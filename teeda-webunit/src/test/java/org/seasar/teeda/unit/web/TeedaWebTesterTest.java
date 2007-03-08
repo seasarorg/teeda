@@ -253,38 +253,45 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.assertCheckboxSelectedByName("f", "aaa", "2");
 		tester.assertCheckboxNotSelectedByName("f", "aaa", "3");
 	}
-	
+
 	public void testAssertselectOptionsByValues() throws Exception {
 		// ## Arrange ##
 		final String relativeUrl = getFileAsRelativeUrl("SelectManyListbox.html");
 
 		// ## Act ##
 		tester.beginAt(relativeUrl);
-		
+		tester.setWorkingForm(1);
+		tester.unselectOptions("aaa", new String[] { "Two" });
 		tester.selectOptionValueByName("aaa", "1");
-		tester.selectOptionsByValues("bbb", new String[]{ "10", "20", "30" });
-		
+		tester.selectOptionsByValues("bbb", new String[] { "10", "20", "30" });
+
 		// ## Assert ##
 		tester.assertSelectedOptionValueEqualsByName("aaa", "1");
-		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[]{"10", "20","30"});
+		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[] {
+				"10", "20", "30" });
 	}
-	
+
 	public void testUnselectOptions() throws Exception {
 		// ## Arrange ##
 		final String relativeUrl = getFileAsRelativeUrl("SelectManyListbox.html");
 
 		// ## Act ##
 		tester.beginAt(relativeUrl);
+		tester.setWorkingForm(1);
 		tester.selectOptionValueByName("aaa", "1");
-		tester.selectOptionsByValues("bbb", new String[]{ "10", "20", "30" });
-		
-		tester.unselectOptions("aaa", new String[]{ "One", "Two" });
-		tester.unselectOptions("bbb", new String[]{  "One", "Two", "Three" });
-		
+		tester.selectOptionsByValues("bbb", new String[] { "10", "20", "30" });
+
+		tester.unselectOptions("aaa", new String[] { "One", "Two" });
+		tester.unselectOptions("bbb", new String[] { "One", "Two", "Three" });
+
 		// ## Assert ##
-		tester.assertSelectOptionsNotEqual("aaa", new String[]{"1", "2", "3"});
-		tester.assertSelectOptionsNotEqual("bbb", new String[]{"10", "20","30"});
+		tester.assertSelectOptionsNotEqual("aaa",
+				new String[] { "One", "Two", "Three" });
+		
+		tester.assertSelectOptionsNotEqual("bbb", new String[] { "One", "Two",
+		"Three" });
 	}
+
 	private String getFileAsRelativeUrl(final String file) {
 		final URL url = getFileAsUrl(file);
 		final String fullUrl = url.toString();
