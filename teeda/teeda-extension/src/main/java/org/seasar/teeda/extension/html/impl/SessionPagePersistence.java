@@ -94,7 +94,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         final ExternalContext extCtx = context.getExternalContext();
         final Map requestMap = extCtx.getRequestMap();
-        if (isOutputlinkTransition(context, extCtx)) {
+        if (isOutputlinkTransition(context, extCtx, viewId)) {
             return;
         }
         final Map subappValues = ScopeValueHelper
@@ -111,14 +111,24 @@ public class SessionPagePersistence implements PagePersistence {
     }
 
     protected static boolean isOutputlinkTransition(FacesContext context,
-            ExternalContext externalContext) {
+            ExternalContext externalContext, String viewId) {
+        final UIViewRoot viewRoot = context.getViewRoot();
+        String previousViewId = null;
+        if (viewRoot != null) {
+            previousViewId = viewRoot.getViewId();
+        }
         // PortletSupport
         boolean isPost = false;
         if (!PortletUtil.isPortlet(context)) {
             isPost = ServletExternalContextUtil.isPost(externalContext);
         }
+        boolean maybeReload = false;
+        if (viewId != null) {
+            maybeReload = viewId.equals(previousViewId);
+        }
+        boolean isNotRedirect = !RedirectScope.isRedirecting(context);
         // TODO in portlet, other flag might be needed..
-        return !RedirectScope.isRedirecting(context) && !isPost;
+        return isNotRedirect && !isPost && !maybeReload;
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {
