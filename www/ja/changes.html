@@ -31,7 +31,21 @@
 <br/>
 <h2><i>Teeda Changes</i></h2>
 
-<h2><a name="1.0.4">Teeda 1.0.4</a></h2>
+<h2><a name="1.0.6">Teeda 1.0.6</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [TEEDA-272] - Gridで、Itemsのクラス名とHTML上のidでまったく同一のものがあると、IllegalPropertyRuntimeException
+    * [TEEDA-275] - ポートレット環境でアクション処理後にレンダー処理がされるとコンテンツが表示されない
+
+** Improvement
+    * [TEEDA-268] - forEachでtbodyタグを使えるようにして欲しい。
+    * [TEEDA-269] - FacesMessageUtilで、MessageResourceBundleFactoryを呼び出しているところをAdapter化して、Deployモードによって切り替える。
+    * [TEEDA-270] - FacesMessageUtilで、データの取得先をXMLやDBからも取得できるようにする。
+    * [TEEDA-273] - Redirect先のドメインとプロトコルを指定できるようにしたい。
+
+</pre>
+
+<h2><a name="1.0.5">Teeda 1.0.5</a></h2>
 <pre style="background-color:white">
 ** Bug
     * [TEEDA-255] - SelectItem(java.lang.Object value) で label が null になる
