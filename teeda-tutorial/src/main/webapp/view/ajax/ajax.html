@@ -1,0 +1,20 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Ajax</title>
+<script type="text/javascript" src="/teedaExtension/org/seasar/teeda/ajax/js/ajax.js"/>
+<script type="text/javascript">
+function ajaxHello(s) {
+  Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxHello, [s], Kumu.Ajax.RESPONSE_TYPE_HTML);
+}
+function ajax_ajaxPage_ajaxHello(s) {
+  var hello = document.getElementById("hello");
+  hello.innerHTML = s;
+}
+</script>
+</head>
+<body>
+<button onclick="ajaxHello('World')">Hello</button>
+<span id="hello">change me</span>
+</body>
+</html>

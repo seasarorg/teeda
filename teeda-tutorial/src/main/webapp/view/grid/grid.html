@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.gridTable {
+	background-color: green;
+}
+.gridCell {
+}
+
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+</head>
+<body>
+<form id="form">
+<span id="allMessages"></span>
+<input type="hidden" id="fooItemsSave"/>
+<table id="fooGrid" width="300px">
+	<colgroup>
+		<col span="1" width="60px" class="T_leftFixed" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><input type="text" id="aaa" /></td>
+			<td><input type="text" id="bbb" /></td>
+			<td><input type="text" id="ccc" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="submit" value="submit" id="doAction"/>
+</form>
+</body>
+</html>
