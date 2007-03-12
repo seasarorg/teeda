@@ -44,6 +44,7 @@ public class HtmlInputSecretRenderer extends AbstractInputRenderer {
         ignoreAttribute.addAttributeName(JsfConstants.VALUE_ATTR);
         ignoreAttribute.addAttributeName(JsfConstants.REDISPLAY_ATTR);
         ignoreAttribute.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        addIgnoreAttributeName(JsfConstants.TYPE_ATTR);
     }
 
     public void encodeEnd(final FacesContext context,
