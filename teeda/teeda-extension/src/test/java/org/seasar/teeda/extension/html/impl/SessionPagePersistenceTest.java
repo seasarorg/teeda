@@ -31,6 +31,8 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.core.application.TeedaStateManager;
+import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
@@ -216,6 +218,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         final PageDesc toPageDesc = createPageDesc(ToPage.class, toViewId);
         pageDescCache.putPageDesc(fromViewId, fromPageDesc);
         pageDescCache.putPageDesc(toViewId, toPageDesc);
+        TeedaStateManager stateManager = new TeedaStateManagerImpl();
         final SessionPagePersistence pagePersistence = new SessionPagePersistence();
         final NamingConvention namingConvention = new NamingConventionImpl() {
             public Class fromComponentNameToClass(String componentName) {
@@ -229,6 +232,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         };
         pagePersistence.setNamingConvention(namingConvention);
         pagePersistence.setPageDescCache(pageDescCache);
+        pagePersistence.setStateManager(stateManager);
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
@@ -295,8 +299,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
             }
 
         };
+        TeedaStateManager stateManager = new TeedaStateManagerImpl();
         pagePersistence.setNamingConvention(namingConvention);
         pagePersistence.setPageDescCache(pageDescCache);
+        pagePersistence.setStateManager(stateManager);
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());

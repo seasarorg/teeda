@@ -93,14 +93,10 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     }
 
     public UIViewRoot restoreView(FacesContext context, String viewId) {
-        final UIViewRoot viewRoot = super.restoreView(context, viewId);
-        if (viewRoot != null) {
-            context.setViewRoot(viewRoot);
-        }
         htmlSuffix.setupSuffix(context, viewId);
         setUpRequestForExternalBinding(context, viewId);
         tagProcessorCache.updateTagProcessor(viewId);
-        return viewRoot;
+        return super.restoreView(context, viewId);
     }
 
     protected void setUpRequestForExternalBinding(FacesContext context,

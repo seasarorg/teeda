@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,9 +29,9 @@ import org.seasar.teeda.core.util.StateManagerUtil;
 
 /**
  * StateManager implementation class using session.
- * 
+ *
  * @author shot
- * 
+ *
  */
 public class TeedaSessionStateManagerImpl extends TeedaStateManager {
 
@@ -191,6 +191,17 @@ public class TeedaSessionStateManagerImpl extends TeedaStateManager {
     public void removeSerializedView(String viewId) {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .remove(viewId);
+    }
+
+    public boolean hasSerializedView(final FacesContext context,
+            final String viewId) {
+        if (isSavingStateInClient(context)) {
+            return false;
+        }
+        final ExternalContext externalContext = context.getExternalContext();
+        SerializedView serializedView = getSerializedViewFromServer(
+                externalContext, viewId);
+        return (serializedView != null);
     }
 
 }

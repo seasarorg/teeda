@@ -19,13 +19,9 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public interface PagePersistence {
-
-    void save(FacesContext context, String viewId);
-
-    void restore(FacesContext context, String viewId);
 
     String SUBAPPLICATION_SCOPE_KEY = PagePersistence.class.getName()
             + ".SUBAPPLICATION";
@@ -33,5 +29,9 @@ public interface PagePersistence {
     String REDIRECT_SCOPE_KEY = PagePersistence.class.getName() + ".REDIRECT";
 
     String PAGE_SCOPE_KEY = PagePersistence.class.getName() + ".PAGE";
+
+    void save(FacesContext context, String viewId);
+
+    void restore(FacesContext context, String viewId);
 
 }

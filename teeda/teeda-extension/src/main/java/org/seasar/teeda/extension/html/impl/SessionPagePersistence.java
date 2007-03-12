@@ -41,6 +41,7 @@ import org.seasar.framework.message.MessageFormatter;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
@@ -67,6 +68,8 @@ public class SessionPagePersistence implements PagePersistence {
     private ActionDescCache actionDescCache;
 
     private NamingConvention namingConvention;
+
+    private TeedaStateManager stateManager;
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "teeda.FacesMessages";
 
@@ -110,23 +113,16 @@ public class SessionPagePersistence implements PagePersistence {
         TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
     }
 
-    protected static boolean isOutputlinkTransition(FacesContext context,
+    protected boolean isOutputlinkTransition(FacesContext context,
             ExternalContext externalContext, String viewId) {
-        final UIViewRoot viewRoot = context.getViewRoot();
-        String previousViewId = null;
-        if (viewRoot != null) {
-            previousViewId = viewRoot.getViewId();
-        }
         // PortletSupport
         boolean isPost = false;
         if (!PortletUtil.isPortlet(context)) {
             isPost = ServletExternalContextUtil.isPost(externalContext);
         }
-        boolean maybeReload = false;
-        if (viewId != null) {
-            maybeReload = viewId.equals(previousViewId);
-        }
-        boolean isNotRedirect = !RedirectScope.isRedirecting(context);
+        final boolean maybeReload = stateManager.hasSerializedView(context,
+                viewId);
+        final boolean isNotRedirect = !RedirectScope.isRedirecting(context);
         // TODO in portlet, other flag might be needed..
         return isNotRedirect && !isPost && !maybeReload;
     }
@@ -386,6 +382,10 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setActionDescCache(ActionDescCache actionDescCache) {
         this.actionDescCache = actionDescCache;
+    }
+
+    public void setStateManager(TeedaStateManager stateManager) {
+        this.stateManager = stateManager;
     }
 
 }
