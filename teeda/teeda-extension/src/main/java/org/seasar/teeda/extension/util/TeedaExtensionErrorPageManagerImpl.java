@@ -48,7 +48,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
             ExternalContext extContext) throws IOException {
         AssertionUtil.assertNotNull("exception", exception);
         if (logger.isDebugEnabled()) {
-            logger.debug(exception);
+            logger.debug(exception.getMessage(), exception);
         }
         final String location = getLocation(exception.getClass());
         if (location == null) {
