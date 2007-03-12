@@ -49,6 +49,12 @@
         <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
         <param-value>.html</param-value>
     </context-param>
+
+    <context-param>
+        <param-name>teeda.REDIRECT_URL</param-name>
+        <param-value>https://127.0.0.1:8080/</param-value>
+    </context-param>
+
 <!--
     <filter>
         <filter-name>dbSessionFilter</filter-name>
@@ -73,7 +79,7 @@
         <filter-name>hotdeployfilter</filter-name>
         <filter-class>org.seasar.framework.container.hotdeploy.HotdeployFilter</filter-class>
     </filter>
-    
+
     <filter>
         <filter-name>extensionfilter</filter-name>
         <filter-class>org.seasar.teeda.extension.filter.ExtensionFilter</filter-class>
@@ -112,7 +118,7 @@
         <filter-name>requestDumpFilter</filter-name>
         <url-pattern>/view/*</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>extensionfilter</filter-name>
         <url-pattern>/teedaExtension/*</url-pattern>
