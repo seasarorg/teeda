@@ -153,6 +153,10 @@ public abstract class VirtualResource {
         return request.getRequestURI().indexOf(VIRTUAL_PATH) != -1;
     }
 
+    public static boolean startsWithVirtualPath(String path) {
+        return path.startsWith(VIRTUAL_PATH);
+    }
+
     public static void resolveVirtualPath(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         String path = getResourcePath(request);

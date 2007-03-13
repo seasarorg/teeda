@@ -35,7 +35,7 @@ public class THtmlPopupCalendar extends HtmlInputText implements
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlPopupCalendar";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlPopupCalendar";;
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlPopupCalendar";
 
     private String popupGotoString = null;
 

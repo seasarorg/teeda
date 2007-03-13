@@ -31,6 +31,9 @@
 		<initMethod name="addElementNodeDecision">
 			<arg><component class="org.seasar.teeda.extension.html.impl.HeadElementNodeDecision"/></arg>
 		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.ScriptElementNodeDecision"/></arg>
+		</initMethod>
 	</component>
 
 	<component
@@ -120,6 +123,8 @@
 		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
 	<component name="headFactory"
 		class="org.seasar.teeda.extension.html.factory.HeadFactory" />
+	<component name="scriptFactory"
+		class="org.seasar.teeda.extension.html.factory.ScriptFactory" />
 	<component name="genericFactory"
 		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
 	<component name="genericElementFactory"
