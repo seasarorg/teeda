@@ -48,7 +48,7 @@
 			<arg>"aop.traceInterceptor"</arg>
 		</initMethod>
 		<initMethod name="addInterceptorName">
-			<arg>"app_aop.appFacesExceptionThrowsInterceptor"</arg>
+			<arg>"app_aop.appThrowsInterceptor"</arg>
 		</initMethod>
 		<property name="pointcut">"do.*, initialize, prerender"</property>
 	</component>
