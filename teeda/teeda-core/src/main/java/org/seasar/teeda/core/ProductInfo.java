@@ -25,9 +25,9 @@ public class ProductInfo {
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String LOCAL_VERSION = "6";
+    private static final String LOCAL_VERSION = "7";
 
-    private static boolean isSnapshot = false;
+    private static boolean isSnapshot = true;
 
     public static String getProductName() {
         return "Teeda";
