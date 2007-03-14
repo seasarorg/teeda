@@ -19,12 +19,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.faces.component.UIParameter;
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
+import org.seasar.framework.util.ResourceUtil;
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlForm;
 import org.seasar.teeda.core.mock.MockHtmlOutputLink;
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
+import org.seasar.teeda.extension.html.impl.HtmlSuffixImpl;
 
 /**
  * @author shot
@@ -71,6 +75,144 @@ public class THtmlOutputLinkRendererTest extends RendererTest {
 
         assertEquals("<a id=\"aaa\" href=\"a?date=2007%2F02%2F21\"></a>",
                 getResponseText());
+    }
+
+    public void testRenderWithSuffixButNoSuffixSet() throws Exception {
+        renderer.setHtmlSuffix(new HtmlSuffixImpl());
+        htmlOutputLink.setId("aaa");
+        htmlOutputLink.setValue("a");
+        encodeByRenderer(renderer, getFacesContext(), htmlOutputLink);
+
+        assertEquals("<a id=\"aaa\" href=\"a\"></a>", getResponseText());
+    }
+
+    public void testRenderWithSuffix() throws Exception {
+        try {
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            htmlOutputLink.setId("aaa");
+            htmlOutputLink.setValue(ResourceUtil.convertPath("a.html",
+                    getClass()));
+            encodeByRenderer(renderer, facesContext, htmlOutputLink);
+
+            assertEquals(
+                    "<a id=\"aaa\" href=\"/org/seasar/teeda/extension/render/html/a_i.html\"></a>",
+                    getResponseText());
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
+    }
+
+    public void testGetSuffixedBase1() throws Exception {
+        try {
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            String suffixedBase = renderer.getSuffixedBase(facesContext,
+                    "hoge.html");
+            assertEquals("hoge.html", suffixedBase);
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
+    }
+
+    public void testGetSuffixedBase2() throws Exception {
+        MockFacesContext facesContext = getFacesContext();
+        facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+        String suffixedBase = renderer.getSuffixedBase(facesContext, "hoge");
+        assertEquals("hoge", suffixedBase);
+    }
+
+    public void testGetSuffixedBase3() throws Exception {
+        try {
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            String suffixedBase = renderer.getSuffixedBase(facesContext,
+                    "/view/hoge/hoge.html");
+            assertEquals("/view/hoge/hoge_i.html", suffixedBase);
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
+    }
+
+    public void testGetSuffixedBase4() throws Exception {
+        try {
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/fooo.html");
+            String suffixedBase = renderer.getSuffixedBase(facesContext,
+                    "./hoge.html");
+            System.out.println(suffixedBase);
+            assertEquals("/view/hoge/hoge_i.html", suffixedBase);
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
+    }
+
+    public void testGetSuffixedBase5() throws Exception {
+        try {
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+            String suffixedBase = renderer.getSuffixedBase(facesContext,
+                    "../bar/bar.html");
+            System.out.println(suffixedBase);
+            assertEquals("/view/bar/bar_i.html", suffixedBase);
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
+    }
+
+    public void testGetSuffixedBase6() throws Exception {
+        try {
+            renderer.setHtmlSuffix(new HtmlSuffixImpl() {
+
+                public String getSuffix(FacesContext context) {
+                    return "_i";
+                }
+
+            });
+            MockFacesContext facesContext = getFacesContext();
+            facesContext.getViewRoot().setViewId("/view/hoge/foo.html");
+            String suffixedBase = renderer.getSuffixedBase(facesContext,
+                    "../../bar.html");
+            System.out.println(suffixedBase);
+            assertEquals("/view/hoge/bar_i.html", suffixedBase);
+        } finally {
+            renderer.setHtmlSuffix(null);
+        }
     }
 
     private THtmlOutputLinkRenderer createTHtmlOutputLinkRenderer() {
