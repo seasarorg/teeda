@@ -15,11 +15,13 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
 
 /**
@@ -54,6 +56,7 @@ public class THtmlSelectOneMenuRendererTest extends RendererTest {
         // ## Act ##
         encodeByRenderer(renderer, htmlSelectOneMenu);
 
+        System.out.println(getResponseText());
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"1\">"
                 + "<option value=\"v\">l</option>" + "</select>",
@@ -75,6 +78,53 @@ public class THtmlSelectOneMenuRendererTest extends RendererTest {
 
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"1\">"
+                + "<option value=\"v\">l</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithOnTeedaError1() throws Exception {
+        // ## Arrange ##
+        htmlSelectOneMenu.setClientId("hoge");
+        MockFacesContext facesContext = getFacesContext();
+        facesContext.addMessage("hoge", new FacesMessage("sssss"));
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v");
+            selectItem.setItemLabel("l");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+        htmlSelectOneMenu.setPageName("hogePage");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneMenu);
+
+        System.out.println(getResponseText());
+        // ## Assert ##
+        assertEquals("<select name=\"hoge\" size=\"1\" class=\"onTeedaError\">"
+                + "<option value=\"v\">l</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_WithOnTeedaError2() throws Exception {
+        // ## Arrange ##
+        htmlSelectOneMenu.setClientId("hoge");
+        MockFacesContext facesContext = getFacesContext();
+        facesContext.addMessage("hoge", new FacesMessage("sssss"));
+        htmlSelectOneMenu.setErrorStyleClass("foo");
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("v");
+            selectItem.setItemLabel("l");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+        htmlSelectOneMenu.setPageName("hogePage");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneMenu);
+
+        System.out.println(getResponseText());
+        // ## Assert ##
+        assertEquals("<select name=\"hoge\" size=\"1\" class=\"foo\">"
                 + "<option value=\"v\">l</option>" + "</select>",
                 getResponseText());
     }

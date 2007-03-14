@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
+import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
@@ -38,6 +39,7 @@ import org.seasar.teeda.core.util.ValueHolderUtil;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
 
@@ -51,9 +53,9 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.SIZE_ATTR);
         ignoreComponent.addAttributeName("selectedValues");
-        ignoreComponent
-                .addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -82,6 +84,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
                 .getClientId(context));
         renderMultiple(context, component, writer);
         renderSize(context, component, writer);
+        renderStyleClass(context, component, writer);
         renderRemainAttributes(component, writer, ignoreComponent);
         final String[] selectedValues = getValuesForRender(context, component);
         renderSelectItems(context, component, writer, it, selectedValues);
@@ -92,6 +95,14 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
     protected String[] getValuesForRender(FacesContext context,
             UIComponent component) {
         return ValueHolderUtil.getValuesForRender(context, component);
+    }
+
+    protected void renderStyleClass(FacesContext context,
+            UIComponent component, ResponseWriter writer) throws IOException {
+        HtmlSelectManyListbox htmlSelectManyListbox = (HtmlSelectManyListbox) component;
+        final String styleClass = htmlSelectManyListbox.getStyleClass();
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
     }
 
     protected void renderSize(FacesContext context, UIComponent component,

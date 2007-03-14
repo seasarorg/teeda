@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,6 +36,10 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
     private String pageName;
 
     private String labelName;
+
+    private static final String VALIDATION_FAIL_CSS = "onTeedaError";
+
+    private String errorStyleClass = VALIDATION_FAIL_CSS;
 
     public void validate(final FacesContext context) {
         super.validate(context);
@@ -67,10 +71,11 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[3];
+        final Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = pageName;
         values[2] = labelName;
+        values[3] = errorStyleClass;
         return values;
     }
 
@@ -79,6 +84,7 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
         super.restoreState(context, values[0]);
         pageName = (String) values[1];
         labelName = (String) values[2];
+        errorStyleClass = (String) values[3];
     }
 
     public String getPageName() {
@@ -95,6 +101,14 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
 
     public void setLabelName(final String labelName) {
         this.labelName = labelName;
+    }
+
+    public String getErrorStyleClass() {
+        return errorStyleClass;
+    }
+
+    public void setErrorStyleClass(String errorStyleClass) {
+        this.errorStyleClass = errorStyleClass;
     }
 
 }

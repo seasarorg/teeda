@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -36,6 +37,14 @@ public class HtmlSelectOneMenuRenderer extends HtmlSelectOneListboxRenderer {
     protected void renderSize(FacesContext context, UIComponent component,
             ResponseWriter writer) throws IOException {
         RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR, "1");
+    }
+
+    protected void renderStyleClass(FacesContext context,
+            UIComponent component, ResponseWriter writer) throws IOException {
+        HtmlSelectOneMenu htmlSelectOneMenu = (HtmlSelectOneMenu) component;
+        final String styleClass = htmlSelectOneMenu.getStyleClass();
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
     }
 
 }
