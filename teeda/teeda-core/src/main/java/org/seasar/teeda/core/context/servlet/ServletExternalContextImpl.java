@@ -138,6 +138,9 @@ public class ServletExternalContextImpl extends ExternalContext implements
             }
         }
         HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (((HttpServletRequest) request).isRequestedSessionIdFromCookie()) {
+            return url;
+        }
         return httpResponse.encodeURL(url);
     }
 
