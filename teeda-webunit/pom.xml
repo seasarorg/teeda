@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-webunit</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
   <packaging>jar</packaging>
   <name>Teeda WebUnit</name>
   <description></description>
@@ -63,6 +63,12 @@
         </executions>
       </plugin>
     </plugins>
+    <extensions>
+    	<extension>
+    		<groupId>org.apache.maven.wagon</groupId>
+    		<artifactId>wagon-webdav</artifactId>
+    	</extension>
+    </extensions>
   </build>
   <repositories>
     <repository>
@@ -222,7 +228,13 @@
       <uniqueVersion>false</uniqueVersion>
       <id>maven.seasar.org</id>
       <name>The Seasar Foundation Maven2 Repository</name>
-      <url>scp://www.seasar.org/home/groups/teeda/maven/maven2</url>
+      <url>dav:https://www.seasar.org/maven/maven2</url>
     </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>

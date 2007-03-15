@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -37,8 +37,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * @author manhole
  * @author yone
+ * @author shot
  */
-class TeedaHtmlUnitDialog extends HtmlUnitDialog {
+public class TeedaHtmlUnitDialog extends HtmlUnitDialog {
 
 	private boolean throwExceptionOnFailingStatusCode;
 
@@ -159,7 +160,9 @@ class TeedaHtmlUnitDialog extends HtmlUnitDialog {
 
 	/**
 	 * 指定indexのHtmlFormを返す
-	 * @param formIndex Fromのindex
+	 * 
+	 * @param formIndex
+	 *            Fromのindex
 	 * @return HtmlForm
 	 */
 	public HtmlForm getForm(final int formIndex) {
@@ -169,7 +172,9 @@ class TeedaHtmlUnitDialog extends HtmlUnitDialog {
 
 	/**
 	 * 指定された名前のHtmlFormを返す
-	 * @param formName Formの名前
+	 * 
+	 * @param formName
+	 *            Formの名前
 	 * @return HtmlForm
 	 */
 	private HtmlForm getForm(final String formName) {

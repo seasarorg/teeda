@@ -285,9 +285,23 @@ public class TeedaWebTesterTest extends TeedaWebTestCase {
 		tester.unselectOptions("bbb", new String[] { "One", "Two", "Three" });
 
 		// ## Assert ##
-		tester.assertSelectedOptionValuesEqualsByName("aaa", new String[]{});
+		tester.assertSelectedOptionValuesEqualsByName("aaa", new String[] {});
 
-		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[]{});
+		tester.assertSelectedOptionValuesEqualsByName("bbb", new String[] {});
+	}
+
+	public void testJs() throws Exception {
+		// ## Arrange ##
+		final String relativeUrl = getFileAsRelativeUrl("js.html");
+
+		// ## Act ##
+		tester.beginAt(relativeUrl);
+		tester.dumpHtml();
+
+		// ## Assert ##
+		Object scripts = tester.executeJavaScript("hogehoge", "call hogehoge");
+		assertNotNull(scripts);
+		System.out.println(scripts);
 	}
 
 	private String getFileAsRelativeUrl(final String file) {

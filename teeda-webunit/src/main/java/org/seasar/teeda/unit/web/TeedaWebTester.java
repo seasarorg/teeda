@@ -26,6 +26,7 @@ import net.sourceforge.jwebunit.TestContext;
 import net.sourceforge.jwebunit.WebTester;
 import net.sourceforge.jwebunit.html.Table;
 
+import com.gargoylesoftware.htmlunit.ScriptEngine;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
@@ -488,6 +489,14 @@ public class TeedaWebTester {
 		assertCheckboxByName(false, cb, value);
 	}
 
+	public Object executeJavaScript(final String sourceCode,
+			final String sourceName) {
+		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
+		final WebClient wc = dialog.getWebClient();
+		final ScriptEngine engine = wc.getScriptEngine();
+		return engine.execute(dialog.getCurrentPage(), sourceCode, sourceName);
+	}
+
 	private WebClient getWebClient() {
 		final TeedaHtmlUnitDialog dialog = getTeedaHtmlUnitDialog();
 		final WebClient webClient = dialog.getWebClient();
@@ -527,7 +536,7 @@ public class TeedaWebTester {
 		return element;
 	}
 
-	private TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
+	TeedaHtmlUnitDialog getTeedaHtmlUnitDialog() {
 		return (TeedaHtmlUnitDialog) tester.getDialog();
 	}
 

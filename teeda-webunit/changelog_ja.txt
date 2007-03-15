@@ -1,3 +1,7 @@
+2007/03/12 teeda-webunit-0.2.1
+
+* TeedaWebTester.executeJavaScript()でJSを実行できるようにした。
+
 2007/03/05 teeda-webunit-0.2.1
 
 * clickLinkを使えるようにした。
