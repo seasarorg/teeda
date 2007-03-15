@@ -44,7 +44,7 @@ public class ReloadTest extends TeedaWebTestCase {
 		String currentUri = tester.getCurrentUri();
 		assertTrue(currentUri.indexOf("view/reload/registConfirm.html") >= 0);
 
-		tester.clickLinkById("reload");
+		tester.executeJavaScript("location.reload()", "reload test");
 		tester.assertTextEqualsById("value1", "12345");
 	}
 
