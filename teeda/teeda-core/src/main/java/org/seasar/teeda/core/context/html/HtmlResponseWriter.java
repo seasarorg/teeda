@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -283,7 +283,7 @@ public class HtmlResponseWriter extends ResponseWriter {
 
     public String encodeQueryString(final String s) throws IOException {
         final char[] chars = s.toCharArray();
-        final StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer(s.length() + 32);
         final String encoding = getCharacterEncoding();
         for (int i = 0; i < chars.length; i++) {
             final char c = chars[i];

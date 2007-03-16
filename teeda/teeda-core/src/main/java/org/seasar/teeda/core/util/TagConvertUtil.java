@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,7 +38,7 @@ public class TagConvertUtil {
             return createSetters(tagName);
         }
 
-        StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer(20);
         StringTokenizer st = new StringTokenizer(tagName, delim);
         String s = null;
         while (st.hasMoreElements()) {

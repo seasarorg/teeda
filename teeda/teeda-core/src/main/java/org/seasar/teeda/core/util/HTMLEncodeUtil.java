@@ -30,7 +30,7 @@ public final class HTMLEncodeUtil {
     public static String encode(final String s, final boolean quote,
             final boolean amp) {
         char[] chars = s.toCharArray();
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer(s.length() + 64);
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             // &nbsp; 0xA0

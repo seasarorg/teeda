@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,9 +29,11 @@ import javax.faces.el.ReferenceSyntaxException;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.teeda.core.exception.SetterNotFoundRuntimeException;
 
 /**
  * @author higa
+ * @author shot
  */
 public class TeedaPropertyResolver extends PropertyResolver {
 
@@ -198,7 +200,11 @@ public class TeedaPropertyResolver extends PropertyResolver {
     protected void setProperty(Object base, String name, Object newValue) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(base.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc(name);
-        pd.setValue(base, newValue);
+        if (pd.hasWriteMethod()) {
+            pd.setValue(base, newValue);
+        } else {
+            throw new SetterNotFoundRuntimeException(name);
+        }
     }
 
     protected Object getProperty(Object base, String name) {
@@ -206,4 +212,5 @@ public class TeedaPropertyResolver extends PropertyResolver {
         PropertyDesc pd = beanDesc.getPropertyDesc(name);
         return pd.getValue(base);
     }
+
 }

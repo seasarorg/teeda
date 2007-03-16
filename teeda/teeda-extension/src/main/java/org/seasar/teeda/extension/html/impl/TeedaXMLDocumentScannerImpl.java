@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,8 +30,8 @@ import org.seasar.framework.util.StringUtil;
 
 /**
  * @author shot
- * 
- * avoid ";" is required becauseof a.html?b=B&c=C format. 
+ *
+ * avoid ";" is required becauseof a.html?b=B&c=C format.
  */
 public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
 
@@ -40,11 +40,11 @@ public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
     private static Logger logger = Logger
             .getLogger(TeedaXMLDocumentScannerImpl.class);
 
-    private XMLStringBuffer fStringBuffer = new XMLStringBuffer();
+    private XMLStringBuffer fStringBuffer = new XMLStringBuffer(128);
 
-    private XMLStringBuffer fStringBuffer2 = new XMLStringBuffer();
+    private XMLStringBuffer fStringBuffer2 = new XMLStringBuffer(128);
 
-    private XMLStringBuffer fStringBuffer3 = new XMLStringBuffer();
+    private XMLStringBuffer fStringBuffer3 = new XMLStringBuffer(128);
 
     protected void scanAttributeValue(XMLString value,
             XMLString nonNormalizedValue, String atName, boolean checkEntities,

@@ -123,7 +123,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             }
             return pathFirst + outcome + pathLast;
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer(100);
         for (int i = 0; i < names.length; i++) {
             buf.append(StringUtil.decapitalize(names[i]));
             if (i != names.length - 1) {

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -35,8 +35,7 @@ public class TViewRoot extends UIViewRoot {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.ViewRoot";
 
-    private static final String SCRIPTS_KEY = TViewRoot.class
-            .getName()
+    private static final String SCRIPTS_KEY = TViewRoot.class.getName()
             + ".SCRIPTS_KEY";
 
     private Map scriptsMap = new HashMap();
@@ -76,7 +75,7 @@ public class TViewRoot extends UIViewRoot {
     }
 
     public String getAllScripts() {
-        StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer(128);
         for (Iterator itr = scriptsMap.entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
             JavaScriptContext context = (JavaScriptContext) entry.getValue();
