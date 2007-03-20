@@ -56,6 +56,7 @@ public class HtmlSelectManyListboxRenderer extends AbstractInputRenderer {
         ignoreComponent.addAttributeName(JsfConstants.DISABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.MULTIPLE_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

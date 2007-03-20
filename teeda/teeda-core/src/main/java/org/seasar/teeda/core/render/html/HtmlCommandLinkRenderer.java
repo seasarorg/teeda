@@ -107,19 +107,15 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
         final String functionName = JavaScriptUtil
                 .getClearHiddenCommandFormParamsFunctionName(formName)
                 + "();";
-        sb.append(functionName);
-        sb.append("var f = document.forms['");
-        sb.append(formId);
-        sb.append("'];");
+        sb.append(functionName).append("var f = document.forms['").append(
+                formId).append("'];");
 
-        sb.append(" f['");
         final String hiddenFieldName = getHiddenFieldName(formId);
-        sb.append(hiddenFieldName);
-        sb.append("'].value = '");
-        sb.append(commandLink.getClientId(context));
-        sb.append("';");
+        sb.append(" f['").append(hiddenFieldName).append("'].value = '")
+                .append(commandLink.getClientId(context)).append("';");
 
-        HtmlFormRenderer.setCommandLinkHiddenParameter(parentForm, hiddenFieldName, null);
+        HtmlFormRenderer.setCommandLinkHiddenParameter(parentForm,
+                hiddenFieldName, null);
 
         for (final Iterator it = commandLink.getChildren().iterator(); it
                 .hasNext();) {
@@ -128,25 +124,20 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
                 final UIParameter p = ((UIParameter) child);
                 final String name = p.getName();
                 final Object value = p.getValue();
-                sb.append(" f['" + name + "'].value = '");
-                sb.append(String.valueOf(value));
-                sb.append("';");
-                HtmlFormRenderer.setCommandLinkHiddenParameter(parentForm, name, null);
+                sb.append(" f['" + name + "'].value = '").append(
+                        String.valueOf(value)).append("';");
+                HtmlFormRenderer.setCommandLinkHiddenParameter(parentForm,
+                        name, null);
             }
         }
 
         final String target = commandLink.getTarget();
         if (target != null && target.trim().length() > 0) {
-            sb.append(" f.target = '");
-            sb.append(target);
-            sb.append("';");
+            sb.append(" f.target = '").append(target).append("';");
         }
 
-        sb.append(" if (f.onsubmit) { f.onsubmit(); }");
-        sb.append(" f.submit();");
-        //TODO
-        sb.append(functionName);
-        sb.append(" return false;");
+        sb.append(" if (f.onsubmit) { f.onsubmit(); } f.submit();").append(
+                functionName).append(" return false;");
         RendererUtil.renderAttribute(writer, JsfConstants.ONCLICK_ATTR, sb
                 .toString());
 
@@ -177,16 +168,13 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
 
         final String formSubmitKey = HtmlFormRendererUtil.getFormSubmitKey(
                 context, parentForm);
-        hrefBuf.append(formSubmitKey);
-        hrefBuf.append("=");
-        hrefBuf.append(formSubmitKey);
-        hrefBuf.append("&");
+        hrefBuf.append(formSubmitKey).append("=").append(formSubmitKey).append(
+                "&");
 
         final String formId = getIdForRender(context, parentForm);
         final String hiddenFieldName = getHiddenFieldName(formId);
-        hrefBuf.append(hiddenFieldName);
-        hrefBuf.append("=");
-        hrefBuf.append(commandLink.getClientId(context));
+        hrefBuf.append(hiddenFieldName).append("=").append(
+                commandLink.getClientId(context));
         if (commandLink.getChildCount() > 0) {
             addChildParametersToHref(commandLink, hrefBuf, writer
                     .getCharacterEncoding());

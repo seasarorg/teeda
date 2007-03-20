@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -40,6 +40,8 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
 
     private static final String RENDERER_SUFFIX = "_RENDERER_FACES_CONFIG";
 
+    private static final int RENDERER_SUFFIX_LENGTH = RENDERER_SUFFIX.length();
+
     private ResponseStateManager responseStateManager;
 
     private S2Container container;
@@ -56,15 +58,16 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
         String rendererKey = HtmlRenderKitKeyGenerateUtil.getGeneratedKey(
                 family, renderType)
                 + RENDERER_SUFFIX;
-        if (getContainer().hasComponentDef(rendererKey)) {
-            RendererHolder holder = (RendererHolder) getContainer()
+        final S2Container c = getContainer();
+        if (c.hasComponentDef(rendererKey)) {
+            RendererHolder holder = (RendererHolder) c
                     .getComponent(rendererKey);
             holder.setRenderer(renderer);
         } else {
             RendererHolder holder = new RendererHolder();
             holder.setRenderer(renderer);
             holder.setRendererKey(rendererKey);
-            getContainer().register(holder, rendererKey);
+            c.register(holder, rendererKey);
         }
     }
 
@@ -81,7 +84,9 @@ public class HtmlRenderKitImpl extends AbstractRenderKit {
     }
 
     protected Renderer getRendererFromFacesConfig(String rendererKey) {
-        String key = rendererKey + RENDERER_SUFFIX;
+        String key = new String(new StringBuffer(rendererKey.length()
+                + RENDERER_SUFFIX_LENGTH).append(rendererKey).append(
+                RENDERER_SUFFIX));
         RendererHolder holder = (RendererHolder) componentLookupStrategy
                 .getComponentByName(key);
         return (holder != null) ? holder.getRenderer() : null;

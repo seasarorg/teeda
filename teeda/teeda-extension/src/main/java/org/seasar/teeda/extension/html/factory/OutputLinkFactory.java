@@ -90,15 +90,13 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         for (int i = 0; i < entries.length; ++i) {
             String entry = entries[i];
             if (entry.startsWith(FIXED_PREFIX)) {
-                buf.append(entry.substring(FIXED_PREFIX.length()));
-                buf.append("&");
+                buf.append(entry.substring(FIXED_PREFIX.length())).append("&");
             } else {
                 String[] elems = StringUtil.split(entry, " =");
                 if (pageDesc.hasProperty(elems[0])) {
                     appendParam(processor, pageDesc, elems[0]);
                 } else {
-                    buf.append(entry);
-                    buf.append("&");
+                    buf.append(entry).append("&");
                 }
             }
         }

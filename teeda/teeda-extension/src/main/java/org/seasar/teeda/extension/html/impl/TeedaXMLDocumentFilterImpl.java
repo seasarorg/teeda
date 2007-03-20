@@ -43,6 +43,10 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
 
     private static final String SEP = System.getProperty("line.separator");
 
+    private static final String BEGIN_COMMENT = "<!--";
+
+    private static final String END_COMMENT = "-->";
+
     public TeedaXMLDocumentFilterImpl() {
     }
 
@@ -61,8 +65,8 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
 
     public void comment(XMLString text, Augmentations augs) throws XNIException {
         final StringBuffer buf = new StringBuffer(text.length + 7);
-        buf.append("<!--").append(text.ch, text.offset, text.length).append(
-                "-->");
+        buf.append(BEGIN_COMMENT).append(text.ch, text.offset, text.length)
+                .append(END_COMMENT);
         final String comment = new String(buf);
         orgHandler.characters(new XMLString(comment.toCharArray(), 0, comment
                 .length()), augs);
@@ -136,7 +140,8 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
     public void startGeneralEntity(String name,
             XMLResourceIdentifier identifier, String encoding,
             Augmentations augs) throws XNIException {
-        final String entityRef = "&" + name + ";";
+        final String entityRef = new String(new StringBuffer(name.length() + 2)
+                .append("&").append(name).append(";"));
         orgHandler.characters(new XMLString(entityRef.toCharArray(), 0,
                 entityRef.length()), augs);
         ++inEntity;
@@ -151,23 +156,16 @@ public class TeedaXMLDocumentFilterImpl implements XMLDocumentFilter {
             Augmentations augs) throws XNIException {
         StringBuffer buf = new StringBuffer(128);
         if (version != null) {
-            buf.append("<?xml version=\"");
-            buf.append(version);
-            buf.append("\"");
+            buf.append("<?xml version=\"").append(version).append("\"");
         }
         if (encoding != null) {
-            buf.append(" encoding=\"");
-            buf.append(encoding);
-            buf.append("\"");
+            buf.append(" encoding=\"").append(encoding).append("\"");
             xmlEncoding = encoding;
         }
         if (standalone != null) {
-            buf.append(" standalone=\"");
-            buf.append(standalone);
-            buf.append("\"");
+            buf.append(" standalone=\"").append(standalone).append("\"");
         }
-        buf.append("?>");
-        buf.append(SEP);
+        buf.append("?>").append(SEP);
         String xml = buf.toString();
         orgHandler.characters(
                 new XMLString(xml.toCharArray(), 0, xml.length()), augs);

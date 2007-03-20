@@ -29,8 +29,6 @@ import org.seasar.teeda.core.util.ViewHandlerUtil;
  */
 public class LabelUtil {
 
-    public static final String LABEL = "label";
-
     public static String getLabelValue(String defaultKey) {
         if (defaultKey == null) {
             return null;
@@ -50,12 +48,20 @@ public class LabelUtil {
             return null;
         }
         String pageName = nc.fromPathToPageName(viewId);
-        String key = getLabelKeySuffix(nc, pageName) + "." + defaultKey;
+        String key = getKey(nc, pageName, defaultKey);
         String propertiesName = getPropertiesName(nc, pageName);
         String defaultPropertiesName = getDefaultApplicationPropertiesName(nc,
                 pageName);
         return getLabelValue(key, propertiesName, defaultKey,
                 defaultPropertiesName);
+    }
+
+    private static String getKey(final NamingConvention nc,
+            final String pageName, final String defaultKey) {
+        final String labelKeySuffix = getLabelKeySuffix(nc, pageName);
+        return new String(new StringBuffer(labelKeySuffix.length()
+                + defaultKey.length() + 1).append(labelKeySuffix).append(
+                InternalConstants.DOT).append(defaultKey));
     }
 
     public static String getLabelValue(String key, String propertiesName,
@@ -83,7 +89,10 @@ public class LabelUtil {
 
     public static String getPropertiesName(NamingConvention nc, String pageName) {
         String packageName = NamingConventionUtil.getPackageName(nc, pageName);
-        return (packageName != null) ? packageName + "." + LABEL : null;
+        return (packageName != null) ? new String(new StringBuffer(packageName
+                .length() + 5).append(packageName)
+                .append(InternalConstants.DOT).append(InternalConstants.LABEL))
+                : null;
     }
 
     public static String getLabelKeySuffix(NamingConvention nc, String pageName) {
@@ -108,10 +117,12 @@ public class LabelUtil {
             return null;
         }
         if (packageName.lastIndexOf(subAppRoot) > 0) {
-            defaultPropertiesName = packageName.substring(0, packageName
-                    .lastIndexOf(subAppRoot)
-                    + subAppRoot.length())
-                    + "." + LABEL;
+            final int len = packageName.lastIndexOf(subAppRoot)
+                    + subAppRoot.length();
+            final String s = packageName.substring(0, len);
+            defaultPropertiesName = new String(new StringBuffer(s.length() + 5)
+                    .append(s).append(InternalConstants.DOT).append(
+                            InternalConstants.LABEL));
         }
         return defaultPropertiesName;
     }

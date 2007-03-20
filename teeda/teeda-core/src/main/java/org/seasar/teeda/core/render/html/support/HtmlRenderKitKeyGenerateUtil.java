@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -29,7 +29,9 @@ public class HtmlRenderKitKeyGenerateUtil {
 
     public static String getGeneratedKey(String family, String renderType) {
         if (!StringUtil.isEmpty(family) && !StringUtil.isEmpty(renderType)) {
-            return family + "." + renderType;
+            return new String(new StringBuffer(family.length()
+                    + renderType.length() + 1).append(family).append(".")
+                    .append(renderType));
         } else {
             throw new IllegalRendererKeyException(family, renderType);
         }

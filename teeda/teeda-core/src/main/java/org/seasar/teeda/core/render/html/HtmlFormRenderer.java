@@ -195,34 +195,26 @@ public class HtmlFormRenderer extends AbstractRenderer {
             String formTarget) throws IOException {
         String functionName = JavaScriptUtil
                 .getClearHiddenCommandFormParamsFunctionName(formName);
-        StringBuffer buf = new StringBuffer(512);
-        buf.append("function ");
-        buf.append(functionName);
-        buf.append("(){");
+        StringBuffer sb = new StringBuffer(512);
+        sb.append("function ").append(functionName).append("(){");
         if (hiddenFormParams != null) {
-            buf.append("var f = document.forms['");
-            buf.append(formName);
-            buf.append("'];");
+            sb.append("var f = document.forms['").append(formName)
+                    .append("'];");
             for (Iterator it = hiddenFormParams.iterator(); it.hasNext();) {
                 final Map.Entry entry = (Entry) it.next();
                 final String name = (String) entry.getKey();
-                buf.append(" f.elements['");
-                buf.append(name);
-                buf.append("'].value='null';");
+                sb.append(" f.elements['").append(name).append(
+                        "'].value='null';");
             }
         }
-        buf.append(" f.target=");
+        sb.append(" f.target=");
         if (formTarget == null || formTarget.length() == 0) {
-            buf.append("'';");
+            sb.append("'';");
         } else {
-            buf.append("'");
-            buf.append(formTarget);
-            buf.append("';");
+            sb.append("'").append(formTarget).append("';");
         }
-        buf.append("} ");
-        buf.append(functionName);
-        buf.append("();");
-        renderJavaScriptElement(writer, buf.toString());
+        sb.append("} ").append(functionName).append("();");
+        renderJavaScriptElement(writer, new String(sb));
     }
 
     public void addIgnoreAttributeName(final String name) {

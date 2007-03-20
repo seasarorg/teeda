@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,7 +36,6 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.ModifierUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.LoopIterator;
@@ -146,7 +144,7 @@ public abstract class AbstractRenderer extends Renderer {
 
     protected Map getAllAttributesAndProperties(final UIComponent component,
             final IgnoreAttribute ignore) {
-        final Map map = new HashMap();
+        final Map map = new HashMap(64);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component
                 .getClass());
         final Object[] attributeNames = ignore.getAttributeNames();
@@ -182,10 +180,6 @@ public abstract class AbstractRenderer extends Renderer {
      */
     protected boolean isRenderAttributeName(final String key) {
         return -1 == key.indexOf('.');
-    }
-
-    private boolean isPublicNoParameterMethod(Method m) {
-        return ModifierUtil.isPublic(m) && m.getParameterTypes().length == 0;
     }
 
     public void setComponentIdLookupStrategy(

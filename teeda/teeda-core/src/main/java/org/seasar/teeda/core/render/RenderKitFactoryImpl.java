@@ -9,13 +9,12 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.render;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,7 +32,7 @@ import org.seasar.teeda.core.util.DIContainerUtil;
  */
 public class RenderKitFactoryImpl extends RenderKitFactory {
 
-    private Map renderKits_ = Collections.synchronizedMap(new HashMap());
+    private Map renderKits_ = new HashMap();
 
     private static Logger logger_ = Logger
             .getLogger(RenderKitFactoryImpl.class);
