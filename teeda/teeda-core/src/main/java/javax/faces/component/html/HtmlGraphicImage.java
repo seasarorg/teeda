@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,6 +22,7 @@ import javax.faces.el.ValueBinding;
 /**
  * @author shot
  */
+//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlGraphicImage extends UIGraphic {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlGraphicImage";

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -448,6 +448,17 @@ public class HtmlInputTextTest extends UIInputTest {
         component.setValueBinding("tabindex", vb);
         assertEquals("bar tabindex", component.getTabindex());
         assertEquals("bar tabindex", component.getValueBinding("tabindex")
+                .getValue(context));
+    }
+
+    public void testSetGetTabindex_ValueBinding2() throws Exception {
+        HtmlInputText component = createHtmlInputText();
+        MockValueBinding vb = new MockValueBinding();
+        FacesContext context = getFacesContext();
+        vb.setValue(context, new Integer(2));
+        component.setValueBinding("tabindex", vb);
+        assertEquals("2", component.getTabindex());
+        assertEquals(new Integer(2), component.getValueBinding("tabindex")
                 .getValue(context));
     }
 

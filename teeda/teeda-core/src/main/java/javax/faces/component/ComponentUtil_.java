@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -52,6 +52,12 @@ public class ComponentUtil_ {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public static String getValueBindingValueAsString(UIComponent component,
+            String bindingName) {
+        Object value = getValueBindingValue(component, bindingName);
+        return (value != null) ? value.toString() : null;
     }
 
     public static Object getValueBindingValue(UIComponent component,

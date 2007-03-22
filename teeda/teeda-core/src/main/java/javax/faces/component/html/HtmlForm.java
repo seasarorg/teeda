@@ -22,6 +22,7 @@ import javax.faces.el.ValueBinding;
 /**
  * @author shot
  */
+//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlForm extends UIForm {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlForm";
