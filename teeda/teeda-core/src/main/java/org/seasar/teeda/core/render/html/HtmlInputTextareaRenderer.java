@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -39,9 +39,10 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
 
     private final IgnoreAttribute ignoreAttribute = new IgnoreAttribute();
     {
-        ignoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
-        ignoreAttribute.addAttributeName(JsfConstants.VALUE_ATTR);
-        ignoreAttribute.addAttributeName(JsfConstants.NAME_ATTR);
+        addIgnoreAttributeName(JsfConstants.ID_ATTR);
+        addIgnoreAttributeName(JsfConstants.VALUE_ATTR);
+        addIgnoreAttributeName(JsfConstants.NAME_ATTR);
+        addIgnoreAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -61,13 +62,22 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
                 getIdForRender(context, htmlInputTextarea));
         RendererUtil.renderAttribute(writer, JsfConstants.NAME_ATTR,
                 htmlInputTextarea.getClientId(context));
+        renderStyleClass(context, htmlInputTextarea, writer);
         renderRemainAttributes(htmlInputTextarea, writer, ignoreAttribute);
 
+        //render value at last.
         String value = ValueHolderUtil.getValueForRender(context,
                 htmlInputTextarea);
         writer.writeText(value, null);
-
         writer.endElement(JsfConstants.TEXTAREA_ELEM);
+    }
+
+    protected void renderStyleClass(final FacesContext context,
+            final HtmlInputTextarea htmlInputTextarea,
+            final ResponseWriter writer) throws IOException {
+        final String styleClass = htmlInputTextarea.getStyleClass();
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                styleClass);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -78,6 +88,10 @@ public class HtmlInputTextareaRenderer extends AbstractInputRenderer {
     protected void decodeHtmlInputText(FacesContext context,
             HtmlInputTextarea htmlInputTextarea) {
         getDecoder().decode(context, htmlInputTextarea);
+    }
+
+    public void addIgnoreAttributeName(final String name) {
+        ignoreAttribute.addAttributeName(name);
     }
 
 }

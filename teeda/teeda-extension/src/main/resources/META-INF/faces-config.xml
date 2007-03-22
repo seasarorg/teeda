@@ -222,6 +222,14 @@
 	</component>
 	<component>
 		<component-type>
+			org.seasar.teeda.extension.HtmlInputTextarea
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlInputTextarea
+		</component-class>
+	</component>
+	<component>
+		<component-type>
 			javax.faces.HtmlCommandButton
 		</component-type>
 		<component-class>

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,6 +38,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     private String labelName;
 
+    private String errorStyleClass;
+
     public String getComponentType() {
         return THtmlSelectOneMenu.COMPONENT_TYPE;
     }
@@ -52,6 +54,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
                 getPageName());
         setComponentProperty(component, ExtensionConstants.LABEL_NAME_ATTR,
                 getLabelName());
+        setComponentProperty(component, ExtensionConstants.ERROR_STYLE_CLASS,
+                getErrorStyleClass());
     }
 
     protected boolean isNullLabelRequired() {
@@ -68,6 +72,13 @@ public class TSelectOneMenuTag extends TSelectTagBase {
         return strategy.isNullLabelRequired(context, v);
     }
 
+    public void release() {
+        super.release();
+        pageName = null;
+        labelName = null;
+        errorStyleClass = null;
+    }
+
     public String getPageName() {
         return pageName;
     }
@@ -82,6 +93,14 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     public void setLabelName(final String labelName) {
         this.labelName = labelName;
+    }
+
+    public String getErrorStyleClass() {
+        return errorStyleClass;
+    }
+
+    public void setErrorStyleClass(String errorStyleClass) {
+        this.errorStyleClass = errorStyleClass;
     }
 
 }
