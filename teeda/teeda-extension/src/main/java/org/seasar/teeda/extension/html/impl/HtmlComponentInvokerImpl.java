@@ -134,8 +134,8 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         return invoke(context, componentName, PRERENDER);
     }
 
-    public String invoke(FacesContext context, String componentName,
-            String methodName) {
+    public String invoke(final FacesContext context,
+            final String componentName, final String methodName) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("methodName", methodName);
         if (INITIALIZE.equals(methodName)) {

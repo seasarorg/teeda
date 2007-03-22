@@ -212,7 +212,9 @@ public class TViewRootRenderer extends AbstractRenderer {
         }
         invokeAll(context);
         invoke(context, viewRoot.getRootViewId());
-        RendererUtil.renderChildren(context, component);
+        if (!context.getResponseComplete()) {
+            RendererUtil.renderChildren(context, component);
+        }
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
