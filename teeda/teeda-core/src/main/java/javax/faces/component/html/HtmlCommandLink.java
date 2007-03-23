@@ -15,14 +15,15 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlCommandLink extends UICommand {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlCommandLink";
@@ -95,8 +96,8 @@ public class HtmlCommandLink extends UICommand {
         if (accesskey != null) {
             return accesskey;
         }
-        ValueBinding vb = getValueBinding("accesskey");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCESSKEY_ATTR);
     }
 
     public void setCharset(String charset) {
@@ -107,8 +108,8 @@ public class HtmlCommandLink extends UICommand {
         if (charset != null) {
             return charset;
         }
-        ValueBinding vb = getValueBinding("charset");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.CHARSET_ATTR);
     }
 
     public void setCoords(String coords) {
@@ -119,8 +120,8 @@ public class HtmlCommandLink extends UICommand {
         if (coords != null) {
             return coords;
         }
-        ValueBinding vb = getValueBinding("coords");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.COORDS_ATTR);
     }
 
     public void setDir(String dir) {
@@ -131,8 +132,8 @@ public class HtmlCommandLink extends UICommand {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setHreflang(String hreflang) {
@@ -143,8 +144,8 @@ public class HtmlCommandLink extends UICommand {
         if (hreflang != null) {
             return hreflang;
         }
-        ValueBinding vb = getValueBinding("hreflang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.HREFLANG_ATTR);
     }
 
     public void setLang(String lang) {
@@ -155,8 +156,8 @@ public class HtmlCommandLink extends UICommand {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setOnblur(String onblur) {
@@ -167,8 +168,8 @@ public class HtmlCommandLink extends UICommand {
         if (onblur != null) {
             return onblur;
         }
-        ValueBinding vb = getValueBinding("onblur");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONBLUR_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -179,8 +180,8 @@ public class HtmlCommandLink extends UICommand {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -191,8 +192,8 @@ public class HtmlCommandLink extends UICommand {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnfocus(String onfocus) {
@@ -203,8 +204,8 @@ public class HtmlCommandLink extends UICommand {
         if (onfocus != null) {
             return onfocus;
         }
-        ValueBinding vb = getValueBinding("onfocus");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONFOCUS_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -215,8 +216,8 @@ public class HtmlCommandLink extends UICommand {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -227,8 +228,8 @@ public class HtmlCommandLink extends UICommand {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -239,8 +240,8 @@ public class HtmlCommandLink extends UICommand {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -251,8 +252,8 @@ public class HtmlCommandLink extends UICommand {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -263,8 +264,8 @@ public class HtmlCommandLink extends UICommand {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -275,8 +276,8 @@ public class HtmlCommandLink extends UICommand {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -287,8 +288,8 @@ public class HtmlCommandLink extends UICommand {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -299,8 +300,8 @@ public class HtmlCommandLink extends UICommand {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setRel(String rel) {
@@ -311,8 +312,8 @@ public class HtmlCommandLink extends UICommand {
         if (rel != null) {
             return rel;
         }
-        ValueBinding vb = getValueBinding("rel");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.REL_ATTR);
     }
 
     public void setRev(String rev) {
@@ -323,8 +324,8 @@ public class HtmlCommandLink extends UICommand {
         if (rev != null) {
             return rev;
         }
-        ValueBinding vb = getValueBinding("rev");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.REV_ATTR);
     }
 
     public void setShape(String shape) {
@@ -335,8 +336,8 @@ public class HtmlCommandLink extends UICommand {
         if (shape != null) {
             return shape;
         }
-        ValueBinding vb = getValueBinding("shape");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.SHAPE_ATTR);
     }
 
     public void setStyle(String style) {
@@ -347,8 +348,8 @@ public class HtmlCommandLink extends UICommand {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -359,8 +360,8 @@ public class HtmlCommandLink extends UICommand {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTabindex(String tabindex) {
@@ -371,8 +372,8 @@ public class HtmlCommandLink extends UICommand {
         if (tabindex != null) {
             return tabindex;
         }
-        ValueBinding vb = getValueBinding("tabindex");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TABINDEX_ATTR);
     }
 
     public void setTarget(String target) {
@@ -383,8 +384,8 @@ public class HtmlCommandLink extends UICommand {
         if (target != null) {
             return target;
         }
-        ValueBinding vb = getValueBinding("target");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TARGET_ATTR);
     }
 
     public void setTitle(String title) {
@@ -395,8 +396,8 @@ public class HtmlCommandLink extends UICommand {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setType(String type) {
@@ -407,8 +408,8 @@ public class HtmlCommandLink extends UICommand {
         if (type != null) {
             return type;
         }
-        ValueBinding vb = getValueBinding("type");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TYPE_ATTR);
     }
 
     public Object saveState(FacesContext context) {

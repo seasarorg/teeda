@@ -15,9 +15,12 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
@@ -371,8 +374,8 @@ public class HtmlOutputLink extends UIOutput {
         if (tabindex != null) {
             return tabindex;
         }
-        ValueBinding vb = getValueBinding("tabindex");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TABINDEX_ATTR);
     }
 
     public void setTarget(String target) {

@@ -15,14 +15,16 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlDataTable extends UIData {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlDataTable";
@@ -98,8 +100,8 @@ public class HtmlDataTable extends UIData {
         if (bgcolor != null) {
             return bgcolor;
         }
-        ValueBinding vb = getValueBinding("bgcolor");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.BGCOLOR_ATTR);
     }
 
     public void setBorder(int border) {
@@ -124,8 +126,8 @@ public class HtmlDataTable extends UIData {
         if (cellpadding != null) {
             return cellpadding;
         }
-        ValueBinding vb = getValueBinding("cellpadding");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.CELLPADDING_ATTR);
     }
 
     public void setCellspacing(String cellspacing) {
@@ -136,8 +138,8 @@ public class HtmlDataTable extends UIData {
         if (cellspacing != null) {
             return cellspacing;
         }
-        ValueBinding vb = getValueBinding("cellspacing");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.CELLSPACING_ATTR);
     }
 
     public void setColumnClasses(String columnClasses) {
@@ -148,8 +150,8 @@ public class HtmlDataTable extends UIData {
         if (columnClasses != null) {
             return columnClasses;
         }
-        ValueBinding vb = getValueBinding("columnClasses");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.COLUMN_CLASSES_ATTR);
     }
 
     public void setDir(String dir) {
@@ -160,8 +162,8 @@ public class HtmlDataTable extends UIData {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setFooterClass(String footerClass) {
@@ -172,8 +174,8 @@ public class HtmlDataTable extends UIData {
         if (footerClass != null) {
             return footerClass;
         }
-        ValueBinding vb = getValueBinding("footerClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.FOOTER_CLASS_ATTR);
     }
 
     public void setFrame(String frame) {
@@ -184,8 +186,8 @@ public class HtmlDataTable extends UIData {
         if (frame != null) {
             return frame;
         }
-        ValueBinding vb = getValueBinding("frame");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.FRAME_ATTR);
     }
 
     public void setHeaderClass(String headerClass) {
@@ -196,8 +198,8 @@ public class HtmlDataTable extends UIData {
         if (headerClass != null) {
             return headerClass;
         }
-        ValueBinding vb = getValueBinding("headerClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.HEADER_CLASS_ATTR);
     }
 
     public void setLang(String lang) {
@@ -208,8 +210,8 @@ public class HtmlDataTable extends UIData {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -220,8 +222,8 @@ public class HtmlDataTable extends UIData {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -232,8 +234,8 @@ public class HtmlDataTable extends UIData {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -244,8 +246,8 @@ public class HtmlDataTable extends UIData {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -256,8 +258,8 @@ public class HtmlDataTable extends UIData {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -268,8 +270,8 @@ public class HtmlDataTable extends UIData {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -280,8 +282,8 @@ public class HtmlDataTable extends UIData {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -292,8 +294,8 @@ public class HtmlDataTable extends UIData {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -304,8 +306,8 @@ public class HtmlDataTable extends UIData {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -316,8 +318,8 @@ public class HtmlDataTable extends UIData {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -328,8 +330,8 @@ public class HtmlDataTable extends UIData {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setRowClasses(String rowClasses) {
@@ -340,8 +342,8 @@ public class HtmlDataTable extends UIData {
         if (rowClasses != null) {
             return rowClasses;
         }
-        ValueBinding vb = getValueBinding("rowClasses");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ROW_CLASSES_ATTR);
     }
 
     public void setRules(String rules) {
@@ -352,8 +354,8 @@ public class HtmlDataTable extends UIData {
         if (rules != null) {
             return rules;
         }
-        ValueBinding vb = getValueBinding("rules");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.RULES_ATTR);
     }
 
     public void setStyle(String style) {
@@ -364,8 +366,8 @@ public class HtmlDataTable extends UIData {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -376,8 +378,8 @@ public class HtmlDataTable extends UIData {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setSummary(String summary) {
@@ -388,8 +390,8 @@ public class HtmlDataTable extends UIData {
         if (summary != null) {
             return summary;
         }
-        ValueBinding vb = getValueBinding("summary");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.SUMMARY_ATTR);
     }
 
     public void setTitle(String title) {
@@ -400,8 +402,8 @@ public class HtmlDataTable extends UIData {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setWidth(String width) {
@@ -412,8 +414,8 @@ public class HtmlDataTable extends UIData {
         if (width != null) {
             return width;
         }
-        ValueBinding vb = getValueBinding("width");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.WIDTH_ATTR);
     }
 
     public Object saveState(FacesContext context) {

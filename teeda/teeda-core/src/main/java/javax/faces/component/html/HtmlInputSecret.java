@@ -15,6 +15,7 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
@@ -419,8 +420,8 @@ public class HtmlInputSecret extends UIInput {
         if (tabindex != null) {
             return tabindex;
         }
-        ValueBinding vb = getValueBinding("tabindex");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TABINDEX_ATTR);
     }
 
     public void setTitle(String title) {

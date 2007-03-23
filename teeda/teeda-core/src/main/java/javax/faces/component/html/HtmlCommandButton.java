@@ -15,15 +15,17 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
  * @author manhole
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlCommandButton extends UICommand {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlCommandButton";
@@ -105,8 +107,8 @@ public class HtmlCommandButton extends UICommand {
         if (accesskey != null) {
             return accesskey;
         }
-        Object value = getValueBindingValue("accesskey");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCESSKEY_ATTR);
     }
 
     public void setAlt(String alt) {
@@ -117,8 +119,8 @@ public class HtmlCommandButton extends UICommand {
         if (alt != null) {
             return alt;
         }
-        Object value = getValueBindingValue("alt");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ALT_ATTR);
     }
 
     public void setDir(String dir) {
@@ -129,8 +131,8 @@ public class HtmlCommandButton extends UICommand {
         if (dir != null) {
             return dir;
         }
-        Object value = getValueBindingValue("dir");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setDisabled(boolean disabled) {
@@ -153,8 +155,8 @@ public class HtmlCommandButton extends UICommand {
         if (image != null) {
             return image;
         }
-        Object value = getValueBindingValue("image");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.IMAGE_ATTR);
     }
 
     public void setLang(String lang) {
@@ -165,8 +167,8 @@ public class HtmlCommandButton extends UICommand {
         if (lang != null) {
             return lang;
         }
-        Object value = getValueBindingValue("lang");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setOnblur(String onblur) {
@@ -177,8 +179,8 @@ public class HtmlCommandButton extends UICommand {
         if (onblur != null) {
             return onblur;
         }
-        Object value = getValueBindingValue("onblur");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONBLUR_ATTR);
     }
 
     public void setOnchange(String onchange) {
@@ -189,8 +191,8 @@ public class HtmlCommandButton extends UICommand {
         if (onchange != null) {
             return onchange;
         }
-        Object value = getValueBindingValue("onchange");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCHANGE_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -201,8 +203,8 @@ public class HtmlCommandButton extends UICommand {
         if (onclick != null) {
             return onclick;
         }
-        Object value = getValueBindingValue("onclick");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -213,8 +215,8 @@ public class HtmlCommandButton extends UICommand {
         if (ondblclick != null) {
             return ondblclick;
         }
-        Object value = getValueBindingValue("ondblclick");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnfocus(String onfocus) {
@@ -225,8 +227,8 @@ public class HtmlCommandButton extends UICommand {
         if (onfocus != null) {
             return onfocus;
         }
-        Object value = getValueBindingValue("onfocus");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONFOCUS_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -237,8 +239,8 @@ public class HtmlCommandButton extends UICommand {
         if (onkeydown != null) {
             return onkeydown;
         }
-        Object value = getValueBindingValue("onkeydown");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -249,8 +251,8 @@ public class HtmlCommandButton extends UICommand {
         if (onkeypress != null) {
             return onkeypress;
         }
-        Object value = getValueBindingValue("onkeypress");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -261,8 +263,8 @@ public class HtmlCommandButton extends UICommand {
         if (onkeyup != null) {
             return onkeyup;
         }
-        Object value = getValueBindingValue("onkeyup");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -273,8 +275,8 @@ public class HtmlCommandButton extends UICommand {
         if (onmousedown != null) {
             return onmousedown;
         }
-        Object value = getValueBindingValue("onmousedown");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -285,8 +287,8 @@ public class HtmlCommandButton extends UICommand {
         if (onmousemove != null) {
             return onmousemove;
         }
-        Object value = getValueBindingValue("onmousemove");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -297,8 +299,8 @@ public class HtmlCommandButton extends UICommand {
         if (onmouseout != null) {
             return onmouseout;
         }
-        Object value = getValueBindingValue("onmouseout");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -309,8 +311,8 @@ public class HtmlCommandButton extends UICommand {
         if (onmouseover != null) {
             return onmouseover;
         }
-        Object value = getValueBindingValue("onmouseover");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -321,8 +323,8 @@ public class HtmlCommandButton extends UICommand {
         if (onmouseup != null) {
             return onmouseup;
         }
-        Object value = getValueBindingValue("onmouseup");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setOnselect(String onselect) {
@@ -333,8 +335,8 @@ public class HtmlCommandButton extends UICommand {
         if (onselect != null) {
             return onselect;
         }
-        Object value = getValueBindingValue("onselect");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONSELECT_ATTR);
     }
 
     public void setReadonly(boolean readonly) {
@@ -357,8 +359,8 @@ public class HtmlCommandButton extends UICommand {
         if (style != null) {
             return style;
         }
-        Object value = getValueBindingValue("style");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -369,8 +371,8 @@ public class HtmlCommandButton extends UICommand {
         if (styleClass != null) {
             return styleClass;
         }
-        Object value = getValueBindingValue("styleClass");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTabindex(String tabindex) {
@@ -381,8 +383,8 @@ public class HtmlCommandButton extends UICommand {
         if (tabindex != null) {
             return tabindex;
         }
-        Object value = getValueBindingValue("tabindex");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TABINDEX_ATTR);
     }
 
     public void setTitle(String title) {
@@ -393,8 +395,8 @@ public class HtmlCommandButton extends UICommand {
         if (title != null) {
             return title;
         }
-        Object value = getValueBindingValue("title");
-        return (value != null) ? (String) value : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setType(String type) {
