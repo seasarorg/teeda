@@ -49,15 +49,15 @@ table.tbline th div {
 }
 
 h3.underline {
-	font-size: 16px;
-	#font-weight: normal;
-	#color: #1C4BAF;
+	font-size: 18px;
+	font-weight: normal;
+	color: #FC7819;
 	#margin-top: 2em;
 	#margin-left: 1em;
 	margin-bottom: 10px;
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
-	#border-bottom-color: #1C4BAF;
+	#border-bottom-color: #FC7819;
 	#margin-right: 20px;
 }
 
@@ -163,6 +163,10 @@ h3.underline {
         <td>JavaScriptの描画</td>
         <td>なし</td>
       </tr>
+      <tr>
+        <td>その他</td>
+        <td>なし</td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -215,13 +219,233 @@ h3.underline {
         <td>JavaScriptの描画</td>
         <td>なし</td>
       </tr>
+      <tr>
+        <td>その他</td>
+        <td>なし</td>
+      </tr>
     </tbody>
   </table>
 </div>
 
+<h3 class="underline"><a name="#inputHidden">inputHidden</a></h3>
+<p>inputTextはhidden入力のコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>hidden入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="hidden" id="aaa" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">typeがhidden</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:inputHidden</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>Validationフェーズを正常終了すると、すぐにModelを更新する</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<h3 class="underline"><a name="#inputTextarea">inputTextarea</a></h3>
+<p>inputTextareaはテキストエリア入力のコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>テキストエリア入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;textarea id="aaa" &gt;bbb&lt;/textarea&gt;</b><br/>実行時にはbbbは無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">textarea</b>タグ</span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputTextarea</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います。</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
 
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>特になし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<h3 class="underline"><a name="#selectOneMenu">selectOneMenu</a></h3>
+<p>selectOneMenuはプルダウン入力項目のコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>プルダウン入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;option value="bbb"&gt;hoge&lt;/option&gt;<br/>
+          &lt;/span&gt;
+          </b><br/>実行時にはbbb,&nbsp;hogeは無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">select</b>タグ</span><br/>
+            <span>-<b class="boldorange">multiple属性がついていない</b></span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある<br/>（上記の例だとaaaItems）</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:selectOneMenu</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います。</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>Templateに書いてある値は実行時には消える</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="#selectOneRadio">selectOneRadio</a></h3>
+<p>selectOneRadioはラジオ入力項目のコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ラジオ入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="0" checked="checked"/&gt;aaa<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="1"/&gt;bbb<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="2"/&gt;ccc<br/>
+          &lt;/span&gt;</b><br/>実行時にはvalue属性,&nbsp;値は無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">radio</b>タグ</span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">spanの配下にinputのradio項目がある</b></span><br/>
+            <span>-<b class="boldorange">spanの配下のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectOneRadio</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">style属性</b></span><br/>
+          <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）。</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>Templateに書いてある値は実行時には消える</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 
 
