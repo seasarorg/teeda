@@ -491,19 +491,23 @@ public abstract class UIComponentBase extends UIComponent {
 
         for (Iterator itr = getFacets().entrySet().iterator(); itr.hasNext();) {
             Map.Entry entry = (Map.Entry) itr.next();
-            Object facetState = facetMap.get(entry.getKey());
-            if (facetState != null) {
-                UIComponent component = (UIComponent) entry.getValue();
-                component.processRestoreState(context, facetState);
+            UIComponent component = (UIComponent) entry.getValue();
+            if (!component.isTransient()) {
+                Object facetState = facetMap.get(entry.getKey());
+                if (facetState != null) {
+                    component.processRestoreState(context, facetState);
+                }
             }
         }
 
         int index = 0;
-        for (Iterator itr = getChildren().iterator(); itr.hasNext(); index++) {
-            Object childrenState = children.get(index);
-            if (childrenState != null) {
-                UIComponent component = (UIComponent) itr.next();
-                component.processRestoreState(context, childrenState);
+        for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
+            UIComponent component = (UIComponent) itr.next();
+            if (!component.isTransient()) {
+                Object childrenState = children.get(index++);
+                if (childrenState != null) {
+                    component.processRestoreState(context, childrenState);
+                }
             }
         }
 
