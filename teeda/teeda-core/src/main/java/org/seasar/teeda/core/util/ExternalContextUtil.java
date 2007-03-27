@@ -18,7 +18,6 @@ package org.seasar.teeda.core.util;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.portlet.PortletRequest;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.portlet.FacesPortlet;
@@ -35,13 +34,8 @@ public class ExternalContextUtil {
     public static String getViewId(ExternalContext externalContext) {
         // PortletSupport
         if (PortletUtil.isPortlet(FacesContext.getCurrentInstance())) {
-            final PortletRequest request = (PortletRequest) externalContext
-                    .getRequest();
-            String viewId = (String) request.getAttribute(FacesPortlet.VIEW_ID);
-            if (viewId == null) {
-                viewId = request.getParameter(FacesPortlet.VIEW_ID);
-            }
-            return viewId;
+            return (String) externalContext.getRequestMap().get(
+                    FacesPortlet.VIEW_ID);
         } else {
             String viewId = externalContext.getRequestPathInfo();
             if (viewId == null) {

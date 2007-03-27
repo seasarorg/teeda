@@ -44,7 +44,7 @@ public class PortletUrlBuilder extends UrlBuilder {
                 // uses ActionURL 
                 PortletURL portletUrl = response.createActionURL();
                 portletUrl.setParameter(FacesPortlet.VIEW_ID, viewId);
-                portletUrl.setParameter(FacesPortlet.TAKE_OVER_PARAMETER, "true");
+                portletUrl.setParameter(FacesPortlet.RENDER_PARAMETER, "true");
 
                 if (uri.getQuery() != null) {
                     String[] queries = uri.getQuery().split("&");

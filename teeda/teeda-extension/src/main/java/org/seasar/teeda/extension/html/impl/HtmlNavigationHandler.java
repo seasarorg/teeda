@@ -15,7 +15,9 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
@@ -94,8 +96,17 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             redirect(context, externalContext, redirectPath, path);
         } else {
             externalContext.getRequestMap().put(
-                    FacesPortlet.REDIRECT_TO_PORTLET, Boolean.TRUE);
-            super.render(context, viewHandler, path);
+                    FacesPortlet.REDIRECT_TO_PORTLET, path);
+            pagePersistence.save(context, path);
+            if (PortletUtil.isRender(context)) {
+                //set dummy output stream
+                context.setResponseWriter(context.getResponseWriter()
+                        .cloneWithWriter(
+                                new OutputStreamWriter(
+                                        new ByteArrayOutputStream())));
+            }
+            context.responseComplete();
+            context.renderResponse();
         }
     }
 

@@ -220,11 +220,6 @@ public class TViewRootRenderer extends AbstractRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        // PortletSupport
-        // TODO: UIViewRoot handling in FacesPortlet may need to be modified...)
-        if (!PortletUtil.isPortlet(context)) {
-            component.getChildren().clear();
-        }
     }
 
     protected void layout(FacesContext context, TViewRoot component) {
