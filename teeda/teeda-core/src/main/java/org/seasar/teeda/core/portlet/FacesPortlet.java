@@ -231,6 +231,7 @@ public class FacesPortlet extends GenericPortlet {
 
         FacesContext facesContext = facesContextFactory.getFacesContext(
                 getPortletContext(), request, response, lifecycle);
+        request.setAttribute(JsfConstants.FACES_CONTEXT, facesContext);
 
         restoreFacesState(facesContext);
         try {
