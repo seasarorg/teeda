@@ -60,6 +60,8 @@ public interface ExtensionConstants {
 
     String DEFAULT_PROPERTIES_NAME_ATTR = "defaultPropertiesName";
 
+    String DEFAULT_KEY_ATTR = "defaultKey";
+
     String PATTERN_ATTR = "pattern";
 
     String LENGTH_ATTR = "length";
