@@ -22,7 +22,6 @@ import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.core.JsfConstants;
 
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlSelectOneRadio extends UISelectOne {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlSelectOneRadio";
@@ -103,8 +102,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (accesskey != null) {
             return accesskey;
         }
-        ValueBinding vb = getValueBinding("accesskey");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCESSKEY_ATTR);
     }
 
     public void setBorder(int border) {
@@ -129,8 +128,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setDisabled(boolean disabled) {
@@ -155,8 +154,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (disabledClass != null) {
             return disabledClass;
         }
-        ValueBinding vb = getValueBinding("disabledClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DISABLED_CLASS_ATTR);
     }
 
     public void setEnabledClass(String enabledClass) {
@@ -167,8 +166,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (enabledClass != null) {
             return enabledClass;
         }
-        ValueBinding vb = getValueBinding("enabledClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ENABLED_CLASS_ATTR);
     }
 
     public void setLang(String lang) {
@@ -179,8 +178,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setLayout(String layout) {
@@ -191,8 +190,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (layout != null) {
             return layout;
         }
-        ValueBinding vb = getValueBinding("layout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LAYOUT_ATTR);
     }
 
     public void setOnblur(String onblur) {
@@ -203,8 +202,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onblur != null) {
             return onblur;
         }
-        ValueBinding vb = getValueBinding("onblur");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONBLUR_ATTR);
     }
 
     public void setOnchange(String onchange) {
@@ -215,8 +214,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onchange != null) {
             return onchange;
         }
-        ValueBinding vb = getValueBinding("onchange");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCHANGE_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -227,8 +226,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -239,8 +238,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnfocus(String onfocus) {
@@ -251,8 +250,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onfocus != null) {
             return onfocus;
         }
-        ValueBinding vb = getValueBinding("onfocus");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONFOCUS_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -263,8 +262,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -275,8 +274,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -287,8 +286,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -299,8 +298,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -311,8 +310,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -323,8 +322,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -335,8 +334,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -347,8 +346,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setOnselect(String onselect) {
@@ -359,8 +358,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (onselect != null) {
             return onselect;
         }
-        ValueBinding vb = getValueBinding("onselect");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONSELECT_ATTR);
     }
 
     public void setReadonly(boolean readonly) {
@@ -385,8 +384,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -397,8 +396,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTabindex(String tabindex) {
@@ -421,8 +420,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setLabel(String label) {
@@ -433,8 +432,8 @@ public class HtmlSelectOneRadio extends UISelectOne {
         if (label != null) {
             return label;
         }
-        ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LABEL_ATTR);
     }
 
     public Object saveState(FacesContext context) {
