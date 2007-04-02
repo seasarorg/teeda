@@ -71,7 +71,6 @@ public class ViewTag extends UIComponentBodyTag {
     }
 
     public int doStartTag() throws JspException {
-        final int rc = super.doStartTag();
         final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
         final String encoding = PageContextUtil
@@ -88,6 +87,7 @@ public class ViewTag extends UIComponentBodyTag {
             response.setContentType(JsfConstants.HTML_CONTENT_TYPE
                     + "; charset=" + encoding);
         }
+        final int rc = super.doStartTag();
         final ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {

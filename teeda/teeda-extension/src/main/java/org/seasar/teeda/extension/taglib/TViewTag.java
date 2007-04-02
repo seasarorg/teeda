@@ -70,9 +70,7 @@ public class TViewTag extends UIComponentTag {
     }
 
     public int doStartTag() throws JspException {
-        int rc = 0;
-        rc = super.doStartTag();
-        FacesContext context = FacesContext.getCurrentInstance();
+        final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
         final String encoding = PageContextUtil
                 .getCharacterEncoding(pageContext);
@@ -88,7 +86,9 @@ public class TViewTag extends UIComponentTag {
             response.setContentType(JsfConstants.HTML_CONTENT_TYPE
                     + "; charset=" + encoding);
         }
-        ResponseWriter writer = context.getResponseWriter();
+
+        final int rc = super.doStartTag();
+        final ResponseWriter writer = context.getResponseWriter();
         AssertionUtil.assertNotNull("ResponseWriter", writer);
         try {
             writer.startDocument();
