@@ -15,14 +15,15 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlForm extends UIForm {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlForm";
@@ -85,8 +86,8 @@ public class HtmlForm extends UIForm {
         if (accept != null) {
             return accept;
         }
-        ValueBinding vb = getValueBinding("accept");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCEPT_ATTR);
     }
 
     public void setAcceptcharset(String acceptcharset) {
@@ -97,8 +98,8 @@ public class HtmlForm extends UIForm {
         if (acceptcharset != null) {
             return acceptcharset;
         }
-        ValueBinding vb = getValueBinding("acceptcharset");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCEPTCHARSET_ATTR);
     }
 
     public void setDir(String dir) {
@@ -109,8 +110,8 @@ public class HtmlForm extends UIForm {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setEnctype(String enctype) {
@@ -121,9 +122,9 @@ public class HtmlForm extends UIForm {
         if (enctype != null) {
             return enctype;
         }
-        ValueBinding vb = getValueBinding("enctype");
-        return vb != null ? (String) vb.getValue(getFacesContext())
-                : DEFAULT_ENCTYPE;
+        String s = ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ENCTYPE_ATTR);
+        return (s != null) ? s : DEFAULT_ENCTYPE;
     }
 
     public void setLang(String lang) {
@@ -134,8 +135,8 @@ public class HtmlForm extends UIForm {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -146,8 +147,8 @@ public class HtmlForm extends UIForm {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -158,8 +159,8 @@ public class HtmlForm extends UIForm {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -170,8 +171,8 @@ public class HtmlForm extends UIForm {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -182,8 +183,8 @@ public class HtmlForm extends UIForm {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -194,8 +195,8 @@ public class HtmlForm extends UIForm {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -206,8 +207,8 @@ public class HtmlForm extends UIForm {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -218,8 +219,8 @@ public class HtmlForm extends UIForm {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -230,8 +231,8 @@ public class HtmlForm extends UIForm {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -242,8 +243,8 @@ public class HtmlForm extends UIForm {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -254,8 +255,8 @@ public class HtmlForm extends UIForm {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setOnreset(String onreset) {
@@ -266,8 +267,8 @@ public class HtmlForm extends UIForm {
         if (onreset != null) {
             return onreset;
         }
-        ValueBinding vb = getValueBinding("onreset");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONRESET_ATTR);
     }
 
     public void setOnsubmit(String onsubmit) {
@@ -278,8 +279,8 @@ public class HtmlForm extends UIForm {
         if (onsubmit != null) {
             return onsubmit;
         }
-        ValueBinding vb = getValueBinding("onsubmit");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONSUBMIT_ATTR);
     }
 
     public void setStyle(String style) {
@@ -290,8 +291,8 @@ public class HtmlForm extends UIForm {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -302,8 +303,8 @@ public class HtmlForm extends UIForm {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTarget(String target) {
@@ -314,8 +315,8 @@ public class HtmlForm extends UIForm {
         if (target != null) {
             return target;
         }
-        ValueBinding vb = getValueBinding("target");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TARGET_ATTR);
     }
 
     public void setTitle(String title) {
@@ -326,8 +327,8 @@ public class HtmlForm extends UIForm {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public Object saveState(FacesContext context) {
