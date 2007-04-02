@@ -46,7 +46,8 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (!JsfConstants.LABEL_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        final String tagName = elementNode.getTagName();
+        if (!JsfConstants.LABEL_ELEM.equalsIgnoreCase(tagName)) {
             return false;
         }
         String id = elementNode.getId();
