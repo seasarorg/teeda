@@ -44,6 +44,11 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class ViewTagTest extends TeedaTestCase {
 
+    protected void teatDown() throws Exception {
+        setFacesContext(new MockFacesContextImpl(getExternalContext(),
+                getApplication()));
+    }
+
     public void testGetComponentType() throws Exception {
         // # Arrange #
         ViewTag tag = new ViewTag();
@@ -122,7 +127,7 @@ public class ViewTagTest extends TeedaTestCase {
             // # Act #
             tag.doStartTag();
             fail();
-        } catch (JspException e) {
+        } catch (Exception e) {
             // # Assert #
             ExceptionAssert.assertMessageExist(e);
             //System.out.println(e.getMessage());
