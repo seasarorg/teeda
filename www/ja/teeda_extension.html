@@ -104,11 +104,11 @@ h3.underline {
       <li><a href="#selectBooleanCheckbox">selectBooleanCheckbox</a></li>
       <li><a href="#selectManyCheckbox">selectManyCheckbox</a></li>
       <li><a href="#forEach">forEach</a></li>
-      <li><a href="#condition">condition</a></li>
-      <li><a href="#grid">grid</a></li>
       <li><a href="#label">label</a></li>
       <li><a href="#title">title</a></li>
       <li><a href="#link">link</a></li>
+      <li><a href="#condition">condition</a></li>
+      <li><a href="#grid">grid</a></li>
       <li><a href="#inputCommaText">inputCommaText</a></li>
       <li><a href="#inputDateText">inputDateText</a></li>
       <li><a href="#layout">layout</a></li>
@@ -445,11 +445,276 @@ h3.underline {
   </table>
 </div>
 
+<h3 class="underline"><a name="#selectBooleanCheckbox">selectBooleanCheckbox</a></h3>
+<p>selectBooleanCheckboxは単一のチェックボックス入力項目コンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>単一チェックボックス入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">type属性がcheckbox</b></span><br/>
+            <span>-Page側に<b class="boldorange">idと同一のプロパティ名</b>がある</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectBooleanCheckbox</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>特になし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<h3 class="underline"><a name="#selectManyCheckbox">selectManyCheckbox</a></h3>
+<p>selectManyCheckboxは複数チェックボックスの入力項目コンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>複数チェックボックス入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="0" checked="checked"/&gt;aaa<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="1"/&gt;bbb<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="2"/&gt;ccc<br/>
+          &lt;/span&gt;</b><br/>実行時にはvalue属性,&nbsp;値は無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">span</b>タグと<b class="boldorange">input</b>タグ(typeはcheckbox)の組み合わせで構成</span><br/>
+            <span>-<b class="boldorange">spanの配下のinput項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-Page側に<b class="boldorange">idと同一のプロパティ名（型は配列）</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectManyCheckbox</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">style属性</b></span><br/>
+          <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します。<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）。</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>Templateに書いてある値は実行時には消える</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<h3 class="underline"><a name="#forEach">forEach</a></h3>
+<p>forEachは繰り返し項目コンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>繰り返し項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo" style="background-color:red"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          </b>
+          &lt;/table&gt;<br/>
+                    実行時には動的に置き換わる部分のdummy値(上の例のhoge)は無視される。<br/>
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">div</b>タグか<b class="boldorange">tbody</b>タグ</span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:forEach</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span><b class="boldorange">値を更新する場合には配列</b>、<b class="boldorange">表示のみの場合はList</b>を使う</span><br/>
+          <span>forEachのネストは表示の場合のみ可能。</span><br/>
+          <span><b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<h3 class="underline"><a name="label">label</a></h3>
+<p>labelは外部ファイルから文字列を出力するコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>外部ファイル(label.properties)からテキスト出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;label id="aaa"&gt;&lt;/label&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">label</b>タグ</span><br/>
+            <span>-<b class="boldorange">id</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:outputLabel</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>labelは、HTML名とidの組み合わせを使い、下記の順番で文字列を探索する。<br/>ただし<b class="boldorange">DynamicPropertyがあればそちらが優先</b>される。</span><br/>
+          <span>
+          &nbsp;&nbsp;-<b class="boldorange">HTML名.idがPageクラスと同一パッケージ上のlabel.properties</b>にあるか<br/>
+          &nbsp;&nbsp;-<b class="boldorange">idのみでPageクラスと同一パッケージ上のlabel.properties</b>にあるか<br/>
+          &nbsp;&nbsp;-idのみでルートパッケージのlabel.propertiesにあるか</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-
+<h3 class="underline"><a name="title">title</a></h3>
+<p>titleを出力するコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>外部ファイル(label.properties)からタイトルを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;title id="title"&gt;dummy&lt;/title&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">title</b>タグ</span><br/>
+            <span>-<b class="boldorange">id</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:title</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>titleもlabelと同様の規約で文字列を取得する。</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- document end -->
 <!-- don't edit start -->
