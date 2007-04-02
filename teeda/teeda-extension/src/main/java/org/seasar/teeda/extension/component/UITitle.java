@@ -9,15 +9,17 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
@@ -70,32 +72,32 @@ public class UITitle extends UIOutput {
         if (defaultKey != null) {
             return defaultKey;
         }
-        ValueBinding vb = getValueBinding("defaultKey");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.DEFAULT_KEY_ATTR);
     }
 
     public String getDefaultPropertiesName() {
         if (defaultPropertiesName != null) {
             return defaultPropertiesName;
         }
-        ValueBinding vb = getValueBinding("defaultPropertiesName");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
     }
 
     public String getKey() {
         if (key != null) {
             return key;
         }
-        ValueBinding vb = getValueBinding("key");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.KEY_ATTR);
     }
 
     public String getPropertiesName() {
         if (propertiesName != null) {
             return propertiesName;
         }
-        ValueBinding vb = getValueBinding("propertiesName");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.PROPERTIES_NAME_ATTR);
     }
 
     public void setDefaultKey(String defaultKey) {
