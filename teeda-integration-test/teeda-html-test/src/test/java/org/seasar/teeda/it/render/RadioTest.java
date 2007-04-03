@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.it.render;
 
 import junit.framework.Test;
+import net.sourceforge.jwebunit.html.Table;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
@@ -40,6 +41,30 @@ public class RadioTest extends TeedaWebTestCase {
 		tester.assertRadioOptionSelectedByName("form:aaa", "2");
 		tester.clickRadioOptionByName("form:aaa", "1");
 		tester.submitByName("form:doAction");
+
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa-display", "1");
+	}
+
+	public void testSelectValueAndSubmitWithLayout2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/radio/selectOneRadioWithLayout.html");
+		tester.dumpHtml();
+
+		tester.assertRadioOptionSelectedByName("form:aaa", "2");
+		tester.clickRadioOptionByName("form:aaa", "1");
+		tester.submitByName("form:doAction");
+
+		Table table = tester.getTableById("aaa");
+		int rowCount = table.getRowCount();
+		System.out.println(table);
+		System.out.println(rowCount);
+		assertTrue(rowCount == 2);
 
 		// ## Assert ##
 		tester.assertTextEqualsById("aaa-display", "1");
