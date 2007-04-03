@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -69,7 +69,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
         encodeHtmlSelectManyCheckboxEnd(context, component);
     }
 
-    private static final String[] TABLE_ATTRIBUTES = new String[] {
+    protected static final String[] TABLE_ATTRIBUTES = new String[] {
             JsfConstants.BORDER_ATTR, JsfConstants.STYLE_ATTR,
             JsfConstants.STYLE_CLASS_ATTR };
 

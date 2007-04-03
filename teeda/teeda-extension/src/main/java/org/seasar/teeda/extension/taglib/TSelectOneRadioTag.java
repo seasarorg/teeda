@@ -9,13 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectOneRadio;
+import javax.faces.component.UIComponent;
+
+import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.html.THtmlSelectOneRadio;
 
 /**
  * @author shot
@@ -23,14 +26,31 @@ import javax.faces.component.html.HtmlSelectOneRadio;
  */
 public class TSelectOneRadioTag extends TSelectTagBase {
 
-    private static final String RENDERER_TYPE = "javax.faces.Radio";
+    private String col;
 
     public String getComponentType() {
-        return HtmlSelectOneRadio.COMPONENT_TYPE;
+        return THtmlSelectOneRadio.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return THtmlSelectOneRadio.DEFAULT_RENDERER_TYPE;
     }
 
+    public String getCol() {
+        return col;
+    }
+
+    public void setCol(String col) {
+        this.col = col;
+    }
+
+    public void release() {
+        super.release();
+        col = null;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, ExtensionConstants.COL_ATTR, col);
+    }
 }

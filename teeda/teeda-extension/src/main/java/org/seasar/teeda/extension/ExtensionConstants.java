@@ -80,6 +80,8 @@ public interface ExtensionConstants {
 
     String ERROR_STYLE_CLASS = "errorStyleClass";
 
+    String COL_ATTR = "col";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 
