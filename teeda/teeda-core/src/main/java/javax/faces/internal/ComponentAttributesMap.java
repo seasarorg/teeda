@@ -50,13 +50,17 @@ public class ComponentAttributesMap implements Map, Serializable {
 
     private BeanDesc beanDesc = null;
 
+    private static final int INITIAL_CAPACITY = 64;
+
     public ComponentAttributesMap(UIComponent component) {
-        this(component, new HashMap(64));
+        this.component = component;
+        this.attributes = new HashMap(INITIAL_CAPACITY);
+        setupPropertyDesc();
     }
 
     public ComponentAttributesMap(UIComponent component, Map attributes) {
         this.component = component;
-        this.attributes = attributes;
+        this.attributes = new HashMap(attributes);
         setupPropertyDesc();
     }
 
