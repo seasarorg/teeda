@@ -25,7 +25,6 @@ import org.seasar.teeda.core.JsfConstants;
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlInputTextarea extends UIInput {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlInputTextarea";
@@ -106,8 +105,8 @@ public class HtmlInputTextarea extends UIInput {
         if (accesskey != null) {
             return accesskey;
         }
-        final ValueBinding vb = getValueBinding("accesskey");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCESSKEY_ATTR);
     }
 
     public void setCols(final int cols) {
@@ -132,8 +131,8 @@ public class HtmlInputTextarea extends UIInput {
         if (dir != null) {
             return dir;
         }
-        final ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setDisabled(final boolean disabled) {
@@ -158,8 +157,8 @@ public class HtmlInputTextarea extends UIInput {
         if (lang != null) {
             return lang;
         }
-        final ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setOnblur(final String onblur) {
@@ -170,8 +169,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onblur != null) {
             return onblur;
         }
-        final ValueBinding vb = getValueBinding("onblur");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONBLUR_ATTR);
     }
 
     public void setOnchange(final String onchange) {
@@ -182,8 +181,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onchange != null) {
             return onchange;
         }
-        final ValueBinding vb = getValueBinding("onchange");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCHANGE_ATTR);
     }
 
     public void setOnclick(final String onclick) {
@@ -194,8 +193,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onclick != null) {
             return onclick;
         }
-        final ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(final String ondblclick) {
@@ -206,8 +205,8 @@ public class HtmlInputTextarea extends UIInput {
         if (ondblclick != null) {
             return ondblclick;
         }
-        final ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnfocus(final String onfocus) {
@@ -218,8 +217,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onfocus != null) {
             return onfocus;
         }
-        final ValueBinding vb = getValueBinding("onfocus");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONFOCUS_ATTR);
     }
 
     public void setOnkeydown(final String onkeydown) {
@@ -230,8 +229,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeydown != null) {
             return onkeydown;
         }
-        final ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(final String onkeypress) {
@@ -242,8 +241,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeypress != null) {
             return onkeypress;
         }
-        final ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(final String onkeyup) {
@@ -254,8 +253,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onkeyup != null) {
             return onkeyup;
         }
-        final ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(final String onmousedown) {
@@ -266,8 +265,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onmousedown != null) {
             return onmousedown;
         }
-        final ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(final String onmousemove) {
@@ -278,8 +277,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onmousemove != null) {
             return onmousemove;
         }
-        final ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(final String onmouseout) {
@@ -290,8 +289,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseout != null) {
             return onmouseout;
         }
-        final ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(final String onmouseover) {
@@ -302,8 +301,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseover != null) {
             return onmouseover;
         }
-        final ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(final String onmouseup) {
@@ -314,8 +313,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onmouseup != null) {
             return onmouseup;
         }
-        final ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setOnselect(final String onselect) {
@@ -326,8 +325,8 @@ public class HtmlInputTextarea extends UIInput {
         if (onselect != null) {
             return onselect;
         }
-        final ValueBinding vb = getValueBinding("onselect");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONSELECT_ATTR);
     }
 
     public void setReadonly(final boolean readonly) {
@@ -366,8 +365,8 @@ public class HtmlInputTextarea extends UIInput {
         if (style != null) {
             return style;
         }
-        final ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(final String styleClass) {
@@ -378,8 +377,8 @@ public class HtmlInputTextarea extends UIInput {
         if (styleClass != null) {
             return styleClass;
         }
-        final ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTabindex(final String tabindex) {
@@ -402,8 +401,8 @@ public class HtmlInputTextarea extends UIInput {
         if (title != null) {
             return title;
         }
-        final ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setLabel(final String label) {
@@ -414,16 +413,16 @@ public class HtmlInputTextarea extends UIInput {
         if (label != null) {
             return label;
         }
-        final ValueBinding vb = getValueBinding(JsfConstants.LABEL_ATTR);
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LABEL_ATTR);
     }
 
     public String getWrap() {
         if (wrap != null) {
             return wrap;
         }
-        final ValueBinding vb = getValueBinding(JsfConstants.WRAP_ATTR);
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.WRAP_ATTR);
     }
 
     public void setWrap(final String wrap) {

@@ -26,7 +26,6 @@ import org.seasar.framework.util.AssertionUtil;
  * @author shot
  * @author higa
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlInputHidden extends UIInput {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlInputHidden";

@@ -25,7 +25,6 @@ import org.seasar.teeda.core.JsfConstants;
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlInputSecret extends UIInput {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlInputSecret";
@@ -110,8 +109,8 @@ public class HtmlInputSecret extends UIInput {
         if (accesskey != null) {
             return accesskey;
         }
-        ValueBinding vb = getValueBinding("accesskey");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ACCESSKEY_ATTR);
     }
 
     public void setAlt(String alt) {
@@ -122,8 +121,8 @@ public class HtmlInputSecret extends UIInput {
         if (alt != null) {
             return alt;
         }
-        ValueBinding vb = getValueBinding("alt");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ALT_ATTR);
     }
 
     public void setDir(String dir) {
@@ -134,8 +133,8 @@ public class HtmlInputSecret extends UIInput {
         if (dir != null) {
             return dir;
         }
-        ValueBinding vb = getValueBinding("dir");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.DIR_ATTR);
     }
 
     public void setDisabled(boolean disabled) {
@@ -160,8 +159,8 @@ public class HtmlInputSecret extends UIInput {
         if (lang != null) {
             return lang;
         }
-        ValueBinding vb = getValueBinding("lang");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LANG_ATTR);
     }
 
     public void setMaxlength(int maxlength) {
@@ -186,8 +185,8 @@ public class HtmlInputSecret extends UIInput {
         if (onblur != null) {
             return onblur;
         }
-        ValueBinding vb = getValueBinding("onblur");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONBLUR_ATTR);
     }
 
     public void setOnchange(String onchange) {
@@ -198,8 +197,8 @@ public class HtmlInputSecret extends UIInput {
         if (onchange != null) {
             return onchange;
         }
-        ValueBinding vb = getValueBinding("onchange");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCHANGE_ATTR);
     }
 
     public void setOnclick(String onclick) {
@@ -210,8 +209,8 @@ public class HtmlInputSecret extends UIInput {
         if (onclick != null) {
             return onclick;
         }
-        ValueBinding vb = getValueBinding("onclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONCLICK_ATTR);
     }
 
     public void setOndblclick(String ondblclick) {
@@ -222,8 +221,8 @@ public class HtmlInputSecret extends UIInput {
         if (ondblclick != null) {
             return ondblclick;
         }
-        ValueBinding vb = getValueBinding("ondblclick");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONDBLCLICK_ATTR);
     }
 
     public void setOnfocus(String onfocus) {
@@ -234,8 +233,8 @@ public class HtmlInputSecret extends UIInput {
         if (onfocus != null) {
             return onfocus;
         }
-        ValueBinding vb = getValueBinding("onfocus");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONFOCUS_ATTR);
     }
 
     public void setOnkeydown(String onkeydown) {
@@ -246,8 +245,8 @@ public class HtmlInputSecret extends UIInput {
         if (onkeydown != null) {
             return onkeydown;
         }
-        ValueBinding vb = getValueBinding("onkeydown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYDOWN_ATTR);
     }
 
     public void setOnkeypress(String onkeypress) {
@@ -258,8 +257,8 @@ public class HtmlInputSecret extends UIInput {
         if (onkeypress != null) {
             return onkeypress;
         }
-        ValueBinding vb = getValueBinding("onkeypress");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYPRESS_ATTR);
     }
 
     public void setOnkeyup(String onkeyup) {
@@ -270,8 +269,8 @@ public class HtmlInputSecret extends UIInput {
         if (onkeyup != null) {
             return onkeyup;
         }
-        ValueBinding vb = getValueBinding("onkeyup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONKEYUP_ATTR);
     }
 
     public void setOnmousedown(String onmousedown) {
@@ -282,8 +281,8 @@ public class HtmlInputSecret extends UIInput {
         if (onmousedown != null) {
             return onmousedown;
         }
-        ValueBinding vb = getValueBinding("onmousedown");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEDOWN_ATTR);
     }
 
     public void setOnmousemove(String onmousemove) {
@@ -294,8 +293,8 @@ public class HtmlInputSecret extends UIInput {
         if (onmousemove != null) {
             return onmousemove;
         }
-        ValueBinding vb = getValueBinding("onmousemove");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEMOVE_ATTR);
     }
 
     public void setOnmouseout(String onmouseout) {
@@ -306,8 +305,8 @@ public class HtmlInputSecret extends UIInput {
         if (onmouseout != null) {
             return onmouseout;
         }
-        ValueBinding vb = getValueBinding("onmouseout");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOUT_ATTR);
     }
 
     public void setOnmouseover(String onmouseover) {
@@ -318,8 +317,8 @@ public class HtmlInputSecret extends UIInput {
         if (onmouseover != null) {
             return onmouseover;
         }
-        ValueBinding vb = getValueBinding("onmouseover");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEOVER_ATTR);
     }
 
     public void setOnmouseup(String onmouseup) {
@@ -330,8 +329,8 @@ public class HtmlInputSecret extends UIInput {
         if (onmouseup != null) {
             return onmouseup;
         }
-        ValueBinding vb = getValueBinding("onmouseup");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONMOUSEUP_ATTR);
     }
 
     public void setOnselect(String onselect) {
@@ -342,8 +341,8 @@ public class HtmlInputSecret extends UIInput {
         if (onselect != null) {
             return onselect;
         }
-        ValueBinding vb = getValueBinding("onselect");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ONSELECT_ATTR);
     }
 
     public void setReadonly(boolean readonly) {
@@ -396,8 +395,8 @@ public class HtmlInputSecret extends UIInput {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -408,8 +407,8 @@ public class HtmlInputSecret extends UIInput {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTabindex(String tabindex) {
@@ -432,8 +431,8 @@ public class HtmlInputSecret extends UIInput {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setLabel(String label) {
