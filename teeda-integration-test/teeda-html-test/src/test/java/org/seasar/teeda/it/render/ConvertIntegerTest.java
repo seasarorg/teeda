@@ -58,7 +58,7 @@ public class ConvertIntegerTest extends TeedaWebTestCase {
 		tester.assertNoMatchInElementById("dddMessage", "dddTitle");
 	}
 
-	public void testInputTextarea() throws Exception {
+	public void _testInputTextarea() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -72,7 +72,7 @@ public class ConvertIntegerTest extends TeedaWebTestCase {
 		doAssert(tester);
 	}
 
-	public void testInputHidden() throws Exception {
+	public void _testInputHidden() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -87,7 +87,7 @@ public class ConvertIntegerTest extends TeedaWebTestCase {
 		doAssert(tester);
 	}
 
-	public void testInputSecret() throws Exception {
+	public void _testInputSecret() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
