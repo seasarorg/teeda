@@ -77,10 +77,12 @@ public class THtmlSelectOneRadioRenderer extends HtmlSelectOneRadioRenderer {
         final Integer col = radio.getCol();
         final int colCount = (col != null) ? col.intValue() : 0;
         String[] selectedValues = getValuesForRender(context, radio);
-        for (int i = 0; it.hasNext(); i++) {
-            if (!noneLayout && (col != null && (i + 1) > colCount)) {
+        int i = 1;
+        while (it.hasNext()) {
+            if (!noneLayout && (col != null && i > colCount)) {
                 writer.endElement(JsfConstants.TR_ELEM);
                 writer.startElement(JsfConstants.TR_ELEM, component);
+                i = 1;
             }
             final SelectItem selectItem = (SelectItem) it.next();
             if (!noneLayout) {
@@ -105,6 +107,7 @@ public class THtmlSelectOneRadioRenderer extends HtmlSelectOneRadioRenderer {
             if (!noneLayout) {
                 writer.endElement(JsfConstants.TD_ELEM);
             }
+            i++;
         }
         if (!noneLayout) {
             writer.endElement(JsfConstants.TR_ELEM);

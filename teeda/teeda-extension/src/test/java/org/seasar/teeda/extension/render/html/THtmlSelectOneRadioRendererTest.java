@@ -521,6 +521,48 @@ public class THtmlSelectOneRadioRendererTest extends RendererTest {
                         + "</tr></table>", getResponseText());
     }
 
+    public void testEncode_layout2() throws Exception {
+        // ## Arrange ##
+        {
+            UISelectItem selectItem1 = new UISelectItem();
+            selectItem1.setItemValue("val");
+            selectItem1.setItemLabel("lab");
+            UISelectItem selectItem2 = new UISelectItem();
+            selectItem2.setItemValue("val2");
+            selectItem2.setItemLabel("lab2");
+            UISelectItem selectItem3 = new UISelectItem();
+            selectItem3.setItemValue("val3");
+            selectItem3.setItemLabel("lab3");
+            UISelectItem selectItem4 = new UISelectItem();
+            selectItem4.setItemValue("val4");
+            selectItem4.setItemLabel("lab4");
+            UISelectItem selectItem5 = new UISelectItem();
+            selectItem5.setItemValue("val5");
+            selectItem5.setItemLabel("lab5");
+            htmlSelectOneRadio.getChildren().add(selectItem1);
+            htmlSelectOneRadio.getChildren().add(selectItem2);
+            htmlSelectOneRadio.getChildren().add(selectItem3);
+            htmlSelectOneRadio.getChildren().add(selectItem4);
+            htmlSelectOneRadio.getChildren().add(selectItem5);
+            htmlSelectOneRadio.setCol(new Integer(2));
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneRadio);
+
+        // ## Assert ##
+        assertEquals(
+                "<table><tr>"
+                        + "<td><label><input type=\"radio\" name=\"_id0\" value=\"val\" />lab</label></td>"
+                        + "<td><label><input type=\"radio\" name=\"_id0\" value=\"val2\" />lab2</label></td>"
+                        + "</tr><tr>"
+                        + "<td><label><input type=\"radio\" name=\"_id0\" value=\"val3\" />lab3</label></td>"
+                        + "<td><label><input type=\"radio\" name=\"_id0\" value=\"val4\" />lab4</label></td>"
+                        + "</tr><tr>"
+                        + "<td><label><input type=\"radio\" name=\"_id0\" value=\"val5\" />lab5</label></td>"
+                        + "</tr></table>", getResponseText());
+    }
+
     private THtmlSelectOneRadioRenderer createTHtmlSelectOneRadioRenderer() {
         return (THtmlSelectOneRadioRenderer) createRenderer();
     }
