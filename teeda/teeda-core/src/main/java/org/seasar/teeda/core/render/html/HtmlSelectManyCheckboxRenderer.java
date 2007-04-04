@@ -57,6 +57,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
         ignoreComponent.addAttributeName(JsfConstants.BORDER_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.NAME_ATTR);
         ignoreComponent.addAttributeName("selectedValues");
     }
 
