@@ -39,7 +39,6 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ServletContextUtil;
@@ -270,10 +269,14 @@ public class TViewRootRenderer extends AbstractRenderer {
     }
 
     protected String getParentViewId(FacesContext context, TViewRoot component) {
-
+        final String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
+        if (defaultSuffix.indexOf(".jsp") >= 0) {
+            return null;
+        }
         String parentPath = FacesConfigOptions.getDefaultLayoutPath();
-        if (component != context.getViewRoot()
-                || context.getViewRoot().getViewId().indexOf("/layout/") >= 0) {
+        final UIViewRoot viewRoot = context.getViewRoot();
+        if (component != viewRoot
+                || viewRoot.getViewId().indexOf("/layout/") >= 0) {
             parentPath = null;
         }
         PageDesc pageDesc = pageDescCache.getPageDesc(component.getViewId());
