@@ -30,6 +30,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.WebAppUtil;
+import javax.faces.internal.scope.RedirectScope;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.webapp.FacesServlet;
@@ -89,10 +90,6 @@ public class FacesPortlet extends GenericPortlet {
     public static final String REDEPLOYED_PORTLET = FacesPortlet.class
             .getName()
             + ".REDEPLOYED_PORTLET";
-
-    public static final String REDIRECT_TO_PORTLET = FacesPortlet.class
-            .getName()
-            + ".REDIRECT_TO_PORTLET";
 
     public static final String RENDER_PARAMETER = FacesPortlet.class.getName()
             + ".RENDER_PARAMETER";
@@ -234,8 +231,14 @@ public class FacesPortlet extends GenericPortlet {
         request.setAttribute(JsfConstants.FACES_CONTEXT, facesContext);
 
         restoreFacesState(facesContext);
+        String redirectPath = null;
         try {
             lifecycle.render(facesContext);
+            redirectPath = RedirectScope.getRedirectingPath(facesContext);
+            if (redirectPath != null) {
+                //remove redirect scope
+                RedirectScope.removeContext(facesContext);
+            }
         } catch (Throwable e) {
             handleException(e);
         } finally {
@@ -247,11 +250,8 @@ public class FacesPortlet extends GenericPortlet {
         }
 
         // redirect
-        Object redirectToPortlet = request
-                .getAttribute(FacesPortlet.REDIRECT_TO_PORTLET);
-        if (redirectToPortlet != null) {
-            request.removeAttribute(FacesPortlet.REDIRECT_TO_PORTLET);
-            redirectRenderFaces(request, response, (String) redirectToPortlet);
+        if (redirectPath != null) {
+            redirectRenderFaces(request, response, redirectPath);
         }
     }
 
@@ -350,6 +350,11 @@ public class FacesPortlet extends GenericPortlet {
             }
         }
 
+        // remove redirect scope
+        if (RedirectScope.isRedirecting(facesContext)) {
+            RedirectScope.removeContext(facesContext);
+        }
+
         restoreView(facesContext, viewId);
     }
 
@@ -433,8 +438,7 @@ public class FacesPortlet extends GenericPortlet {
                 if (request.getParameter(RENDER_PARAMETER) != null) {
                     setRenderParameters(request, response);
                 }
-            } else if (facesContext.getExternalContext().getRequestMap().get(
-                    REDIRECT_TO_PORTLET) != null) {
+            } else if (RedirectScope.isRedirecting(facesContext)) {
                 saveFacesState(facesContext);
             }
 
@@ -455,9 +459,6 @@ public class FacesPortlet extends GenericPortlet {
                 .get(CURRENT_PORTLET_MODE);
         sessionMap.put(PREVIOUS_PORTLET_MODE, currentPortletMode);
 
-        Object redirectToPortlet = requestMap.get(REDIRECT_TO_PORTLET);
-        requestMap.remove(REDIRECT_TO_PORTLET);
-
         FacesPortletState state = new FacesPortletState();
         state.setViewId(facesContext.getViewRoot().getViewId());
 
@@ -475,7 +476,8 @@ public class FacesPortlet extends GenericPortlet {
             }
         }
 
-        if (redirectToPortlet == null) {
+        String redirectPath = RedirectScope.getRedirectingPath(facesContext);
+        if (redirectPath == null) {
             List excludedNameList = (List) requestMap
                     .get(EXCLUDED_ATTRIBUTE_LIST);
             // save request attributes
@@ -489,7 +491,7 @@ public class FacesPortlet extends GenericPortlet {
 
         } else {
             // replace viewId
-            state.setViewId((String) redirectToPortlet);
+            state.setViewId(redirectPath);
 
             // save request attributes
             Map map = new HashMap();

@@ -22,13 +22,13 @@ import java.io.OutputStreamWriter;
 import javax.faces.application.ViewHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.scope.RedirectScope;
 import javax.servlet.ServletContext;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.application.NavigationHandlerImpl;
-import org.seasar.teeda.core.portlet.FacesPortlet;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletContextUtil;
@@ -95,8 +95,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                     path);
             redirect(context, externalContext, redirectPath, path);
         } else {
-            externalContext.getRequestMap().put(
-                    FacesPortlet.REDIRECT_TO_PORTLET, path);
+            RedirectScope.setRedirectingPath(context, path);
             pagePersistence.save(context, path);
             if (PortletUtil.isRender(context)) {
                 //set dummy output stream

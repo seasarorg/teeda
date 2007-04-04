@@ -119,6 +119,8 @@ public class SessionPagePersistence implements PagePersistence {
         boolean isPost = false;
         if (!PortletUtil.isPortlet(context)) {
             isPost = ServletExternalContextUtil.isPost(externalContext);
+        } else {
+            isPost = !PortletUtil.isRender(context);
         }
         final boolean maybeReload = stateManager.hasSerializedView(context,
                 viewId);
