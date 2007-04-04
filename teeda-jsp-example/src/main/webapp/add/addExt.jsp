@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://www.seasar.org/teeda/extension" prefix="te" %>
+<f:view>
 <html>
 <te:head>
  <title>add</title>
 </te:head>
 <body>
-<f:view>
  <h:form>
    <h:messages globalOnly="false" showDetail="true"/>
    <te:inputCommaText id="text1" value="#{addExtBean.arg1}" required="true" fraction="4" groupingSeparator="," fractionSeparator="."/>
@@ -19,6 +19,6 @@
    <h:outputText value="#{addExtBean.result}"/>
    <h:commandButton action="#{addExtBean.calculate}" value="calculate"/>
  </h:form>
-</f:view>
 </body>
 </html>
+</f:view>

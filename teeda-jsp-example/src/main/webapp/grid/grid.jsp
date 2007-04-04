@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://www.seasar.org/teeda/extension" prefix="te"%>
+<f:view>
 <html>
 <head>
 <title>grid.jsp</title>
@@ -25,8 +26,7 @@
 </style>
 </head>
 
-<body>
-<f:view>
+<te:body>
 <h:form id="inputTextForm">
 	<%--
 		fooGridXY
@@ -62,6 +62,6 @@
 	</te:grid>
 	<h:commandButton id="submit1"/>
 </h:form>
-</f:view>
-</body>
+</te:body>
 </html>
+</f:view>
