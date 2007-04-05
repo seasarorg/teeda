@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,9 @@ public class AddPage {
 	private int arg1;
 
 	private int arg2;
+
+	// never userd, just for readonly test
+	private int arg3;
 
 	private int result;
 
@@ -54,5 +57,13 @@ public class AddPage {
 	public String doCalculate() {
 		result = arg1 + arg2;
 		return null;
+	}
+
+	public int getArg3() {
+		return arg3;
+	}
+
+	public void setArg3(int arg3) {
+		this.arg3 = arg3;
 	}
 }
