@@ -435,7 +435,7 @@ public class THtmlSelectOneRadioRendererTest extends RendererTest {
                 + " onkeyup=\"n\"" + " onmousedown=\"o\""
                 + " onmousemove=\"p\"" + " onmouseout=\"q\""
                 + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
-                + " readonly=\"true\"" + " tabindex=\"x\"" + " title=\"y\""
+                + " readonly=\"readonly\"" + " tabindex=\"x\"" + " title=\"y\""
                 + "/>lab</label>" + "</td></tr>" + "</table>",
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

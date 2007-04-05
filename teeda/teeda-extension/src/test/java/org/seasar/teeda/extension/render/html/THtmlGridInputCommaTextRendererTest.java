@@ -157,7 +157,7 @@ public class THtmlGridInputCommaTextRendererTest extends RendererTest {
                 + " onkeydown=\"l;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 2, '.');\""
                 + " onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 2, '.');\""
                 + " onkeyup=\"n;Teeda.THtmlInputCommaText.convertByKey(this);\""
-                + " onchange=\"h\"" + " readonly=\"true\""
+                + " onchange=\"h\"" + " readonly=\"readonly\""
                 + " ondblclick=\"j\"" + " size=\"3\"" + " onmouseover=\"r\""
                 + " tabindex=\"x\"" + " maxlength=\"5\"" + " onclick=\"i\""
                 + " onmouseout=\"q\"" + " onmousedown=\"o\""

@@ -9,23 +9,27 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.util;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.IntegerConverter;
 
 import junitx.framework.ArrayAssert;
 
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
@@ -35,8 +39,21 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class RendererUtilTest extends TeedaTestCase {
+
+    public void testRenderAttribute() throws Exception {
+        HtmlResponseWriter writer = new HtmlResponseWriter();
+        writer.setWriter(new StringWriter());
+        HtmlInputText htmlInputText = new HtmlInputText();
+        writer.startElement(JsfConstants.INPUT_ELEM, htmlInputText);
+        RendererUtil.renderAttribute(writer, "readonly", "true");
+        RendererUtil.renderAttribute(writer, "disabled", "true");
+        writer.endElement(JsfConstants.INPUT_ELEM);
+        assertEquals("<input readonly=\"readonly\" disabled=\"disabled\" />",
+                writer.toString());
+    }
 
     public void testShouldRenderIdAttribute_True() throws Exception {
         // ## Arrange ##

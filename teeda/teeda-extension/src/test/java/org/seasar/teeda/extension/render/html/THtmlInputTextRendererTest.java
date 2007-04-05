@@ -163,7 +163,7 @@ public class THtmlInputTextRendererTest extends RendererTest {
                         + " onkeyup=\"n\"" + " onmousedown=\"o\""
                         + " onmousemove=\"p\"" + " onmouseout=\"q\""
                         + " onmouseover=\"r\"" + " onmouseup=\"s\""
-                        + " onselect=\"t\"" + " readonly=\"true\""
+                        + " onselect=\"t\"" + " readonly=\"readonly\""
                         + " size=\"2\"" + " style=\"w\"" + " class=\"u\""
                         + " tabindex=\"x\"" + " title=\"y\"" + "/>",
                 getResponseText());

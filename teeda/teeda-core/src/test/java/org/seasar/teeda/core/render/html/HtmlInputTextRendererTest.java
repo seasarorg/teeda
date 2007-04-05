@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -81,7 +81,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
         assertEquals("<input type=\"text\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
-    
+
     public void testEncode_WithValue2() throws Exception {
         // ## Arrange ##
         htmlInputText.setValue("&hearts;");
@@ -90,7 +90,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlInputText);
 
         // ## Assert ##
-        assertEquals("<input type=\"text\" name=\"_id0\" value=\"&amp;hearts;\" />",
+        assertEquals(
+                "<input type=\"text\" name=\"_id0\" value=\"&amp;hearts;\" />",
                 getResponseText());
     }
 
@@ -175,7 +176,7 @@ public class HtmlInputTextRendererTest extends RendererTest {
                         + " onkeyup=\"n\"" + " onmousedown=\"o\""
                         + " onmousemove=\"p\"" + " onmouseout=\"q\""
                         + " onmouseover=\"r\"" + " onmouseup=\"s\""
-                        + " onselect=\"t\"" + " readonly=\"true\""
+                        + " onselect=\"t\"" + " readonly=\"readonly\""
                         + " size=\"2\"" + " style=\"w\"" + " class=\"u\""
                         + " tabindex=\"x\"" + " title=\"y\""
                         + " autocomplete=\"C\"" + "/>", getResponseText());

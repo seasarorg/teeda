@@ -405,8 +405,9 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
                 + " onkeydown=\"l\"" + " onkeypress=\"m\"" + " onkeyup=\"n\""
                 + " onmousedown=\"o\"" + " onmousemove=\"p\""
                 + " onmouseout=\"q\"" + " onmouseover=\"r\""
-                + " onmouseup=\"s\"" + " onselect=\"t\"" + " readonly=\"true\""
-                + " tabindex=\"x\"" + " title=\"y\"" + ">"
+                + " onmouseup=\"s\"" + " onselect=\"t\""
+                + " readonly=\"readonly\"" + " tabindex=\"x\"" + " title=\"y\""
+                + ">"
                 + "<option value=\"val\" class=\"d\" selected=\"selected\">"
                 + "lab</option></select>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

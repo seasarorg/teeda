@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -168,9 +168,9 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
                 + " onkeydown=\"l\"" + " onkeypress=\"m\"" + " onkeyup=\"n\""
                 + " onmousedown=\"o\"" + " onmousemove=\"p\""
                 + " onmouseout=\"q\"" + " onmouseover=\"r\""
-                + " onmouseup=\"s\"" + " onselect=\"t\"" + " readonly=\"true\""
-                + " style=\"w\"" + " class=\"u\"" + " tabindex=\"x\""
-                + " title=\"y\"" + "/>", getResponseText());
+                + " onmouseup=\"s\"" + " onselect=\"t\""
+                + " readonly=\"readonly\"" + " style=\"w\"" + " class=\"u\""
+                + " tabindex=\"x\"" + " title=\"y\"" + "/>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
 

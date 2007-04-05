@@ -86,7 +86,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         assertEquals("<input type=\"password\" name=\"_id0\" value=\"abc\" />",
                 getResponseText());
     }
-    
+
     public void testEncode_WithValueRedisplayTrue2() throws Exception {
         // ## Arrange ##
         htmlInputSecret.setValue("&hearts;");
@@ -96,7 +96,8 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlInputSecret);
 
         // ## Assert ##
-        assertEquals("<input type=\"password\" name=\"_id0\" value=\"&amp;hearts;\" />",
+        assertEquals(
+                "<input type=\"password\" name=\"_id0\" value=\"&amp;hearts;\" />",
                 getResponseText());
     }
 
@@ -170,7 +171,7 @@ public class HtmlInputSecretRendererTest extends RendererTest {
                         + " onkeyup=\"n\"" + " onmousedown=\"o\""
                         + " onmousemove=\"p\"" + " onmouseout=\"q\""
                         + " onmouseover=\"r\"" + " onmouseup=\"s\""
-                        + " onselect=\"t\"" + " readonly=\"true\""
+                        + " onselect=\"t\"" + " readonly=\"readonly\""
                         + " size=\"2\"" + " style=\"w\"" + " class=\"u\""
                         + " tabindex=\"x\"" + " title=\"y\"" + "/>",
                 getResponseText());

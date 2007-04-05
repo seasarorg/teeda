@@ -413,7 +413,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
                 + " onkeyup=\"n\"" + " onmousedown=\"o\""
                 + " onmousemove=\"p\"" + " onmouseout=\"q\""
                 + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
-                + " readonly=\"true\"" + " tabindex=\"x\"" + " title=\"y\""
+                + " readonly=\"readonly\"" + " tabindex=\"x\"" + " title=\"y\""
                 + ">"
                 + "<option value=\"val\" class=\"d\" selected=\"selected\">"
                 + "lab</option></select>", getResponseText());

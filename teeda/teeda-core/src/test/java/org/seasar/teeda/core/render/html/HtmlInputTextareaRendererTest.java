@@ -186,7 +186,7 @@ public class HtmlInputTextareaRendererTest extends RendererTest {
                 + " onkeyup=\"n\"" + " onmousedown=\"o\""
                 + " onmousemove=\"p\"" + " onmouseout=\"q\""
                 + " onmouseover=\"r\"" + " onmouseup=\"s\"" + " onselect=\"t\""
-                + " readonly=\"true\"" + " rows=\"20\"" + " style=\"w\""
+                + " readonly=\"readonly\"" + " rows=\"20\"" + " style=\"w\""
                 + " class=\"u\"" + " tabindex=\"x\"" + " title=\"y\""
                 + " wrap=\"z\"" + ">B</textarea>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

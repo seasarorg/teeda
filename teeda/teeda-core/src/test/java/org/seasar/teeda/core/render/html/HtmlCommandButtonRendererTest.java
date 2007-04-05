@@ -223,7 +223,7 @@ public class HtmlCommandButtonRendererTest extends RendererTest {
                         + " onmousedown=\"o\"" + " onmousemove=\"p\""
                         + " onmouseout=\"q\"" + " onmouseover=\"r\""
                         + " onmouseup=\"s\"" + " onselect=\"t\""
-                        + " readonly=\"true\"" + " style=\"w\""
+                        + " readonly=\"readonly\"" + " style=\"w\""
                         + " class=\"u\"" + " tabindex=\"x\"" + " title=\"y\""
                         + "/>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());

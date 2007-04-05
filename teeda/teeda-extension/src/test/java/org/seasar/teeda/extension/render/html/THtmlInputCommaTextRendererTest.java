@@ -154,7 +154,7 @@ public class THtmlInputCommaTextRendererTest extends RendererTest {
                         + "onblur=\"g;Teeda.THtmlInputCommaText.convertByKey(this);Teeda.THtmlInputCommaText.addComma(this, 4, ',', '.');\" "
                         + "onkeydown=\"l;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 4, '.');\" "
                         + "onkeypress=\"m;return Teeda.THtmlInputCommaText.keycheckForNumber(event, this, 4, '.');\" onkeyup=\"n;Teeda.THtmlInputCommaText.convertByKey(this);\" "
-                        + "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"true\" "
+                        + "style=\"w;ime-mode:disabled;\" title=\"y\" onchange=\"h\" dir=\"c\" readonly=\"readonly\" "
                         + "class=\"u\" accesskey=\"a\" ondblclick=\"j\" size=\"2\" onmouseover=\"r\" "
                         + "tabindex=\"x\" maxlength=\"5\" lang=\"e\" onclick=\"i\" alt=\"b\" "
                         + "onmouseout=\"q\" onmousedown=\"o\" onselect=\"t\" onmouseup=\"s\" "
