@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -34,13 +34,13 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 public class TByteLengthValidator extends LengthValidator implements
         ValidationTargetSelectable {
 
-    public static final String VALIDATOR_ID = "teeda.core.ByteLength";
+    public static final String VALIDATOR_ID = "teeda.extension.ByteLength";
 
-    public static final String MAXIMUM_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.MAXIMUM";
+    public static final String MAXIMUM_MESSAGE_ID = "org.seasar.teeda.extension.validator.TByteLengthValidator.MAXIMUM";
 
-    public static final String MINIMUM_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.MINIMUM";
+    public static final String MINIMUM_MESSAGE_ID = "org.seasar.teeda.extension.validator.TByteLengthValidator.MINIMUM";
 
-    public static final String ENCODE_MESSAGE_ID = "org.seasar.teeda.core.validator.ByteLengthValidator.ENCODE";
+    public static final String ENCODE_MESSAGE_ID = "org.seasar.teeda.extension.validator.TByteLengthValidator.ENCODE";
 
     private String charSet = null;
 

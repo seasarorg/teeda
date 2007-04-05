@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,12 +30,13 @@ public class TByteLengthValidatorTest extends AbstractValidatorTest {
 
     public void testConstants() throws Exception {
         assertEquals(
-                "org.seasar.teeda.core.validator.ByteLengthValidator.MAXIMUM",
+                "org.seasar.teeda.extension.validator.TByteLengthValidator.MAXIMUM",
                 TByteLengthValidator.MAXIMUM_MESSAGE_ID);
         assertEquals(
-                "org.seasar.teeda.core.validator.ByteLengthValidator.MINIMUM",
+                "org.seasar.teeda.extension.validator.TByteLengthValidator.MINIMUM",
                 TByteLengthValidator.MINIMUM_MESSAGE_ID);
-        assertEquals("teeda.core.ByteLength", TByteLengthValidator.VALIDATOR_ID);
+        assertEquals("teeda.extension.ByteLength",
+                TByteLengthValidator.VALIDATOR_ID);
     }
 
     public void testValidate_greaterThanMaximum() throws Exception {
