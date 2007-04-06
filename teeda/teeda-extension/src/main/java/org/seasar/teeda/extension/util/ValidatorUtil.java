@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,7 +22,7 @@ import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author higa
- * 
+ *
  */
 public abstract class ValidatorUtil {
 
@@ -31,7 +31,7 @@ public abstract class ValidatorUtil {
 
     public static final boolean isTargetCommand(FacesContext context,
             String[] forValues) {
-        if (forValues == null) {
+        if (forValues == null || forValues.length == 0) {
             return true;
         }
         String command = getCommand(context);
