@@ -15,14 +15,16 @@
  */
 package javax.faces.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIMessages;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
 public class HtmlMessages extends UIMessages {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlMessages";
@@ -72,8 +74,8 @@ public class HtmlMessages extends UIMessages {
         if (errorClass != null) {
             return errorClass;
         }
-        ValueBinding vb = getValueBinding("errorClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ERROR_CLASS_ATTR);
     }
 
     public void setErrorStyle(String errorStyle) {
@@ -84,8 +86,8 @@ public class HtmlMessages extends UIMessages {
         if (errorStyle != null) {
             return errorStyle;
         }
-        ValueBinding vb = getValueBinding("errorStyle");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.ERROR_STYLE_ATTR);
     }
 
     public void setFatalClass(String fatalClass) {
@@ -96,8 +98,8 @@ public class HtmlMessages extends UIMessages {
         if (fatalClass != null) {
             return fatalClass;
         }
-        ValueBinding vb = getValueBinding("fatalClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.FATAL_CLASS_ATTR);
     }
 
     public void setFatalStyle(String fatalStyle) {
@@ -108,8 +110,8 @@ public class HtmlMessages extends UIMessages {
         if (fatalStyle != null) {
             return fatalStyle;
         }
-        ValueBinding vb = getValueBinding("fatalStyle");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.FATAL_STYLE_ATTR);
     }
 
     public void setInfoClass(String infoClass) {
@@ -120,8 +122,8 @@ public class HtmlMessages extends UIMessages {
         if (infoClass != null) {
             return infoClass;
         }
-        ValueBinding vb = getValueBinding("infoClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.INFO_CLASS_ATTR);
     }
 
     public void setInfoStyle(String infoStyle) {
@@ -132,8 +134,8 @@ public class HtmlMessages extends UIMessages {
         if (infoStyle != null) {
             return infoStyle;
         }
-        ValueBinding vb = getValueBinding("infoStyle");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.INFO_STYLE_ATTR);
     }
 
     public void setLayout(String layout) {
@@ -144,9 +146,9 @@ public class HtmlMessages extends UIMessages {
         if (layout != null) {
             return layout;
         }
-        ValueBinding vb = getValueBinding("layout");
-        return vb != null ? (String) vb.getValue(getFacesContext())
-                : DEFAULT_LAYOUT;
+        final String str = ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.LAYOUT_ATTR);
+        return (str != null) ? str : DEFAULT_LAYOUT;
     }
 
     public void setStyle(String style) {
@@ -157,8 +159,8 @@ public class HtmlMessages extends UIMessages {
         if (style != null) {
             return style;
         }
-        ValueBinding vb = getValueBinding("style");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_ATTR);
     }
 
     public void setStyleClass(String styleClass) {
@@ -169,8 +171,8 @@ public class HtmlMessages extends UIMessages {
         if (styleClass != null) {
             return styleClass;
         }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.STYLE_CLASS_ATTR);
     }
 
     public void setTitle(String title) {
@@ -181,8 +183,8 @@ public class HtmlMessages extends UIMessages {
         if (title != null) {
             return title;
         }
-        ValueBinding vb = getValueBinding("title");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.TITLE_ATTR);
     }
 
     public void setTooltip(boolean tooltip) {
@@ -207,8 +209,8 @@ public class HtmlMessages extends UIMessages {
         if (warnClass != null) {
             return warnClass;
         }
-        ValueBinding vb = getValueBinding("warnClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.WARN_CLASS_ATTR);
     }
 
     public void setWarnStyle(String warnStyle) {
@@ -219,8 +221,8 @@ public class HtmlMessages extends UIMessages {
         if (warnStyle != null) {
             return warnStyle;
         }
-        ValueBinding vb = getValueBinding("warnStyle");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                JsfConstants.WARN_STYLE_ATTR);
     }
 
     public Object saveState(FacesContext context) {
