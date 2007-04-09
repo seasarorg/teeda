@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,6 +26,7 @@ import javax.faces.internal.LabelUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.component.html.THtmlCommandButton;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -34,7 +35,10 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
  */
 public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
 
-    //TODO register by TeedaRendererComponentAutoRegister.
+    public static final String COMPONENT_FAMILY = THtmlCommandButton.COMPONENT_FAMILY;
+
+    public static final String RENDERER_TYPE = THtmlCommandButton.DEFAULT_RENDERERTYPE;
+
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
@@ -51,8 +55,9 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
             UICommand command, ResponseWriter writer) throws IOException {
         final String id = getIdForRender(context, command);
         final String labelValue = LabelUtil.getLabelValue(id);
-        if(labelValue != null) {
-            RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, labelValue);
+        if (labelValue != null) {
+            RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR,
+                    labelValue);
         } else {
             super.renderValueAttribute(context, command, writer);
         }

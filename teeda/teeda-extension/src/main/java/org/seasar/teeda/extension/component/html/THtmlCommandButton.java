@@ -30,6 +30,10 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
  */
 public class THtmlCommandButton extends HtmlCommandButton {
 
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
+
+    public static final String DEFAULT_RENDERERTYPE = "org.seasar.teeda.extension.HtmlCommandButton";
+
     public void broadcast(FacesEvent event) throws AbortProcessingException {
         if (TransactionTokenUtil.isDoOnce(getId())) {
             FacesContext context = FacesContext.getCurrentInstance();

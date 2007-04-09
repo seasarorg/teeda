@@ -8,34 +8,6 @@
 
 <faces-config>
 
-	<!-- TODO : move to AutoRegister -->
-    <render-kit>
-		<renderer>
-			<component-family>javax.faces.Command</component-family>
-			<renderer-type>javax.faces.Button</renderer-type>
-			<renderer-class>
-				org.seasar.teeda.extension.render.html.THtmlCommandButtonRenderer
-			</renderer-class>
-		</renderer>
-		<renderer>
-			<component-family>javax.faces.SelectOne</component-family>
-			<renderer-type>javax.faces.Menu</renderer-type>
-			<renderer-class>
-				org.seasar.teeda.extension.render.html.THtmlSelectOneMenuRenderer
-			</renderer-class>
-		</renderer>
-	</render-kit>
-
-	<!--
-    <component>
-		<component-type>
-			javax.faces.ViewRoot
-		</component-type>
-		<component-class>
-			org.seasar.teeda.extension.component.TViewRoot
-		</component-class>
-	</component>
-	 -->
 	<component>
 		<component-type>
 			org.seasar.teeda.extension.Text

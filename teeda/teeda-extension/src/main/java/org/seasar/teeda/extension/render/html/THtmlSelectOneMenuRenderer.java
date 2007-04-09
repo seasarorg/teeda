@@ -39,6 +39,10 @@ import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
  */
 public class THtmlSelectOneMenuRenderer extends HtmlSelectOneMenuRenderer {
 
+    public static final String COMPONENT_FAMILY = THtmlSelectOneMenu.COMPONENT_FAMILY;
+
+    public static final String RENDERER_TYPE = THtmlSelectOneMenu.RENDERER_TYPE;
+
     public THtmlSelectOneMenuRenderer() {
         addIgnoreAttributeName(ExtensionConstants.PAGE_NAME_ATTR);
         addIgnoreAttributeName(ExtensionConstants.LABEL_NAME_ATTR);

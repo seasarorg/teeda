@@ -30,8 +30,6 @@ import org.seasar.teeda.extension.util.NullLabelStrategyImpl;
  */
 public class TSelectOneMenuTag extends TSelectTagBase {
 
-    private static final String RENDERER_TYPE = "javax.faces.Menu";
-
     private static final NullLabelStrategy defaultNullLabelStrategy = new NullLabelStrategyImpl();
 
     private String pageName;
@@ -45,7 +43,7 @@ public class TSelectOneMenuTag extends TSelectTagBase {
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return THtmlSelectOneMenu.RENDERER_TYPE;
     }
 
     protected void setProperties(final UIComponent component) {

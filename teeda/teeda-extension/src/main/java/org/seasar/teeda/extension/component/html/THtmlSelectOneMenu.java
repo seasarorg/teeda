@@ -33,6 +33,8 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
 
+    public static final String RENDERER_TYPE = "org.seasar.teeda.extension.HtmlSelectOneMenu";
+
     private String pageName;
 
     private String labelName;
