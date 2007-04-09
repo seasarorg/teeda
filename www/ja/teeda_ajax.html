@@ -2,7 +2,7 @@
 <html>
 <!-- don't edit start -->
 <head>
-<title>Seasar - DI Container with AOP - </title>
+<title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
@@ -101,7 +101,7 @@ Kumu.Ajax.executeTeedaAjax(test, { "component" : "hoge", "action" : "foo" });
 &lt;input type="text" name="teeda" /&gt;
 &lt;input type="text" name="kumu" /&gt;
 &lt;/form&gt;
-Kumu.Ajax.executeTeedaAjax(hoge_foo, 
+Kumu.Ajax.executeTeedaAjax(hoge_foo,
     {"teeda" : document.x.teeda.value, "kumu" : document.x.kumu.value});
 </pre>
 
@@ -111,7 +111,7 @@ Kumu.Ajax.executeTeedaAjax(hoge_foo,
 </p>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd"&gt;
 
 &lt;components&gt;
@@ -164,10 +164,10 @@ fooメソッドでは、JavaScriptに返したい文字列を作成するだけ�
 <li>日本語パラメータについて</li>
 <p>Tomcat5.x系で日本語パラメータを使用する場合には、Tomcatの設定ファイル server.xmlのConnector要素のuseBodyEncodingForURI属性を以下のように"true"を設定して下さい。
 <pre>
-&lt;Connector 
+&lt;Connector
 port="8080" maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
 enableLookups="false" acceptCount="100"
-debug="0" connectionTimeout="20000" 
+debug="0" connectionTimeout="20000"
 disableUploadTimeout="true" useBodyEncodingForURI="true"/&gt;
 </pre>
 
