@@ -108,6 +108,7 @@ h3.underline {
       <li><a href="#title">title</a></li>
       <li><a href="#link">link</a></li>
       <li><a href="#condition">condition</a></li>
+
       <li><a href="#grid">grid</a></li>
       <li><a href="#inputCommaText">inputCommaText</a></li>
       <li><a href="#inputDateText">inputDateText</a></li>
@@ -710,6 +711,174 @@ h3.underline {
         <td>その他</td>
         <td>
           <span>titleもlabelと同様の規約で文字列を取得する。</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="link">link</a></h3>
+<p>linkを出力するコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>リンクを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;a id="goLinkResult" href="linkResult.html?arg1=123&amp;arg2=223&amp;<br/>arg3=345&amp;date=123"gt;Linkで画面遷移&lt;/a&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">a</b>タグ</span><br/>
+            <span>-<b class="boldorange">id</b>がgoで始まっている</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:outputLink</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>href属性に記述したkey=value形式のvalue部分は、以下のように決定する</span><br/>
+          <span>
+          &nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b><br/>
+          &nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="condition">condition</a></h3>
+<p>簡単な条件分岐を出力するコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>condition(条件分岐)を出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;&lt;またはdiv id="isNotCondition"&gt;&lt;/div&gt;</b>
+        </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">div</b>タグ</span><br/>
+            <span>-<b class="boldorange">id</b>がisまたはisNotで始まっている</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:condition</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>Conditionは条件にマッチしたときにのみ描画される</span><br/>
+          <span>
+          &nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される<br/>
+          &nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される<br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="grid">grid</a></h3>
+<p>Tableを出力するコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>Tableを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;&lt;またはdiv id="isNotCondition"&gt;&lt;/div&gt;</b>
+        </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">table</b>タグ</span><br/>
+            <span>-<b class="boldorange">id</b>が存在し、末尾がGrid、GridX、GridY、GridXYとなっている</span><br/>
+            <span>-<b class="boldorange">id</b>からGridのタグを取り除きItemsを付加したものがPageに存在する(id=aaaGridならaaaItems)</span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:grid</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">async</b></span><br/>
+          <p>この属性は、Gridで非同期通信を行うかどうかをGrid単位で設定するために使う.<br/>&nbsp;&nbsp;aync=trueで非同期、falseで同期.デフォルトは50件以上出力されると非同期になる．</p>
+          <span>-<b class="boldorange">callback</b></span><br/>
+          <p>この属性は、非同期通信の度に毎回呼び出されるcallback関数を定義しておける．<br/>&nbsp;&nbsp;
+          <b class="boldorange">callback関数は、<br/>&nbsp;&nbsp;function_name(tableのid、非同期呼出の固まりの最初のindex、最後のindex、DOMノードツリー自身)</b><br/>という引数で描画されます。</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>あり.同期出力の場合と、非同期出力の場合でScriptも違うものが出力される.</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>-同期の場合のGridは50件まず描画され、残りはbodyの最後に全て描画される。</span><br/>
+          <span>-非同期の場合は50件ずつ非同期に描画される。</span><br/>
+          <span>-アプリケーション全体でのGridの同期/非同期の挙動は、web.xmlにteeda.DEFAULT_GRID_ASYNCというキーで<br/>
+                   以下のように定義する．(trueで非同期、falseで非同期)</span><br/>
+          &nbsp;&nbsp;&lt;context-param&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;<b class="boldorange">teeda.DEFAULT_GRID_ASYNC</b>&lt;/param-name&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;<b class="boldorange">false</b>&lt;/param-value&gt;<br/>
+          &nbsp;&nbsp;&lt;/context-param&gt;<br/>
         </td>
       </tr>
     </tbody>
