@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,7 +18,7 @@ package org.seasar.teeda.core.render.html;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.component.UIGraphic;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
@@ -50,23 +50,22 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        encodeHtmlGraphicImageEnd(context, (HtmlGraphicImage) component);
+        encodeHtmlGraphicImageEnd(context, (UIGraphic) component);
     }
 
     protected void encodeHtmlGraphicImageEnd(FacesContext context,
-            HtmlGraphicImage htmlGraphicImage) throws IOException {
+            UIGraphic graphic) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.IMG_ELEM, htmlGraphicImage);
-        RendererUtil.renderIdAttributeIfNecessary(writer, htmlGraphicImage,
-                getIdForRender(context, htmlGraphicImage));
-        final String url = getUrl(context, htmlGraphicImage);
+        writer.startElement(JsfConstants.IMG_ELEM, graphic);
+        RendererUtil.renderIdAttributeIfNecessary(writer, graphic,
+                getIdForRender(context, graphic));
+        final String url = getUrl(context, graphic);
         writer.writeURIAttribute(JsfConstants.SRC_ATTR, url, null);
-        renderRemainAttributes(htmlGraphicImage, writer, ignoreComponent);
+        renderRemainAttributes(graphic, writer, ignoreComponent);
         writer.endElement(JsfConstants.IMG_ELEM);
     }
 
-    protected String getUrl(FacesContext context,
-            HtmlGraphicImage htmlGraphicImage) {
+    protected String getUrl(FacesContext context, UIGraphic htmlGraphicImage) {
         String url = htmlGraphicImage.getUrl();
         if (url == null) {
             url = "";
