@@ -32,6 +32,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesMessageUtil;
+import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.Renderer;
@@ -254,8 +255,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             setValue(null);
             setLocalValueSet(false);
         } catch (RuntimeException e) {
-            //TODO getId() -> UIComponentUtil.getLabel(component)
-            Object[] args = { getId() };
+            Object[] args = { UIComponentUtil.getLabel(this) };
             context.getExternalContext().log(e.getMessage(), e);
             FacesMessageUtil.addErrorComponentMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
