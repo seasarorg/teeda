@@ -108,7 +108,6 @@ h3.underline {
       <li><a href="#title">title</a></li>
       <li><a href="#link">link</a></li>
       <li><a href="#condition">condition</a></li>
-
       <li><a href="#grid">grid</a></li>
       <li><a href="#inputCommaText">inputCommaText</a></li>
       <li><a href="#inputDateText">inputDateText</a></li>
@@ -866,7 +865,7 @@ h3.underline {
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
-        <td>あり.同期出力の場合と、非同期出力の場合でScriptも違うものが出力される.</td>
+        <td>あり.同期出力の場合と、非同期出力の場合でScriptも違うものが出力される.(TODO 詳細)</td>
       </tr>
       <tr>
         <td>その他</td>
@@ -879,6 +878,72 @@ h3.underline {
           &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;<b class="boldorange">teeda.DEFAULT_GRID_ASYNC</b>&lt;/param-name&gt;<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;<b class="boldorange">false</b>&lt;/param-value&gt;<br/>
           &nbsp;&nbsp;&lt;/context-param&gt;<br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputCommaText">inputCommaText</a></h3>
+<p>inputCommaTextは金額入力のコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>金額入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="text" id="aaa" class="T_currency" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">typeがtextまたは指定されていない</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+            <span>-<b class="boldorange">class属性に"T_currency"と記述されている</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputCommaText</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <span>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います。</span><br/>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+          <span>-<b class="boldorange">groupingSeparator</b></span><br/>
+          <p>この属性は、3桁ごとの金額区切り文字を何にするか指定します.デフォルトは<b class="boldorange">","</b>.</p>
+          <span>-<b class="boldorange">fractionSeparator</b></span><br/>
+          <p>この属性は、3桁ごとの小数点区切り文字を何にするか指定します.デフォルトは<b class="boldorange">"."</b>.</p>
+          <span>-<b class="boldorange">fraction</b></span><br/>
+          <p>この属性は、小数点以下何桁までを有効範囲とするか指定します.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>あり</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>-inputCommaTextは<b class="boldorange">自動的にime-mode:disabled;が描画</b>される</span><br/>
+          <span>-<b class="boldorange">数値と記号、tmb（t=000, m=000000, b=000000000に変換）のみ</b>しか入力できない</span><br/>
+          <span>-focusから抜ける際にフォーマットを整え、再度focusがあたると数値のみのフォーマットになる</span><br/>
         </td>
       </tr>
     </tbody>
