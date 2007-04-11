@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,14 +18,14 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.OutputTextTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
+import org.seasar.teeda.extension.taglib.TOutputTextTag;
 
 /**
  * @author shot
@@ -37,8 +37,8 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
     }
 
     protected void registerTagElements() {
-        registerTagElement(JsfConstants.JSF_HTML_URI, "outputText",
-                OutputTextTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputText", TOutputTextTag.class);
     }
 
     public void testIsMatch() throws Exception {
@@ -57,6 +57,16 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse("3", factory.isMatch(elementNode3, pageDesc, null));
     }
 
+    public void testIsMatch2() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "aaaLabel");
+        ElementNode parentNode = createElementNode("a", new HashMap());
+        ElementNode elementNode = createElementNode("span", properties);
+        elementNode.setParent(parentNode);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
+    }
+
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
@@ -70,7 +80,7 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(OutputTextTag.class, processor.getTagClass());
+        assertEquals(TOutputTextTag.class, processor.getTagClass());
         assertEquals("#{fooPage.aaa}", processor.getProperty("value"));
     }
 }

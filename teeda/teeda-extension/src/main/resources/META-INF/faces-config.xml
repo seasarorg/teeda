@@ -296,4 +296,12 @@
 			org.seasar.teeda.extension.component.html.THtmlSelectOneRadio
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlOutputText
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlOutputText
+		</component-class>
+	</component>
 </faces-config>

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,8 +22,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.el.ValueBinding;
-import javax.faces.internal.ConverterResource;
 
 import org.seasar.teeda.core.exception.NoValueHolderRuntimeException;
 
@@ -55,17 +53,9 @@ public class ValueHolderUtil {
                 return submittedValue.toString();
             }
         }
-        ValueHolder vh = (ValueHolder) component;
-        Object value = vh.getValue();
-        Converter converter = null;
-        ValueBinding vb = component.getValueBinding("value");
-        if (vb != null) {
-            String expression = vb.getExpressionString();
-            converter = ConverterResource.getConverter(expression);
-        }
-        if (converter == null) {
-            converter = vh.getConverter();
-        }
+        final ValueHolder vh = (ValueHolder) component;
+        final Object value = vh.getValue();
+        final Converter converter = ConverterUtil.getConverter(component);
         return UIValueUtil.getValueAsString(context, component, value,
                 converter);
     }

@@ -9,11 +9,19 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.util;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.ValueHolder;
+import javax.faces.convert.Converter;
+import javax.faces.el.ValueBinding;
+import javax.faces.internal.ConverterResource;
+
+import org.seasar.teeda.core.JsfConstants;
 
 /**
  * @author yone
@@ -21,6 +29,23 @@ package org.seasar.teeda.core.util;
 public class ConverterUtil {
 
     private ConverterUtil() {
+    }
+
+    public static Converter getConverter(final UIComponent component) {
+        Converter converter = null;
+        final ValueBinding vb = component
+                .getValueBinding(JsfConstants.VALUE_ATTR);
+        if (vb != null) {
+            String expression = vb.getExpressionString();
+            converter = ConverterResource.getConverter(expression);
+        }
+        if (converter != null) {
+            return converter;
+        }
+        if (component instanceof ValueHolder) {
+            return ((ValueHolder) component).getConverter();
+        }
+        return null;
     }
 
     public static int convertToInt(Object value) {

@@ -18,8 +18,6 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.faces.internal.LabelUtil;
-
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -62,19 +60,8 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return;
         }
-        String pageName = pageDesc.getPageName();
-        String propertiesName = LabelUtil.getPropertiesName(namingConvention,
-                pageName);
-        String id = StringUtil.trimSuffix(elementNode.getId(), "Label");
-        String key = LabelUtil.getLabelKeySuffix(namingConvention, pageName)
-                + "." + id;
-        properties.put(ExtensionConstants.KEY_ATTR, key);
-        properties.put(ExtensionConstants.PROPERTIES_NAME_ATTR, propertiesName);
-        properties.put(ExtensionConstants.DEFAULT_KEY, id);
-        String defaultPropertiesName = LabelUtil
-                .getDefaultApplicationPropertiesName(namingConvention, pageName);
-        properties.put(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR,
-                defaultPropertiesName);
+        LabelFactoryUtil.storeLabelAttributesTo(properties, elementNode,
+                pageDesc, namingConvention);
     }
 
     protected void customizeDynamicProperties(String base, Map properties,

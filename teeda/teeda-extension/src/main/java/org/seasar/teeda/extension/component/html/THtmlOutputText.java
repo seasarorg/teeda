@@ -16,7 +16,7 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.ComponentUtil_;
-import javax.faces.component.html.HtmlOutputLabel;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -24,12 +24,11 @@ import org.seasar.teeda.extension.ExtensionConstants;
 /**
  * @author shot
  */
-//TODO if getter method which return type is String, use ComponentUtil_.getValueBindingAsString(this, bindingName);
-public class THtmlOutputLabel extends HtmlOutputLabel {
+public class THtmlOutputText extends HtmlOutputText {
 
-    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Label";
+    public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlOutputText";
 
-    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Label";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlOutputText";
 
     private String key;
 
@@ -39,7 +38,7 @@ public class THtmlOutputLabel extends HtmlOutputLabel {
 
     private String defaultPropertiesName;
 
-    public THtmlOutputLabel() {
+    public THtmlOutputText() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 

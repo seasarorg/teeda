@@ -25,6 +25,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.HtmlNode;
+import org.seasar.teeda.extension.html.TextNode;
 
 public class ElementNodeImpl implements ElementNode {
 
@@ -191,6 +192,16 @@ public class ElementNodeImpl implements ElementNode {
 
     public void removeChild(HtmlNode node) {
         children.remove(node);
+    }
+
+    public TextNode getFirstTextNode() {
+        for (int i = 0; i < getChildSize(); i++) {
+            HtmlNode child = getChild(i);
+            if (child instanceof TextNode) {
+                return (TextNode) child;
+            }
+        }
+        return null;
     }
 
 }

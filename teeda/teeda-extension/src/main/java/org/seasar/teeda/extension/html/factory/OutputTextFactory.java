@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,18 +17,23 @@ package org.seasar.teeda.extension.html.factory;
 
 import java.util.Map;
 
+import org.seasar.framework.convention.NamingConvention;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
- * 
+ *
  */
 public class OutputTextFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "outputText";
+
+    private NamingConvention nc;
 
     public OutputTextFactory() {
     }
@@ -41,7 +46,14 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return false;
         }
-        return pageDesc.hasProperty(elementNode.getId());
+        final String id = elementNode.getId();
+        if (id == null) {
+            return false;
+        }
+        if (isLabelSpan(id, elementNode)) {
+            return true;
+        }
+        return pageDesc.hasProperty(id);
     }
 
     public boolean isLeaf() {
@@ -56,8 +68,43 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return;
         }
-        properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageDesc
-                .getPageName(), elementNode.getId()));
+        final String id = elementNode.getId();
+        final boolean isLabel = isLabelSpan(id, elementNode);
+        if (isLabel) {
+            TextNode firstTextNode = elementNode.getFirstTextNode();
+            properties.put(JsfConstants.VALUE_ATTR, firstTextNode.getValue());
+        } else {
+            properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(
+                    pageDesc.getPageName(), id));
+        }
+        final ElementNode parent = elementNode.getParent();
+        if (parent != null) {
+            final String tagName = parent.getTagName();
+            if (id.endsWith("Label")
+                    && tagName.equalsIgnoreCase(JsfConstants.ANCHOR_ELEM)) {
+                LabelFactoryUtil.storeLabelAttributesTo(properties,
+                        elementNode, pageDesc, nc);
+            }
+        }
+    }
+
+    protected static boolean isLabelSpan(final String id,
+            final ElementNode elementNode) {
+        final ElementNode parent = elementNode.getParent();
+        if (parent == null) {
+            return false;
+        }
+        final String tagName = parent.getTagName();
+        if (id.endsWith("Label")
+                && tagName.equalsIgnoreCase(JsfConstants.ANCHOR_ELEM)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setNamingConvention(NamingConvention namingConvention) {
+        this.nc = namingConvention;
     }
 
     protected String getTagName() {
@@ -65,6 +112,6 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return JsfConstants.JSF_HTML_URI;
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 }
