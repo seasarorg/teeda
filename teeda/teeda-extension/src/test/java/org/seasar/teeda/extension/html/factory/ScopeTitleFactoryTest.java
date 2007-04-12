@@ -21,26 +21,26 @@ import java.util.Map;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
-import org.seasar.teeda.extension.taglib.TOutputTextTag;
+import org.seasar.teeda.extension.taglib.TTitleTag;
 
 /**
- * @author higa
+ * @author shot
  */
-public class ScopeOutputTextFactoryTest extends ElementProcessorFactoryTestCase {
+public class ScopeTitleFactoryTest extends ElementProcessorFactoryTestCase {
 
     protected AbstractElementProcessorFactory createFactory() {
-        return new ScopeOutputTextFactory();
+        return new ScopeTitleFactory();
     }
 
     protected void registerTagElements() {
-        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
-                "outputText", TOutputTextTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI, "title",
+                TTitleTag.class);
     }
 
     public void testIsMatch() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "requestScope_aaa");
-        ElementNode elementNode = createElementNode("span", properties);
+        ElementNode elementNode = createElementNode("title", properties);
         assertTrue(factory.isMatch(elementNode, null, null));
 
         ElementNode elementNode2 = createElementNode("foo", properties);
@@ -55,14 +55,15 @@ public class ScopeOutputTextFactoryTest extends ElementProcessorFactoryTestCase 
         // ## Arrange ##
         Map properties = new HashMap();
         properties.put("id", "requestScope_aaa");
-        ElementNode elementNode = createElementNode("span", properties);
+        ElementNode elementNode = createElementNode("title", properties);
 
         // ## Act ##
         ElementProcessor processor = factory.createProcessor(elementNode, null,
                 null);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(TOutputTextTag.class, processor.getTagClass());
+        assertEquals(TTitleTag.class, processor.getTagClass());
         assertEquals("#{requestScope.aaa}", processor.getProperty("value"));
     }
+
 }

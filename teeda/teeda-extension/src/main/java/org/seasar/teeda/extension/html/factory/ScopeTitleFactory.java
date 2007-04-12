@@ -26,19 +26,15 @@ import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
 
 /**
- * @author higa
  * @author shot
  */
-public class ScopeOutputTextFactory extends AbstractElementProcessorFactory {
+public class ScopeTitleFactory extends AbstractElementProcessorFactory {
 
-    private static final String TAG_NAME = "outputText";
-
-    public ScopeOutputTextFactory() {
-    }
+    private static final String TAG_NAME = "title";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        if (!JsfConstants.TITLE_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
         String id = elementNode.getId();
@@ -46,10 +42,6 @@ public class ScopeOutputTextFactory extends AbstractElementProcessorFactory {
             return false;
         }
         return id.indexOf("Scope_") >= 0;
-    }
-
-    public boolean isLeaf() {
-        return true;
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -62,6 +54,10 @@ public class ScopeOutputTextFactory extends AbstractElementProcessorFactory {
                         .replace(elementNode.getId(), "_", ".")));
     }
 
+    public boolean isLeaf() {
+        return true;
+    }
+
     protected String getTagName() {
         return TAG_NAME;
     }
@@ -69,4 +65,5 @@ public class ScopeOutputTextFactory extends AbstractElementProcessorFactory {
     protected String getUri() {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
+
 }

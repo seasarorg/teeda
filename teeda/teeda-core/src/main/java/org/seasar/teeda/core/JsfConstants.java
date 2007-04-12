@@ -193,6 +193,8 @@ public interface JsfConstants {
 
     String HEAD_ELEM = "head";
 
+    String TITLE_ELEM = "title";
+
     // -- attribute --
 
     String ACCEPT_ATTR = "accept";

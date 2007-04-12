@@ -53,6 +53,8 @@
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
 	<component name="scopeOutputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.ScopeOutputTextFactory" />
+	<component name="scopeTitleFactory"
+		class="org.seasar.teeda.extension.html.factory.ScopeTitleFactory" />
 	<component name="holidayCalendarFactory"
 		class="org.seasar.teeda.extension.html.factory.HolidayCalendarFactory" />
 	<component name="selectBooleanCheckboxFactory"
