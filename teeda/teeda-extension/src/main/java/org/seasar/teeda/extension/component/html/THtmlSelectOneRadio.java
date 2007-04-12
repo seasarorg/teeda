@@ -18,7 +18,9 @@ package org.seasar.teeda.extension.component.html;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -31,6 +33,25 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlSelectOneRadio";
 
     private Integer col = null;
+
+    public void validate(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        final Object submittedValue = getSubmittedValue();
+        final Object convertedValue = getConvertedValue(context, submittedValue);
+        if (!isValid()) {
+            return;
+        }
+        validateValue(context, convertedValue);
+        if (!isValid()) {
+            return;
+        }
+        Object previous = getValue();
+        setValue(convertedValue);
+        setSubmittedValue(null);
+        if (compareValues(previous, convertedValue)) {
+            queueEvent(new ValueChangeEvent(this, previous, convertedValue));
+        }
+    }
 
     public Object saveState(final FacesContext context) {
         final Object[] values = new Object[2];
