@@ -78,11 +78,9 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                     UIComponent child = (UIComponent) it.next();
                     if (child instanceof UIParameter) {
                         UIParameter parameter = (UIParameter) child;
-                        String encodedName = URLEncoder.encode(parameter
-                                .getName(), encoding);
-                        String encodedValue = URLEncoder.encode(
-                                toBlankIfNull(parameter.getValue()), encoding);
-                        urlBuilder.add(encodedName, encodedValue);
+                        String name = parameter.getName();
+                        String value = toBlankIfNull(parameter.getValue());
+                        urlBuilder.add(name, value);
                     }
                 }
                 return context.getExternalContext().encodeResourceURL(
