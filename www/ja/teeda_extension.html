@@ -949,7 +949,54 @@ h3.underline {
     </tbody>
   </table>
 </div>
-
+<h3 class="underline"><a name="include">include</a></h3>
+<p>include機能についての説明。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>インクルード機能</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;te:src~"aaa.html"&gt;</b><br/>または<br/><b class="boldorange">&lt;te:src~"/bbb/bbb.html"&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">teを使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります。</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>無し</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-<b class="boldorange">includeページに対応するPageクラスのinitialize()が呼ばれる。</b></span><br/>
+            <span>-<b class="boldorange">includeページに対応するPageクラスのprerender()が呼ばれる。</b></span><br/>
+            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能。</b></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
