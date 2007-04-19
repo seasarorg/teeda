@@ -312,7 +312,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (facesMessage != null) {
             context.addMessage(getClientId(context), facesMessage);
         } else {
-            Object[] args = new Object[] { getId() };
+            Object[] args = new Object[] { UIComponentUtil.getLabel(this) };
             FacesMessageUtil.addErrorComponentMessage(context, this,
                     CONVERSION_MESSAGE_ID, args);
         }
@@ -351,7 +351,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     protected void validateValue(FacesContext context, Object newValue) {
         if (isValid() && isRequired() && UIInputUtil.isEmpty(newValue)) {
-            Object[] args = new Object[] { getId() };
+            Object[] args = new Object[] { UIComponentUtil.getLabel(this) };
             FacesMessageUtil.addErrorComponentMessage(context, this,
                     REQUIRED_MESSAGE_ID, args);
             setValid(false);
