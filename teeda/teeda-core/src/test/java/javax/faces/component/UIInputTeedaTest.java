@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,6 +19,9 @@ import java.util.Iterator;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.internal.ConverterResource;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.DoubleRangeValidator;
@@ -26,6 +29,7 @@ import javax.faces.validator.LengthValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockValueBinding;
 
 /**
@@ -34,6 +38,7 @@ import org.seasar.teeda.core.mock.MockValueBinding;
 public class UIInputTeedaTest extends UIOutputTeedaTest {
 
     public void tearDown() {
+        ConverterResource.removeAll();
         ValidatorResource.removeAll();
     }
 
@@ -111,6 +116,46 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         FacesMessage message = (FacesMessage) o;
         assertNotNull(message);
         assertEquals(FacesMessage.SEVERITY_ERROR, message.getSeverity());
+    }
+
+    public void testValidate() throws Exception {
+        FacesContext context = getFacesContext();
+        UIInput input = createUIInput();
+        input.setId("aaa");
+        input.getAttributes().put(JsfConstants.LABEL_ATTR, "hoge");
+        input.setSubmittedValue("");
+        ConverterResource.addConverter("#{hoge}", new Converter() {
+
+            public Object getAsObject(FacesContext context,
+                    UIComponent component, String value)
+                    throws ConverterException {
+                return "";
+            }
+
+            public String getAsString(FacesContext context,
+                    UIComponent component, Object value)
+                    throws ConverterException {
+                return "";
+            }
+
+        });
+        input.setValueBinding("value", new MockValueBinding() {
+            public String getExpressionString() {
+                return "#{hoge}";
+            }
+        });
+        input.setValid(true);
+        input.setRequired(true);
+        input.validate(context);
+
+        Iterator messages = context.getMessages();
+        assertTrue(messages != null);
+
+        FacesMessage next = (FacesMessage) messages.next();
+        assertTrue(next != null);
+
+        String detail = next.getDetail();
+        assertTrue(detail.indexOf("hoge") >= 0);
     }
 
     private UIInput createUIInput() {
