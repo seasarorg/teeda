@@ -44,6 +44,7 @@ import javax.faces.internal.NamingContainerUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
@@ -314,6 +315,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             return;
         }
         final Object page = getPage(context);
+        final Object pageClone = ClassUtil.newInstance(page.getClass());
+        BeanUtil.copyProperties(page, pageClone);
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
                 .getClass());
         final PropertyDesc itemsPd = pageBeanDesc
@@ -368,7 +371,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 }
                 final PropertyDesc pagePd = pageBeanDesc
                         .getPropertyDesc(propertyName);
-                pagePd.setValue(page, null);
+                pagePd.setValue(page, pagePd.getValue(pageClone));
             }
         }
         itemsPd.setValue(page, items);
