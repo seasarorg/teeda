@@ -40,36 +40,36 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
-    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
+    public boolean isMatch(final ElementNode elementNode,
+            final PageDesc pageDesc, final ActionDesc actionDesc) {
         if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
             return false;
         }
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         if (id == null) {
             return false;
         }
         if (pageDesc == null) {
             return false;
         }
-        String items = id + ExtensionConstants.ITEMS_SUFFIX;
+        final String items = id + ExtensionConstants.ITEMS_SUFFIX;
         if (!pageDesc.hasItemsProperty(items)) {
             return false;
         }
         int elementNodeCount = 0;
         for (int i = 0; i < elementNode.getChildSize(); i++) {
-            HtmlNode child = elementNode.getChild(i);
+            final HtmlNode child = elementNode.getChild(i);
             if (child instanceof ElementNode) {
                 elementNodeCount++;
-                ElementNode node = (ElementNode) child;
-                String childTagName = node.getTagName();
+                final ElementNode node = (ElementNode) child;
+                final String childTagName = node.getTagName();
                 if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(childTagName)
                         || !JsfConstants.RADIO_VALUE.equalsIgnoreCase(node
                                 .getProperty(JsfConstants.TYPE_ATTR))) {
                     return false;
                 }
-                String name = node.getProperty(JsfConstants.NAME_ATTR);
-                if (name == null || !name.equals(id)) {
+                final String name = node.getProperty(JsfConstants.NAME_ATTR);
+                if ((name == null) || !name.equals(id)) {
                     return false;
                 }
             }
@@ -80,8 +80,9 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         return true;
     }
 
-    protected void customizeProperties(Map properties, ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
+    protected void customizeProperties(final Map properties,
+            final ElementNode elementNode, final PageDesc pageDesc,
+            final ActionDesc actionDesc) {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
