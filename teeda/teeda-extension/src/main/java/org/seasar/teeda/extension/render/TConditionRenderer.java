@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.IgnoreAttribute;
 
+import org.seasar.framework.log.Logger;
+import org.seasar.framework.message.MessageFormatter;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -39,10 +41,13 @@ public class TConditionRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
+    private static final Logger logger = Logger
+            .getLogger(TConditionRenderer.class);
+
     private final IgnoreAttribute attribute = new IgnoreAttribute();
     {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
-        attribute.addAttributeName("submitted");
+        attribute.addAttributeName(ExtensionConstants.SUBMITTED);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -53,10 +58,10 @@ public class TConditionRenderer extends AbstractRenderer {
     protected void decodeTCondition(FacesContext context, TCondition condition) {
         Object submitted = null;
         for (Iterator itr = condition.getChildren().iterator(); itr.hasNext();) {
-            UIComponent c = (UIComponent) itr.next();
+            final UIComponent c = (UIComponent) itr.next();
             if (c instanceof HtmlInputHidden) {
-                HtmlInputHidden hidden = (HtmlInputHidden) c;
-                String hiddenId = c.getId();
+                final HtmlInputHidden hidden = (HtmlInputHidden) c;
+                final String hiddenId = c.getId();
                 if (hiddenId.equals(condition.getId()
                         + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
                     hidden.decode(context);
@@ -75,21 +80,27 @@ public class TConditionRenderer extends AbstractRenderer {
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        boolean rendered = component.isRendered();
-
+        final boolean rendered = component.isRendered();
+        boolean renderHidden = false;
         for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
-            UIComponent c = (UIComponent) itr.next();
-            if (c instanceof HtmlInputHidden) {
-                String hiddenId = c.getId();
+            final UIComponent child = (UIComponent) itr.next();
+            if (child instanceof HtmlInputHidden) {
+                final String hiddenId = child.getId();
                 if (hiddenId.equals(component.getId()
                         + ExtensionConstants.TEEDA_HIDDEN_SUFFIX)) {
-                    ((HtmlInputHidden) c).setValue(new Boolean(rendered));
+                    ((HtmlInputHidden) child).setValue(new Boolean(rendered));
+                    renderHidden = true;
                     break;
                 }
             }
         }
         if (!rendered) {
             return;
+        }
+        if (!renderHidden) {
+            final String message = MessageFormatter
+                    .getMessage("WTDA0203", null);
+            logger.debug(message);
         }
         TCondition condition = (TCondition) component;
         final ResponseWriter writer = context.getResponseWriter();

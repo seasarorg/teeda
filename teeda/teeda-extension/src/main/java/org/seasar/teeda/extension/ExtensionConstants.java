@@ -82,6 +82,8 @@ public interface ExtensionConstants {
 
     String COL_ATTR = "col";
 
+    String SUBMITTED = "submitted";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 
