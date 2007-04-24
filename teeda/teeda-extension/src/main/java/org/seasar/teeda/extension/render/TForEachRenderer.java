@@ -25,6 +25,8 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.beans.util.BeanUtil;
+import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
@@ -47,6 +49,8 @@ public class TForEachRenderer extends AbstractRenderer {
         }
         final TForEach forEach = (TForEach) component;
         final Object page = forEach.getPage(context);
+        final Object pageClone = ClassUtil.newInstance(page.getClass());
+        BeanUtil.copyProperties(page, pageClone);
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
                 .getClass());
         final Object[] items = forEach.getItems(context);
@@ -64,6 +68,7 @@ public class TForEachRenderer extends AbstractRenderer {
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
         }
+        BeanUtil.copyProperties(pageClone, page);
     }
 
     public void decode(FacesContext context, UIComponent component) {
