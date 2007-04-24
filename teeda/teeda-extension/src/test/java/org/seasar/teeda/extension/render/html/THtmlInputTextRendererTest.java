@@ -28,7 +28,6 @@ import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
-import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.extension.component.html.THtmlInputText;
 
 /**
@@ -235,10 +234,6 @@ public class THtmlInputTextRendererTest extends RendererTest {
 
     public void testGetRendersChildren() throws Exception {
         assertEquals(false, renderer.getRendersChildren());
-    }
-
-    private HtmlInputTextRenderer createHtmlInputTextRenderer() {
-        return (HtmlInputTextRenderer) createRenderer();
     }
 
     public void testErrorStyleClass() throws Exception {
