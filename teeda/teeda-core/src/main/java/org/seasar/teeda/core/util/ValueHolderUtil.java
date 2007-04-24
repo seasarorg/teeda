@@ -30,22 +30,22 @@ import org.seasar.teeda.core.exception.NoValueHolderRuntimeException;
  */
 public class ValueHolderUtil {
 
-    public static Object getValue(UIComponent component) {
+    public static Object getValue(final UIComponent component) {
         if (!(component instanceof ValueHolder)) {
             throw new NoValueHolderRuntimeException(component.getClass());
         }
-        ValueHolder vh = (ValueHolder) component;
+        final ValueHolder vh = (ValueHolder) component;
         return vh.getValue();
     }
 
-    public static String getValueForRender(FacesContext context,
-            UIComponent component) {
+    public static String getValueForRender(final FacesContext context,
+            final UIComponent component) {
         if (!(component instanceof ValueHolder)) {
             throw new IllegalArgumentException("component must be ValueHolder");
         }
         if (component instanceof EditableValueHolder) {
-            EditableValueHolder evh = (EditableValueHolder) component;
-            Object submittedValue = evh.getSubmittedValue();
+            final EditableValueHolder evh = (EditableValueHolder) component;
+            final Object submittedValue = evh.getSubmittedValue();
             if (submittedValue != null) {
                 if (submittedValue instanceof String) {
                     return (String) submittedValue;
@@ -60,26 +60,26 @@ public class ValueHolderUtil {
                 converter);
     }
 
-    public static String[] getValuesForRender(FacesContext context,
-            UIComponent component) {
+    public static String[] getValuesForRender(final FacesContext context,
+            final UIComponent component) {
         if (!(component instanceof ValueHolder)) {
             throw new IllegalArgumentException("component must be ValueHolder");
         }
         if (component instanceof EditableValueHolder) {
-            EditableValueHolder evh = (EditableValueHolder) component;
-            Object submittedValue = evh.getSubmittedValue();
+            final EditableValueHolder evh = (EditableValueHolder) component;
+            final Object submittedValue = evh.getSubmittedValue();
             if (submittedValue instanceof String[]) {
                 return (String[]) submittedValue;
             }
         }
-        ValueHolder vh = (ValueHolder) component;
-        Object value = vh.getValue();
+        final ValueHolder vh = (ValueHolder) component;
+        final Object value = vh.getValue();
         if (value == null) {
             return new String[0];
         }
-        Converter converter = vh.getConverter();
+        final Converter converter = vh.getConverter();
         final int length = Array.getLength(value);
-        String[] values = new String[length];
+        final String[] values = new String[length];
         for (int i = 0; i < length; ++i) {
             values[i] = UIValueUtil.getValueAsString(context, component, Array
                     .get(value, i), converter);
