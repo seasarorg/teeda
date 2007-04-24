@@ -124,16 +124,18 @@ public class UISelectItem extends UIComponentBase {
         itemDisabledSet = ((Boolean) values[3]).booleanValue();
         itemLabel = (String) values[4];
         itemValue = values[5];
+        value = values[6];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[6];
+        Object[] values = new Object[7];
         values[0] = super.saveState(context);
         values[1] = itemDescription;
         values[2] = ComponentUtil_.convertToBoolean(itemDisabled);
         values[3] = ComponentUtil_.convertToBoolean(itemDisabledSet);
         values[4] = itemLabel;
         values[5] = itemValue;
+        values[6] = value;
         return values;
     }
 

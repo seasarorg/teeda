@@ -15,6 +15,8 @@
  */
 package javax.faces.component;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
+
 /**
  * @author manhole
  */
@@ -22,8 +24,27 @@ public class UISelectItemTeedaTest extends UIComponentBaseTeedaTest {
 
     public void testSaveAndRestoreState() throws Exception {
         super.testSaveAndRestoreState();
-        createUISelectItem();
-        // TODO test
+        // ## Arrange ##
+        final UISelectItem component1 = createUISelectItem();
+        component1.setItemDescription("aaaDesc");
+        component1.setItemDisabled(true);
+        component1.setItemLabel("fooLabel");
+        component1.setItemValue("fooItemValue");
+        component1.setValue("hogeValue");
+
+        final MockFacesContext context = getFacesContext();
+
+        // ## Act ##
+        final Object state = component1.saveState(context);
+        final UISelectItem component2 = createUISelectItem();
+        component2.restoreState(context, serializeAndDeserialize(state));
+
+        // ## Assert ##
+        assertEquals(component1.getItemDescription(), component2
+                .getItemDescription());
+        assertEquals(component1.isItemDisabled(), component2.isItemDisabled());
+        assertEquals(component1.getItemLabel(), component2.getItemLabel());
+        assertEquals(component1.getValue(), component2.getValue());
     }
 
     private UISelectItem createUISelectItem() {
