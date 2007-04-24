@@ -14,3 +14,26 @@ SVNからチェックアウトした後に、mvn eclipse:eclipse して
 
 pom.xmlが更新される度に(dependencyが変更される度に)、
 mvn eclipse:eclipseすること。
+
+
+* 各モジュールについて
+
+** teeda-core-test
+
+teeda-coreのみのテストです。
+teeda-extensionのjarはclasspathへ通していません。
+
+** teeda-core-test-client
+
+teeda-coreのみのテストです。
+teeda-core-testとの違いは、javax.faces.STATE_SAVING_METHODが"client"になっていることです。
+
+** teeda-jsp-test
+
+teeda-coreとteeda-extensionをclasspathに持ち、
+viewにJSPを使用するテストです。
+
+** teeda-html-test
+
+teeda-coreとteeda-extensionをclasspathに持ち、
+viewにHTMLを使用するテストです。

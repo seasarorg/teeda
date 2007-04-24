@@ -24,6 +24,7 @@ import java.util.NoSuchElementException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 /**
@@ -115,13 +116,51 @@ public class SelectItemsIterator implements Iterator {
         throw new NoSuchElementException();
     }
 
-    protected SelectItem createSelectItem(UISelectItem ui) {
-        SelectItem item = (SelectItem) ui.getValue();
-        if (item != null) {
-            return item;
+    protected SelectItem createSelectItem(final UISelectItem ui) {
+        final Object value = ui.getValue();
+        if (value != null) {
+            return convertValueAsSelectItem(value, ui);
+        } else {
+            final Object itemValue = ui.getItemValue();
+            final String label = ui.getItemLabel();
+            final String description = ui.getItemDescription();
+            final boolean disabled = ui.isItemDisabled();
+            return createSelectItem(itemValue, label, description, disabled);
         }
-        return new SelectItem(ui.getItemValue(), ui.getItemLabel(), ui
-                .getItemDescription(), ui.isItemDisabled());
+    }
+
+    private SelectItem createSelectItem(final Object value, String label,
+            final String description, final boolean disabled) {
+        if (label == null && value != null) {
+            label = value.toString();
+        }
+        SelectItem selectItem = new SelectItem();
+        if (value != null) {
+            selectItem.setValue(value);
+        }
+        if (label != null) {
+            selectItem.setLabel(label);
+        }
+        selectItem.setDescription(description);
+        selectItem.setDisabled(disabled);
+        return selectItem;
+    }
+
+    private SelectItem convertValueAsSelectItem(final Object value,
+            final UIComponent component) {
+        if (value instanceof SelectItem) {
+            return (SelectItem) value;
+        } else {
+            final FacesContext context = FacesContext.getCurrentInstance();
+            final String clientId = component.getClientId(context);
+            final StringBuffer sb = new StringBuffer(100);
+            sb.append("component [");
+            sb.append(clientId);
+            sb.append("] is not SelectItem. but was [");
+            sb.append(value.getClass().getName());
+            sb.append("]");
+            throw new IllegalStateException(new String(sb));
+        }
     }
 
     protected static class SelectItemsMapIterator implements Iterator {

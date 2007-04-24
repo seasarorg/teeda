@@ -37,6 +37,7 @@
   <modules>
     <module>teeda-core-test</module>
     <module>teeda-core-test-client</module>
+    <module>teeda-jsp-test</module>
     <module>teeda-html-test</module>
   </modules>
   <repositories>

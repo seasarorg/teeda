@@ -122,15 +122,34 @@ public class UIComponentUtil {
         }
     }
 
-    public static UIForm findParentForm(UIComponent component) {
-        UIComponent parent = component.getParent();
-        while (parent != null && !(parent instanceof UIForm)) {
-            parent = parent.getParent();
-        }
+    public static UIForm findParentForm(final UIComponent component) {
+        final UIComponent parent = findParentOrNull(component, UIForm.class);
         if (parent == null) {
             throw new TagNotFoundRuntimeException("form");
         }
         return (UIForm) parent;
+    }
+
+    public static UIComponent findParent(final UIComponent component,
+            final Class parentClass) {
+        final UIComponent parent = findParentOrNull(component, parentClass);
+        if (parent != null) {
+            return parent;
+        }
+        // TODO 例外をどうにかする
+        throw new IllegalArgumentException("parent element not found ["
+                + parentClass.getName() + "]");
+    }
+
+    private static UIComponent findParentOrNull(final UIComponent component,
+            final Class parentClass) {
+        for (UIComponent parent = component.getParent(); parent != null; parent = parent
+                .getParent()) {
+            if (parentClass.isInstance(parent)) {
+                return parent;
+            }
+        }
+        return null;
     }
 
     public static UIComponent findDescendant(UIComponent component, Class clazz) {
