@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>selectOneRadio1</title>
+</head>
+<body>
+	<form 
+		id="selectOneRadio1Form" 
+		name="selectOneRadio1Form" 
+		action="/faces/render/selectOneRadio1.jsp" 
+		method="post" 
+		enctype="application/x-www-form-urlencoded"
+	>
+		<table id="aaaa">
+			<tr>
+				<td><label><input type="radio" name="selectOneRadio1Form:aaaa" value="1" />One</label></td>
+				<td><label><input type="radio" name="selectOneRadio1Form:aaaa" value="2" checked="checked" />Two</label></td>
+				<td><label><input type="radio" name="selectOneRadio1Form:aaaa" value="3" />Three</label></td>
+			</tr>
+		</table>
+		<span id="bbb">2</span>
+		<input type="submit" id="submit1" name="selectOneRadio1Form:submit1" />
+		<input type="hidden" 
+			name="selectOneRadio1Form/render/selectOneRadio1.jsp" 
+			value="selectOneRadio1Form" 
+		/>
+	</form>
+</body>
+</html>
