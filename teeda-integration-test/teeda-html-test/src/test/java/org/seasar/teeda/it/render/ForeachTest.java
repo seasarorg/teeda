@@ -29,6 +29,42 @@ public class ForeachTest extends TeedaWebTestCase {
 		return setUpTest(ForeachTest.class);
 	}
 
+	public void testSeasarUser7342() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreach.html");
+		tester.dumpHtml();
+		tester.setTextById("foo-text", "aaa");
+		tester.setTextById("bar-text", "bbb");
+		tester.submitById("doForeachConfirm");
+
+		// --------
+		assertTrue(tester.getCurrentUri().indexOf("foreachConfirm.html") > 0);
+
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("foo-text", "aaa");
+		tester.assertTextEqualsById("bar-text", "bbb");
+	}
+
+	public void testSeasarUser7347() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(),
+				"view/foreach/foreach.html?foo=AAA&bar=BBB");
+		tester.dumpHtml();
+		tester.assertTextEqualsById("foo-span", "AAA");
+		tester.assertTextEqualsById("bar-span", "BBB");
+		tester.assertTextEqualsById("foo-span2", "AAA");
+		tester.assertTextEqualsById("bar-span2", "BBB");
+	}
+
 	public void testInputArray() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
