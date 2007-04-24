@@ -151,6 +151,9 @@ public class RendererUtil {
                 return false;
             }
         }
+        if (JsfConstants.ESCAPE_ATTR.equals(attributeName)) {
+            return false;
+        }
         if (JsfConstants.ID_ATTR.equals(attributeName)) {
             return shouldRenderIdAttribute(value.toString());
         }
