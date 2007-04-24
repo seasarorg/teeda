@@ -24,7 +24,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <includes>
-              <include>**/AllCoreTests.java</include>
+              <include>**/AllJspTests.java</include>
             </includes>
           </configuration>
         </plugin>

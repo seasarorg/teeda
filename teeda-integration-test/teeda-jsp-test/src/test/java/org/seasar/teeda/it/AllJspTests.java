@@ -23,10 +23,10 @@ import org.seasar.teeda.unit.web.FileSystemWebTestBuilder;
 /**
  * @author manhole
  */
-public class AllCoreTests extends TestCase {
+public class AllJspTests extends TestCase {
 
     public static Test suite() throws Exception {
-        return new FileSystemWebTestBuilder().build(AllCoreTests.class);
+        return new FileSystemWebTestBuilder().build(AllJspTests.class);
     }
 
 }
