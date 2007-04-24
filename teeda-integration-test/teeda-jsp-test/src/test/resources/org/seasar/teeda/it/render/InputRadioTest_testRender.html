@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>inputRadio</title>
+</head>
+<body>
+	<form 
+		id="inputRadioForm" 
+		name="inputRadioForm" 
+		action="/faces/render/inputRadio.jsp" 
+		method="post" 
+		enctype="application/x-www-form-urlencoded"
+	>
+		<input type="radio" name="inputRadioForm:aaaa" value="1" />One
+		<input type="radio" name="inputRadioForm:aaaa" value="2" checked="checked" />Two
+		<input type="radio" name="inputRadioForm:aaaa" value="3" />Three
+		<span id="bbb">2</span>
+		<input type="submit" id="submit1" name="inputRadioForm:submit1" />
+		<input type="hidden" 
+			name="inputRadioForm/render/inputRadio.jsp" 
+			value="inputRadioForm" 
+		/>
+	</form>
+</body>
+</html>

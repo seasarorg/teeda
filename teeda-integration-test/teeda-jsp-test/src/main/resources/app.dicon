@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="convention.dicon"/>
+	<include path="teeda.dicon"/>
+
+	<component
+		class="org.seasar.teeda.core.render.autoregister.TeedaRendererComponentAutoRegister">
+		<initMethod name="addReferenceClass">
+			<arg>@org.seasar.teeda.extension.render.html.HtmlTextRenderer@class</arg>
+		</initMethod>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.teeda.extension.render"</arg>
+			<arg>"..*Renderer"</arg>
+		</initMethod>
+		<initMethod name="addIgnoreClassPattern">
+			<arg>"org.seasar.teeda.extension.render"</arg>
+			<arg>"Abstract..*Renderer"</arg>
+		</initMethod>
+	</component>
+
+</components>

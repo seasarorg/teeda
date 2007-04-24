@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config>
+	<lifecycle>
+		<phase-listener>org.seasar.teeda.core.event.PhaseChangeTracer</phase-listener>
+	</lifecycle>
+
+	<managed-bean>
+		<managed-bean-name>selectOneRadio1Bean</managed-bean-name>
+		<managed-bean-class>org.seasar.teeda.it.SelectOneRadio1Bean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<!-- 
+	<navigation-rule>
+		<from-view-id>/render/changePage1.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>ok</from-outcome>
+			<to-view-id>/render/changePage1_result.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	-->
+
+	<converter>
+		<converter-id>inputDateTimeConverter</converter-id>
+		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
+		<property>
+			<property-name>pattern</property-name>
+			<property-class>String</property-class>
+			<default-value>yyyy.MM.dd</default-value>
+		</property>
+	</converter>
+	<converter>
+		<converter-id>outputDateTimeConverter</converter-id>
+		<converter-class>javax.faces.convert.DateTimeConverter</converter-class>
+		<property>
+			<property-name>pattern</property-name>
+			<property-class>String</property-class>
+			<default-value>yyyy/MM/dd</default-value>
+		</property>
+	</converter>
+
+</faces-config>
