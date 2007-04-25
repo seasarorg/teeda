@@ -95,8 +95,10 @@ public class TeedaExtensionErrorPageManagerImpl extends
             return;
         }
         String message = exception.getMessage();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                message, message));
+        final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                message, message);
+        context.addMessage(null, fm);
+        redirectScope.remove(JsfConstants.ERROR_MANAGER_EXCEPTION_KEY);
     }
 
     protected PagePersistence getPagePersistence() {
