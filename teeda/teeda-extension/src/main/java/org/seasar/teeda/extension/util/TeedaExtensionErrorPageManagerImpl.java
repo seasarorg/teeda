@@ -26,6 +26,7 @@ import javax.faces.internal.scope.SubApplicationScope;
 import javax.servlet.ServletRequest;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.message.MessageFormatter;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.AlreadyRedirectingException;
@@ -33,6 +34,7 @@ import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.ServletErrorPageManagerImpl;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -95,9 +97,15 @@ public class TeedaExtensionErrorPageManagerImpl extends
             return;
         }
         String message = exception.getMessage();
+        if (message == null) {
+            message = MessageFormatter.getMessage("WTDA0204",
+                    new Object[] { exception });
+        }
         final FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 message, message);
         context.addMessage(null, fm);
+        context.getExternalContext().getRequestMap().put(
+                ExtensionConstants.EXCEPTOION_PROPERTY, exception);
         redirectScope.remove(JsfConstants.ERROR_MANAGER_EXCEPTION_KEY);
     }
 

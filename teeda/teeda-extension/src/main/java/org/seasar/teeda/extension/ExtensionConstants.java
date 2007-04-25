@@ -160,4 +160,5 @@ public interface ExtensionConstants {
 
     Integer SUBAPP_SCOPE = new Integer(3);
 
+    String EXCEPTOION_PROPERTY = "exception";
 }

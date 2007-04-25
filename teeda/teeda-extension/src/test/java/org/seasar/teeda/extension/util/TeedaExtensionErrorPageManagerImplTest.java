@@ -9,14 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.util;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,6 +75,33 @@ public class TeedaExtensionErrorPageManagerImplTest extends
         assertEquals("aaa", req.getAttribute(JsfConstants.ERROR_MESSAGE));
 
         assertTrue(calls[0]);
+    }
+
+    public void testSaveAndRestoreException1() throws Exception {
+        MockFacesContext context = getFacesContext();
+        TeedaExtensionErrorPageManagerImpl.saveException(new HogeException(),
+                context);
+        TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
+        Iterator messages = context.getMessages();
+        assertNotNull(messages);
+        FacesMessage fm = (FacesMessage) messages.next();
+        assertNotNull(fm);
+        assertNotNull(fm.getDetail());
+        System.out.println(fm.getDetail());
+    }
+
+    public void testSaveAndRestoreException2() throws Exception {
+        MockFacesContext context = getFacesContext();
+        FooException e = new FooException();
+        e.setMessage("aaa");
+        TeedaExtensionErrorPageManagerImpl.saveException(e, context);
+        TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
+        Iterator messages = context.getMessages();
+        assertNotNull(messages);
+        FacesMessage fm = (FacesMessage) messages.next();
+        assertNotNull(fm);
+        assertNotNull("aaa", fm.getDetail());
+        System.out.println(fm.getDetail());
     }
 
     private static class HogeException extends Exception {
