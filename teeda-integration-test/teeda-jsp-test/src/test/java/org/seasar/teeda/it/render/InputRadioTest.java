@@ -32,6 +32,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 
 /**
+ * https://www.seasar.org/issues/browse/TEEDA-290
+ * 
  * @author manhole
  */
 public class InputRadioTest extends TeedaWebTestCase {
