@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.seasar.org/teeda/extension" prefix="te"%>
 <f:view>
 <html>
-<head>
+<te:head>
 <title>grid.jsp</title>
 <style>
 .gridHeader {
@@ -24,7 +24,7 @@
 	margin: 0px;
 }
 </style>
-</head>
+</te:head>
 
 <te:body>
 <h:form id="inputTextForm">
