@@ -29,13 +29,14 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.DateTimeConverter;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.mock.NullUIComponent;
 
 /**
  * @author shot
- *
+ * @author yone
  */
 public class TDateTimeConverterTest extends AbstractConverterTestCase {
 
@@ -372,6 +373,84 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         converter.setLocale(locale);
         assertEquals(locale, converter.getLocale());
 
+    }
+
+    public void testConvertTargetPointed() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        final String pattern = "yyyy/MM/dd";
+        converter.setPattern(pattern);
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+
+        String dateValue = "2005/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+        assertEquals(date, dateTarget);
+    }
+
+    public void testConvertTargetPointed2() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        final String pattern = "yyyy/MM/dd";
+        converter.setPattern(pattern);
+        converter.setTarget("aaa");
+        
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+
+        String dateValue = "AAA";
+        try {
+            converter.getAsObject(context,
+                    new MockUIComponent(), dateValue);
+            fail();
+        } catch (ConverterException expected) {
+            assertNotNull(expected);
+        }
+    }
+
+    public void testConvertTargetNotPointed() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        final String pattern = "yyyy/MM/dd";
+        converter.setPattern(pattern);
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+
+        String dateValue = "2005/08/01";
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
+
+        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+        assertEquals(date, dateTarget);
+    }
+
+    public void testConvertTargetNotPointed2() throws Exception {
+        TDateTimeConverter converter = (TDateTimeConverter) createConverter();
+        FacesContext context = getFacesContext();
+        converter.setLocale(defaultLocale);
+        converter.setTimeZone(defaultTimeZone);
+        final String pattern = "yyyy/MM/dd";
+        converter.setPattern(pattern);
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+
+        String dateValue = "AAA";
+        Date date = (Date) converter.getAsObject(context,
+                new MockUIComponent(), dateValue);
+
+        assertNull(date);
     }
 
     private Date createDateTarget(String pattern, Locale locale, String date)

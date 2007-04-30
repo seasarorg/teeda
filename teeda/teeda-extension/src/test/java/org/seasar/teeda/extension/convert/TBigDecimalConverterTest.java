@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.convert;
 
 import java.math.BigDecimal;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -29,7 +30,7 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
                 new MockUIComponent(), new BigDecimal("123456789.100"));
         assertEquals("123,456,789.1", s);
     }
-    
+
     public void testGetAsString_withRoundingMode() throws Exception {
         TBigDecimalConverter converter = new TBigDecimalConverter();
         converter.setPattern("###,###,###.###");
@@ -37,5 +38,53 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
         String s = converter.getAsString(getFacesContext(),
                 new MockUIComponent(), new BigDecimal("123456789.1555"));
         assertEquals("123,456,789.156", s);
+    }
+
+    public void testConvertTargetPointed() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        converter.setPattern("###,###,###.###");
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+        String s = converter.getAsString(getFacesContext(),
+                new MockUIComponent(), new BigDecimal("123456789.100"));
+        assertEquals("123,456,789.1", s);
+    }
+
+    public void testConvertTargetPointed2() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        converter.setPattern("###,###,###.###");
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa");
+        try {
+            converter.getAsString(getFacesContext(), new MockUIComponent(),
+                    new BigDecimal("AAA"));
+        } catch (Exception expected) {
+            assertNotNull(expected);
+        }
+    }
+
+    // コンバートエラーが無い場合は，コンバートが行われる事を確認
+    public void testConvertTargetNotPointed() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        converter.setPattern("###,###,###.###");
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        String s = converter.getAsString(getFacesContext(),
+                new MockUIComponent(), new BigDecimal("123456789.100"));
+        assertEquals("123,456,789.1", s);
+    }
+
+    public void testConvertTargetNotPointed2() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        converter.setPattern("###,###,###.###");
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        String s = converter.getAsString(getFacesContext(),
+                new MockUIComponent(), "AAA");
+        assertEquals("AAA", s);
     }
 }

@@ -29,11 +29,14 @@ import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.ConverterUtil;
 
 /**
  * @author shot
+ * @author yone
  */
-public class TDateTimeConverter extends DateTimeConverter {
+public class TDateTimeConverter extends DateTimeConverter implements
+        ConvertTargetSelectable {
 
     private Integer threshold = null;
 
@@ -46,9 +49,21 @@ public class TDateTimeConverter extends DateTimeConverter {
                 .get(Calendar.YEAR) - 80;
     }
 
+    private String target;
+
+    protected String[] targets;
+
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
-        Date date = (Date) super.getAsObject(context, component, value);
+        Date date = null;
+        try {
+            date = (Date) super.getAsObject(context, component, value);
+        } catch (ConverterException e) {
+            if (!isTargetCommandConvert(context, targets)) {
+                return null;
+            }
+            throw e;
+        }
         if (date == null) {
             return null;
         }
@@ -91,6 +106,9 @@ public class TDateTimeConverter extends DateTimeConverter {
         try {
             return formatter.parse(value);
         } catch (ParseException e) {
+            if (!isTargetCommandConvert(context, targets)) {
+                return null;
+            }
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
             throw ConvertUtil.wrappedByConverterException(this, context, args,
@@ -132,9 +150,10 @@ public class TDateTimeConverter extends DateTimeConverter {
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[2];
+        Object[] values = new Object[3];
         values[0] = super.saveState(context);
         values[1] = threshold;
+        values[2] = target;
         return values;
     }
 
@@ -142,6 +161,23 @@ public class TDateTimeConverter extends DateTimeConverter {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
         threshold = (Integer) values[1];
+        target = (String) values[2];
+        setTarget(target);
     }
 
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
+        targets = StringUtil.split(target, ", ");
+    }
+
+    public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
+        return ConverterUtil.isTargetCommand(context, targets);
+    }
 }

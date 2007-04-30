@@ -24,19 +24,26 @@ import javax.faces.convert.ConverterException;
 import javax.faces.internal.ConvertUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.util.BigDecimalFormatUtil;
+import org.seasar.teeda.extension.util.ConverterUtil;
 
 /**
  * @author shot
  * @author contributed by SMG Co., Ltd.(http://www.smg.co.jp/)
+ * @author yone
  */
-public class TBigDecimalConverter extends BigDecimalConverter {
+public class TBigDecimalConverter extends BigDecimalConverter implements
+        ConvertTargetSelectable {
 
     private String pattern;
 
     private Integer scale;
 
     private Integer roundingMode;
+    private String target;
+
+    private String[] targets;
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
@@ -64,6 +71,9 @@ public class TBigDecimalConverter extends BigDecimalConverter {
 
             return BigDecimalFormatUtil.format(decimalValue, pattern);
         } catch (Exception e) {
+            if (!isTargetCommandConvert(context, targets)) {
+                return null;
+            }
             throw ConvertUtil.wrappedByConverterException(e);
         }
     }
@@ -91,5 +101,19 @@ public class TBigDecimalConverter extends BigDecimalConverter {
     public void setRoundingMode(Integer roundingMode) {
         this.roundingMode = roundingMode;
     }
+    public String getTarget() {
+        return target;
+    }
 
+    public void setTarget(String target) {
+        this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
+        targets = StringUtil.split(target, ", ");
+    }
+
+    public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
+        return ConverterUtil.isTargetCommand(context, targets);
+    }
 }
