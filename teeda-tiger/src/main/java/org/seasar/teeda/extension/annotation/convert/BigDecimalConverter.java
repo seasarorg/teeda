@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author higa
+ * @author yone
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
@@ -29,4 +30,7 @@ import java.lang.annotation.Target;
 public @interface BigDecimalConverter {
 
 	String pattern() default "";
+	
+	String target() default "";
+	
 }

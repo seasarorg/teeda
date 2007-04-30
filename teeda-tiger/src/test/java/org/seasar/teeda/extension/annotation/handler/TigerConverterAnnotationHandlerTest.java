@@ -27,6 +27,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
 import org.seasar.teeda.extension.annotation.convert.TimestampConverter;
 import org.seasar.teeda.extension.convert.TDateTimeConverter;
+import org.seasar.teeda.extension.convert.TTimestampConverter;
 
 public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 
@@ -36,8 +37,8 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd);
 		ComponentDef cd2 = new ComponentDefImpl(
-				org.seasar.teeda.core.convert.TimestampConverter.class,
-				"timestampConverter");
+				TTimestampConverter.class,
+				"TTimestampConverter");
 		cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd2);
 		register(HogeBean.class, "hogeBean");
@@ -51,7 +52,7 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		assertNotNull(converter);
 		assertEquals("time", converter.getType());
 
-		org.seasar.teeda.core.convert.TimestampConverter timestampConverter = (org.seasar.teeda.core.convert.TimestampConverter) ConverterResource
+		TTimestampConverter timestampConverter = (TTimestampConverter) ConverterResource
 				.getConverter("#{hogeBean.ddd}");
 		assertNotNull(timestampConverter);
 		assertEquals("yyyy/MM/dd HH:mm:ss.SSS", timestampConverter.getPattern());

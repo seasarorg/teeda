@@ -22,10 +22,11 @@ import java.lang.annotation.Target;
 
 /**
  * @author shot
+ * @author yone
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Converter("timestampConverter")
+@Converter("TTimestampConverter")
 public @interface TimestampConverter {
 
 	String type() default "";
@@ -35,4 +36,7 @@ public @interface TimestampConverter {
 	String pattern() default "";
 
 	String timeStyle() default "";
+
+	String target() default "";
+
 }

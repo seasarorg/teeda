@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author higa
+ * @author yone
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
@@ -35,4 +36,7 @@ public @interface DateTimeConverter {
 	String pattern() default "";
 
 	String timeStyle() default "";
+
+	String target() default "";
+
 }
