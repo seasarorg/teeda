@@ -97,6 +97,7 @@ h3.underline {
       <li><a href="#outputText">outputText</a></li>
       <li><a href="#inputText">inputText</a></li>
       <li><a href="#inputHidden">inputHidden</a></li>
+      <li><a href="#inputRadio">inputRadio</a></li>
       <!--
       <li><a href="#inputSecret">inputSecret</a></li>
       -->
@@ -290,6 +291,62 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td><span>Validationフェーズを正常終了すると、すぐにModelを更新する</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputRadio">inputRadio</a></h3>
+<p>inputRadioはラジオ入力項目のコンポーネントです。HTMLへ記述したradio候補をそのまま使用します。
+ラジオ入力項目コンポーネントには<a href="#selectOneRadio">selectOneRadio</a>がありますが、
+こちらは項目が動的に変わる場合に使用するもの、という違いがあります。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ラジオ入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="1" /&gt;One<br />
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="2" /&gt;Two<br />
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="3" /&gt;Three<br />
+          &lt;/span&gt;
+          </b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">spanタグの配下にinputタグのradio項目がある</b></span><br/>
+            <span>-<b class="boldorange">spanタグのidと同一のプロパティ名がPageクラスに存在する</b></span><br/>
+            <span>-<b class="boldorange">spanタグの配下のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputRadio</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>なし</td>
       </tr>
     </tbody>
   </table>
