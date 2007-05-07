@@ -257,21 +257,44 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 final String summary = fm.getSummary();
                 final String detail = fm.getDetail();
                 //TODO : maybe need to be flexible for line output.
+                if (summary == null && detail == null) {
+                    continue;
+                }
+                final String lineErrorMessage = getLineErrorMessage(context,
+                        row + 1);
                 if (summary != null) {
-                    fm.setSummary(summary
-                            + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                            + (row + 1)
-                            + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                    if (lineErrorMessage != null) {
+                        fm.setSummary(summary + lineErrorMessage);
+                    } else {
+                        fm
+                                .setSummary(summary
+                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
+                                        + (row + 1)
+                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                    }
                 }
                 if (detail != null) {
-                    fm.setDetail(detail
-                            + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                            + (row + 1)
-                            + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                    if (lineErrorMessage != null) {
+                        fm.setDetail(detail + lineErrorMessage);
+                    } else {
+                        fm
+                                .setDetail(detail
+                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
+                                        + (row + 1)
+                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                    }
                 }
             }
         }
 
+    }
+
+    protected String getLineErrorMessage(final FacesContext context,
+            int linenumber) {
+        String message = FacesMessageUtil.getSummary(context,
+                ExtensionConstants.VALIDATION_ERROR_LINE_MESSAGE,
+                new Object[] { new Integer(linenumber) });
+        return message;
     }
 
     //fix for https://www.seasar.org/issues/browse/TEEDA-146

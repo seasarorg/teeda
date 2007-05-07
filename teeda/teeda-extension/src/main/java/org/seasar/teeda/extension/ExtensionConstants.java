@@ -154,6 +154,8 @@ public interface ExtensionConstants {
 
     String VALIDATION_ERROR_LINE_SUFFIX = ")";
 
+    String VALIDATION_ERROR_LINE_MESSAGE = "org.seasar.teeda.extension.component.TForEach.line";
+
     Integer REDIRECT_SCOPE = new Integer(1);
 
     Integer PAGE_SCOPE = new Integer(2);

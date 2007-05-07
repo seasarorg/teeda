@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -33,4 +33,38 @@ public class TConditionTest extends TeedaTestCase {
         c.setRendered(true);
         assertTrue(c.isRendered());
     }
+
+    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured2()
+            throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "a", "b"));
+        TCondition c = new TCondition();
+        c.setRendered(false);
+        c.setSubmitted(true);
+        assertTrue(c.isRendered());
+    }
+
+    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured3()
+            throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                "a", "b"));
+        TCondition c = new TCondition();
+        c.setRendered(false);
+        c.setSubmitted(true);
+        assertTrue(c.isRendered());
+    }
+
+    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured4()
+            throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                "a", "b"));
+        TCondition c = new TCondition();
+        c.setRendered(true);
+        c.setSubmitted(false);
+        assertTrue(c.isRendered());
+    }
+
 }

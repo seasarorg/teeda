@@ -279,8 +279,6 @@ public class FacesMessageUtil {
 
     private static MessageResourceBundle getBundle(FacesContext context,
             Locale locale, String bundleName) {
-
-        // TODO DBやXMLなどからもメッセージを取れるようにしたい
         return MessageResourceBundleChainFactory
                 .createChain(bundleName, locale);
     }
@@ -323,5 +321,19 @@ public class FacesMessageUtil {
         AssertionUtil.assertNotNull("context", context);
         final Iterator itr = context.getMessages();
         return itr.hasNext();
+    }
+
+    public static boolean hasErrorOrFatalMessage(final FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        final FacesMessage[] allMessages = getAllMessages(context);
+        for (int i = 0; i < allMessages.length; i++) {
+            final FacesMessage fm = allMessages[i];
+            final Severity severity = fm.getSeverity();
+            if (severity.equals(FacesMessage.SEVERITY_ERROR)
+                    || severity.equals(FacesMessage.SEVERITY_FATAL)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

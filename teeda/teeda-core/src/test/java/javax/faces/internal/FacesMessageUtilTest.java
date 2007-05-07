@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -246,6 +246,27 @@ public class FacesMessageUtilTest extends TeedaTestCase {
 
         };
         assertTrue(FacesMessageUtil.hasMessagesByClientId(context, c));
+    }
+
+    public void testHasErrorOrFatalMesssages1() throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "c1", "c2"));
+        assertTrue(FacesMessageUtil.hasErrorOrFatalMessage(context));
+    }
+
+    public void testHasErrorOrFatalMesssages2() throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                "c1", "c2"));
+        assertTrue(FacesMessageUtil.hasErrorOrFatalMessage(context));
+    }
+
+    public void testHasErrorOrFatalMesssages3() throws Exception {
+        MockFacesContext context = getFacesContext();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "c1", "c2"));
+        assertFalse(FacesMessageUtil.hasErrorOrFatalMessage(context));
     }
 
 }
