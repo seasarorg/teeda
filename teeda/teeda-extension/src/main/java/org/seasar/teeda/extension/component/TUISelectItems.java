@@ -46,6 +46,13 @@ public class TUISelectItems extends UISelectItems {
     //default : output nullLabel.
     private boolean nullLabelRequired = true;
 
+    private static final SelectItem BLANK_SELECT_ITEM = new SelectItem();
+    
+    static {
+        BLANK_SELECT_ITEM.setValue("");
+        BLANK_SELECT_ITEM.setLabel("");
+    }
+    
     public String getItemLabel() {
         return itemLabel;
     }
@@ -86,45 +93,50 @@ public class TUISelectItems extends UISelectItems {
             list.add(si);
         }
         if (value instanceof Collection) {
-            for (Iterator it = ((Collection) value).iterator(); it.hasNext();) {
-                Object item = it.next();
-                if (item instanceof SelectItem) {
-                    list.add(item);
-                } else if (item instanceof Map) {
-                    Map map = (Map) item;
-                    SelectItem si = new SelectItem();
-                    Object itemValueValue = map.get(itemValue);
-                    if (itemValueValue != null) {
-                        si.setValue(itemValueValue);
+            final Collection valueCollection = (Collection) value;
+            if(valueCollection.size() == 0) {
+                list.add(BLANK_SELECT_ITEM);
+            } else {
+                for (Iterator it = valueCollection.iterator(); it.hasNext();) {
+                    Object item = it.next();
+                    if (item instanceof SelectItem) {
+                        list.add(item);
+                    } else if (item instanceof Map) {
+                        Map map = (Map) item;
+                        SelectItem si = new SelectItem();
+                        Object itemValueValue = map.get(itemValue);
+                        if (itemValueValue != null) {
+                            si.setValue(itemValueValue);
+                        }
+                        Object itemLabelValue = map.get(itemLabel);
+                        if (itemLabelValue == null) {
+                            itemLabelValue = itemValueValue;
+                        }
+                        if (itemLabelValue != null) {
+                            si.setLabel(itemLabelValue.toString());
+                        }
+                        list.add(si);
+                    } else {
+                        SelectItem si = new SelectItem();
+                        BeanDesc bd = BeanDescFactory.getBeanDesc(item.getClass());
+                        PropertyDesc pd = bd.getPropertyDesc(itemValue);
+                        Object itemValueValue = pd.getValue(item);
+                        if (itemValueValue != null) {
+                            si.setValue(itemValueValue);
+                        }
+                        Object itemLabelValue = null;
+                        if (bd.hasPropertyDesc(itemLabel)) {
+                            pd = bd.getPropertyDesc(itemLabel);
+                            itemLabelValue = pd.getValue(item);
+                        }
+                        if (itemLabelValue == null) {
+                            itemLabelValue = itemValueValue;
+                        }
+                        if (itemLabelValue != null) {
+                            si.setLabel(itemLabelValue.toString());
+                        }
+                        list.add(si);
                     }
-                    Object itemLabelValue = map.get(itemLabel);
-                    if (itemLabelValue == null) {
-                        itemLabelValue = itemValueValue;
-                    }
-                    if (itemLabelValue != null) {
-                        si.setLabel(itemLabelValue.toString());
-                    }
-                    list.add(si);
-                } else {
-                    SelectItem si = new SelectItem();
-                    BeanDesc bd = BeanDescFactory.getBeanDesc(item.getClass());
-                    PropertyDesc pd = bd.getPropertyDesc(itemValue);
-                    Object itemValueValue = pd.getValue(item);
-                    if (itemValueValue != null) {
-                        si.setValue(itemValueValue);
-                    }
-                    Object itemLabelValue = null;
-                    if (bd.hasPropertyDesc(itemLabel)) {
-                        pd = bd.getPropertyDesc(itemLabel);
-                        itemLabelValue = pd.getValue(item);
-                    }
-                    if (itemLabelValue == null) {
-                        itemLabelValue = itemValueValue;
-                    }
-                    if (itemLabelValue != null) {
-                        si.setLabel(itemLabelValue.toString());
-                    }
-                    list.add(si);
                 }
             }
         }
