@@ -40,7 +40,10 @@ public class CharacterConverter implements Converter {
         }
         value = value.trim();
         if (value.length() < 1) {
-            return null;
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtil.wrappedByConverterException(this, context, args,
+                    new Exception());
         }
         try {
             return new Character(value.charAt(0));

@@ -16,9 +16,21 @@
 package javax.faces.convert;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockFacesContextImpl;
 import org.seasar.teeda.core.mock.MockUIComponent;
 
 public class CharacterConverterTest extends AbstractConverterTestCase {
+
+    public void testGetAsObject_valueLengthIsBlank() throws Exception {
+        Converter converter = createConverter();
+        try {
+            converter.getAsObject(new MockFacesContextImpl(),
+                    new MockUIComponent(), "");
+            fail();
+        } catch (ConverterException e) {
+            success();
+        }
+    }
 
     public void testGetAsObject_convertSuccess() {
         Converter converter = createConverter();
