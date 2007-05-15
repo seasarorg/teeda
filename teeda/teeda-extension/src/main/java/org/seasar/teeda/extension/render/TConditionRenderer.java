@@ -26,6 +26,7 @@ import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.message.MessageFormatter;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -71,9 +72,9 @@ public class TConditionRenderer extends AbstractRenderer {
             }
         }
         if ("true".equals(submitted)) {
-            condition.setSubmitted(true);
+            condition.setSubmitted(Boolean.TRUE);
         } else {
-            condition.setSubmitted(false);
+            condition.setSubmitted(Boolean.FALSE);
         }
     }
 
@@ -108,6 +109,18 @@ public class TConditionRenderer extends AbstractRenderer {
         RendererUtil.renderIdAttributeIfNecessary(writer, component,
                 getIdForRender(context, condition));
         renderRemainAttributes(condition, writer, attribute);
+    }
+
+    public void encodeChildren(FacesContext context, UIComponent component)
+            throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+        TCondition condition = (TCondition) component;
+        Boolean submitted = condition.isSubmitted();
+        if (submitted != null && !submitted.booleanValue()) {
+            return;
+        }
+        super.encodeChildren(context, component);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

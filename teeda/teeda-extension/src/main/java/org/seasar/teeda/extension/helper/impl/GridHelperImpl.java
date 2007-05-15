@@ -9,24 +9,32 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.helper.impl;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.framework.log.Logger;
 import org.seasar.teeda.extension.helper.GridHelper;
 
 /**
  * @author higa
- * 
+ *
  */
 public class GridHelperImpl implements GridHelper {
 
+    private static final long serialVersionUID = 1L;
+
     private long token = 0;
+
+    private static final Logger logger = Logger.getLogger(GridHelperImpl.class);
 
     private Map tables = new HashMap();
 
@@ -41,6 +49,9 @@ public class GridHelperImpl implements GridHelper {
     }
 
     public synchronized String ajaxGetTable(String token) {
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat f = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss:SSS");
+        logger.debug("ajaxGetTable : " + f.format(date));
         return (String) tables.remove(token);
     }
 }

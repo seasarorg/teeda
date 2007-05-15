@@ -22,7 +22,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
-import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -44,12 +43,18 @@ public class TCondition extends UIComponentBase {
     }
 
     public boolean isRendered() {
-        if (FacesMessageUtil.hasErrorOrFatalMessage(getFacesContext())
-                && submitted != null) {
+        /*
+         if (FacesMessageUtil.hasErrorOrFatalMessage(getFacesContext())
+         && submitted != null) {
+         return submitted.booleanValue();
+         } else {
+         return super.isRendered();
+         }
+         */
+        if (submitted != null) {
             return submitted.booleanValue();
-        } else {
-            return super.isRendered();
         }
+        return super.isRendered();
     }
 
     public String getFamily() {
@@ -59,18 +64,15 @@ public class TCondition extends UIComponentBase {
     /**
      * @return Returns the submitted.
      */
-    public boolean isSubmitted() {
-        if (submitted == null) {
-            return true;
-        }
-        return submitted.booleanValue();
+    public Boolean isSubmitted() {
+        return submitted;
     }
 
     /**
      * @param submitted The submitted to set.
      */
-    public void setSubmitted(boolean b) {
-        this.submitted = new Boolean(b);
+    public void setSubmitted(Boolean b) {
+        this.submitted = b;
     }
 
     public void processDecodes(FacesContext context) {
@@ -81,7 +83,7 @@ public class TCondition extends UIComponentBase {
 
     public void processUpdates(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
-        processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
+        processUpdateModelAction(context, PhaseId.UPDATE_MODEL_VALUES);
     }
 
     public void processValidators(FacesContext context) {
@@ -89,8 +91,23 @@ public class TCondition extends UIComponentBase {
         processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
     }
 
+    protected void processUpdateModelAction(FacesContext context, PhaseId phase) {
+        if (submitted != null) {
+            boolean b = submitted.booleanValue();
+            submitted = null;
+            if (!b) {
+                return;
+            }
+        }
+        for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
+            UIComponent component = (UIComponent) children.next();
+            ComponentUtil_.processAppropriatePhaseAction(context, component,
+                    phase);
+        }
+    }
+
     protected void processAppropriateAction(FacesContext context, PhaseId phase) {
-        if (!isSubmitted()) {
+        if (submitted != null && !submitted.booleanValue()) {
             return;
         }
         for (Iterator children = getFacetsAndChildren(); children.hasNext();) {

@@ -41,7 +41,7 @@ public class TConditionTest extends TeedaTestCase {
                 "a", "b"));
         TCondition c = new TCondition();
         c.setRendered(false);
-        c.setSubmitted(true);
+        c.setSubmitted(Boolean.TRUE);
         assertTrue(c.isRendered());
     }
 
@@ -52,7 +52,7 @@ public class TConditionTest extends TeedaTestCase {
                 "a", "b"));
         TCondition c = new TCondition();
         c.setRendered(false);
-        c.setSubmitted(true);
+        c.setSubmitted(Boolean.TRUE);
         assertTrue(c.isRendered());
     }
 
@@ -63,7 +63,7 @@ public class TConditionTest extends TeedaTestCase {
                 "a", "b"));
         TCondition c = new TCondition();
         c.setRendered(true);
-        c.setSubmitted(false);
+        c.setSubmitted(Boolean.TRUE);
         assertTrue(c.isRendered());
     }
 
