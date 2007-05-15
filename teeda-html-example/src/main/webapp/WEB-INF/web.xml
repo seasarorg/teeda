@@ -58,7 +58,7 @@
 
     <filter>
         <filter-name>dbSessionFilter</filter-name>
-        <filter-class>org.seasar.extension.dbsession.DbSessionFilter</filter-class>
+        <filter-class>org.seasar.extension.httpsession.SessionFilter</filter-class>
     </filter>
 
     <filter>
@@ -114,10 +114,12 @@
          -->
     </filter-mapping>
 
+	<!--
     <filter-mapping>
         <filter-name>requestDumpFilter</filter-name>
         <url-pattern>/view/*</url-pattern>
     </filter-mapping>
+    -->
 
     <filter-mapping>
         <filter-name>extensionfilter</filter-name>

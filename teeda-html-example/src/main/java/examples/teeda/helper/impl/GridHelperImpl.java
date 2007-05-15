@@ -9,12 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package examples.teeda.helper.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,51 +28,53 @@ import examples.teeda.helper.GridHelper;
  * 
  * @author takanori
  */
-public class GridHelperImpl implements GridHelper {
+public class GridHelperImpl implements GridHelper, Serializable {
 
-    public List pagingFilter(List data, GridCondition condition) {
-        int offset = condition.getOffset();
-        int limit = condition.getLimit();
-        List pagingResult = pagingFilter(data, offset, limit);
+	private static final long serialVersionUID = 1L;
 
-        return pagingResult;
-    }
+	public List pagingFilter(List data, GridCondition condition) {
+		int offset = condition.getOffset();
+		int limit = condition.getLimit();
+		List pagingResult = pagingFilter(data, offset, limit);
 
-    public List pagingFilter(List data, int offset, int limit) {
-        if (offset < 0) {
-            throw new IllegalArgumentException("offset : " + offset);
-        }
-        if (limit < 0) {
-            throw new IllegalArgumentException("limit : " + limit);
-        }
+		return pagingResult;
+	}
 
-        List pagingResult;
-        if (data == null || data.size() <= 0) {
-            return new ArrayList();
-        } else if (offset > data.size()) {
-            return new ArrayList();
-        }
+	public List pagingFilter(List data, int offset, int limit) {
+		if (offset < 0) {
+			throw new IllegalArgumentException("offset : " + offset);
+		}
+		if (limit < 0) {
+			throw new IllegalArgumentException("limit : " + limit);
+		}
 
-        int lastIndex = offset + limit;
-        if (lastIndex > data.size()) {
-            lastIndex = data.size();
-        }
-        pagingResult = new ArrayList(data.subList(offset, lastIndex));
+		List pagingResult;
+		if (data == null || data.size() <= 0) {
+			return new ArrayList();
+		} else if (offset > data.size()) {
+			return new ArrayList();
+		}
 
-        return pagingResult;
-    }
+		int lastIndex = offset + limit;
+		if (lastIndex > data.size()) {
+			lastIndex = data.size();
+		}
+		pagingResult = new ArrayList(data.subList(offset, lastIndex));
 
-    public List sort(List data, GridCondition condition) {
-        String sortProperty = condition.getSortProperty();
-        boolean sortOrder = condition.isSortOrder();
+		return pagingResult;
+	}
 
-        List sortedList = sort(data, sortProperty, sortOrder);
-        return sortedList;
-    }
+	public List sort(List data, GridCondition condition) {
+		String sortProperty = condition.getSortProperty();
+		boolean sortOrder = condition.isSortOrder();
 
-    public List sort(List data, String sortProperty, boolean sortOrder) {
-        // TODO
-        return null;
-    }
+		List sortedList = sort(data, sortProperty, sortOrder);
+		return sortedList;
+	}
+
+	public List sort(List data, String sortProperty, boolean sortOrder) {
+		// TODO
+		return null;
+	}
 
 }
