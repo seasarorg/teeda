@@ -175,7 +175,11 @@ Kumu.Ajax = {
       url += "?time=" + self.encodeURL(sysdate);
       if(null != params){
         for(var key in params){
-          parameters += "&" + key + "=" + self.encodeURL(params[key]);
+          var v = params[key];
+          if (v instanceof Function) {
+            continue;
+          }
+          parameters += "&" + key + "=" + self.encodeURL(v);
         }
       }
       url += parameters;
@@ -189,8 +193,12 @@ Kumu.Ajax = {
       params['time'] = self.encodeURL(sysdate);
       if(params){
         var array = new Array();
-        for(var v in params) {
-          array.push(v + "=" + encodeURIComponent(params[v]));
+        for(var key in params) {
+          var v = params[key];
+          if (v instanceof Function) {
+            continue;
+          }
+          array.push(key + "=" + encodeURIComponent(v));
         }
         parameters = array.join("&");
       }
