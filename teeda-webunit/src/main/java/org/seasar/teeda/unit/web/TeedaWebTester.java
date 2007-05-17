@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Locale;
 
 import junit.framework.Assert;
-import net.sourceforge.jwebunit.IJWebUnitDialog;
-import net.sourceforge.jwebunit.TestContext;
-import net.sourceforge.jwebunit.WebTester;
+import net.sourceforge.jwebunit.api.IJWebUnitDialog;
 import net.sourceforge.jwebunit.html.Table;
+import net.sourceforge.jwebunit.junit.WebTester;
+import net.sourceforge.jwebunit.util.TestContext;
 
 import com.gargoylesoftware.htmlunit.ScriptEngine;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -61,9 +61,8 @@ public class TeedaWebTester {
         this(new WebTesterWrapper());
     }
 
-    public TeedaWebTester(final WebTester tester) {
+    private TeedaWebTester(final WebTester tester) {
         this.tester = tester;
-        tester.initializeDialog();
     }
 
     public void beginAt(final String relativeUrl) {
