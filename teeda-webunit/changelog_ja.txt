@@ -1,4 +1,4 @@
-2007/03/12 teeda-webunit-0.2.1
+2007/03/12 teeda-webunit-0.2.2
 
 * TeedaWebTester.executeJavaScript()でJSを実行できるようにした。
 
