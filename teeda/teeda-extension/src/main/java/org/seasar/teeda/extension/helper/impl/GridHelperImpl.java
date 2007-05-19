@@ -34,8 +34,6 @@ public class GridHelperImpl implements GridHelper {
 
     private long token = 0;
 
-    private static final Logger logger = Logger.getLogger(GridHelperImpl.class);
-
     private Map tables = new HashMap();
 
     protected String createToken() {
@@ -49,9 +47,6 @@ public class GridHelperImpl implements GridHelper {
     }
 
     public synchronized String ajaxGetTable(String token) {
-        Date date = new Date(System.currentTimeMillis());
-        DateFormat f = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss:SSS");
-        logger.debug("ajaxGetTable : " + f.format(date));
         return (String) tables.remove(token);
     }
 }
