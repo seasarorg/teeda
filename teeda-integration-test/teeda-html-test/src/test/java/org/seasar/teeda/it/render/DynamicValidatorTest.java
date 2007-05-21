@@ -43,7 +43,7 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		super.tearDown();
 	}
 
-	public void testValidator1() throws Exception {
+	public void _testValidator1() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPAN);
 		TeedaWebTester tester = new TeedaWebTester();
@@ -64,7 +64,7 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.assertTextInElementById("allMessages", "bbb");
 	}
 
-	public void testValidator2() throws Exception {
+	public void _testValidator2() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPAN);
 		TeedaWebTester tester = new TeedaWebTester();
@@ -74,8 +74,8 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.beginAt(getBaseUrl(), "view/validator/dynamicValidator.html");
 		tester.dumpHtml();
 
-		tester.setTextById("aaa", "123");
-		tester.setTextById("bbb", "223");
+		tester.setTextById("aaa", "12");
+		tester.setTextById("bbb", "22");
 
 		tester.submitByName("validatorForm:doExec");
 
@@ -83,6 +83,26 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 		tester.assertTextInElementById("allMessages", "aaa");
 		tester.assertTextInElementById("allMessages", "bbb");
+	}
+
+	public void testValidator3() throws Exception {
+		// ## Arrange ##
+		Locale.setDefault(Locale.JAPAN);
+		TeedaWebTester tester = new TeedaWebTester();
+		// tester.setLocale(Locale.JAPAN);
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/dynamicValidator.html");
+		tester.dumpHtml();
+
+		tester.setTextById("aaa", "1234");
+		tester.setTextById("bbb", "2246");
+
+		tester.submitByName("validatorForm:doExec");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertNoMatchInElementById("validatorForm", "allMessages");
 	}
 
 }

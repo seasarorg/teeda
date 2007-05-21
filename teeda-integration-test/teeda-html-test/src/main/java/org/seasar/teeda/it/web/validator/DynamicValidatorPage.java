@@ -26,11 +26,11 @@ public class DynamicValidatorPage {
 	// これらは動的なValidatorが定義されている場合、無視される
 	public static final String aaa_TRequiredValidator = null;
 
-	public static final String aaa_TLengthValidator = "minimum = 10";
+	public static final String aaa_TLengthValidator = "minimum = 1";
 
 	public static final String bbb_TRequiredValidator = null;
 
-	public static final String bbb_TLengthValidator = "minimum = 10";
+	public static final String bbb_TLengthValidator = "minimum = 1";
 
 	private Integer aaa;
 
