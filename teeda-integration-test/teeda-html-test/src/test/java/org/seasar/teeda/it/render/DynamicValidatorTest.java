@@ -1,0 +1,88 @@
+/*
+ * Copyright 2004-2007 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package org.seasar.teeda.it.render;
+
+import java.util.Locale;
+
+import junit.framework.Test;
+
+import org.seasar.teeda.unit.web.TeedaWebTestCase;
+import org.seasar.teeda.unit.web.TeedaWebTester;
+
+/**
+ * @author shot
+ */
+public class DynamicValidatorTest extends TeedaWebTestCase {
+
+	public static Test suite() throws Exception {
+		return setUpTest(DynamicValidatorTest.class);
+	}
+
+	private Locale defaultLocale;
+
+	protected void setUp() throws Exception {
+		super.setUp();
+		defaultLocale = Locale.getDefault();
+	}
+
+	protected void tearDown() throws Exception {
+		Locale.setDefault(defaultLocale);
+		super.tearDown();
+	}
+
+	public void testValidator1() throws Exception {
+		// ## Arrange ##
+		Locale.setDefault(Locale.JAPAN);
+		TeedaWebTester tester = new TeedaWebTester();
+		// tester.setLocale(Locale.JAPAN);
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/dynamicValidator.html");
+		tester.dumpHtml();
+
+		tester.setTextById("aaa", "");
+		tester.setTextById("bbb", "");
+
+		tester.submitByName("validatorForm:doExec");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertTextInElementById("allMessages", "aaa");
+		tester.assertTextInElementById("allMessages", "bbb");
+	}
+
+	public void testValidator2() throws Exception {
+		// ## Arrange ##
+		Locale.setDefault(Locale.JAPAN);
+		TeedaWebTester tester = new TeedaWebTester();
+		// tester.setLocale(Locale.JAPAN);
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/dynamicValidator.html");
+		tester.dumpHtml();
+
+		tester.setTextById("aaa", "123");
+		tester.setTextById("bbb", "223");
+
+		tester.submitByName("validatorForm:doExec");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertTextInElementById("allMessages", "aaa");
+		tester.assertTextInElementById("allMessages", "bbb");
+	}
+
+}
