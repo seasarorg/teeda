@@ -21,8 +21,8 @@ import javax.faces.el.ValueBinding;
 import javax.faces.internal.ConverterResource;
 
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.S2ContainerFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.convert.NullConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -39,7 +39,7 @@ public class HtmlInputHiddenTest extends UIInputTest {
 
     public void testProcessValidatorAndUpdateModelImmediately()
             throws Exception {
-        S2Container container = S2ContainerFactory.create();
+        S2Container container = new S2ContainerImpl();
         SingletonS2ContainerFactory.setContainer(container);
         SingletonS2ContainerFactory.init();
 

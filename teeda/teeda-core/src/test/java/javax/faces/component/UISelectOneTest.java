@@ -18,8 +18,8 @@ package javax.faces.component;
 import java.util.Iterator;
 
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.S2ContainerFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 
 /**
@@ -29,7 +29,7 @@ public class UISelectOneTest extends UIInputTest {
 
     public void testValidateValue_Available() throws Exception {
         // ## Arrange ##
-        S2Container container = S2ContainerFactory.create();
+        S2Container container = new S2ContainerImpl();
         SingletonS2ContainerFactory.setContainer(container);
         SingletonS2ContainerFactory.init();
         UISelectOne selectOne = arrangeForValidateTest();
