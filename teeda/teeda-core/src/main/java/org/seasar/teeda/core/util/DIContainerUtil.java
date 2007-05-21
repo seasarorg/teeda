@@ -32,8 +32,12 @@ public class DIContainerUtil {
     }
 
     public static Object getComponentNoException(Object componentKey) {
-        if (getContainer().hasComponentDef(componentKey)) {
-            return getContainer().getComponent(componentKey);
+        S2Container container = getContainer();
+        if (container == null) {
+            return null;
+        }
+        if (container.hasComponentDef(componentKey)) {
+            return container.getComponent(componentKey);
         }
         return null;
     }

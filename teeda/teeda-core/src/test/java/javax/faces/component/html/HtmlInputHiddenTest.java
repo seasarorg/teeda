@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,6 +20,9 @@ import javax.faces.component.UIInputTest;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.ConverterResource;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.S2ContainerFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.convert.NullConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -36,6 +39,10 @@ public class HtmlInputHiddenTest extends UIInputTest {
 
     public void testProcessValidatorAndUpdateModelImmediately()
             throws Exception {
+        S2Container container = S2ContainerFactory.create();
+        SingletonS2ContainerFactory.setContainer(container);
+        SingletonS2ContainerFactory.init();
+
         HtmlInputHidden hidden = (HtmlInputHidden) createUIComponent();
         MockFacesContext context = getFacesContext();
         MockValueBinding vb = new MockValueBinding("#{aaa}");
@@ -45,16 +52,16 @@ public class HtmlInputHiddenTest extends UIInputTest {
         hidden.setValue("bbb");
         hidden.setSubmittedValue("bbb");
         hidden.setValid(true);
-        
+
         hidden.processValidators(context);
-        
+
         ValueBinding vbRes = hidden.getValueBinding("value");
         String s = (String) vbRes.getValue(context);
         assertEquals("bbb", s);
         assertTrue(hidden.isLocalValueSet());
         assertNotNull(hidden.getValue());
     }
-    
+
     public static class Aaa {
         private String name;
 
@@ -65,6 +72,6 @@ public class HtmlInputHiddenTest extends UIInputTest {
         public void setName(String name) {
             this.name = name;
         }
-        
+
     }
 }

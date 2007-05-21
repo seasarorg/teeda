@@ -34,12 +34,14 @@ import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
+import javax.faces.internal.ValidatorLookupStrategy;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
@@ -360,7 +362,30 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             validateFromAddedValidator(context, newValue);
             validateFromBinding(context, newValue);
         }
-        validateFromAnnotation(context, newValue);
+        validateForExtension(context, newValue);
+    }
+
+    protected void validateForExtension(FacesContext context, Object value) {
+        Validator validator = null;
+        final ValidatorLookupStrategy strategy = (ValidatorLookupStrategy) DIContainerUtil
+                .getComponentNoException(ValidatorLookupStrategy.class);
+        if (strategy != null) {
+            validator = strategy.findValidator(context, this, value);
+        } else {
+            ValueBinding vb = this.getValueBinding("value");
+            if (vb != null) {
+                String expression = vb.getExpressionString();
+                validator = ValidatorResource.getValidator(expression);
+            }
+        }
+        if (validator == null) {
+            return;
+        }
+        try {
+            validator.validate(context, this, value);
+        } catch (ValidatorException e) {
+            handleValidationException(context, e);
+        }
     }
 
     protected boolean compareValues(Object previous, Object value) {
@@ -510,21 +535,6 @@ public class UIInput extends UIOutput implements EditableValueHolder {
                 handleValidationException(context, ve);
             } else {
                 throw e;
-            }
-        }
-    }
-
-    protected void validateFromAnnotation(FacesContext context, Object value) {
-        ValueBinding vb = getValueBinding("value");
-        if (vb != null) {
-            String expression = vb.getExpressionString();
-            Validator validator = ValidatorResource.getValidator(expression);
-            if (validator != null) {
-                try {
-                    validator.validate(context, this, value);
-                } catch (ValidatorException e) {
-                    handleValidationException(context, e);
-                }
             }
         }
     }

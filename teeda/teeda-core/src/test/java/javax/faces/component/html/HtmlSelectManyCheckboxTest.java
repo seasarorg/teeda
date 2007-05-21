@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,6 +28,9 @@ import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.S2ContainerFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -514,6 +517,9 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
     }
 
     public void testValidate() throws Exception {
+        S2Container container = S2ContainerFactory.create();
+        SingletonS2ContainerFactory.setContainer(container);
+        SingletonS2ContainerFactory.init();
         FactoryFinder.setFactory(FactoryFinder.RENDER_KIT_FACTORY,
                 "org.seasar.teeda.core.mock.MockRenderKitFactory");
         RenderKitFactory factory = (RenderKitFactory) FactoryFinder

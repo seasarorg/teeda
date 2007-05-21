@@ -454,7 +454,7 @@ public class HtmlSelectManyListbox extends UISelectMany {
         }
         if (PostbackUtil.isPostback(context.getExternalContext()
                 .getRequestMap())) {
-            validateFromAnnotation(context, convertedValue);
+            validateForExtension(context, convertedValue);
         }
         if (!isValid()) {
             return;

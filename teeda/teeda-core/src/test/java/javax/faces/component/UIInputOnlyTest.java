@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,6 +36,9 @@ import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junitx.framework.ObjectAssert;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.S2ContainerFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.core.mock.MockApplicationImpl;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -50,6 +53,12 @@ import org.seasar.teeda.core.mock.NullValidator;
  * @author manhole
  */
 public class UIInputOnlyTest extends TestCase {
+
+    public void setUp() throws Exception {
+        S2Container container = S2ContainerFactory.create();
+        SingletonS2ContainerFactory.setContainer(container);
+        SingletonS2ContainerFactory.init();
+    }
 
     public void testConstants() throws Exception {
         assertEquals("javax.faces.Input", UIInput.COMPONENT_FAMILY);
