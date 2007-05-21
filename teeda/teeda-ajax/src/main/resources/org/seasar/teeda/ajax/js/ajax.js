@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,18 +36,18 @@ Kumu.Ajax = {
   RESPONSE_TYPE_JSON : 2,
   RESPONSE_TYPE_TEXT : 3,
   RESPONSE_TYPE_HTML : 4,
-  
+
   READY_STATE : ['Uninitialized', 'Loading', 'Loaded', 'Interactive'],
-  
+
   axo : new Array(
     "Microsoft.XMLHTTP",
     "Msxml2.XMLHTTP.4.0",
     "Msxml2.XMLHTTP.3.0",
     "Msxml2.XMLHTTP"
   ),
-  
+
   URL : 'teeda.ajax',
-  
+
   ASYNC : true,
 
   DEBUG : false,
@@ -161,16 +161,16 @@ Kumu.Ajax = {
       }
       delete params.method;
     }
-    
+
     if(ajaxComponent.timeout){
       var timerId = self._setTimeout(xmlHttp, ajaxComponent, ajaxComponent.timeout, ajaxComponent.onTimeout);
       ajaxComponent._clearTimeout = function(){
         clearTimeout(timerId);
-      }      
+      }
     }
-    
+
     var process = new Kumu.Ajax.AjaxProcess(xmlHttp, ajaxComponent);
-    
+
     if(method == 'GET'){
       url += "?time=" + self.encodeURL(sysdate);
       if(null != params){
@@ -212,7 +212,7 @@ Kumu.Ajax = {
     }
     return process;
   },
-  
+
   _setTimeout : function(req, ajaxComponent, time, callback){
     var timerId;
     var self = Kumu.Ajax;
@@ -227,7 +227,7 @@ Kumu.Ajax = {
     timerId = setTimeout(onTimeout, time * 1000);
     return timerId;
   },
-  
+
   _createCanceler : function(req, ajaxComponent){
     return function(){
       var self = Kumu.Ajax;
@@ -240,7 +240,7 @@ Kumu.Ajax = {
       }
     };
   },
-  
+
   _onReadyStateChange : function(req, ajaxComponent){
     var self = Kumu.Ajax;
     var event = 'on'+self.READY_STATE[req.readyState];
@@ -252,7 +252,7 @@ Kumu.Ajax = {
       ajaxComponent.doAction[event]._called = true;
     }
   },
-  
+
   _onException : function(exception, ajaxComponent){
     if(ajaxComponent.doAction && ajaxComponent.doAction.onException){
       ajaxComponent.doAction.onException(exception, ajaxComponent);
@@ -261,7 +261,7 @@ Kumu.Ajax = {
       ajaxComponent._clearTimeout();
     }
   },
-  
+
   _evalResult : function(req, ajaxComponent) {
     var self = Kumu.Ajax;
     var status;
@@ -280,12 +280,12 @@ Kumu.Ajax = {
       } else {
         ajaxComponent.doAction(req.responseText);
       }
-      
+
       if (ajaxComponent._clearTimeout){
         ajaxComponent._clearTimeout();
       }
     } else {
-      if(status > 0){ 
+      if(status > 0){
         if (ajaxComponent.doAction && ajaxComponent.doAction.onFailure){
           ajaxComponent.doAction.onFailure(req, ajaxComponent);
         }else{
@@ -297,7 +297,7 @@ Kumu.Ajax = {
       }
     }
   },
-  
+
   _registAjaxListener : function(req, ajaxComponent) {
     var self = Kumu.Ajax;
     req.onreadystatechange = function() {
@@ -314,7 +314,7 @@ Kumu.Ajax = {
 
   },
 
-  encodeURL : function encodeURL(val) {
+  encodeURL : function(val) {
     if (encodeURI) {
       return encodeURI(val);
     }
@@ -348,7 +348,7 @@ Kumu.Ajax = {
     if(!param){
       param = {};
     }
-    
+
     if('onUninitialized' in param){
       ajax.onUninitialized = param['onUninitialized'];
       delete param['onUninitialized'];
@@ -377,7 +377,7 @@ Kumu.Ajax = {
       ajax.onTimeout = param['onTimeout'];
       delete param['onTimeout'];
     }
-    
+
     ajax.params = param;
     if(param instanceof Array){
       for(var i = 0; i < param.length; i++){
@@ -449,7 +449,7 @@ Kumu.Ajax = {
       }
     }
   },
-  
+
   removeRender : function(id){
     var removeId = id+":rendered";
     var elem = document.getElementById(removeId);
