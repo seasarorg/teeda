@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,6 +17,7 @@ package javax.faces.convert;
 
 import java.util.ArrayList;
 
+import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 
 public class NumberConverterTest extends AbstractConverterTestCase {
@@ -89,6 +90,18 @@ public class NumberConverterTest extends AbstractConverterTestCase {
         assertEquals("500,000.123", s);
     }
 
+    public void testSaveAndRestore() throws Exception {
+        NumberConverter converter = (NumberConverter) createConverter();
+        converter.setType("currency");
+        converter.setPattern("#,##0.000");
+        MockFacesContext context = getFacesContext();
+        Object saveState = converter.saveState(context);
+        NumberConverter converter2 = (NumberConverter) createConverter();
+        converter2.restoreState(context, saveState);
+
+        assertEquals("currency", converter.getType());
+        assertEquals("#,##0.000", converter.getPattern());
+    }
 
     protected Converter createConverter() {
         return createNumberConverter();
