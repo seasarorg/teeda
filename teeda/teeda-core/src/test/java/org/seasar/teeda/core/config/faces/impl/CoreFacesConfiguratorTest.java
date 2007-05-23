@@ -24,6 +24,7 @@ import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.event.PhaseListener;
+import javax.faces.internal.FactoryFinderUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKit;
@@ -60,7 +61,6 @@ import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.core.scope.Scope;
 import org.seasar.teeda.core.scope.impl.S2ScopeTranslator;
 import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
-import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot

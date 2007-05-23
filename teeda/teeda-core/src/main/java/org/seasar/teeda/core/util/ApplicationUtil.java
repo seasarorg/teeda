@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.core.util;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FactoryFinderUtil;
 
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.exception.IllegalClassTypeException;
@@ -40,7 +41,7 @@ public class ApplicationUtil {
         FacesContext context = FacesContext.getCurrentInstance();
         return context.getApplication();
     }
-    
+
     public static void verifyClassType(Class expected, Class actual) {
         if (!ClassUtil.isAssignableFrom(expected, actual)) {
             throw new IllegalClassTypeException(expected, actual);

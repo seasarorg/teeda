@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.faces.application.ApplicationFactory;
 import javax.faces.convert.Converter;
+import javax.faces.internal.FactoryFinderUtil;
 
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.StringUtil;
@@ -34,7 +35,6 @@ import org.seasar.teeda.core.config.faces.element.impl.PropertyElementImpl;
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot

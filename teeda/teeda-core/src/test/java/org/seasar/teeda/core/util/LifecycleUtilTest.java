@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.util;
 
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.FactoryFinderUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 
@@ -24,7 +25,7 @@ import org.seasar.teeda.core.mock.MockPhaseListener;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class LifecycleUtilTest extends TeedaTestCase {
-    
+
     public void testGetLifecycle() {
         Lifecycle lifecycle = LifecycleUtil.getLifecycle();
         assertNotNull(lifecycle);

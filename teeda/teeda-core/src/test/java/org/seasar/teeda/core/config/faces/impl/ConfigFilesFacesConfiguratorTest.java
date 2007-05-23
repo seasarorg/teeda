@@ -21,6 +21,7 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.FactoryFinderUtil;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -41,7 +42,6 @@ import org.seasar.teeda.core.mock.MockRenderKitFactory;
 import org.seasar.teeda.core.mock.MockStateManager;
 import org.seasar.teeda.core.mock.MockVariableResolver;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
-import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot
@@ -56,7 +56,7 @@ public class ConfigFilesFacesConfiguratorTest extends S2TestCase {
     public ConfigFilesFacesConfiguratorTest(String name) {
         super(name);
     }
-    
+
     protected void tearDown() {
         FacesConfigOptions.clear();
     }

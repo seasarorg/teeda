@@ -22,6 +22,7 @@ import java.net.URLClassLoader;
 
 import javax.faces.application.ApplicationFactory;
 import javax.faces.context.FacesContextFactory;
+import javax.faces.internal.FactoryFinderUtil;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
 
@@ -36,7 +37,6 @@ import org.seasar.teeda.core.mock.MockApplicationFactory;
 import org.seasar.teeda.core.mock.MockFacesContextFactory;
 import org.seasar.teeda.core.mock.MockLifecycleFactory;
 import org.seasar.teeda.core.mock.MockRenderKitFactory;
-import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot

@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.internal.FactoryFinderUtil;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.render.Renderer;
@@ -34,7 +35,6 @@ import org.seasar.teeda.core.mock.MockRenderKit;
 import org.seasar.teeda.core.mock.MockRenderKitImpl;
 import org.seasar.teeda.core.mock.MockRenderer;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.core.util.FactoryFinderUtil;
 
 /**
  * @author shot

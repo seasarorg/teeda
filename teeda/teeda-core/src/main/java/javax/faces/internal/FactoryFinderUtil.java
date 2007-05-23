@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -32,7 +32,7 @@ import javax.faces.render.RenderKitFactory;
 
 /**
  * @author shot
- * 
+ *
  * This class might be changed without notice. Please do not use it
  * excluding the JSF specification part.
  */
@@ -85,7 +85,7 @@ public class FactoryFinderUtil {
 
     public static Object createFactoryInstance(String factoryName,
             List classNames) {
-        
+
         ClassLoader loader = getClassLoader();
         Class abstractFactoryClass = getAbstractFactoryClass(factoryName);
         Object current = null;
@@ -173,4 +173,25 @@ public class FactoryFinderUtil {
     public static boolean isAlreadySetFactory(Map factoryMap, String factoryName) {
         return (factoryMap != null && factoryMap.containsKey(factoryName));
     }
+
+    public static ApplicationFactory getApplicationFactory() {
+        return (ApplicationFactory) FactoryFinder
+                .getFactory(FactoryFinder.APPLICATION_FACTORY);
+    }
+
+    public static FacesContextFactory getFacesContextFactory() {
+        return (FacesContextFactory) FactoryFinder
+                .getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
+    }
+
+    public static LifecycleFactory getLifecycleFactory() {
+        return (LifecycleFactory) FactoryFinder
+                .getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+    }
+
+    public static RenderKitFactory getRenderKitFactory() {
+        return (RenderKitFactory) FactoryFinder
+                .getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+    }
+
 }
