@@ -2,12 +2,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Grid</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
 <script language="JavaScript" src="../../js/global.js"></script>
 <script language="JavaScript" src="../../js/gridEdit.js"></script>
 <script language="JavaScript" src="../../js/sorttable.js"></script>
 <link rel="stylesheet" type="text/css" href="../../css/global.css" />
-</head>
-<body>
 Grid Paging
 <form id="form">
 
@@ -42,23 +43,23 @@ Grid Paging
 <script>
 <!--
 function doPagingAction(pageElem) {
-    
+
     var childNodes = pageElem.childNodes;
     var pageNumber;
     for(var i = 0; i < childNodes.length; i++) {
         if(childNodes[i].id == "paging") {
             pageNumber = childNodes[i].innerHTML;
             break;
-        } 
+        }
     }
-    
+
     if(pageNumber == null || pageNumber == "undefined") {
         return;
     }
-    
+
     var currentIndex = document.getElementById("currentIndex");
     currentIndex.value = pageNumber - 1;
-    
+
     var doPagingButton = document.getElementById("doPaging");
     doPagingButton.click();
 }

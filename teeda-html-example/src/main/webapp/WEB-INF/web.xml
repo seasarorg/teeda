@@ -50,11 +50,13 @@
         <param-value>.html</param-value>
     </context-param>
 
+	<!-- REDIRECT URLを明示的に指定したい場合は下記コメントをはずし、適切な値を設定してください -->
+	<!--
     <context-param>
         <param-name>teeda.REDIRECT_URL</param-name>
         <param-value>https://127.0.0.1:8080/</param-value>
     </context-param>
-
+	 -->
 
     <filter>
         <filter-name>dbSessionFilter</filter-name>
@@ -95,11 +97,13 @@
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
+	<!-- DBSessionを有効にするには下記コメントはずしてください。 -->
+	<!--
     <filter-mapping>
         <filter-name>dbSessionFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+	 -->
     <filter-mapping>
         <filter-name>s2filter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -136,12 +140,13 @@
     <servlet>
         <servlet-name>teedaServlet</servlet-name>
         <servlet-class>org.seasar.teeda.core.webapp.TeedaServlet</servlet-class>
-<!--    If you want to run teeda-html-example as Portlet, replace TeedaServlet with
+		<!--
+		   If you want to run teeda-html-example as Portlet, replace TeedaServlet with
         TeedaPortletExtendedServlet and add S2Portlet and Portlet Filter.
         S2Portlet: http://s2portlet.sandbox.seasar.org/
         Portlet Filter: http://portals.apache.org/bridges/
         <servlet-class>org.seasar.teeda.core.webapp.TeedaPortletExtendedServlet</servlet-class>
--->
+		-->
         <init-param>
         	<param-name>configPath</param-name>
         	<param-value>app.dicon</param-value>
