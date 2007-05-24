@@ -29,6 +29,7 @@ import javax.faces.lifecycle.Lifecycle;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.ErrorPageManager;
+import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -54,7 +55,7 @@ public class LifecycleImpl extends Lifecycle {
 
     private Phase updateModelValuesPhase;
 
-    private ErrorPageManager errorPageManager;
+    private ErrorPageManager errorPageManager = new NullErrorPageManagerImpl();
 
     public LifecycleImpl() {
     }
