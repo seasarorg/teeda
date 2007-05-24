@@ -31,6 +31,42 @@
 <br/>
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.7">Teeda 1.0.7</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [TEEDA-277] - Gridの幅を調整するするスクリプトが出力されない
+    * [TEEDA-279] - UIComponentBaseのprocessRestoreStateでisTransientをチェックしていない
+    * [TEEDA-280] - ポートレット環境において、prerenderの戻り値でページが変わらない
+    * [TEEDA-281] - ポートレット環境でfacesContextがDIされない
+    * [TEEDA-283] - ポートレット環境でリダイレクト時にSubApplicationScope内の値が渡されない
+    * [TEEDA-289] - ポートレット環境でリンクのパラメータから取得する値がエンコードされたままである
+    * [Seasar-user:6641] [teeda-ajax]ServletException生成時のパラメータについて
+    * [Seasar-user:6744] [Teeda]ErrorPageManager使用時のRender処理について
+    * [Seasar-user:6820] [Teeda]Gridの幅調整スクリプトが出力されない
+    * [Seasar-user:6610] [Teeda] 可変ラジオボタンの件と、Validationエラー時のスタイルの件について
+    * [Seasar-user:6625] [Teeda] レイアウト機能の下でのタイトル動的変更について
+    * [Seasar-user:7073] [Teeda]ラジオボタン未選択時のValidatorについて
+    * [teeda-dev:3463] htmlへ書いたradioをそのまま使いたい
+    * [Seasar-user:7512] [Teeda] ForEach使用時のValidationメッセージについて
+    * [Seasar-user:7554] [Teeda] Ajaxで連動させる２つのプルダウンリスト （Itemsが空でもSelectのコンポーネントは出すように修正。）
+    * [Seasar-user:7503] [Teeda] メッセージ出力時のdivによる表示・非表示処理について
+    * [Seasar-user:7591] [Teeda]非同期Gridでの不具合
+    * [Seasar-user:7725] [Teeda Ajax] Safariでの動作
+
+** Improvement
+    * [TEEDA-213] - SelectOneMenuでのエラー時CSS出力
+    * [TEEDA-271] - AbstractRendererでgetAllAttributesAndProperties()のパフォーマンスチューニング
+    * [Seasar-user:7677] [Teeda] Validatorでチェックする桁数を可変にしたい
+    * TeedaExtensionのErrorPageManagerでexceptionを渡せるようにした。
+
+
+** New Feature
+    * [TEEDA-274] - GET時のHtmlSuffix対応
+    * [TEEDA-290] - htmlテンプレートへ書いたradioをそのまま出力できるようにする
+    * [TEEDA-292] - ConverterにもValitatorのようなtarget指定機能を追加する
+    * [TEEDA-294] - publicなフィールドをプロパティとして認識できるようにする
+</pre>
+
 <h2><a name="1.0.6">Teeda 1.0.6</a></h2>
 <pre style="background-color:white">
 ** Bug
