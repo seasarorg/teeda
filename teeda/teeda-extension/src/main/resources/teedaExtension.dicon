@@ -2,7 +2,8 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<include path="convention.dicon" />
+	<include path="convention.dicon"
+		condition="@org.seasar.teeda.core.util.DiconConditionUtil@hasConvention()" />
 	<include path="teeda.dicon" />
 
 	<component name="validatorLookupStrategyImpl" class="org.seasar.teeda.extension.validator.ValidatorLookupStrategyImpl"/>
