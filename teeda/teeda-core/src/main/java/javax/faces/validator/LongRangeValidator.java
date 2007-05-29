@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.UIInputUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.LongConversionUtil;
@@ -60,7 +61,7 @@ public class LongRangeValidator implements Validator, StateHolder {
             Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (value == null) {
+        if (UIInputUtil.isEmpty(value)) {
             return;
         }
         long longValue = 0;

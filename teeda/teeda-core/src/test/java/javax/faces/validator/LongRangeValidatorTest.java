@@ -137,6 +137,13 @@ public class LongRangeValidatorTest extends AbstractValidatorTest {
         }
     }
 
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        LongRangeValidator validator = new LongRangeValidator(5, 2);
+        validator.validate(context, context.getViewRoot(), "");
+    }
+
     public void testEquals1() throws Exception {
         LongRangeValidator v1 = new LongRangeValidator(2, 1);
         LongRangeValidator v2 = new LongRangeValidator(2, 1);

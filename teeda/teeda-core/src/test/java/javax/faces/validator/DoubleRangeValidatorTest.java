@@ -221,6 +221,13 @@ public class DoubleRangeValidatorTest extends AbstractValidatorTest {
         }
     }
 
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        DoubleRangeValidator validator = new DoubleRangeValidator(5, 2);
+        validator.validate(context, context.getViewRoot(), "");
+    }
+
     public void testEquals1() throws Exception {
         DoubleRangeValidator v1 = new DoubleRangeValidator(2, 1);
         DoubleRangeValidator v2 = new DoubleRangeValidator(2, 1);

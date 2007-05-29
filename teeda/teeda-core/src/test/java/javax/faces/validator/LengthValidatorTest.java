@@ -82,6 +82,13 @@ public class LengthValidatorTest extends AbstractValidatorTest {
         }
     }
 
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContextWithSetMessageBundle("a",
+                Locale.ENGLISH);
+        LengthValidator validator = new LengthValidator(5, 2);
+        validator.validate(context, context.getViewRoot(), "");
+    }
+
     protected FacesContext getFacesContextWithSetMessageBundle(
             String viewRootId, Locale locale) {
         getApplication().setMessageBundle("javax.faces.component.TestMessages");

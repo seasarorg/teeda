@@ -20,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.UIInputUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
@@ -92,11 +93,9 @@ public class LengthValidator implements Validator, StateHolder {
             Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-
-        if (value == null) {
+        if (UIInputUtil.isEmpty(value)) {
             return;
         }
-
         int length = getConvertedValueLength(value);
         if (minimum > -1 && length < minimum) {
             Object[] args = { new Integer(minimum),
