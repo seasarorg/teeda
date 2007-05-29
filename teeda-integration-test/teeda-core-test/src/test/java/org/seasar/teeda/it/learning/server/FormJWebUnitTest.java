@@ -16,7 +16,7 @@
 package org.seasar.teeda.it.learning.server;
 
 import junit.framework.Test;
-import net.sourceforge.jwebunit.WebTester;
+import net.sourceforge.jwebunit.junit.WebTester;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 
