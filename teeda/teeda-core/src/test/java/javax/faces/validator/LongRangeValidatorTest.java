@@ -21,6 +21,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 public class LongRangeValidatorTest extends AbstractValidatorTest {
 
@@ -138,10 +139,9 @@ public class LongRangeValidatorTest extends AbstractValidatorTest {
     }
 
     public void testValidate_NoValidate() throws Exception {
-        FacesContext context = getFacesContextWithSetMessageBundle("a",
-                Locale.ENGLISH);
+        FacesContext context = getFacesContext();
         LongRangeValidator validator = new LongRangeValidator(5, 2);
-        validator.validate(context, context.getViewRoot(), "");
+        validator.validate(context, new MockUIComponent(), "");
     }
 
     public void testEquals1() throws Exception {

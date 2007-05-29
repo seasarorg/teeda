@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.context.FacesContext;
 import javax.faces.validator.AbstractValidatorTest;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -99,6 +100,16 @@ public class TRegularExpressionValidatorTest extends AbstractValidatorTest {
             assertNotNull(e.getFacesMessage());
             assertEquals("hoge", e.getMesssageIds()[0]);
         }
+    }
+
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContext();
+        TRegularExpressionValidator validator = new TRegularExpressionValidator();
+        validator.setPattern("[0-9]");
+        validator.setTarget("abc");
+        final MockUIComponent component = new MockUIComponent();
+        component.setId("abc");
+        validator.validate(context, component, "");
     }
 
     public void testSaveAndRestore() throws Exception {

@@ -24,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
+import javax.faces.internal.UIInputUtil;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
@@ -71,7 +72,7 @@ public class TNumberLengthValidator implements Validator, StateHolder,
             throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (value == null) {
+        if (UIInputUtil.isEmpty(value)) {
             return;
         }
         if (!isTargetCommandValidation(context, targets)) {

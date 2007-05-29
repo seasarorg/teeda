@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.context.FacesContext;
 import javax.faces.validator.AbstractValidatorTest;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -94,6 +95,12 @@ public class TLengthValidatorTest extends AbstractValidatorTest {
             assertEquals("max", e.getMesssageIds()[0]);
             assertEquals("min", e.getMesssageIds()[1]);
         }
+    }
+
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContext();
+        TLengthValidator validator = new TLengthValidator(50, 20);
+        validator.validate(context, new MockUIComponent(), "");
     }
 
     public void testSaveAndRestore() throws Exception {

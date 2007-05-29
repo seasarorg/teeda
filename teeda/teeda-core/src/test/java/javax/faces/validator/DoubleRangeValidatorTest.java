@@ -22,6 +22,7 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 /**
  * @author shot
@@ -222,10 +223,9 @@ public class DoubleRangeValidatorTest extends AbstractValidatorTest {
     }
 
     public void testValidate_NoValidate() throws Exception {
-        FacesContext context = getFacesContextWithSetMessageBundle("a",
-                Locale.ENGLISH);
+        FacesContext context = getFacesContext();
         DoubleRangeValidator validator = new DoubleRangeValidator(5, 2);
-        validator.validate(context, context.getViewRoot(), "");
+        validator.validate(context, new MockUIComponent(), "");
     }
 
     public void testEquals1() throws Exception {

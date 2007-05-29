@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.validator;
 
+import javax.faces.context.FacesContext;
 import javax.faces.validator.AbstractValidatorTest;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
@@ -76,6 +77,14 @@ public class TDoubleRangeValidatorTest extends AbstractValidatorTest {
         } catch (ValidatorException expected) {
             fail();
         }
+    }
+
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContext();
+        TDoubleRangeValidator validator = new TDoubleRangeValidator();
+        validator.setMaximum(33);
+        validator.setMinimum(11);
+        validator.validate(context, new MockUIComponent(), "");
     }
 
     public void testSaveAndRestore() throws Exception {

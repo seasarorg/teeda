@@ -21,6 +21,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.mock.MockUIComponent;
 
 /**
  * @author shot
@@ -83,10 +84,9 @@ public class LengthValidatorTest extends AbstractValidatorTest {
     }
 
     public void testValidate_NoValidate() throws Exception {
-        FacesContext context = getFacesContextWithSetMessageBundle("a",
-                Locale.ENGLISH);
+        FacesContext context = getFacesContext();
         LengthValidator validator = new LengthValidator(5, 2);
-        validator.validate(context, context.getViewRoot(), "");
+        validator.validate(context, new MockUIComponent(), "");
     }
 
     protected FacesContext getFacesContextWithSetMessageBundle(

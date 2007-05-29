@@ -458,6 +458,15 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
         }
     }
 
+    public void testValidate_NoValidate() throws Exception {
+        FacesContext context = getFacesContext();
+        TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setTarget("aaa");
+        validator.setIntegralMax(3);
+        validator.setIntegralMin(1);
+        validator.validate(context, new MockUIComponent(), "");
+    }
+
     protected Validator createValidator() {
         return new TNumberLengthValidator();
     }
