@@ -140,7 +140,16 @@ public abstract class TeedaWebTestCase extends TestCase {
         throws IOException {
         try {
             final Page page = webClient.getPage(url);
-            return (HtmlPage) page;
+            if (page instanceof HtmlPage) {
+                return (HtmlPage) page;
+            }
+            final WebResponse webResponse = page.getWebResponse();
+            System.err.println("StatusCode=" + webResponse.getStatusCode());
+            System.err.println("StatusMessage="
+                + webResponse.getStatusMessage());
+            final String s = new String(webResponse.getResponseBody());
+            System.err.println("[[" + s + "]]");
+            throw new ClassCastException(page.getClass().getName());
         } catch (final FailingHttpStatusCodeException e) {
             final WebResponse response = e.getResponse();
             e.printStackTrace();
