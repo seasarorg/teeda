@@ -7,7 +7,10 @@
 	<include path="app_aop.dicon"/>
 	<include path="teedaExtension.dicon"/>
 	<include path="selectOneConstants.dicon"/>
+	<!--
 	<include path="dbsession.dicon"/>
+	-->
+	<include path="s2captcha.dicon"/>
 
 	<component name="aaa2Dto" class="examples.teeda.dto.Aaa2Dto" instance="session" />
 </components>

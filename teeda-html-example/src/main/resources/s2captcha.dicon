@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.3//EN"
+	"http://www.seasar.org/dtd/components23.dtd">
+<components>
+	<!-- フォントの設定（フォントジェネレータで使用 -->
+	<!-- 物理名を指定したほうがよりランダム性が高まるがポータビリティが失われる -->
+	<component name="fontSerif" class="java.awt.Font">
+		<arg>"Serif"</arg>
+		<arg>0</arg>
+		<arg>10</arg>
+	</component>
+
+	<component name="fontSansSerif" class="java.awt.Font">
+		<arg>"SansSerif"</arg>
+		<arg>0</arg>
+		<arg>10</arg>
+	</component>
+
+	<!-- フォンジェネレータの設定 -->
+	<component name="fontGenRandom" class="com.octo.captcha.component.image.fontgenerator.RandomFontGenerator">
+		<!-- 最小サイズ -->
+		<arg>30</arg>
+		<!-- 最大サイズ --> 
+		<arg>50</arg>
+		<arg>new java.awt.Font[] { fontSerif, fontSansSerif }</arg>
+	</component>
+	
+	<!-- バックグラウンドジェネレータの設定 -->
+	<!-- シンプルな白の背景 -->
+	<component name="backGenUni" class="com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator">
+		<!-- イメージの横幅 -->
+		<arg>300</arg>
+		<!-- イメージの高さ -->
+		<arg>100</arg>
+	</component>
+
+	<!-- カラージェネレータの設定 -->
+	<!-- テキストに色をつける -->
+	<component name="colorGenRandomDark" class="com.octo.captcha.component.image.color.RandomRangeColorGenerator">
+		<!-- 赤(R)の範囲 -->
+		<arg>new int[]{0, 150}</arg>
+		<!-- 緑(G)の範囲 -->
+		<arg>new int[]{0, 150}</arg>
+		<!-- 青(B)の範囲 -->
+		<arg>new int[]{0, 150}</arg>
+		<!-- 透過(A)の範囲 -->
+		<arg>new int[]{255, 255}</arg>
+	</component>
+
+	<!-- テキストペースタの設定 -->
+	<component name="simpleColorPaster" class="com.octo.captcha.component.image.textpaster.RandomTextPaster">
+		<!-- 許されるテキストの最小の文字数 -->
+		<arg>4</arg>
+		<!-- 許されるテキストの最大の文字数 -->
+		<arg>6</arg>
+		<!-- カラージェネレータ -->
+		<arg>colorGenRandomDark</arg>
+		<!-- それぞれの文字色を変えるかどうか -->
+		<arg>true</arg>
+	</component>
+
+	<!-- ワードからイメージへの変換の設定 -->
+	<!-- 文字を変形せずにイメージ化する場合 -->
+	<!--
+	<component name="wordToImage" class="com.octo.captcha.component.image.wordtoimage.ComposedWordToImage">
+		<arg>fontGenRandom</arg>
+		<arg>backGenUni</arg>
+		<arg>simpleColorPaster</arg>
+	</component>
+	-->
+	
+	<!-- 文字を変形（波紋状）してイメージ化する場合 -->
+	<component name="water" class="com.jhlabs.image.WaterFilter">
+		<property name="amplitude">3d</property>		
+		<property name="antialias">true</property>
+		<property name="phase">20d</property>
+		<property name="wavelength">70d</property>
+	</component>
+	
+	<component name="backDef" class="com.octo.captcha.component.image.deformation.ImageDeformationByFilters">
+		<arg>new java.awt.image.ImageFilter[]{}</arg>
+	</component>
+	<component name="textDef" class="com.octo.captcha.component.image.deformation.ImageDeformationByFilters">
+		<arg>new java.awt.image.ImageFilter[]{}</arg>
+	</component>
+	<component name="postDef" class="com.octo.captcha.component.image.deformation.ImageDeformationByFilters">
+		<arg>new java.awt.image.ImageFilter[]{ water }</arg>
+	</component>
+	
+	<component name="wordToImage" class="com.octo.captcha.component.image.wordtoimage.DeformedComposedWordToImage">
+		<arg>fontGenRandom</arg>
+		<arg>backGenUni</arg>
+		<arg>simpleColorPaster</arg>
+		<arg>backDef</arg>
+		<arg>textDef</arg>
+		<arg>postDef</arg>
+	</component>	
+
+	<!-- ディクショナリリーダの設定 -->
+	<component name="fileDict" class="com.octo.captcha.component.word.FileDictionary">
+		<!-- 表示する文字列が定義されたリソースファイル名 -->
+		<arg>"toddlist"</arg>
+	</component>
+
+	<!-- ワードジェネレータの設定 -->
+	<component name="wordGen" class="com.octo.captcha.component.word.wordgenerator.ComposeDictionaryWordGenerator">
+		<arg>fileDict</arg>
+	</component>
+	
+	<!-- イメージファクトリの設定 -->
+	<component name="imageFactory" class="com.octo.captcha.image.gimpy.GimpyFactory">
+		<arg>wordGen</arg>
+		<arg>wordToImage</arg>
+	</component>
+
+	<!-- イメージエンジンの設定 -->
+	<component name="imageEngine" class="com.octo.captcha.engine.GenericCaptchaEngine">
+		<arg>new com.octo.captcha.image.ImageCaptchaFactory[] { imageFactory }</arg>
+	</component>
+
+	<!-- CAPTCHA サービスの設定 -->
+	<component class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
+		<arg>imageEngine</arg>
+		<arg>300</arg>
+		<arg>200000</arg>
+	</component>
+</components>

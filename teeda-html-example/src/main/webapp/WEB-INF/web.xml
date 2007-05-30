@@ -171,6 +171,13 @@
         <load-on-startup>3</load-on-startup>
     </servlet>
 
+	<!-- for JCapthca -->
+    <servlet>
+        <servlet-name>captcha</servlet-name>
+        <servlet-class>examples.teeda.servlet.ImageCaptchaServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>facesServlet</servlet-name>
         <url-pattern>*.html</url-pattern>
@@ -184,6 +191,12 @@
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>*.ajax</url-pattern>
+    </servlet-mapping>
+
+	<!-- for JCapthca -->
+    <servlet-mapping>
+        <servlet-name>captcha</servlet-name>
+        <url-pattern>/captcha.jpg</url-pattern>
     </servlet-mapping>
 
 	<!--
