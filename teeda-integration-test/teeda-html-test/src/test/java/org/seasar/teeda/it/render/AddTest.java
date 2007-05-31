@@ -71,4 +71,17 @@ public class AddTest extends TeedaWebTestCase {
 		assertEquals("readonly", input.getReadOnlyAttribute());
 	}
 
+	public void testSeasarUser7940() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/add/add.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTitleEquals("Simple Add sample");
+		tester.assertAttributeEqualsById("doCalculate", "value", "計算実行");
+	}
+
 }
