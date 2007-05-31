@@ -28,7 +28,7 @@ public class TCommandButtonTag extends CommandButtonTag {
     }
 
     public String getRendererType() {
-        return THtmlCommandButton.DEFAULT_RENDERERTYPE;
+        return THtmlCommandButton.DEFAULT_RENDERER_TYPE;
     }
 
 }

@@ -30,7 +30,7 @@ public class HtmlCommandButton extends UICommand {
 
     public static final String COMPONENT_TYPE = "javax.faces.HtmlCommandButton";
 
-    public static final String DEFAULT_RENDERERTYPE = "javax.faces.Button";
+    public static final String DEFAULT_RENDERER_TYPE = "javax.faces.Button";
 
     private static final boolean DEFAULT_DISABLED = false;
 
@@ -96,7 +96,7 @@ public class HtmlCommandButton extends UICommand {
 
     public HtmlCommandButton() {
         super();
-        setRendererType(DEFAULT_RENDERERTYPE);
+        setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public void setAccesskey(String accesskey) {

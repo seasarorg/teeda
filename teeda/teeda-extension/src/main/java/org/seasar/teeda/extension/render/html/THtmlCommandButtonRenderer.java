@@ -31,13 +31,13 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
 
     public static final String COMPONENT_FAMILY = THtmlCommandButton.COMPONENT_FAMILY;
 
-    public static final String RENDERER_TYPE = THtmlCommandButton.DEFAULT_RENDERERTYPE;
+    public static final String RENDERER_TYPE = THtmlCommandButton.DEFAULT_RENDERER_TYPE;
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {

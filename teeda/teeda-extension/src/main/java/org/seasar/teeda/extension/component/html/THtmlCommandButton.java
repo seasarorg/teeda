@@ -26,13 +26,18 @@ import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class THtmlCommandButton extends HtmlCommandButton {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
 
-    public static final String DEFAULT_RENDERERTYPE = "org.seasar.teeda.extension.HtmlCommandButton";
+    public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
+
+    public THtmlCommandButton() {
+        super();
+        setRendererType(DEFAULT_RENDERER_TYPE);
+    }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
         if (TransactionTokenUtil.isDoOnce(getId())) {

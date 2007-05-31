@@ -18,8 +18,7 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.html.CommandButtonTag;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
@@ -27,6 +26,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
+import org.seasar.teeda.extension.taglib.TCommandButtonTag;
 
 public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
 
@@ -35,8 +35,8 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
     }
 
     protected void registerTagElements() {
-        registerTagElement(JsfConstants.JSF_HTML_URI, "commandButton",
-                CommandButtonTag.class);
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "commandButton", TCommandButtonTag.class);
     }
 
     public void testCreateProcessor_pageDescNull() throws Exception {
@@ -124,7 +124,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
 
         Map properties2 = new HashMap();
@@ -167,7 +167,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("", processor.getProperty("onclick"));
     }
@@ -186,7 +186,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("foo();", processor.getProperty("onclick"));
     }
@@ -205,7 +205,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("hoge();bar();", processor.getProperty("onclick"));
     }
@@ -224,7 +224,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("", processor.getProperty("onclick"));
     }
@@ -243,7 +243,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("foo();", processor.getProperty("onclick"));
     }
@@ -262,7 +262,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("hoge();bar();", processor.getProperty("onclick"));
     }
@@ -281,7 +281,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("#{fooPage.doBbbOnclick}", processor
                 .getProperty("onclick"));
@@ -302,7 +302,7 @@ public class CommandButtonFactoryTest extends ElementProcessorFactoryTestCase {
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull(processor);
-        assertEquals(CommandButtonTag.class, processor.getTagClass());
+        assertEquals(TCommandButtonTag.class, processor.getTagClass());
         assertEquals("#{fooPage.doBbb}", processor.getProperty("action"));
         assertEquals("hoge.gif", processor.getProperty("image"));
     }

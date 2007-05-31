@@ -202,7 +202,7 @@
 	</component>
 	<component>
 		<component-type>
-			javax.faces.HtmlCommandButton
+			org.seasar.teeda.extension.HtmlCommandButton
 		</component-type>
 		<component-class>
 			org.seasar.teeda.extension.component.html.THtmlCommandButton
