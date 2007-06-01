@@ -32,7 +32,7 @@ var o = {
 
 //指定したid名の要素にinnerHTMLで値をセットする関数を作成
 function functionFactory(name){
-  return new Function(name, '$i(\''+name+'\').innerHTML = '+name).multiple();
+  return new Function(name, '$i(\''+name+'\').innerHTML = '+name).kwargs();
 }
 
 function render3(test2){
@@ -46,7 +46,7 @@ function render3(test2){
   });
 }
 
-var render = Kumu.group(functionFactory('test'), functionFactory('test1'), render3.multiple());
+var render = Kumu.grouping(functionFactory('test'), functionFactory('test1'), render3.kwargs());
 
 </script>
 

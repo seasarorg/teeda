@@ -13,6 +13,8 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+var _global = (function (){return this;})();
+
 if (typeof(Kumu) == 'undefined') {
   Kumu = {};
 }
@@ -42,6 +44,10 @@ Kumu = Kumu.extend(Kumu, {
   baseUrl : '',
   
   loadLibrary : {},
+  
+  getGlobal : function(){
+    return _global;
+  },
   
   /** curry method **/
   bind : function(func){
@@ -256,7 +262,7 @@ Kumu = Kumu.extend(Kumu, {
     }
   },
   
-  group : function(){
+  grouping : function(){
     var functions = [];
     for (var i = 0; i < arguments.length; i++){
       if(typeof(arguments[i]) == 'function'){
@@ -264,8 +270,9 @@ Kumu = Kumu.extend(Kumu, {
       }
   	}
   	return function(){
+      var result = [];
       for (var i = 0; i < functions.length; i++){
-        functions[i].apply(functions[i], arguments);
+        result.push(functions[i].apply(functions[i], arguments));
       }  		
   	}
   },
@@ -333,9 +340,8 @@ Kumu = Kumu.extend(Kumu, {
         Kumu._loadModule(libraryName);
       }
     }, Kumu.toArray(arguments));
-  }
+  },
   
-  /** AOP TraceLog
   beginTrace : function(args, func){
     var funcstr = func.toString();
     var ret = funcstr.match(/[0-9A-Za-z_]+\(/).toString();
@@ -410,25 +416,21 @@ Kumu = Kumu.extend(Kumu, {
   },
   
   trace : function(target){
-    for(var i in target){
-      var obj = target[i];
-      if(typeof(obj) == "function" ){
-        obj = this.addBefore(obj, this.beginTrace);
-        obj = this.addAfter(obj, this.endTrace);
-        target[i] = obj;
+    if(typeof(target) == "function"){
+      obj = this.addBefore(target, this.beginTrace);
+      obj = this.addAfter(obj, this.endTrace);
+      return obj;        
+    }else{
+      for(var i in target){
+        var obj = target[i];
+        if(typeof(obj) == "function"){
+          obj = this.addBefore(obj, this.beginTrace);
+          obj = this.addAfter(obj, this.endTrace);
+          target[i] = obj;
+        }
       }
     }
-  },
-  
-  debug : function(bool, obj){
-    if(bool){
-      if(obj){
-        Kumu.trace(obj);
-      }else{
-        Kumu.trace(this);
-      }
-    }
-  }*/
+  }
   
 });
 
@@ -453,8 +455,8 @@ String.prototype = Kumu.extend(String.prototype,{
 });
 
 Function.prototype.getName = function() {
-    var ret = this.toString().match(/[0-9A-Za-z_]+\(/).toString();
-    return ret.substring(0,ret.length-1);
+  var ret = this.toString().match(/[0-9A-Za-z_]+\(/).toString();
+  return ret.substring(0,ret.length-1);
 }
 
 Function.prototype.bind = function() {
@@ -488,7 +490,7 @@ Function.prototype.bindScopeAsEventListener = function() {
   }
 }
 
-Function.prototype.multiple = function(){
+Function.prototype.kwargs = function(){
   var x = this;
   var funcstr = x.toString();
   var ret = funcstr.match(/\([0-9A-Za-z_, ]+\)/).toString();
@@ -550,7 +552,7 @@ Function.prototype.state = function(obj){
   return func;
 }
 
-Function.prototype.deferred = function(time){
+Function.prototype.delay = function(time){
   var x = this;
   var timeout;
   var args = [];
@@ -577,4 +579,16 @@ Function.prototype.deferred = function(time){
   return func;
 }
 
+Function.prototype.addBefore = function(func){
+  var x = this;
+  return Kumu.addBefore(this, func);
+}
+
+Function.prototype.addAfter = function(func){
+  return Kumu.addAfter(this, func);
+}
+
+Function.prototype.addAround = function(func){
+  return Kumu.addArround(this, func);
+}
 Kumu.init();
