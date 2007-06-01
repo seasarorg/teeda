@@ -84,6 +84,8 @@ public interface ExtensionConstants {
 
     String SUBMITTED = "submitted";
 
+    String TEMPLATEVALUE_ATTR = "templateValue";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 

@@ -45,6 +45,8 @@ import org.seasar.teeda.core.util.ServletContextUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.UIBody;
+import org.seasar.teeda.extension.component.UITitle;
+import org.seasar.teeda.extension.component.html.THtmlHead;
 import org.seasar.teeda.extension.helper.PathHelper;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.HtmlDescCache;
@@ -224,9 +226,11 @@ public class TViewRootRenderer extends AbstractRenderer {
     protected void layout(FacesContext context, TViewRoot component) {
         TViewRoot child = component;
         TViewRoot parent = getParentViewRoot(context, child);
+        UIComponent title = null;
         while (parent != null) {
             UIComponent body = UIComponentUtil.findDescendant(child,
                     UIBody.class);
+            title = UIComponentUtil.findDescendant(child, UITitle.class);
             if (body == null) {
                 logger.log("WTDA0202", new Object[] { child.getViewId() });
             }
@@ -239,9 +243,33 @@ public class TViewRootRenderer extends AbstractRenderer {
             component.setRootViewId(child.getViewId());
             component.getChildren().clear();
             component.getChildren().addAll(child.getChildren());
+            if (title != null) {
+                UIComponent head = UIComponentUtil.findDescendant(component,
+                        THtmlHead.class);
+                boolean foundTitle = replaceComponent(head, title);
+                if (!foundTitle) {
+                    logger.debug("No found Title tag.");
+                }
+            }
         } else {
             component.setRootViewId(component.getViewId());
         }
+    }
+
+    protected boolean replaceComponent(final UIComponent root,
+            UIComponent titleCandidate) {
+        for (int i = 0; i < root.getChildCount(); i++) {
+            final UIComponent child = (UIComponent) root.getChildren().get(i);
+            boolean b = replaceComponent(child, titleCandidate);
+            if (b) {
+                return true;
+            }
+            if (child instanceof UITitle) {
+                root.getChildren().remove(i);
+                root.getChildren().add(i, titleCandidate);
+            }
+        }
+        return false;
     }
 
     protected TViewRoot getParentViewRoot(FacesContext context,

@@ -9,11 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.taglib;
+
+import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.extension.component.UITitle;
 
@@ -21,6 +23,8 @@ import org.seasar.teeda.extension.component.UITitle;
  * @author shot
  */
 public class TTitleTag extends TOutputLabelTag {
+
+    private String templateValue;
 
     public TTitleTag() {
     }
@@ -31,6 +35,24 @@ public class TTitleTag extends TOutputLabelTag {
 
     public String getRendererType() {
         return UITitle.DEFAULT_RENDERER_TYPE;
+    }
+
+    public void release() {
+        super.release();
+        templateValue = null;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, "templateValue", templateValue);
+    }
+
+    public String getTemplateValue() {
+        return templateValue;
+    }
+
+    public void setTemplateValue(String templateValue) {
+        this.templateValue = templateValue;
     }
 
 }

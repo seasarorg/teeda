@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -72,6 +72,32 @@ public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
         assertNotNull("1", processor);
         assertEquals("2", TTitleTag.class, processor.getTagClass());
         assertEquals("3", "#{fooPage.abcValue}", processor.getProperty("value"));
+    }
+
+    public void testCreateFactory2() throws Exception {
+        // ## Arrange ##
+        NamingConventionImpl namingConvention = new NamingConventionImpl();
+        namingConvention
+                .addRootPackageName("org.seasar.teeda.extension.html.factory.sub");
+        ((OutputLabelFactory) factory).setNamingConvention(namingConvention);
+        FacesConfigOptions.setDefaultSuffix(".html");
+
+        Map properties = new HashMap();
+        properties.put("id", "abc");
+        ElementNode elementNode = createElementNode("title", properties);
+        elementNode.addText("hoge");
+        elementNode.endElement();
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", processor);
+        assertEquals("2", TTitleTag.class, processor.getTagClass());
+        assertEquals("3", "#{fooPage.abcValue}", processor.getProperty("value"));
+        assertEquals("4", "hoge", processor.getProperty("templateValue"));
     }
 
 }

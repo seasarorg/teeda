@@ -44,6 +44,8 @@ public class UITitle extends UIOutput {
 
     private String defaultPropertiesName;
 
+    private String templateValue;
+
     public UITitle() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -117,7 +119,7 @@ public class UITitle extends UIOutput {
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[7];
+        Object values[] = new Object[8];
         values[0] = super.saveState(context);
         values[1] = dir;
         values[2] = lang;
@@ -125,6 +127,7 @@ public class UITitle extends UIOutput {
         values[4] = defaultKey;
         values[5] = propertiesName;
         values[6] = defaultPropertiesName;
+        values[7] = templateValue;
         return ((Object) (values));
     }
 
@@ -137,6 +140,19 @@ public class UITitle extends UIOutput {
         defaultKey = (String) values[4];
         propertiesName = (String) values[5];
         defaultPropertiesName = (String) values[6];
+        templateValue = (String) values[7];
+    }
+
+    public String getTemplateValue() {
+        if (templateValue != null) {
+            return templateValue;
+        }
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.TEMPLATEVALUE_ATTR);
+    }
+
+    public void setTemplateValue(String templateValue) {
+        this.templateValue = templateValue;
     }
 
 }

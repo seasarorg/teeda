@@ -9,16 +9,20 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.Map;
+
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
@@ -33,8 +37,23 @@ public class TitleFactory extends OutputLabelFactory {
                 .getTagName())) {
             return false;
         }
-        String id = elementNode.getId();
-        return (id != null);
+        return true;
+    }
+
+    protected void customizeProperties(Map properties, ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc) {
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
+                        actionDesc);
+        final int childSize = elementNode.getChildSize();
+        if (childSize > 0) {
+            HtmlNode child = elementNode.getChild(0);
+            if (child instanceof TextNode) {
+                TextNode node = (TextNode) child;
+                properties.put(ExtensionConstants.TEMPLATEVALUE_ATTR, node
+                        .getValue());
+            }
+        }
     }
 
     public boolean isLeaf() {
