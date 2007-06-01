@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,20 +25,32 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class TitleTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(TitleTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(TitleTest.class);
+	}
 
-    public void testRender() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/title/title.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/title/title.html");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertTextEqualsById("aaa", "HOGE");
-    }
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "HOGE");
+	}
+
+	public void testRenderTemplate() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/title/title2.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTitleEquals("mock");
+	}
 
 }
