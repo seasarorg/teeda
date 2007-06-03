@@ -32,13 +32,19 @@ public class AddInputPage {
 	private Integer result;
 
 	private String message;
-	
+
 	public String initialize() {
 		message = "計算サンプル";
 		return null;
 	}
-	
+
 	public String doCalculate() {
+		try {
+			Thread.currentThread().sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		result = new Integer(arg1.intValue() + arg2.intValue());
 		return "addResult";
 	}
