@@ -26,9 +26,13 @@ import javax.faces.context.FacesContext;
  */
 public abstract class RedirectScope {
 
-    private static final String KEY = RedirectScope.class.getName();
+    private static final String REDIRECTING_KEY = RedirectScope.class.getName();
 
-    private static final VariableScope scope = new VariableScope(KEY);
+    private static final String REDIRECTED_KEY = RedirectScope.class.getName()
+            + ".REDIRECTED";
+
+    private static final VariableScope scope = new VariableScope(
+            REDIRECTING_KEY);
 
     protected RedirectScope() {
     }
@@ -47,19 +51,23 @@ public abstract class RedirectScope {
         scope.removeContext(context);
     }
 
+    public static void clearContext(FacesContext context) throws FacesException {
+        scope.clearContext(context);
+    }
+
     public static boolean isRedirecting(FacesContext context)
             throws FacesException {
         Map ctx = scope.getContext(context);
         if (ctx == null) {
             return false;
         }
-        return ctx.containsKey(KEY);
+        return ctx.containsKey(REDIRECTING_KEY);
     }
 
     public static void setRedirectingPath(FacesContext context, String path)
             throws FacesException {
         Map ctx = getOrCreateContext(context);
-        ctx.put(KEY, path);
+        ctx.put(REDIRECTING_KEY, path);
     }
 
     public static String getRedirectingPath(FacesContext context)
@@ -68,6 +76,21 @@ public abstract class RedirectScope {
         if (ctx == null) {
             return null;
         }
-        return (String) ctx.get(KEY);
+        return (String) ctx.get(REDIRECTING_KEY);
+    }
+
+    public static void setRedirectedPath(FacesContext context, String path)
+            throws FacesException {
+        Map ctx = getOrCreateContext(context);
+        ctx.put(REDIRECTED_KEY, path);
+    }
+
+    public static String getRedirectedPath(FacesContext context)
+            throws FacesException {
+        Map ctx = scope.getContext(context);
+        if (ctx == null) {
+            return null;
+        }
+        return (String) ctx.get(REDIRECTED_KEY);
     }
 }

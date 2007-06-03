@@ -45,11 +45,13 @@ public class THtmlCommandButton extends HtmlCommandButton {
             if (TransactionTokenUtil.verify(context)) {
                 super.broadcast(event);
             } else {
-                String redirectingPath = RedirectScope
-                        .getRedirectingPath(context);
-                if (redirectingPath != null) {
+                String path = RedirectScope.getRedirectingPath(context);
+                if (path == null) {
+                    path = RedirectScope.getRedirectedPath(context);
+                }
+                if (path != null) {
                     NavigationHandlerUtil.assertNotAlreadyRedirect(context);
-                    NavigationHandlerUtil.redirect(context, redirectingPath);
+                    NavigationHandlerUtil.redirect(context, path);
                 }
                 context.renderResponse();
             }

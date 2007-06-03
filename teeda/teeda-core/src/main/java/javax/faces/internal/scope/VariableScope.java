@@ -78,6 +78,22 @@ public class VariableScope {
         contexts.remove(wid);
     }
 
+    public void clearContext(FacesContext context) throws FacesException {
+        ExternalContext extCtx = context.getExternalContext();
+        String wid = WindowIdUtil.getWindowId(extCtx);
+        clearContext(context, wid);
+    }
+
+    public void clearContext(FacesContext context, String wid)
+            throws FacesException {
+        ExternalContext extCtx = context.getExternalContext();
+        Map contexts = getContexts(extCtx);
+        Map m = (Map) contexts.get(wid);
+        if (m != null) {
+            m.clear();
+        }
+    }
+
     protected synchronized Map getContexts(ExternalContext externalContext)
             throws FacesException {
         Map sessionMap = externalContext.getSessionMap();
