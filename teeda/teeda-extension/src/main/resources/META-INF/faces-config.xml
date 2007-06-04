@@ -312,5 +312,12 @@
 			org.seasar.teeda.extension.component.html.THtmlRadioItem
 		</component-class>
 	</component>
-
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlStyle
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlStyle
+		</component-class>
+	</component>
 </faces-config>

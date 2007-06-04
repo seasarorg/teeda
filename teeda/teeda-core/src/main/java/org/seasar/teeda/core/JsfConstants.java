@@ -195,6 +195,8 @@ public interface JsfConstants {
 
     String TITLE_ELEM = "title";
 
+    String STYLE_ELEM = "style";
+
     // -- attribute --
 
     String ACCEPT_ATTR = "accept";

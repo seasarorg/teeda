@@ -76,6 +76,8 @@ public interface ExtensionConstants {
 
     String CALENDAR_CLASS_ATTR = "calendarClass";
 
+    String MEDIA_ATTR = "media";
+
     String DEFAULT_KEY = "defaultKey";
 
     String ERROR_STYLE_CLASS = "errorStyleClass";
@@ -165,4 +167,5 @@ public interface ExtensionConstants {
     Integer SUBAPP_SCOPE = new Integer(3);
 
     String EXCEPTOION_PROPERTY = "exception";
+
 }

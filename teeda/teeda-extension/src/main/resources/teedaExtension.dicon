@@ -41,6 +41,9 @@
 		<initMethod name="addElementNodeDecision">
 			<arg><component class="org.seasar.teeda.extension.html.impl.TitleElementNodeDecision"/></arg>
 		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.StyleElementNodeDecision"/></arg>
+		</initMethod>
 	</component>
 
 	<component
@@ -54,6 +57,8 @@
     <component
 		class="org.seasar.teeda.extension.html.impl.HtmlComponentInvokerImpl" />
 
+	<component name="styleFactory"
+		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="mockFactory"
 		class="org.seasar.teeda.extension.html.factory.MockFactory" />
 	<component name="treeHiddenFactory"

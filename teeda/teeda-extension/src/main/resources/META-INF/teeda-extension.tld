@@ -3656,5 +3656,41 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
-
+	<tag>
+		<name>style</name>
+		<tag-class>
+			org.seasar.teeda.extension.taglib.TStyleTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>media</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
 </taglib>

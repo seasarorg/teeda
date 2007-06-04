@@ -47,6 +47,7 @@ import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.UITitle;
 import org.seasar.teeda.extension.component.html.THtmlHead;
+import org.seasar.teeda.extension.component.html.THtmlStyle;
 import org.seasar.teeda.extension.helper.PathHelper;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.HtmlDescCache;
@@ -227,10 +228,16 @@ public class TViewRootRenderer extends AbstractRenderer {
         TViewRoot child = component;
         TViewRoot parent = getParentViewRoot(context, child);
         UIComponent title = null;
+        List styleList = new ArrayList();
         while (parent != null) {
             UIComponent body = UIComponentUtil.findDescendant(child,
                     UIBody.class);
             title = UIComponentUtil.findDescendant(child, UITitle.class);
+            final UIComponent style = UIComponentUtil.findDescendant(child,
+                    THtmlStyle.class);
+            if (style != null) {
+                styleList.add(style);
+            }
             if (body == null) {
                 logger.log("WTDA0202", new Object[] { child.getViewId() });
             }
@@ -243,9 +250,12 @@ public class TViewRootRenderer extends AbstractRenderer {
             component.setRootViewId(child.getViewId());
             component.getChildren().clear();
             component.getChildren().addAll(child.getChildren());
+            final UIComponent head = UIComponentUtil.findDescendant(component,
+                    THtmlHead.class);
+            if (styleList.size() > 0) {
+                head.getChildren().addAll(styleList);
+            }
             if (title != null) {
-                UIComponent head = UIComponentUtil.findDescendant(component,
-                        THtmlHead.class);
                 boolean foundTitle = replaceComponent(head, title);
                 if (!foundTitle) {
                     logger.debug("No found Title tag.");
