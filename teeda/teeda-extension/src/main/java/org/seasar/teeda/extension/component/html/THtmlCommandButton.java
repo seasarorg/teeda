@@ -15,12 +15,14 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import javax.faces.component.ComponentUtil_;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.internal.scope.RedirectScope;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
@@ -33,6 +35,8 @@ public class THtmlCommandButton extends HtmlCommandButton {
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
+
+    private String disabledJs = null;
 
     public THtmlCommandButton() {
         super();
@@ -59,4 +63,30 @@ public class THtmlCommandButton extends HtmlCommandButton {
         }
         super.broadcast(event);
     }
+
+    public String getDisabledJs() {
+        if (disabledJs != null) {
+            return disabledJs;
+        }
+        return ComponentUtil_.getValueBindingValueAsString(this, "disabledJs");
+    }
+
+    public void setDisabledJs(String disabledJs) {
+        this.disabledJs = disabledJs;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        disabledJs = (String) values[1];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object values[] = new Object[2];
+        values[0] = super.saveState(context);
+        values[1] = disabledJs;
+        return values;
+    }
+
+    
 }

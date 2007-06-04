@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import javax.faces.component.UIComponent;
+
 import org.seasar.teeda.core.taglib.html.CommandButtonTag;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
 
@@ -22,6 +24,26 @@ import org.seasar.teeda.extension.component.html.THtmlCommandButton;
  * @author shot
  */
 public class TCommandButtonTag extends CommandButtonTag {
+
+    private String disabledJs = null;
+    
+    public void release() {
+        super.release();
+        disabledJs = null;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, "disabledJs", disabledJs);
+    }
+
+    public String getDisabledJs() {
+        return disabledJs;
+    }
+
+    public void setDisabledJs(String disabledJs) {
+        this.disabledJs = disabledJs;
+    }
 
     public String getComponentType() {
         return THtmlCommandButton.COMPONENT_TYPE;
