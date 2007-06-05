@@ -48,7 +48,7 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
 
     public THtmlCommandButtonRenderer() {
         super();
-        addIgnoreAttributeName(ExtensionConstants.DISABLEDJS_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.RENDERJS_ATTR);
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
     }
 
@@ -67,7 +67,7 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
 
     protected void encodeTHtmlCommandButtonPrepare(final FacesContext context,
             final THtmlCommandButton button) throws IOException {
-        if (!button.isDisabledJs()) {
+        if (!button.isRenderJs()) {
             return;
         }
         loader.loadScript(context, button);

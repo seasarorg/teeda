@@ -3479,7 +3479,7 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabledJs</name>
+			<name>renderJs</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>

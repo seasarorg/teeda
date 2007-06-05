@@ -43,7 +43,7 @@ public class THtmlCommandButton extends HtmlCommandButton implements
 
     private static final long TIME_DEFAULT = 50000;
 
-    private Boolean disabledJs = null;
+    private Boolean renderJs = null;
 
     private Long time;
 
@@ -73,18 +73,18 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         super.broadcast(event);
     }
 
-    public boolean isDisabledJs() {
-        if (disabledJs != null) {
-            return disabledJs.booleanValue();
+    public boolean isRenderJs() {
+        if (renderJs != null) {
+            return renderJs.booleanValue();
         }
-        ValueBinding vb = getValueBinding(ExtensionConstants.DISABLEDJS_ATTR);
+        ValueBinding vb = getValueBinding(ExtensionConstants.RENDERJS_ATTR);
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.booleanValue() : false;
     }
 
-    public void setDisabledJs(boolean disabledJs) {
-        this.disabledJs = new Boolean(disabledJs);
+    public void setRenderJs(boolean renderJs) {
+        this.renderJs = new Boolean(renderJs);
     }
 
     public long getTime() {
@@ -103,13 +103,13 @@ public class THtmlCommandButton extends HtmlCommandButton implements
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        disabledJs = (Boolean) values[1];
+        renderJs = (Boolean) values[1];
     }
 
     public Object saveState(FacesContext context) {
         Object values[] = new Object[2];
         values[0] = super.saveState(context);
-        values[1] = disabledJs;
+        values[1] = renderJs;
         return values;
     }
 

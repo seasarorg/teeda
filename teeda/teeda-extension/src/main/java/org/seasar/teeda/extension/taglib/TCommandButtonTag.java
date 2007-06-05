@@ -26,7 +26,7 @@ import org.seasar.teeda.extension.component.html.THtmlCommandButton;
  */
 public class TCommandButtonTag extends CommandButtonTag {
 
-    private String disabledJs = null;
+    private String renderJs = null;
 
     private String time = null;
 
@@ -40,23 +40,23 @@ public class TCommandButtonTag extends CommandButtonTag {
 
     public void release() {
         super.release();
-        disabledJs = null;
+        renderJs = null;
         time = null;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, ExtensionConstants.DISABLEDJS_ATTR,
-                disabledJs);
+        setComponentProperty(component, ExtensionConstants.RENDERJS_ATTR,
+                renderJs);
         setComponentProperty(component, ExtensionConstants.TIME_ATTR, time);
     }
 
-    public String getDisabledJs() {
-        return disabledJs;
+    public String getRenderJs() {
+        return renderJs;
     }
 
-    public void setDisabledJs(String disabledJs) {
-        this.disabledJs = disabledJs;
+    public void setRenderJs(String disabledJs) {
+        this.renderJs = disabledJs;
     }
 
     public String getComponentType() {

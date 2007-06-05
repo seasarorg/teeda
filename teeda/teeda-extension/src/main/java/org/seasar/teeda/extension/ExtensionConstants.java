@@ -88,7 +88,7 @@ public interface ExtensionConstants {
 
     String TEMPLATEVALUE_ATTR = "templateValue";
 
-    String DISABLEDJS_ATTR = "disabledJs";
+    String RENDERJS_ATTR = "renderJs";
 
     String TIME_ATTR = "time";
 
