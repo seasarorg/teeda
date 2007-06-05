@@ -24,20 +24,54 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.internal.LabelUtil;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
+import org.seasar.teeda.extension.util.DoubleSubmitProtectionLoader;
+import org.seasar.teeda.extension.util.KumuDisabledScriptLoader;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
  * @author higa
  * @author shot
  */
-public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
+public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
+        implements RenderPreparableRenderer {
 
     public static final String COMPONENT_FAMILY = THtmlCommandButton.COMPONENT_FAMILY;
 
     public static final String RENDERER_TYPE = THtmlCommandButton.DEFAULT_RENDERER_TYPE;
+
+    private DoubleSubmitProtectionLoader loader = new KumuDisabledScriptLoader();
+
+    public THtmlCommandButtonRenderer() {
+        super();
+        addIgnoreAttributeName(ExtensionConstants.DISABLEDJS_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
+    }
+
+    public void encodePrepare(FacesContext context, UIComponent component)
+            throws IOException {
+        assertNotNull(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        final String id = component.getId();
+        if (TransactionTokenUtil.isDoOnce(id)) {
+            encodeTHtmlCommandButtonPrepare(context,
+                    (THtmlCommandButton) component);
+        }
+    }
+
+    protected void encodeTHtmlCommandButtonPrepare(final FacesContext context,
+            final THtmlCommandButton button) throws IOException {
+        if (!button.isDisabledJs()) {
+            return;
+        }
+        loader.loadScript(context, button);
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
@@ -61,6 +95,14 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer {
         } else {
             super.renderValueAttribute(context, command, writer);
         }
+    }
+
+    public DoubleSubmitProtectionLoader getLoader() {
+        return loader;
+    }
+
+    public void setLoader(DoubleSubmitProtectionLoader loader) {
+        this.loader = loader;
     }
 
 }

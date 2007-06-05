@@ -88,6 +88,10 @@ public interface ExtensionConstants {
 
     String TEMPLATEVALUE_ATTR = "templateValue";
 
+    String DISABLEDJS_ATTR = "disabledJs";
+
+    String TIME_ATTR = "time";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 

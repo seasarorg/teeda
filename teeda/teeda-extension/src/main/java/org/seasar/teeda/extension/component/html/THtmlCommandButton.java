@@ -15,28 +15,37 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.ComponentUtil_;
+import java.io.IOException;
+
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.internal.RenderPreparable;
+import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
  * @author higa
  * @author shot
  */
-public class THtmlCommandButton extends HtmlCommandButton {
+public class THtmlCommandButton extends HtmlCommandButton implements
+        RenderPreparable {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlCommandButton";
 
-    private String disabledJs = null;
+    private static final long TIME_DEFAULT = 50000;
+
+    private Boolean disabledJs = null;
+
+    private Long time;
 
     public THtmlCommandButton() {
         super();
@@ -64,21 +73,37 @@ public class THtmlCommandButton extends HtmlCommandButton {
         super.broadcast(event);
     }
 
-    public String getDisabledJs() {
+    public boolean isDisabledJs() {
         if (disabledJs != null) {
-            return disabledJs;
+            return disabledJs.booleanValue();
         }
-        return ComponentUtil_.getValueBindingValueAsString(this, "disabledJs");
+        ValueBinding vb = getValueBinding(ExtensionConstants.DISABLEDJS_ATTR);
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
     }
 
-    public void setDisabledJs(String disabledJs) {
-        this.disabledJs = disabledJs;
+    public void setDisabledJs(boolean disabledJs) {
+        this.disabledJs = new Boolean(disabledJs);
+    }
+
+    public long getTime() {
+        if (time != null) {
+            return time.longValue();
+        }
+        ValueBinding vb = getValueBinding(ExtensionConstants.TIME_ATTR);
+        Long v = vb != null ? (Long) vb.getValue(getFacesContext()) : null;
+        return v != null ? v.longValue() : TIME_DEFAULT;
+    }
+
+    public void setTime(long time) {
+        this.time = new Long(time);
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        disabledJs = (String) values[1];
+        disabledJs = (Boolean) values[1];
     }
 
     public Object saveState(FacesContext context) {
@@ -88,5 +113,8 @@ public class THtmlCommandButton extends HtmlCommandButton {
         return values;
     }
 
-    
+    public void encodePrepare(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    }
+
 }
