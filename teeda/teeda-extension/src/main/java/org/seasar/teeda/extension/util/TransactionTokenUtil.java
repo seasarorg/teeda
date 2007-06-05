@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -34,11 +35,14 @@ import org.seasar.teeda.core.util.RendererUtil;
 
 /**
  * @author higa
- * 
+ * @author shot
  */
 public class TransactionTokenUtil {
 
-    public static final String TOKEN = TransactionTokenUtil.class.getName()
+    public static String TOKEN = null;
+
+    public static final String DEFAULT_TOKEN = TransactionTokenUtil.class
+            .getName()
             + ".TOKEN";
 
     private static final String TOKENS = TransactionTokenUtil.class.getName()
@@ -59,11 +63,13 @@ public class TransactionTokenUtil {
     }
 
     public static synchronized String getToken(Map requestMap) {
+        initTokenIfNeed();
         return (String) requestMap.get(TOKEN);
     }
 
     public static synchronized void renderTokenIfNeed(FacesContext context,
             UIComponent component) throws IOException {
+        initTokenIfNeed();
         ExternalContext extCtx = context.getExternalContext();
         Map requestMap = extCtx.getRequestMap();
         String token = (String) requestMap.get(TOKEN);
@@ -121,6 +127,7 @@ public class TransactionTokenUtil {
     }
 
     public static synchronized boolean verify(FacesContext context) {
+        initTokenIfNeed();
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String token = (String) paramMap.get(TOKEN);
         if (StringUtil.isEmpty(token)) {
@@ -143,5 +150,14 @@ public class TransactionTokenUtil {
             return true;
         }
         return false;
+    }
+
+    private static void initTokenIfNeed() {
+        if (TOKEN == null) {
+            final String customizedTokenKey = FacesMessageUtil.getSummary(
+                    FacesContext.getCurrentInstance(), DEFAULT_TOKEN, null);
+            TOKEN = (customizedTokenKey != null) ? customizedTokenKey
+                    : DEFAULT_TOKEN;
+        }
     }
 }
