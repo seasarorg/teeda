@@ -30,24 +30,24 @@
 <!-- document start -->
 <br/>
 <h2><a id="id1" name="id1">Kumuとは</a></h2>
-<p>Kumuはjavascriptをより簡単に記述できるように作られたjsのライブラリです。</p>
+<p>Kumuはjavascriptをより簡単に記述できるように作られたjavascriptのライブラリです。</p>
 <p>Kumuは以下のような機能を提供します。</p>
 <ol class="arabic simple">
-<li>ショートカットメソッド</li>
+<li>ショートカット関数</li>
 <li>既存のFunction拡張</li>
-<li>動的なjsファイルの読み込み</li>
+<li>動的なjavascriptファイルの読み込み</li>
 <li>イベント処理、および管理</li>
 <li>Ajax</li>
 <li>テーブルのソート</li>
 <li>二重サブミット防止機能</li>
 <li>DOM操作のヘルパー</li>
-<li>jsによるバリデータ</li>
+<li>javascriptによるバリデータ</li>
 </ol>
 <p>Kumuは複数のファイルから構成されており、機能ごとにファイルが分かれています。</p>
 <ul class="simple">
-<li><a href="#id2">kumu.js</a> Kumuの本体です。このファイルがないと他のKumuのjsファイルが正しく動作しません。</li>
+<li><a href="#id2">kumu.js</a> Kumuの本体です。このファイルがないと他のKumuのjavascriptファイルが正しく動作しません。</li>
 <li>event.js イベント処理を行うライブラリです。</li>
-<li>ajax.js Ajax処理を行うライブラリです。TeedaAjaxで使用します。ajax.jsはKumuに依存していません。そのため単体で使用することが可能です。</li>
+<li><a href="kumu_ajax.html">ajax.js</a> Ajax処理を行うライブラリです。TeedaAjaxで使用します。ajax.jsはKumuに依存していません。そのため単体で使用することが可能です。</li>
 <li>sortable_table.js テーブルをソートするライブラリです。</li>
 <li>disabled.js 二重送信を防ぐ為のライブラリです。</li>
 <li>validator.js 入力チェックを行うためのライブラリです。</li>
@@ -57,13 +57,13 @@
 <div class="section">
 <h2><a id="id2" name="id2">Kumu</a></h2>
 <p>Kumuは基本的な機能を提供します。</p>
-<p>よく使う関数などをショートカットメソッドとして提供しています。</p>
+<p>よく使う関数などをショートカット関数として提供しています。</p>
 <p>Kumuではなるべくglobalな領域を汚さないようにしているため関数は全て名前空間 Kumu で始まります。</p>
 </div>
 <div class="section">
 <h3><a id="id3" name="id3">ショートカット</a></h3>
-<p>Kumuではよく使うメソッドのショートカットメソッドを提供しています。</p>
-<p>特に要素を特定するメソッドは簡単に呼びだす事ができます。</p>
+<p>Kumuではよく使う関数のショートカット関数を提供しています。</p>
+<p>特に要素を特定する関数は簡単に呼びだす事ができます。</p>
 <ul class="simple">
 <li>$i = document.getElementByIdのショートカット</li>
 <li>$t = document.getElementByTagNameのショートカット</li>
@@ -77,7 +77,7 @@ var foo_list = $i('foo');
 </div>
 <div class="section">
 <h3><a id="javascript-load" name="javascript-load">javascriptのload</a></h3>
-<p>Kumuでは他のjsファイル同士の依存を解決させるためjsをlodingする機能を持っています。</p>
+<p>Kumuでは他のファイル同士の依存を解決させるためjavascriptをlodingする機能を持っています。</p>
 <pre class="literal-block">
 //foo.jsを読み込む
 Kumu.staticLoad('foo');
@@ -94,7 +94,7 @@ Kumu.dynamicLoad('foo.bar');
 <li>staticLoad</li>
 <li>dynamicLoad</li>
 </ul>
-<p>loadできるjsファイルはkumu.jsと同ディレクトリ内、あるいはkumu.jsの下位ディレクトリのjsファイルです。</p>
+<p>loadできるjsファイルはkumu.jsと同ディレクトリ内、あるいはkumu.jsの下位ディレクトリのjavascriptファイルです。</p>
 <p>load対象のjsがkumuと同ディレクトリ内にある場合には</p>
 <pre class="literal-block">
 Kumu.staticLoad([.jsを抜いたファイル名]);
@@ -102,17 +102,17 @@ Kumu.staticLoad([.jsを抜いたファイル名]);
 <p>また下位ディレクトリにある場合はパスのスラッシュ( / )をピリオド（ . )にして指定します。</p>
 <div class="section">
 <h3><a id="staticload" name="staticload">staticLoad</a></h3>
-<p>staticLoadは静的にjsファイルを読み込みます。</p>
+<p>staticLoadは静的にjavascriptファイルを読み込みます。</p>
 <p>staticLoadはscriptタグを出力してファイルを読み込みます。</p>
-<p>そのためstaticLoadを呼び出したjsファイル内で読み込んだjsファイルの機能を使う事はできません。</p>
+<p>そのためstaticLoadを呼び出したjavascriptファイル内で読み込んだjsファイルの機能を使う事はできません。</p>
 <p>それは出力したscriptタグはその場ですぐには評価されないためです。</p>
-<p>（staticLoadを呼び出したjsファイルの解析後に読み込まれる）</p>
+<p>（staticLoadを呼び出したjavascriptファイルの解析後に読み込まれる）</p>
 </div>
 <div class="section">
 <h3><a id="dynamicload" name="dynamicload">dynamicLoad</a></h3>
-<p>dynamicLoadは動的にjsファイルを読み込みます。</p>
-<p>dynamicLoadは読みこんだjsファイルをその場で評価し、使う事ができます。</p>
-<p>但し、dynamicLoadができるjsファイルは正しくevalできるjsファイルでなければいけません。</p>
+<p>dynamicLoadは動的にjavascriptファイルを読み込みます。</p>
+<p>dynamicLoadは読みこんだjavascriptファイルをその場で評価し、使う事ができます。</p>
+<p>但し、dynamicLoadができるjavascriptファイルは正しくevalできるjavascriptファイルでなければいけません。</p>
 </div>
 </div>
 <div class="section">
