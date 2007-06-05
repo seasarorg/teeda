@@ -232,21 +232,21 @@ var list = $i('department', 'person');
 <p>複数のnameを指定する事も出来ます。</p>
 <pre class="literal-block">
 // tag名がpreの要素を取得
-var obj = $i('pre');
+var obj = $t('pre');
 
-var list = $i('ul', 'ol');
+var list = $t('ul', 'ol');
 </pre>
 </div>
 <div class="section">
 <h3><a id="kumu-n-name" name="kumu-n-name">Kumu.$n(name, [...])</a></h3>
 <p>document.getElementByNameのショートカットメソッドです。</p>
-<p>またこの関数は$tという名前でも使用可能です。</p>
+<p>またこの関数は$nという名前でも使用可能です。</p>
 <p>複数のnameを指定する事も出来ます。</p>
 <pre class="literal-block">
 //nameがemployeeの要素を取得
-var obj = $i('employee');
+var obj = $n('employee');
 
-var list = $i('search', 'employeeCode');
+var list = $n('search', 'employeeCode');
 </pre>
 </div>
 <div class="section">
