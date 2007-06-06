@@ -21,9 +21,11 @@ import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
@@ -37,6 +39,8 @@ public class TCondition extends UIComponentBase {
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
     private Boolean submitted = null;
+
+    private Boolean renderSpan = null;
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
@@ -116,4 +120,32 @@ public class TCondition extends UIComponentBase {
                     phase);
         }
     }
+
+    public boolean isRenderSpan() {
+        if (renderSpan != null) {
+            return renderSpan.booleanValue();
+        }
+        ValueBinding vb = getValueBinding(ExtensionConstants.RENDERSPAN_ATTR);
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setRenderSpan(boolean renderSpan) {
+        this.renderSpan = new Boolean(renderSpan);
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        renderSpan = (Boolean) values[1];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[7];
+        values[0] = super.saveState(context);
+        values[1] = renderSpan;
+        return values;
+    }
+
 }

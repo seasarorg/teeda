@@ -49,6 +49,7 @@ public class TConditionRenderer extends AbstractRenderer {
     {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
         attribute.addAttributeName(ExtensionConstants.SUBMITTED);
+        attribute.addAttributeName(ExtensionConstants.RENDERSPAN_ATTR);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -105,7 +106,11 @@ public class TConditionRenderer extends AbstractRenderer {
         }
         TCondition condition = (TCondition) component;
         final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement(JsfConstants.DIV_ELEM, condition);
+        if (!condition.isRenderSpan()) {
+            writer.startElement(JsfConstants.DIV_ELEM, condition);
+        } else {
+            writer.startElement(JsfConstants.SPAN_ELEM, condition);
+        }
         RendererUtil.renderIdAttributeIfNecessary(writer, component,
                 getIdForRender(context, condition));
         renderRemainAttributes(condition, writer, attribute);
@@ -130,7 +135,11 @@ public class TConditionRenderer extends AbstractRenderer {
             return;
         }
         final ResponseWriter writer = context.getResponseWriter();
-        writer.endElement(JsfConstants.DIV_ELEM);
+        if (!((TCondition) component).isRenderSpan()) {
+            writer.endElement(JsfConstants.DIV_ELEM);
+        } else {
+            writer.endElement(JsfConstants.SPAN_ELEM);
+        }
     }
 
     public boolean getRendersChildren() {

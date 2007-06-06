@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -65,6 +65,22 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse(factory.isMatch(elementNode3, pageDesc3, null));
     }
 
+    public void testIsMatch_spanIsOk() throws Exception {
+        Map props = new HashMap();
+        props.put("id", "isBbb");
+        ElementNode elementNode = createElementNode("span", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_spanIsOk2() throws Exception {
+        Map props2 = new HashMap();
+        props2.put("id", "isNotBbb");
+        ElementNode elementNode2 = createElementNode("span", props2);
+        PageDesc pageDesc2 = createPageDesc(AaaPage.class, "aaaPage");
+        assertTrue(factory.isMatch(elementNode2, pageDesc2, null));
+    }
+
     public void testCreateFactory1() throws Exception {
         // ## Arrange ##
         Map props = new HashMap();
@@ -100,4 +116,41 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("3", "#{aaaPage.bbb == false}", processor
                 .getProperty("rendered"));
     }
+
+    public void testCreateFactory_spanIsOk1() throws Exception {
+        // ## Arrange ##
+        Map props = new HashMap();
+        props.put("id", "isBbb");
+        ElementNode elementNode = createElementNode("span", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", processor);
+        assertEquals("2", TConditionTag.class, processor.getTagClass());
+        assertEquals("3", "#{aaaPage.bbb == true}", processor
+                .getProperty("rendered"));
+    }
+
+    public void testCreateFactory_spanIsOk2() throws Exception {
+        // ## Arrange ##
+        Map props = new HashMap();
+        props.put("id", "isNotBbb");
+        ElementNode elementNode = createElementNode("span", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull("1", processor);
+        assertEquals("2", TConditionTag.class, processor.getTagClass());
+        assertEquals("3", "#{aaaPage.bbb == false}", processor
+                .getProperty("rendered"));
+    }
+
 }

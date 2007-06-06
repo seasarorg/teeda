@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,6 +26,8 @@ import org.seasar.teeda.extension.component.TCondition;
  * @author shot
  */
 public class TConditionTag extends UIComponentTagBase {
+
+    private String renderSpan;
 
     public TConditionTag() {
     }
@@ -46,6 +48,18 @@ public class TConditionTag extends UIComponentTagBase {
                 .setId(condition.getId()
                         + ExtensionConstants.TEEDA_HIDDEN_SUFFIX);
         condition.getChildren().add(hidden);
+        if (renderSpan != null) {
+            setComponentProperty(component, ExtensionConstants.RENDERSPAN_ATTR,
+                    renderSpan);
+        }
+    }
+
+    public void setRenderSpan(String renderSpan) {
+        this.renderSpan = renderSpan;
+    }
+
+    public String getRenderSpan() {
+        return renderSpan;
     }
 
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -43,7 +43,9 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
             return false;
         }
         String tagName = elementNode.getTagName();
-        return JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName) && isIdMatch(id);
+        return (JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName) || JsfConstants.SPAN_ELEM
+                .equalsIgnoreCase(tagName))
+                && isIdMatch(id);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -71,6 +73,10 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
             expression = getBindingExpression(pageName, s);
         }
         properties.put("rendered", expression);
+        String tagName = elementNode.getTagName();
+        if (tagName != null && JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName)) {
+            properties.put(ExtensionConstants.RENDERSPAN_ATTR, "true");
+        }
     }
 
     protected String getTagName() {

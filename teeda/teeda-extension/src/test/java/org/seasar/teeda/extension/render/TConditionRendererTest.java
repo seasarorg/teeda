@@ -79,6 +79,33 @@ public class TConditionRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode1_span() throws Exception {
+        Renderer r = createRenderer();
+        TCondition c = new TCondition();
+        c.setId("isAaa");
+        c.setRenderSpan(true);
+        c.setRendered(true);
+        encodeByRenderer(r, c);
+        assertEquals("<span id=\"isAaa\"></span>", getResponseText());
+    }
+
+    public void testEncode2_span() throws Exception {
+        Renderer r = createRenderer();
+        TCondition c = new TCondition();
+        MockHtmlOutputText child = new MockHtmlOutputText();
+        child.setId("bbb");
+        c.setRenderSpan(true);
+        child.setValue("B");
+        HtmlOutputTextRenderer childRenderer = new HtmlOutputTextRenderer();
+        child.setRenderer(childRenderer);
+        c.setId("isAaa");
+        c.setRendered(true);
+        c.getChildren().add(child);
+        encodeByRenderer(r, c);
+        assertEquals("<span id=\"isAaa\"><span id=\"bbb\">B</span></span>",
+                getResponseText());
+    }
+
     protected Renderer createRenderer() {
         return new TConditionRenderer();
     }
