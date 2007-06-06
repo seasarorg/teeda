@@ -100,6 +100,7 @@ Kumu.extend(Kumu.Event, {
      || element.attachevent)){
       name = 'keydown';
     }
+    var processList = [];
     nodes.map(function(node){
       var nodeFunc = observer.state();
       var p = {
@@ -121,11 +122,11 @@ Kumu.extend(Kumu.Event, {
           }
         },
         cancel : function(c){
-        	nodeFunc.cancel(c);
+          nodeFunc.cancel(c);
 		},
 		clear : function(){
-		    this.remove();
-			Kumu.Event.process[node][name] = null;
+		  this.remove();
+		  Kumu.Event.process[node][name] = null;
 		}
       };
       if(this.process[node]){
@@ -141,7 +142,9 @@ Kumu.extend(Kumu.Event, {
         this.process[node][name].push(p);
       }
       p.add();
+      processList.push(p);
     }.bindScope(this));
+    return processList;
   },
  
   regist : function(o){
