@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>double submit protection sample</title>
+</head>
+<body>
+<form id="form">
+<div>
+<span id="allMessages"></span>
+</div>
+<table>
+<tr>
+<td></td><td><input name="arg1" type="text" id="arg1" title="INPUT1"/></td>
+<td><span id="arg1Message"></span></td>
+</tr>
+<tr>
+<td> + </td>
+<td><input name="arg2" type="text" id="arg2" title="INPUT2"/></td>
+<td><span id="arg2Message"></span></td>
+</tr>
+<tr>
+<td> = </td>
+<td><span id="result"></span></td>
+</tr>
+</table>
+<input type="submit" name="button1" value="calculate" id="doOnceCalculate" te:renderJs="true"/>
+<input type="text" id="arg3" readonly="readonly" />
+</form>
+</body>
+</html>

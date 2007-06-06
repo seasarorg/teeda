@@ -49,4 +49,25 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.assertElementNotPresentById("isNotAaa");
 	}
 
+	public void testConditionRestoreWhenValidationErrorWithSpan()
+			throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/conditionSpan.html");
+		tester.dumpHtml();
+
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementNotPresentById("isNotAaa");
+		tester.setTextById("hoge", "1");
+
+		tester.submitById("doHoge-1");
+
+		tester.dumpHtml();
+		// ## Assert ##
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementNotPresentById("isNotAaa");
+	}
+
 }

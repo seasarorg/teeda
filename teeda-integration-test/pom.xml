@@ -105,7 +105,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-webunit</artifactId>
-      <version>0.2.3-SNAPSHOT</version>
+      <version>0.2.3</version>
       <scope>test</scope>
     </dependency>
     <!-- for junit-addons -->
