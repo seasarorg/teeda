@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Kumu Event</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="kumu-event">
+
+
+<h2 class="subtitle" id="id1">Kumu.Eventとは</h2>
+<p>Kumu.EventはHTML要素にイベント処理を簡単に割り当てるように作られたjavascriptのライブラリです。</p>
+<p>Kumu.EventはKumuに依存しているため、kumu.jsを必ず先に読み込んでおく必要があります。</p>
+<p>Kumu.Eventは以下の機能を提供します。</p>
+<ol class="arabic simple">
+<li>HTML要素へのイベント処理の割当</li>
+<li>JSONによるイベント処理の割当</li>
+<li>関数によるイベント処理の割当</li>
+</ol>
+<div class="section">
+<h3><a id="html" name="html">HTML要素へのイベント処理の割当</a></h3>
+<p>Kumu.Eventを使用するとHTMLに直接&quot;onclick&quot;などを記述せずにイベント処理を割り当てる事が出来ます。</p>
+<p>従来では以下のように記述しますがKumu.Eventを使用するとonclickを記述せずに済みます。</p>
+<div class="section">
+<h3><a id="id2" name="id2">イベント処理を割り当てる</a></h3>
+<p>イベント処理を割り当てるにはKumu.Event.addEventを使用します。</p>
+<p>通常時の場合と比較すると以下のようになります。</p>
+<pre class="literal-block">
+// 従来 DOMに記述する
+&lt;span onclick=&quot;alert('TEST');&quot;&gt;クリックするとalert&lt;/span&gt;
+</pre>
+<p>Kumu.Eventを使用する場合は以下のようになります。</p>
+<pre class="literal-block">
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    alert('TEST');
+  };
+  Kumu.Event.addEvent('foo', 'click', test);
+&lt;/script&gt;
+</pre>
+<p>※DOMの要素が読み込める状態にするため対象の要素より下にscriptを記述しています。</p>
+<p>Kumu.Event.addEventには以下の引き数を渡します。</p>
+<ul class="simple">
+<li>割り当てたい要素のidあるいはDOM要素</li>
+<li>イベント名の文字列</li>
+<li>イベント発生時呼ばれる関数</li>
+<li>キャプチャの使用（useCapture)</li>
+</ul>
+<p>イベント名にはイベントの種類を指定します。</p>
+<p>イベントの種類の代表的なものは以下です。</p>
+<ul class="simple">
+<li>load</li>
+<li>unload</li>
+<li>change</li>
+<li>click</li>
+<li>dbclick</li>
+<li>mouseover</li>
+<li>mouseout</li>
+<li>blur</li>
+<li>keydown</li>
+<li>keyup</li>
+<li>keypress</li>
+<li>mousedown</li>
+<li>mouseup</li>
+</ul>
+<p>またイベント発生時呼ばれる関数には発生したeventが渡されます。</p>
+<p>イベント処理が発生した要素を取得するには以下のように記述します。</p>
+<pre class="literal-block">
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    //イベントが発生した要素を取得
+    var element = evt.target || evt.srcElement;
+    alert(element);
+  };
+  Kumu.Event.addEvent('foo', 'click', test);
+&lt;/script&gt;
+</pre>
+<p>またKumu.Event.addEventは割り当てたイベントの状態をもったprocess objectを返します。</p>
+<p>process objectはイベントを解放したりすることができます。</p>
+<pre class="literal-block">
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    //イベントが発生した要素を取得
+    var element = evt.target || evt.srcElement;
+    alert(element);
+  };
+  var process = Kumu.Event.addEvent('foo', 'click', test);
+  // 実行状態でなければcancel
+  process.cancel();
+
+&lt;/script&gt;
+</pre>
+</div>
+<div class="section">
+<h3><a id="id3" name="id3">イベント処理を削除する</a></h3>
+<p>割り当てたイベントを解放するにはKumu.Event.addEventの返り値であるprocess objectを使用します。</p>
+<p>process objectは割り当てられた要素分だけArrayで返されます。</p>
+<p>process objectは割り当てられたイベントを持っておりremove関すを使うとイベントを解放することができます。</p>
+<pre class="literal-block">
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    //イベントが発生した要素を取得
+    var element = evt.target || evt.srcElement;
+    alert(element);
+  };
+  var process = Kumu.Event.addEvent('foo', 'click', test);
+  process[0].remove();
+
+&lt;/script&gt;
+</pre>
+<p>さらにprocess objectを保持しておくとイベントを再度簡単に割り当てたりする事も出来ます。</p>
+<pre class="literal-block">
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    //イベントが発生した要素を取得
+    var element = evt.target || evt.srcElement;
+    alert(element);
+  };
+  var process = Kumu.Event.addEvent('foo', 'click', test);
+  process[0].remove();
+  //再度割り当て
+  process[0].add();
+
+&lt;/script&gt;
+</pre>
+<p>process objectはKumu.Event.processでも参照することが可能です。</p>
+</div>
+<div class="section">
+<h3><a id="id4" name="id4">イベントの管理</a></h3>
+<p>Kumu.Event.addEventで割り合てたイベントはKumu.Event内で管理しています。</p>
+<p>割り当てたイベントはKumu.Event.processで参照することができます。</p>
+<p>Kumu.Event.processの構造は[要素名]をキーにしたobjectになっています。</p>
+<p>その中には[イベント名]をキーにしたobjectが入っており値には割り当てた順でprocess objectが入っています。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="json" name="json">JSONによるイベント処理の設定</a></h3>
+<p>Kumu.Eventでは更に簡単にイベントを割り当てる事が出来ます。</p>
+<p>Kumu.Eventでは設定ファイルの代わりにKumuEventConfという名前のglobalな領域のJSONを設定として読み込みます。</p>
+<p>KumuEventConfを使用すると以下のように設定することができます。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/event.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var debug = function(evt, element){
+    alert(evt);
+    alert(element);
+  };
+
+  var function on(evt){
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    if(elem.nodeType == 3){
+      elem = elem.parentNode;
+    }
+    elem.className = 'on';
+  };
+
+  function off(evt){
+    var elem = (evt.target) ? evt.target : evt.srcElement;
+    if(elem.nodeType == 3){
+      elem = elem.parentNode;
+    }
+    elem.className = 'off';
+  };
+
+  KumuEventConf = {
+    'click_test:id1' : debug,
+    'mouseover_change' : on,
+    'mouseout_change' : off
+  }
+&lt;/script&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+  .on {
+    background-color: #ffb;
+  }
+  .off{
+    background-color: #ffffff;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='test:id1'&gt;アラートが出ます&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>KumuEventConfはキーから割り当てるイベントおよび要素を特定します。</p>
+<p>KumuEventConfは以下のような仕様で動作します。</p>
+<ul class="simple">
+<li>キー : イベント名 + '_' + 要素のid名</li>
+<li>値 : イベント発生時に呼ばれる関数</li>
+</ul>
+<p>イベント発生時に呼ばれる関数はイベント、addEventで指定した要素のid(あるいは要素そのもの）を引き数に実行されます。</p>
+<p>KumuEventConfの設定はドキュメントが全てloadされた状態時に有効になります。</p>
+</div>
+<div class="section">
+<h3><a id="id5" name="id5">関数によるイベント処理の割当</a></h3>
+<p>Kumu.Eventでは関数からもイベントを割り当てる事ができます。</p>
+<p>Kumu.EventはFunction.prototypeに関数名からイベント割当を行う関数を追加します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/event.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = function(){
+
+    function click_test:id1(evt, element){
+      alert(evt);
+      alert(element);
+    };
+    click_test:id1.registEvent();
+
+    function mouseover_change(evt){
+      var elem = (evt.target) ? evt.target : evt.srcElement;
+      if(elem.nodeType == 3){
+        elem = elem.parentNode;
+      }
+      elem.className = 'on';
+    };
+    mouseover_change.registEvent();
+
+    function mouseout_change(evt){
+      var elem = (evt.target) ? evt.target : evt.srcElement;
+      if(elem.nodeType == 3){
+        elem = elem.parentNode;
+      }
+      elem.className = 'off';
+    }
+    mouseout_change.registEvent();
+  };
+  test = resgistOnLoad();
+
+&lt;/script&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+  .on {
+    background-color: #ffb;
+  }
+  .off{
+    background-color: #ffffff;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='test:id1'&gt;アラートが出ます&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+  &lt;li id=&quot;change&quot;&gt;mouseover&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>イベント処理を割り当てる際によくある問題はscriptを評価する際に対象の要素がなくエラーになる事です。</p>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var test = funciton(evt){
+    //イベントが発生した要素を取得
+    var element = evt.target || evt.srcElement;
+    alert(element);
+  };
+  //　この時点でfooは見えない
+  Kumu.Event.addEvent('foo', 'click', test);
+&lt;/script&gt;
+
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+</pre>
+<p>registOnLoad を使うと指定した関数をHTMLを全て読み込んだ時に実行することができます。</p>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var load = function(){
+    var test = funciton(evt){
+      //イベントが発生した要素を取得
+      var element = evt.target || evt.srcElement;
+      alert(element);
+    };
+    //　この時点でfooは見えない
+    Kumu.Event.addEvent('foo', 'click', test);
+  };
+  load.registOnLoad();
+&lt;/script&gt;
+
+&lt;span id=&quot;foo&quot;&gt;クリックするとalert&lt;/span&gt;
+</pre>
+</div>
+<div class="section">
+<h3><a id="id6" name="id6">リファレンス</a></h3>
+<div class="section">
+<h3><a id="kumu-event-addevent-id-eventname-usecapture" name="kumu-event-addevent-id-eventname-usecapture">Kumu.Event.addEvent(id, eventName, useCapture)</a></h3>
+<p>指定したidの要素にイベント処理を割り当てます。</p>
+<p>idではなくelement自身を渡す事も出来ます。また同一idの要素が複数存在する場合はそれら全てにイベントを割り当てます。</p>
+<p>イベント名には以下のものが使用できます。</p>
+<ul class="simple">
+<li>load</li>
+<li>unload</li>
+<li>change</li>
+<li>click</li>
+<li>dbclick</li>
+<li>mouseover</li>
+<li>mouseout</li>
+<li>blur</li>
+<li>keydown</li>
+<li>keyup</li>
+<li>keypress</li>
+<li>mousedown</li>
+<li>mouseup</li>
+</ul>
+<p>addEventメソッドは自身の状態を持ったprocess objectの配列を返します。</p>
+<pre class="literal-block">
+var test = funciton(evt){
+  //イベントが発生した要素を取得
+  var element = evt.target || evt.srcElement;
+  alert(element);
+};
+vat processList = Kumu.Event.addEvent('foo', 'click', test);
+</pre>
+<p>process objectは以下の関数を持っています。</p>
+<div class="section">
+<h3><a id="add" name="add">add()</a></h3>
+<p>イベント処理を割り当てます。</p>
+<p>再割当したい場合に使用します。</p>
+</div>
+<div class="section">
+<h3><a id="remove" name="remove">remove()</a></h3>
+<p>割り当てたイベント処理を解放します。</p>
+</div>
+<div class="section">
+<h3><a id="cancel" name="cancel">cancel()</a></h3>
+<p>実行状態を見てキャンセル可能であれば関数を実行できないようにします。</p>
+</div>
+<div class="section">
+<h3><a id="clear" name="clear">clear()</a></h3>
+<p>割り当てたイベント処理を解放します。</p>
+<p>Kumu.Event.processからも解放します。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="kumu-event-stopevent-event" name="kumu-event-stopevent-event">Kumu.Event.stopEvent(event)</a></h3>
+<p>eventをキャンセルします。</p>
+<p>anchorなどに使用するとクリックをキャンセルして押せなくすることができます。</p>
+<pre class="literal-block">
+var test = function(evt){
+  Kumu.Event.stopEvent(evt);
+};
+Kumu.Event.addEvent(document.body, 'click' test);
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-event-unloadevent" name="kumu-event-unloadevent">Kumu.Event.unloadEvent()</a></h3>
+<p>Kumu.Event.addEventで割り当てた全てのイベントを解放します。</p>
+<pre class="literal-block">
+Kumu.Event.unloadEvent();
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-event-regist-object" name="kumu-event-regist-object">Kumu.Event.regist(object)</a></h3>
+<p>指定したobjectのキーからイベント処理を割り当てます。</p>
+<ul class="simple">
+<li>キー : イベント名 + '_' + 要素のid名</li>
+<li>値 : イベント発生時に呼ばれる関数</li>
+</ul>
+<pre class="literal-block">
+var obj = {
+  'click_test' : function(){
+    alert('test');
+  }
+};
+
+// id='test'の要素のclickイベントに割り当てる
+Kumu.Event.regist(o);
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-event-addonloadevent-function" name="kumu-event-addonloadevent-function">Kumu.Event.addOnLoadEvent(function)</a></h3>
+<p>指定した関数をonload時に実行します。</p>
+<pre class="literal-block">
+var test = function(evt){
+  alert('test');
+}
+Kumu.Event.addOnLoadEvent(test)
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-event-addonunloadevent-function" name="kumu-event-addonunloadevent-function">Kumu.Event.addOnUnLoadEvent(function)</a></h3>
+<p>指定した関数をonunload時に実行します。</p>
+<pre class="literal-block">
+var test = function(evt){
+  alert('test');
+}
+Kumu.Event.addOnUnLoadEvent(test)
+</pre>
+</div>
+</div>
+<div class="section">
+<h3><a id="function-prototype" name="function-prototype">Function.prototype</a></h3>
+<div class="section">
+<h3><a id="registevent-scope" name="registevent-scope">registEvent(scope)</a></h3>
+<p>関数名を元にイベント処理を割り当てます。</p>
+<p>関数名はイベント名 + '_' + 要素のid名である必要があります。</p>
+<p>引き数で実行時のscopeを渡す事ができます。</p>
+<pre class="literal-block">
+function click_test(evt, elementName){
+  alert(evt);
+  alert(elementName);
+};
+
+click_test.registEvent(this);
+</pre>
+</div>
+<div class="section">
+<h3><a id="registeventtoelement-scope-element" name="registeventtoelement-scope-element">registEventToElement(scope, element)</a></h3>
+<p>関数名を元にイベント処理を割り当てます。</p>
+<p>registEventは異なり、関数名から要素は特定しません。</p>
+<p>引き数の２番目に割り当てたい要素を指定します。</p>
+<p>関数名はイベント名 + '_' から始まる必要があります。</p>
+<p>引き数で実行時のscopeを渡す事ができます。</p>
+<pre class="literal-block">
+function click_xxx(evt, elementName){
+  alert(evt);
+  alert(elementName);
+};
+
+click_test.registEventToElement(this, $i('test'));
+</pre>
+</div>
+<div class="section">
+<h3><a id="registonload-scope" name="registonload-scope">registOnLoad(scope)</a></h3>
+<p>関数をonload時に実行するように登録します。</p>
+<p>Kumu.Event.addOnLoadEvent(function)を自身に適用します。</p>
+<p>引き数で実行時のscopeを渡す事ができます。</p>
+</div>
+<div class="section">
+<h3><a id="registonunload-scope" name="registonunload-scope">registOnUnLoad(scope)</a></h3>
+<p>関数をonload時に実行するように登録します。</p>
+<p>Kumu.Event.addOnUnLoadEvent(function)を自身に適用します。</p>
+<p>引き数で実行時のscopeを渡す事ができます。</p>
+</div>
+</div>
+</div>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>
