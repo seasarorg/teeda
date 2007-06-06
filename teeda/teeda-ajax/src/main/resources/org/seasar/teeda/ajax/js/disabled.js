@@ -9,14 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 if (typeof(Kumu) == 'undefined') {
   Kumu = {};
 }else{
-  Kumu.dynamicLoad('event');
+  if (typeof(Kumu.Event) == 'undefined') {
+    Kumu.dynamicLoad('event');
+  }
 }
 
 if (typeof(Kumu.Html) == 'undefined') {
@@ -30,13 +32,13 @@ if (typeof(Kumu.Html.Disabled) == 'undefined') {
 DisabledConf = false;
 
 Kumu.extend(Kumu.Html.Disabled, {
-  
+
   time : 1000,
-  
+
   anchor : false,
-  
+
   submitMessage : false,
-  
+
   anchorMessage : false,
 
   lock : function(element) {
@@ -44,7 +46,7 @@ Kumu.extend(Kumu.Html.Disabled, {
       element.__lock = true;
     }
   },
-   
+
   unlock : function(element) {
     (function(){
       if(element.__lock){
@@ -52,7 +54,7 @@ Kumu.extend(Kumu.Html.Disabled, {
       }
     }.deferred(this.time))();
   },
-  
+
   disable : function(evt, element, func){
     if(element.__lock){
 	  if(func){
@@ -66,7 +68,7 @@ Kumu.extend(Kumu.Html.Disabled, {
 	  return true;
     }
   },
-  
+
   disableAnchor : function(){
     document.body.onclick = function(e){
       var element = e.target || e.srcElement;
@@ -85,7 +87,7 @@ Kumu.extend(Kumu.Html.Disabled, {
       }
     }.bindScopeAsEventListener(this);
   },
-  
+
   disableForms: function(forms) {
     Kumu.map(function(f){
       if(f.onsubmit){
@@ -96,7 +98,7 @@ Kumu.extend(Kumu.Html.Disabled, {
       }
     }.bindScope(this), Kumu.toArray(forms));
   },
-      
+
   loadDisabled : function(){
     var forms = Kumu.toArray(document.forms);
     if(DisabledConf){
@@ -104,13 +106,13 @@ Kumu.extend(Kumu.Html.Disabled, {
         this.time = DisabledConf.time;
       }
       if(DisabledConf.excludeAnchor){
-        this.anchor = DisabledConf.excludeAnchor;       
+        this.anchor = DisabledConf.excludeAnchor;
       }
       if(DisabledConf.submitMessage){
-        this.submitMessage = DisabledConf.submitMessage;       
+        this.submitMessage = DisabledConf.submitMessage;
       }
       if(DisabledConf.anchorMessage){
-        this.anchorMessage = DisabledConf.anchorMessage;       
+        this.anchorMessage = DisabledConf.anchorMessage;
       }
       if(DisabledConf.excludeForm){
         var ids  = DisabledConf.excludeForm;

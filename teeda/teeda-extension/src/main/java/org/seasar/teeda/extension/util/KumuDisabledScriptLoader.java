@@ -33,9 +33,13 @@ public class KumuDisabledScriptLoader implements DoubleSubmitProtectionLoader {
         final String path = ResourceUtil.getResourcePath(
                 "org.seasar.teeda.ajax.js.kumu", "js");
         VirtualResource.addJsResource(context, path);
+        VirtualResource.addJsResource(context, ResourceUtil.getResourcePath(
+                "org.seasar.teeda.ajax.js.event", "js"));
+        VirtualResource.addJsResource(context, ResourceUtil.getResourcePath(
+                "org.seasar.teeda.ajax.js.disabled", "js"));
         final String key = button.getClass().getName() + "." + button.getId();
         final StringBuffer buf = new StringBuffer(200);
-        buf.append("Kumu.dynamicLoad('disabled');\n");
+        //buf.append("Kumu.dynamicLoad('disabled');\n");
         buf.append("DisabledConf = {\n");
         buf.append(" time : ").append(button.getTime()).append(",\n");
         final String submitFunction = FacesMessageUtil.getSummary(context,

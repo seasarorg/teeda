@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +34,10 @@ public class KumuDisabledScriptLoaderTest extends TeedaTestCase {
         loader.loadScript(getFacesContext(), button);
         Set r = VirtualResource.getJsResources(getFacesContext());
         assertNotNull(r);
-        assertEquals("org/seasar/teeda/ajax/js/kumu.js", r.iterator().next());
+        Iterator iterator = r.iterator();
+        assertEquals("org/seasar/teeda/ajax/js/kumu.js", iterator.next());
+        assertEquals("org/seasar/teeda/ajax/js/event.js", iterator.next());
+        assertEquals("org/seasar/teeda/ajax/js/disabled.js", iterator.next());
 
         Map r2 = VirtualResource.getInlineJsResources(getFacesContext());
         assertNotNull(r2);
