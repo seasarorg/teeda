@@ -52,7 +52,7 @@ Kumu.extend(Kumu.Html.Disabled, {
       if(element.__lock){
         element.__lock = false;
       }
-    }.deferred(this.time))();
+    }.delay(this.time))();
   },
 
   disable : function(evt, element, func){
