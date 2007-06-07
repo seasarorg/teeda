@@ -70,4 +70,24 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.assertElementNotPresentById("isNotAaa");
 	}
 
+	public void testConditionNotMatch_TEEDA307() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/conditionNotMatch.html");
+		tester.dumpHtml();
+
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementPresentById("isNotAaa");
+		tester.setTextById("hoge", "1");
+
+		tester.submitById("doHoge-1");
+
+		tester.dumpHtml();
+		// ## Assert ##
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementPresentById("isNotAaa");
+	}
+
 }
