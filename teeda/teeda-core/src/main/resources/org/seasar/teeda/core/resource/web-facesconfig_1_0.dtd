@@ -1,8 +1,18 @@
 <!--
- Copyright 2004 Sun Microsystems, Inc. All rights reserved.
- SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+	* Copyright 2004-2007 the Seasar Foundation and the Others.
+	*
+	* Licensed under the Apache License, Version 2.0 (the "License");
+	* you may not use this file except in compliance with the License.
+	* You may obtain a copy of the License at
+	*
+	*     http://www.apache.org/licenses/LICENSE-2.0
+	*
+	* Unless required by applicable law or agreed to in writing, software
+	* distributed under the License is distributed on an "AS IS" BASIS,
+	* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+	* either express or implied. See the License for the specific language
+	* governing permissions and limitations under the License.
 -->
-
 <!--
     DTD for the JavaServer Faces Application Configuration File (Version 1.0)
 
@@ -152,7 +162,7 @@
 -->
 <!ELEMENT attribute       (description*, display-name*, icon*, attribute-name, attribute-class, default-value?, suggested-value?, attribute-extension*)>
 
-<!-- 
+<!--
     Extension element for attribute.  May contain implementation
     specific content.
 -->
@@ -172,7 +182,7 @@
 -->
 <!ELEMENT component       (description*, display-name*, icon*, component-type, component-class, attribute*, property*, component-extension*)>
 
-<!-- 
+<!--
     Extension element for component.  May contain implementation
     specific content.
 -->
@@ -211,7 +221,7 @@
 
 <!--
      The "locale-config" element allows the app developer to declare the
-     supported locales for this application.  
+     supported locales for this application.
 -->
 <!ELEMENT locale-config (default-locale?, supported-locale*)>
 
@@ -290,7 +300,7 @@
 -->
 <!ELEMENT property        (description*, display-name*, icon*, property-name, property-class, default-value?, suggested-value?, property-extension*)>
 
-<!-- 
+<!--
     Extension element for property.  May contain implementation
     specific content.
 -->
@@ -330,7 +340,7 @@
 -->
 <!ELEMENT renderer        (description*, display-name*, icon*, component-family, renderer-type, renderer-class, attribute*, renderer-extension*)>
 
-<!-- 
+<!--
     Extension element for renderer.  May contain implementation
     specific content.
 -->
@@ -440,7 +450,7 @@
 
 <!--
     The "default-render-kit-id" element allows the application to define
-    a renderkit to be used other than the standard one. 
+    a renderkit to be used other than the standard one.
 -->
 <!ELEMENT default-render-kit-id   (#PCDATA)>
 
@@ -527,7 +537,7 @@
 
 <!--
     The "key" element is the String representation of a map key that
-    will be stored in a managed property of type java.util.Map.  
+    will be stored in a managed property of type java.util.Map.
 -->
 <!ELEMENT key             (#PCDATA)>
 
@@ -550,7 +560,7 @@
 <!--
     The "lifecycle-factory" element contains the fully qualified class name
     of the concrete LifecycleFactory implementation class that will be called
-    when FactoryFinder.getFactory(LIFECYCLE_FACTORY) is called. It must be 
+    when FactoryFinder.getFactory(LIFECYCLE_FACTORY) is called. It must be
     of type "ClassName".
 -->
 <!ELEMENT lifecycle-factory (#PCDATA)>
@@ -717,7 +727,7 @@ registered on the Lifecycle. It must be of type "ClassName".
 <!--
     The "render-kit-factory" element contains the fully qualified class name
     of the concrete RenderKitFactory implementation class that will be called
-    when FactoryFinder.getFactory(RENDER_KIT_FACTORY) is called. It must be 
+    when FactoryFinder.getFactory(RENDER_KIT_FACTORY) is called. It must be
     of type "ClassName".
 -->
 <!ELEMENT render-kit-factory (#PCDATA)>
