@@ -38,14 +38,28 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         if (StringUtil.isEmpty(id)) {
             return false;
         }
-        String tagName = elementNode.getTagName();
-        return (JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName) || JsfConstants.SPAN_ELEM
-                .equalsIgnoreCase(tagName))
-                && isIdMatch(id);
+        final String tagName = elementNode.getTagName();
+        final boolean isId = StringUtil.startsWithIgnoreCase(id,
+                IS_PARAM_PREFIX)
+                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX);
+        final boolean isNotId = StringUtil.startsWithIgnoreCase(id,
+                ISNOT_PARAM_PREFIX);
+        if (!isId && !isNotId) {
+            return false;
+        }
+        String s = null;
+        if (isId) {
+            s = id.substring(IS_PARAM_PREFIX.length());
+        } else {
+            s = id.substring(ISNOT_PARAM_PREFIX.length());
+        }
+        final boolean hasProperty = pageDesc.hasProperty(StringUtil
+                .decapitalize(s));
+        return (isDiv(tagName) || isSpan(tagName)) && hasProperty;
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -87,9 +101,12 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
-    private boolean isIdMatch(String id) {
-        return (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX) || StringUtil
-                .startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX));
+    private static final boolean isDiv(final String tagName) {
+        return JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName);
+    }
+
+    private static final boolean isSpan(final String tagName) {
+        return JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName);
     }
 
 }

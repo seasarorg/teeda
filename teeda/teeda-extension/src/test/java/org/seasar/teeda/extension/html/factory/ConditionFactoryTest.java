@@ -23,6 +23,7 @@ import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.sub.web.Aaa2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.taglib.TConditionTag;
@@ -63,6 +64,22 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         ElementNode elementNode3 = createElementNode("div", props3);
         PageDesc pageDesc3 = createPageDesc(AaaPage.class, "aaaPage");
         assertFalse(factory.isMatch(elementNode3, pageDesc3, null));
+    }
+
+    public void testIsMatch4_noSuchPageProperty1() throws Exception {
+        Map props = new HashMap();
+        props.put("id", "isBbb");
+        ElementNode elementNode = createElementNode("div", props);
+        PageDesc pageDesc = createPageDesc(Aaa2Page.class, "aaaPage");
+        assertFalse(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch4_noSuchPageProperty2() throws Exception {
+        Map props = new HashMap();
+        props.put("id", "isNotBbb");
+        ElementNode elementNode = createElementNode("div", props);
+        PageDesc pageDesc = createPageDesc(Aaa2Page.class, "aaaPage");
+        assertFalse(factory.isMatch(elementNode, pageDesc, null));
     }
 
     public void testIsMatch_spanIsOk() throws Exception {
