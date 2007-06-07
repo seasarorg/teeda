@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Kumu Html Disabled</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="kumu-html-disabled">
+<h2 class="subtitle" id="id1">Kumu.Html.Disabledとは</h2>
+<p>Kumu.Html.Disabledはダブルサブミット（二重送信）を防止するために作られたjavascriptのライブラリです。</p>
+<p>Kumu.Html.Disabledはkumu.jsおよびevent.jsに依存しています。</p>
+<p>そのためkumu.js、event.jsを必ず先に読み込んでおく必要があります。</p>
+<p>Kumu.Html.Disabledは以下の機能を提供します。</p>
+<ol class="arabic simple">
+<li>formの二重送信防止</li>
+<li>アンカーの二重クリック防止</li>
+</ol>
+<p>Kumu.Html.DisabledはHTMLが読み込み完了時にHTML内の全てのformとanchorを監視します。</p>
+<p>二重送信防止の方法は２回目以降は一定時間イベントをキャンセルすることで実現しています。</p>
+<p>そのため、画面を切り替え（遷移）しないと何もできなくなるということはありません。</p>
+<p>復帰する時間はJSONのtimeプロパティで設定します。</p>
+<p>またKumu.Html.Disabledは特定のJSONを設定として動作します。特別にjavascriptの関数を作成し、呼ぶ必要は一切ありません。</p>
+<p>設定はDisabledConfというJSONに記述します。</p>
+<pre class="literal-block">
+DisabledConf = {
+  time : 50000
+}
+</pre>
+<p>DisabledConfの仕様は以下です。</p>
+<ul class="simple">
+<li>time : 使えるようになるまでの時間を設定します(msec)</li>
+<li>excludeForm : 監視対象外のformのidを配列で指定します。複数指定することができます。</li>
+<li>submitMessage : formが送信中であった場合呼ばれる関数を設定します。</li>
+<li>eccludeAnchor : 監視しない対象のanchorのidを配列で設定します。複数指定する事もできます。</li>
+<li>anchorMessage : 既にクリック中である場合に呼ばれる関数を設定します。</li>
+</ul>
+<div class="section">
+<h3><a id="form" name="form">formの二重送信防止</a></h3>
+<p>Kumu.Html.Disabledはformのonsubmitを監視しています。</p>
+<p>Kumu.Html.Disabledは基本的にHTML内全てのformおよびanchorを監視します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/event.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/disabled.js&quot;&gt;&lt;/script&gt;
+&lt;title&gt;Disabled Sample&lt;/title&gt;
+&lt;script&gt;
+  DisabledConf = {
+    time : 50000,
+    excludeForm : ['test2'],
+    submitMessage : function(){
+      alert('送信中です');
+    }
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;form id=&quot;test1&quot; action=&quot;https://www.seasar.org/issues/&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;サブミットテスト1&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;javascriptサブミットテスト1&quot; onclick=&quot;document.forms[0].submit();&quot;&gt;
+&lt;/form&gt;
+&lt;form id=&quot;test2&quot; action=&quot;https://www.seasar.org/issues/&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;サブミットテスト2&quot;&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;javascriptサブミットテスト2&quot; onclick=&quot;document.forms[1].submit();&quot;&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>eccludeFormは監視しない対象のformのidを配列で設定します。複数指定する事もできます。</p>
+<p>submitMessageは既に送信中である場合に呼ばれる関数です。</p>
+<p>上記では既に送信中であった場合alertを出します。</p>
+<p>※現状ではformのonsubmitが発生しない状況だとうまく動作しません。</p>
+</div>
+<div class="section">
+<h3><a id="id2" name="id2">アンカーの二重クリック防止</a></h3>
+<p>form同様、Kumu.Html.Disabledは全てのanchorを監視します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/event.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/disabled.js&quot;&gt;&lt;/script&gt;
+&lt;title&gt;Disabled Sample&lt;/title&gt;
+&lt;script&gt;
+  DisabledConf = {
+    time : 50000,
+    excludeAnchor : ['a2'],
+    anchorMessage : function(){
+      alert('遷移中です');
+    }
+  }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a id=&quot;a1&quot; href=&quot;https://www.seasar.org/issues/&quot;&gt;テストリンク1&lt;/a&gt;
+&lt;a id=&quot;a2&quot; href=&quot;https://www.seasar.org/issues/&quot;&gt;テストリンク2&lt;/a&gt;
+</pre>
+<p>&lt;/body&gt;
+&lt;/html&gt;</p>
+<p>eccludeAnchorは監視しない対象のanchorのidを配列で設定します。複数指定する事もできます。</p>
+<p>anchorMessageは既にクリック中である場合に呼ばれる関数です。</p>
+<p>上記では既にクリックしてある場合alertを出します。</p>
+</div>
+</div>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>
