@@ -15,9 +15,22 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
+
+import org.seasar.framework.mock.servlet.MockHttpServletRequest;
+import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -60,5 +73,26 @@ public class VirtualResourceTest extends TeedaTestCase {
         assertEquals("<style></style>", resources.get("aaa"));
     }
 
-    //TODO testing
+    public void testIsVirtualPath() throws Exception {
+        final MockHttpServletRequest req = new MockHttpServletRequestImpl(
+                getServletContext(), "hoge") {
+
+            public String getRequestURI() {
+                return "/teedaExtension/";
+            }
+        };
+        assertTrue(VirtualResource.isVirtualPath(req));
+    }
+    
+    public void testIsNotVirtualPath() throws Exception {
+        final MockHttpServletRequest req = new MockHttpServletRequestImpl(
+                getServletContext(), "hoge") {
+
+            public String getRequestURI() {
+                return "/it_is_not_virtual_path/";
+            }
+        };
+        assertFalse(VirtualResource.isVirtualPath(req));
+    }
+
 }
