@@ -27,11 +27,12 @@ import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
  * @author higa
- * 
+ * @author shot
  */
 public class TigerTakeOverDescAnnotationHandler extends
 		ConstantTakeOverDescAnnotationHandler {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Map getTakeOverDescs(S2Container container,
 			ComponentDef componentDef, Class componentClass,
@@ -53,11 +54,12 @@ public class TigerTakeOverDescAnnotationHandler extends
 					.getName(), takeOver.properties());
 			ret.put(methodName, takeOverDesc);
 		}
-		if (!ret.isEmpty()) {
-			return ret;
+		final Map<String, TakeOverDesc> m = super.getTakeOverDescs(container,
+				componentDef, componentClass, componentName, beanDesc);
+		if (!m.isEmpty()) {
+			ret.putAll(m);
 		}
-		return super.getTakeOverDescs(container, componentDef, componentClass,
-				componentName, beanDesc);
+		return ret;
 	}
 
 }
