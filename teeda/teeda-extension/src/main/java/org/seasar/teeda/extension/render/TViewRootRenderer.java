@@ -36,6 +36,7 @@ import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.DIContainerUtil;
@@ -59,15 +60,16 @@ import org.seasar.teeda.extension.html.PageDescCache;
  * @author higa
  * @authos shot
  */
-public class TViewRootRenderer extends AbstractRenderer {
+public class TViewRootRenderer extends AbstractRenderer implements Invokable,
+        Layoutable {
 
     public static final String COMPONENT_FAMILY = TViewRoot.COMPONENT_FAMILY;
 
     public static final String RENDERER_TYPE = TViewRoot.DEFAULT_RENDERER_TYPE;
 
-    private static final String LIST_KEY = TViewRootRenderer.class.getName();
+    public static final String LIST_KEY = TViewRootRenderer.class.getName();
 
-    private static final String POP_INDEX_KEY = LIST_KEY + ".INDEX";
+    public static final String POP_INDEX_KEY = LIST_KEY + ".INDEX";
 
     private static final Logger logger = Logger
             .getLogger(TViewRootRenderer.class);
@@ -90,7 +92,11 @@ public class TViewRootRenderer extends AbstractRenderer {
         if (list == null) {
             return null;
         }
-        int index = ((Integer) requestMap.get(POP_INDEX_KEY)).intValue();
+        Integer popIndex = (Integer) requestMap.get(POP_INDEX_KEY);
+        if (popIndex == null) {
+            return null;
+        }
+        int index = (popIndex).intValue();
         IncludedBody body = (IncludedBody) list.get(index);
         requestMap.put(POP_INDEX_KEY, new Integer(index - 1));
         return body;
@@ -111,6 +117,185 @@ public class TViewRootRenderer extends AbstractRenderer {
     protected static List getIncludedBodies(FacesContext context) {
         Map requestMap = context.getExternalContext().getRequestMap();
         return (List) requestMap.get(LIST_KEY);
+    }
+
+    public void decode(FacesContext context, UIComponent component) {
+        super.decode(context, component);
+        layout(context, (TViewRoot) component);
+        for (Iterator i = component.getChildren().iterator(); i.hasNext();) {
+            UIComponent child = (UIComponent) i.next();
+            child.processDecodes(context);
+        }
+    }
+
+    public void encodeBegin(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeBegin(context, component);
+        TViewRoot viewRoot = (TViewRoot) component;
+        if (viewRoot.getRootViewId() == null) {
+            layout(context, viewRoot);
+        }
+        invokeAll(context);
+        invoke(context, viewRoot.getRootViewId());
+        if (!context.getResponseComplete()) {
+            RendererUtil.renderChildren(context, component);
+        }
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeEnd(context, component);
+    }
+
+    //TODO separate from TViewRootRenderer and make LayoutBuilder.
+    public void layout(final FacesContext context, final TViewRoot component) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+        TViewRoot child = component;
+        TViewRoot parent = getParentViewRoot(context, child);
+        UIComponent title = null;
+        List styleList = new ArrayList();
+        List scriptList = new ArrayList();
+        while (parent != null) {
+            UIComponent body = UIComponentUtil.findDescendant(child,
+                    UIBody.class);
+            if (body == null) {
+                logger.log("WTDA0202", new Object[] { child.getViewId() });
+            }
+            final UIComponent head = UIComponentUtil.findDescendant(component,
+                    THtmlHead.class);
+            if (head != null) {
+                title = UIComponentUtil.findDescendant(head, UITitle.class);
+                styleList = UIComponentUtil.collectDescendants(head,
+                        THtmlStyle.class);
+                scriptList = UIComponentUtil.collectDescendants(head,
+                        THtmlScript.class);
+            }
+            pushIncludedBody(context, new IncludedBody(child.getViewId(), body
+                    .getChildren()));
+            child = parent;
+            parent = getParentViewRoot(context, child);
+        }
+        if (child != component) {
+            component.setRootViewId(child.getViewId());
+            component.getChildren().clear();
+            component.getChildren().addAll(child.getChildren());
+            final UIComponent head = UIComponentUtil.findDescendant(component,
+                    THtmlHead.class);
+            if (styleList.size() > 0) {
+                head.getChildren().addAll(styleList);
+            }
+            if (scriptList.size() > 0) {
+                head.getChildren().addAll(scriptList);
+            }
+            if (title != null) {
+                boolean foundTitle = replaceComponent(head, title);
+                /*
+                 if (!foundTitle) {
+                 logger.debug("No found Title tag.");
+                 }
+                 */
+            }
+        } else {
+            component.setRootViewId(component.getViewId());
+        }
+    }
+
+    protected boolean replaceComponent(final UIComponent root,
+            UIComponent titleCandidate) {
+        for (int i = 0; i < root.getChildCount(); i++) {
+            final UIComponent child = (UIComponent) root.getChildren().get(i);
+            boolean b = replaceComponent(child, titleCandidate);
+            if (b) {
+                return true;
+            }
+            if (child instanceof UITitle) {
+                root.getChildren().remove(i);
+                root.getChildren().add(i, titleCandidate);
+            }
+        }
+        return false;
+    }
+
+    protected TViewRoot getParentViewRoot(FacesContext context,
+            TViewRoot component) {
+
+        String parentViewId = getParentViewId(context, component);
+        if (parentViewId == null) {
+            return null;
+        }
+        if (HotdeployUtil.isHotdeploy()
+                || htmlDescCache.getHtmlDesc(parentViewId) == null) {
+            InputStream is = ServletContextUtil.getResourceAsStream(
+                    servletContext, parentViewId);
+            if (is != null) {
+                InputStreamUtil.close(is);
+            } else {
+                return null;
+            }
+        }
+        UIViewRoot viewRoot = viewHandler.restoreView(context, parentViewId);
+        if (viewRoot == null) {
+            viewRoot = viewHandler.createView(context, parentViewId);
+        }
+        return (TViewRoot) viewRoot;
+    }
+
+    protected String getParentViewId(FacesContext context, TViewRoot component) {
+        final String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
+        if (defaultSuffix.indexOf(ViewHandler.DEFAULT_SUFFIX) >= 0) {
+            return null;
+        }
+        String parentPath = FacesConfigOptions.getDefaultLayoutPath();
+        final UIViewRoot viewRoot = context.getViewRoot();
+        if (component != viewRoot
+                || viewRoot.getViewId().indexOf("/layout/") >= 0) {
+            parentPath = null;
+        }
+        PageDesc pageDesc = pageDescCache.getPageDesc(component.getViewId());
+        if (pageDesc != null
+                && pageDesc.hasProperty(ExtensionConstants.LAYOUT_ATTR)) {
+            Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
+            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+            PropertyDesc propDesc = beanDesc
+                    .getPropertyDesc(ExtensionConstants.LAYOUT_ATTR);
+            if (propDesc.hasReadMethod()) {
+                parentPath = (String) propDesc.getValue(page);
+            }
+        }
+        if (parentPath == null) {
+            return null;
+        }
+        return pathHelper.fromViewRootRelativePathToViewId(parentPath);
+    }
+
+    public void invokeAll(FacesContext context) {
+        List bodies = getIncludedBodies(context);
+        if (bodies == null) {
+            return;
+        }
+        for (int i = 0; i < bodies.size(); i++) {
+            IncludedBody body = (IncludedBody) bodies.get(i);
+            invoke(context, body.getViewId());
+        }
+    }
+
+    public void invoke(final FacesContext context, final String viewId) {
+        ExternalContext externalContext = context.getExternalContext();
+        Map requestMap = externalContext.getRequestMap();
+        if (!PostbackUtil.isPostback(requestMap)) {
+            invoke(context, viewId, HtmlComponentInvoker.INITIALIZE);
+        }
+        if (context.getResponseComplete()) {
+            return;
+        }
+        invoke(context, viewId, HtmlComponentInvoker.PRERENDER);
+    }
+
+    protected String invoke(FacesContext context, String path, String methodName) {
+        String componentName = htmlComponentInvoker.getComponentName(path,
+                methodName);
+        return htmlComponentInvoker.invoke(context, componentName, methodName);
     }
 
     /**
@@ -198,179 +383,4 @@ public class TViewRootRenderer extends AbstractRenderer {
         this.pathHelper = pathHelper;
     }
 
-    public void decode(FacesContext context, UIComponent component) {
-        super.decode(context, component);
-        layout(context, (TViewRoot) component);
-        for (Iterator i = component.getChildren().iterator(); i.hasNext();) {
-            UIComponent child = (UIComponent) i.next();
-            child.processDecodes(context);
-        }
-    }
-
-    public void encodeBegin(FacesContext context, UIComponent component)
-            throws IOException {
-        super.encodeBegin(context, component);
-        TViewRoot viewRoot = (TViewRoot) component;
-        if (viewRoot.getRootViewId() == null) {
-            layout(context, viewRoot);
-        }
-        invokeAll(context);
-        invoke(context, viewRoot.getRootViewId());
-        if (!context.getResponseComplete()) {
-            RendererUtil.renderChildren(context, component);
-        }
-    }
-
-    public void encodeEnd(FacesContext context, UIComponent component)
-            throws IOException {
-        super.encodeEnd(context, component);
-    }
-
-    protected void layout(FacesContext context, TViewRoot component) {
-        TViewRoot child = component;
-        TViewRoot parent = getParentViewRoot(context, child);
-        UIComponent title = null;
-        final List styleList = new ArrayList();
-        final List scriptList = new ArrayList();
-        while (parent != null) {
-            UIComponent body = UIComponentUtil.findDescendant(child,
-                    UIBody.class);
-            title = UIComponentUtil.findDescendant(child, UITitle.class);
-            final UIComponent style = UIComponentUtil.findDescendant(child,
-                    THtmlStyle.class);
-            if (style != null) {
-                styleList.add(style);
-            }
-            final UIComponent script = UIComponentUtil.findDescendant(child,
-                    THtmlScript.class);
-            if (script != null) {
-                scriptList.add(script);
-            }
-            if (body == null) {
-                logger.log("WTDA0202", new Object[] { child.getViewId() });
-            }
-            pushIncludedBody(context, new IncludedBody(child.getViewId(), body
-                    .getChildren()));
-            child = parent;
-            parent = getParentViewRoot(context, child);
-        }
-        if (child != component) {
-            component.setRootViewId(child.getViewId());
-            component.getChildren().clear();
-            component.getChildren().addAll(child.getChildren());
-            final UIComponent head = UIComponentUtil.findDescendant(component,
-                    THtmlHead.class);
-            if (styleList.size() > 0) {
-                head.getChildren().addAll(styleList);
-            }
-            if (scriptList.size() > 0) {
-                head.getChildren().addAll(scriptList);
-            }
-            if (title != null) {
-                boolean foundTitle = replaceComponent(head, title);
-                if (!foundTitle) {
-                    logger.debug("No found Title tag.");
-                }
-            }
-        } else {
-            component.setRootViewId(component.getViewId());
-        }
-    }
-
-    protected boolean replaceComponent(final UIComponent root,
-            UIComponent titleCandidate) {
-        for (int i = 0; i < root.getChildCount(); i++) {
-            final UIComponent child = (UIComponent) root.getChildren().get(i);
-            boolean b = replaceComponent(child, titleCandidate);
-            if (b) {
-                return true;
-            }
-            if (child instanceof UITitle) {
-                root.getChildren().remove(i);
-                root.getChildren().add(i, titleCandidate);
-            }
-        }
-        return false;
-    }
-
-    protected TViewRoot getParentViewRoot(FacesContext context,
-            TViewRoot component) {
-
-        String parentViewId = getParentViewId(context, component);
-        if (parentViewId == null) {
-            return null;
-        }
-        if (HotdeployUtil.isHotdeploy()
-                || htmlDescCache.getHtmlDesc(parentViewId) == null) {
-            InputStream is = ServletContextUtil.getResourceAsStream(
-                    servletContext, parentViewId);
-            if (is != null) {
-                InputStreamUtil.close(is);
-            } else {
-                return null;
-            }
-        }
-        UIViewRoot viewRoot = viewHandler.restoreView(context, parentViewId);
-        if (viewRoot == null) {
-            viewRoot = viewHandler.createView(context, parentViewId);
-        }
-        return (TViewRoot) viewRoot;
-    }
-
-    protected String getParentViewId(FacesContext context, TViewRoot component) {
-        final String defaultSuffix = FacesConfigOptions.getDefaultSuffix();
-        if (defaultSuffix.indexOf(".jsp") >= 0) {
-            return null;
-        }
-        String parentPath = FacesConfigOptions.getDefaultLayoutPath();
-        final UIViewRoot viewRoot = context.getViewRoot();
-        if (component != viewRoot
-                || viewRoot.getViewId().indexOf("/layout/") >= 0) {
-            parentPath = null;
-        }
-        PageDesc pageDesc = pageDescCache.getPageDesc(component.getViewId());
-        if (pageDesc != null
-                && pageDesc.hasProperty(ExtensionConstants.LAYOUT_ATTR)) {
-            Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
-            BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-            PropertyDesc propDesc = beanDesc
-                    .getPropertyDesc(ExtensionConstants.LAYOUT_ATTR);
-            if (propDesc.hasReadMethod()) {
-                parentPath = (String) propDesc.getValue(page);
-            }
-        }
-        if (parentPath == null) {
-            return null;
-        }
-        return pathHelper.fromViewRootRelativePathToViewId(parentPath);
-    }
-
-    protected void invokeAll(FacesContext context) {
-        List bodies = getIncludedBodies(context);
-        if (bodies == null) {
-            return;
-        }
-        for (int i = 0; i < bodies.size(); i++) {
-            IncludedBody body = (IncludedBody) bodies.get(i);
-            invoke(context, body.getViewId());
-        }
-    }
-
-    protected void invoke(FacesContext context, String viewId) {
-        ExternalContext externalContext = context.getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
-        if (!PostbackUtil.isPostback(requestMap)) {
-            invoke(context, viewId, HtmlComponentInvoker.INITIALIZE);
-        }
-        if (context.getResponseComplete()) {
-            return;
-        }
-        invoke(context, viewId, HtmlComponentInvoker.PRERENDER);
-    }
-
-    protected String invoke(FacesContext context, String path, String methodName) {
-        String componentName = htmlComponentInvoker.getComponentName(path,
-                methodName);
-        return htmlComponentInvoker.invoke(context, componentName, methodName);
-    }
 }

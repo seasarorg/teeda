@@ -9,12 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package javax.faces.internal;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class UIComponentUtil {
 
@@ -165,6 +167,22 @@ public class UIComponentUtil {
             }
         }
         return null;
+    }
+
+    public static List collectDescendants(UIComponent component, Class clazz) {
+        List list = new ArrayList();
+        List children = component.getChildren();
+        for (Iterator i = children.iterator(); i.hasNext();) {
+            UIComponent child = (UIComponent) i.next();
+            if (clazz.isInstance(child)) {
+                list.add(child);
+            }
+            List l = collectDescendants(child, clazz);
+            if (l != null) {
+                list.addAll(l);
+            }
+        }
+        return list;
     }
 
     public static Renderer getRenderer(FacesContext context,

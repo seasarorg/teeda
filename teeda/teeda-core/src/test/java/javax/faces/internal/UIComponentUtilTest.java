@@ -9,19 +9,30 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package javax.faces.internal;
 
+import java.util.Iterator;
+import java.util.List;
+
+import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
+import javax.faces.el.MethodBinding;
+import javax.faces.el.MethodNotFoundException;
 import javax.faces.internal.web.foo.FooPage;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
@@ -31,6 +42,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class UIComponentUtilTest extends TeedaTestCase {
 
@@ -120,6 +132,154 @@ public class UIComponentUtilTest extends TeedaTestCase {
         root.getChildren().add(command);
         assertSame(command, UIComponentUtil.findDescendant(root,
                 UICommand.class));
+    }
+
+    public void testCollectDescendants() throws Exception {
+        UIViewRoot root = new UIViewRoot();
+        UIForm form = new UIForm();
+        UIInput input = new UIInput();
+        input.setId("a1");
+        form.getChildren().add(input);
+
+        UIInput input2 = new UIInput();
+        input2.setId("a2");
+        form.getChildren().add(input2);
+
+        UIInput input3 = new UIInput();
+        input3.setId("a3");
+        form.getChildren().add(input3);
+
+        root.getChildren().add(form);
+
+        List list = UIComponentUtil.collectDescendants(root, UIInput.class);
+        assertNotNull(list);
+        assertTrue(list.size() == 3);
+    }
+
+    public void testCallValidators_justNormalValidatorCall() throws Exception {
+        UIInput input = new UIInput();
+        input.setId("aaa");
+        final boolean[] call = { false };
+        input.addValidator(new Validator() {
+
+            public void validate(FacesContext context, UIComponent component,
+                    Object value) throws FacesException {
+                call[0] = true;
+                throw new ValidatorException(new FacesMessage() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    public String getSummary() {
+                        return "hoge";
+                    }
+
+                });
+            }
+
+        });
+
+        UIComponentUtil.callValidators(getFacesContext(), input, "123");
+
+        assertTrue(call[0]);
+        Iterator messages = getFacesContext().getMessages();
+        assertNotNull(messages);
+        FacesMessage m = (FacesMessage) messages.next();
+        assertEquals("hoge", m.getSummary());
+    }
+
+    public void testCallValidators_methodValidatorCall0() throws Exception {
+        UIInput input = new UIInput();
+        input.setId("aaa");
+        final boolean[] call = { false };
+        input.setValidator(new MethodBinding() {
+
+            public Class getType(FacesContext context)
+                    throws MethodNotFoundException {
+                return null;
+            }
+
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                call[0] = true;
+                return null;
+            }
+
+        });
+
+        UIComponentUtil.callValidators(getFacesContext(), input, "123");
+        assertTrue(call[0]);
+    }
+
+    public void testCallValidators_methodValidatorCall1() throws Exception {
+        UIInput input = new UIInput();
+        input.setId("aaa");
+        final boolean[] call = { false };
+        input.setValidator(new MethodBinding() {
+
+            public Class getType(FacesContext context)
+                    throws MethodNotFoundException {
+                return null;
+            }
+
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                call[0] = true;
+                ValidatorException e = new ValidatorException(
+                        new FacesMessage() {
+
+                            private static final long serialVersionUID = 1L;
+
+                            public String getSummary() {
+                                return "hoge";
+                            }
+
+                        });
+                throw new EvaluationException(e);
+            }
+
+        });
+
+        UIComponentUtil.callValidators(getFacesContext(), input, "123");
+
+        assertTrue(call[0]);
+        Iterator messages = getFacesContext().getMessages();
+        assertNotNull(messages);
+        FacesMessage m = (FacesMessage) messages.next();
+        assertEquals("hoge", m.getSummary());
+    }
+
+    public void testCallValidators_methodValidatorCall2() throws Exception {
+        UIInput input = new UIInput();
+        input.setId("aaa");
+        final boolean[] call = { false };
+        input.setValidator(new MethodBinding() {
+
+            public Class getType(FacesContext context)
+                    throws MethodNotFoundException {
+                return null;
+            }
+
+            public Object invoke(FacesContext context, Object[] params)
+                    throws EvaluationException, MethodNotFoundException {
+                call[0] = true;
+                throw new EvaluationException(new Exception() {
+
+                    public String getMessage() {
+                        return "aaa";
+                    }
+
+                });
+            }
+
+        });
+
+        try {
+            UIComponentUtil.callValidators(getFacesContext(), input, "123");
+            fail();
+        } catch (EvaluationException expected) {
+            assertEquals("aaa", expected.getCause().getMessage());
+            success();
+        }
     }
 
     public static class MockHtmlInputText extends HtmlInputText {
