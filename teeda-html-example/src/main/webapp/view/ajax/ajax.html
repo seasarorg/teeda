@@ -2,9 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>Ajax</title>
-</head>
-<body>
 <script type="text/javascript">
+//<![CDATA[
   var startAjax = function(){
     function ajax_ajaxPage_ajaxStartAjax(res){
       var result = $i('result');
@@ -57,8 +56,11 @@
     'click_startAjaxList' : startAjaxList,
     'change_sample1' : combinationList
   }
-  
+//]]>  
 </script>
+
+</head>
+<body>
 <form id="sampleForm">
 <input type="hidden" id="sample1ItemsSave" />
 <input type="hidden" id="sample2ItemsSave" />
