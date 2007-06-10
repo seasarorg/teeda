@@ -29,6 +29,7 @@ public class TigerTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
 
 	protected void setUp() {
 		register(HogeBean.class, "hogeBean");
+		register(FooPage.class, "fooPage");
 	}
 
 	public void testGetTakeOverDescs() throws Exception {
@@ -48,6 +49,23 @@ public class TigerTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
 		assertEquals(0, takeOverDesc.getProperties().length);
 	}
 
+	public void testGetTakeOverDescs2() throws Exception {
+		TigerTakeOverDescAnnotationHandler handler = new TigerTakeOverDescAnnotationHandler();
+		Map m = handler.getTakeOverDescs("fooPage");
+		assertEquals(2, m.size());
+		TakeOverDesc takeOverDesc = (TakeOverDesc) m.get("doBbb");
+		assertNotNull(takeOverDesc);
+		assertEquals(TakeOverTypeDescFactory.INCLUDE, takeOverDesc
+				.getTakeOverTypeDesc());
+		ArrayAssert.assertEquals(new String[] { "aaa", "bbb" }, takeOverDesc
+				.getProperties());
+		takeOverDesc = (TakeOverDesc) m.get("jumpHoge3");
+		assertNotNull(takeOverDesc);
+		assertEquals(TakeOverTypeDescFactory.NEVER, takeOverDesc
+				.getTakeOverTypeDesc());
+		assertEquals(0, takeOverDesc.getProperties().length);
+	}
+
 	public static class HogeBean {
 
 		@TakeOver(properties = "aaa, bbb")
@@ -60,4 +78,39 @@ public class TigerTakeOverDescAnnotationHandlerTest extends TeedaTestCase {
 			return null;
 		}
 	}
+	
+	public static class FooPage {
+		
+		private String aaa;
+		
+		private String bbb;
+
+        public static final String jumpHoge3_TAKE_OVER = "type=never";
+        
+		@TakeOver(properties = "aaa, bbb")
+		public String doBbb() {
+			return null;
+		}
+		
+		public String getAaa() {
+			return aaa;
+		}
+
+		public void setAaa(String aaa) {
+			this.aaa = aaa;
+		}
+
+
+		public String getBbb() {
+			return bbb;
+		}
+
+
+		public void setBbb(String bbb) {
+			this.bbb = bbb;
+		}
+
+	}
+	
+	
 }
