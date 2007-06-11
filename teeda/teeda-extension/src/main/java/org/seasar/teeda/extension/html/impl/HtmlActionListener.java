@@ -28,7 +28,7 @@ import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class HtmlActionListener extends ActionListenerImpl {
 
