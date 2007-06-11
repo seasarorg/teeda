@@ -4,7 +4,7 @@
     <exportSource>true</exportSource>
     <reloadable>false</reloadable>
     <redirectLogger>true</redirectLogger>
-    <updateXml>false</updateXml>
+    <updateXml>true</updateXml>
     <warLocation>C:\teeda-html-example.war</warLocation>
     <extraInfo></extraInfo>
     <webPath>/teeda-html-example</webPath>
