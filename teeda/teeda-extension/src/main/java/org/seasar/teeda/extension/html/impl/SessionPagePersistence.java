@@ -163,7 +163,7 @@ public class SessionPagePersistence implements PagePersistence {
             String previousViewId, PageDesc pageDesc) {
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
-        Map nextPageProperties = getNextPageProperties(viewId);
+        Map nextPageProperties = getNextPageProperties(pageDesc, viewId);
         if (nextPageProperties.isEmpty()) {
             return;
         }
@@ -174,10 +174,11 @@ public class SessionPagePersistence implements PagePersistence {
     /*
      * postbackとpreviousViewIdはPage間で引き継がない
      */
-    protected Map getNextPageProperties(final String viewId) {
+    protected Map getNextPageProperties(final PageDesc pageDesc,
+            final String viewId) {
         final Map map = new HashMap();
-        String nextPageName = namingConvention.fromPathToPageName(viewId);
-        Class nextPageClass = namingConvention
+        final String nextPageName = namingConvention.fromPathToPageName(viewId);
+        final Class nextPageClass = namingConvention
                 .fromComponentNameToClass(nextPageName);
         if (nextPageClass == null) {
             return map;
@@ -193,6 +194,9 @@ public class SessionPagePersistence implements PagePersistence {
                 continue;
             }
             if (JsfConstants.PREVIOUS_VIEW_ID.equals(propertyName)) {
+                continue;
+            }
+            if (pageDesc.isPageScopeProperty(propertyName)) {
                 continue;
             }
             map.put(propertyName, pd.getPropertyType());

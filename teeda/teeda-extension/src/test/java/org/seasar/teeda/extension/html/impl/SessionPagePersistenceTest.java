@@ -74,7 +74,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Map nextPageProperties = persistence.getNextPageProperties(null);
+        Map nextPageProperties = persistence.getNextPageProperties(pageDesc,
+                null);
         Map subappValues = new HashMap();
         Map redirectValues = new HashMap();
         persistence
@@ -111,7 +112,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Map nextPageProperties = persistence.getNextPageProperties(null);
+        Map nextPageProperties = persistence.getNextPageProperties(pageDesc,
+                null);
         Map subappValues = new HashMap();
         Map redirectValues = new HashMap();
         persistence.saveIncludePageValues(subappValues, redirectValues,
@@ -123,6 +125,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
     }
 
     public void testConvertExcludePageData() throws Exception {
+        PageDesc pageDesc = createPageDesc(Hoge.class, "hoge");
         Hoge hoge = new Hoge();
         hoge.setInt1(1);
         hoge.setInt2(new Integer(2));
@@ -146,7 +149,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         });
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(Hoge.class);
-        Map nextPageProperties = persistence.getNextPageProperties(null);
+        Map nextPageProperties = persistence.getNextPageProperties(pageDesc,
+                null);
         Map subappValues = new HashMap();
         persistence.saveExcludePageValues(subappValues, getFacesContext(),
                 beanDesc, hoge, new String[] { "int1" }, nextPageProperties);

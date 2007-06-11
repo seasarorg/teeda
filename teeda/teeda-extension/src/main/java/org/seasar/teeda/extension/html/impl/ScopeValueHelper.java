@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
+import javax.faces.internal.scope.PageScope;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
@@ -70,7 +71,7 @@ public class ScopeValueHelper {
     }
 
     public static Map getPageScopeValues(FacesContext context) {
-        Map scopeContext = SubApplicationScope.getContext(context);
+        Map scopeContext = PageScope.getContext(context);
         if (scopeContext == null) {
             return null;
         }
@@ -78,7 +79,7 @@ public class ScopeValueHelper {
     }
 
     public static Map getOrCreatePageScopeValues(FacesContext context) {
-        Map scopeContext = SubApplicationScope.getOrCreateContext(context);
+        Map scopeContext = PageScope.getOrCreateContext(context);
         Map values = (Map) scopeContext.get(PagePersistence.PAGE_SCOPE_KEY);
         if (values == null) {
             values = new HashMap();
