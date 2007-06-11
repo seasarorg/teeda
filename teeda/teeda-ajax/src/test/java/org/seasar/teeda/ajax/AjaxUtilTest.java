@@ -128,6 +128,20 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         System.out.println(s);
     }
 
+    public void testToJson_htmlBean1() throws Exception {
+        final HtmlBean bean = new HtmlBean();
+        final String s = AjaxUtil.toJson(bean);
+        assertEquals("{status:null,html:null}", s);
+    }
+
+    public void testToJson_htmlBean2() throws Exception {
+        final HtmlBean bean = new HtmlBean();
+        bean.setStatus(new Integer(30));
+        bean.setHtml("<div>hoge</div>");
+        final String s = AjaxUtil.toJson(bean);
+        assertEquals("{status:30,html:\"<div>hoge<\\/div>\"}", s);
+    }
+
     public void testQuote() throws Exception {
         assertEquals("\"a\"", AjaxUtil.quote("a"));
         assertEquals("\"\\t\"", AjaxUtil.quote("\t"));
@@ -256,4 +270,29 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
             return ddd;
         }
     }
+
+    public static class HtmlBean {
+
+        private Integer status;
+
+        private String html;
+
+        public String getHtml() {
+            return html;
+        }
+
+        public void setHtml(final String html) {
+            this.html = html;
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+
+        public void setStatus(final Integer status) {
+            this.status = status;
+        }
+
+    }
+
 }
