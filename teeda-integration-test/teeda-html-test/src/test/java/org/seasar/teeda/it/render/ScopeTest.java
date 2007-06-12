@@ -29,7 +29,7 @@ public class ScopeTest extends TeedaWebTestCase {
 		return setUpTest(ScopeTest.class);
 	}
 
-	public void testRender() throws Exception {
+	public void testPageScope() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -46,6 +46,33 @@ public class ScopeTest extends TeedaWebTestCase {
 		assertTrue(tester.getCurrentUri().indexOf(
 				"view/scope/pageScopeResult.html") > 0);
 		tester.assertTextEqualsById("message", "");
+	}
+
+	public void testRedirectScope() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/redirectScopeInput.html");
+		tester.dumpHtml();
+
+		tester.setTextByName("form:message", "hogehoge");
+		tester.setTextByName("form:hoge", "foofoo");
+
+		tester.submitById("doRedirectScopeExecute");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/redirectScopeResult1.html") > 0);
+		tester.assertTextEqualsById("message", "hogehoge");
+		tester.assertTextEqualsById("hoge", "foofoo");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+
+		tester.dumpHtml();
+		tester.assertTextEqualsById("message", "");
+		tester.assertTextEqualsById("hoge", "foofoo");
 	}
 
 }
