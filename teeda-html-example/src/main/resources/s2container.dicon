@@ -2,7 +2,7 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<include condition="#ENV == 'ut'" path="hotdeploy.dicon"/>
-	<include condition="#ENV == 'ct' || #ENV == 'it'" path="warmdeploy.dicon"/>
-	<include condition="#ENV == 'product'" path="cooldeploy.dicon"/>
+	<include condition="#ENV == 'ut'" path="warmdeploy.dicon"/>
+	<include condition="#ENV == 'ct'" path="hotdeploy.dicon"/>
+	<include condition="#ENV == 'it' || #ENV == 'product'" path="cooldeploy.dicon"/>
 </components>
