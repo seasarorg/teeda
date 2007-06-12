@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Kumu Validator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="kumu-validator">
+<h2 class="subtitle" id="id1">Kumu.Validatorとは</h2>
+<p>Kumu.Validatorはクライアントサイドで入力チェックをするために作られたjavascriptのライブラリです。</p>
+<p>Kumu.Validatorはkumu.jsおよびevent.jsに依存しています。</p>
+<p>そのため、kumu.js、event.jsを必ず先に読み込んでおく必要があります。</p>
+<p>Kumu.Validatorは以下の機能を提供します。</p>
+<ol class="arabic simple">
+<li>入力チェック</li>
+<li>submitボタンの無効化</li>
+</ol>
+<div class="section">
+<h3><a id="id2" name="id2">入力チェック</a></h3>
+<p>Kumu.Validatorはクライアントサイドの入力チェックを行います。</p>
+<p>入力チェックはJSONに設定を記述します。特別にjavascriptの関数を作成するし、呼ぶ必要は一切ありません。</p>
+<p>入力チェックはKumuValidatorConfに記述します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;ValidateSample&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../js/jsunit/css/jsUnitStyle.css&quot;&gt;
+
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/event.js&quot;&gt;&lt;/script&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/validate.js&quot;&gt;&lt;/script&gt;
+
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot;&gt;
+
+function test(element, result){
+  if(result){
+    element.style.background = '#ffffff';
+  }else{
+    element.style.background = '#cc00ff';
+  }
+}
+
+KumuValidatorConf = {
+  test : ['Required','Integer','MinLength:2','MaxLength:5'],
+  test1 : ['Required','RegularExpression:[A-Z]'],
+  test2 : {'RegularExpression:([a-z]){2}' : test },
+  ok : 'result',
+  cancel : 'result'
+}
+
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+  &lt;td&gt; ['Required','Integer','MinLength:2','MaxLength:5']&lt;/td&gt;
+  &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;test&quot; value=&quot;&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;['Required','RegularExpression:[A-Z]']&lt;/td&gt;
+  &lt;td&gt;&lt;input type=&quot;text1&quot; name=&quot;test1&quot; value=&quot;&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;{'RegularExpression:([a-z]){2}' : test } override showResult&lt;/td&gt;
+  &lt;td&gt;&lt;input type=&quot;text2&quot; name=&quot;test2&quot; value=&quot;&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;input type=&quot;submit&quot; name=&quot;ok&quot; value=&quot;ALL_OK&quot;&gt;
+&lt;input type=&quot;reset&quot; name=&quot;cancel&quot; value=&quot;CANCEL&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>KumuValidatorConfにはproperty名に要素のname属性、値にvalidatorの種類を配列で設定します。</p>
+<p>ひとつの要素に複数のvalidatorをかけることも可能です。</p>
+<p>入力チェックに必要なパラメータを&quot;:&quot;で区切って渡す事もできます。パラメータは使用するvalidatorによって異なります。</p>
+<p>パラメータはひとつのみ渡す事が可能です。</p>
+<p>入力チェックでエラーになった場合の動作もオーバーライドして変更することができます。</p>
+<p>オーバーライドするには設定にobjectを渡し、property名にvalidatorの設定、値にエラー時に呼ばれる関数を設定します。</p>
+<p>エラー時に呼ばれる関数は対象の要素、入力チェックの結果を渡され実行されます。</p>
+<pre class="literal-block">
+// エラー時にはresultはfalseになる
+// この例だとエラー発生時には要素のバックグラウンドを#cc00ffにしている
+function test(element, result){
+  if(result){
+    element.style.background = '#ffffff';
+  }else{
+    element.style.background = '#cc00ff';
+  }
+}
+
+// エラー発生時の動作をオーバーライド
+KumuValidatorConf = {
+  test2 : {'RegularExpression:([a-z]){2}' : test },
+}
+</pre>
+<p>標準で以下のvalidatorを提供しています。</p>
+<ul class="simple">
+<li>Required 必須チェック</li>
+<li>RegularExpression 正規表現チェック</li>
+<li>Integer 数値チェック</li>
+<li>MinRange 最小値チェック</li>
+<li>MaxRange 最大値チェック</li>
+<li>Double 小数点チェック</li>
+<li>MinLength 最小文字数チェック</li>
+<li>MaxLength 最大文字数チェック</li>
+</ul>
+</div>
+<div class="section">
+<h3><a id="submit" name="submit">submitボタンの無効化</a></h3>
+<p>Kumu.Validatorは入力チェック時に指定したsubmitボタンを無効化することができます。</p>
+<p>入力チェックを全てパスするとsubmitボタンが使えるようになります。</p>
+<p>無効化するsubmitボタンを指定するにはKumuValidatorConfのproperty名に無効化したいボタンのname属性、値には'result'と設定します。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['Required'],
+  ok : 'result',
+  cancel : 'result'
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="id3" name="id3">モードの切り替え</a></h3>
+<p>Kumu.Validatorはデフォルトでname属性を指定して動作しています。</p>
+<p>Kumu.Validatorは要素を特定するためにname属性ではなくid属性に切り替える事ができます。</p>
+<p>idモードを使うにはKumu.Validator.modeIdへtrueをセットします。</p>
+<pre class="literal-block">
+Kumu.Validator.modeId(true);
+
+KumuValidatorConf = {
+  test : ['Required','Integer','MinLength:2','MaxLength:5'],
+  ok : 'result',
+  cancel : 'result'
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="validator" name="validator">Validatorの自作</a></h3>
+<p>Kumu.Validatorではvalidatorを自作する事も可能です。</p>
+<p>validatorを自作する事はそれほど難しくありません。</p>
+<p>ですが自作validatorも含め、validatorは必ず以下の仕様を満たさなければいけません。</p>
+<ul class="simple">
+<li>Kumu.Validator.[名前]Validatorという名前で作成されている</li>
+<li>this.validate関数を実装している</li>
+<li>Kumu.Validator.ValidatorBaseのpropertyを全て持っている</li>
+</ul>
+<p>validate関数は実際に評価を行う関数です。引数に入力した値が入ってきます。</p>
+<p>validate関数はbool値で結果を返さなくてはいけません。</p>
+<p>またvalidatorを呼び出すまでの仕組みなどはKumu.Validator.ValidatorBaseが持っています。</p>
+<p>そのため、自作validatorを作成する際にはKumu.extendsあるいは以下のようにしてValidatorBaseのpropertyを引き継がなければいけません。</p>
+<pre class="literal-block">
+Kumu.Validator.FooValidator = function(){
+  this.validate = function(v){
+    var re = /^[-]?\d*$/;
+    var v = v.toString();
+    if(!v.match(re)){
+      return false;
+    }else{
+      return true;
+    }
+  }
+}
+Kumu.Validator.FooValidator.prototype = new Kumu.Validator.ValidatorBase();
+</pre>
+<p>自作validatorを呼び出すにはvalidatorの名前から'Validator'を取り除きます。</p>
+<p>上記の例だと'Foo'で呼び出す事ができます。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['Foo']
+}
+</pre>
+<p>また引数を渡すvalidatorを作成する事も可能です。</p>
+<p>引数を渡す場合には作成した関数に引数を設定できるように作成します。</p>
+<p>但し、引数はひとつだけしか渡すことはできません。</p>
+<pre class="literal-block">
+Kumu.Validator.BarValidator = function(value){
+  this.value = value;
+  this.validate = function(v){
+    var v = v.toString();
+    if(v &lt; this.value){
+      return true;
+    }else{
+      return false;
+    }
+  }
+}
+Kumu.Validator.BarValidator.prototype = new Kumu.Validator.ValidatorBase();
+</pre>
+<p>設定は以下のようになります。</p>
+<pre class="literal-block">
+// 10以上はエラー
+KumuValidatorConf = {
+  test : ['Bar:10']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="id4" name="id4">リファレンス</a></h3>
+<div class="section">
+<h3><a id="kumu-validator-modeid-boolean" name="kumu-validator-modeid-boolean">Kumu.Validator.modeId(boolean)</a></h3>
+<p>設定をname属性ではなくid属性で動作するように設定します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-requiredvalidator" name="kumu-validator-requiredvalidator">Kumu.Validator.RequiredValidator()</a></h3>
+<p>必須チェックを行います。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['Required']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-regularexpressionvalidator-pattern" name="kumu-validator-regularexpressionvalidator-pattern">Kumu.Validator.RegularExpressionValidator(pattern)</a></h3>
+<p>正規表現チェックを行います。</p>
+<p>引数に正規表現のパターンを指定します。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['RegularExpression:[A-Z]']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-integervalidator" name="kumu-validator-integervalidator">Kumu.Validator.IntegerValidator()</a></h3>
+<p>数値チェックを行います。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['Intger']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-doublevalidator" name="kumu-validator-doublevalidator">Kumu.Validator.DoubleValidator()</a></h3>
+<p>数値(少数点を含む)チェックを行います。</p>
+<pre class="literal-block">
+KumuValidatorConf = {
+  test : ['Double']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-minrangevalidator-range" name="kumu-validator-minrangevalidator-range">Kumu.Validator.MinRangeValidator(range)</a></h3>
+<p>最小値チェックを行います。</p>
+<p>引数に最小値を指定します。</p>
+<pre class="literal-block">
+// 0以上
+KumuValidatorConf = {
+  test : ['MinRange:0']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-maxrangevalidator-range" name="kumu-validator-maxrangevalidator-range">Kumu.Validator.MaxRangeValidator(range)</a></h3>
+<p>最大値チェックを行います。</p>
+<p>引数に最大値を指定します。</p>
+<pre class="literal-block">
+// 10以下
+KumuValidatorConf = {
+  test : ['ManRange:10']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-minlengthvalidator-range" name="kumu-validator-minlengthvalidator-range">Kumu.Validator.MinLengthValidator(range)</a></h3>
+<p>最小文字数チェックを行います。</p>
+<p>引数に最小文字数を指定します。</p>
+<pre class="literal-block">
+// 0文字以上
+KumuValidatorConf = {
+  test : ['MinLength:0']
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-validator-maxlengthvalidator-range" name="kumu-validator-maxlengthvalidator-range">Kumu.Validator.MaxLengthValidator(range)</a></h3>
+<p>最大文字数チェックを行います。</p>
+<p>引数に最大文字数を指定します。</p>
+<pre class="literal-block">
+// 10以下
+KumuValidatorConf = {
+  test : ['ManLength:10']
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>
