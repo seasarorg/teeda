@@ -15,6 +15,10 @@
  */
  if (typeof(Kumu) == 'undefined') {
   Kumu = {};
+}else{
+  if (typeof(Kumu.Event) == 'undefined') {
+    Kumu.dynamicLoad('event');
+  }
 }
 
 if (typeof(Kumu.Validator) == 'undefined') {
@@ -267,7 +271,6 @@ Kumu.Validator.DoubleValidator = function(){
     var re = /^[-]?\d*.?\d$/;
     var v = v.toString();
     if(!v.match(re)){
-      //TODO errorMessage
       return false;      
     }else{
       return true;
