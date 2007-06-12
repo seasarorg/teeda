@@ -15,15 +15,24 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.mock.MockFacesContext;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author shot
  */
-public class THtmlElementTest extends TestCase {
+public class THtmlElementTest extends TeedaTestCase {
 
-    //TODO more testing
-    public void test1() throws Exception {
-        assertTrue(true);
+    public void testSimple() throws Exception {
+        THtmlElement element = new THtmlElement();
+        element.setTagName("aaa");
+        element.setValueBindingAttribute("bbb", "BBB");
+        MockFacesContext context = getFacesContext();
+        Object saveState = element.saveState(context);
+        THtmlElement element2 = new THtmlElement();
+        element2.restoreState(context, saveState);
+        assertEquals("aaa", element2.getTagName());
+        assertEquals("bbb", element2.getBindingPropertyNames()[0]);
     }
+
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.core.util.RendererUtil;
@@ -41,6 +42,8 @@ public class THtmlElementRenderer extends Renderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         if (!component.isRendered()) {
             return;
         }
@@ -54,11 +57,12 @@ public class THtmlElementRenderer extends Renderer {
         renderAttributes(writer, elem);
     }
 
-    public void encodeEnd(FacesContext facesContext, UIComponent component)
+    public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
-
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         THtmlElement elem = (THtmlElement) component;
-        ResponseWriter writer = facesContext.getResponseWriter();
+        ResponseWriter writer = context.getResponseWriter();
         if (component.isRendered()) {
             writer.endElement(elem.getTagName());
         }
@@ -70,7 +74,8 @@ public class THtmlElementRenderer extends Renderer {
 
     public void encodeChildren(FacesContext context, UIComponent component)
             throws IOException {
-
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
         if (!component.isRendered()) {
             return;
         }
