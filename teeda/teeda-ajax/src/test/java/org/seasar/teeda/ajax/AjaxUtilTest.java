@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -131,7 +131,8 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
     public void testToJson_htmlBean1() throws Exception {
         final HtmlBean bean = new HtmlBean();
         final String s = AjaxUtil.toJson(bean);
-        assertEquals("{status:null,html:null}", s);
+        assertTrue(s.indexOf("status:null") > 0);
+        assertTrue(s.indexOf("html:null") > 0);
     }
 
     public void testToJson_htmlBean2() throws Exception {
@@ -139,7 +140,8 @@ public class AjaxUtilTest extends S2FrameworkTestCase {
         bean.setStatus(new Integer(30));
         bean.setHtml("<div>hoge</div>");
         final String s = AjaxUtil.toJson(bean);
-        assertEquals("{status:30,html:\"<div>hoge<\\/div>\"}", s);
+        assertTrue(s.indexOf("status:30") > 0);
+        assertTrue(s.indexOf("html:\"<div>hoge<\\/div>\"") > 0);
     }
 
     public void testQuote() throws Exception {

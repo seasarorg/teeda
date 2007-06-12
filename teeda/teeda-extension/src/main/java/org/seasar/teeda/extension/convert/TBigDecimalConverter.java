@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -36,11 +36,16 @@ import org.seasar.teeda.extension.util.ConverterUtil;
 public class TBigDecimalConverter extends BigDecimalConverter implements
         ConvertTargetSelectable {
 
+    public static final int SCALE_NONE = -1;
+
+    public static final int ROUNDINGMODE_NONE = -1;
+
     private String pattern;
 
     private Integer scale;
 
     private Integer roundingMode;
+
     private String target;
 
     private String[] targets;
@@ -58,8 +63,9 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
             }
 
             BigDecimal decimalValue = (BigDecimal) value;
-            if (this.scale != null) {
-                if (this.roundingMode != null) {
+            if (this.scale != null && scale.intValue() != SCALE_NONE) {
+                if (this.roundingMode != null
+                        && scale.intValue() != ROUNDINGMODE_NONE) {
                     decimalValue = decimalValue.setScale(this.scale.intValue(),
                             this.roundingMode.intValue());
                 } else {
@@ -101,6 +107,7 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
     public void setRoundingMode(Integer roundingMode) {
         this.roundingMode = roundingMode;
     }
+
     public String getTarget() {
         return target;
     }
