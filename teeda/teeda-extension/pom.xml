@@ -52,19 +52,19 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>org.seasar.teeda</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>teeda-core</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>org.seasar.teeda</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>teeda-ajax</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>org.seasar.teeda</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>teeda-core</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>

@@ -67,19 +67,19 @@
       </build>
       <dependencies>
         <dependency>
-          <groupId>org.seasar.teeda</groupId>
+          <groupId>${project.groupId}</groupId>
           <artifactId>teeda-core</artifactId>
-          <version>1.0.7</version>
+          <version>${project.version}</version>
         </dependency>
         <dependency>
-          <groupId>org.seasar.teeda</groupId>
+          <groupId>${project.groupId}</groupId>
           <artifactId>teeda-extension</artifactId>
-          <version>1.0.7</version>
+          <version>${project.version}</version>
         </dependency>
         <dependency>
-          <groupId>org.seasar.teeda</groupId>
+          <groupId>${project.groupId}</groupId>
           <artifactId>teeda-ajax</artifactId>
-          <version>1.0.7</version>
+          <version>${project.version}</version>
         </dependency>
       </dependencies>
     </profile>
