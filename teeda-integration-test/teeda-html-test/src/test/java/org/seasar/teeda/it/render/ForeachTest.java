@@ -265,4 +265,34 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTextPresent("hogefoobar");
 	}
 
+	public void testSeasarUser7342_2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachSeasarUser7342.html");
+		tester.dumpHtml();
+		tester.setTextById("foo-text", "hogehoge");
+		tester.setTextById("bar-text", "foofoo");
+		tester.submitById("doForeachConfirm");
+
+		// --------
+		assertTrue(tester.getCurrentUri().indexOf(
+				"foreachConfirmSeasarUser7342.html") > 0);
+
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("foo-text", "hogehoge");
+		tester.assertTextEqualsById("bar-text", "foofoo");
+
+		tester.submitById("doForeach");
+
+		assertTrue(tester.getCurrentUri().indexOf("foreachSeasarUser7342.html") > 0);
+
+		tester.assertTextEqualsById("foo-span2", "hogehoge");
+		tester.assertTextEqualsById("bar-span2", "foofoo");
+
+	}
+
 }
