@@ -97,7 +97,7 @@
                 <configuration>
                   <tasks>
                     <ant
-                      antfile="build-.xml"
+                      antfile="build.xml"
                       target="cobertura-report"
                       inheritRefs="true"
                     >
@@ -117,7 +117,7 @@
         <dependency>
           <groupId>cobertura</groupId>
           <artifactId>cobertura</artifactId>
-          <version>1.7</version>
+          <version>1.8</version>
         </dependency>
       </dependencies>
     </profile>
