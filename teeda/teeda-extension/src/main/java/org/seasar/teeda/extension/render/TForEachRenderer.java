@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -24,9 +25,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.beans.util.BeanUtil;
-import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
@@ -49,10 +49,13 @@ public class TForEachRenderer extends AbstractRenderer {
         }
         final TForEach forEach = (TForEach) component;
         final Object page = forEach.getPage(context);
-        final Object pageClone = ClassUtil.newInstance(page.getClass());
-        BeanUtil.copyProperties(page, pageClone);
+
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
                 .getClass());
+        /**
+         * TEEDA-305
+         */
+        final Map result = extractProperties(pageBeanDesc, page);
         final Object[] items = forEach.getItems(context);
         /*
          * https://www.seasar.org/issues/browse/TEEDA-150
@@ -68,7 +71,7 @@ public class TForEachRenderer extends AbstractRenderer {
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
         }
-        BeanUtil.copyProperties(pageClone, page);
+        putProperties(pageBeanDesc, page, result);
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -124,4 +127,31 @@ public class TForEachRenderer extends AbstractRenderer {
         return true;
     }
 
+    protected Map extractProperties(final BeanDesc pageBeanDesc,
+            final Object page) {
+        final Map result = new HashMap();
+        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
+            final String propertyName = pd.getPropertyName();
+            if (propertyName.endsWith("Items") || !pd.hasReadMethod()) {
+                continue;
+            }
+            result.put(propertyName, pd.getValue(page));
+        }
+        return result;
+    }
+
+    protected void putProperties(final BeanDesc pageBeanDesc,
+            final Object page, final Map result) {
+        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
+            final String propertyName = pd.getPropertyName();
+            if (!result.containsKey(propertyName) || !pd.hasWriteMethod()) {
+                continue;
+            }
+            Object value = result.get(propertyName);
+            pd.setValue(page, value);
+        }
+
+    }
 }
