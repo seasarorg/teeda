@@ -1,0 +1,28 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>LITBox Example</title>
+<script type="text/javascript">
+//<![CDATA[
+var view = function(){
+  new LITBox('./litboxview.html',{type:'window', overray:true});
+};
+
+//]]>  
+</script>
+
+</head>
+<body>
+<form id="litboxForm">
+
+<h2> Teeda Ajax with LITBox</h2>
+<p>LITBox Exampleです</p>
+
+<input type="button" value="LITBoxを表示する" onclick="view();" />
+<hr />
+<p>受け取ったメッセージは以下に表示します。</p>
+<span id="message">aiueo</span>
+
+</form>
+</body>
+</html>
