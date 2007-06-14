@@ -52,6 +52,7 @@
 <li><a href="#create-validator">カスタムValidatorの作成</a></li>
 <li><a href="#register-validator">カスタムValidatorの登録</a></li>
 <li><a href="#tiger-validator">Tigerアノテーションの作成</a></li>
+<li><a href="#use-validator">Validatorの利用例</a></li>
 </ol>
 
 <h3><a id="exist-validator" name="exist-validator">1.既存Validatorの調査</a></h3>
@@ -157,6 +158,29 @@ public @interface MyRequired {
 }
 </pre>
 
+<h3><a id="use-validator" name="use-validator">5.Validatorの利用例</a></h3>
+<p>
+JDK1.4/1.5でのValidatorの利用例を下記に示します．<br/>
+JDK1.4では定数アノテーションでの利用、JDK1.5ではTigerアノテーション(または定数アノテーション)で利用できます．
+</p>
+
+<pre>
+//JDK1.4の場合
+public class HogePage {
+  public static final String aaa_myRequiredValidator = null;
+  private String aaa;
+  //以下、getter/setter
+}
+</pre>
+
+<pre>
+//JDK1.5の場合
+public class HogePage {
+  @MyRequired
+  private String aaa;
+  //以下、getter/setter
+}
+</pre>
 
 <h3><a id="converter" name="converter">Converterのカスタマイズについて</a></h3>
 
