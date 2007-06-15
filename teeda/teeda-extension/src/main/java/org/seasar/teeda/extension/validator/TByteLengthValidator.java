@@ -154,4 +154,9 @@ public class TByteLengthValidator extends LengthValidator implements
             String[] targets) {
         return ValidatorUtil.isTargetCommand(context, targets);
     }
+
+    public String[] getTargets() {
+        return targets;
+    }
+
 }
