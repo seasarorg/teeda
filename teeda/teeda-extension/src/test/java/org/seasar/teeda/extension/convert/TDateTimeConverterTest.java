@@ -261,12 +261,31 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         assertEquals(dateTarget, date);
     }
 
-    public void testGetAsObject_noDelimIsNotPermitted() throws Exception {
+    public void testGetAsObject_noDelimIsPermittedOnlyWithYYYY()
+            throws Exception {
         FacesContext context = getFacesContext();
         TDateTimeConverter converter = new TDateTimeConverter();
 
         converter.setTimeZone(TimeZone.getDefault());
         converter.setPattern("yyyyMMdd");
+        converter.setLocale(defaultLocale);
+        converter.setThreshold(new Integer(69));
+        try {
+            Object o = converter.getAsObject(context, new MockUIComponent(),
+                    "20050804");
+            System.out.println(o);
+            assertTrue(true);
+        } catch (ConverterException e) {
+            fail();
+        }
+    }
+
+    public void testGetAsObject_noDelimIsNotPermitted() throws Exception {
+        FacesContext context = getFacesContext();
+        TDateTimeConverter converter = new TDateTimeConverter();
+
+        converter.setTimeZone(TimeZone.getDefault());
+        converter.setPattern("yyMMdd");
         converter.setLocale(defaultLocale);
         converter.setThreshold(new Integer(69));
         try {
@@ -402,14 +421,13 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         final String pattern = "yyyy/MM/dd";
         converter.setPattern(pattern);
         converter.setTarget("aaa");
-        
+
         getFacesContext().getExternalContext().getRequestMap().put(
                 JsfConstants.SUBMITTED_COMMAND, "aaa");
 
         String dateValue = "AAA";
         try {
-            converter.getAsObject(context,
-                    new MockUIComponent(), dateValue);
+            converter.getAsObject(context, new MockUIComponent(), dateValue);
             fail();
         } catch (ConverterException expected) {
             assertNotNull(expected);

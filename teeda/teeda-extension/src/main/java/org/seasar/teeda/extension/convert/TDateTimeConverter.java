@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -68,12 +68,6 @@ public class TDateTimeConverter extends DateTimeConverter implements
             return null;
         }
         String pattern = getPattern();
-        String delim = DateConversionUtil.findDelimiter(value);
-        if (delim == null) {
-            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
-                    value);
-            throw ConvertUtil.wrappedByConverterException(this, context, args);
-        }
         final SimpleDateFormat formatter = DateConversionUtil.getDateFormat(
                 value, getLocale());
         if (pattern == null) {
@@ -88,6 +82,12 @@ public class TDateTimeConverter extends DateTimeConverter implements
         date = adjustDate(date);
         if (threshold == null) {
             return date;
+        }
+        final String delim = DateConversionUtil.findDelimiter(value);
+        if (delim == null) {
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw ConvertUtil.wrappedByConverterException(this, context, args);
         }
         if (delim != null) {
             setPattern("yyyy" + delim + "MM" + delim + "dd");
