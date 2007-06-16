@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
@@ -23,6 +26,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -38,7 +42,7 @@ public class TCondition extends UIComponentBase {
 
     private static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
 
-    private Boolean submitted = null;
+    private static final int CONDITION_SIZE = 17;
 
     private Boolean renderSpan = null;
 
@@ -47,36 +51,58 @@ public class TCondition extends UIComponentBase {
     }
 
     public boolean isRendered() {
-        /*
-         if (FacesMessageUtil.hasErrorOrFatalMessage(getFacesContext())
-         && submitted != null) {
-         return submitted.booleanValue();
-         } else {
-         return super.isRendered();
-         }
-         */
-        if (submitted != null) {
-            return submitted.booleanValue();
+        Boolean condition = getEncodedCondition();
+        if (condition != null) {
+            return condition.booleanValue();
         }
         return super.isRendered();
     }
 
+    protected Boolean getEncodedCondition() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map conditions = getConditions(context);
+        if (conditions == null) {
+            return null;
+        }
+        return (Boolean) conditions.get(getClientId(context));
+    }
+
+    protected Map getConditions(FacesContext context) {
+        Map map = PageScope.getContext(context);
+        if (map == null) {
+            return null;
+        }
+        return (Map) map.get(COMPONENT_TYPE);
+    }
+
+    protected Map getOrCreateConditions(FacesContext context) {
+        Map map = PageScope.getOrCreateContext(context);
+        Map conditions = (Map) map.get(COMPONENT_TYPE);
+        if (conditions == null) {
+            conditions = new HashMap(CONDITION_SIZE);
+            map.put(COMPONENT_TYPE, conditions);
+        }
+        return conditions;
+    }
+
+    protected void clearEncodedCondition() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map conditions = getConditions(context);
+        if (conditions == null) {
+            return;
+        }
+        conditions.remove(getClientId(context));
+    }
+
+    protected void saveEncodedCondition() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map conditions = getOrCreateConditions(context);
+        conditions.put(getClientId(context), Boolean
+                .valueOf(super.isRendered()));
+    }
+
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    /**
-     * @return Returns the submitted.
-     */
-    public Boolean isSubmitted() {
-        return submitted;
-    }
-
-    /**
-     * @param submitted The submitted to set.
-     */
-    public void setSubmitted(Boolean b) {
-        this.submitted = b;
     }
 
     public void processDecodes(FacesContext context) {
@@ -87,7 +113,7 @@ public class TCondition extends UIComponentBase {
 
     public void processUpdates(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
-        processUpdateModelAction(context, PhaseId.UPDATE_MODEL_VALUES);
+        processAppropriateAction(context, PhaseId.UPDATE_MODEL_VALUES);
     }
 
     public void processValidators(FacesContext context) {
@@ -95,13 +121,9 @@ public class TCondition extends UIComponentBase {
         processAppropriateAction(context, PhaseId.PROCESS_VALIDATIONS);
     }
 
-    protected void processUpdateModelAction(FacesContext context, PhaseId phase) {
-        if (submitted != null) {
-            boolean b = submitted.booleanValue();
-            submitted = null;
-            if (!b) {
-                return;
-            }
+    protected void processAppropriateAction(FacesContext context, PhaseId phase) {
+        if (!isRendered()) {
+            return;
         }
         for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
             UIComponent component = (UIComponent) children.next();
@@ -110,15 +132,14 @@ public class TCondition extends UIComponentBase {
         }
     }
 
-    protected void processAppropriateAction(FacesContext context, PhaseId phase) {
-        if (submitted != null && !submitted.booleanValue()) {
-            return;
-        }
-        for (Iterator children = getFacetsAndChildren(); children.hasNext();) {
-            UIComponent component = (UIComponent) children.next();
-            ComponentUtil_.processAppropriatePhaseAction(context, component,
-                    phase);
-        }
+    public void encodeBegin(FacesContext context) throws IOException {
+        clearEncodedCondition();
+        super.encodeBegin(context);
+    }
+
+    public void encodeEnd(FacesContext context) throws IOException {
+        super.encodeEnd(context);
+        saveEncodedCondition();
     }
 
     public boolean isRenderSpan() {

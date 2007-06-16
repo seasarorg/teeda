@@ -152,6 +152,19 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         return COMPONENT_FAMILY;
     }
 
+    public void processDecodes(FacesContext context) {
+        AssertionUtil.assertNotNull("context", context);
+        if (!isRendered()) {
+            return;
+        }
+        try {
+            decode(context);
+        } catch (RuntimeException e) {
+            context.renderResponse();
+            throw e;
+        }
+    }
+
     public void processValidators(final FacesContext context) {
         if (context == null) {
             throw new NullPointerException("context");

@@ -108,19 +108,18 @@ public abstract class UIComponentBase extends UIComponent {
     }
 
     private String createClientId(FacesContext context) {
-        String parentId = "";
+        StringBuffer buf = new StringBuffer(32);
         for (UIComponent component = getParent(); component != null; component = component
                 .getParent()) {
             if (component instanceof NamingContainer) {
-                parentId = component.getClientId(context)
-                        + NamingContainer.SEPARATOR_CHAR;
+                buf.append(component.getClientId(context)).append(
+                        NamingContainer.SEPARATOR_CHAR);
                 break;
             }
         }
-
-        String clientId = parentId
-                + context.getExternalContext().encodeNamespace(
-                        (id != null) ? id : getUniqueId(context));
+        buf.append(context.getExternalContext().encodeNamespace(
+                (id != null) ? id : getUniqueId(context)));
+        String clientId = buf.toString();
         Renderer renderer = getRenderer(context);
         if (renderer != null) {
             clientId = renderer.convertClientId(context, clientId);

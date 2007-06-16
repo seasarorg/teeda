@@ -25,8 +25,7 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
  */
 public class TConditionTest extends TeedaTestCase {
 
-    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured()
-            throws Exception {
+    public void testIsRendered() throws Exception {
         MockFacesContext context = getFacesContext();
         context.addMessage(null, new FacesMessage());
         TCondition c = new TCondition();
@@ -34,37 +33,17 @@ public class TConditionTest extends TeedaTestCase {
         assertTrue(c.isRendered());
     }
 
-    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured2()
-            throws Exception {
-        MockFacesContext context = getFacesContext();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "a", "b"));
-        TCondition c = new TCondition();
-        c.setRendered(false);
-        c.setSubmitted(Boolean.TRUE);
-        assertTrue(c.isRendered());
-    }
-
-    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured3()
-            throws Exception {
-        MockFacesContext context = getFacesContext();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
-                "a", "b"));
-        TCondition c = new TCondition();
-        c.setRendered(false);
-        c.setSubmitted(Boolean.TRUE);
-        assertTrue(c.isRendered());
-    }
-
-    public void testIsRendered_submittedValueIsNullWhenInitValidationOccured4()
-            throws Exception {
-        MockFacesContext context = getFacesContext();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                "a", "b"));
+    public void testEncodedValue() throws Exception {
         TCondition c = new TCondition();
         c.setRendered(true);
-        c.setSubmitted(Boolean.TRUE);
-        assertTrue(c.isRendered());
-    }
+        c.saveEncodedCondition();
+        assertEquals(Boolean.TRUE, c.getEncodedCondition());
 
+        c.setRendered(false);
+        c.saveEncodedCondition();
+        assertEquals(Boolean.FALSE, c.getEncodedCondition());
+
+        c.clearEncodedCondition();
+        assertNull(c.getEncodedCondition());
+    }
 }
