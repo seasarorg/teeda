@@ -9,7 +9,7 @@ public class Condition3Page {
 
 	private int flgInfoIndex;
 
-	private List<Boolean> flgInfoItems;
+	private List/* <Boolean> */flgInfoItems;
 
 	private Boolean flgInfo;
 
@@ -27,7 +27,7 @@ public class Condition3Page {
 		return flgInfoItems;
 	}
 
-	public void setFlgInfoItems(List<Boolean> flgInfoItems) {
+	public void setFlgInfoItems(List/* <Boolean> */flgInfoItems) {
 		this.flgInfoItems = flgInfoItems;
 	}
 
@@ -48,7 +48,7 @@ public class Condition3Page {
 	}
 
 	public Class prerender() {
-		flgInfoItems = new ArrayList<Boolean>();
+		flgInfoItems = new ArrayList/* <Boolean> */();
 		flgInfoItems.add(Boolean.TRUE);
 		flgInfoItems.add(Boolean.FALSE);
 		flgInfoItems.add(Boolean.TRUE);
@@ -56,7 +56,10 @@ public class Condition3Page {
 	}
 
 	public boolean isDisp() {
-		return flgInfo;
+		if (flgInfo == null) {
+			return false;
+		}
+		return flgInfo.booleanValue();
 	}
 
 	/**
