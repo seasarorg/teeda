@@ -19,23 +19,13 @@ public class AaaDto {
 
 	private String label;
 
-	private int value;
-
-	private String nullLabel;
-	
-	public String getNullLabel() {
-		return nullLabel;
-	}
-
-	public void setNullLabel(String nullLabel) {
-		this.nullLabel = nullLabel;
-	}
+	private String value;
 
 	public String getLabel() {
 		return label;
 	}
 
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -43,7 +33,7 @@ public class AaaDto {
 		this.label = label;
 	}
 
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 }
