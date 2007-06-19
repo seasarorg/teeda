@@ -1,0 +1,48 @@
+<project name="teeda-weblogic8x-test" default="setup-sources" basedir=".">
+
+	<property name="source_project" location="${basedir}/../teeda-tomcat5x-test"/>
+	<property name="src.main" location="${basedir}/src/main"/>
+	<property name="src.main.java" location="${src.main}/java"/>
+	<property name="src.main.resources" location="${src.main}/resources"/>
+	<property name="src.main.webapp" location="${src.main}/webapp"/>
+	<property name="src.test" location="${basedir}/src/test"/>
+	<property name="src.test.java" location="${src.test}/java"/>
+	<property name="src.test.resources" location="${src.test}/resources"/>
+	<target name="setup-sources">
+		<echo>basedir=${basedir}</echo>
+		<echo>source_project=${source_project}</echo>
+		<echo>src.main=${src.main}</echo>
+		<echo>src.test=${src.test}</echo>
+		<echo>src.main.java=${src.main.java}</echo>
+		<echo>src.main.resources=${src.main.resources}</echo>
+		<echo>src.main.webapp=${src.main.webapp}</echo>
+		<echo>src.test.java=${src.test.java}</echo>
+		<echo>src.test.resources=${src.test.resources}</echo>
+		<copy todir="${src.main.java}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/main/java"/>
+		</copy>
+		<copy todir="${src.main.resources}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/main/resources"/>
+		</copy>
+		<copy todir="${src.main.webapp}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/main/webapp"/>
+		</copy>
+		<copy todir="${src.test.java}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/test/java"/>
+		</copy>
+		<copy todir="${src.test.resources}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/test/resources"/>
+		</copy>
+		<copy todir="${src.test.resources}" failonerror="false" overwrite="true">
+			<fileset dir="${source_project}/src/test/resources"/>
+		</copy>
+	</target>
+
+	<target name="clean-sources">
+		<delete includeEmptyDirs="true" failonerror="false">
+			<fileset dir="${src.main}"/>
+			<fileset dir="${src.test}"/>
+		</delete>
+	</target>
+
+</project>

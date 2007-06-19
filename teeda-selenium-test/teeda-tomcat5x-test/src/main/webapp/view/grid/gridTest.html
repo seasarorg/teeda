@@ -1,0 +1,435 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</meta>
+<title>Grid</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<script src="../../js/global.js" language="JavaScript">
+</script>
+<script src="../../js/gridEdit.js" language="JavaScript">
+</script>
+<script src="../../js/sorttable.js" language="JavaScript">
+</script>
+<link href="../../css/global.css" type="text/css" rel="stylesheet"></link>
+Grid
+<form id="gridForm" name="gridForm" method="post" enctype="application/x-www-form-urlencoded" action="/teeda-html-myexample/view/grid/gridEdit.html">
+<!-- queryString のパラメータ名のsuffixにSelectを付けたもの -->
+<input type="hidden" id="fooIndexSelect" name="gridForm:fooIndexSelect" value="" />
+<input type="submit" id="doDelete" name="gridForm:doDelete" value="削除" style="display:none" />
+<input type="submit" id="doUpdate" name="gridForm:doUpdate" value="更新" style="display:none" />
+
+<input type="hidden" id="sortId" name="gridForm:sortId" value="" />
+<input type="hidden" id="sortOrder" name="gridForm:sortOrder" value="" />
+<input type="submit" id="doSort" name="gridForm:doSort" style="display:none" />
+
+<script language="JavaScript" type="text/javascript">
+<!--
+if (typeof(Teeda) == 'undefined') {
+  Teeda = {};
+}
+if (typeof(Teeda.THtmlGrid) == 'undefined') {
+  Teeda.THtmlGrid = {};
+}
+Teeda.THtmlGrid = {
+  _trim : function (s) {
+    return s.replace(/^\s+|\s+$/g, '');
+  },
+  _getFirstChildByTagName : function (fromNode, elemName) {
+    var self = Teeda.THtmlGrid;
+    if (!fromNode.hasChildNodes()) {
+      return null;
+    }
+    var children = fromNode.childNodes;
+    var len = children.length;
+    for (var i = 0; i < len; i++) {
+      var child = children.item(i);
+      if (!child.tagName) {
+        continue;
+      }
+      if (elemName == child.tagName.toLowerCase()) {
+        return child;
+      }
+      var ret = self._getFirstChildByTagName(child, elemName);
+      if (ret) {
+        return ret;
+      }
+    }
+  },
+  editOn : function(div) {
+    var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(div, 'span');
+    if (span.style.display == 'none') {
+      return;
+    }
+    var ascendantDiv = div.parentNode.parentNode;
+    ascendantDiv.style.width = ascendantDiv.offsetWidth;
+    var input = self._getFirstChildByTagName(div, 'input');
+    input.value = self._trim(span.innerHTML);
+    span.style.display = 'none';
+    input.style.display = 'inline';
+    input.focus();
+  },
+  editOff : function (input) {
+    var self = Teeda.THtmlGrid;
+    var span = self._getFirstChildByTagName(input.parentNode, 'span');
+    span.innerHTML = input.value;
+    input.style.display = 'none';
+    span.style.display = 'inline';
+  },
+  _adjustWidth : function (headerTable, bodyTable) {
+    var self = Teeda.THtmlGrid;
+    var headerRowLength = headerTable.rows.length;
+    var bodyRowLength = bodyTable.rows.length;
+    if (headerRowLength <= 0 || bodyRowLength <= 0 || bodyRowLength < headerRowLength) {
+      return;
+    }
+    for (var rowCount = 0; rowCount < headerRowLength; rowCount++) {
+      var headerCells = headerTable.rows[rowCount % headerRowLength].cells;
+      var bodyCells = bodyTable.rows[rowCount].cells;
+      var headerCellsLength = headerCells.length;
+      var bodyCellsLength = bodyCells.length;
+      if (headerCellsLength != bodyCellsLength) {
+        return;
+      }
+      for (var cellCount = 0; cellCount < headerCellsLength; cellCount++) {
+        var headerDiv = headerCells[cellCount].firstChild;
+        var bodyDiv = bodyCells[cellCount].firstChild;
+        var headerCellWidth = headerDiv.offsetWidth;
+        var bodyCellWidth = bodyDiv.offsetWidth;
+        var longer = Math.max(headerCellWidth, bodyCellWidth);
+        var originalWidth = headerDiv.style.width;
+        if (originalWidth) {
+          originalWidth = headerDiv.style.width.replace(/px/,"");
+          longer = Math.max(longer, originalWidth);
+        }
+        headerDiv.style.width = longer;
+        bodyDiv.style.width = longer;
+      }
+    }
+  },
+  adjustGridSize : function (gridId) {
+    var self = Teeda.THtmlGrid;
+    var leftHeaderTable = document.getElementById(gridId + 'LeftHeaderTable');
+    var leftBodyTable = document.getElementById(gridId + 'LeftBodyTable');
+    var rightHeaderTable = document.getElementById(gridId + 'RightHeaderTable');
+    var rightBodyTable = document.getElementById(gridId + 'RightBodyTable');
+    if (leftHeaderTable && leftBodyTable) {
+      self._adjustWidth(leftHeaderTable, leftBodyTable);
+    }
+    if (rightHeaderTable && rightBodyTable) {
+      self._adjustWidth(rightHeaderTable, rightBodyTable);
+    }
+  },
+  _loadGridRowsFor : function (srcTable, destTable) {
+    var destTbody = destTable.tBodies[0];
+    var srcTbody = srcTable.tBodies[0];
+    var srcRows = srcTbody.rows;
+    var len = srcRows.length;
+    for (var i = 0; i < len; i++) {
+      var row = srcRows[0];
+      destTbody.appendChild(row);
+    }
+    srcTable.parentNode.removeChild(srcTable);
+  },
+  loadGridRows : function (gridId) {
+    var self = Teeda.THtmlGrid;
+    var leftSrcTable = document.getElementById(gridId + 'LeftBodySource');
+    var leftDestTable = document.getElementById(gridId + 'LeftBodyTable');
+    var rightSrcTable = document.getElementById(gridId + 'RightBodySource');
+    var rightDestTable = document.getElementById(gridId + 'RightBodyTable');
+    if (leftSrcTable && leftDestTable) {
+      self._loadGridRowsFor(leftSrcTable, leftDestTable);
+    }
+    if (rightSrcTable && rightDestTable) {
+      self._loadGridRowsFor(rightSrcTable, rightDestTable);
+    }
+  }
+};
+//-->
+</script>
+<table id="fooGridY" border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td>
+		<div id="fooGridYRightHeader">
+			<table id="fooGridYRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+			<thead>
+				<tr>
+					<th id="del-header">
+						<div class="gridHeader doubleHeight sorttable" style="overflow:hidden; width:100px;">
+							<nobr>
+								列<br />
+								削除
+							</nobr>
+						</div>
+					</th>
+					<th id="aaa-header">
+						<div class="gridHeader doubleAdjust sorttable" style="overflow:hidden; width:100px;">
+							<nobr>aaa</nobr>
+						</div>
+					</th>
+					<th id="bbb-header">
+						<div class="gridHeader doubleAdjust sorttable" style="overflow:hidden; width:100px;">
+							<nobr>bbb</nobr>
+						</div>
+					</th>
+					<th id="ccc-header">
+						<div class="gridHeader doubleAdjust sorttable" style="overflow:hidden; width:100px;">
+							<nobr>ccc</nobr>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			</table>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td style="vertical-align:top;">
+		<div id="fooGridYRightBody" style="overflow-y:scroll; height:100px;">
+			<table id="fooGridYRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
+			<tbody>
+				<tr class="editStatusUpdate" style="">
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=0#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:0:editStatus" value="2" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">0</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+							<nobr>
+								<input type="text" id="bbb" name="gridForm:fooGridY:0:bbb" class="gridCellEdit" autocomplete="off" value="str" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">0.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr class="editStatusUpdate" style="">
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=1#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:1:editStatus" value="2" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">1</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+							<nobr>
+								<input type="text" id="bbb" name="gridForm:fooGridY:1:bbb" class="gridCellEdit" autocomplete="off" value="str" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">1.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=2#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:2:editStatus" value="" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">2</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+							<nobr>
+								<input type="text" id="bbb" name="gridForm:fooGridY:2:bbb" class="gridCellEdit" autocomplete="off" value="str" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">2.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=3#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:3:editStatus" value="" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">3</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+							<nobr>
+								<input type="text" id="bbb" name="gridForm:fooGridY:3:bbb" class="gridCellEdit" autocomplete="off" value="str" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">3.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=4#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:4:editStatus" value="" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">4</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+								<input type="text" id="bbb" name="gridForm:fooGridY:4:bbb" class="gridCellEdit" autocomplete="off" value="str4" />
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">4.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=5#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:5:editStatus" value="" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">5</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+								<input type="text" id="bbb" name="gridForm:fooGridY:5:bbb" class="gridCellEdit" autocomplete="off" value="str5" />
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">5.0000</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+				<tr class="editStatusAdd" style="">
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<a id="goGridEdit" href="?fooIndex=6#" onclick="doLinkAction(this, 'doDelete');">削除</a>
+								<input type="hidden" id="editStatus" name="gridForm:fooGridY:6:editStatus" value="1" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="aaa">
+								</span>
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell editCell" style="overflow:hidden;">
+							<nobr>
+								<input type="text" id="bbb" name="gridForm:fooGridY:6:bbb" class="gridCellEdit" autocomplete="off" />
+							</nobr>
+						</div>
+					</td>
+					<td>
+						<div class="gridCell" style="overflow:hidden;">
+							<nobr>
+								<span id="ccc">
+								</span>
+							</nobr>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</td>
+</tr>
+</table>
+<script language="JavaScript" type="text/javascript">
+
+<!--
+function appendEventFor(targetObj, eventName, fn){
+  var prev = targetObj[eventName];
+  if (prev) {
+    targetObj[eventName] = function() { prev(); fn(); }
+  } else {
+    targetObj[eventName] = fn;
+  }
+}
+appendEventFor(window, 'onload', function() { Teeda.THtmlGrid.adjustGridSize('fooGridY'); Teeda.THtmlGrid.loadGridRows('fooGridY'); });
+//-->
+</script>
+<br>
+</br>
+<input type="submit" id="doAdd" name="gridForm:doAdd" value="追加" />
+<input type="submit" id="goGridEditConfirm" name="gridForm:goGridEditConfirm" value="登録" />
+<input type="hidden" name="gridForm/view/grid/gridEdit.html" value="gridForm" />
+</form>
+</body>
+</html>

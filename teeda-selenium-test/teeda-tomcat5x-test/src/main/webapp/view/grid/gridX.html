@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>GridX</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	height: 25px;
+}
+.gridCellEdit {
+	border-width: 1px;
+	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+GridX
+<form id="gridForm">
+<table id="fooGridX" width="300px" height="200px">
+	<colgroup>
+		<col span="2" width="60px" class="T_leftFixed" />
+		<col span="4" width="70px" />
+	</colgroup>
+	<thead>
+		<tr height="50px">
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+			<th>ddd</th>
+			<th>eee</th>
+			<th>fff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><span id="aaa" /></td>
+			<td><span id="bbb" /></td>
+			<td><span id="ccc" /></td>
+			<td style="background-color: #B4CDCD;"><input type="text" id="ddd" /></td>
+			<td style="background-color: #BCEE68;"><input type="text" id="eee" class="T_currency" /></td>
+			<td><span id="fff" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="submit" />
+</form>
+</body>
+</html>

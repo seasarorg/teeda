@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="default-customizer.dicon"/>
+
+	<component name="commandAspectCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
+		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
+		<property name="pointcut">"do.*, initialize, prerender"</property>
+	</component>
+
+	<component name="actionSupportAspectCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
+		<property name="interceptorName">"app_aop.actionSupportInterceptor"</property>
+		<property name="pointcut">"do.*, initialize, prerender"</property>
+	</component>
+
+	<component name="actionCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+		<initMethod name="addCustomizer">
+			<arg>commandAspectCustomizer</arg>
+		</initMethod>
+		<initMethod name="addCustomizer">
+			<arg>actionSupportAspectCustomizer</arg>
+		</initMethod>
+	</component>
+</components>

@@ -1,0 +1,119 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ForEach</title>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+<script language="JavaScript" src="../../js/global.js"></script>
+<script language="JavaScript" src="../../js/gridEdit.js"></script>
+</head>
+<body>
+
+ForEach
+<form id="form">
+    
+<input type="hidden" id="fooItemsSave" />
+<input type="hidden" id="barItemsSave" />
+
+<table border="0" cellpadding="0" cellspacing="0" class="eGridTable">
+  <tr>
+    <td class="eGridLayer">
+
+<!-- left header -->
+<div id="leftHeader" class="eGridLeftHeader">
+<table id="leftHeaderTable" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th width="20px" class="eGridHeader"></th>
+  </tr>
+</table>
+</div>
+
+    </td>
+    <td class="eGridLayer">
+
+<!-- right header -->
+<div id="rightHeader" class="eGridRightHeader">
+<table id="rightHeaderTable" border="0" cellpadding="0" cellspacing="0">
+  <div id="fooItems-headerColgroup">
+    <div id="isEditStatusNormal"><colgroup><col width="100px" span="1"/></colgroup></div>
+    <div id="isEditStatusAdd"><colgroup width="100px" class="editStatusAdd"><col span="1"/></colgroup></div>
+    <div id="isEditStatusUpdate"><colgroup width="100px" class="editStatusUpdate"><col span="1"/></colgroup></div>
+    <div id="isEditStatusDelete"><colgroup width="100px" class="editStatusDelete"><col span="1"/></colgroup></div>
+  </div>
+  <tr>
+    <div id="fooItems-aaa">
+    <th nowrap="nowrap" class="eGridHeader">
+      <span id="aaa">1</span>
+    </th>
+    </div>
+  </tr>
+</table>
+</div>
+  
+    </td>
+  </tr>
+  <tr>
+    <td class="eGridLayer">
+
+<!-- left body -->
+<div id="leftBody" class="eGridLeftBody">
+<table id="leftBodyTable" border="0" cellpadding="0" cellspacing="0">
+  <colgroup width="20px"/>
+  <tr>
+    <td class="eGridCell">bbb</td>
+  </tr>
+  <tr>
+    <td class="eGridCell">ccc</td>
+  </tr>
+</table>
+</div>
+
+    </td>
+    <td class="eGridLayer">
+        
+<!-- right body -->
+<div id="rightBody" class="eGridRightBody" onscroll="scroll(this.id)">
+<table id="rightBodyTable" border="0" cellpadding="0" cellspacing="0">
+  <div id="fooItems-bodyColgroup">
+    <div id="isEditStatusNormal"><colgroup width="100px"></colgroup></div>
+    <div id="isEditStatusAdd"><colgroup width="100px" class="editStatusAdd"></colgroup></div>
+    <div id="isEditStatusUpdate"><colgroup width="100px" class="editStatusUpdate"></colgroup></div>
+    <div id="isEditStatusDelete"><colgroup width="100px" class="editStatusDelete"><col span="1" /></colgroup></div>
+  </div>
+  <tr>
+    <div id="fooItems-bbb">
+      <td nowrap="nowrap" class="eGridCell">
+        <input type="hidden" id="editStatus"/>
+        <input type="hidden" id="bbbEditStatus"/>
+        <input type="text" id="bbb" autocomplete="off" class="center" onchange="gridCellOnChange(this);"/>
+      </td>
+    </div>
+  </tr>
+  <tr>
+    <div id="fooItems-ccc">
+      <td nowrap="nowrap" class="eGridCell">
+        <input type="text" id="ccc" autocomplete="off" class="T_currency" />
+      </td>
+    </div>
+  </tr>
+</table>
+</div>
+
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<select id="barItems">
+  <option value="0">A</option>
+</select>
+
+<input type="submit" id="doAdd" value="追加" />
+<input type="submit" id="doDelete" value="削除" />
+<input type="submit" id="goForeachGridEditConfirm" value="登録" />
+
+
+</form>
+
+</body>
+</html>

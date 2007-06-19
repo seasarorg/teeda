@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components namespace="teedaErrorPage" >
+
+	<component class="org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl">
+		<initMethod name="addErrorPage">
+			<arg>@examples.teeda.web.error.WebAppRuntimeException@class</arg>
+			<arg>"/view/error/errorResult.html"</arg>
+		</initMethod>
+		<initMethod name="addErrorPage">
+			<arg>@examples.teeda.web.error.WebAppRuntime2Exception@class</arg>
+			<arg>"/view/error/error2Result.html"</arg>
+		</initMethod>
+	</component>
+</components>
+

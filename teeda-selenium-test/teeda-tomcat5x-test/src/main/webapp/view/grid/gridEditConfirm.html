@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<script language="JavaScript" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+Grid
+<form id="gridForm">
+
+<table id="fooGridY" height="100px">
+	<colgroup>
+		<col span="4" width="100px"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th></th>
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><span id="editStatus" /><input type="hidden" id="editStatus-hidden"/></td>
+			<td><span id="aaa" /><input type="hidden" id="aaa-hidden"/></td>
+			<td><span id="bbb" class=""/><input type="hidden" id="bbb-hidden"/></td>
+			<td><span id="ccc" /><input type="hidden" id="ccc-hidden"/></td>
+		</tr>
+	</tbody>
+</table>
+<br />
+<input type="submit" id="doSubmit" value="OK"/>
+<input type="submit" id="jumpGridEdit" value="キャンセル"/>
+</form>
+</body>
+</html>

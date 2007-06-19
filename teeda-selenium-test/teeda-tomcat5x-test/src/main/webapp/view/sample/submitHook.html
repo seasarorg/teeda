@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Sumit Hook</title>
+<script language="JavaScript" src="../../js/submitHook.js"></script>
+</head>
+
+<body>
+
+<form id="form">
+
+通知あり：<input type="text" id="text1" onchange="fdSubmitHook.notify();" /><br />
+通知なし：<input type="text" id="text2" /><br />
+<br />
+通知あり：
+<select id="select1" onchange="fdSubmitHook.notify();">
+  <option value=""></option>
+  <option value="1">001</option>
+  <option value="2">002</option>
+  <option value="3">003</option>
+</select>
+<br />
+通知なし：
+<select id="select2">
+  <option value=""></option>
+  <option value="1">001</option>
+  <option value="2">002</option>
+  <option value="3">003</option>
+</select>
+<br />
+<br />
+<input type="submit" id="doNormalSubmit" value="Normal Submit" />
+<input type="submit" id="doHookSubmit" value="Hook Submit" onclick="fdSubmitHook.hook();" />
+
+</form>
+
+</body>
+</html>

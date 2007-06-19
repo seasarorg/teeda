@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+</head>
+<body>
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	height: 25px;
+}
+.gridCellEdit {
+	border-width: 1px;
+	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+Grid
+<form id="gridForm">
+<table id="fooGrid" width="300px" height="200px">
+	<colgroup>
+		<col span="2" width="60px" class="T_leftFixed" />
+		<col span="4" width="70px" />
+	</colgroup>
+	<thead>
+		<tr style="dummy" height="50px">
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+			<th>ddd</th>
+			<th>eee</th>
+			<th>fff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="dummy">
+			<td><span id="aaa">aaa</span></td>
+			<td><span id="bbb">bbb</span></td>
+			<td><span id="ccc">ccc</span></td>
+			<td style="background-color: #B4CDCD;"><input type="text" id="ddd" /></td>
+			<td style="background-color: #BCEE68;"><input type="text" id="eee" class="T_currency" /></td>
+			<td><a id="goGridResult" href="gridResult.html?fff=f1&ggg=g1"><span id="fff">f1</span></a></td>
+		</tr>
+	</tbody>
+</table>
+<input type="submit" />
+</form>
+</body>
+</html>

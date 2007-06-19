@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Ajax</title>
+<script type="text/javascript">
+//<![CDATA[
+  var startAjax = function(){
+    function ajax_ajaxPage_ajaxStartAjax(res){
+      var result = $i('result');
+      result.innerHTML = res;
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjax, [], Kumu.Ajax.RESPONSE_TYPE_TEXT);
+  };
+
+  var startAjaxObject = function(){
+    function ajax_ajaxPage_ajaxStartAjaxObject(res){
+      Kumu.Ajax.render(res);
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjaxObject, []);
+  };
+
+  var startAjaxList = function(){
+    function ajax_ajaxPage_ajaxStartAjaxList(res){
+      Kumu.Ajax.render(res);
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjaxList, []);
+  };
+
+  var clearOptions = function(select){
+    var listcnt = select.length;
+    for(var i = listcnt - 1; i >= 0; i--){
+      select.options[i] = null;
+    }
+  };
+
+  var combinationList = function(evt){
+    var elem = evt.target || evt.srcElement;
+    var value = elem.value;
+    function ajax_ajaxPage_ajaxCombinationList(res){
+      var select = $i('sample2');
+      clearOptions(select);
+      var i = 0;      
+      res.map(function(v){
+        select.options[i] = new Option(v.label,v.value);
+        i++;
+      });
+    };
+    
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxCombinationList, [value]);
+  };
+
+  
+  KumuEventConf = {
+    'click_startAjax' : startAjax,
+    'click_startAjaxObject' : startAjaxObject,
+    'click_startAjaxList' : startAjaxList,
+    'change_sample1' : combinationList
+  }
+//]]>  
+</script>
+
+</head>
+<body>
+<form id="sampleForm">
+<input type="hidden" id="sample1ItemsSave" />
+<input type="hidden" id="sample2ItemsSave" />
+
+<h2> Simple Teeda Ajax Example</h2>
+<p>Teeda Ajaxの基本機能のExampleです</p>
+<hr />
+
+<p>Plain Textを受け取る</p>
+<p>javascript</p>
+<pre>
+  var startAjax = function(){
+    function ajax_ajaxPage_ajaxStartAjax(res){
+      var result = $i('result');
+      result.innerHTML = res;
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjax, [], Kumu.Ajax.RESPONSE_TYPE_TEXT);
+  };
+</pre>
+
+<div id="result">ここが変わります</div>
+<input type="button" value="Start Ajax" id="startAjax" />
+
+<hr/>
+<p>Objectを受け取る</p>
+<p>renderメソッドを使用しています</p>
+<p>javascript</p>
+<pre>
+  var startAjaxObject = function(){
+    function ajax_ajaxPage_ajaxStartAjaxObject(res){
+      Kumu.Ajax.render(res);
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjaxObject, []);
+  };
+</pre>
+<div id="firstName">ここが変わります</div>
+<div id="lastName">ここが変わります</div>
+<input type="button" value="Start Ajax Object" id="startAjaxObject" />
+<hr/>
+<p>Listを受け取る</p>
+<p>renderメソッドを使用しています</p>
+<p>javascript</p>
+<pre>
+  var startAjaxList = function(){
+    function ajax_ajaxPage_ajaxStartAjaxList(res){
+      Kumu.Ajax.render(res);
+    }
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjaxList, []);
+  };
+</pre>
+<table border="1">
+  <thead>
+    <td>No</td>
+    <td>UserName</td>
+  </thead>
+  <tbody>
+    <tr id="list" style="display: none;">
+      <td id="no">ここが変わります</td>
+      <td id="name">ここが変わります</td>
+    </tr>
+  </tbody>
+ </table>
+<input type="button" value="Start Ajax List" id="startAjaxList" />
+<hr/>
+<p>comboboxの連携</p>
+<p>javascript</p>
+<pre>
+  var clearOptions = function(select){
+    var listcnt = select.length;
+    for(var i = listcnt - 1; i >= 0; i--){
+      select.options[i] = null;
+    }
+  };
+
+  var combinationList = function(evt){
+    var elem = evt.target || evt.srcElement;
+    var value = elem.value;
+    function ajax_ajaxPage_ajaxCombinationList(res){
+      var select = $i('sample2');
+      clearOptions(select);
+      var i = 0;      
+      res.map(function(v){
+        select.options[i] = new Option(v.label,v.value);
+        i++;
+      });
+    };
+    
+    Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxCombinationList, [value]);
+  };
+</pre>
+変更すると隣のコンボボックスの内容が変わります。
+<select id="sample1">
+</select>
+<select id="sample2">
+</select>
+<hr/>
+</form>
+</body>
+</html>

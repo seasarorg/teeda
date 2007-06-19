@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<script language="JavaScript" src="../../js/global.js"></script>
+<script language="JavaScript" src="../../js/gridEdit.js"></script>
+<script language="JavaScript" src="../../js/sorttable.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+Grid
+<form id="gridForm">
+<!-- queryString のパラメータ名のsuffixにSelectを付けたもの -->
+<input type="hidden" id="fooIndexSelect" value=""/>
+<input type="submit" id="doDelete" value="削除" style="display:none"/>
+<input type="submit" id="doUpdate" value="更新" style="display:none"/>
+
+<input type="hidden" id="sortId" />
+<input type="hidden" id="sortOrder" />
+<input type="submit" id="doSort" style="display:none" />
+
+<input type="hidden" id="fooItemsSessionSave" />
+
+<table id="fooGridY" height="100px">
+	<colgroup>
+		<col span="4" width="100px"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th id="del-header" class="sorttable">列<br />削除</th>
+			<th id="aaa-header" class="sorttable">aaa</th>
+			<th id="bbb-header" class="sorttable">bbb</th>
+			<th id="ccc-header" class="sorttable">ccc</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="">
+			<td>
+				<a id="goGridEdit" href="#?fooIndex=1" onclick="doLinkAction(this, 'doDelete');">削除</a>
+				<input type="hidden" id="editStatus"/>
+                <input type="hidden" id="bbbEditStatus"/>
+			</td>
+			<td><span id="aaa" /></td>
+			<td><input type="text" id="bbb" autocomplete="off"/></td>
+			<td><span id="ccc" /></td>
+		</tr>
+	</tbody>
+</table>
+<br />
+<input type="submit" id="doAdd" value="追加"/>
+<input type="submit" id="goGridEditConfirm" value="登録"/>
+
+</form>
+</body>
+</html>

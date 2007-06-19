@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<script language="JavaScript" src="../../js/global.js"></script>
+<script language="JavaScript" src="../../js/gridEdit.js"></script>
+<script language="JavaScript" src="../../js/sorttable.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+Grid Paging
+<form id="form">
+
+<input type="hidden" id="sortId" />
+<input type="hidden" id="sortOrder" />
+<input type="submit" id="doSort" style="display:none" />
+
+<input type="hidden" id="fooItemsSave" />
+<input type="hidden" id="pagingItemsSave" />
+
+<table id="fooGridY" height="100px">
+  <colgroup>
+    <col span="3" width="100px"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th id="aaa-header" class="sorttable">aaa</th>
+      <th id="bbb-header" class="sorttable">bbb</th>
+      <th id="ccc-header" class="sorttable">ccc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span id="aaa" /></td>
+      <td><span id="bbb" /></td>
+      <td><span id="ccc" /></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+
+<script>
+<!--
+function doPagingAction(pageElem) {
+
+    var childNodes = pageElem.childNodes;
+    var pageNumber;
+    for(var i = 0; i < childNodes.length; i++) {
+        if(childNodes[i].id == "paging") {
+            pageNumber = childNodes[i].innerHTML;
+            break;
+        }
+    }
+
+    if(pageNumber == null || pageNumber == "undefined") {
+        return;
+    }
+
+    var currentIndex = document.getElementById("currentIndex");
+    currentIndex.value = pageNumber - 1;
+
+    var doPagingButton = document.getElementById("doPaging");
+    doPagingButton.click();
+}
+//-->
+</script>
+
+<table class="pagingTable">
+  <tr>
+  <div id="pagingItems">
+  <td>
+    <div id="isCurrent"><span id="paging-current"/></div>
+    <div id="isNotCurrent"><a href="#" onclick="doPagingAction(this);"><span id="paging"/></a></div>
+  </td>
+  </div>
+  </tr>
+</table>
+<input type="hidden" id="currentIndex" />
+<input type="submit" id="doPaging" value="ページング" style="display : none;" />
+
+</form>
+</body>
+</html>

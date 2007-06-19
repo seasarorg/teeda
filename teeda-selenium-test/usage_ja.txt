@@ -1,0 +1,53 @@
+* teeda-selenium-testの使い方
+
+1. 環境変数JAVA_HOMEにJDKを設定しておく。
+　************************************
+  JDKは1.5以上を使用すること
+　************************************
+2. SVNからチェックアウトする。
+3. teedaで"mvn install"する。
+   依存先ライブラリがSNAPSHOTの場合は、依存先でもmvn installする。
+4. teeda-selenium-testで"mvn integration-test"するとテストが実行される。
+
+** Eclipseを使う場合
+
+SVNからチェックアウトした後に、mvn eclipse:eclipse して
+(もしくは mvn -Declipse.downloadSources=true eclipse:eclipse)
+.classpathと.projectを生成する。
+
+pom.xmlが更新される度に(dependencyが変更される度に)、
+mvn eclipse:eclipseすること。
+
+
+* 各モジュールについて
+
+** teeda-tomcat5x-test
+Tomcat5.x系でのTest
+
+Testを追加する際はこのモジュールに追加して下さい。
+このモジュールから他のモジュールにTestをコピーして実行します。
+
+
+** teeda-jetty6x-test
+Jetty6.x系でのTest
+
+
+** teeda-geronimo1x-test
+GeronimoでのTest
+FireFoxが空いていると使用するっぽい1099ポートを
+geronimoがRMIで使用する為、Firefoxを落としておく必要がある
+
+# ダウンロード＆起動まで結構時間かかります
+
+
+** teeda-resin3x-test
+Resin3.x系でのTest
+# ダウンロード＆起動まで結構時間かかります
+
+
+** teeda-weblogic8x-test
+
+これはWebLogicを事前にインストールする必要があります。
+インストールしたら、pom.xmlのコメントをはずしてweblogicのモジュールを有効にし
+mvn integration-test -Dweblogic.home=インストール先
+で実行可能なはず？です。

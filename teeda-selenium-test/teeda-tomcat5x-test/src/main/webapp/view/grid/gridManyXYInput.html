@@ -1,0 +1,76 @@
+<html xmlns:te="http://www.seasar.org/teeda/extension">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>GridXY</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.ddd {
+	background-color: #B4CDCD;
+}
+td div.ddd {
+	color: black;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	height: 25px;
+}
+.gridCellEdit {
+	border-width: 1px;
+	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+GridXY
+<span id="allMessages"/>
+<form id="gridForm">
+<input type="hidden" id="show" />
+<input type="hidden" id="fooItemsSessionSave" />
+<input type="text" id="itemSize" />
+<input type="submit" id="doChangeSize" value="件数を変更" />
+
+<div id="isShow">
+<table id="fooGridXY" width="300px" height="200px">
+	<colgroup>
+		<col span="2" width="60px" class="T_leftFixed" />
+		<col span="4" width="70px" />
+	</colgroup>
+	<thead>
+		<tr height="50px">
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+			<th class="ddd">ddd</th>
+			<th>eee</th>
+			<th>fff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><span id="aaa" /></td>
+			<td><span id="bbb" /></td>
+			<td><span id="ccc" /></td>
+			<td class="ddd"><input type="text" id="ddd" /></td>
+			<td style="background-color: #BCEE68;"><input type="text" id="eee" /></td>
+			<td><span id="fff" /></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</form>
+</body>
+</html>
