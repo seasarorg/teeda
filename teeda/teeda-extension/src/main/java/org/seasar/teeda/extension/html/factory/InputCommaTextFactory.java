@@ -52,17 +52,24 @@ public class InputCommaTextFactory extends InputTextFactory {
         if (pageDesc == null) {
             return;
         }
-        properties.put(ExtensionConstants.FRACTION_ATTR, getBindingExpression(
-                pageDesc.getPageName(), elementNode.getId()
-                        + ExtensionConstants.FRACTION_SUFFIX));
-        properties.put(ExtensionConstants.FRACTION_SEPARATOR_ATTR,
-                getBindingExpression(pageDesc.getPageName(), elementNode
-                        .getId()
-                        + ExtensionConstants.FRACTION_SEPARATOR_SUFFIX));
-        properties.put(ExtensionConstants.GROUPING_SEPARATOR_ATTR,
-                getBindingExpression(pageDesc.getPageName(), elementNode
-                        .getId()
-                        + ExtensionConstants.GROUPING_SEPARATOR_SUFFIX));
+        if (!properties.containsKey(ExtensionConstants.FRACTION_ATTR)) {
+            properties.put(ExtensionConstants.FRACTION_ATTR,
+                    getBindingExpression(pageDesc.getPageName(), elementNode
+                            .getId()
+                            + ExtensionConstants.FRACTION_SUFFIX));
+        }
+        if (!properties.containsKey(ExtensionConstants.FRACTION_SEPARATOR_ATTR)) {
+            properties.put(ExtensionConstants.FRACTION_SEPARATOR_ATTR,
+                    getBindingExpression(pageDesc.getPageName(), elementNode
+                            .getId()
+                            + ExtensionConstants.FRACTION_SEPARATOR_SUFFIX));
+        }
+        if (!properties.containsKey(ExtensionConstants.GROUPING_SEPARATOR_ATTR)) {
+            properties.put(ExtensionConstants.GROUPING_SEPARATOR_ATTR,
+                    getBindingExpression(pageDesc.getPageName(), elementNode
+                            .getId()
+                            + ExtensionConstants.GROUPING_SEPARATOR_SUFFIX));
+        }
     }
 
     protected String getTagName() {

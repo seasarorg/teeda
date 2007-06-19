@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.extension.html.factory.sub.web;
 
+import java.math.BigDecimal;
+
 /**
  * @author shot
  */
@@ -29,6 +31,8 @@ public class AaaPage {
     private String aaaGroupingSeparator = ",";
 
     private boolean bbb;
+
+    private BigDecimal ccc;
 
     public boolean isBbb() {
         return bbb;
@@ -68,6 +72,20 @@ public class AaaPage {
 
     public void setAaa(String aaa) {
         this.aaa = aaa;
+    }
+
+    /**
+     * @return Returns the ccc.
+     */
+    public BigDecimal getCcc() {
+        return ccc;
+    }
+
+    /**
+     * @param ccc The ccc to set.
+     */
+    public void setCcc(BigDecimal ccc) {
+        this.ccc = ccc;
     }
 
 }

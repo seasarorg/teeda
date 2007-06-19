@@ -82,14 +82,36 @@ public class InputCommaTextFactoryTest extends ElementProcessorFactoryTestCase {
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
         // ## Assert ##
-        assertNotNull("1", processor);
-        assertEquals("2", TInputCommaTextTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.aaa}", processor.getProperty("value"));
-        assertEquals("4", "#{aaaPage.aaaFraction}", processor
+        assertNotNull(processor);
+        assertEquals(TInputCommaTextTag.class, processor.getTagClass());
+        assertEquals("#{aaaPage.aaa}", processor.getProperty("value"));
+        assertEquals("#{aaaPage.aaaFraction}", processor
                 .getProperty("fraction"));
-        assertEquals("5", "#{aaaPage.aaaFractionSeparator}", processor
+        assertEquals("#{aaaPage.aaaFractionSeparator}", processor
                 .getProperty("fractionSeparator"));
-        assertEquals("6", "#{aaaPage.aaaGroupingSeparator}", processor
+        assertEquals("#{aaaPage.aaaGroupingSeparator}", processor
                 .getProperty("groupingSeparator"));
+    }
+
+    public void testCreateFactory_TEEDA314() throws Exception {
+        // ## Arrange ##
+        Map props = new HashMap();
+        props.put("id", "ccc");
+        props.put("type", "text");
+        props.put("class", "T_Currency");
+        props.put("fraction", "2");
+        props.put("fractionSeparator", ".");
+        props.put("groupingSeparator", ",");
+        ElementNode elementNode = createElementNode("input", props);
+        PageDesc pageDesc = createPageDesc(AaaPage.class, "aaaPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertEquals("2", processor.getProperty("fraction"));
+        assertEquals(".", processor.getProperty("fractionSeparator"));
+        assertEquals(",", processor.getProperty("groupingSeparator"));
     }
 }
