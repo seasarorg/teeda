@@ -90,4 +90,26 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.assertElementPresentById("isNotAaa");
 	}
 
+	public void testConditionForEach_TEEDA241() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition3.html");
+		tester.dumpHtml();
+
+		tester.submitById("doCheck");
+
+		tester.dumpHtml();
+		// ## Assert ##
+		String src = tester.getPageSource();
+		String s1 = "メッセージあり";
+		String s2 = "メッセージなし";
+		int pos = src.indexOf(s1);
+		assertTrue(pos >= 0);
+		pos = src.indexOf(s2, pos);
+		assertTrue(pos >= 0);
+		pos = src.indexOf(s1, pos);
+		assertTrue(pos >= 0);
+	}
 }
