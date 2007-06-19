@@ -133,7 +133,9 @@ public class TCondition extends UIComponentBase {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        clearEncodedCondition();
+        if (!context.getMessages().hasNext()) {
+            clearEncodedCondition();
+        }
         super.encodeBegin(context);
     }
 
