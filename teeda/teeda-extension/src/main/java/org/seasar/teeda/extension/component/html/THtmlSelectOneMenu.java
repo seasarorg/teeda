@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 import javax.faces.internal.SelectItemsIterator;
 import javax.faces.model.SelectItem;
@@ -38,6 +39,8 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
     private String pageName;
 
     private String labelName;
+
+    private Integer size = null;
 
     private static final String VALIDATION_FAIL_CSS = "onTeedaError";
 
@@ -73,11 +76,12 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[4];
+        final Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = pageName;
         values[2] = labelName;
         values[3] = errorStyleClass;
+        values[4] = size;
         return values;
     }
 
@@ -87,6 +91,7 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
         pageName = (String) values[1];
         labelName = (String) values[2];
         errorStyleClass = (String) values[3];
+        size = (Integer) values[4];
     }
 
     public String getPageName() {
@@ -113,4 +118,17 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
         this.errorStyleClass = errorStyleClass;
     }
 
+    public int getSize() {
+        if (size != null) {
+            return size.intValue();
+        }
+        ValueBinding vb = getValueBinding("size");
+        Integer v = vb != null ? (Integer) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.intValue() : 1;
+    }
+
+    public void setSize(int size) {
+        this.size = new Integer(size);
+    }
 }

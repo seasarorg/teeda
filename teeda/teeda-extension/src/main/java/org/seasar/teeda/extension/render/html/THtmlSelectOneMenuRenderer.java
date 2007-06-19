@@ -49,6 +49,13 @@ public class THtmlSelectOneMenuRenderer extends HtmlSelectOneMenuRenderer {
         addIgnoreAttributeName(ExtensionConstants.ERROR_STYLE_CLASS);
     }
 
+    protected void renderSize(FacesContext context, UIComponent component,
+            ResponseWriter writer) throws IOException {
+        THtmlSelectOneMenu c = (THtmlSelectOneMenu) component;
+        RendererUtil.renderAttribute(writer, JsfConstants.SIZE_ATTR, String
+                .valueOf(c.getSize()));
+    }
+
     protected void renderStyleClass(FacesContext context,
             UIComponent component, ResponseWriter writer) throws IOException {
         colorErrorComponent(context, (UIInput) component);

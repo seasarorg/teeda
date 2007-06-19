@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlSelectOneMenu;
@@ -38,6 +39,8 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     private String errorStyleClass;
 
+    private String size;
+
     public String getComponentType() {
         return THtmlSelectOneMenu.COMPONENT_TYPE;
     }
@@ -54,6 +57,7 @@ public class TSelectOneMenuTag extends TSelectTagBase {
                 getLabelName());
         setComponentProperty(component, ExtensionConstants.ERROR_STYLE_CLASS,
                 getErrorStyleClass());
+        setComponentProperty(component, JsfConstants.SIZE_ATTR, getSize());
     }
 
     protected boolean isNullLabelRequired() {
@@ -75,6 +79,7 @@ public class TSelectOneMenuTag extends TSelectTagBase {
         pageName = null;
         labelName = null;
         errorStyleClass = null;
+        size = null;
     }
 
     public String getPageName() {
@@ -99,6 +104,20 @@ public class TSelectOneMenuTag extends TSelectTagBase {
 
     public void setErrorStyleClass(String errorStyleClass) {
         this.errorStyleClass = errorStyleClass;
+    }
+
+    /**
+     * @return Returns the size.
+     */
+    public String getSize() {
+        return size;
+    }
+
+    /**
+     * @param size The size to set.
+     */
+    public void setSize(String size) {
+        this.size = size;
     }
 
 }
