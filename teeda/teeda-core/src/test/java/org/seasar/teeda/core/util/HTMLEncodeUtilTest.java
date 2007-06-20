@@ -15,12 +15,13 @@
  */
 package org.seasar.teeda.core.util;
 
-import junit.framework.TestCase;
+import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.HTMLEncodeUtil.HtmlEncodeStrategy;
 
 /**
  * @author yone
  */
-public class HTMLEncodeUtilTest extends TestCase {
+public class HTMLEncodeUtilTest extends TeedaTestCase {
 
     public void testEncode_amp() throws Exception {
         assertEquals("&nbsp;", HTMLEncodeUtil.encode("&nbsp;", false, false));
@@ -43,9 +44,30 @@ public class HTMLEncodeUtilTest extends TestCase {
         assertEquals("&gt;&gt;", HTMLEncodeUtil.encode(">>", true, true));
     }
 
-    public void testEncode_yen() throws Exception {
+    public void testEncode_00A5_withDefaultStrategy() throws Exception {
+        char c = '\u00a5';
+        assertEquals("&yen;", HTMLEncodeUtil.encode(Character.toString(c),
+                false, false));
+        assertEquals("&yen;", HTMLEncodeUtil.encode(Character.toString(c),
+                true, true));
+        c = '\u005c\';
+        assertNotSame("&yen;", HTMLEncodeUtil.encode(Character.toString(c),
+                false, false));
+        assertNotSame("&yen;", HTMLEncodeUtil.encode(Character.toString(c),
+                true, true));
+        assertEquals("\\", HTMLEncodeUtil.encode(Character.toString(c), false,
+                false));
+        assertEquals("\\", HTMLEncodeUtil.encode(Character.toString(c), true,
+                true));
+    }
+
+    public void testEncode_yen_for_SeasarUser5976() throws Exception {
+        HtmlEncodeStrategy orgStrategy = HTMLEncodeUtil.getHtmlEncodeStrategy();
+        HTMLEncodeUtil
+                .setHtmlEncodeStrategy(new HTMLEncodeUtil.JapaneseHtmlEncodeStrategy());
         assertEquals("&yen;&yen;", HTMLEncodeUtil.encode("\\\\", false, false));
         assertEquals("&yen;&yen;", HTMLEncodeUtil.encode("\\\\", true, true));
+        HTMLEncodeUtil.setHtmlEncodeStrategy(orgStrategy);
     }
 
 }
