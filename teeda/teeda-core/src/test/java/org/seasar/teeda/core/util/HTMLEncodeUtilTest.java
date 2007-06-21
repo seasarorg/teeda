@@ -20,6 +20,7 @@ import org.seasar.teeda.core.util.HTMLEncodeUtil.HtmlEncodeStrategy;
 
 /**
  * @author yone
+ * @author shot
  */
 public class HTMLEncodeUtilTest extends TeedaTestCase {
 

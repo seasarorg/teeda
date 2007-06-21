@@ -51,65 +51,72 @@ public final class HTMLEncodeUtil {
 
     }
 
-    public static class DefaultHtmlEncodeStrategy implements HtmlEncodeStrategy {
+    public static abstract class AbstractHtmlEncodeStrategy implements
+            HtmlEncodeStrategy {
 
-        public String encode(String s, boolean quote, boolean amp) {
+        public String encode(final String s, final boolean quote,
+                final boolean amp) {
             char[] chars = s.toCharArray();
             StringBuffer sb = new StringBuffer(s.length() + 64);
             for (int i = 0; i < chars.length; i++) {
                 char c = chars[i];
-                // &nbsp; 0xA0
-                if ((int) c == '\u00A0') {
-                    sb.append("&nbsp;");
-                } else if (c == '<') {
-                    sb.append("&lt;");
-                } else if (c == '>') {
-                    sb.append("&gt;");
-                } else if (amp && c == '&') {
-                    sb.append("&amp;");
-                } else if (c == '"') {
-                    sb.append("&quot;");
-                } else if (quote && c == '\'') {
-                    sb.append("&#39;");
-                } else if ((int) c == '\u00A5') {
-                    sb.append("&yen;");
-                } else {
-                    sb.append(c);
-                }
+                encodeEach(sb, c, quote, amp);
             }
             return new String(sb);
         }
 
+        protected abstract void encodeEach(final StringBuffer buf,
+                final char c, final boolean quote, final boolean amp);
     }
 
-    public static class JapaneseHtmlEncodeStrategy implements
-            HtmlEncodeStrategy {
+    public static class DefaultHtmlEncodeStrategy extends
+            AbstractHtmlEncodeStrategy {
 
-        public String encode(String s, boolean quote, boolean amp) {
-            char[] chars = s.toCharArray();
-            StringBuffer sb = new StringBuffer(s.length() + 64);
-            for (int i = 0; i < chars.length; i++) {
-                char c = chars[i];
-                // &nbsp; 0xA0
-                if ((int) c == '\u00A0') {
-                    sb.append("&nbsp;");
-                } else if (c == '<') {
-                    sb.append("&lt;");
-                } else if (c == '>') {
-                    sb.append("&gt;");
-                } else if (amp && c == '&') {
-                    sb.append("&amp;");
-                } else if (c == '"') {
-                    sb.append("&quot;");
-                } else if (quote && c == '\'') {
-                    sb.append("&#39;");
-                } else if ((int) c == '\u00A5' || (int) c == '\u005C\') {
-                    sb.append("&yen;");
-                } else {
-                    sb.append(c);
-                }
+        protected void encodeEach(final StringBuffer sb, final char c,
+                final boolean quote, final boolean amp) {
+            if ((int) c == '\u00A0') {
+                sb.append("&nbsp;");
+            } else if (c == '<') {
+                sb.append("&lt;");
+            } else if (c == '>') {
+                sb.append("&gt;");
+            } else if (amp && c == '&') {
+                sb.append("&amp;");
+            } else if (c == '"') {
+                sb.append("&quot;");
+            } else if (quote && c == '\'') {
+                sb.append("&#39;");
+            } else if ((int) c == '\u00A5') {
+                sb.append("&yen;");
+            } else {
+                sb.append(c);
             }
-            return new String(sb);
+        }
+
+    }
+
+    public static class JapaneseHtmlEncodeStrategy extends
+            AbstractHtmlEncodeStrategy {
+
+        protected void encodeEach(final StringBuffer sb, final char c,
+                final boolean quote, final boolean amp) {
+            if ((int) c == '\u00A0') {
+                sb.append("&nbsp;");
+            } else if (c == '<') {
+                sb.append("&lt;");
+            } else if (c == '>') {
+                sb.append("&gt;");
+            } else if (amp && c == '&') {
+                sb.append("&amp;");
+            } else if (c == '"') {
+                sb.append("&quot;");
+            } else if (quote && c == '\'') {
+                sb.append("&#39;");
+            } else if ((int) c == '\u00A5' || (int) c == '\u005C\') {
+                sb.append("&yen;");
+            } else {
+                sb.append(c);
+            }
         }
 
     }
