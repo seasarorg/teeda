@@ -1,7 +1,5 @@
 package examples.teeda.web.include;
 
-import examples.teeda.web.add.AddPage;
-
 public class Teeda313Page {
 
 	private int result;
@@ -19,6 +17,7 @@ public class Teeda313Page {
 	public Class doAction() {
 		System.out.println("doAction");
 		result = addPage.getArg1() + addPage.getArg2();
+		addPage.setArg2(12345);
 		return null;
 	}
 
