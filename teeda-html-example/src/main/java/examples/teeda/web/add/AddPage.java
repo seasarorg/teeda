@@ -55,4 +55,8 @@ public class AddPage {
 		result = arg1 + arg2;
 		return null;
 	}
+
+	public boolean isArg1Disabled() {
+		return false;
+	}
 }
