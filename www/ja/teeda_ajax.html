@@ -30,6 +30,8 @@
 <!-- document start -->
 <br/>
 <h2>Teeda Ajax</h2>
+<p><font color="red">【最新情報】</font> <a href="#hotdeploy">Seasar2.4の新機能SmartDeployを利用した場合の使い方</a></p>
+
 <p>Teeda Ajaxとは、主に以下のような機能を提供します。<br/>
 <ul>
   <li>AjaxによりS2Containerに登録されているPOJOとの連携</li>
@@ -174,6 +176,44 @@ disableUploadTimeout="true" useBodyEncodingForURI="true"/&gt;
 
 <p>詳しくはteeda-ajax-demoをEclipse上でプロジェクトとして取り込みTomcatを起動後http://localhost:8080/teeda-ajax-demo/にアクセスしてサンプルの動作確認を行って下さい。</p>
 
+<br/>
+<h3><a name="hotdeploy">Seasar2.4の新機能SmartDeployを利用した場合の使い方</a></h3>
+<li>推奨パターン</li>
+<ul>
+  <li>呼び出し対象のコンポーネント登録するには？</li>
+  <li>呼び出す際のコンポーネント名は？</li>
+</ul>
+<p>
+呼び出したい対象のコンポーネントをdiconファイルに登録する必要はありません。<br>
+　Pageクラスにajaxから始まるメソッド名を定義する事によりdiconファイルへ登録する際に必要だったmetaタグの登録が不要になります。<br>
+　【Pageクラス例】<br>
+　package examples.teeda.web.ajaxにあるAjaxPageクラスに以下のようにメソッドを定義します。<br>
+<font color="green">　※convention.diconで指定されているrootパッケージはexamples.teedaとします</font>
+</p>
+<pre>
+package examples.teeda.web.ajax;
+
+public class AjaxPage {
+    <font color="green">// メソッド名はajaxから始める</font>
+    public String <font color="red">ajax</font>StartAjax() {
+        return "Start Ajax";
+    }
+}
+</pre>
+<p>
+このコンポーネントをJavaScriptから呼び出すには、コンポーネント名が必要になります。<br>
+　SmartDeployを使用した場合にはPageクラスは<font color="green">サブアプリケーション名 + "_" + Pageクラス名(先頭小文字)</font>という名前でS2に自動登録されます。<br>
+　上記の例の場合、サブアプリケーション名が"ajax"でPageクラス名がAjaxPageなので先頭を小文字にした"ajaxPage"となりますので<br>
+　以下のようにJavaScriptから呼び出す事が出来ます。
+</p>
+<pre>
+  <font color="green">// サブアプリケーション"ajax" + "_" + Pageクラス名の先頭小文字"ajaxPage" + "_" + 呼び出したいメソッド名</font>
+  function <font color="red">ajax_ajaxPage_ajaxStartAjax</font>(res){
+    alert(res);
+  }
+  Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjax, [], Kumu.Ajax.RESPONSE_TYPE_TEXT);
+</pre>
+<p>Kumu.Ajaxの詳細な使い方は<a href="kumu_ajax.html">こちら</a>も参考にして下さい。</p>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
