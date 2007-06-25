@@ -315,11 +315,11 @@ Kumu.Ajax = {
   },
 
   encodeURL : function(val) {
-    if (encodeURI) {
-      return encodeURI(val);
-    }
     if (encodeURIComponent) {
       return encodeURIComponent(val);
+    }
+    if (encodeURI) {
+      return encodeURI(val);
     }
     if (escape) {
       return escape(val);
@@ -328,8 +328,9 @@ Kumu.Ajax = {
 
   _getComponentName : function(func){
     var str = func.toString();
-    var ret = str.match(/[0-9A-Za-z_]+\(/).toString();
+    var ret = str.match(/[0-9A-Za-z_]+\s*\(/).toString();
     ret = ret.substring(0,ret.length-1);
+    ret = ret.replace(/[\s　]+$/, '');
     var idx = ret.lastIndexOf("_");
     if (idx == -1) {
       return [];
