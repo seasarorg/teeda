@@ -47,6 +47,7 @@ import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
+import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
@@ -70,6 +71,8 @@ public class SessionPagePersistence implements PagePersistence {
     private NamingConvention namingConvention;
 
     private TeedaStateManager stateManager;
+
+    private HtmlSuffix htmlSuffix;
 
     private static final String ERROR_MESSAGE_PERSISTE_KEY = "teeda.FacesMessages";
 
@@ -177,7 +180,7 @@ public class SessionPagePersistence implements PagePersistence {
     protected Map getNextPageProperties(final PageDesc pageDesc,
             final String viewId) {
         final Map map = new HashMap();
-        final String nextPageName = namingConvention.fromPathToPageName(viewId);
+        final String nextPageName = fromPathToPageName(viewId);
         final Class nextPageClass = namingConvention
                 .fromComponentNameToClass(nextPageName);
         if (nextPageClass == null) {
@@ -202,6 +205,12 @@ public class SessionPagePersistence implements PagePersistence {
             map.put(propertyName, pd.getPropertyType());
         }
         return map;
+    }
+
+    protected String fromPathToPageName(final String viewId) {
+        String normalizedPath = (viewId != null) ? htmlSuffix
+                .normalizePath(viewId) : viewId;
+        return namingConvention.fromPathToPageName(normalizedPath);
     }
 
     protected void savePageValues(Map subappValues, Map redirectValues,
@@ -392,6 +401,14 @@ public class SessionPagePersistence implements PagePersistence {
 
     public void setStateManager(TeedaStateManager stateManager) {
         this.stateManager = stateManager;
+    }
+
+    public HtmlSuffix getHtmlSuffix() {
+        return htmlSuffix;
+    }
+
+    public void setHtmlSuffix(HtmlSuffix htmlSuffix) {
+        this.htmlSuffix = htmlSuffix;
     }
 
 }

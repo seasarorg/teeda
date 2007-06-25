@@ -62,6 +62,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         hoge.setList(new ArrayList());
         hoge.setStrArray(new String[0]);
         SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setHtmlSuffix(new HtmlSuffixImpl());
         persistence.setNamingConvention(new NamingConventionImpl() {
 
             public Class fromComponentNameToClass(String componentName) {
@@ -100,6 +101,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         hoge.setInt1(1);
         hoge.setInt2(new Integer(2));
         SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setHtmlSuffix(new HtmlSuffixImpl());
         persistence.setNamingConvention(new NamingConventionImpl() {
 
             public Class fromComponentNameToClass(String componentName) {
@@ -137,6 +139,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         hoge.setList(new ArrayList());
         hoge.setStrArray(new String[0]);
         SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setHtmlSuffix(new HtmlSuffixImpl());
         persistence.setNamingConvention(new NamingConventionImpl() {
 
             public Class fromComponentNameToClass(String componentName) {
@@ -168,13 +171,14 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
     public void testSaveAndRestore() throws Exception {
         SessionPagePersistence spp = new SessionPagePersistence();
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        spp.setHtmlSuffix(htmlSuffix);
         NamingConventionImpl convention = new NamingConventionImpl();
         convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
         String rootPath = "/"
                 + ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
-        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
         spp.setNamingConvention(convention);
         PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
         pageDescCache.setNamingConvention(convention);
@@ -223,7 +227,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         pageDescCache.putPageDesc(fromViewId, fromPageDesc);
         pageDescCache.putPageDesc(toViewId, toPageDesc);
         TeedaStateManager stateManager = new TeedaStateManagerImpl();
-        final SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        final SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setHtmlSuffix(new HtmlSuffixImpl());
         final NamingConvention namingConvention = new NamingConventionImpl() {
             public Class fromComponentNameToClass(String componentName) {
                 return ToPage.class;
@@ -234,14 +239,14 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
             }
 
         };
-        pagePersistence.setNamingConvention(namingConvention);
-        pagePersistence.setPageDescCache(pageDescCache);
-        pagePersistence.setStateManager(stateManager);
+        persistence.setNamingConvention(namingConvention);
+        persistence.setPageDescCache(pageDescCache);
+        persistence.setStateManager(stateManager);
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
         actionDescCache.setHtmlSuffix(new HtmlSuffixImpl());
-        pagePersistence.setActionDescCache(actionDescCache);
+        persistence.setActionDescCache(actionDescCache);
         final MockFacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
         Exception ex = new NullPointerException("hoge");
@@ -258,10 +263,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertNull(requestMap.get("aaaaa"));
 
         // ## Act ##
-        pagePersistence.save(context, toViewId);
+        persistence.save(context, toViewId);
         getExternalContext().getRequestParameterMap().put("redirect", "true");
         context.removeMessages();
-        pagePersistence.restore(context, toViewId);
+        persistence.restore(context, toViewId);
 
         // ## Assert ##
         final String[] aaaaa = (String[]) requestMap.get("aaaaa");
@@ -292,7 +297,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         final PageDesc toPageDesc = createPageDesc(To2Page.class, toViewId);
         pageDescCache.putPageDesc(fromViewId, fromPageDesc);
         pageDescCache.putPageDesc(toViewId, toPageDesc);
-        final SessionPagePersistence pagePersistence = new SessionPagePersistence();
+        final SessionPagePersistence persistence = new SessionPagePersistence();
+        persistence.setHtmlSuffix(new HtmlSuffixImpl());
         final NamingConvention namingConvention = new NamingConventionImpl() {
             public Class fromComponentNameToClass(String componentName) {
                 return To2Page.class;
@@ -304,14 +310,14 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
 
         };
         TeedaStateManager stateManager = new TeedaStateManagerImpl();
-        pagePersistence.setNamingConvention(namingConvention);
-        pagePersistence.setPageDescCache(pageDescCache);
-        pagePersistence.setStateManager(stateManager);
+        persistence.setNamingConvention(namingConvention);
+        persistence.setPageDescCache(pageDescCache);
+        persistence.setStateManager(stateManager);
         ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
         actionDescCache.setNamingConvention(namingConvention);
         actionDescCache.setContainer(getContainer());
         actionDescCache.setHtmlSuffix(new HtmlSuffixImpl());
-        pagePersistence.setActionDescCache(actionDescCache);
+        persistence.setActionDescCache(actionDescCache);
         final FacesContext context = getFacesContext();
         context.getViewRoot().setViewId(fromViewId);
 
@@ -327,9 +333,9 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertNull(requestMap.get("aaaaa"));
 
         // ## Act ##
-        pagePersistence.save(context, toViewId);
+        persistence.save(context, toViewId);
         getExternalContext().getRequestParameterMap().put("redirect", "true");
-        pagePersistence.restore(context, toViewId);
+        persistence.restore(context, toViewId);
 
         // ## Assert ##
         final String[] aaaaa = (String[]) requestMap.get("aaaaa");
