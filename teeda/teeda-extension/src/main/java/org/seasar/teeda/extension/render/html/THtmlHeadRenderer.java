@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,6 +30,7 @@ import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
  * @author higa
+ * @author shot
  */
 public class THtmlHeadRenderer extends AbstractRenderer {
 
@@ -62,8 +63,13 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         Set jsResources = VirtualResource.getJsResources(context);
         for (Iterator i = jsResources.iterator(); i.hasNext();) {
             String path = (String) i.next();
-            renderIncludeJavaScript(writer, VirtualResource.convertVirtualPath(
-                    context, path));
+            if (path == null) {
+                continue;
+            }
+            String convertedPath = (!path.startsWith("../") && !path
+                    .startsWith("./")) ? VirtualResource.convertVirtualPath(
+                    context, path) : path;
+            renderIncludeJavaScript(writer, convertedPath);
             writer.write(JsfConstants.LINE_SP);
         }
     }
@@ -84,8 +90,13 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         Set cssResources = VirtualResource.getCssResources(context);
         for (Iterator i = cssResources.iterator(); i.hasNext();) {
             String path = (String) i.next();
-            renderStyleSheet(writer, VirtualResource.convertVirtualPath(
-                    context, path));
+            if (path == null) {
+                continue;
+            }
+            String convertedPath = (!path.startsWith("../") && !path
+                    .startsWith("./")) ? VirtualResource.convertVirtualPath(
+                    context, path) : path;
+            renderStyleSheet(writer, convertedPath);
             writer.write(JsfConstants.LINE_SP);
         }
     }

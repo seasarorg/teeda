@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,6 +22,7 @@ import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
  * @author higa
+ * @author shot
  */
 public class THtmlHeadRendererTest extends AbstractRendererTest {
 
@@ -44,6 +45,24 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
                 getResponseText());
     }
 
+    public void testEncode_jsResource_startsWithReference() throws Exception {
+        VirtualResource.addJsResource(getFacesContext(), "../hoge.js");
+        encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
+        assertEquals(
+                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"../hoge.js\"></script>\n</head>\n",
+                getResponseText());
+    }
+
+    public void testEncode_jsResource_startsWithReference2() throws Exception {
+        VirtualResource.addJsResource(getFacesContext(), "./hoge.js");
+        encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
+        assertEquals(
+                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"./hoge.js\"></script>\n</head>\n",
+                getResponseText());
+    }
+
     public void testEncode_inlineJsResource() throws Exception {
         VirtualResource.addInlineJsResource(getFacesContext(), "aaa", "hoge");
         encodeByRenderer(renderer, component);
@@ -60,4 +79,32 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         System.out.println(getResponseText());
         assertEquals("<head>\n<style></style>\n</head>\n", getResponseText());
     }
+
+    public void testEncode_cssResource() throws Exception {
+        VirtualResource.addCssResource(getFacesContext(), "aaa");
+        encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
+        assertEquals(
+                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"/mock-context/teedaExtension/aaa\" />\n</head>\n",
+                getResponseText());
+    }
+
+    public void testEncode_cssResource_startWithReference() throws Exception {
+        VirtualResource.addCssResource(getFacesContext(), "../aaa");
+        encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
+        assertEquals(
+                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"../aaa\" />\n</head>\n",
+                getResponseText());
+    }
+
+    public void testEncode_cssResource_startWithReference2() throws Exception {
+        VirtualResource.addCssResource(getFacesContext(), "./aaa");
+        encodeByRenderer(renderer, component);
+        System.out.println(getResponseText());
+        assertEquals(
+                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"./aaa\" />\n</head>\n",
+                getResponseText());
+    }
+
 }
