@@ -37,6 +37,9 @@
   <modules>
     <module>teeda-jetty6x-test</module>
     <module>teeda-tomcat5x-test</module>
+    <module>teeda-jboss3x-test</module>
+    <module>teeda-jboss4x-test</module>
+    <module>teeda-tomcat5x-test</module>
     <module>teeda-resin3x-test</module>
     <module>teeda-geronimo1x-test</module>
     <!-- weblogic install
