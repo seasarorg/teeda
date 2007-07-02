@@ -89,6 +89,7 @@ h3.underline {
 <ul>
   <li><a href="#components">コンポーネント仕様一覧</a>
     <ul>
+      <li><a href="#form">form</a></li>
       <li><a href="#outputText">outputText</a></li>
       <li><a href="#inputText">inputText</a></li>
       <li><a href="#inputHidden">inputHidden</a></li>
@@ -142,6 +143,52 @@ h3.underline {
     </ul>
   </li>
 </ul>
+
+<h3 class="underline"><a name="form">form</a></h3>
+<p>formを表すコンポーネントです。</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>Formコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;form id="aaaForm"&gt;</b><br/>実行時にはmethod属性やaction属性が自動で設定されます。</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">form</b>タグ</span><br/>
+            <span>-<b class="boldorange">idはFormで終わる事(例：aaaForm, userForm)</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:form</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>なし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <h3 class="underline"><a name="outputText">outputText</a></h3>
 <p>outputTextは文字列を出力するコンポーネントです。</p>
