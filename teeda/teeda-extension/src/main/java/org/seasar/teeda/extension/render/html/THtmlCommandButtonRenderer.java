@@ -44,6 +44,8 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
 
     public static final String RENDERER_TYPE = THtmlCommandButton.DEFAULT_RENDERER_TYPE;
 
+    public static final String loader_BINDING = "bindingType=may";
+
     private DoubleSubmitProtectionLoader loader = new KumuDisabledScriptLoader();
 
     public THtmlCommandButtonRenderer() {
