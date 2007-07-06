@@ -18,17 +18,21 @@ package org.seasar.teeda.extension.component.html;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
+ * @author yone
  */
 public class THtmlOutputText extends HtmlOutputText {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.HtmlOutputText";
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlOutputText";
+
+    private static final boolean DEFAULT_INVISIBLE = false;
 
     private String key;
 
@@ -37,6 +41,9 @@ public class THtmlOutputText extends HtmlOutputText {
     private String propertiesName;
 
     private String defaultPropertiesName;
+
+    // spanタグを出力するかどうか
+    private Boolean invisible = null;
 
     public THtmlOutputText() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -89,14 +96,29 @@ public class THtmlOutputText extends HtmlOutputText {
     public void setPropertiesName(String propertiesName) {
         this.propertiesName = propertiesName;
     }
+    
+    public boolean isInvisible() {
+        if (invisible != null) {
+            return invisible.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("invisible");
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : DEFAULT_INVISIBLE;
+    }
 
+    public void setInvisible(boolean invisible) {
+        this.invisible = Boolean.valueOf(invisible);
+    }
+    
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[5];
+        Object values[] = new Object[6];
         values[0] = super.saveState(context);
         values[1] = key;
         values[2] = defaultKey;
         values[3] = propertiesName;
         values[4] = defaultPropertiesName;
+        values[5] = invisible;
         return values;
     }
 
@@ -107,6 +129,7 @@ public class THtmlOutputText extends HtmlOutputText {
         defaultKey = (String) values[2];
         propertiesName = (String) values[3];
         defaultPropertiesName = (String) values[4];
+        invisible = (Boolean) values[5];
     }
 
 }

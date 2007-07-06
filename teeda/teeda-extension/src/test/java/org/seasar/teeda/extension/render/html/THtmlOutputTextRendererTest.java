@@ -343,6 +343,36 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         assertEquals("<span id=\"aaaLabel\">CCC</span>", getResponseText());
     }
 
+    public void testInvisibleFalse() throws Exception {
+        assertFalse("default is false", htmlOutputText.isInvisible());
+        // ## Arrange ##
+        htmlOutputText.setId("fooId");
+        htmlOutputText.setValue("aaa");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlOutputText);
+
+        // ## Assert ##
+        Diff diff = new Diff("<span" + " id=\"fooId\">aaa</span>",
+                getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+    
+    public void testInvisibleTrue() throws Exception {
+        assertFalse("default is false", htmlOutputText.isInvisible());
+        // ## Arrange ##
+        htmlOutputText.setId("fooId");
+        htmlOutputText.setValue("aaa");
+        htmlOutputText.setInvisible(true);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlOutputText);
+
+        // ## Assert ##
+        assertEquals("aaa", getResponseText());
+    }
+
+
     private THtmlOutputTextRenderer createTHtmlOutputTextRenderer() {
         return (THtmlOutputTextRenderer) createRenderer();
     }

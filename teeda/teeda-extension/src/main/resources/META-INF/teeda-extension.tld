@@ -3606,6 +3606,11 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>invisible</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>key</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>

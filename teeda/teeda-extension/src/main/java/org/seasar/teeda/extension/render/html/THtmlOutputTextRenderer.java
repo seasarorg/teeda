@@ -32,6 +32,7 @@ import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
  * @author shot
+ * @author yone
  */
 public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
 
@@ -42,7 +43,7 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
     public THtmlOutputTextRenderer() {
         addIgnoreAttributeName(ExtensionConstants.KEY_ATTR);
         addIgnoreAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
-        addIgnoreAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
+        //addIgnoreAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
         addIgnoreAttributeName(ExtensionConstants.DEFAULT_KEY);
         addIgnoreAttributeName(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
     }
@@ -54,12 +55,15 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
         final String id = getIdForRender(context, htmlOutputText);
         final boolean isLabel = (id != null && id.endsWith("Label"));
         boolean startSpan = false;
+        final boolean invisible = text.isInvisible();
         if (containsAttributeForRender(htmlOutputText, getIgnoreAttribute())) {
-            writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
-            startSpan = true;
-            RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
-                    id);
-            renderRemainAttributes(htmlOutputText, writer, getIgnoreAttribute());
+            if (!invisible) { 
+                writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
+                startSpan = true;    
+                RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
+                        id);
+                renderRemainAttributes(htmlOutputText, writer, getIgnoreAttribute());
+            }
         }
         String value = null;
         if (isLabel) {

@@ -22,6 +22,7 @@ import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
  * @author shot
+ * @author yone
  */
 public class TOutputTextTag extends OutputTextTag {
 
@@ -32,6 +33,8 @@ public class TOutputTextTag extends OutputTextTag {
     private String propertiesName;
 
     private String defaultPropertiesName;
+    
+    private String invisible; 
 
     public String getComponentType() {
         return THtmlOutputText.COMPONENT_TYPE;
@@ -65,12 +68,17 @@ public class TOutputTextTag extends OutputTextTag {
         this.defaultPropertiesName = defaultPropertiesName;
     }
 
+    public String getInvisible() {
+        return invisible;
+    }
+
     public void release() {
         super.release();
         key = null;
         propertiesName = null;
         defaultPropertiesName = null;
         defaultKey = null;
+        invisible = null;
     }
 
     public String getDefaultKey() {
@@ -81,6 +89,10 @@ public class TOutputTextTag extends OutputTextTag {
         this.defaultKey = defaultKey;
     }
 
+    public void setInvisible(String invisible) {
+        this.invisible = invisible;
+    }
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, "key", key);
@@ -88,6 +100,7 @@ public class TOutputTextTag extends OutputTextTag {
         setComponentProperty(component, "propertiesName", propertiesName);
         setComponentProperty(component, "defaultPropertiesName",
                 defaultPropertiesName);
+        setComponentProperty(component, "invisible", invisible);
     }
 
 }

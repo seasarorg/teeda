@@ -93,6 +93,8 @@ public interface ExtensionConstants {
     String TIME_ATTR = "time";
 
     String RENDERSPAN_ATTR = "renderSpan";
+    
+    String INVISIBLE_ATTR = "invisible";
 
     //Suffix and prefix
     String GO_PREFIX = "go";
