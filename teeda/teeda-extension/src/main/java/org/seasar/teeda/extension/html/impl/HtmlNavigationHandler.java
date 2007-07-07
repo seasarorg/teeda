@@ -118,7 +118,14 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
-        String pathFirst = viewId.substring(0, pos + 1);
+        String root = namingConvention.adjustViewRootPath();
+        String pathFirst = null;
+        if (root != null && root.trim().length() > 0) {
+            pathFirst = viewId.substring(0, pos + 1);
+        } else {
+            pathFirst = "/";
+        }
+
         String pathLast = viewId.substring(pos2);
         String[] names = StringUtil.split(outcome, "_");
         String suffix = htmlSuffix.getSuffix(context);
@@ -139,8 +146,11 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
                 buf.append("/");
             }
         }
-        pos = viewId.indexOf('/', 1);
-        pathFirst = viewId.substring(0, pos + 1);
+        if (root != null && root.trim().length() > 0) {
+            pos = viewId.indexOf('/', 1);
+            pathFirst = viewId.substring(0, pos + 1);
+        }
+
         String path = pathFirst + buf + suffix + pathLast;
         if (servletContext.getResourceAsStream(path) != null) {
             return path;
