@@ -7,61 +7,6 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
-<style>
-table.tbline {
-  border-collapse: collapse;
-  border: 1px solid #999999;
-}
-table.tbline td {
-  padding-top    : 2px;
-  padding-bottom : 2px;
-  padding-left   : 5px;
-  padding-right  : 5px;
-  line-height    : 130%;
-  border-width   : 0 1px 1px 0;
-  border-style   : solid;
-  border-color   : #C0C0C0;
-  font-size      : 12px;
-  color          : #666666;
-}
-
-table.tbline th {
-  text-align: left;
-  background-color: #FFD082;
-  font-weight: bold;
-  font-size: 12px;
-  color: #FC7819;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #C0C0C0;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: #C0C0C0;
-}
-
-table.tbline th div {
-	text-align: center;
-}
-
-.boldorange {
-  font-weight : bold;
-  color: #FC7819;
-}
-
-h3.underline {
-	font-size: 18px;
-	font-weight: normal;
-	color: #FC7819;
-	#margin-top: 2em;
-	#margin-left: 1em;
-	margin-bottom: 10px;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	#border-bottom-color: #FC7819;
-	#margin-right: 20px;
-}
-
-</style>
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
 <body onload="preload('ja')">
@@ -84,30 +29,55 @@ h3.underline {
 <!-- don't edit end -->
 <!-- document start -->
 <br/>
-<h1><i>Teeda Extension</i></h1>
-<h2><a name="what_is_extension">Teeda Extensionとは？</a></h2>
-<div>
-<p>Teeda&nbsp;Extensionとは、Page駆動開発を基準とした拡張フレームワークです.<br/>
-Teeda&nbsp;Extensionを使うことで、HTMLテンプレートとPageクラスと呼ばれるPOJOクラスだけを<br/>
-作るだけで簡単に効率よくWebアプリケーションを作成することが出来るようになります．
-</p>
-</div>
-<div>
-<h3><a name="document">ドキュメント</a></h3>
-<ul>
-  <li><a href="#links">ドキュメント一覧</a>
-    <ul>
-      <!--
-      <li><a href="./about_page_driven.html">Page駆動開発とは</a></li>
-      <li><a href="./extension_chracteristics.html">Teeda&nbsp;Extension&nbsp;の特徴</a></li>
-      -->
-      <li><a href="./extension_function.html">Teeda&nbsp;Extension&nbsp;機能リファレンス</a></li>
-      <li><a href="./extension_component_reference.html">Teeda&nbsp;Extension&nbsp;コンポーネントリファレンス</a></li>
-      <li><a href="./extension_customize.html">Teeda&nbsp;Extension&nbsp;カスタマイズについて</a>
-    </ul>
-  </li>
+<div class="document" id="function-list">
+<h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
+<p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します。</p>
+<ul class="arabic simple">
+<li><a href="#layout">レイアウトについて</a></li>
 </ul>
 </div>
+
+<div class="section">
+<h3><a id="layout" name="layout">レイアウトについて</a></h3>
+<p>Teedaでは簡単に使えるレイアウト機能を提供しています。<br/>
+view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます。
+layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込む場合は、
+<pre>
+&lt;te:include te:src="/layout/header.html"/&gt;
+</pre>
+のように記述します。詳しくは、<a href="extension_component_reference.html#include">includeタグ</a>を参照してください。<br />
+レイアウトを適用するHTMLの中身を読み込むには、
+<pre>
+&lt;te:includeChildBody/&gt;
+</pre>
+のように記述します。詳しくは、<a href="extension_component_reference.html#includeChildBody">includeChildBodyタグ</a>を参照してください。<br />
+各Pageでpublic String getLayout() {...}を定義し、戻り値で/aaa/bbb.htmlのように指定するとbbb.htmlをレイアウトにすることもできます。<br />
+getLayout()の値は動的に変えることもできます。layout.htmlのボディのサンプルは次のようになります。
+<pre>
+&lt;table border="0" cellspacing="5"&gt;
+&lt;tr>
+  &lt;td colspan="2"&gt;&lt;te:include te:src="/layout/header.html"/&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td width="140" valign="top"&gt;
+    &lt;te:include te:src="/layout/menu.html"/&gt;
+  &lt;/td&gt;
+  &lt;td valign="top" align="left"&gt;
+    &lt;te:includeChildBody/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;
+    &lt;hr/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;
+    &lt;te:include te:src="/layout/footer.html"/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
@@ -117,7 +87,7 @@ Teeda&nbsp;Extensionを使うことで、HTMLテンプレートとPageクラス�
 <td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
 </tr><tr>
 <td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
-<td width="766" class="copyright">Copyright&copy; 2006-2007, The Seasar Foundation and the others. All rights reserved.</td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
 </tr></table>
 <td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
 <td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
