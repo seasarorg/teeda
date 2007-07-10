@@ -53,16 +53,19 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
         final THtmlOutputText text = (THtmlOutputText) htmlOutputText;
         final ResponseWriter writer = context.getResponseWriter();
         final String id = getIdForRender(context, htmlOutputText);
-        final boolean isLabel = (id != null && id.endsWith("Label"));
+        // PortletSupport: id for render has a namespace.
+        final boolean isLabel = (id != null && id.endsWith(context
+                .getExternalContext().encodeNamespace("Label")));
         boolean startSpan = false;
         final boolean invisible = text.isInvisible();
         if (containsAttributeForRender(htmlOutputText, getIgnoreAttribute())) {
-            if (!invisible) { 
+            if (!invisible) {
                 writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
-                startSpan = true;    
-                RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputText,
-                        id);
-                renderRemainAttributes(htmlOutputText, writer, getIgnoreAttribute());
+                startSpan = true;
+                RendererUtil.renderIdAttributeIfNecessary(writer,
+                        htmlOutputText, id);
+                renderRemainAttributes(htmlOutputText, writer,
+                        getIgnoreAttribute());
             }
         }
         String value = null;
