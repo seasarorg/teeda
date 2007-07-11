@@ -9,24 +9,25 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.annotation.handler;
 
+import java.util.HashMap;
+
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.DoubleRangeValidator;
 
-import junit.framework.TestCase;
-
+import org.seasar.teeda.core.unit.TeedaTestCase;
 import org.seasar.teeda.extension.validator.TByteLengthValidator;
 
 /**
  * @author higa
- *
+ * @author shot
  */
-public class AbstValidatorAnnotationHandlerTest extends TestCase {
+public class AbstValidatorAnnotationHandlerTest extends TeedaTestCase {
 
     protected void tearDown() {
         ValidatorResource.removeAll();
@@ -34,9 +35,14 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
 
     public void testAddAndRemoveValidator() throws Exception {
         MockAnnotationHandler handler = new MockAnnotationHandler();
-        handler.registerValidator("aaa", "bbb", new TByteLengthValidator());
-        handler.registerValidator("aaa", "bbb", new DoubleRangeValidator());
-        handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
+        register(TByteLengthValidator.class, "byteLengthValidator");
+        register(DoubleRangeValidator.class, "doubleRangeValidator");
+        handler.registerValidator("aaa", "bbb", "byteLengthValidator",
+                new HashMap());
+        handler.registerValidator("aaa", "bbb", "doubleRangeValidator",
+                new HashMap());
+        handler.registerValidator("aaa", "ccc", "doubleRangeValidator",
+                new HashMap());
         assertNotNull(ValidatorResource.getValidator("#{aaa.bbb}"));
         assertEquals(2, handler.getExpressionSize("aaa"));
 
@@ -47,9 +53,14 @@ public class AbstValidatorAnnotationHandlerTest extends TestCase {
 
     public void testRemoveAll() throws Exception {
         MockAnnotationHandler handler = new MockAnnotationHandler();
-        handler.registerValidator("aaa", "bbb", new TByteLengthValidator());
-        handler.registerValidator("aaa", "bbb", new DoubleRangeValidator());
-        handler.registerValidator("aaa", "ccc", new DoubleRangeValidator());
+        register(TByteLengthValidator.class, "byteLengthValidator");
+        register(DoubleRangeValidator.class, "doubleRangeValidator");
+        handler.registerValidator("aaa", "bbb", "byteLengthValidator",
+                new HashMap());
+        handler.registerValidator("aaa", "bbb", "doubleRangeValidator",
+                new HashMap());
+        handler.registerValidator("aaa", "ccc", "doubleRangeValidator",
+                new HashMap());
         handler.removeAll();
         assertNull(ValidatorResource.getValidator("#{aaa.bbb}"));
         assertEquals(0, handler.getExpressionSize("aaa"));

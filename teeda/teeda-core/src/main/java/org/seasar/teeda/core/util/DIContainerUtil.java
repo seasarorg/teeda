@@ -90,7 +90,7 @@ public class DIContainerUtil {
         return getContainer().findAllComponents(componentKey);
     }
 
-    private static S2Container getContainer() {
+    public static S2Container getContainer() {
         return SingletonS2ContainerFactory.getContainer();
     }
 

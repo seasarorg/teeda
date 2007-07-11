@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -57,9 +57,11 @@ public class ManagedBeanFactoryImplTest extends TeedaTestCase {
         assertEquals("hoge", b.getString());
     }
 
+    //TODO 2.4.13 work, 2.4.14 not work.
     public void testRegisterManagedBean3() {
         ManagedBeanFactory factory = getManagedBeanFactory();
-        factory.registerManagedBean("c", C.class, Scope.SESSION, "init", "destroy");
+        factory.registerManagedBean("c", C.class, Scope.SESSION, "init",
+                "destroy");
         c = (C) factory.getManagedBean("c");
         assertEquals("init:", c.toString());
     }

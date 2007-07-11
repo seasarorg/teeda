@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,12 +18,9 @@ package org.seasar.teeda.extension.annotation.handler;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import javax.faces.validator.Validator;
-
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
@@ -72,19 +69,17 @@ public class ConstantValidatorAnnotationHandler extends
                         namingConvention.getValidatorSuffix())) {
             return;
         }
-        String fieldString = field.getName();
-        int index = fieldString.lastIndexOf("_");
-        String fieldName = fieldString.substring(0, index);
-        String validatorName = fieldString.substring(index + 1);
+        final String fieldString = field.getName();
+        final int index = fieldString.lastIndexOf("_");
+        final String fieldName = fieldString.substring(0, index);
+        final String validatorName = fieldString.substring(index + 1);
         if (!beanDesc.hasPropertyDesc(fieldName)
                 || !container.hasComponentDef(validatorName)) {
             return;
         }
-        Validator validator = (Validator) container.getComponent(validatorName);
-        String s = FieldUtil.getString(field, null);
-        Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-        BeanUtil.copyProperties(m, validator);
-        registerValidator(componentName, fieldName, validator);
+        final String s = FieldUtil.getString(field, null);
+        final Map properties = ConstantAnnotationUtil.convertExpressionToMap(s);
+        registerValidator(componentName, fieldName, validatorName, properties);
     }
 
     protected void processSetterMethods(S2Container container,

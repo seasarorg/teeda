@@ -20,10 +20,16 @@ import java.io.InputStream;
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.HotDeployValidatorBuilderImpl;
 import javax.faces.internal.InternalConstants;
+import javax.faces.internal.NormalValidatorBuilderImpl;
+import javax.faces.internal.ValidatorBuilder;
+import javax.faces.internal.ValidatorResource;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.util.InputStreamUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -51,6 +57,18 @@ public class TeedaInitializer {
         initializeFacesConfigCustomOptions(context);
         buildFacesConfig();
         buildWebAppConfig(context);
+
+        ValidatorBuilder builder = (ValidatorBuilder) DIContainerUtil
+                .getComponentNoException(ValidatorBuilder.class);
+        if (builder == null) {
+            final S2Container container = DIContainerUtil.getContainer();
+            if (HotdeployUtil.isHotdeploy()) {
+                builder = new HotDeployValidatorBuilderImpl(container);
+            } else {
+                builder = new NormalValidatorBuilderImpl(container);
+            }
+        }
+        ValidatorResource.setValidatorBuilder(builder);
     }
 
     public ServletContext getServletContext() {

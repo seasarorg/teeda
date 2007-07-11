@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.internal.ValidatorResource;
-import javax.faces.validator.Validator;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
@@ -38,10 +37,10 @@ public abstract class AbstractValidatorAnnotationHandler implements
     private Map expressionsMap = new HashMap();
 
     public void registerValidator(String componentName, String propertyName,
-            Validator validator) {
+            String validatorName, Map properties) {
         String expression = BindingUtil.getExpression(componentName,
                 propertyName);
-        ValidatorResource.addValidator(expression, validator);
+        ValidatorResource.addValidator(expression, validatorName, properties);
         Set expressions = (Set) expressionsMap.get(componentName);
         if (expressions == null) {
             expressions = new HashSet();

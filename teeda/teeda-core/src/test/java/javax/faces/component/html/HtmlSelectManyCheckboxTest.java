@@ -23,13 +23,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectManyTest;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.RenderKitFactory;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.container.S2Container;
-import org.seasar.framework.container.factory.S2ContainerFactory;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -517,6 +517,10 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
                 context));
     }
 
+    public void tearDownValidate() throws Exception {
+        ValidatorResource.removeAll();
+    }
+
     public void testValidate() throws Exception {
         S2Container container = new S2ContainerImpl();
         SingletonS2ContainerFactory.setContainer(container);
@@ -532,14 +536,18 @@ public class HtmlSelectManyCheckboxTest extends UISelectManyTest {
         component.setValid(true);
         component.setValueBinding("value", new MockValueBinding("#{a.b}"));
         final FacesMessage m = new FacesMessage("aaa");
-        ValidatorResource.addValidator("#{a.b}", new Validator() {
+
+        container.register(new Validator() {
 
             public void validate(FacesContext context, UIComponent component,
                     Object value) throws FacesException {
                 throw new ValidatorException(m);
             }
 
-        });
+        }, "validator");
+        ValidatorResource.setValidatorBuilder(new NormalValidatorBuilderImpl(
+                container));
+        ValidatorResource.addValidator("#{a.b}", "validator");
         facesContext.getExternalContext().getRequestMap().put("postback",
                 new Boolean(true));
         try {

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,13 +18,12 @@ package org.seasar.teeda.extension.util;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
 import javax.faces.el.PropertyNotFoundException;
-import javax.faces.internal.ValidatorChain;
 import javax.faces.internal.ValidatorResource;
-import javax.faces.validator.LengthValidator;
 
 import org.seasar.teeda.core.mock.MockApplication;
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.validator.TLengthValidator;
 import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 /**
@@ -47,16 +46,18 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
     public void testIsRequired_noNullLabelWhenTRequiredValidatorExists()
             throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
-        ValidatorResource.addValidator("aaa", new TRequiredValidator());
+        register(TRequiredValidator.class, "required");
+        ValidatorResource.addValidator("aaa", "required");
         assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
     public void testIsRequired_noNullLabelWhenTRequiredValidatorExists2()
             throws Exception {
         NullLabelStrategyImpl helper = new NullLabelStrategyImpl();
-        ValidatorChain chain = new ValidatorChain();
-        chain.add(new TRequiredValidator());
-        ValidatorResource.addValidator("aaa", chain);
+        register(TRequiredValidator.class, "required");
+        register(TLengthValidator.class, "length");
+        ValidatorResource.addValidator("aaa", "required");
+        ValidatorResource.addValidator("aaa", "length");
         assertFalse(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 
@@ -71,9 +72,8 @@ public class NullLabelStrategyImplTest extends TeedaTestCase {
             }
 
         });
-        ValidatorChain chain = new ValidatorChain();
-        chain.add(new LengthValidator());
-        ValidatorResource.addValidator("aaa", chain);
+        register(TLengthValidator.class, "length");
+        ValidatorResource.addValidator("aaa", "length");
         assertTrue(helper.isNullLabelRequired(getFacesContext(), "aaa"));
     }
 

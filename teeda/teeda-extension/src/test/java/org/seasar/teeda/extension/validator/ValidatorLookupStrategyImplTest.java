@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.validator;
 
 import javax.faces.component.UIInput;
+import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.validator.LengthValidator;
 import javax.faces.validator.Validator;
@@ -79,8 +80,8 @@ public class ValidatorLookupStrategyImplTest extends TeedaTestCase {
                 return "#{hoge_hogePage.foo}";
             }
         });
-        ValidatorResource.addValidator("#{hoge_hogePage.foo}",
-                new LengthValidator());
+        register(TLengthValidator.class, "length");
+        ValidatorResource.addValidator("#{hoge_hogePage.foo}", "length");
         ValidatorLookupStrategyImpl strategy = new ValidatorLookupStrategyImpl();
         strategy.setDynamicValidatorInvoker(invokerImpl);
 
@@ -95,6 +96,10 @@ public class ValidatorLookupStrategyImplTest extends TeedaTestCase {
         assertTrue(lengthValidator.getMinimum() == 0);
     }
 
+    public void tearDownDynamicAndStatic_dynamicPrior() throws Exception {
+        ValidatorResource.removeAll();
+    }
+
     public void testStatic_gotValidator() throws Exception {
         ValidatorLookupStrategyImpl strategy = new ValidatorLookupStrategyImpl();
         UIInput input = new UIInput();
@@ -103,11 +108,18 @@ public class ValidatorLookupStrategyImplTest extends TeedaTestCase {
                 return "#{hoge_hogePage.foo}";
             }
         });
-        ValidatorResource.addValidator("#{hoge_hogePage.foo}",
-                new LengthValidator());
+        register(TLengthValidator.class, "length");
+        NormalValidatorBuilderImpl builder = new NormalValidatorBuilderImpl();
+        builder.setContainer(getContainer());
+        ValidatorResource.setValidatorBuilder(builder);
+        ValidatorResource.addValidator("#{hoge_hogePage.foo}", "length");
         Validator v = strategy.findValidator(getFacesContext(), input, "123");
         assertNotNull(v);
         assertTrue(v instanceof LengthValidator);
+    }
+
+    public void tearDownStatic_gotValidator() throws Exception {
+        ValidatorResource.removeAll();
     }
 
     public void testStatic_noValidator() throws Exception {
@@ -118,10 +130,14 @@ public class ValidatorLookupStrategyImplTest extends TeedaTestCase {
                 return "#{should_not.find_validator}";
             }
         });
-        ValidatorResource.addValidator("#{hoge_hogePage.foo}",
-                new LengthValidator());
+        register(TLengthValidator.class, "length");
+        ValidatorResource.addValidator("#{hoge_hogePage.foo}", "length");
         Validator v = strategy.findValidator(getFacesContext(), input, "123");
         assertNull(v);
+    }
+
+    public void tearDownStatic_noValidator() throws Exception {
+        ValidatorResource.removeAll();
     }
 
     public static class HogePage {

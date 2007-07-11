@@ -15,7 +15,9 @@
  */
 package javax.faces.component;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -106,7 +108,11 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         vb.setExpressionString("#{a.name}");
         input.setValueBinding("value", vb);
 
-        ValidatorResource.addValidator("#{a.name}", new LengthValidator(5, 2));
+        register(LengthValidator.class, "lengthValidator");
+        Map map = new HashMap();
+        map.put("maximum", new Integer(5));
+        map.put("minimum", new Integer(2));
+        ValidatorResource.addValidator("#{a.name}", "lengthValidator", map);
 
         input.validateValue(getFacesContext(), new Integer(6));
 

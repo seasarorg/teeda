@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,6 +21,7 @@ import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.RenderKitFactory;
@@ -58,7 +59,7 @@ import org.seasar.teeda.core.scope.impl.ScopeManagerImpl;
 
 /**
  * @author shot
- * 
+ *
  * Set up JSF env for easy-testing JSF Application and view.
  */
 public abstract class TeedaTestCase extends S2FrameworkTestCase {
@@ -127,6 +128,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         lifecycle.addPhaseListener(phaseListener);
         initFactories();
         setFactories();
+        ValidatorResource.setValidatorBuilder(new NormalValidatorBuilderImpl(
+                getContainer()));
     }
 
     protected void initFactories() {
