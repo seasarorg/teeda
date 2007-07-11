@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,11 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import javax.faces.validator.Validator;
-
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ClassUtil;
@@ -59,11 +56,9 @@ public class TigerValidatorAnnotationHandler extends
 		if (metaAnnotation == null) {
 			return;
 		}
-		String vname = getValidatorName(metaAnnotation);
-		Validator validator = (Validator) container.getComponent(vname);
+		String validatorName = getValidatorName(metaAnnotation);
 		Map props = AnnotationUtil.getProperties(annotation);
-		BeanUtil.copyProperties(props, validator);
-		registerValidator(componentName, propertyName, validator);
+		registerValidator(componentName, propertyName, validatorName, props);
 	}
 
 	protected void processSetterMethod(S2Container container,
