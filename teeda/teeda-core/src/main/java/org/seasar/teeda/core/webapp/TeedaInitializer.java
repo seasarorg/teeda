@@ -19,9 +19,13 @@ import java.io.InputStream;
 
 import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
+import javax.faces.internal.ConverterBuilder;
+import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.HotDeployConverterBuilderImpl;
 import javax.faces.internal.HotDeployValidatorBuilderImpl;
 import javax.faces.internal.InternalConstants;
+import javax.faces.internal.NormalConverterBuilderImpl;
 import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorBuilder;
 import javax.faces.internal.ValidatorResource;
@@ -57,18 +61,32 @@ public class TeedaInitializer {
         initializeFacesConfigCustomOptions(context);
         buildFacesConfig();
         buildWebAppConfig(context);
+        buildResources();
+    }
 
-        ValidatorBuilder builder = (ValidatorBuilder) DIContainerUtil
+    protected void buildResources() {
+        final S2Container container = DIContainerUtil.getContainer();
+        ValidatorBuilder validatorBuilder = (ValidatorBuilder) DIContainerUtil
                 .getComponentNoException(ValidatorBuilder.class);
-        if (builder == null) {
-            final S2Container container = DIContainerUtil.getContainer();
+        if (validatorBuilder == null) {
             if (HotdeployUtil.isHotdeploy()) {
-                builder = new HotDeployValidatorBuilderImpl(container);
+                validatorBuilder = new HotDeployValidatorBuilderImpl(container);
             } else {
-                builder = new NormalValidatorBuilderImpl(container);
+                validatorBuilder = new NormalValidatorBuilderImpl(container);
             }
         }
-        ValidatorResource.setValidatorBuilder(builder);
+        ValidatorResource.setValidatorBuilder(validatorBuilder);
+
+        ConverterBuilder converterBuilder = (ConverterBuilder) DIContainerUtil
+                .getComponentNoException(ConverterBuilder.class);
+        if (converterBuilder == null) {
+            if (HotdeployUtil.isHotdeploy()) {
+                converterBuilder = new HotDeployConverterBuilderImpl(container);
+            } else {
+                converterBuilder = new NormalConverterBuilderImpl(container);
+            }
+        }
+        ConverterResource.setConverterBuilder(converterBuilder);
     }
 
     public ServletContext getServletContext() {

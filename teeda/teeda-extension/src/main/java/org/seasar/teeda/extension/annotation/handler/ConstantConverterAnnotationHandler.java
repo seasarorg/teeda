@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,12 +18,9 @@ package org.seasar.teeda.extension.annotation.handler;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import javax.faces.convert.Converter;
-
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.util.ConstantAnnotationUtil;
@@ -71,30 +68,17 @@ public class ConstantConverterAnnotationHandler extends
                         namingConvention.getConverterSuffix())) {
             return;
         }
-        String fieldString = field.getName();
-        int index = fieldString.lastIndexOf("_");
-        String fieldName = fieldString.substring(0, index);
-        String converterName = fieldString.substring(index + 1);
+        final String fieldString = field.getName();
+        final int index = fieldString.lastIndexOf("_");
+        final String fieldName = fieldString.substring(0, index);
+        final String converterName = fieldString.substring(index + 1);
         if (!beanDesc.hasPropertyDesc(fieldName)
                 || !container.hasComponentDef(converterName)) {
             return;
         }
-        Converter converter = getConverter(container, converterName);
-        if (converter == null) {
-            return;
-        }
-        String s = (String) FieldUtil.get(field, null);
-        Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-        BeanUtil.copyProperties(m, converter);
-        registerConverter(componentName, fieldName, converter);
-    }
-
-    protected Converter getConverter(S2Container container, String converterName) {
-        ComponentDef cd = container.getComponentDef(converterName);
-        if (!Converter.class.isAssignableFrom(cd.getComponentClass())) {
-            return null;
-        }
-        return (Converter) cd.getComponent();
+        final String s = (String) FieldUtil.get(field, null);
+        final Map properties = ConstantAnnotationUtil.convertExpressionToMap(s);
+        registerConverter(componentName, fieldName, converterName, properties);
     }
 
     protected void processGetterMethods(S2Container container,

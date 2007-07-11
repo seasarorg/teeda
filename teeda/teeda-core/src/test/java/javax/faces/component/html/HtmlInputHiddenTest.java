@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInputTest;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.ConverterResource;
+import javax.faces.internal.NormalConverterBuilderImpl;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
@@ -42,11 +43,14 @@ public class HtmlInputHiddenTest extends UIInputTest {
         S2Container container = new S2ContainerImpl();
         SingletonS2ContainerFactory.setContainer(container);
         SingletonS2ContainerFactory.init();
+        container.register(NullConverter.class, "nullConverter");
 
         HtmlInputHidden hidden = (HtmlInputHidden) createUIComponent();
         MockFacesContext context = getFacesContext();
         MockValueBinding vb = new MockValueBinding("#{aaa}");
-        ConverterResource.addConverter("#{aaa}", new NullConverter());
+        ConverterResource.setConverterBuilder(new NormalConverterBuilderImpl(
+                container));
+        ConverterResource.addConverter("#{aaa}", "nullConverter");
         vb.setValue(context, "aaa");
         hidden.setValueBinding("value", vb);
         hidden.setValue("bbb");
@@ -60,6 +64,7 @@ public class HtmlInputHiddenTest extends UIInputTest {
         assertEquals("bbb", s);
         assertTrue(hidden.isLocalValueSet());
         assertNotNull(hidden.getValue());
+        SingletonS2ContainerFactory.destroy();
     }
 
     public static class Aaa {

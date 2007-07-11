@@ -24,8 +24,11 @@ import javax.faces.el.MethodBinding;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 import javax.faces.internal.ConverterResource;
+import javax.faces.internal.NormalConverterBuilderImpl;
 import javax.faces.validator.Validator;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.impl.S2ContainerImpl;
 import org.seasar.teeda.core.mock.MockMethodBinding;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
 import org.seasar.teeda.core.mock.MockValueBinding;
@@ -280,7 +283,11 @@ public class UIInputTest extends UIOutputTest {
         MockValueBinding vb = new MockValueBinding("aaa");
         vb.setExpressionString("bbb");
         input.setValueBinding("value", vb);
-        ConverterResource.addConverter("bbb", new IntegerConverter());
+        S2Container container = new S2ContainerImpl();
+        container.register(IntegerConverter.class, "integerConverter");
+        ConverterResource.setConverterBuilder(new NormalConverterBuilderImpl(
+                container));
+        ConverterResource.addConverter("bbb", "integerConverter");
         Object submittedValue = "sss";
         assertNotNull(input.getConvertedValue(context, submittedValue));
         assertTrue(context.getMessages() != null);
@@ -292,6 +299,7 @@ public class UIInputTest extends UIOutputTest {
             c++;
         }
         assertTrue(c == 1);
+        container.destroy();
     }
 
     private UIInput createUIInput() {

@@ -28,15 +28,19 @@ import org.seasar.framework.util.ArrayUtil;
  */
 public class ValidatorResource {
 
-    private static Map validators_ = new HashMap();
+    private static Map validatorPairs = new HashMap();
 
-    private static ValidatorBuilder builder = new NormalValidatorBuilderImpl();
+    private static ValidatorBuilder builder;
 
     protected ValidatorResource() {
     }
 
     public static synchronized Validator getValidator(final String expression) {
-        ValidatorPair[] pairs = (ValidatorPair[]) validators_.get(expression);
+        if (builder == null) {
+            return null;
+        }
+        ValidatorPair[] pairs = (ValidatorPair[]) validatorPairs
+                .get(expression);
         return builder.build(expression, pairs);
     }
 
@@ -48,22 +52,23 @@ public class ValidatorResource {
     public static synchronized void addValidator(final String expression,
             final String validatorName, final Map properties) {
         ValidatorPair pair = new ValidatorPair(validatorName, properties);
-        ValidatorPair[] pairs = (ValidatorPair[]) validators_.get(expression);
+        ValidatorPair[] pairs = (ValidatorPair[]) validatorPairs
+                .get(expression);
         if (pairs == null) {
             pairs = new ValidatorPair[0];
         }
-        validators_.put(expression, ArrayUtil.add(pairs, pair));
+        validatorPairs.put(expression, ArrayUtil.add(pairs, pair));
     }
 
     public static synchronized void removeValidator(String expression) {
-        validators_.remove(expression);
+        validatorPairs.remove(expression);
         if (builder != null) {
             builder.clearValidator(expression);
         }
     }
 
     public static void removeAll() {
-        validators_.clear();
+        validatorPairs.clear();
         if (builder != null) {
             builder.clearAll();
         }

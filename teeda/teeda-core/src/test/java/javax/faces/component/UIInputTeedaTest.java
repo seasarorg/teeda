@@ -130,7 +130,7 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
         input.setId("aaa");
         input.getAttributes().put(JsfConstants.LABEL_ATTR, "hoge");
         input.setSubmittedValue("");
-        ConverterResource.addConverter("#{hoge}", new Converter() {
+        register(new Converter() {
 
             public Object getAsObject(FacesContext context,
                     UIComponent component, String value)
@@ -144,7 +144,8 @@ public class UIInputTeedaTest extends UIOutputTeedaTest {
                 return "";
             }
 
-        });
+        }, "converter");
+        ConverterResource.addConverter("#{hoge}", "converter");
         input.setValueBinding("value", new MockValueBinding() {
             public String getExpressionString() {
                 return "#{hoge}";

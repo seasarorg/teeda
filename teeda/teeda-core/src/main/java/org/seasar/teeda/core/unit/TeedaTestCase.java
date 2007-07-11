@@ -21,6 +21,7 @@ import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
 import javax.faces.internal.ConverterResource;
 import javax.faces.internal.FacesConfigOptions;
+import javax.faces.internal.NormalConverterBuilderImpl;
 import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -129,6 +130,8 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
         initFactories();
         setFactories();
         ValidatorResource.setValidatorBuilder(new NormalValidatorBuilderImpl(
+                getContainer()));
+        ConverterResource.setConverterBuilder(new NormalConverterBuilderImpl(
                 getContainer()));
     }
 

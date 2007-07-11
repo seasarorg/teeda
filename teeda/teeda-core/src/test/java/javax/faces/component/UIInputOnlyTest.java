@@ -29,6 +29,7 @@ import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.internal.ConverterResource;
+import javax.faces.internal.NormalConverterBuilderImpl;
 import javax.faces.render.Renderer;
 import javax.faces.validator.ValidatorException;
 
@@ -58,6 +59,8 @@ public class UIInputOnlyTest extends TestCase {
         S2Container container = new S2ContainerImpl();
         SingletonS2ContainerFactory.setContainer(container);
         SingletonS2ContainerFactory.init();
+        ConverterResource.setConverterBuilder(new NormalConverterBuilderImpl(
+                container));
     }
 
     public void testConstants() throws Exception {
@@ -859,15 +862,17 @@ public class UIInputOnlyTest extends TestCase {
         input.setParent(root);
         input.setSubmittedValue("1000");
         input.setValid(true);
-        ConverterResource.addConverter("#{a.b}", new IntegerConverter() {
+        SingletonS2ContainerFactory.getContainer().register(
+                new IntegerConverter() {
 
-            public Object getAsObject(FacesContext context,
-                    UIComponent component, String value)
-                    throws ConverterException {
-                return new Integer(value);
-            }
+                    public Object getAsObject(FacesContext context,
+                            UIComponent component, String value)
+                            throws ConverterException {
+                        return new Integer(value);
+                    }
 
-        });
+                }, "integerConverter");
+        ConverterResource.addConverter("#{a.b}", "integerConverter");
         input.setValueBinding("value", new MockValueBinding() {
             public String getExpressionString() {
                 return "#{a.b}";

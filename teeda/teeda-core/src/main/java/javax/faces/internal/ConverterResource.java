@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,30 +20,73 @@ import java.util.Map;
 
 import javax.faces.convert.Converter;
 
+import org.seasar.framework.util.ArrayUtil;
+
 /**
  * @author shot
  */
 public class ConverterResource {
 
-    private static Map converters = new HashMap();
+    private static Map converterPairs = new HashMap();
+
+    private static ConverterBuilder builder;
 
     protected ConverterResource() {
     }
 
-    public static synchronized Converter getConverter(String expression) {
-        return (Converter) converters.get(expression);
+    public static synchronized Converter getConverter(final String expression) {
+        if (builder == null) {
+            return null;
+        }
+        ConverterPair[] pairs = (ConverterPair[]) converterPairs
+                .get(expression);
+        return builder.build(expression, pairs);
     }
 
-    public static synchronized void addConverter(String expression,
-            Converter converter) {
-        converters.put(expression, converter);
+    public static synchronized void addConverter(final String expression,
+            final String converterName) {
+        addConverter(expression, converterName, new HashMap());
+    }
+
+    public static synchronized void addConverter(final String expression,
+            final String converterName, final Map properties) {
+        ConverterPair pair = new ConverterPair(converterName, properties);
+        ConverterPair[] pairs = (ConverterPair[]) converterPairs
+                .get(expression);
+        if (pairs == null) {
+            pairs = new ConverterPair[0];
+        }
+        converterPairs.put(expression, ArrayUtil.add(pairs, pair));
     }
 
     public static synchronized void removeConverter(String expression) {
-        converters.remove(expression);
+        converterPairs.remove(expression);
+        if (builder != null) {
+            builder.clearConverter(expression);
+        }
     }
 
     public static void removeAll() {
-        converters.clear();
+        converterPairs.clear();
+        if (builder != null) {
+            builder.clearAll();
+        }
     }
+
+    public static void setConverterBuilder(final ConverterBuilder cb) {
+        builder = cb;
+    }
+
+    public static class ConverterPair {
+
+        public String converterName;
+
+        public Map properties;
+
+        public ConverterPair(final String converterName, final Map properties) {
+            this.converterName = converterName;
+            this.properties = properties;
+        }
+    }
+
 }

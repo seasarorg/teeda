@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,18 +26,19 @@ import javax.faces.convert.DoubleConverter;
 import javax.faces.convert.NumberConverter;
 import javax.faces.internal.ConverterResource;
 
-import junit.framework.TestCase;
 import junitx.framework.ArrayAssert;
 import junitx.framework.ObjectAssert;
 
 import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.unit.ExceptionAssert;
+import org.seasar.teeda.core.unit.TeedaTestCase;
 
 /**
  * @author manhole
+ * @author shot
  */
-public class ValueHolderUtilTest extends TestCase {
+public class ValueHolderUtilTest extends TeedaTestCase {
 
     public void testGetValueForRender_EditableValueHolder() throws Exception {
         // ## Arrange ##
@@ -103,7 +104,8 @@ public class ValueHolderUtilTest extends TestCase {
             }
 
         });
-        ConverterResource.addConverter("#{hoge}", new NumberConverter());
+        register(NumberConverter.class, "numberConverter");
+        ConverterResource.addConverter("#{hoge}", "numberConverter");
         editableValueHolder.setConverter(new DoubleConverter());
 
         // ## Act & Assert ##
