@@ -259,7 +259,27 @@ Kumu = Kumu.extend(Kumu, {
       }
     );
   },
+  
+  startsWith : function(prefix, str) {
+    if(!str){
+      str = this;
+    }
+    if (prefix.length > str.length){
+      return false;
+    }
+    return str.indexOf(prefix) == 0;
+  },
 
+  endsWith : function(suffix, str) {
+    if(!str){
+      str = this;
+    }
+    if (suffix.length > str.length){
+      return false;
+    }
+    return str.lastIndexOf(suffix) == (str.length - suffix.length);
+  },
+    
   create: function() {
     return function() {
       if(this.initialize){ 
@@ -359,7 +379,7 @@ Kumu = Kumu.extend(Kumu, {
       if(includes){
         for(var i = 0;i < includes.length; i++){
           var id = includes[i].getAttribute('id');
-          if(id && id == 'mockInclude'){
+          if(id && Kumu.startsWith('mockInclude', id)){
             var src = includes[i].getAttribute('src');
             if(src){
               xmlHttp = Kumu._createXHR();
@@ -519,7 +539,9 @@ String.prototype = Kumu.extend(String.prototype,{
   ltrim : Kumu.ltrim,
   rtrim : Kumu.rtrim,
   trim : Kumu.trim,
-  camelize : Kumu.camelize
+  camelize : Kumu.camelize,
+  startsWith : Kumu.startsWith,
+  endsWith : Kumu.endsWith
 });
 
 Function.prototype.getName = function() {
