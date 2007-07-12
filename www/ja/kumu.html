@@ -42,6 +42,7 @@
 <li>二重サブミット防止機能</li>
 <li>DOM操作のヘルパー</li>
 <li>javascriptによるバリデータ</li>
+<li>レイアウト機能</li>
 </ol>
 <p>Kumuは複数のファイルから構成されており、機能ごとにファイルが分かれています。</p>
 <ul class="simple">
@@ -180,6 +181,117 @@ var test = function(x, y){
 test = Kumu.trace(test);
 </pre>
 </div>
+
+<div class="section">
+<h3><a id="id7" name="id7">レイアウト機能</a></h3>
+<p>Kumuではmayaaやteedaのincludeに近いレイアウト機能を提供しています。</p>
+<p>多くのフレームワークでレイアウトやincludeする機能は存在しますが、UIなどのHTML作成時に使用するにはわざわざフレームワークを通してレンダリングするなど難があります。</p>
+<p>Kumuではそういったわずらわしい作業を簡素化するためレイアウト機能を提供しています。</p>
+<p>UIやHTMLのモック作成の時点でフレームワークに依存せずレイアウト機能を使用する事が出来ます。</p>
+<p>Kumuのレイアウト機能は以下の機能を提供しています。</p>
+<ol class="arabic simple">
+<li>include機能</li>
+<li>レイアウト機能</li>
+</ol>
+<div class="section">
+<h3><a id="include" name="include">include機能</a></h3>
+<p>include機能はHTMLを指定したHTMLをincludeする機能です。</p>
+<p>includeするにはまずKumuのmockInclude機能を有効にします。</p>
+<p>有効にするにはKumuを読み込む際にmockInclude=trueパラメータを渡します。</p>
+<pre class="literal-block">
+&lt;!-- ?mockInclude=trueとする --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js?mockInclude=true&quot;&gt;&lt;/script&gt;
+</pre>
+<p>includeするにはdivタグにid名が&quot;mockInclude&quot;で始まり、src属性にincludeしたいファイルのパスを指定します。</p>
+<p>mockIncludeが有効になった状態でincludeしたい箇所に以下のようなdivタグを記述するとHTMLがincludeされます。</p>
+<pre class="literal-block">
+&lt;!-- 必ず&lt;/div&gt;出終わること --&gt;
+&lt;div id=&quot;mockInclude1&quot; src=&quot;./header.html&quot;&gt;&lt;/div&gt;
+</pre>
+<p>teedaのinclude機能と異なり、includeしたいファイルのパスはコンテキストパスなどとは関係ありません。</p>
+<p>includeするためのdivタグは必ず&quot;&lt;/div&gt;&quot;で終わるようにして下さい。正しくブロック内にincludeされない場合があります。</p>
+<p>includeは以下のように複数指定することも出来ます。</p>
+<pre class="literal-block">
+&lt;div id=&quot;mockInclude1&quot; src=&quot;./header.html&quot;&gt;&lt;/div&gt;
+
+&lt;div id=&quot;mockInclude2&quot; src=&quot;./footer.html&quot;&gt;&lt;/div&gt;
+</pre>
+<p>CSSなどはinclude元のHTMLの使用されます。</p>
+</div>
+<div class="section">
+<h3><a id="id8" name="id8">レイアウト機能</a></h3>
+<p>レイアウト機能はteedaのレイアウト機能とほぼ同様な機能です。</p>
+<p>teedaと同様、body内のHTMLを親のレイアウトの一部にはめ込み表示することができます。</p>
+<p>レイアウト機能を使用するにはまずinclude機能を有効にして下さい。</p>
+<p>そしてレイアウト用のHTMLをlayout=&lt;レイアウトファイルのパス&gt;で指定します。</p>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot; src=&quot;./js/kumu.js?mockInclude=true&amp;layout=./layout.html&quot;&gt;&lt;/script&gt;
+</pre>
+<p>レイアウトファイルにはめ込んで表示したい箇所にid=&quot;mockIncludeChildBody&quot;を持ったdivタグを定義します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;ここからchild&lt;/p&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;div id=&quot;mockIncludeChildBody&quot;&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>現在のHTMLのbody内が指定したレイアウトファイルの&lt;div id=&quot;mockIncludeChildBody&quot;&gt;&lt;/div&gt;の部分に表示されます。</p>
+<p>レイアウト機能とincludeは組み合わせて使用することができます。</p>
+<p>layout.html:</p>
+<pre class="literal-block">
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;mockInclude1&quot; src=&quot;./header.html&quot;&gt;&lt;/div&gt;
+&lt;p&gt;ここからchild&lt;/p&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;div id=&quot;mockIncludeChildBody&quot;&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;div id=&quot;mockInclude1&quot; src=&quot;./footer.html&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>layoutSample.html:</p>
+<pre class="literal-block">
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Language&quot; content=&quot;ja&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+&lt;script  type=&quot;text/javascript&quot; src=&quot;./js/kumu.js?mockInclude=true&amp;layout=./layout.html&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;form&gt;
+レイアウト
+&lt;table style=&quot;width:100%&quot;&gt;
+&lt;tr&gt;
+  &lt;td&gt;ボタンだよ&lt;/td&gt;
+  &lt;td&gt;&lt;input type=&quot;button&quot; value=&quot;TEST2&quot; /&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+</div>
+
 <div class="section">
 <h3><a id="id7" name="id7">リファレンス</a></h3>
 <div class="section">
