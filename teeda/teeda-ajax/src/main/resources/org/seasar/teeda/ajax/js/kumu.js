@@ -374,6 +374,32 @@ Kumu = Kumu.extend(Kumu, {
 
   _loadTemplate : function (){    
     if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
+      if(Kumu.options && Kumu.options['layout']){
+        var _body = document.body.innerHTML;
+        document.body.innerHTML = '';
+        var src = Kumu.options['layout'];
+        var xmlHttp = Kumu._createXHR();
+        xmlHttp.open("GET", src, false);
+        xmlHttp.send(null);
+        var text = xmlHttp.responseText;
+        document.body.innerHTML = text;
+        var includes = Kumu.$t('div');
+        if(includes){
+          for(var i = 0;i < includes.length; i++){
+            var node = includes[i];
+            var id = node.getAttribute('id');
+            if(id && Kumu.startsWith('mockIncludeChildBody', id)){
+              if (node.outerHTML) {
+                node.outerHTML = _body;
+              } else {
+                var range = node.ownerDocument.createRange();
+                range.selectNodeContents(node);
+                node.parentNode.replaceChild(range.createContextualFragment(_body), node);
+              }            
+            }
+          }
+        }                
+      }
       Kumu._includeTemplate();
     }
   },
