@@ -372,22 +372,32 @@ Kumu = Kumu.extend(Kumu, {
     eval(xmlHttp.responseText);
   },
 
-  _loadTemplate : function (){
-    
+  _loadTemplate : function (){    
     if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
-      var includes = Kumu.$t('div');
-      if(includes){
-        for(var i = 0;i < includes.length; i++){
-          var id = includes[i].getAttribute('id');
-          if(id && Kumu.startsWith('mockInclude', id)){
-            var src = includes[i].getAttribute('src');
-            if(src){
-              xmlHttp = Kumu._createXHR();
-              xmlHttp.open("GET", src, false);
-              xmlHttp.send(null);
-              var text = xmlHttp.responseText;
-              includes[i].innerHTML = text;
-            }
+      Kumu._includeTemplate();
+    }
+  },
+  
+  _includeTemplate : function(){
+    var includes = Kumu.$t('div');
+    if(includes){
+      for(var i = 0;i < includes.length; i++){
+        var node = includes[i];
+        var id = node.getAttribute('id');
+        if(id && Kumu.startsWith('mockInclude', id)){
+          var src = node.getAttribute('src');
+          if(src){
+            var xmlHttp = Kumu._createXHR();
+            xmlHttp.open("GET", src, false);
+            xmlHttp.send(null);
+            var text = xmlHttp.responseText;
+            if (node.outerHTML) {
+              node.outerHTML = text;
+            } else {
+              var range = node.ownerDocument.createRange();
+              range.selectNodeContents(node);
+              node.parentNode.replaceChild(range.createContextualFragment(text), node);
+            }            
           }
         }
       }
