@@ -44,11 +44,17 @@ Kumu = Kumu.extend(Kumu, {
   baseUrl : '',
   
   loadLibrary : {},
+
+  options : {},
   
   getGlobal : function(){
     return _global;
   },
   
+  undef : function(name, object){
+    return (typeof (object || _global)[name] == "undefined");
+  },
+   
   /** curry method **/
   bind : function(func){
     return function(){
@@ -280,12 +286,21 @@ Kumu = Kumu.extend(Kumu, {
   init : function(){
     var sc = Kumu.toArray(Kumu.$t('script'));
     var root = Kumu.filter(function(s) {
-      return (s.src && s.src.match(/kumu\.js$/));
-    }, sc);    
+      return (s.src && s.src.match(/kumu\.js$/) || s.src.match(/kumu\.js?/));
+    }, sc);
     Kumu.map(function(node){
       if(Kumu.baseUrl == ''){
         var arr = node.src.split('kumu.js');
         Kumu.baseUrl = arr[0];
+        if(arr[1] && arr[1] != ''){
+          var options = arr[1].replace('?', '').split('&');
+          Kumu.map(function(option){
+            var param = option.split('=');
+            if(param && param.length == 2){
+              Kumu.options[param[0]] = param[1];
+            }
+          }, options);
+        }
       }
     }, root);
   },
@@ -300,7 +315,7 @@ Kumu = Kumu.extend(Kumu, {
     }, Kumu.toArray(arguments));
   },
 
-  _loadModule : function (filename){
+  _createXHR : function (){
     var axo =  new Array(
       "Microsoft.XMLHTTP",
       "Msxml2.XMLHTTP.4.0",
@@ -327,9 +342,64 @@ Kumu = Kumu.extend(Kumu, {
         xmlHttp = false;
       }
     }
+    return xmlHttp;
+  },
+
+  _loadModule : function (filename){
+    xmlHttp = Kumu._createXHR();
     xmlHttp.open("GET", filename, false);
     xmlHttp.send(null);
     eval(xmlHttp.responseText);
+  },
+
+  _loadTemplate : function (){
+    
+    if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
+      var includes = Kumu.$t('div');
+      if(includes){
+        for(var i = 0;i < includes.length; i++){
+          var id = includes[0].getAttribute('id');
+          if(id && id == 'mockInclude'){
+            var src = includes[0].getAttribute('src');
+            if(src){
+              xmlHttp = Kumu._createXHR();
+              xmlHttp.open("GET", src, false);
+              xmlHttp.send(null);
+              var text = xmlHttp.responseText;
+              includes[0].innerHTML = text;
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  _createXMLFromStr : function(str){
+    if (!Kumu.undef("DOMParser")) {
+      var parser = new DOMParser();
+      return parser.parseFromString(str, 'text/xml');
+    }else{
+      if(!Kumu.undef("ActiveXObject")){
+        var doc = null;        
+        var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
+        for(var i = 0; i < prefixes.length; i++) {
+          try {
+            doc = new ActiveXObject(prefixes[i] + ".XMLDOM");
+          }
+          catch (e) {
+          }
+          if (doc) {
+            break;
+          }
+        }
+        doc.async = false;
+        doc.loadXML(str);
+        return doc;
+      }else{
+        //TODO implements other
+        return "";
+      }
+    }
   },
   
   dynamicLoad : function(){
@@ -352,13 +422,7 @@ Kumu = Kumu.extend(Kumu, {
       str += ' : ';
     }
     str += ']';
-    try {
-      var br = document.createElement("br");
-      var span = document.createElement("span");
-      document.body.appendChild(br);
-      document.body.appendChild(span.appendChild(document.createTextNode(str)));
-    } catch (e) {
-    }
+    Kumu._log(str);
     return args;
   },
 
@@ -372,6 +436,11 @@ Kumu = Kumu.extend(Kumu, {
       str += ' : ';
     }
     str += ']';
+    Kumu._log(str);
+    return result;
+  },
+  
+  _log :function(str){
     try {
       var br = document.createElement("br");
       var span = document.createElement("span");
@@ -379,9 +448,8 @@ Kumu = Kumu.extend(Kumu, {
       document.body.appendChild(span.appendChild(document.createTextNode(str)));
     } catch (e) {
     }
-    return result;
   },
-  
+    
   addBefore : function(func, before) {
     var addfunc = function() {
       return func.apply(this, before(arguments, func));
@@ -592,3 +660,17 @@ Function.prototype.addAround = function(func){
   return Kumu.addArround(this, func);
 }
 Kumu.init();
+
+if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
+  if (window.addEventListener) {
+    window.addEventListener('load', Kumu._loadTemplate, false);
+  } else if (window.attachEvent) {
+    window.attachEvent('onload', Kumu._loadTemplate);
+  }
+  if (window.removeEventListener) {
+    window.removeEventListener('unload', Kumu._loadTemplate, false);
+  } else if (window.detachEvent) {
+     window.detachEvent('onunload', Kumu._loadTemplate);
+  }
+}
+
