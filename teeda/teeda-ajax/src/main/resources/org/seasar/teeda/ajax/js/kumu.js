@@ -358,15 +358,15 @@ Kumu = Kumu.extend(Kumu, {
       var includes = Kumu.$t('div');
       if(includes){
         for(var i = 0;i < includes.length; i++){
-          var id = includes[0].getAttribute('id');
+          var id = includes[i].getAttribute('id');
           if(id && id == 'mockInclude'){
-            var src = includes[0].getAttribute('src');
+            var src = includes[i].getAttribute('src');
             if(src){
               xmlHttp = Kumu._createXHR();
               xmlHttp.open("GET", src, false);
               xmlHttp.send(null);
               var text = xmlHttp.responseText;
-              includes[0].innerHTML = text;
+              includes[i].innerHTML = text;
             }
           }
         }
