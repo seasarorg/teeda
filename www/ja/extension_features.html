@@ -33,12 +33,60 @@
 <h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
 <p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します。</p>
 <ul class="arabic simple">
+<li><a href="#previousViewId">previousViewId</a></li>
+<li><a href="#postback">postback</a></li>
 <li><a href="#layout">レイアウト</a></li>
 <li><a href="#dynamicValidation">動的なバリデーション</a></li>
 </ul>
 </div>
 
 <div class="section">
+<h3><a id="previousViewId" name="previousViewId">previousViewId</a></h3>
+<p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから来たかをわかるようにするための機能です．<br />
+Pageクラスに[previousViewId]というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．</p>
+
+<pre>
+public class NextPage {
+    private String previousViewId;
+
+    public String prerender() {
+        System.out.println(previousViewId);
+        return null;
+    }
+
+    public String getPreviousViewId() {
+        return previousViewId;
+    }
+
+    public void setPreviousViewId(String previousViewId) {
+        this.previousViewId = previousViewId;
+    }
+}
+</pre>
+
+<h3><a id="postback" name="postback">postback</a></h3>
+<p>postback(ポストバック)とは、ある画面からデータがポストされてきたときに、その送り先が同一のページである事を指します．<br />
+Pageクラスに[postback]というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
+
+<pre>
+public class HogePage {
+    private boolean postback;
+    public boolean isPostback() {
+        return postback;
+    }
+    public void setPostback(boolean postback) {
+        this.postback = postback;
+    }
+    public String prerender() {
+        if(isPostback()) {
+            //postback時のロジックを記述
+        } else {
+            //初回起動時のロジックを記述
+        }
+    }
+}
+</pre>
+
 <h3><a id="layout" name="layout">レイアウト</a></h3>
 <p>Teedaでは簡単に使えるレイアウト機能を提供しています。<br/>
 view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます。
