@@ -33,21 +33,82 @@
 <h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
 <p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します。</p>
 <ul class="arabic simple">
+<li><a href="#initialize">初期化(initialize)メソッド</a></li>
+<li><a href="#prerender">描画前(prerender)メソッド</a></li>
 <li><a href="#previousViewId">previousViewId</a></li>
-<li><a href="#postback">postback</a></li>
+<li><a href="#postback">ポストバック</a></li>
 <li><a href="#layout">レイアウト</a></li>
 <li><a href="#dynamicValidation">動的なバリデーション</a></li>
 </ul>
 </div>
 
 <div class="section">
+<h3><a id="initialize" name="initialize">初期化(initialize)メソッド</a></h3>
+<p>初期化(initialize)メソッドとは、あるPageが初期化されたタイミングで<b><font color="red">1度だけ</font></b>呼び出されるライフサイクルメソッドです．<br />
+Pageクラスに<b>[initialize]</b>というメソッドを定義しておくと初期化されたタイミングでTeedaが呼び出してくれます．<br />
+initializeの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
+戻り値の型の選択はinitializeメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+
+<table border="1">
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>戻り値の型</div></th>
+		<th nowrap="nowrap"><div>説明</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+
+<h3><a id="prerender" name="prerender">描画前(prerender)メソッド</a></h3>
+<p>描画前(prerender)メソッドとは、あるPageが描画される直前で<b><font color="red">毎回</font></b>呼び出されるライフサイクルメソッドです．<br />
+Pageクラスに<b>[prerender]</b>というメソッドを定義しておくと描画される直前にTeedaが呼び出してくれます．<br />
+prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
+戻り値の型の選択はprerenderメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+
+<table border="1">
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>戻り値の型</div></th>
+		<th nowrap="nowrap"><div>説明</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+
+
 <h3><a id="previousViewId" name="previousViewId">previousViewId</a></h3>
-<p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから来たかをわかるようにするための機能です．<br />
-Pageクラスに[previousViewId]というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．</p>
+<p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから遷移してきたかを判別する機能です．<br />
+Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．</p>
 
 <pre>
 public class NextPage {
-    private String previousViewId;
+    <b><font color="red">private String previousViewId;</font></b>
 
     public String prerender() {
         System.out.println(previousViewId);
@@ -64,13 +125,14 @@ public class NextPage {
 }
 </pre>
 
-<h3><a id="postback" name="postback">postback</a></h3>
+<h3><a id="postback" name="postback">ポストバック</a></h3>
 <p>postback(ポストバック)とは、ある画面からデータがポストされてきたときに、その送り先が同一のページである事を指します．<br />
-Pageクラスに[postback]というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
+Pageクラスに<b>[postback]</b>というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
 
 <pre>
 public class HogePage {
-    private boolean postback;
+    <b><font color="red">private boolean postback;</font></b>
+
     public boolean isPostback() {
         return postback;
     }
