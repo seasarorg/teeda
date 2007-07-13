@@ -34,8 +34,13 @@ public class ExternalContextUtil {
     public static String getViewId(ExternalContext externalContext) {
         // PortletSupport
         if (PortletUtil.isPortlet(FacesContext.getCurrentInstance())) {
-            return (String) externalContext.getRequestMap().get(
+            String viewId = (String) externalContext.getRequestMap().get(
                     FacesPortlet.VIEW_ID);
+            if (viewId == null) {
+                viewId = (String) externalContext.getRequestMap().get(
+                        FacesPortlet.DEFAULT_PAGE);
+            }
+            return viewId;
         } else {
             String viewId = externalContext.getRequestPathInfo();
             if (viewId == null) {
