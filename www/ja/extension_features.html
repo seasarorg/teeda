@@ -31,7 +31,7 @@
 <br/>
 <div class="document" id="function-list">
 <h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
-<p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します。</p>
+<p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します．</p>
 <ul class="arabic simple">
 <li><a href="#initialize">初期化(initialize)メソッド</a></li>
 <li><a href="#prerender">描画前(prerender)メソッド</a></li>
@@ -150,20 +150,20 @@ public class HogePage {
 </pre>
 
 <h3><a id="layout" name="layout">レイアウト</a></h3>
-<p>Teedaでは簡単に使えるレイアウト機能を提供しています。<br/>
-view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます。
+<p>Teedaでは簡単に使えるレイアウト機能を提供しています．<br/>
+view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます．
 layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込む場合は、
 <pre>
 &lt;te:include te:src="/layout/header.html"/&gt;
 </pre>
-のように記述します。詳しくは、<a href="extension_component_reference.html#include">includeタグ</a>を参照してください。<br />
+のように記述します．詳しくは、<a href="extension_component_reference.html#include">includeタグ</a>を参照してください．<br />
 レイアウトを適用するHTMLの中身を読み込むには、
 <pre>
 &lt;te:includeChildBody/&gt;
 </pre>
-のように記述します。詳しくは、<a href="extension_component_reference.html#includeChildBody">includeChildBodyタグ</a>を参照してください。<br />
-各Pageでpublic String getLayout() {...}を定義し、戻り値で/aaa/bbb.htmlのように指定するとbbb.htmlをレイアウトにすることもできます。<br />
-getLayout()の値は動的に変えることもできます。layout.htmlのボディのサンプルは次のようになります。
+のように記述します．詳しくは、<a href="extension_component_reference.html#includeChildBody">includeChildBodyタグ</a>を参照してください．<br />
+各Pageでpublic String getLayout() {...}を定義し、戻り値で/aaa/bbb.htmlのように指定するとbbb.htmlをレイアウトにすることもできます．<br />
+getLayout()の値は動的に変えることもできます．layout.htmlのボディのサンプルは次のようになります．
 <pre>
 &lt;table border="0" cellspacing="5"&gt;
 &lt;tr>
@@ -191,8 +191,8 @@ getLayout()の値は動的に変えることもできます。layout.htmlのボ�
 </pre>
 
 <h3><a id="dynamicValidation" name="dynamicValidation">動的なバリデーション</a></h3>
-<p>バリデーションを動的に変化させるには、get + id + Validatorという名前のメソッドを定義します。<br/>
-例えば、aaaというidのタグのバリデーションを動的に変える場合は次のようなメソッドを用意します。</p>
+<p>バリデーションを動的に変化させるには、get + id + Validatorという名前のメソッドを定義します．<br/>
+例えば、aaaというidのタグのバリデーションを動的に変える場合は次のようなメソッドを用意します．</p>
 <pre>
 public Validator getAaaValidator() {
     TLengthValidator validator = new TLengthValidator();
@@ -204,7 +204,7 @@ public Validator getAaaValidator() {
     return validator;
 }
 </pre>
-複数のValidatorを返す場合には、ValidatorChainを使います。
+複数のValidatorを返す場合には、ValidatorChainを使います．
 <pre>
 public Validator getAaaValidator() {
     ValidatorChain chain = new ValidatorChain();
