@@ -33,12 +33,13 @@
 <h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
 <p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します。</p>
 <ul class="arabic simple">
-<li><a href="#layout">レイアウトについて</a></li>
+<li><a href="#layout">レイアウト</a></li>
+<li><a href="#dynamicValidation">動的なバリデーション</a></li>
 </ul>
 </div>
 
 <div class="section">
-<h3><a id="layout" name="layout">レイアウトについて</a></h3>
+<h3><a id="layout" name="layout">レイアウト</a></h3>
 <p>Teedaでは簡単に使えるレイアウト機能を提供しています。<br/>
 view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます。
 layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込む場合は、
@@ -78,6 +79,37 @@ getLayout()の値は動的に変えることもできます。layout.htmlのボ�
 &lt;/tr&gt;
 &lt;/table&gt;
 </pre>
+
+<h3><a id="dynamicValidation" name="dynamicValidation">動的なバリデーション</a></h3>
+<p>バリデーションを動的に変化させるには、get + id + Validatorという名前のメソッドを定義します。<br/>
+例えば、aaaというidのタグのバリデーションを動的に変える場合は次のようなメソッドを用意します。</p>
+<pre>
+public Validator getAaaValidator() {
+    TLengthValidator validator = new TLengthValidator();
+    if (...) {
+        validator.setMinimum(3);
+    } else {
+        validator.setMinimum(5);
+    }
+    return validator;
+}
+</pre>
+複数のValidatorを返す場合には、ValidatorChainを使います。
+<pre>
+public Validator getAaaValidator() {
+    ValidatorChain chain = new ValidatorChain();
+    chain.add(new TRequiredValidator());
+    TLengthValidator validator = new TLengthValidator();
+    if (...) {
+        validator.setMinimum(3);
+    } else {
+        validator.setMinimum(5);
+    }
+    chain.add(validator);
+    return chain;
+}
+</pre>
+
 <!-- document end -->
 <!-- don't edit start -->
 </td>
