@@ -478,7 +478,7 @@ Kumu = Kumu.extend(Kumu, {
       str += ' : ';
     }
     str += ']';
-    Kumu._log(str);
+    Kumu.log(str);
     return args;
   },
 
@@ -492,11 +492,11 @@ Kumu = Kumu.extend(Kumu, {
       str += ' : ';
     }
     str += ']';
-    Kumu._log(str);
+    Kumu.log(str);
     return result;
   },
   
-  _log :function(str){
+  log :function(str){
     try {
       var br = document.createElement("br");
       var span = document.createElement("span");
