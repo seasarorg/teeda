@@ -482,6 +482,10 @@ Kumu.FormHelper = {
     return str.lastIndexOf(suffix) == (str.length - suffix.length);
   },
 
+  getValue : function(element){
+    return Kumu.FormHelper.Serializer[element.tagName.toLowerCase()](element);            
+  },
+
   getItem : function(form, element){
     if (typeof form == 'string'){
       form = document.getElementById(form);
