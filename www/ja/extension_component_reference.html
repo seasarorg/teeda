@@ -100,6 +100,7 @@ h3.underline {
       <li><a href="#selectOneRadio">selectOneRadio</a></li>
       <li><a href="#selectBooleanCheckbox">selectBooleanCheckbox</a></li>
       <li><a href="#selectManyCheckbox">selectManyCheckbox</a></li>
+      <li><a href="#commandButton">commandButton</a></li>
       <li><a href="#forEach">forEach</a></li>
       <li><a href="#itemsSave">itemsSave</a></li>
       <li><a href="#label">label</a></li>
@@ -712,6 +713,70 @@ h3.underline {
     </tbody>
   </table>
 </div>
+
+<h3 class="underline"><a name="commandButton">commandButton</a></h3>
+<p>commandButtonはサブミットコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>サブミットコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;input type="submit" value="submit" id="doHoge"/&gt;</b>または<br />
+          <b class="boldorange">&lt;input type="submit" value="submit" id="goHoge"/&gt;</b>または<br />
+          <b class="boldorange">&lt;input type="submit" value="submit" id="jumpHoge"/&gt;</b>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>タグ<br/>
+            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．<br/>
+            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．<br/>
+            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．<br/>
+            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:commandButton</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">renderJs属性</b></span><br/>
+          <p>doOnceで始まるidを持ち、renderJs属性を<b class="boldorange">true</b>にすると、ダブルサブミット防止のJavaScriptが出力される．</p>
+          <span>-<b class="boldorange">time属性</b></span><br/>
+          <p>上記のrenderJsと連動して、ダブルサブミット防止JavaScriptのタイムアウト値の設定をする（msec）．</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>doOnceでrenderJs属性をtrueにした場合のみ、あり．</td>
+      </tr>
+      <!-- TODO CommandButtonの挙動はここだけでは書ききれないので、詳細に別ページで記述する． -->
+      <tr>
+        <td>その他</td>
+        <td>
+        	<span>-ダブルサブミット防止JavaScriptの設定詳細は<a href="http://teeda.seasar.org/ja/kumu_disabled.html">こちら</a>を参照ください．</span><br />
+        	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
+        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされます．値の引継ぎ機能は無効です．</b></span>
+        	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 <h3 class="underline"><a name="forEach">forEach</a></h3>
 <p>forEachは繰り返し項目コンポーネントです．</p>
