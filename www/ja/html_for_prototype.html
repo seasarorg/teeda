@@ -134,7 +134,8 @@ xhtml形式
 <h3>HTMLファイルの雛形</h3>
 <pre class="literal-block">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"&gt;
 &lt;head&gt;
 &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
@@ -237,9 +238,30 @@ width="100"
 
 <h3>&はあらゆるところで &amp;amp;と記述する</h3>
 <p>
-ただし、クエリーストリングの &amp; はそのまま記述しても良い。
-属性の省略書式は使わない
+HTMLの仕様なのでTeedaに限った話ではありませんが、クエリーストリングの & についても、&amp; と記述することを推奨します。
 </p>
+<b>良い例</b><br />
+<pre class="literal-block">
+&lt;a href="and.html?aaa=aaa<font color="red">&amp;amp;</font>copy=bbb"&gt;bbbb&lt;/a&gt;
+</pre>
+
+<b>悪い例</b><br />
+<pre class="literal-block">
+&lt;a href="and.html?aaa=aaa<font color="red">&amp;</font>copy=bbb"&gt;bbbb&lt;/a&gt;
+</pre>
+<p>
+上記の悪い例は、クエリーストリング内の &amp;copy が © と誤認識されてしまいます。<br>
+<br>
+&amp; でもうまく動作するケースもありますが、&amp;amp; を推奨するのHTMLの仕様に準拠することで不毛なトラブルを避けるためです。<br>
+<br>
+興味のある方は、下記をご覧下さい。
+<br>
+[RFC1866] 8.2.1. The form-urlencoded Media Type<br>
+<a href="http://www.ietf.org/rfc/rfc1866.txt">http://www.ietf.org/rfc/rfc1866.txt</a>
+</p>
+
+
+<h3>属性の省略書式は使わない</h3>
 <b>良い例</b><br />
 <pre class="literal-block">
 &lt;input type="radio" name="bar" <font color="red">checked="checked"</font> /&gt;
@@ -258,7 +280,9 @@ width="100"
 
 
 <h2><a id="optional" name="optional">余力があればやる事項</h2>
-
+<p>プロトタイプ作成の目的をお客様との仕様確認と考えると、
+蛇足になってしまうかも知れないが、余力があればやっておいた方が良いという事項を以下に説明します。</p>
+<br>
 <h3>インデント</h3>
 <p>
 プロジェクトごとで決めておく。<br>
@@ -317,24 +341,28 @@ id属性も書いておく。idの値は、余力があれば書いておき、�
 
 <hr>
 <h2><a id="layout" name="layout">レイアウト機能</a></h2>
-<p>StrutsのTilesに相当する機能。HTMLテンプレートの継承により、親HTML側にヘッダーやフッター、メニュー等の共通レイアウト要素を記述することができる機能です。</p>
+<p>
+StrutsのTilesに相当する機能。HTMLテンプレートの継承により、親HTML側にヘッダーやフッター、メニュー等の共通レイアウト要素を記述することができる機能です。
+レイアウト機能は、サーバーサイド版とクライアントサイド版が存在します。併用して使用することを推奨します。
+</p>
 <h3>レイアウト機能</h3>
-<p>Comming Soon!!</p>
+<p>
+レイアウト機能の詳細については<a href="http://teeda.seasar.org/ja/extension_features.html#layout">こちら</a>をご覧下さい。
+</p>
 <br>
 
-<h3>モックインクルード機能</h3>
+<h3>レイアウト機能（JavaScriptを使うクライアント版）</h3>
 <p>
 JavaScriptを使ってクライアントサイドでレイアウト機能を実現することができます。
 個別のHTMLファイルには、ヘッダーやフッター、メニュー要素が存在しないにも関わらず、
-Teedaを経由せずにローカルでそのままHTMLファイルを開けば、ヘッダーやフッター、メニュー等が描画される機能です。
-<br>
+Teedaを経由せずにローカルでそのままHTMLファイルを開けば、ヘッダーやフッター、メニュー等が描画される機能です。<br>
 <br>
 例えば、webappsフォルダのアーカイブを送付するなどして、Tomcat等の開発環境が存在しないお客様に対して、
 開発中であったとしても手軽に仕様を確認してもらえることができます。開発者にとっても、ダミー用のヘッダーやフッターに
 埋もれることのないスッキリとしてHTMLファイル上でコーディングを実施することができます。
 <br>
 <br>
-<b>＜詳細については、もうしばらくお待ち下さい。＞</b>
+詳細については<a href="http://d.hatena.ne.jp/mopemope/20070713/p1">こちら</a>をご覧下さい。
 
 </p>
 
@@ -343,6 +371,7 @@ Teedaを経由せずにローカルでそのままHTMLファイルを開けば�
 
 
 </div>
+
 <!-- document end -->
 <!-- don't edit start -->
 </td>
@@ -352,7 +381,7 @@ Teedaを経由せずにローカルでそのままHTMLファイルを開けば�
 <td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
 </tr><tr>
 <td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
-<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+<td width="766" class="copyright">Copyright&copy; 2005-2007, The Seasar Foundation and the others. All rights reserved.</td>
 </tr></table>
 <td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
 <td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
@@ -362,3 +391,5 @@ Teedaを経由せずにローカルでそのままHTMLファイルを開けば�
 </body>
 <!-- document end -->
 </html>
+
+
