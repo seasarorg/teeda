@@ -23,6 +23,8 @@ public class ForeachPage {
 
 	private FooItem[] aaaItems;
 
+	private int aaaIndex;
+
 	public FooItem[] getAaaItems() {
 		if (aaaItems == null) {
 			aaaItems = new FooItem[3];
@@ -61,7 +63,11 @@ public class ForeachPage {
 	}
 
 	public String getFooStyle() {
-		return "background-color:yellow";
+		if (aaaIndex % 2 == 0) {
+			return "background-color:yellow";
+		} else {
+			return "background-color:red";
+		}
 	}
 
 	public static class FooItem {
@@ -85,6 +91,21 @@ public class ForeachPage {
 		public void setFoo(String foo) {
 			this.foo = foo;
 		}
+	}
+
+	/**
+	 * @return the aaaIndex
+	 */
+	public int getAaaIndex() {
+		return aaaIndex;
+	}
+
+	/**
+	 * @param aaaIndex
+	 *            the aaaIndex to set
+	 */
+	public void setAaaIndex(int aaaIndex) {
+		this.aaaIndex = aaaIndex;
 	}
 
 }
