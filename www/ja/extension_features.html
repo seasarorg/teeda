@@ -43,7 +43,7 @@
 </div>
 
 <div class="section">
-<h3><a id="initialize" name="initialize">初期化(initialize)メソッド</a></h3>
+<h3><b><a id="initialize" name="initialize">初期化(initialize)メソッド</a></b></h3>
 <p>初期化(initialize)メソッドとは、あるPageが初期化されたタイミングで<b><font color="red">1度だけ</font></b>呼び出されるライフサイクルメソッドです．<br />
 Pageクラスに<b>[initialize]</b>というメソッドを定義しておくと初期化されたタイミングでTeedaが呼び出してくれます．<br />
 initializeの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
@@ -71,8 +71,9 @@ initializeの戻り値の型としてはClass/String/void型をどれかを選�
 	</tr>
 </tbody>
 </table>
+<br />
 
-<h3><a id="prerender" name="prerender">描画前(prerender)メソッド</a></h3>
+<h3><b><a id="prerender" name="prerender">描画前(prerender)メソッド</a></b></h3>
 <p>描画前(prerender)メソッドとは、あるPageが描画される直前で<b><font color="red">毎回</font></b>呼び出されるライフサイクルメソッドです．<br />
 Pageクラスに<b>[prerender]</b>というメソッドを定義しておくと描画される直前にTeedaが呼び出してくれます．<br />
 prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
@@ -100,9 +101,9 @@ prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶ
 	</tr>
 </tbody>
 </table>
+<br />
 
-
-<h3><a id="previousViewId" name="previousViewId">previousViewId</a></h3>
+<h3><b><a id="previousViewId" name="previousViewId">previousViewId</a></b></h3>
 <p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから遷移してきたかを判別する機能です．<br />
 Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．</p>
 
@@ -124,8 +125,9 @@ public class NextPage {
     }
 }
 </pre>
+<br />
 
-<h3><a id="postback" name="postback">ポストバック</a></h3>
+<h3><b><a id="postback" name="postback">ポストバック</a></b></h3>
 <p>postback(ポストバック)とは、ある画面からデータがポストされてきたときに、その送り先が同一のページである事を指します．<br />
 Pageクラスに<b>[postback]</b>というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
 
@@ -148,8 +150,9 @@ public class HogePage {
     }
 }
 </pre>
+<br />
 
-<h3><a id="layout" name="layout">レイアウト</a></h3>
+<h3><b><a id="layout" name="layout">レイアウト</a></b></h3>
 <p>Teedaでは簡単に使えるレイアウト機能を提供しています．<br/>
 view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます．
 layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込む場合は、
@@ -189,8 +192,9 @@ getLayout()の値は動的に変えることもできます．layout.htmlのボ�
 &lt;/tr&gt;
 &lt;/table&gt;
 </pre>
+<br />
 
-<h3><a id="dynamicValidation" name="dynamicValidation">動的なバリデーション</a></h3>
+<h3><b><a id="dynamicValidation" name="dynamicValidation">動的なバリデーション</a></b></h3>
 <p>バリデーションを動的に変化させるには、get + id + Validatorという名前のメソッドを定義します．<br/>
 例えば、aaaというidのタグのバリデーションを動的に変える場合は次のようなメソッドを用意します．</p>
 <pre>
