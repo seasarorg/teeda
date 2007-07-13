@@ -37,6 +37,7 @@
 <li><a href="#prerender">描画前(prerender)メソッド</a></li>
 <li><a href="#previousViewId">previousViewId</a></li>
 <li><a href="#postback">ポストバック</a></li>
+<li><a href="#dynamicproperty">DynamicProperty</a></li>
 <li><a href="#layout">レイアウト</a></li>
 <li><a href="#dynamicValidation">動的なバリデーション</a></li>
 </ul>
@@ -50,6 +51,7 @@ initializeの戻り値の型としてはClass/String/void型をどれかを選�
 戻り値の型の選択はinitializeメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
 
 <table border="1">
+<caption><font size="3">[ initializeメソッドの戻り値型一覧 ]</font></caption>
 <thead>
 	<tr>
 		<th nowrap="nowrap"><div>戻り値の型</div></th>
@@ -80,6 +82,7 @@ prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶ
 戻り値の型の選択はprerenderメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
 
 <table border="1">
+<caption><font size="3">[ prerenderメソッドの戻り値型一覧 ]</font></caption>
 <thead>
 	<tr>
 		<th nowrap="nowrap"><div>戻り値の型</div></th>
@@ -151,6 +154,42 @@ public class HogePage {
 }
 </pre>
 <br />
+
+<h3><b><a id="dynamicproperty" name="dynamicproperty">DynamicProperty(ダイナミックプロパティ)</a></b></h3>
+<p>DynamicProperty(ダイナミックプロパティ)とは、Pageクラス側で動的にHTMLの属性値を変更できる機能です．<br />
+この機能は、例えば動的にCSSなどを切り替えたりする場合に有効な機能です．</p>
+<p>
+DynamicPropertyで指定するメソッドは，<b><font color="red">get＋id＋属性名</font></b>という名称でPageクラスに定義されます．<br />
+idがハイフンつきの場合は、<b><font color="red">ハイフンを取り除いて先頭大文字にした形式</font></b>で記述されます．<br />
+例えばidがarg1の入力項目のstyle属性を動的に変更する場合を考えてみましょう．<br />
+その場合には、PageクラスにgetArg1Style()というメソッドを定義しておくと実行時に呼ばれます．<br />
+下記にDynamicPropertyの規約をまとめます．</p>
+
+<table border="1">
+<caption><font size="3">[ DynamicPropertyの規約一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>HTMLのid</div></th>
+		<th nowrap="nowrap"><div>属性</div></th>
+		<th nowrap="nowrap"><div>PageクラスのDynamicPropertyメソッド名</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;hoge</td>
+		<td>&nbsp;style</td>
+		<td>&nbsp;<b><font color="red">getHogeStyle()</font></b></td>
+	</tr>
+	<tr>
+		<td>&nbsp;hoge-foo</td>
+		<td>&nbsp;onclick</td>
+		<td>&nbsp;<b><font color="red">getHogeFooOnclick()</font></b></td>
+	</tr>
+</tbody>
+</table>
+<br />
+
+
 
 <h3><b><a id="layout" name="layout">レイアウト</a></b></h3>
 <p>Teedaでは簡単に使えるレイアウト機能を提供しています．<br/>
