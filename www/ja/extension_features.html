@@ -108,7 +108,8 @@ prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶ
 
 <h3><b><a id="previousViewId" name="previousViewId">previousViewId</a></b></h3>
 <p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから遷移してきたかを判別する機能です．<br />
-Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．</p>
+Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．<br />
+previousViewIdには、/view/hoge/foo.htmlのような形式のHTMLまでのパスが設定されます．</p>
 
 <pre>
 public class NextPage {
