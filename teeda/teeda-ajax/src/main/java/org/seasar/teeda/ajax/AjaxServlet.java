@@ -121,7 +121,7 @@ public class AjaxServlet extends HttpServlet {
         if (target instanceof String) {
             result = target.toString();
         } else {
-            result = AjaxUtil.toJson(target);
+            result = JSONSerializer.serialize(target);
         }
         AjaxUtil.setContentType(response, result);
 

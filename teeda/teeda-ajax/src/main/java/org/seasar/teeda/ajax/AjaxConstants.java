@@ -41,6 +41,8 @@ public interface AjaxConstants {
 
     String COLON = ":";
 
+    String SINGLE_QUOTE = "'";
+
     String NULL_STRING = "null";
 
     String TRUE_STRING = "true";
