@@ -40,6 +40,8 @@
 <li>通信状態ごとの関数実行</li>
 <li>Teedaとの連携機能</li>
 <li>JSONレンダリング</li>
+<li>Formの値の取得</li>
+<li>JSONの文字列化（この機能は将来kumu.jsに移行します）</li>
 </ol>
 <div class="section">
 <h3><a id="ajax" name="ajax">Ajaxによる非同期通信</a></h3>
@@ -331,6 +333,135 @@ var o = {
 <p>新たに追加された要素を削除する場合にはKumu.Ajax.removeRender(id)で削除することができます。</p>
 </div>
 <div class="section">
+<h3><a id="form" name="form">Formの値の取得</a></h3>
+
+<p>Kumu.AjaxはFormの値を取得するためのヘルパーを用意しています。</p>
+<p>Kumu.FormHelperを使うとFormをJSON化でき、簡単に値を取得する事ができます。</p>
+<p>では簡単な見てみます。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;firstName&quot;/&gt;
+
+  &lt;input type=&quot;text&quot; name=&quot;lastName&quot;/&gt;
+&lt;/form&gt;
+</pre>
+<p>上記のFormはname属性がfirstNameとlastNameという名前のinputフィールドを持っています。</p>
+<p>このFormをJSON化し、値を取得するには以下のように記述します。</p>
+<pre class="literal-block">
+// FormをJSON化する
+var form = Kumu.FormHelper.create('Form');
+
+//name属性がfirstNameの値を取得
+var firstNameValue = form['firsrtName']
+
+//name属性がfirstNameの値を取得
+var lastNameValue = form['lastName']
+
+</pre>
+<p>FormをJSON化するのはKumu.FormHelper.createを使用します。</p>
+<p>FormHelperの引き数にはFormの要素あるいは対象のFormのid属性の値を指定します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create(&lt;Form要素もしくはFormのid属性&gt;, &lt;タイプ&gt;);
+</pre>
+<div class="section">
+<h3><a id="id3" name="id3">Formのタイプ</a></h3>
+<p>FormHelperはいくつかのタイプをサポートしています。</p>
+
+<p>タイプは以下の３つです。</p>
+<ul class="simple">
+<li>'r' rawモード -- Formそのままのname属性を使用してJSONを構築する。（デフォルト）</li>
+<li>'t' teedaモード -- FormをTeedaのPageクラスのidのようにJSONを構築する。</li>
+<li>'i' idモード -- Formのname属性ではなくid属性をキーに使用してJSONを構築する。</li>
+</ul>
+<p>Teedaモードを使用するには以下のように記述します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form', 't');
+</pre>
+</div>
+<div class="section">
+
+<h3><a id="raw" name="raw">rawモード</a></h3>
+<p>rawモードはそのままname属性の値をキーとしてJSONを構築します。</p>
+<p>デフォルトではこの動作になります。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form');
+</pre>
+</div>
+<div class="section">
+<h3><a id="id4" name="id4">teedaモード</a></h3>
+<p>teedaモードはteedaでレンダリングされたFormをJSON化します。</p>
+<p>teedaはJSF実装FWのためFormをレンダリングするとname属性がそのまま出ないケースなどがあります。</p>
+
+<p>例えばItemsのケースです。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+&lt;input type=&quot;text&quot; id=&quot;num1&quot; class=&quot;hoge&quot;/&gt;&lt;br/&gt;
+
+&lt;input type=&quot;text&quot; id=&quot;num2&quot;/&gt;&lt;br/&gt;
+&lt;span id=&quot;str&quot;&gt;aaa&lt;/span&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;fooItemsSave&quot; /&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+       &lt;div id=&quot;fooItems&quot;&gt;
+       &lt;tr&gt;
+         &lt;td&gt;&lt;span id=&quot;fooNo&quot;&gt;100&lt;/span&gt;&lt;/td&gt;
+
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;aaa&quot; title=&quot;AAA&quot; /&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;bbb&quot; title=&quot;BBB&quot; /&gt;&lt;/td&gt;
+
+       &lt;/tr&gt;
+       &lt;/div&gt;
+&lt;/table&gt;
+&lt;input type=&quot;submit&quot; id=&quot;doNothing&quot; /&gt;
+&lt;/form&gt;
+
+</pre>
+<p>このケースの場合、idは同じになってしまうためidで取得するのは難しく、またname属性は複雑な値になり解析が困難です。</p>
+<p>このようなケースもKumu.FormHelperを使用することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper('Form', 't');
+var items = form['fooItems']
+for(var i = 0; i &lt; items.length; i++){
+    var item = items[i];
+    alert('aaa = '+item['aaa']+' bbb = '+item['bbb');
+}
+</pre>
+<p>Teedaモードを使うと上記のように繰り返し部分もリスト化され、簡単にアクセスすることができます。</p>
+</div>
+<div class="section">
+
+<h3><a id="id" name="id">idモード</a></h3>
+<p>id属性の値をキーとしてJSONを構築します。</p>
+<p>その他の動作はrawモードと変わりません。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="json-kumu-js" name="json-kumu-js">JSONの文字列化（この機能は将来kumu.jsに移行します）</a></h3>
+<p>Kumu.JSONSerializerを使うとJSONを文字列化することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper.create('aForm');
+
+// Kumu本体のログ機能でログ出力
+Kumu.log(Kumu.JSONSerializer.serialize(form));
+</pre>
+<p>上記のようにFormの内容などをデバッグする際に使用することができます。</p>
+
+<p>またobjectであればなんでも文字列化することができます。</p>
+<div class="section">
+<h3><a id="id5" name="id5">応用</a></h3>
+<p>JSONSerializerを使用すると複数のobjectをまとめて文字列にする事ができます。</p>
+<p>そのためAjaxで送信するパラメータも減らすことができます。</p>
+<p>JSON化した文字列はサーバサイドでorg.seasar.teeda.ajax.JSONSerializerを使用してMapに復元することができます。</p>
+<pre class="literal-block">
+String str = &quot;{'test1':'test2'}&quot;;
+Map map = JSONSerializer.evalMap(str);
+</pre>
+<p>Mapに変換後、Dxoなどを使用することによって簡単に好きなDtoなどにマッピングする事が出来るようになります。</p>
+
+</div>
+</div>
+
+<div class="section">
 <h3><a id="id3" name="id3">リファレンス</a></h3>
 <div class="section">
 <h3><a id="kumu-ajax-executeajax-ajaxcomponent" name="kumu-ajax-executeajax-ajaxcomponent">Kumu.Ajax.executeAjax(ajaxComponent)</a></h3>
@@ -344,13 +475,36 @@ var o = {
 <p>詳細は<a href="teeda_ajax.html">Teeda Ajax</a>を参照して下さい。</p>
 </div>
 <div class="section">
-<h3><a id="kumu-ajax-render-json" name="kumu-ajax-render-json">Kumu.Ajax.render(json)</a></h2>
+<h3><a id="kumu-ajax-render-json" name="kumu-ajax-render-json">Kumu.Ajax.render(json)</a></h3>
 <p>JSONをレンダリングします。</p>
 <p>詳細は<a id="#json">JSONレンダリング</a> を参照して下さい。</p>
 </div>
 <div class="section">
-<h2><a id="kumu-ajax-removerender-id" name="kumu-ajax-removerender-id">Kumu.Ajax.removeRender(id)</a></h2>
+<h3><a id="kumu-ajax-removerender-id" name="kumu-ajax-removerender-id">Kumu.Ajax.removeRender(id)</a></h3>
 <p>Kumu.Ajax.render(json)で新たに追加された要素を削除します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-create-element-type" name="kumu-formhelper-create-element-type">Kumu.FormHelper.create(element, type)</a></h3>
+<p>FormをJSON化します。</p>
+<p>詳細は.. Formの値の取得　を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getvalue-element" name="kumu-formhelper-getvalue-element">Kumu.FormHelper.getValue(element)</a></h3>
+<p>指定した要素の値を取得します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitem-element-teeda" name="kumu-formhelper-getitem-element-teeda">Kumu.FormHelper.getItem(element)(Teeda使用時）</a></h3>
+
+<p>指定した要素が含まれているItemsの中のItemを返します。</p>
+<p>Itemsのリストの中に入っているItemのJSONを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitemsindex-form-element-teeda" name="kumu-formhelper-getitemsindex-form-element-teeda">Kumu.FormHelper.getItemsIndex(form, element)(Teeda使用時）</a></h3>
+<p>指定した要素が含まれているItemsのIndexを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-jsonserializer-serialize-object" name="kumu-jsonserializer-serialize-object">Kumu.JSONSerializer.serialize(object)</a></h3>
+<p>指定したobjectをJSON文字列化します。</p>
 </div>
 </div>
 </div>

@@ -312,6 +312,17 @@ obj.print(&quot;TEST&quot;);
 </pre>
 </div>
 <div class="section">
+<h2><a id="kumu-undef-value" name="kumu-undef-value">Kumu.undef(value)</a></h2>
+<p>値が存在していないかチェックします。</p>
+<pre class="literal-block">
+//false
+var result = Kumu.undef('Kumu');
+//true
+var result = Kumu.undef('Test');
+
+</pre>
+</div>
+<div class="section">
 <h3><a id="kumu-bind-value" name="kumu-bind-value">Kumu.bind(value, [....])</a></h3>
 <p>関数のカリー化を行います。</p>
 <p>引き数に渡された値を束縛し状態の関数を返します。</p>
@@ -521,6 +532,29 @@ str = str.camelize(str);
 </pre>
 </div>
 <div class="section">
+<h3><a id="kumu-startswith-prefix-string" name="kumu-startswith-prefix-string">Kumu.startsWith(prefix, String)</a></h3>
+<p>指定した文字列がprefixで始まっているかチェックします。</p>
+<p>この関数はString.prototypeにも登録されています。</p>
+<pre class="literal-block">
+// false
+var result1 = Kumu.startsWith('teeda', 'foo');
+// true
+var result2 = Kumu.startsWith('teeda', 'teedafoo');
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-endswith-suffix-string" name="kumu-endswith-suffix-string">Kumu.endsWith(suffix, String)</a></h3>
+<p>指定した文字列がsuffixで終わっているかチェックします。</p>
+
+<p>この関数はString.prototypeにも登録されています。</p>
+<pre class="literal-block">
+// false
+var result1 = Kumu.endsWith('teeda', 'foo');
+// true
+var result2 = Kumu.endsWith('teeda', 'footeeda');
+</pre>
+</div>
+<div class="section">
 <h3><a id="kumu-grouping-function" name="kumu-grouping-function">Kumu.grouping([function.....])</a></h3>
 <p>関数をグループ化して一括実行できる関数を返します。</p>
 <p>指定した順番に関数を実行します。</p>
@@ -651,6 +685,13 @@ test1(&quot; Hello &quot;);
 <p>渡したobject内のfunctionに対し、トレースログを出力します。</p>
 </div>
 </div>
+<div class="section">
+<h3><a id="kumu-log-string" name="kumu-log-string">Kumu.log(String);</a></h3>
+<p>指定した文字列をログとして表示します。</p>
+<p>渡したStringはHTML（dcument）の最後に追加表示されます。</p>
+</div>
+</div>
+
 <div class="section">
 <h3><a id="function-prototype" name="function-prototype">Function.prototype</a></h3>
 <div class="section">
