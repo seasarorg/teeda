@@ -256,6 +256,8 @@ Kumu.Ajax = {
   _onException : function(exception, ajaxComponent){
     if(ajaxComponent.doAction && ajaxComponent.doAction.onException){
       ajaxComponent.doAction.onException(exception, ajaxComponent);
+    }else if(ajaxComponent && ajaxComponent['onException']){
+      ajaxComponent['onException'](exception, ajaxComponent);
     }
     if (ajaxComponent._clearTimeout){
       ajaxComponent._clearTimeout();
@@ -288,6 +290,8 @@ Kumu.Ajax = {
       if(status > 0){
         if (ajaxComponent.doAction && ajaxComponent.doAction.onFailure){
           ajaxComponent.doAction.onFailure(req, ajaxComponent);
+        }else if (ajaxComponent && ajaxComponent['onFailure']){
+          ajaxComponent['onFailure'](req, ajaxComponent);
         }else{
           self.debugPrint("AjaxError! status["+status+"] message["+req.responseText+"]", true);
         }
