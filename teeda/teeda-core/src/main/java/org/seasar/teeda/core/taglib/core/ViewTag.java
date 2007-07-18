@@ -23,6 +23,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.application.StateManager.SerializedView;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.PageContextUtil;
@@ -30,6 +31,7 @@ import javax.faces.internal.ValueBindingUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.webapp.UIComponentBodyTag;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.jstl.core.Config;
@@ -73,8 +75,15 @@ public class ViewTag extends UIComponentBodyTag {
     public int doStartTag() throws JspException {
         final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
-        final String encoding = PageContextUtil
-                .getCharacterEncoding(pageContext);
+        String encoding = PageContextUtil.getCharacterEncoding(pageContext);
+        if (encoding == null) {
+            ExternalContext externalContext = context.getExternalContext();
+            encoding = ((HttpServletRequest) externalContext.getRequest())
+                    .getCharacterEncoding();
+            if (encoding == null) {
+                encoding = JsfConstants.DEFAULT_ENCODING;
+            }
+        }
         final ServletResponse response = pageContext.getResponse();
         final Locale locale = context.getViewRoot().getLocale();
         response.setLocale(locale);
