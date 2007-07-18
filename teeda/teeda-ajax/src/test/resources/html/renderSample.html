@@ -2,34 +2,46 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.foo {color:red }
+.bar {color:blue }
+</style>
+<script language="JavaScript" type="text/javascript" src="../../../main/resources/org/seasar/teeda/ajax/js/kumu.js"></script>
+<!--
 <script language="JavaScript" type="text/javascript" src="../../../main/resources/org/seasar/teeda/ajax/js/ajax.js"></script>
+-->
 <script>
 var o = {
   'test' : 'てすと',
+  'test@class' : 'foo',
   'test1' : 'てすと1',
   'test2' : [
   {
     'no':1,
+    'no@class':'foo',
     'name' : 'name1'
   }, 
   {
     'no':2,
+    'no@class':'bar',
     'name' : 'name2'
   }, 
   {
     'no':3,
+    'no@style':{'background-color':'red'},
     'name' : 'name3'
   }, 
   {
     'no':4,
+    'no@class':'bar',
     'name' : 'name4'
   }, 
   {
     'no':5,
+    'no@class':'foo',
     'name' : 'name5'
   }]
 }
-
 
 </script>
 
@@ -37,7 +49,6 @@ var o = {
 </head>
 <body>
 <div id='test' style="display:none">Test</div>
-<div id='test1' style="display:none">Test</div>
 <div id='test1' style="display:none">Test</div>
 
 <table border="1">
@@ -52,6 +63,9 @@ var o = {
     <td id="name">Test</td>
   </tr>
 </table>
-<input type="button" value="CHANGE" onclick="Kumu.Ajax.render(o);"> 
+<input type="button" value="INNER_TEMPLATE_RENDER" onclick="Kumu.Template.render(o);"> 
+<input type="button" value="TEMPLATE_RENDER" onclick="Kumu.Template.render(o, './template.html', 'target');"> 
+<div id="target" ></div>
+
 </body>
 </html>

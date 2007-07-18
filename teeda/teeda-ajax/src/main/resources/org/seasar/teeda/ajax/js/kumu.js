@@ -22,6 +22,7 @@ if (typeof(Kumu) == 'undefined') {
 Kumu.VERSION = "0.1";
 Kumu.NAME = "Kumu";
 Kumu.DEBUG = false;
+Kumu.SCRIPT_RE = '<script[^>]*>([\\S\\s]*?)<\/script>',
 
 /** extends **/
 Kumu.extend = function (self, obj) {
@@ -47,6 +48,8 @@ Kumu = Kumu.extend(Kumu, {
 
   options : {},
   
+  _idCache : [],
+  
   getGlobal : function(){
     return _global;
   },
@@ -54,7 +57,40 @@ Kumu = Kumu.extend(Kumu, {
   undef : function(name, object){
     return (typeof (object || _global)[name] == "undefined");
   },
-   
+  
+  provide : function(names, obj){
+    if(names.indexOf('.') == -1){
+      return Kumu._createObjects(names, _global);
+    }
+    
+    if(!obj){
+        obj = _global;
+    }
+    if(typeof(names) == 'string'){
+      names = Kumu.toArray(names.split('.'));    
+      Kumu.provide(names, obj);
+    }else{
+      var name = Kumu.shift(names);
+      if(name){
+        obj = Kumu._createObject(name, obj);
+        if(obj){
+          Kumu._createObject(names, obj);
+        }
+      }
+      return obj;
+    }
+  },
+  
+  _createObject : function(name, obj){
+    if(obj){
+      obj = _global;
+    }
+    if(obj && Kumu.undef(name, obj)){
+      obj[name] = {};
+    }
+    return obj[name];
+  },
+  
   /** curry method **/
   bind : function(func){
     return function(){
@@ -216,6 +252,18 @@ Kumu = Kumu.extend(Kumu, {
     return list.length;
   },
 
+  include: function(value, list) {
+    if(!list){
+      list = this;
+    }
+    for(var i = 0; i < list.length; i++){
+      if(list[i] == value){
+        return true;
+      }
+    }
+    return false;
+  },
+
   separate : function(str){
     var i = str.indexOf("_");
     if(i == 0){
@@ -279,7 +327,14 @@ Kumu = Kumu.extend(Kumu, {
     }
     return str.lastIndexOf(suffix) == (str.length - suffix.length);
   },
-    
+  
+  ignoreScripts: function(str) {
+    if(!str){
+      str = this;
+    }
+    return str.replace(new RegExp(Kumu.SCRIPT_RE, 'img'), '');
+  },
+  
   create: function() {
     return function() {
       if(this.initialize){ 
@@ -404,6 +459,16 @@ Kumu = Kumu.extend(Kumu, {
     }
   },
   
+  _replaceHTML : function(node, text){
+    if (node.outerHTML) {
+      node.outerHTML = text;
+    } else {
+       var range = node.ownerDocument.createRange();
+       range.selectNodeContents(node);
+       node.parentNode.replaceChild(range.createContextualFragment(text), node);
+    }            
+  },
+    
   _includeTemplate : function(){
     var includes = Kumu.$t('div');
     if(includes){
@@ -417,13 +482,7 @@ Kumu = Kumu.extend(Kumu, {
             xmlHttp.open("GET", src, false);
             xmlHttp.send(null);
             var text = xmlHttp.responseText;
-            if (node.outerHTML) {
-              node.outerHTML = text;
-            } else {
-              var range = node.ownerDocument.createRange();
-              range.selectNodeContents(node);
-              node.parentNode.replaceChild(range.createContextualFragment(text), node);
-            }            
+            Kumu._replaceHTML(node, text);
           }
         }
       }
@@ -496,12 +555,15 @@ Kumu = Kumu.extend(Kumu, {
     return result;
   },
   
-  log :function(str){
+  log :function(obj){
     try {
+      if(obj.innerHTML){
+        obj = obj.innerHTML;
+      }
       var br = document.createElement("br");
       var span = document.createElement("span");
       document.body.appendChild(br);
-      document.body.appendChild(span.appendChild(document.createTextNode(str)));
+      document.body.appendChild(span.appendChild(document.createTextNode(obj)));
     } catch (e) {
     }
   },
@@ -554,6 +616,31 @@ Kumu = Kumu.extend(Kumu, {
         }
       }
     }
+  },
+  
+  getElementsById : function(id){
+    if(!(id instanceof String) && typeof id != "string"){
+      return [id];
+    }
+
+    var nodes = [];
+    var elem = Kumu.$i(id);
+    if(!Kumu._idCache[id]){
+      Kumu._idCache[id] = []; 
+    }
+    while(elem){
+      if(!elem["cached"]){
+        nodes.push(elem);
+      }
+      elem.id = "";
+      elem = $i(id);
+    }
+    Kumu._idCache[id] = Kumu._idCache[id].concat(nodes);
+    Kumu.map(function(n){
+      n.id = id;
+      n.cached = true;
+    },_idCache[id] );
+    return Kumu._idCache[id];
   }
   
 });
@@ -567,7 +654,8 @@ Array.prototype = Kumu.extend(Array.prototype, {
   map:Kumu.map,
   filter:Kumu.filter,
   shift:Kumu.shift,
-  unshift:Kumu.unshift
+  unshift:Kumu.unshift,
+  include:Kumu.include
   
 });
 
@@ -577,7 +665,8 @@ String.prototype = Kumu.extend(String.prototype,{
   trim : Kumu.trim,
   camelize : Kumu.camelize,
   startsWith : Kumu.startsWith,
-  endsWith : Kumu.endsWith
+  endsWith : Kumu.endsWith,
+  ignoreScripts : Kumu.ignoreScripts
 });
 
 Function.prototype.getName = function() {
@@ -732,3 +821,324 @@ if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] ==
   }
 }
 
+Kumu.Template = {
+
+  _templateCache:{},
+
+  _nodeCache:{},
+
+  setStyle : function(element, style) {
+    for(var v in style){
+      if(v == 'opacity'){
+        this.setOpacity(element, style[v]);
+      }else{
+        element.style[v.camelize()] = style[v];
+      }
+    }
+  },
+
+  setOpacity : function(element, value){
+    if(value == 1){
+      var value = (/Gecko/.test(navigator.userAgent) && !/Konqueror|Safari|KHTML/.test(navigator.userAgent)) ? 0.999999 : null;
+      this.setStyle(element, {opacity:value}); 
+      if(/MSIE/.test(navigator.userAgent)){
+        this.setStyle(element, {filter:self._getStyle(element,'filter').replace(/alpha\([^\)]*\)/gi,'')});  
+      }
+    } else {
+      this.setStyle(element, {opacity: value});
+      if(/MSIE/.test(navigator.userAgent)){
+        this.setStyle(element, {filter:self._getStyle(element,'filter').replace(/alpha\([^\)]*\)/gi,'') + 'alpha(opacity='+value*100+')'});
+      }
+    }
+  },
+  
+  _setJSONData : function(node, data){
+    if(node.style.display == 'none'){
+      node.style.display = '';
+    }
+    if(data['data']){
+      node.innerHTML = data['data'];
+    }
+    if(data['attr']){
+      var attrs = data['attr'];
+      for(var attr in attrs){
+        if(attr == 'style'){
+          this.setStyle(node, attrs[attr]);
+        }else{
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+    }
+  },
+  
+  _prepare : function(data){
+    var predata = {};
+    for(var v in data){
+      var key = v;
+      var attr_key;
+      if(v.indexOf('@') > 0){
+        key = v.substring(0, v.indexOf('@'));
+        attr_key = v.substring(v.indexOf('@')+1);
+      }else{
+        attr_key = null;
+      }
+      if(!predata[key]){
+        predata[key] = {};
+      }
+      
+      if(attr_key){
+        if(!predata[key]['attr']){
+          predata[key]['attr'] = {};
+        }
+        predata[key]['attr'][attr_key] = data[v];        
+      }else{
+        predata[key]['data'] = data[v];
+      }
+    };
+    return predata;
+  }, 
+  
+  render : function(json, url, target, replace){    
+    var self = Kumu.Template;
+    if(url && target){
+      self._renderTemplate.bindScope(this)(url, json, url, target, replace);
+    }else{
+      self._render.bindScope(this)('inner', document, json);
+    }
+  },
+    
+  _render : function(prefix, doc, json, change_id){
+    var prepare_data = this._prepare(json);
+    for(var v in prepare_data){
+      var nodes = [];
+      var o = prepare_data[v];
+      var data = o['data'];
+      var node = doc.getElementById(v);
+      var cacheKey = prefix+v;
+      if(data && data instanceof Array){
+        var parent, orig;
+        if(this._nodeCache[cacheKey]){
+          orig = this._nodeCache[cacheKey]['node'];
+          parent = this._nodeCache[cacheKey]['parent'];
+        }else{
+          var parent = node.parentNode;
+          if(parent.nodeType == 3){
+            parent = parent.parentNode;
+          }
+          orig = node.cloneNode(true);
+          this._nodeCache[cacheKey] = {'parent':parent,'node':orig};
+          parent.removeChild(node);
+        }
+        for(var j = 0; j < data.length; j++){
+          var obj = data[j];
+          var clone = orig.cloneNode(true);
+          if(clone.style.display &&  clone.style.display == 'none'){
+            clone.style.display = '';
+          }
+          parent.appendChild(clone);
+          this._render(prefix, doc, obj, "true");
+          clone.id = clone.id+":rendered";
+          clone.__id = clone.id;
+        }
+      }else{
+        if(node){
+          this._setJSONData(node, o);
+          if(change_id){
+            node.id = v+":rendered";
+            node.__id = v;
+          }
+        }
+      }
+    }
+  },
+  
+  _setTemplate : function(target, data, replace){
+    if(replace){
+      if (target.outerHTML) {
+        target.outerHTML = data;
+      } else {
+        var range = target.ownerDocument.createRange();
+        range.selectNodeContents(target);
+        target.parentNode.replaceChild(range.createContextualFragment(data), target);
+      }            
+    }else{
+      target.innerHTML = data;
+    }
+  },
+  
+  _update : function(from, to, doc){
+    if(!doc){
+      doc = document;
+    }
+    var html = from.innerHTML;
+    var tagName = to.tagName.toUpperCase();
+    if (['THEAD','TBODY','TR','TD'].include(tagName)) {
+      var div = doc.createElement('div');
+      switch (tagName) {
+        case 'THEAD':
+        case 'TBODY':
+          div.innerHTML = '<table><tbody>' +  html.ignoreScripts() + '</tbody></table>';
+          depth = 2;
+          break;
+        case 'TR':
+          div.innerHTML = '<table><tbody><tr>' +  html.ignoreScripts() + '</tr></tbody></table>';
+          depth = 3;
+          break;
+        case 'TD':
+          div.innerHTML = '<table><tbody><tr><td>' +  html.ignoreScripts() + '</td></tr></tbody></table>';
+          depth = 4;
+      }
+      Kumu.toArray(to.childNodes).map(function(node) { to.removeChild(node) });
+      for(var i = 0; i < depth; i++){
+        div = div.firstChild;
+      }
+      Kumu.toArray(div.childNodes).map(function(node) { to.appendChild(node) });
+    } else {
+      to.innerHTML = html.ignoreScripts();
+    }
+  
+  },
+  
+  _renderIframeDoc : function(prefix, url, iframe, data, id, replace){
+    var index = this._templateCache.index || 0;
+    var doc;
+    if(iframe.contentDocument){
+      doc = iframe.contentDocument;
+    }else{
+      doc = iframe.Document;
+    }
+    if(this._templateCache[url]){
+      doc.body.innerHTML = this._templateCache[url];
+      for(var k in this._nodeCache){
+        if(k.startsWith(url)){
+          var orig = this._nodeCache[k]['node'];
+          var eachid = this._nodeCache[k]['node'].id;
+          var eachnode = doc.getElementById(eachid+":rendered");
+          var parent = eachnode.parentNode;
+          if(parent.nodeType == 3){
+            parent = parent.parentNode;
+          }
+          this._nodeCache[k]['parent'] = parent;
+          var clone = eachnode.cloneNode(true);
+          this._update(orig, clone, doc);
+          this._nodeCache[k]['node'] = clone;
+        }
+      }
+    }
+    
+    this._render(prefix, doc, data);
+    var node = document.getElementById(id);
+    if(node){
+      this._setTemplate(node, doc.body.innerHTML, replace);
+      this._templateCache[url] = doc.body.innerHTML;
+      this._templateCache.index = index+1;
+
+      (function(){
+        var parent = iframe.parentNode;
+        if(parent.nodeType == 3){
+          parent = parent.parentNode;
+        }
+        parent.removeChild(iframe);
+      }).delay(50);
+    }
+  }, 
+  
+  _renderTemplate : function(prefix, data, url, id, replace){
+    var scope = this;
+    var index = this._templateCache.index || 0;
+    var iframe = document.createElement('iframe');
+    iframe.setAttribute('id', '_tmpFrame'+index);
+    if(!this._templateCache[url]){
+      iframe.setAttribute('src', url);
+    }
+    iframe.style.display = 'none';
+    if (document.all) {
+      iframe.onreadystatechange = function () {
+        if (this.readyState == "complete") {
+          scope._renderIframeDoc.bindScope(scope)(prefix, url, iframe, data, id, replace);
+          this.onreadystatechange = null;
+        }
+      }
+    } else {
+      iframe.onload = (function(){
+        this._renderIframeDoc(prefix, url, iframe, data, id, replace);
+      }).bindScope(this);
+    }
+    document.body.appendChild(iframe);
+  },
+  
+  removeRender : function(id){
+    var removeId = id+":rendered";
+    var elem = document.getElementById(removeId);
+    while(elem){
+      elem.parentNode.removeChild(elem);
+      elem = document.getElementById(removeId);
+    }
+  }
+
+}
+
+Kumu.JSONSerializer = {
+  
+  serialize:function (o) {
+    var type = typeof (o);
+    if (type == "undefined") {
+      return "undefined";
+    } else {
+      if ((type == "number") || (type == "boolean")) {
+        return o + "";
+      } else {
+        if (o === null) {
+          return "null";
+        }
+      }
+    }
+    if (type == "string") {
+      return o;
+    }
+    if(o.innerHTML){
+      return o.innerHTML;
+    }
+    var me = arguments.callee;
+    if (type != "function" && typeof (o.length) == "number") {
+      var res = [];
+      for (var i = 0; i < o.length; i++) {
+        var val = me(o[i]);
+        if (typeof (val) != "string") {
+          val = "undefined";
+        }
+        res.push(val);
+      }
+      return "[" + res.join(",") + "]";
+    }
+    if (type == "function") {
+      return o.toString();
+    }
+    res = [];
+    for (var k in o) {
+      var useKey;
+      if (typeof k == "number") {
+        useKey = "\"" + k + "\"";
+      } else {
+        if (typeof k == "string") {
+          useKey = k;
+        } else {
+          continue;
+        }
+      }
+      val = me(o[k]);
+      if (val && typeof (val) != "string") {
+        continue;
+      }
+      res.push(useKey + ":" + val);
+    }
+    return "{" + res.join(",") + "}";
+  }
+};
+
+$dump = function(obj){
+  if(obj.innerHTML){
+    obj = obj.innerHTML;
+  }
+  Kumu.log(Kumu.JSONSerializer.serialize(obj));
+}
