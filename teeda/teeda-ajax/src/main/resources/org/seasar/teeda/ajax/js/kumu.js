@@ -361,6 +361,28 @@ Kumu = Kumu.extend(Kumu, {
     }
     return str.replace(new RegExp(Kumu.SCRIPT_RE, 'img'), '');
   },
+
+  extractScripts: function(str) {
+    if(!str){
+      str = this;
+    }
+    var matchAll = new RegExp(Kumu.SCRIPT_RE, 'img');
+    var matchOne = new RegExp(Kumu.SCRIPT_RE, 'im');
+    return Kumu.map(function(scriptTag) {
+      return (scriptTag.match(matchOne) || ['', ''])[1];
+    }, str.match(matchAll) || []);
+  },
+
+  evalScripts: function(str) {
+    if(!str){
+      str = this;
+    }
+    Kumu.map(function(src){
+      if(src && src.length > 0){
+        eval(src);
+      }
+    }, Kumu.extractScripts(str));
+  },
   
   create: function() {
     return function() {
@@ -693,7 +715,9 @@ String.prototype = Kumu.extend(String.prototype,{
   camelize : Kumu.camelize,
   startsWith : Kumu.startsWith,
   endsWith : Kumu.endsWith,
-  ignoreScripts : Kumu.ignoreScripts
+  ignoreScripts : Kumu.ignoreScripts,
+  extractScripts : Kumu.extractScripts,
+  evalScripts : Kumu.evalScripts
 });
 
 Function.prototype.getName = function() {
@@ -1011,14 +1035,14 @@ Kumu.defineClass('Kumu.Template')({
   _setTemplate : function(target, data, replace){
     if(replace){
       if (target.outerHTML) {
-        target.outerHTML = data;
+        target.outerHTML = data.ignoreScripts();
       } else {
         var range = target.ownerDocument.createRange();
         range.selectNodeContents(target);
-        target.parentNode.replaceChild(range.createContextualFragment(data), target);
+        target.parentNode.replaceChild(range.createContextualFragment(data.ignoreScripts()), target);
       }            
     }else{
-      target.innerHTML = data;
+      target.innerHTML = data.ignoreScripts();
     }
   },
   
