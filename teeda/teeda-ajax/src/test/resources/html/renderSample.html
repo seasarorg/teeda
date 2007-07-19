@@ -43,6 +43,16 @@ var o = {
   }]
 }
 
+var options = {};
+options['onInitialize'] = function(){alert('init');};
+options['onLoad'] = function(){alert('load');};
+options['onLoaded'] = function(){alert('loaded');};
+options['onComplete'] = function(){alert('comp');};
+
+var templ1 = new Kumu.Template(options);
+var templ2 = new Kumu.Template('./template.html', options);
+
+
 </script>
 
 <title>AjaxSample</title>
@@ -63,9 +73,12 @@ var o = {
     <td id="name">Test</td>
   </tr>
 </table>
-<input type="button" value="INNER_TEMPLATE_RENDER" onclick="Kumu.Template.render(o);"> 
-<input type="button" value="TEMPLATE_RENDER" onclick="Kumu.Template.render(o, './template.html', 'target');"> 
+<input type="button" value="INNER_TEMPLATE_RENDER" onclick="templ1.render(o);"> 
+<input type="button" value="TEMPLATE_RENDER" onclick="templ2.render(o, 'target');"> 
 <div id="target" ></div>
+<script>
+$dump(templ1);
 
+</script>
 </body>
 </html>

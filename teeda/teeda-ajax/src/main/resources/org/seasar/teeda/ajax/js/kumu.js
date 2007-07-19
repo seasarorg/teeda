@@ -50,6 +50,8 @@ Kumu = Kumu.extend(Kumu, {
   
   _idCache : [],
   
+  _templateId:0,
+  
   getGlobal : function(){
     return _global;
   },
@@ -58,31 +60,36 @@ Kumu = Kumu.extend(Kumu, {
     return (typeof (object || _global)[name] == "undefined");
   },
   
-  provide : function(names, obj){
-    if(names.indexOf('.') == -1){
-      return Kumu._createObjects(names, _global);
-    }
-    
+  provide : function(name, obj){
+    if(name.indexOf('.') == -1){
+      return Kumu._createObject(name, obj);
+    }    
     if(!obj){
-        obj = _global;
+      obj = _global;
     }
+    return Kumu._provide(name, obj);
+  },
+
+  _provide : function(names, ctx){
     if(typeof(names) == 'string'){
       names = Kumu.toArray(names.split('.'));    
-      Kumu.provide(names, obj);
+      return Kumu._provide(names, ctx);
     }else{
       var name = Kumu.shift(names);
       if(name){
-        obj = Kumu._createObject(name, obj);
-        if(obj){
-          Kumu._createObject(names, obj);
+        var obj = Kumu._createObject(name, ctx);
+        if(obj && names.length > 0){
+          return Kumu._provide(names, obj);
+        }else{
+          return ctx;
         }
       }
-      return obj;
+      return ctx;
     }
   },
   
   _createObject : function(name, obj){
-    if(obj){
+    if(!obj){
       obj = _global;
     }
     if(obj && Kumu.undef(name, obj)){
@@ -91,7 +98,24 @@ Kumu = Kumu.extend(Kumu, {
     return obj[name];
   },
   
-  /** curry method **/
+  define : function(name){
+    Kumu.provide(name);
+    eval('var n = '+name);
+    return function(obj){
+      n = Kumu.extend(n, obj);
+    }
+  },
+
+  defineClass : function(name){
+    Kumu.provide(name);
+    eval(name+'=Kumu.create()');
+    eval('var n = '+name);
+    return function(obj){
+      n.prototype = Kumu.extend(n.prototype, obj);
+    }
+  },
+  
+  
   bind : function(func){
     return function(){
       var bind = arguments;
@@ -219,6 +243,9 @@ Kumu = Kumu.extend(Kumu, {
   shift : function(list) {
     if(!list){
       list = this;
+    }
+    if(list.length == 0){
+      return undefined;
     }
     var obj = list[0];
     for (var i = 0; i < list.length-1; i++){
@@ -821,12 +848,30 @@ if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] ==
   }
 }
 
-Kumu.Template = {
-
-  _templateCache:{},
-
-  _nodeCache:{},
-
+Kumu.defineClass('Kumu.Template')({
+    
+  initialize : function(url, options){
+    this._id = Kumu._templateId++;
+    this.redneredSuffix = ':rendered'+this._id;
+    this._nodeCache = {};
+    this._templateCache = {};
+    if(typeof url == 'string'){
+      this.url = url;
+      this.options = options || {};
+    }else{
+      this.options = url || {};
+    }
+    this.append = this.options['append'] || false;
+    this._state = 'Initialize';
+  },
+  
+  _callStateMethod : function(){
+    var cb = this.options['on'+this._state];    
+    if(cb && typeof cb == 'function'){
+      cb();
+    }
+  },
+  
   setStyle : function(element, style) {
     for(var v in style){
       if(v == 'opacity'){
@@ -898,13 +943,16 @@ Kumu.Template = {
     return predata;
   }, 
   
-  render : function(json, url, target, replace){    
-    var self = Kumu.Template;
-    if(url && target){
-      self._renderTemplate.bindScope(this)(url, json, url, target, replace);
+  render : function(json, target, replace){    
+    this._callStateMethod();
+    if(this.url){
+      this._renderTemplate.bindScope(this)(this.url, json, this.url, target, replace);
     }else{
-      self._render.bindScope(this)('inner', document, json);
+      this._render.bindScope(this)('inner', document, json);
     }
+    this._state = 'Complete';
+    this._callStateMethod();
+    this._state = 'Initialize';
   },
     
   _render : function(prefix, doc, json, change_id){
@@ -920,6 +968,9 @@ Kumu.Template = {
         if(this._nodeCache[cacheKey]){
           orig = this._nodeCache[cacheKey]['node'];
           parent = this._nodeCache[cacheKey]['parent'];
+          if(!this.appnd){
+            this.removeRender(orig.id, doc);
+          }
         }else{
           var parent = node.parentNode;
           if(parent.nodeType == 3){
@@ -937,14 +988,14 @@ Kumu.Template = {
           }
           parent.appendChild(clone);
           this._render(prefix, doc, obj, "true");
-          clone.id = clone.id+":rendered";
+          clone.id = clone.id+this.redneredSuffix;
           clone.__id = clone.id;
         }
       }else{
         if(node){
           this._setJSONData(node, o);
           if(change_id){
-            node.id = v+":rendered";
+            node.id = v+this.redneredSuffix;
             node.__id = v;
           }
         }
@@ -1013,7 +1064,7 @@ Kumu.Template = {
         if(k.startsWith(url)){
           var orig = this._nodeCache[k]['node'];
           var eachid = this._nodeCache[k]['node'].id;
-          var eachnode = doc.getElementById(eachid+":rendered");
+          var eachnode = doc.getElementById(eachid+this.redneredSuffix);
           var parent = eachnode.parentNode;
           if(parent.nodeType == 3){
             parent = parent.parentNode;
@@ -1021,6 +1072,7 @@ Kumu.Template = {
           this._nodeCache[k]['parent'] = parent;
           var clone = eachnode.cloneNode(true);
           this._update(orig, clone, doc);
+          clone.id = clone.id.replace(this.redneredSuffix, '');          
           this._nodeCache[k]['node'] = clone;
         }
       }
@@ -1048,37 +1100,48 @@ Kumu.Template = {
     var index = this._templateCache.index || 0;
     var iframe = document.createElement('iframe');
     iframe.setAttribute('id', '_tmpFrame'+index);
+    iframe.setAttribute('border', '0');
+    iframe.setAttribute('height', '0px');
+    iframe.setAttribute('width', '0px');
     if(!this._templateCache[url]){
       iframe.setAttribute('src', url);
     }
     iframe.style.display = 'none';
+    this._state = 'Load';
+    this._callStateMethod();
     if (document.all) {
       iframe.onreadystatechange = function () {
         if (this.readyState == "complete") {
+          scope._state = 'Loaded';
+          scope._callStateMethod();
           scope._renderIframeDoc.bindScope(scope)(prefix, url, iframe, data, id, replace);
           this.onreadystatechange = null;
         }
       }
     } else {
+      this._state = 'Initialize';
       iframe.onload = (function(){
+        this._state = 'Loaded';
+        this._callStateMethod();
         this._renderIframeDoc(prefix, url, iframe, data, id, replace);
       }).bindScope(this);
     }
     document.body.appendChild(iframe);
   },
-  
-  removeRender : function(id){
-    var removeId = id+":rendered";
-    var elem = document.getElementById(removeId);
+
+  removeRender : function(id, doc){
+    doc = doc || document;
+    var removeId = id+this.redneredSuffix;
+    var elem = doc.getElementById(removeId);    
     while(elem){
       elem.parentNode.removeChild(elem);
-      elem = document.getElementById(removeId);
+      elem = doc.getElementById(removeId);
     }
   }
 
-}
+});
 
-Kumu.JSONSerializer = {
+Kumu.define('Kumu.JSONSerializer')({
   
   serialize:function (o) {
     var type = typeof (o);
@@ -1134,7 +1197,7 @@ Kumu.JSONSerializer = {
     }
     return "{" + res.join(",") + "}";
   }
-};
+});
 
 $dump = function(obj){
   if(obj.innerHTML){
