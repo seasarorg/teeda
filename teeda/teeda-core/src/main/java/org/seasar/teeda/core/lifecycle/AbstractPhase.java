@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
+import javax.faces.internal.PhaseUtil;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.teeda.core.util.LifecycleUtil;
@@ -50,6 +51,7 @@ public abstract class AbstractPhase implements Phase {
 
     //If need pre-prePhase or post-prePhase(and also postPhase) action, add method.
     public void execute(FacesContext context) {
+        PhaseUtil.setCurrentPhase(getCurrentPhaseId());
         prePhase(context);
         try {
             executePhase(context);
