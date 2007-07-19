@@ -902,7 +902,12 @@ Kumu.defineClass('Kumu.Template')({
       node.style.display = '';
     }
     if(data['data']){
-      node.innerHTML = data['data'];
+      var tag = node.tagName.toLowerCase();
+      if(tag == 'input'){
+        node.value = data['data'];
+      }else{
+        node.innerHTML = data['data'];
+      }
     }
     if(data['attr']){
       var attrs = data['attr'];

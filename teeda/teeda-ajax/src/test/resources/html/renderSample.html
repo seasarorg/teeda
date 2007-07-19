@@ -69,16 +69,12 @@ var templ2 = new Kumu.Template('./template.html', options);
   </tr>
   <tr id='test2' style="display:none">
     <td>増えるわかめちゃんTest</td>
-    <td id="no">Test</td>
+    <td ><input id="no" type="text" value="" /></td>
     <td id="name">Test</td>
   </tr>
 </table>
 <input type="button" value="INNER_TEMPLATE_RENDER" onclick="templ1.render(o);"> 
 <input type="button" value="TEMPLATE_RENDER" onclick="templ2.render(o, 'target');"> 
 <div id="target" ></div>
-<script>
-$dump(templ1);
-
-</script>
 </body>
 </html>
