@@ -26,6 +26,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.PhaseUtil;
 import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -46,11 +47,23 @@ public class TCondition extends UIComponentBase {
 
     private Boolean renderSpan = null;
 
+    private Boolean refresh;
+
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public boolean isRendered() {
+        final PhaseId phaseId = PhaseUtil.getCurrentPhase();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final boolean noError = !context.getMessages().hasNext();
+        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
+                : false;
+        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)
+                && (isRefresh || noError)) {
+            clearEncodedCondition();
+            return super.isRendered();
+        }
         Boolean condition = getEncodedCondition();
         if (condition != null) {
             return condition.booleanValue();
@@ -158,16 +171,32 @@ public class TCondition extends UIComponentBase {
         this.renderSpan = new Boolean(renderSpan);
     }
 
+    public boolean isRefresh() {
+        if (refresh != null) {
+            return refresh.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("refresh");
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setRefresh(boolean ref) {
+        this.refresh = new Boolean(ref);
+    }
+
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         renderSpan = (Boolean) values[1];
+        refresh = (Boolean) values[2];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[7];
+        Object[] values = new Object[3];
         values[0] = super.saveState(context);
         values[1] = renderSpan;
+        values[2] = refresh;
         return values;
     }
 

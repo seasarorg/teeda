@@ -42,6 +42,7 @@ public class TConditionRenderer extends AbstractRenderer {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
         attribute.addAttributeName(ExtensionConstants.SUBMITTED);
         attribute.addAttributeName(ExtensionConstants.RENDERSPAN_ATTR);
+        attribute.addAttributeName("refresh");
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)

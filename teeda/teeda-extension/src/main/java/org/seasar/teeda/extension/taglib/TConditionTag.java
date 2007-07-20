@@ -28,6 +28,8 @@ public class TConditionTag extends UIComponentTagBase {
 
     private String renderSpan;
 
+    private String refresh;
+
     public TConditionTag() {
     }
 
@@ -43,6 +45,7 @@ public class TConditionTag extends UIComponentTagBase {
         super.setProperties(component);
         setComponentProperty(component, ExtensionConstants.RENDERSPAN_ATTR,
                 renderSpan);
+        setComponentProperty(component, "refresh", refresh);
     }
 
     public void setRenderSpan(String renderSpan) {
@@ -51,6 +54,14 @@ public class TConditionTag extends UIComponentTagBase {
 
     public String getRenderSpan() {
         return renderSpan;
+    }
+
+    public String getRefresh() {
+        return refresh;
+    }
+
+    public void setRefresh(String refresh) {
+        this.refresh = refresh;
     }
 
 }
