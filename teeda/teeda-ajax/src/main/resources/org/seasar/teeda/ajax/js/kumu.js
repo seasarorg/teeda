@@ -115,7 +115,6 @@ Kumu = Kumu.extend(Kumu, {
     }
   },
   
-  
   bind : function(func){
     return function(){
       var bind = arguments;
@@ -690,9 +689,49 @@ Kumu = Kumu.extend(Kumu, {
       n.cached = true;
     },_idCache[id] );
     return Kumu._idCache[id];
-  }
+  },
   
+  operator: {
+    // unary logic operators
+    truth: function (a) { return !!a; }, 
+    lognot: function (a) { return !a; },
+    identity: function (a) { return a; },
+
+    // bitwise unary operators
+    not: function (a) { return ~a; },
+    neg: function (a) { return -a; },
+
+    // binary operators
+    add: function (a, b) { return a + b; },
+    sub: function (a, b) { return a - b; },
+    div: function (a, b) { return a / b; },
+    mod: function (a, b) { return a % b; },
+    mul: function (a, b) { return a * b; },
+
+    // bitwise binary operators
+    and: function (a, b) { return a & b; },
+    or: function (a, b) { return a | b; },
+    xor: function (a, b) { return a ^ b; },
+    lshift: function (a, b) { return a << b; },
+    rshift: function (a, b) { return a >> b; },
+    zrshift: function (a, b) { return a >>> b; },
+
+    // near-worthless built-in comparators
+    eq: function (a, b) { return a == b; },
+    ne: function (a, b) { return a != b; },
+    gt: function (a, b) { return a > b; },
+    ge: function (a, b) { return a >= b; },
+    lt: function (a, b) { return a < b; },
+    le: function (a, b) { return a <= b; },
+
+    // binary logical operators
+    logand: function (a, b) { return a && b; },
+    logor: function (a, b) { return a || b; },
+    contains: function (a, b) { return b in a; }
+  }
+    
 });
+
 
 /** global option **/
 var $i = Kumu.$i;
@@ -725,8 +764,10 @@ Function.prototype.getName = function() {
   return ret.substring(0,ret.length-1);
 }
 
-Function.prototype.bind = function() {
-  return Kumu.bind(this);
+Function.prototype.partial = function() {
+  var func = Kumu.bind(this);
+  var args = Kumu.toArray(arguments);
+  return func.apply(this, args);
 }
 
 Function.prototype.bindScope = function() {
@@ -1113,7 +1154,6 @@ Kumu.defineClass('Kumu.Template')({
       this._setTemplate(node, doc.body.innerHTML, replace);
       this._templateCache[url] = doc.body.innerHTML;
       this._templateCache.index = index+1;
-
       (function(){
         var parent = iframe.parentNode;
         if(parent.nodeType == 3){
@@ -1227,6 +1267,196 @@ Kumu.define('Kumu.JSONSerializer')({
     return "{" + res.join(",") + "}";
   }
 });
+
+Kumu.define('Kumu.FormHelper')({
+
+  getValue : function(element){
+    return Kumu.FormHelper.Serializer[element.tagName.toLowerCase()](element);            
+  },
+
+  getItem : function(form, element){
+    if (typeof form == 'string'){
+      form = document.getElementById(form);
+    }
+    var formId = form.getAttribute('id');
+    var name = element.name;
+    var names = name.split(':');
+    if(names && names.length > 0){            
+      var child_name = names[names.length-1];
+      if(child_name.indexOf(formId) == 0){
+        return null;            
+      }else{
+        var count = names[names.length-2];
+        if(count == formId){
+          return null;
+        }else{
+          var f = Kumu.FormHelper.create(form, 't');
+          return f[names[names.length-3]][count];
+        }
+      }
+    }
+  },
+    
+  getItemsIndex : function(form, element){
+    if (typeof form == 'string'){
+      form = document.getElementById(form);
+    }
+    var formId = form.getAttribute('id');
+    var name = element.name;
+    var names = name.split(':');
+    if(names && names.length > 0){            
+      var child_name = names[names.length-1];
+      if(child_name.indexOf(formId) == 0){
+        return null;            
+      }else{
+        var count = names[names.length-2];
+        if(count == formId){
+          return null;
+        }else{
+          return count;
+        }
+      }
+    }
+  },
+    
+  create : function(form, type, hash){
+    if(!type){
+      type = 'r';
+    }
+    if(!hash){
+      hash = false;
+    }
+    if (typeof form == 'string'){
+      form = document.getElementById(form);
+    }
+
+    var result = {};
+    var formId = form.getAttribute('id');    
+    var nodes = form.getElementsByTagName('*');
+    Kumu.toArray(nodes).map(function(node){
+      if(!node.disabled && node.name){
+        var name;
+        var value = Kumu.FormHelper.Serializer[node.tagName.toLowerCase()](node);
+        if(type == 'i'){
+          name = node.id;
+        }else if(type == 't'){
+          name = node.name;
+          names = name.split(':');
+          if(names && names.length > 0){            
+            var child_name = names[names.length-1];
+            if(child_name.indexOf(formId) == 0){
+              name = child_name;            
+            }else{
+              var count = names[names.length-2];
+              if(count == formId){
+                name = child_name;
+              }else{
+                name = names[names.length-3];
+              }
+            }            
+          }
+        }else{
+          name = node.name;
+        }
+        if (name && value != undefined) {
+          var o = result[name];
+          if (o) {
+            if(type != 't'){
+              if(typeof o != 'Array'){
+                result[name] = [o];
+              }
+              result[name].push(value);
+            }else{  
+              if(node.tagName.toLowerCase() == 'input' && name.endsWith('Items')){
+                if(result[name][count]){
+                  result[name][count][child_name] = value;
+                }else{
+                  var child = {};
+                  child[child_name] = value;
+                  result[name][count] = child;
+                }                
+              }else{
+                if(typeof o != 'Array'){
+                  result[name] = [o];
+                }
+                result[name].push(value);
+              }
+            }
+          }else{
+            if(type != 't'){
+              result[name] = value;
+            }else{
+              if(node.tagName.toLowerCase() == 'input' && name.endsWith('Items')){
+                var child = {};
+                child[child_name] = value;
+                result[name] = [child];                
+              }else{
+                result[name] = value;
+              }
+            }
+          }
+        }
+      }
+    });
+    return result;
+    //return hash ? Kumu.Ajax.toQueryString(result) : result;
+  }    
+});
+
+Kumu.define('Kumu.FormHelper.Serializer')({
+
+  input : function(element){  
+    switch(element.type.toLowerCase()){
+      case 'checkbox':
+      case 'radio':
+        return Kumu.FormHelper.Serializer._getCheckedValue(element);        
+      default:
+        return Kumu.FormHelper.Serializer.textarea(element);
+    }
+  },
+  
+  _getCheckedValue: function(element) {
+    return element.checked ? element.value : null;
+  },
+  
+  textarea : function(element){
+    return element.value;
+  },
+  
+  select: function(element) {
+    if(element.type == 'select-one'){
+      return Kumu.FormHelper.Serializer._getSelectOneValue(element);
+    }else{
+      return Kumu.FormHelper.Serializer._getSelectManyValue(element);
+    } 
+  },
+
+  _getSelectOneValue: function(element) {
+    var index = element.selectedIndex;
+    if(index >= 0){
+      return Kumu.FormHelper.Serializer._getOptionValue(element.options[index]);
+    }
+    return null;
+  },
+
+  _getSelectManyValue: function(element) {
+    var values = [];
+    for (var i = 0; i < element.length; i++) {
+      var opt = element.options[i];
+      if (opt.selected) {
+        values.push(Kumu.FormHelper.Serializer._getOptionValue(opt));
+      }
+    }
+    return values;
+  },
+  
+  _getOptionValue: function(option) {
+    var v = option.getAttribute('value')
+    return v ? option.value : option.text;
+  }
+  
+});
+
 
 $dump = function(obj){
   if(obj.innerHTML){
