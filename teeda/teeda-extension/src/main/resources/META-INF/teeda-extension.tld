@@ -3713,4 +3713,29 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+	<tag>
+		<name>link</name>
+		<tag-class>
+			org.seasar.teeda.extension.taglib.TLinkTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>rel</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>src</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
 </taglib>

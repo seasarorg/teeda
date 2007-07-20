@@ -48,6 +48,7 @@ import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.UITitle;
 import org.seasar.teeda.extension.component.html.THtmlHead;
+import org.seasar.teeda.extension.component.html.THtmlLink;
 import org.seasar.teeda.extension.component.html.THtmlScript;
 import org.seasar.teeda.extension.component.html.THtmlStyle;
 import org.seasar.teeda.extension.helper.PathHelper;
@@ -156,6 +157,7 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
         UIComponent title = null;
         List styleList = new ArrayList();
         List scriptList = new ArrayList();
+        List linkList = new ArrayList();
         while (parent != null) {
             UIComponent body = UIComponentUtil.findDescendant(child,
                     UIBody.class);
@@ -170,6 +172,8 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
                         THtmlStyle.class);
                 scriptList = UIComponentUtil.collectDescendants(head,
                         THtmlScript.class);
+                linkList = UIComponentUtil.collectDescendants(head,
+                        THtmlLink.class);
             }
             pushIncludedBody(context, new IncludedBody(child.getViewId(), body
                     .getChildren()));
@@ -187,6 +191,9 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
             }
             if (scriptList.size() > 0) {
                 head.getChildren().addAll(scriptList);
+            }
+            if (linkList.size() > 0) {
+                head.getChildren().addAll(linkList);
             }
             if (title != null) {
                 boolean foundTitle = replaceComponent(head, title);
