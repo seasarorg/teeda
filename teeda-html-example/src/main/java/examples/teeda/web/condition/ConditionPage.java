@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,13 +20,21 @@ package examples.teeda.web.condition;
  */
 public class ConditionPage {
 
-	public static final String hoge_lengthValidator = "minimum=3";
-
 	private int hoge;
 
-	private Boolean aaa = null;
+	private String aaa = null;
 
-	private Boolean bbb = null;
+	private String bbb = null;
+
+	private Boolean foo;
+
+	public Boolean getFoo() {
+		return foo;
+	}
+
+	public void setFoo(Boolean foo) {
+		this.foo = foo;
+	}
 
 	public int getHoge() {
 		return hoge;
@@ -37,27 +45,33 @@ public class ConditionPage {
 	}
 
 	public String initialize() {
-		aaa = Boolean.TRUE;
 		return null;
 	}
 
-	public void setAaa(Boolean aaa) {
+	public void setAaa(String aaa) {
 		this.aaa = aaa;
 	}
 
-	public Boolean isAaa() {
+	public String getAaa() {
 		return aaa;
 	}
 
-	public Boolean isBbb() {
+	public String getBbb() {
 		return bbb;
 	}
 
-	public void setBbb(Boolean bbb) {
+	public void setBbb(String bbb) {
 		this.bbb = bbb;
 	}
 
 	public String doHoge() {
+		if (hoge <= 100) {
+			foo = Boolean.TRUE;
+			aaa = "AAA";
+		} else {
+			foo = Boolean.FALSE;
+			aaa = "BBB";
+		}
 		return null;
 	}
 }

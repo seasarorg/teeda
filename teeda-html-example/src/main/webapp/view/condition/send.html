@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja" xmlns:te="http://www.seasar.org/teeda/extension">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form id="sendForm">
+<div id="isDisplayReplyMsg" te:refresh="true">
+<p>返信メッセージ「<span id="replyMsg" />」を受信しました．</p>
+</div>
+<div>
+送信メッセージを入力してください <input type="text" id="sendMsg" /> <span id="sendMsgMessage" /><br />
+返信メッセージを受信する場合はチェックしてください <input type="checkbox" id="needReply" /><br />
+<input type="submit" id="doSend" value="送信" />
+<!--
+<input type="hidden" id="replyMsg-hidden" />
+ -->
+</div>
+</form>
+</body>
+</html>
