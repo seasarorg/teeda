@@ -112,4 +112,39 @@ public class ConditionTest extends TeedaWebTestCase {
 		pos = src.indexOf(s1, pos);
 		assertTrue(pos >= 0);
 	}
+
+	public void testCondition2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition2.html");
+		tester.dumpHtml();
+
+		tester.submitById("doHoge");
+
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementPresentById("aaa-1");
+		tester.assertTextPresent("true");
+
+		tester.setTextById("hoge", "111");
+		tester.submitById("doHoge");
+
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementPresentById("aaa-2");
+		tester.assertTextPresent("false");
+
+		tester.setTextById("hoge", "a");
+		tester.submitById("doHoge");
+
+		tester.assertElementPresentById("allMessages");
+		tester.assertElementPresentById("aaa-2");
+		tester.assertTextPresent("false");
+
+	}
+
 }
