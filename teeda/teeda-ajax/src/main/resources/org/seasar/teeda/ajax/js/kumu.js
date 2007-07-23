@@ -764,7 +764,7 @@ Function.prototype.getName = function() {
   return ret.substring(0,ret.length-1);
 }
 
-Function.prototype.partial = function() {
+Function.prototype.curry = function() {
   var func = Kumu.bind(this);
   var args = Kumu.toArray(arguments);
   return func.apply(this, args);
