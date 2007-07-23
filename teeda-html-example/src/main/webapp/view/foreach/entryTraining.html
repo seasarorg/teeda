@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../../css/global.css"/>
+</head>
+<body>
+<style type="text/css">
+<!--
+.openCountNormal {
+	color: black;
+	font-weight: bold;
+}
+.openCountSmall {
+	color: orange;
+	font-weight: bold;
+}
+.openCountZero {
+	color: red;
+	font-weight: bold;
+}
+-->
+</style>
+<form id="Form" method="post">
+<div align="left">
+	<span class="p1"><span class="headline">研修申し込み</span></span>
+	<br /><br />
+	<span class="p1">
+		研修名：<span id="trainingName" class="HEADER">ＳＶ研修（ＬＴ向け）</span>
+	</span>
+	<hr width="98%" />
+	<span class="p2">
+		コースを選択してください<br />
+		<table class="borderTable p2" cellspacing="1">
+			<tr>
+				<td class="headerCellStyle">コース名</td>
+				<td class="headerCellStyle">説明</td>
+				<td class="headerCellStyle">状態</td>
+			</tr>
+			<tbody id="courceItems">
+				<tr>
+					<td class="cellStyle"><a href="entryTraining.html?trainingID=123&courceID=456" id="goLesson" ><span id="courceName">Zコース</span>&nbsp;</a></td>
+					<td class="cellStyle"><span id="courceDescription" /></td>
+					<td class="cellStyle">&nbsp;<span id="status" >状態</span>&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+	</span>
+	<div id="isViewLesson">
+		<hr width="98%" />
+		<span class="p2">
+			コース：&nbsp;<span id="courceName" class="HEADER"/>&nbsp;<span id="courceDescription" class="HEADER"/><br /><br />
+		</span>
+		<table class="borderTable p3" cellspacing="1">
+			<tr>
+				<td class="headerCellStyle">講義</td>
+				<td class="headerCellStyle">場所</td>
+				<td class="headerCellStyle">担当講師</td>
+				<td class="headerCellStyle">日付</td>
+			</tr>
+			<tbody id="lessonItems">
+				<tr>
+				
+				<div id="isEnabledEntry">
+				<td class="cellStyle"><a href="confirmEntryTraining.html?trainingID=123&courceID=456&lessonID=789" id="goConfirm" ><span id="lessonName">講義</span></a></td>
+				</div>
+				<div id="isNotEnabledEntry">
+				<td class="cellStyle"><span id="lessonName">講義</span></td>
+				</div>
+				
+				<td class="cellStyle" align="left"><span id="trainingRoomName" >重工ビル10F Training Room C</span></td>
+				<td class="cellStyle">&nbsp;<span id="instructorsName">松山 川瀬 齋田</span>&nbsp;</td>
+				<td class="cellStyle" align="right"><span id="lessonDate" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div><span id="messages" class="ERRORMESSAGE" /></div>
+</div>
+<input type="hidden" id="trainingID" />
+<input type="hidden" id="courceID" />
+</form>
+</body>
+</html>
