@@ -22,6 +22,8 @@ public class Foo2Page {
     private String aaa;
 
     private int bbb;
+    
+    private AaaDto aaaDto;
 
     /**
      * @return Returns the bbb.
@@ -56,5 +58,19 @@ public class Foo2Page {
 
     public String doBbb() {
         return null;
+    }
+
+    /**
+     * @return Returns the aaaDto.
+     */
+    public AaaDto getAaaDto() {
+        return aaaDto;
+    }
+
+    /**
+     * @param aaaDto The aaaDto to set.
+     */
+    public void setAaaDto(AaaDto aaaDto) {
+        this.aaaDto = aaaDto;
     }
 }

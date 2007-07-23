@@ -36,6 +36,7 @@ import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
+import org.seasar.teeda.extension.html.impl.page.AaaDto;
 import org.seasar.teeda.extension.html.impl.page.Foo2Page;
 import org.seasar.teeda.extension.html.impl.page.Foo3Page;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
@@ -349,6 +350,40 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertTrue(((Integer) requestMap.get("num")).intValue() == 2);
         assertNotNull(requestMap.get("ccc"));
         assertTrue(requestMap.get("ccc") instanceof String[][]);
+    }
+
+    public void testGetNextPageProperties() throws Exception {
+        SessionPagePersistence spp = new SessionPagePersistence();
+        HtmlSuffixImpl htmlSuffix = new HtmlSuffixImpl();
+        spp.setHtmlSuffix(htmlSuffix);
+        NamingConventionImpl convention = new NamingConventionImpl();
+        convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
+        String rootPath = "/"
+                + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        convention.setViewRootPath(rootPath);
+        convention.setViewExtension(".html");
+        spp.setNamingConvention(convention);
+        PageDescCacheImpl pageDescCache = new PageDescCacheImpl();
+        pageDescCache.setNamingConvention(convention);
+        pageDescCache.setContainer(getContainer());
+        pageDescCache.setHtmlSuffix(htmlSuffix);
+        spp.setPageDescCache(pageDescCache);
+        ActionDescCacheImpl actionDescCache = new ActionDescCacheImpl();
+        actionDescCache.setNamingConvention(convention);
+        actionDescCache.setContainer(getContainer());
+        actionDescCache.setHtmlSuffix(htmlSuffix);
+        spp.setActionDescCache(actionDescCache);
+        register(FooPage.class, "fooPage");
+        register(Foo2Page.class, "foo2Page");
+        String path = rootPath + "/foo.html";
+        String path2 = rootPath + "/foo2.html";
+        PageDesc pageDesc = pageDescCache.createPageDesc(path);
+        pageDescCache.createPageDesc(path2);
+        register(AaaDto.class, "aaaDto");
+        FacesContext context = getFacesContext();
+        context.getViewRoot().setViewId(path);
+        Map map = spp.getNextPageProperties(pageDesc, path2);
+        assertFalse(map.containsKey("aaaDto"));
     }
 
     private static class MockPageDescCache implements PageDescCache {

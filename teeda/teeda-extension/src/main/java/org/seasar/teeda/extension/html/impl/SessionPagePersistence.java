@@ -34,6 +34,8 @@ import javax.faces.internal.scope.SubApplicationScope;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.framework.container.ComponentDef;
+import org.seasar.framework.container.deployer.InstanceDefFactory;
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.log.Logger;
@@ -201,6 +203,19 @@ public class SessionPagePersistence implements PagePersistence {
             }
             if (pageDesc.isPageScopeProperty(propertyName)) {
                 continue;
+            }
+            if (propertyName.endsWith(namingConvention.getDtoSuffix())) {
+                ComponentDef cd = DIContainerUtil
+                        .getComponentDefNoException(propertyName);
+                if (cd == null) {
+                    cd = DIContainerUtil.getComponentDefNoException(pd
+                            .getPropertyType());
+                }
+                if (cd != null
+                        && cd.getInstanceDef().equals(
+                                InstanceDefFactory.SESSION)) {
+                    continue;
+                }
             }
             map.put(propertyName, pd.getPropertyType());
         }

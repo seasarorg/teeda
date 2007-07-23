@@ -43,6 +43,8 @@ public class FooPage {
 
     private Double eee;
 
+    private AaaDto aaaDto;
+
     public Double getEee() {
         return eee;
     }
@@ -125,6 +127,20 @@ public class FooPage {
 
     public void setDddItems(String dddItems) {
         this.dddItems = dddItems;
+    }
+
+    /**
+     * @return Returns the aaaDto.
+     */
+    public AaaDto getAaaDto() {
+        return aaaDto;
+    }
+
+    /**
+     * @param aaaDto The aaaDto to set.
+     */
+    public void setAaaDto(AaaDto aaaDto) {
+        this.aaaDto = aaaDto;
     }
 
 }
