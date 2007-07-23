@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it;
+package org.seasar.teeda.it.render;
 
 import junit.framework.Test;
 

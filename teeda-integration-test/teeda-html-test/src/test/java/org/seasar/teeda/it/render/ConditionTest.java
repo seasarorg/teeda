@@ -147,4 +147,20 @@ public class ConditionTest extends TeedaWebTestCase {
 
 	}
 
+	public void testConditionInput() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/conditionInput.html");
+		tester.dumpHtml();
+
+		tester.setTextById("bbb", "hogehoge");
+
+		tester.submitById("doExec");
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/condition/conditionResult.html") > 0);
+		tester.assertTextEqualsById("bbb", "hogehoge");
+	}
 }
