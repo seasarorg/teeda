@@ -29,20 +29,28 @@
 <!-- don't edit end -->
 <!-- document start -->
 <br/>
+<div class="admonition- admonition">
+<p class="first admonition-title">注意点</p>
+<p class="last">現バージョンよりajax.jsにあったFormの値を取得する機能、</p>
+<p class="last">JSONの文字列化機能をkumu.jsに移行しています。</p>
+</div>
 <h2><a id="id1" name="id1">Kumuとは</a></h2>
 <p>Kumuはjavascriptをより簡単に記述できるように作られたjavascriptのライブラリです。</p>
 <p>Kumuは以下のような機能を提供します。</p>
 <ol class="arabic simple">
-<li>ショートカット関数</li>
+<li>ショートカットメソッド</li>
 <li>既存のFunction拡張</li>
-<li>動的なjavascriptファイルの読み込み</li>
+<li>動的なjsファイルの読み込み</li>
 <li>イベント処理、および管理</li>
 <li>Ajax</li>
 <li>テーブルのソート</li>
 <li>二重サブミット防止機能</li>
 <li>DOM操作のヘルパー</li>
-<li>javascriptによるバリデータ</li>
+<li>jsによるバリデータ</li>
 <li>レイアウト機能</li>
+<li>テンプレート機能</li>
+<li>Formからの値の取得</li>
+<li>JSON文字列化</li>
 </ol>
 <p>Kumuは複数のファイルから構成されており、機能ごとにファイルが分かれています。</p>
 <ul class="simple">
@@ -55,16 +63,18 @@
 </ul>
 <p>では各ライブラリについて詳細な解説をしていきます。</p>
 </div>
+
 <div class="section">
-<h2><a id="id2" name="id2">Kumu</a></h2>
+<h3><a id="id2" name="id2">Kumu</a></h3>
 <p>Kumuは基本的な機能を提供します。</p>
-<p>よく使う関数などをショートカット関数として提供しています。</p>
+<p>よく使う関数などをショートカットメソッドとして提供しています。</p>
+<p>またプロトタイピング開発時に使用できる機能も提供します。</p>
 <p>Kumuではなるべくglobalな領域を汚さないようにしているため関数は全て名前空間 Kumu で始まります。</p>
 </div>
 <div class="section">
 <h3><a id="id3" name="id3">ショートカット</a></h3>
-<p>Kumuではよく使う関数のショートカット関数を提供しています。</p>
-<p>特に要素を特定する関数は簡単に呼びだす事ができます。</p>
+<p>Kumuではよく使うメソッドのショートカットメソッドを提供しています。</p>
+<p>特に要素を特定するメソッドは簡単に呼びだす事ができます。</p>
 <ul class="simple">
 <li>$i = document.getElementByIdのショートカット</li>
 <li>$t = document.getElementByTagNameのショートカット</li>
@@ -78,7 +88,7 @@ var foo_list = $i('foo');
 </div>
 <div class="section">
 <h3><a id="javascript-load" name="javascript-load">javascriptのload</a></h3>
-<p>Kumuでは他のファイル同士の依存を解決させるためjavascriptをloadingする機能を持っています。</p>
+<p>Kumuでは他のjsファイル同士の依存を解決させるためjsをlodingする機能を持っています。</p>
 <pre class="literal-block">
 //foo.jsを読み込む
 Kumu.staticLoad('foo');
@@ -95,7 +105,7 @@ Kumu.dynamicLoad('foo.bar');
 <li>staticLoad</li>
 <li>dynamicLoad</li>
 </ul>
-<p>loadできるjsファイルはkumu.jsと同ディレクトリ内、あるいはkumu.jsの下位ディレクトリのjavascriptファイルです。</p>
+<p>loadできるjsファイルはkumu.jsと同ディレクトリ内、あるいはkumu.jsの下位ディレクトリのjsファイルです。</p>
 <p>load対象のjsがkumuと同ディレクトリ内にある場合には</p>
 <pre class="literal-block">
 Kumu.staticLoad([.jsを抜いたファイル名]);
@@ -103,17 +113,17 @@ Kumu.staticLoad([.jsを抜いたファイル名]);
 <p>また下位ディレクトリにある場合はパスのスラッシュ( / )をピリオド（ . )にして指定します。</p>
 <div class="section">
 <h3><a id="staticload" name="staticload">staticLoad</a></h3>
-<p>staticLoadは静的にjavascriptファイルを読み込みます。</p>
+<p>staticLoadは静的にjsファイルを読み込みます。</p>
 <p>staticLoadはscriptタグを出力してファイルを読み込みます。</p>
-<p>そのためstaticLoadを呼び出したjavascriptファイル内で読み込んだjsファイルの機能を使う事はできません。</p>
+<p>そのためstaticLoadを呼び出したjsファイル内で読み込んだjsファイルの機能を使う事はできません。</p>
 <p>それは出力したscriptタグはその場ですぐには評価されないためです。</p>
-<p>（staticLoadを呼び出したjavascriptファイルの解析後に読み込まれる）</p>
+<p>（staticLoadを呼び出したjsファイルの解析後に読み込まれる）</p>
 </div>
 <div class="section">
 <h3><a id="dynamicload" name="dynamicload">dynamicLoad</a></h3>
-<p>dynamicLoadは動的にjavascriptファイルを読み込みます。</p>
-<p>dynamicLoadは読みこんだjavascriptファイルをその場で評価し、使う事ができます。</p>
-<p>但し、dynamicLoadができるjavascriptファイルは正しくevalできるjavascriptファイルでなければいけません。</p>
+<p>dynamicLoadは動的にjsファイルを読み込みます。</p>
+<p>dynamicLoadは読みこんだjsファイルをその場で評価し、使う事ができます。</p>
+<p>但し、dynamicLoadができるjsファイルは正しくevalできるjsファイルでなければいけません。</p>
 </div>
 </div>
 <div class="section">
@@ -170,7 +180,29 @@ test({name:'foo', text:'value'});
 <p>そのため、thisの値を一定にするためにbindScopeを使用します。</p>
 </div>
 <div class="section">
-<h3><a id="id6" name="id6">関数のトレース</a></h3>
+<h3><a id="id6" name="id6">ログ機能</a></h3>
+<p>Kumuにはデバッグ用にログ出力する関数があります。</p>
+<p>ログ出力はbody要素の一番最後に追加されて出力されます。</p>
+<pre class="literal-block">
+// HTMLの最後にtestと出力されます
+Kumu.log('test');
+</pre>
+<p>上記のlog関数には文字列を指定しなくてはなりません。</p>
+<p>objectをデバッグしたい場合には$dump関数を使用します。</p>
+<p>$dump関数はobjectをシリアライズしてログ出力を行います。</p>
+<pre class="literal-block">
+var o = {'id':'teeda', 'value':'test'};
+
+$dump(o);
+</pre>
+<div class="admonition-dump admonition">
+<p class="first admonition-title">$dump可能なもの</p>
+<p>$dumpは再帰的にobjectをシリアライズ化してログ出力をします。</p>
+<p class="last">そのため、循環参照を行っているobjectなどを渡すとスタックオーバーフローが発生します。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="id7" name="id7">関数のトレース</a></h3>
 <p>Kumuにはデバッグ用に関数をトレースする関数があります。</p>
 <p>トレース用の関数を使用するとhtmlに実行時のログが出力されます。</p>
 <pre class="literal-block">
@@ -181,9 +213,8 @@ var test = function(x, y){
 test = Kumu.trace(test);
 </pre>
 </div>
-
 <div class="section">
-<h3><a id="id7" name="id7">レイアウト機能</a></h3>
+<h3><a id="experimental" name="experimental">レイアウト機能(experimental)</a></h3>
 <p>Kumuではmayaaやteedaのincludeに近いレイアウト機能を提供しています。</p>
 <p>多くのフレームワークでレイアウトやincludeする機能は存在しますが、UIなどのHTML作成時に使用するにはわざわざフレームワークを通してレンダリングするなど難があります。</p>
 <p>Kumuではそういったわずらわしい作業を簡素化するためレイアウト機能を提供しています。</p>
@@ -289,11 +320,640 @@ test = Kumu.trace(test);
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
+<p>レンダリング結果:</p>
+<pre class="literal-block">
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;meta content=&quot;ja&quot; http-equiv=&quot;Content-Language&quot;/&gt;
+  &lt;meta content=&quot;text/html; charset=UTF-8&quot; http-equiv=&quot;Content-Type&quot;/&gt;
+  &lt;script src=&quot;./js/kumu.js?mockInclude=true&amp;layout=./layout.html&quot; type=&quot;text/javascript&quot; &quot;&gt;
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;HEADER&lt;/p&gt;
+&lt;p&gt;ここからchild&lt;/p&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+  &lt;form&gt;
+  レイアウト
+  &lt;table style=&quot;width: 100%;&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr&gt;
+  &lt;td&gt;ボタンだよ&lt;/td&gt;
+  &lt;td&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;/form&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;FOOTER&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<div class="admonition- admonition">
+<p class="first admonition-title">レイアウト機能について</p>
+<p class="last">この機能は実験的な機能です。
+そのため、UIモック以外で使用すると予期しない動作を引き起こす可能性があります。</p>
 </div>
 </div>
-
+</div>
 <div class="section">
-<h3><a id="id7" name="id7">リファレンス</a></h3>
+<h3><a id="html-experimental" name="html-experimental">HTMLテンプレート機能(experimental)</a></h3>
+<p>Kumuのインクルード機能は外部のHTMLファイルを読み込むことができても中の値を変える事はできません。</p>
+<p>そのためKumuはteedaやmayaaに近い簡易テンプレート機能を備えています。</p>
+<p>テンプレート機能を使うとAjaxで取得した値などを簡単にHTMLに変換、表示する事ができます。</p>
+<p>テンプレート自身もHTMLでそのまま記述できるため、ブラウザでそのままプレビューする事が出来ます。</p>
+<div class="section">
+<h3><a id="id9" name="id9">テンプレートクラス</a></h3>
+<p>テンプレート機能を使用するにはKumu.Templateクラスを使用します。</p>
+<pre class="literal-block">
+var tmpl1 = new Kumu.Template();
+tmpl1.render(data);
+</pre>
+<p>Templateクラスはコンストラクタに外部HTMLのurlを渡す事ができます。</p>
+<p>外部テンプレートを使用する際にはそちらを使用して下さい。</p>
+<p>（外部テンプレートについては後述）</p>
+<p>またtemplateはレンダリングのフェーズに合わせてコールバック関数を呼ぶ事ができます。</p>
+<ul class="simple">
+<li>onInitialize -- 初期化時</li>
+<li>onLoad -- 外部テンプレート読み込み時</li>
+<li>onLoaded -- 外部テンプレート読み込み完了時</li>
+<li>onComplete -- レンダリング完了時</li>
+</ul>
+<p>コールバック関数をセットするにはコンストラクタでoptionの値をセットします。</p>
+<pre class="literal-block">
+var options = {};
+options['onInitialize'] = function(){alert('init');};
+options['onLoad'] = function(){alert('load');};
+options['onLoaded'] = function(){alert('loaded');};
+options['onComplete'] = function(){alert('comp');};
+
+var tmpl1 = new Kumu.Template(options);
+//外部テンプレートの場合
+var tmpl2 = new Kumu.Template('./template.html', options);
+</pre>
+<p>その他、以下のようなoptionがあります。</p>
+<ul class="simple">
+<li>append -- 追加モード。繰り返し部を前回の値を保持し、さらに追加する</li>
+</ul>
+<p>レンダリングの実行はrenderメソッドを使用します。</p>
+<pre class="literal-block">
+var data = {
+  'test':'データ'
+}
+var tmpl1 = new Kumu.Template();
+tmpl1.render(data);
+</pre>
+<p>renderメソッドにはデータであるJSONを渡します。</p>
+<p>外部テンプレートを使用する際にはその他に位置を渡す必要があります。</p>
+<p>renderメソッドは以下の引き数を取ります。</p>
+<ul class="simple">
+<li>data -- データ（JSON）</li>
+<li>target -- 外部テンプレートをレンダリングした結果を入れる要素（idで指定)</li>
+<li>replace -- 外部テンプレートをレンダリングした結果を入れる要素を置き換え、trueならば置き換え（省略可）</li>
+</ul>
+</div>
+<div class="section">
+<h3><a id="id10" name="id10">レンダリング</a></h3>
+<p>テンプレートはデータをJSON形式で受け取ります。</p>
+<p>テンプレートはJSONのキーとHTMLのidをマッチングさせレンダリングを行います。</p>
+<p>データ部:</p>
+<pre class="literal-block">
+var o = {
+  'test' : 'てすと',
+}
+</pre>
+<p>レンダリング対象:</p>
+<pre class="literal-block">
+&lt;span id=&quot;test&quot;&gt;ここが変化します&lt;/span&gt;
+</pre>
+<p>上記のようにレンダリングしたい箇所のidをキーとしてJSONを作成することでテンプレートはレンダリングを行います。</p>
+<p>foreachのように繰り返し出力する場合には値の部分をObjectの配列にします。</p>
+<p>データ部:</p>
+<pre class="literal-block">
+var o = {
+  'test2' : [
+    {
+    'no':1,
+    'name' : 'name1'
+    },
+    {
+    'no':2,
+    'name' : 'name2'
+    }
+  ]
+}
+</pre>
+<p>レンダリング部:</p>
+<pre class="literal-block">
+&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;No&lt;/td&gt;
+    &lt;td&gt;Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id='test2'&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td &gt;&lt;input id=&quot;no&quot; type=&quot;text&quot; value=&quot;&quot; /&gt;&lt;/td&gt;
+    &lt;td id=&quot;name&quot;&gt;Test&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+<p>上記の例ではid=test2の箇所を繰り返し出力します。また繰り返すobjectに関してもidでマッチした箇所をレンダリングします。</p>
+<p>属性の値を変更したい場合にはid名&#64;属性名でキーを作成します。</p>
+<p>データ部:</p>
+<pre class="literal-block">
+var o = {
+  'test&#64;class' : 'foo',
+}
+</pre>
+<p>またstyle属性を変更する場合には値をobjectにし、キーに変更したいstyle、値をセットにします。</p>
+<p>データ部:</p>
+<pre class="literal-block">
+var o = {
+  'no&#64;style':{'background-color':'red'},
+}
+</pre>
+</div>
+<div class="section">
+<h3><a id="id11" name="id11">テンプレートのタイプ</a></h3>
+<p>テンプレートのタイプには２つあります。</p>
+<ol class="arabic simple">
+<li>内部テンプレート（同一HTML内テンプレート）</li>
+<li>外部テンプレート</li>
+</ol>
+</div>
+<div class="section">
+<h3><a id="id12" name="id12">内部テンプレート</a></h3>
+<p>内部テンプレートはテンプレートを呼び出すHTML内にテンプレート部を埋め込むテンプレートです。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.foo {color:red }
+.bar {color:blue }
+&lt;/style&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test&#64;class' : 'foo',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'no&#64;class':'foo',
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'no&#64;class':'bar',
+    'name' : 'name2'
+  },
+  {
+    'no':3,
+    'no&#64;style':{'background-color':'red'},
+    'name' : 'name3'
+  },
+  {
+    'no':4,
+    'no&#64;class':'bar',
+    'name' : 'name4'
+  },
+ {
+    'no':5,
+    'no&#64;class':'foo',
+    'name' : 'name5'
+  }]
+}
+var templ1 = new Kumu.Template(options);
+&lt;/script&gt;
+
+&lt;title&gt;Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='test' style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+&lt;div id='test1' style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;No&lt;/td&gt;
+    &lt;td&gt;Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id='test2'&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td &gt;&lt;input id=&quot;no&quot; type=&quot;text&quot; value=&quot;&quot; /&gt;&lt;/td&gt;
+    &lt;td id=&quot;name&quot;&gt;Test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;input type=&quot;button&quot; value=&quot;INNER_TEMPLATE_RENDER&quot; onclick=&quot;templ1.render(o);&quot;&gt;
+&lt;div id=&quot;target&quot; &gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>上記のままだと繰り返し部のテンプレート部が見えてしまっています。</p>
+<p>開発時には良いですが、実際に動作させる場合には表示させたくありません。</p>
+<p>そのような場合には繰り返し部のstyleをdisplay:noneとします。</p>
+<p>テンプレートはテンプレート部のstyleのdisplayの値も参照しており、noneであれば表示するように振る舞います。</p>
+<p>レンダリング結果は以下のようになります。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.foo {color:red }
+.bar {color:blue }
+&lt;/style&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test&#64;class' : 'foo',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'no&#64;class':'foo',
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'no&#64;class':'bar',
+    'name' : 'name2'
+  },
+  {
+    'no':3,
+    'no&#64;style':{'background-color':'red'},
+    'name' : 'name3'
+  },
+  {
+    'no':4,
+    'no&#64;class':'bar',
+    'name' : 'name4'
+  },
+ {
+    'no':5,
+    'no&#64;class':'foo',
+    'name' : 'name5'
+  }]
+}
+var templ1 = new Kumu.Template(options);
+&lt;/script&gt;
+
+&lt;title&gt;Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;test&quot; class=&quot;foo&quot; style=&quot;&quot;&gt;てすと&lt;/div&gt;
+  &lt;div id=&quot;test1&quot; style=&quot;&quot;&gt;てすと1&lt;/div&gt;
+  &lt;table border=&quot;1&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;No&lt;/td&gt;
+    &lt;td&gt;Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input id=&quot;no:rendered0&quot; class=&quot;foo&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
+    &lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name1&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input id=&quot;no:rendered0&quot; class=&quot;bar&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
+    &lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name2&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input id=&quot;no:rendered0&quot; type=&quot;text&quot; value=&quot;&quot; style=&quot;background-color: red;&quot;/&gt;
+    &lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name3&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input id=&quot;no:rendered0&quot; class=&quot;bar&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
+    &lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name4&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;増えるわかめちゃんTest&lt;/td&gt;
+    &lt;td&gt;
+    &lt;input id=&quot;no:rendered0&quot; class=&quot;foo&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
+    &lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name5&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;input type=&quot;button&quot; onclick=&quot;templ1.render(o);&quot; value=&quot;INNER_TEMPLATE_RENDER&quot;/&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+<div class="section">
+<h3><a id="id13" name="id13">外部テンプレート</a></h3>
+<p>外部テンプレートはテンプレートを呼び出すHTMLではなく、外部のHTMLテンプレートです。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.foo {color:red }
+.bar {color:blue }
+&lt;/style&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test&#64;class' : 'foo',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'no&#64;class':'foo',
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'no&#64;class':'bar',
+    'name' : 'name2'
+  },
+ {
+    'no':3,
+    'no&#64;style':{'background-color':'red'},
+    'name' : 'name3'
+  },
+ {
+   'no':4,
+   'no&#64;class':'bar',
+   'name' : 'name4'
+ },
+  {
+   'no':5,
+   'no&#64;class':'foo',
+   'name' : 'name5'
+ }]
+}
+
+var templ2 = new Kumu.Template('./template.html', options);
+&lt;title&gt;Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;target&quot; &gt;&lt;/div&gt;
+&lt;input type=&quot;button&quot; value=&quot;TEMPLATE_RENDER&quot; onclick=&quot;templ2.render(o, 'target');&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>template.html:</p>
+<pre class="literal-block">
+&lt;p&gt;TEMPLATE&lt;/p&gt;
+&lt;div id=&quot;test&quot; style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+&lt;div id=&quot;test1&quot; style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;Template No&lt;/td&gt;
+    &lt;td&gt;Template Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id='test2'&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no&quot;&gt;Test&lt;/td&gt;
+    &lt;td id=&quot;name&quot;&gt;Test&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+<p>外部テンプレートを使用する際には必ず外部テンプレートのurlと、レンダリング結果を挿入するブロックを指定（id)します。</p>
+<pre class="literal-block">
+//urlの指定
+var templ2 = new Kumu.Template('./template.html', options);
+//結果を挿入するブロック（id）で指定。targetを指定
+templ2.render(o, 'target');
+</pre>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.foo {color:red }
+.bar {color:blue }
+&lt;/style&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/kumu.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test&#64;class' : 'foo',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'no&#64;class':'foo',
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'no&#64;class':'bar',
+    'name' : 'name2'
+  },
+ {
+    'no':3,
+    'no&#64;style':{'background-color':'red'},
+    'name' : 'name3'
+  },
+ {
+   'no':4,
+   'no&#64;class':'bar',
+   'name' : 'name4'
+ },
+  {
+   'no':5,
+   'no&#64;class':'foo',
+   'name' : 'name5'
+ }]
+}
+
+var templ2 = new Kumu.Template('./template.html', options);
+&lt;title&gt;Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;target&quot;&gt;
+  &lt;p&gt;TEMPLATE&lt;/p&gt;
+  &lt;div id=&quot;test&quot; class=&quot;foo&quot; style=&quot;&quot;&gt;てすと&lt;/div&gt;
+  &lt;div id=&quot;test1&quot; style=&quot;&quot;&gt;てすと1&lt;/div&gt;
+  &lt;table border=&quot;1&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;Template No&lt;/td&gt;
+    &lt;td&gt;Template Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no:rendered0&quot; class=&quot;foo&quot;&gt;1&lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name1&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no:rendered0&quot; class=&quot;bar&quot;&gt;2&lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name2&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no:rendered0&quot; style=&quot;background-color: red;&quot;&gt;3&lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name3&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no:rendered0&quot; class=&quot;bar&quot;&gt;4&lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name4&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id=&quot;test2:rendered0&quot; style=&quot;&quot;&gt;
+    &lt;td&gt;Template List Test&lt;/td&gt;
+    &lt;td id=&quot;no:rendered0&quot; class=&quot;foo&quot;&gt;5&lt;/td&gt;
+    &lt;td id=&quot;name:rendered0&quot;&gt;name5&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+&lt;input type=&quot;button&quot; onclick=&quot;templ2.render(o, 'target');&quot; value=&quot;TEMPLATE_RENDER&quot;/&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<!-- admonition::　外部テンプレートのjavascriptについて
+
+外部テンプレート上にjavascriptが記述されている場合予期しない動作を起こす可能性があります。
+外部テンプレート上にはjavascriptを記述しないようにして下さい。 -->
+</div>
+</div>
+<div class="section">
+<h3><a id="form" name="form">Formの値の取得</a></h3>
+<p>Kumu.FormHelperを使うとFormをJSON化でき、簡単に値を取得する事ができます。</p>
+<p>では簡単な見てみます。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;firstName&quot;/&gt;
+  &lt;input type=&quot;text&quot; name=&quot;lastName&quot;/&gt;
+&lt;/form&gt;
+</pre>
+<p>上記のFormはname属性がfirstNameとlastNameという名前のinputフィールドを持っています。</p>
+<p>このFormをJSON化し、値を取得するには以下のように記述します。</p>
+<pre class="literal-block">
+// FormをJSON化する
+var form = Kumu.FormHelper.create('Form');
+
+//name属性がfirstNameの値を取得
+var firstNameValue = form['firsrtName']
+
+//name属性がfirstNameの値を取得
+var lastNameValue = form['lastName']
+</pre>
+<p>FormをJSON化するのはKumu.FormHelper.createを使用します。</p>
+<p>FormHelperの引き数にはFormの要素あるいは対象のFormのid属性の値を指定します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create(&lt;Form要素もしくはFormのid属性&gt;, &lt;タイプ&gt;);
+</pre>
+<div class="section">
+<h3><a id="id14" name="id14">Formのタイプ</a></h3>
+<p>FormHelperはいくつかのタイプをサポートしています。</p>
+<p>タイプは以下の３つです。</p>
+<ul class="simple">
+<li>'r' rawモード -- Formそのままのname属性を使用してJSONを構築する。（デフォルト）</li>
+<li>'t' teedaモード -- FormをTeedaのPageクラスのidのようにJSONを構築する。</li>
+<li>'i' idモード -- Formのname属性ではなくid属性をキーに使用してJSONを構築する。</li>
+</ul>
+<p>Teedaモードを使用するには以下のように記述します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form', 't');
+</pre>
+</div>
+<div class="section">
+<h3><a id="raw" name="raw">rawモード</a></h3>
+<p>rawモードはそのままname属性の値をキーとしてJSONを構築します。</p>
+<p>デフォルトではこの動作になります。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form');
+</pre>
+</div>
+<div class="section">
+<h3><a id="teeda" name="teeda">teedaモード</a></h3>
+<p>teedaモードはteedaでレンダリングされたFormをJSON化します。</p>
+<p>teedaはJSF実装FWのためFormをレンダリングするとname属性がそのまま出ないケースなどがあります。</p>
+<p>例えばItemsのケースです。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+&lt;input type=&quot;text&quot; id=&quot;num1&quot; class=&quot;hoge&quot;/&gt;&lt;br/&gt;
+&lt;input type=&quot;text&quot; id=&quot;num2&quot;/&gt;&lt;br/&gt;
+&lt;span id=&quot;str&quot;&gt;aaa&lt;/span&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;fooItemsSave&quot; /&gt;
+&lt;table border=&quot;1&quot;&gt;
+       &lt;div id=&quot;fooItems&quot;&gt;
+       &lt;tr&gt;
+         &lt;td&gt;&lt;span id=&quot;fooNo&quot;&gt;100&lt;/span&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;aaa&quot; title=&quot;AAA&quot; /&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;bbb&quot; title=&quot;BBB&quot; /&gt;&lt;/td&gt;
+       &lt;/tr&gt;
+       &lt;/div&gt;
+&lt;/table&gt;
+&lt;input type=&quot;submit&quot; id=&quot;doNothing&quot; /&gt;
+&lt;/form&gt;
+</pre>
+<p>このケースの場合、idは同じになってしまうためidで取得するのは難しく、またname属性は複雑な値になり解析が困難です。</p>
+<p>このようなケースもKumu.FormHelperを使用することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper('Form', 't');
+var items = form['fooItems']
+for(var i = 0; i &lt; items.length; i++){
+    var item = items[i];
+    alert('aaa = '+item['aaa']+' bbb = '+item['bbb');
+}
+</pre>
+<p>Teedaモードを使うと上記のように繰り返し部分もリスト化され、簡単にアクセスすることができます。</p>
+</div>
+<div class="section">
+<h3><a id="id" name="id">idモード</a></h3>
+<p>id属性の値をキーとしてJSONを構築します。</p>
+<p>その他の動作はrawモードと変わりません。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="json" name="json">JSONの文字列化</a></h3>
+<p>Kumu.JSONSerializerを使うとJSONを文字列化することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper.create('aForm');
+
+// Kumu本体のログ機能でログ出力
+Kumu.log(Kumu.JSONSerializer.serialize(form));
+</pre>
+<p>上記のようにFormの内容などをデバッグする際に使用することができます。</p>
+<p>またobjectであればなんでも文字列化することができます。</p>
+<div class="section">
+<h3><a id="id15" name="id15">応用</a></h3>
+<p>JSONSerializerを使用すると複数のobjectをまとめて文字列にする事ができます。</p>
+<p>そのためAjaxで送信するパラメータも減らすことができます。</p>
+<p>JSON化した文字列はサーバサイドでorg.seasar.teeda.ajax.JSONSerializerを使用してMapに復元することができます。</p>
+<pre class="literal-block">
+String str = &quot;{'test1':'test2'}&quot;;
+Map map = JSONSerializer.evalMap(str);
+</pre>
+<p>Mapに変換後、Dxoなどを使用することによって簡単に好きなDtoなどにマッピングする事が出来るようになります。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="id16" name="id16">リファレンス</a></h3>
 <div class="section">
 <h3><a id="kumu-extend-self-super" name="kumu-extend-self-super">Kumu.extend(self, super)</a></h3>
 <p>継承のようにobjectのpropertyをコピーします。</p>
@@ -312,14 +972,83 @@ obj.print(&quot;TEST&quot;);
 </pre>
 </div>
 <div class="section">
-<h2><a id="kumu-undef-value" name="kumu-undef-value">Kumu.undef(value)</a></h2>
+<h3><a id="kumu-provide-name-obj" name="kumu-provide-name-obj">Kumu.provide(name, obj)</a></h3>
+<p>指定されたobj上に指定した名前のobjectを生成します。</p>
+<p>objが省略された場合はglobalに作成します。</p>
+<p>この関数は名前空間のようなものを生成する際に使用します。</p>
+<pre class="literal-block">
+//foo.bar を作成する
+Kumu.provide('foo.bar');
+
+alert(foo.bar);
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-define-name" name="kumu-define-name">Kumu.define(name)</a></h3>
+<p>指定した名前のobjectを作成します。</p>
+<p>ライブラリのようなobjectを作成する場合、名前空間のようなものを同時に生成します。</p>
+<pre class="literal-block">
+if(typeof Foo = 'undefined'){
+  Foo = {}
+}
+
+if(typeof Foo.Bar = 'undefined'){
+  Foo.Bar = {}
+}
+
+Kumu.extends(Foo.Bar,{
+  ...
+  ...
+  ...
+
+});
+</pre>
+<p>上記のような処理を以下のように記述する事が出来ます。</p>
+<pre class="literal-block">
+Kumu.define('Foo.Bar')({
+   ...
+   ...
+
+});
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-defineclass-name" name="kumu-defineclass-name">Kumu.defineClass(name)</a></h3>
+<p>指定した名前のクラス関数を作成します。</p>
+<p>ライブラリのようなクラス関数を作成する場合、名前空間のようなものを同時に生成します。</p>
+<pre class="literal-block">
+if(typeof Foo = 'undefined'){
+  Foo = {}
+}
+
+if(typeof Foo.Bar = 'undefined'){
+  Foo.Bar = Kumu.create();
+}
+
+Kumu.extends(Foo.Bar.prototype,{
+  ...
+  ...
+  ...
+
+});
+</pre>
+<p>上記のような処理を以下のように記述する事が出来ます。</p>
+<pre class="literal-block">
+Kumu.defineClass('Foo.Bar')({
+   ...
+   ...
+
+});
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-undef-value" name="kumu-undef-value">Kumu.undef(value)</a></h3>
 <p>値が存在していないかチェックします。</p>
 <pre class="literal-block">
 //false
 var result = Kumu.undef('Kumu');
 //true
 var result = Kumu.undef('Test');
-
 </pre>
 </div>
 <div class="section">
@@ -355,21 +1084,21 @@ var list = $i('department', 'person');
 <p>複数のnameを指定する事も出来ます。</p>
 <pre class="literal-block">
 // tag名がpreの要素を取得
-var obj = $t('pre');
+var obj = $i('pre');
 
-var list = $t('ul', 'ol');
+var list = $i('ul', 'ol');
 </pre>
 </div>
 <div class="section">
 <h3><a id="kumu-n-name" name="kumu-n-name">Kumu.$n(name, [...])</a></h3>
 <p>document.getElementByNameのショートカットメソッドです。</p>
-<p>またこの関数は$nという名前でも使用可能です。</p>
+<p>またこの関数は$tという名前でも使用可能です。</p>
 <p>複数のnameを指定する事も出来ます。</p>
 <pre class="literal-block">
 //nameがemployeeの要素を取得
-var obj = $n('employee');
+var obj = $i('employee');
 
-var list = $n('search', 'employeeCode');
+var list = $i('search', 'employeeCode');
 </pre>
 </div>
 <div class="section">
@@ -447,7 +1176,7 @@ var list = Kumu.items(obj);
 </pre>
 </div>
 <div class="section">
-<h3><a id="kumu-shift-array" name="kumu-shift-array">Kumu.shift(Array)</a></h3>
+<h3><a id="kumu-shift" name="kumu-shift">Kumu.shift([...])</a></h3>
 <p>渡されたlistの先頭を抜いて返します。</p>
 <p>渡されたArrayは詰められます。</p>
 <p>この関数はArray.prototypeにも登録されています。</p>
@@ -473,6 +1202,16 @@ Kumu.unshift(src, 0);
 
 // src = [-1, 0, 1, 2, 3]
 src.unshift(-1);
+</pre>
+</div>
+<div class="section">
+<h3><a id="kumu-include-value" name="kumu-include-value">Kumu.include(value, [...])</a></h3>
+<p>指定したvalueが指定したArrayの中にあるか判断します。</p>
+<pre class="literal-block">
+// true
+var result = Kumu.include(1, [0,1,2,3,4]);
+// false
+var result = Kumu.include(1, [0,2,3,4]);
 </pre>
 </div>
 <div class="section">
@@ -545,7 +1284,6 @@ var result2 = Kumu.startsWith('teeda', 'teedafoo');
 <div class="section">
 <h3><a id="kumu-endswith-suffix-string" name="kumu-endswith-suffix-string">Kumu.endsWith(suffix, String)</a></h3>
 <p>指定した文字列がsuffixで終わっているかチェックします。</p>
-
 <p>この関数はString.prototypeにも登録されています。</p>
 <pre class="literal-block">
 // false
@@ -578,6 +1316,7 @@ var result = grouping(1);
 <h3><a id="kumu-create" name="kumu-create">Kumu.create()</a></h3>
 <p>クラスにあたる関数を作成します。</p>
 <p>作成された関数は実行時にinitializeという名前の関数を実行し、コンストラクタのように振る舞います。</p>
+<p>Kumu.defineClassを使用すると簡単に作成する事が出来ます。</p>
 <pre class="literal-block">
 var clazz = Kumu.create();
 Kumu.extend(clazz.prototype, {
@@ -684,14 +1423,12 @@ test1(&quot; Hello &quot;);
 <p>指定したobjectのトレースログを表示します。</p>
 <p>渡したobject内のfunctionに対し、トレースログを出力します。</p>
 </div>
-</div>
 <div class="section">
 <h3><a id="kumu-log-string" name="kumu-log-string">Kumu.log(String);</a></h3>
 <p>指定した文字列をログとして表示します。</p>
 <p>渡したStringはHTML（dcument）の最後に追加表示されます。</p>
 </div>
 </div>
-
 <div class="section">
 <h3><a id="function-prototype" name="function-prototype">Function.prototype</a></h3>
 <div class="section">
@@ -700,7 +1437,7 @@ test1(&quot; Hello &quot;);
 <p>無名関数である場合には関数名は取得できません。</p>
 </div>
 <div class="section">
-<h3><a id="bind-object" name="bind-object">bind([object, ....])</a></h3>
+<h3><a id="curry-object" name="curry-object">curry([object, ....])</a></h3>
 <p>自身にKumu.bindを実行して値を束縛します。</p>
 </div>
 <div class="section">
@@ -806,6 +1543,37 @@ test = test.delay(1000*10);
 //10秒後にalert
 test();
 </pre>
+</div>
+<div class="section">
+<h3><a id="kumu-template-url-options" name="kumu-template-url-options">Kumu.Template(url, options)</a></h3>
+<p>テンプレートクラスを作成します。</p>
+<p>詳細は.. HTMLテンプレート機能　を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-create-element-type" name="kumu-formhelper-create-element-type">Kumu.FormHelper.create(element, type)</a></h3>
+<p>FormをJSON化します。</p>
+<p>詳細は.. Formの値の取得　を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getvalue-element" name="kumu-formhelper-getvalue-element">Kumu.FormHelper.getValue(element)</a></h3>
+<p>指定した要素の値を取得します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitem-element-teeda" name="kumu-formhelper-getitem-element-teeda">Kumu.FormHelper.getItem(element)(Teeda使用時）</a></h3>
+<p>指定した要素が含まれているItemsの中のItemを返します。</p>
+<p>Itemsのリストの中に入っているItemのJSONを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitemsindex-form-element-teeda" name="kumu-formhelper-getitemsindex-form-element-teeda">Kumu.FormHelper.getItemsIndex(form, element)(Teeda使用時）</a></h3>
+<p>指定した要素が含まれているItemsのIndexを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-jsonserializer-serialize-object" name="kumu-jsonserializer-serialize-object">Kumu.JSONSerializer.serialize(object)</a></h3>
+<p>指定したobjectをJSON文字列化します。</p>
+</div>
+<div class="section">
+<h3><a id="dump-object" name="dump-object">$dump(object)</a></h3>
+<p>指定したobjectの中身をserializeし、ログ出力します。</p>
 </div>
 </div>
 </div>
