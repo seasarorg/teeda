@@ -493,11 +493,11 @@ Kumu = Kumu.extend(Kumu, {
             var id = node.getAttribute('id');
             if(id && Kumu.startsWith('mockIncludeChildBody', id)){
               if (node.outerHTML) {
-                node.outerHTML = _body;
+                node.outerHTML = _body.ignoreScripts();
               } else {
                 var range = node.ownerDocument.createRange();
                 range.selectNodeContents(node);
-                node.parentNode.replaceChild(range.createContextualFragment(_body), node);
+                node.parentNode.replaceChild(range.createContextualFragment(_body.ignoreScripts()), node);
               }            
             }
           }
@@ -1160,7 +1160,7 @@ Kumu.defineClass('Kumu.Template')({
           parent = parent.parentNode;
         }
         parent.removeChild(iframe);
-      }).delay(50);
+      }).delay(20)();
     }
   }, 
   
