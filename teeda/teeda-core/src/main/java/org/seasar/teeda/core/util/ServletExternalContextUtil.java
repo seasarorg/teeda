@@ -73,7 +73,7 @@ public class ServletExternalContextUtil {
         if (encoding == null) {
             encoding = getEncodingFromSession(httpServletRequest);
         }
-        if (encoding == null) {
+        if (encoding == null || "null".equals(encoding)) {
             return;
         }
         MethodUtil.invoke(characterEncodingMethod, httpServletRequest,

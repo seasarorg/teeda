@@ -76,11 +76,11 @@ public class ViewTag extends UIComponentBodyTag {
         final FacesContext context = FacesContext.getCurrentInstance();
         AssertionUtil.assertNotNull("FacesContext", context);
         String encoding = PageContextUtil.getCharacterEncoding(pageContext);
-        if (encoding == null) {
+        if (encoding == null || "null".equals(encoding)) {
             ExternalContext externalContext = context.getExternalContext();
             encoding = ((HttpServletRequest) externalContext.getRequest())
                     .getCharacterEncoding();
-            if (encoding == null) {
+            if (encoding == null || "null".equals(encoding)) {
                 encoding = JsfConstants.DEFAULT_ENCODING;
             }
         }
