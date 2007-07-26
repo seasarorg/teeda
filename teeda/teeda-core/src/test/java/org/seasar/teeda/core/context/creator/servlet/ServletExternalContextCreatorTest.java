@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.context.creator.servlet;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.EncodeUrlCustomizer;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
@@ -26,5 +27,32 @@ public class ServletExternalContextCreatorTest extends TeedaTestCase {
         ExternalContext ctx = creator.create(getServletContext(), getRequest(),
                 getResponse());
         assertNotNull(ctx);
+    }
+
+    public void testCreateCustomize() throws Exception {
+        register(new EncodeUrlCustomizer() {
+
+            private static final long serialVersionUID = 1L;
+
+            public String encodeActionUrl(ExternalContext externalContext,
+                    String url) {
+                return "aaa";
+            }
+
+            public String encodeNamespace(String name) {
+                return null;
+            }
+
+            public String encodeResourceUrl(ExternalContext externalContext,
+                    String url) {
+                return null;
+            }
+
+        });
+        ServletExternalContextCreator creator = new ServletExternalContextCreator();
+        ExternalContext ctx = creator.create(getServletContext(), getRequest(),
+                getResponse());
+        assertNotNull(ctx);
+        assertEquals("aaa", ctx.encodeActionURL(""));
     }
 }

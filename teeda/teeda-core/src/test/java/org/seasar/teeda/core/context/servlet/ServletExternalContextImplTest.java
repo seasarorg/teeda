@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.core.context.servlet;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.WindowIdEncodeUrlCustomizer;
 import javax.faces.internal.WindowIdUtil;
 import javax.faces.mock.servlet.MockServletRequestImpl;
 import javax.servlet.ServletRequest;
@@ -129,8 +130,9 @@ public class ServletExternalContextImplTest extends S2TestCase {
     }
 
     public void testEncodeResourceURL() {
-        ExternalContext context = new ServletExternalContextImpl(
+        ServletExternalContextImpl context = new ServletExternalContextImpl(
                 getServletContext(), getRequest(), getResponse());
+        context.setEncodeUrlCustomizer(new WindowIdEncodeUrlCustomizer());
         assertEquals("hoge", context.encodeResourceURL("hoge"));
         WindowIdUtil.setWindowId(context, "1");
         assertEquals("hoge?wid=1", context.encodeResourceURL("hoge"));

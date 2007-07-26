@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.context.ExternalContext;
-import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.EncodeUrlCustomizer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -45,7 +45,6 @@ import org.seasar.framework.container.external.servlet.ServletRequestParameterMa
 import org.seasar.framework.container.external.servlet.ServletRequestParameterValuesMap;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.context.Releaseable;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
@@ -91,6 +90,8 @@ public class ServletExternalContextImpl extends ExternalContext implements
 
     private Map requestHeaderValuesMap = null;
 
+    private EncodeUrlCustomizer customizer = null;
+
     public ServletExternalContextImpl(final ServletContext context,
             final ServletRequest request, final ServletResponse response) {
         this.context = context;
@@ -117,7 +118,7 @@ public class ServletExternalContextImpl extends ExternalContext implements
     }
 
     public String encodeActionURL(String url) {
-        return encodeResourceURL(url);
+        return customizer.encodeActionUrl(this, url);
     }
 
     public String encodeNamespace(final String name) {
@@ -125,23 +126,14 @@ public class ServletExternalContextImpl extends ExternalContext implements
         return name;
     }
 
-    public String encodeResourceURL(String url) {
-        AssertionUtil.assertNotNull("url is null.", url);
+    public String encodeResourceURL(final String url) {
         assertHttpServletResponse();
-        String wid = WindowIdUtil.getWindowId(this);
-        if (!StringUtil.isEmpty(wid)) {
-            String s = WindowIdUtil.WID + "=" + wid;
-            if (url.lastIndexOf("?") >= 0) {
-                url = url + "&" + s;
-            } else {
-                url = url + "?" + s;
-            }
-        }
+        final String encodedUrl = customizer.encodeResourceUrl(this, url);
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         if (((HttpServletRequest) request).isRequestedSessionIdFromCookie()) {
             return url;
         }
-        return httpResponse.encodeURL(url);
+        return httpResponse.encodeURL(encodedUrl);
     }
 
     public Map getApplicationMap() {
@@ -344,6 +336,10 @@ public class ServletExternalContextImpl extends ExternalContext implements
         this.requestMap = null;
         this.requestHeaderMap = null;
         this.requestHeaderValuesMap = null;
+    }
+
+    public void setEncodeUrlCustomizer(EncodeUrlCustomizer customizer) {
+        this.customizer = customizer;
     }
 
 }

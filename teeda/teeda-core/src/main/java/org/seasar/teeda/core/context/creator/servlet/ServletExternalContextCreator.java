@@ -9,23 +9,26 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.core.context.creator.servlet;
 
 import javax.faces.context.ExternalContext;
+import javax.faces.internal.EncodeUrlCustomizer;
+import javax.faces.internal.WindowIdEncodeUrlCustomizer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.seasar.teeda.core.context.creator.ExternalContextCreator;
 import org.seasar.teeda.core.context.servlet.ServletExternalContextImpl;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot
- * 
+ *
  */
 public class ServletExternalContextCreator implements ExternalContextCreator {
 
@@ -41,7 +44,15 @@ public class ServletExternalContextCreator implements ExternalContextCreator {
 
     protected ExternalContext createExternalContext(ServletContext context,
             ServletRequest request, ServletResponse response) {
-        return new ServletExternalContextImpl(context, request, response);
+        ServletExternalContextImpl externalContext = new ServletExternalContextImpl(
+                context, request, response);
+        EncodeUrlCustomizer customizer = (EncodeUrlCustomizer) DIContainerUtil
+                .getComponentNoException(EncodeUrlCustomizer.class);
+        if (customizer == null) {
+            customizer = new WindowIdEncodeUrlCustomizer();
+        }
+        externalContext.setEncodeUrlCustomizer(customizer);
+        return externalContext;
     }
-    
+
 }

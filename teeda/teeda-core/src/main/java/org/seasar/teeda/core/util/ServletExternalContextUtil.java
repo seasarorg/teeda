@@ -34,6 +34,8 @@ import javax.servlet.http.HttpSession;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.framework.util.Disposable;
+import org.seasar.framework.util.DisposableUtil;
 import org.seasar.framework.util.EnumerationIterator;
 import org.seasar.framework.util.MethodUtil;
 import org.seasar.teeda.core.JsfConstants;
@@ -53,6 +55,19 @@ public class ServletExternalContextUtil {
     private static final String CHARSET_HEADER = "charset=";
 
     private static final int CHARSET_HEADER_LENGTH = CHARSET_HEADER.length();
+
+    private static RedirectUrlResolver resolver = null;
+
+    private static boolean resolverInited = false;
+
+    static {
+        DisposableUtil.add(new Disposable() {
+            public void dispose() {
+                resolver = null;
+                resolverInited = false;
+            }
+        });
+    }
 
     private ServletExternalContextUtil() {
     }
@@ -159,14 +174,16 @@ public class ServletExternalContextUtil {
             ServletResponse response) throws IOException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         FacesContext context = FacesContext.getCurrentInstance();
-        if (DIContainerUtil.hasContainer()) {
-            RedirectUrlResolver resolver = (RedirectUrlResolver) DIContainerUtil
-                    .getComponentNoException(RedirectUrlResolver.class);
-            if (resolver != null) {
-                HttpServletRequest httpRequest = (HttpServletRequest) request;
-                url = resolver.resolveUrl(url, context, httpRequest,
-                        httpResponse);
+        if (!resolverInited) {
+            if (DIContainerUtil.hasContainer()) {
+                resolver = (RedirectUrlResolver) DIContainerUtil
+                        .getComponentNoException(RedirectUrlResolver.class);
             }
+            resolverInited = true;
+        }
+        if (resolver != null) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            url = resolver.resolveUrl(url, context, httpRequest, httpResponse);
         }
         httpResponse.sendRedirect(url);
         if (context != null) {

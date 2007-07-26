@@ -13,22 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.core.resolver;
+package javax.faces.internal;
 
-import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+
+import javax.faces.context.ExternalContext;
 
 /**
  * @author shot
- *
- * To use its implementation class, you can modify redirection URL.
- * For instance, you can change HTTP to HTTPS, or keep HTTPS protocol.
  */
-public interface RedirectUrlResolver {
+public interface EncodeUrlCustomizer extends Serializable {
 
-    String resolveUrl(final String contextPath, final FacesContext context,
-            final HttpServletRequest request, final HttpServletResponse response)
-            throws FacesException;
+    String encodeActionUrl(final ExternalContext externalContext,
+            final String url);
+
+    String encodeResourceUrl(final ExternalContext externalContext,
+            final String url);
+
+    String encodeNamespace(final String name);
 }
