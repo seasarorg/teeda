@@ -728,7 +728,7 @@ Kumu = Kumu.extend(Kumu, {
     Kumu.map(function(n){
       n.id = id;
       n.cached = true;
-    },_idCache[id] );
+    }, Kumu._idCache[id] );
     return Kumu._idCache[id];
   },
   
