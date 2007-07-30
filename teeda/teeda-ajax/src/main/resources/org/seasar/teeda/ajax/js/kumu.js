@@ -23,6 +23,9 @@ Kumu.VERSION = "0.1";
 Kumu.NAME = "Kumu";
 Kumu.DEBUG = false;
 Kumu.SCRIPT_RE = '<script[^>]*>([\\S\\s]*?)<\/script>',
+Kumu.STYLE_RE = '<style[^>]*>([\\S\\s]*?)<\/style>',
+Kumu.BODY_RE = '<body[^>]*>([\\S\\s]*?)<\/body>',
+Kumu.HEAD_RE = '<head[^>]*>([\\S\\s]*?)<\/head>',
 
 /** extends **/
 Kumu.extend = function (self, obj) {
@@ -50,7 +53,9 @@ Kumu = Kumu.extend(Kumu, {
   
   _idCache : [],
   
-  _templateId:0,
+  _templateId : 0,
+  
+  _layoutText : '',
   
   getGlobal : function(){
     return _global;
@@ -354,6 +359,13 @@ Kumu = Kumu.extend(Kumu, {
     return str.lastIndexOf(suffix) == (str.length - suffix.length);
   },
   
+  ignoreHead: function(str) {
+    if(!str){
+      str = this;
+    }
+    return str.replace(new RegExp(Kumu.HEAD_RE, 'img'), '');
+  },
+
   ignoreScripts: function(str) {
     if(!str){
       str = this;
@@ -426,6 +438,7 @@ Kumu = Kumu.extend(Kumu, {
         }
       }
     }, root);
+    Kumu._prepareTemplate();
   },
   
   staticLoad : function(){
@@ -474,18 +487,46 @@ Kumu = Kumu.extend(Kumu, {
     xmlHttp.send(null);
     eval(xmlHttp.responseText);
   },
-
+  
+  _getLayout : function(){
+    var src = Kumu.options['layout'];
+    var xmlHttp = Kumu._createXHR();
+    xmlHttp.open("GET", src, false);
+    xmlHttp.send(null);
+    var text = xmlHttp.responseText;
+    return text;
+  },
+    
+  _prepareTemplate : function(){
+    if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
+      if(Kumu.options && Kumu.options['layout']){
+        var text = Kumu._getLayout();
+        var bodyMatch = new RegExp(Kumu.BODY_RE, 'im');
+        var layout = (text.match(bodyMatch) || ['', ''])[1]
+        if(layout == ''){
+            layout = text;
+        }
+        Kumu._layoutText = layout;
+        var matchAll = new RegExp(Kumu.STYLE_RE, 'img');
+        var re = text.match(matchAll);
+        Kumu.map(function(style){
+            document.write(style);
+        }, re);
+        
+        matchAll = new RegExp(Kumu.SCRIPT_RE, 'img');
+        re = text.match(matchAll);
+        Kumu.map(function(style){
+            document.write(style);
+        }, re);
+      }
+    }
+  },
+    
   _loadTemplate : function (){    
     if(Kumu.options && Kumu.options['mockInclude'] && Kumu.options['mockInclude'] == 'true'){
       if(Kumu.options && Kumu.options['layout']){
         var _body = document.body.innerHTML;
-        document.body.innerHTML = '';
-        var src = Kumu.options['layout'];
-        var xmlHttp = Kumu._createXHR();
-        xmlHttp.open("GET", src, false);
-        xmlHttp.send(null);
-        var text = xmlHttp.responseText;
-        document.body.innerHTML = text;
+        document.body.innerHTML = Kumu._layoutText;
         var includes = Kumu.$t('div');
         if(includes){
           for(var i = 0;i < includes.length; i++){
@@ -509,11 +550,11 @@ Kumu = Kumu.extend(Kumu, {
   
   _replaceHTML : function(node, text){
     if (node.outerHTML) {
-      node.outerHTML = text;
+      node.outerHTML = text.ignoreHead().ignoreScripts();
     } else {
        var range = node.ownerDocument.createRange();
        range.selectNodeContents(node);
-       node.parentNode.replaceChild(range.createContextualFragment(text), node);
+       node.parentNode.replaceChild(range.createContextualFragment(text.ignoreHead().ignoreScripts()), node);
     }            
   },
     
@@ -754,6 +795,7 @@ String.prototype = Kumu.extend(String.prototype,{
   camelize : Kumu.camelize,
   startsWith : Kumu.startsWith,
   endsWith : Kumu.endsWith,
+  ignoreHead : Kumu.ignoreHead,
   ignoreScripts : Kumu.ignoreScripts,
   extractScripts : Kumu.extractScripts,
   evalScripts : Kumu.evalScripts
