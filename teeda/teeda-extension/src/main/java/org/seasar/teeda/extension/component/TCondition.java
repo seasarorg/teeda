@@ -26,6 +26,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.PhaseUtil;
 import javax.faces.internal.scope.PageScope;
 
@@ -56,7 +57,8 @@ public class TCondition extends UIComponentBase {
     public boolean isRendered() {
         final PhaseId phaseId = PhaseUtil.getCurrentPhase();
         final FacesContext context = FacesContext.getCurrentInstance();
-        final boolean noError = !context.getMessages().hasNext();
+        final boolean noError = !FacesMessageUtil
+                .hasErrorOrFatalMessage(context);
         final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
                 : false;
         if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)
