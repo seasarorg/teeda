@@ -28,6 +28,10 @@ public class TSelectOneRadioTag extends TSelectTagBase {
 
     private String col;
 
+    private String pageName;
+
+    private String labelName;
+
     public String getComponentType() {
         return THtmlSelectOneRadio.COMPONENT_TYPE;
     }
@@ -47,10 +51,33 @@ public class TSelectOneRadioTag extends TSelectTagBase {
     public void release() {
         super.release();
         col = null;
+        pageName = null;
+        labelName = null;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, ExtensionConstants.COL_ATTR, col);
+        setComponentProperty(component, ExtensionConstants.PAGE_NAME_ATTR,
+                pageName);
+        setComponentProperty(component, ExtensionConstants.LABEL_NAME_ATTR,
+                labelName);
     }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
+    }
+
 }

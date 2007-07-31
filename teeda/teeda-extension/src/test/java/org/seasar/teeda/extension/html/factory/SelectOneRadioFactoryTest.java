@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -210,8 +210,10 @@ public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
                 .getProperty("value"));
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
+        assertEquals("5", "fooPage", parentProcessor.getProperty("pageName"));
+        assertEquals("6", "hogeLabel", parentProcessor.getProperty("labelName"));
     }
-    
+
     public void testCreateProcessor_2() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();
@@ -241,7 +243,10 @@ public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
         assertEquals("5", " aaa", parentProcessor.getProperty("style"));
-        assertEquals("6", "pageDirection", parentProcessor.getProperty("layout"));
+        assertEquals("6", "pageDirection", parentProcessor
+                .getProperty("layout"));
+        assertEquals("7", "fooPage", parentProcessor.getProperty("pageName"));
+        assertEquals("8", "hogeLabel", parentProcessor.getProperty("labelName"));
     }
 
     public void testCreateProcessor_3() throws Exception {
@@ -273,7 +278,10 @@ public class SelectOneRadioFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("4", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("items"));
         assertEquals("5", "aaa ", parentProcessor.getProperty("style"));
-        assertEquals("6", "lineDirection", parentProcessor.getProperty("layout"));
+        assertEquals("6", "lineDirection", parentProcessor
+                .getProperty("layout"));
+        assertEquals("7", "fooPage", parentProcessor.getProperty("pageName"));
+        assertEquals("8", "hogeLabel", parentProcessor.getProperty("labelName"));
     }
 
 }

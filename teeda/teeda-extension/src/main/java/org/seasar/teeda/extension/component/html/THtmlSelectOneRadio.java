@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.component.html;
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
+import javax.faces.el.VariableResolver;
 import javax.faces.event.ValueChangeEvent;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -33,6 +34,10 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlSelectOneRadio";
 
     private Integer col = null;
+
+    private String pageName;
+
+    private String labelName;
 
     public void validate(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
@@ -51,12 +56,22 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
         if (compareValues(previous, convertedValue)) {
             queueEvent(new ValueChangeEvent(this, previous, convertedValue));
         }
+        THtmlSelectUtil.takeOverLabel(context, this, getPage(context),
+                getLabelName());
+    }
+
+    private Object getPage(final FacesContext context) {
+        final VariableResolver variableResolver = context.getApplication()
+                .getVariableResolver();
+        return variableResolver.resolveVariable(context, getPageName());
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[2];
+        final Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = col;
+        values[2] = pageName;
+        values[3] = labelName;
         return values;
     }
 
@@ -64,6 +79,8 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
         final Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
         col = (Integer) values[1];
+        pageName = (String) values[2];
+        labelName = (String) values[3];
     }
 
     public Integer getCol() {
@@ -78,6 +95,32 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
 
     public void setCol(Integer col) {
         this.col = col;
+    }
+
+    public String getLabelName() {
+        if (labelName != null) {
+            return labelName;
+        }
+        Object value = ComponentUtil_.getValueBindingValue(this,
+                ExtensionConstants.LABEL_NAME_ATTR);
+        return (value != null) ? (String) value : null;
+    }
+
+    public String getPageName() {
+        if (pageName != null) {
+            return pageName;
+        }
+        Object value = ComponentUtil_.getValueBindingValue(this,
+                ExtensionConstants.PAGE_NAME_ATTR);
+        return (value != null) ? (String) value : null;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
     }
 
 }

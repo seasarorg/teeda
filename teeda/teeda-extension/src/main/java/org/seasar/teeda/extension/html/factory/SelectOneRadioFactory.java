@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -92,6 +92,7 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         final String pageName = pageDesc.getPageName();
         final String id = elementNode.getId();
         final String items = id + ExtensionConstants.ITEMS_SUFFIX;
+        final String labelName = id + ExtensionConstants.LABEL_SUFFIX;
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 id));
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(
@@ -99,6 +100,8 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
         if (properties.containsKey(JsfConstants.STYLE_ATTR)) {
             LayoutUtil.styleToLayout(properties);
         }
+        properties.put(ExtensionConstants.PAGE_NAME_ATTR, pageName);
+        properties.put(ExtensionConstants.LABEL_NAME_ATTR, labelName);
     }
 
     public boolean isLeaf() {

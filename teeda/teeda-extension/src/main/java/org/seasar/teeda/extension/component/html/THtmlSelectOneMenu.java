@@ -19,12 +19,6 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
-import javax.faces.internal.SelectItemsIterator;
-import javax.faces.model.SelectItem;
-
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 
 /**
  * @author shot
@@ -49,24 +43,8 @@ public class THtmlSelectOneMenu extends HtmlSelectOneMenu {
     public void validate(final FacesContext context) {
         super.validate(context);
         THtmlSelectUtil.validate(this);
-        final Object selected = getValue();
-        final Object page = getPage(context);
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        if (!beanDesc.hasPropertyDesc(getLabelName())) {
-            return;
-        }
-        final PropertyDesc labelPd = beanDesc.getPropertyDesc(getLabelName());
-
-        for (final SelectItemsIterator it = new SelectItemsIterator(this); it
-                .hasNext();) {
-            final SelectItem item = (SelectItem) it.next();
-            final Object v = item.getValue();
-            if (v.equals(selected)) {
-                final String l = item.getLabel();
-                labelPd.setValue(page, l);
-                break;
-            }
-        }
+        THtmlSelectUtil.takeOverLabel(context, this, getPage(context),
+                getLabelName());
     }
 
     private Object getPage(final FacesContext context) {

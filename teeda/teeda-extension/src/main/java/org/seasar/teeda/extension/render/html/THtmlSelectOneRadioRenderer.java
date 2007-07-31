@@ -43,6 +43,8 @@ public class THtmlSelectOneRadioRenderer extends HtmlSelectOneRadioRenderer {
 
     {
         addIgnoreAttributeName(ExtensionConstants.COL_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.PAGE_NAME_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.LABEL_NAME_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

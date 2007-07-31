@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,14 +19,46 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectOne;
+import javax.faces.context.FacesContext;
+import javax.faces.internal.SelectItemsIterator;
+import javax.faces.model.SelectItem;
 
+import org.seasar.framework.beans.BeanDesc;
+import org.seasar.framework.beans.PropertyDesc;
+import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.component.TUISelectItems;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
 /**
  * @author manhole
+ * @author shot
  */
 public class THtmlSelectUtil {
+
+    public static void takeOverLabel(final FacesContext context,
+            final UISelectOne select, Object page, final String labelName) {
+        if (select == null || page == null || labelName == null) {
+            return;
+        }
+        final Object selected = select.getValue();
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        if (!beanDesc.hasPropertyDesc(labelName)) {
+            return;
+        }
+        final PropertyDesc labelPd = beanDesc.getPropertyDesc(labelName);
+        for (final SelectItemsIterator it = new SelectItemsIterator(select); it
+                .hasNext();) {
+            final SelectItem item = (SelectItem) it.next();
+            final Object v = item.getValue();
+            if (v.equals(selected)) {
+                final String l = item.getLabel();
+                labelPd.setValue(page, l);
+                break;
+            }
+        }
+
+    }
 
     public static void validate(final UIComponent component) {
         final Object value = findSavedValue(component);
