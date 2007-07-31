@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,6 +30,16 @@ public class SelectOneRadioInputPage {
 	private List aaaItems;
 
 	private Integer bbb;
+
+	private String aaaLabel;
+
+	public String getAaaLabel() {
+		return aaaLabel;
+	}
+
+	public void setAaaLabel(String aaaLabel) {
+		this.aaaLabel = aaaLabel;
+	}
 
 	public String initialize() {
 		aaaItems = new ArrayList();
