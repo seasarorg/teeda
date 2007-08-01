@@ -142,8 +142,9 @@ public class TTimestampConverterTest extends TeedaTestCase {
         Object o = converter.getAsObject(context, new NullUIComponent(),
                 dateValue);
 
-        assertNotNull(o);
-        assertTrue(o instanceof Timestamp);
+//        assertNotNull(o);
+//        assertTrue(o instanceof Timestamp);
+        assertNull(o);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {

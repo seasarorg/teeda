@@ -67,7 +67,7 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
         }
     }
 
-    // コンバートエラーが無い場合は，コンバートが行われる事を確認
+    // エラーで判断せずにtargetじゃなければコンバート処理しない
     public void testConvertTargetNotPointed() throws Exception {
         TBigDecimalConverter converter = new TBigDecimalConverter();
         converter.setPattern("###,###,###.###");
@@ -76,7 +76,7 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
         String s = converter.getAsString(getFacesContext(),
                 new MockUIComponent(), new BigDecimal("123456789.100"));
-        assertEquals("123,456,789.1", s);
+        assertEquals(null, s);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {

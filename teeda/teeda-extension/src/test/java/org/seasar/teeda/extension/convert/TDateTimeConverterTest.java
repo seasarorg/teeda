@@ -449,8 +449,9 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         Date date = (Date) converter.getAsObject(context,
                 new NullUIComponent(), dateValue);
 
-        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
-        assertEquals(date, dateTarget);
+//        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
+//        assertEquals(date, dateTarget);
+        assertNull(date);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {

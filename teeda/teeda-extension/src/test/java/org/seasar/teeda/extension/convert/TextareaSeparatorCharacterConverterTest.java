@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.convert;
 import javax.faces.convert.AbstractConverterTestCase;
 import javax.faces.convert.Converter;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockUIComponent;
 
@@ -61,6 +62,20 @@ public class TextareaSeparatorCharacterConverterTest extends
         String value = "abc" + "\r\r\n\n\n" + "def";
         Object o = converter.getAsString(context, component, value);
         assertEquals("abc<br/><br/><br/><br/>def", o.toString());
+    }
+
+    public void testConvertTargetNotPointed() throws Exception {
+        TextareaSeparatorCharacterConverter converter = (TextareaSeparatorCharacterConverter) createConverter();
+        converter.setTarget("aaa");
+        MockUIComponent component = new MockUIComponent();
+        MockFacesContext context = getFacesContext();
+        context.getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        String value = "abc" + "\r\n\r\n" + "def";
+        Object o = converter.getAsString(context, component, value);
+        // targetが異なる為、コンバート処理は行われない
+        assertNull(o);
+
     }
 
     protected Converter createConverter() {

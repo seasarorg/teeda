@@ -30,13 +30,13 @@ public class TTimestampConverter extends TDateTimeConverter implements
 
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
+        if (!isTargetCommandConvert(context, targets)) {
+            return null;
+        }
         Date date = null;
         try {
             date = (Date) super.getAsObject(context, component, value);
         } catch (ConverterException e) {
-            if (!isTargetCommandConvert(context, targets)) {
-                return null;
-            }
             throw e;
         }
         if (date == null) {
@@ -45,4 +45,5 @@ public class TTimestampConverter extends TDateTimeConverter implements
         Timestamp timeStamp = new Timestamp(date.getTime());
         return timeStamp;
     }
+    
 }

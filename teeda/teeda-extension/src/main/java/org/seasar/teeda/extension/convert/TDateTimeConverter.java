@@ -52,16 +52,16 @@ public class TDateTimeConverter extends DateTimeConverter implements
     private String target;
 
     protected String[] targets;
-
+    
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         Date date = null;
+        if (!isTargetCommandConvert(context, targets)) {
+            return null;
+        }
         try {
             date = (Date) super.getAsObject(context, component, value);
         } catch (ConverterException e) {
-            if (!isTargetCommandConvert(context, targets)) {
-                return null;
-            }
             throw e;
         }
         if (date == null) {
@@ -106,9 +106,6 @@ public class TDateTimeConverter extends DateTimeConverter implements
         try {
             return formatter.parse(value);
         } catch (ParseException e) {
-            if (!isTargetCommandConvert(context, targets)) {
-                return null;
-            }
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
             throw ConvertUtil.wrappedByConverterException(this, context, args,
@@ -138,6 +135,9 @@ public class TDateTimeConverter extends DateTimeConverter implements
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
+        if (!isTargetCommandConvert(context, targets)) {
+            return "";
+        }
         return super.getAsString(context, component, value);
     }
 

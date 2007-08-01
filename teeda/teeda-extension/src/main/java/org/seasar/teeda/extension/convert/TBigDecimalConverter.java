@@ -61,7 +61,9 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
             if (value instanceof String) {
                 return (String) value;
             }
-
+            if (!isTargetCommandConvert(context, targets)) {
+                return null;
+            }
             BigDecimal decimalValue = (BigDecimal) value;
             if (this.scale != null && scale.intValue() != SCALE_NONE) {
                 if (this.roundingMode != null
@@ -77,13 +79,18 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
 
             return BigDecimalFormatUtil.format(decimalValue, pattern);
         } catch (Exception e) {
-            if (!isTargetCommandConvert(context, targets)) {
-                return null;
-            }
             throw ConvertUtil.wrappedByConverterException(e);
         }
     }
-
+    
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+        if (!isTargetCommandConvert(context, targets)) {
+            return null;
+        }
+        return super.getAsObject(context, component, value);
+    }
+    
     public String getPattern() {
         return pattern;
     }
