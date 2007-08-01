@@ -30,16 +30,66 @@ public class Hello2Test extends TeedaWebTestCase {
 	}
 
     // <span te:invisible="true">の場合，spanタグを出力しないTest
-	public void testInvisibleRender() throws Exception {
-		// ## Arrange ##
-		TeedaWebTester tester = new TeedaWebTester();
+    public void testInvisibleRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
 
-		// ## Act ##
-		tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
-		tester.dumpHtml();
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
+        tester.dumpHtml();
 
-		// ## Assert ##
-		tester.assertTextEqualsById("pp", "こんにちはInvisibleTest");
-	}
+        // ## Assert ##
+        tester.assertTextEqualsById("pp", "こんにちはInvisibleTest");
+    }
+    
+    // <span te:omittag="true">の場合，spanタグを出力しないTest
+    public void testOmittagRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
 
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEqualsById("pp2", "こんにちはInvisibleTest");
+    }
+    
+    // <span te:invisible="false" te:omittag="false">の場合，spanタグを出力するTest
+    public void testInvisibleAndOmittagRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEqualsById("aaa-3", "InvisibleTest");
+    }
+
+    // <span te:invisible="true" te:omittag="false">の場合，spanタグを出力しないTest
+    public void testInvisibleTrueAndOmittagFalseRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEqualsById("pp4", "こんにちはInvisibleTest");
+    }
+    // <span te:invisible="false" te:omittag="true">の場合，spanタグを出力しないTest
+    public void testInvisibleFalseAndOmittagTrueRender() throws Exception {
+        // ## Arrange ##
+        TeedaWebTester tester = new TeedaWebTester();
+
+        // ## Act ##
+        tester.beginAt(getBaseUrl(), "view/hello/hello2.html");
+        tester.dumpHtml();
+
+        // ## Assert ##
+        tester.assertTextEqualsById("pp5", "こんにちはInvisibleTest");
+    }
 }
