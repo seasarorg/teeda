@@ -42,6 +42,7 @@ import org.seasar.teeda.extension.component.html.THtmlOutputText;
 
 /**
  * @author shot
+ * @author yone
  */
 public class THtmlOutputTextRendererTest extends RendererTest {
 
@@ -372,6 +373,34 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         assertEquals("aaa", getResponseText());
     }
 
+    public void testOmittagFalse() throws Exception {
+        assertFalse("default is false", htmlOutputText.isOmittag());
+        // ## Arrange ##
+        htmlOutputText.setId("fooId");
+        htmlOutputText.setValue("aaa");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlOutputText);
+
+        // ## Assert ##
+        Diff diff = new Diff("<span" + " id=\"fooId\">aaa</span>",
+                getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+    
+    public void testOmittagTrue() throws Exception {
+        assertFalse("default is false", htmlOutputText.isOmittag());
+        // ## Arrange ##
+        htmlOutputText.setId("fooId");
+        htmlOutputText.setValue("aaa");
+        htmlOutputText.setOmittag(true);
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlOutputText);
+
+        // ## Assert ##
+        assertEquals("aaa", getResponseText());
+    }
 
     private THtmlOutputTextRenderer createTHtmlOutputTextRenderer() {
         return (THtmlOutputTextRenderer) createRenderer();

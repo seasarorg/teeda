@@ -33,8 +33,10 @@ public class TOutputTextTag extends OutputTextTag {
     private String propertiesName;
 
     private String defaultPropertiesName;
-    
-    private String invisible; 
+
+    private String invisible;
+
+    private String omittag;
 
     public String getComponentType() {
         return THtmlOutputText.COMPONENT_TYPE;
@@ -72,6 +74,10 @@ public class TOutputTextTag extends OutputTextTag {
         return invisible;
     }
 
+    public String getOmittag() {
+        return omittag;
+    }
+
     public void release() {
         super.release();
         key = null;
@@ -79,6 +85,7 @@ public class TOutputTextTag extends OutputTextTag {
         defaultPropertiesName = null;
         defaultKey = null;
         invisible = null;
+        omittag = null;
     }
 
     public String getDefaultKey() {
@@ -93,6 +100,10 @@ public class TOutputTextTag extends OutputTextTag {
         this.invisible = invisible;
     }
 
+    public void setOmittag(String omittag) {
+        this.omittag = omittag;
+    }
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, "key", key);
@@ -101,6 +112,7 @@ public class TOutputTextTag extends OutputTextTag {
         setComponentProperty(component, "defaultPropertiesName",
                 defaultPropertiesName);
         setComponentProperty(component, "invisible", invisible);
+        setComponentProperty(component, "omittag", omittag);
     }
 
 }

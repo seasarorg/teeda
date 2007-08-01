@@ -20,6 +20,7 @@ import javax.faces.component.NamingContainer;
 /**
  * @author shot
  * @author manhole
+ * @author yone
  */
 public interface ExtensionConstants {
 
@@ -95,6 +96,8 @@ public interface ExtensionConstants {
     String RENDERSPAN_ATTR = "renderSpan";
     
     String INVISIBLE_ATTR = "invisible";
+    
+    String OMITTAG_ATTR = "omittag";
 
     //Suffix and prefix
     String GO_PREFIX = "go";

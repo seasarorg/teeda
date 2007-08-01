@@ -58,8 +58,9 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
                 .getExternalContext().encodeNamespace("Label")));
         boolean startSpan = false;
         final boolean invisible = text.isInvisible();
+        final boolean omittag = text.isOmittag();
         if (containsAttributeForRender(htmlOutputText, getIgnoreAttribute())) {
-            if (!invisible) {
+            if (!(invisible || omittag)) {
                 writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
                 startSpan = true;
                 RendererUtil.renderIdAttributeIfNecessary(writer,

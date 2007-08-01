@@ -3636,6 +3636,11 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>omittag</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>key</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>

@@ -34,6 +34,8 @@ public class THtmlOutputText extends HtmlOutputText {
 
     private static final boolean DEFAULT_INVISIBLE = false;
 
+    private static final boolean DEFAULT_OMITTAG = false;
+
     private String key;
 
     private String defaultKey;
@@ -44,6 +46,8 @@ public class THtmlOutputText extends HtmlOutputText {
 
     // spanタグを出力するかどうか
     private Boolean invisible = null;
+
+    private Boolean omittag = null;
 
     public THtmlOutputText() {
         setRendererType(DEFAULT_RENDERER_TYPE);
@@ -96,12 +100,12 @@ public class THtmlOutputText extends HtmlOutputText {
     public void setPropertiesName(String propertiesName) {
         this.propertiesName = propertiesName;
     }
-    
+
     public boolean isInvisible() {
         if (invisible != null) {
             return invisible.booleanValue();
         }
-        ValueBinding vb = getValueBinding("invisible");
+        ValueBinding vb = getValueBinding(ExtensionConstants.INVISIBLE_ATTR);
         Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
                 : null;
         return v != null ? v.booleanValue() : DEFAULT_INVISIBLE;
@@ -110,15 +114,30 @@ public class THtmlOutputText extends HtmlOutputText {
     public void setInvisible(boolean invisible) {
         this.invisible = Boolean.valueOf(invisible);
     }
-    
+
+    public boolean isOmittag() {
+        if (omittag != null) {
+            return omittag.booleanValue();
+        }
+        ValueBinding vb = getValueBinding(ExtensionConstants.OMITTAG_ATTR);
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : DEFAULT_OMITTAG;
+    }
+
+    public void setOmittag(boolean omittag) {
+        this.omittag = Boolean.valueOf(omittag);
+    }
+
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[6];
+        Object values[] = new Object[7];
         values[0] = super.saveState(context);
         values[1] = key;
         values[2] = defaultKey;
         values[3] = propertiesName;
         values[4] = defaultPropertiesName;
         values[5] = invisible;
+        values[6] = omittag;
         return values;
     }
 
@@ -130,6 +149,7 @@ public class THtmlOutputText extends HtmlOutputText {
         propertiesName = (String) values[3];
         defaultPropertiesName = (String) values[4];
         invisible = (Boolean) values[5];
+        omittag = (Boolean) values[6];
     }
 
 }
