@@ -61,7 +61,7 @@ public class TViewRootRendererTest extends TeedaTestCase {
         renderer.setHtmlComponentInvoker(new HtmlComponentInvoker() {
 
             public String getComponentName(String path, String methodName) {
-                return null;
+                return "hoge";
             }
 
             public String invoke(FacesContext context, String componentName,
@@ -76,12 +76,14 @@ public class TViewRootRendererTest extends TeedaTestCase {
 
             public String invokeInitialize(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.INITIALIZE);
             }
 
             public String invokePrerender(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.PRERENDER);
             }
 
             public boolean isInitialized(FacesContext context) {
@@ -101,7 +103,7 @@ public class TViewRootRendererTest extends TeedaTestCase {
         renderer.setHtmlComponentInvoker(new HtmlComponentInvoker() {
 
             public String getComponentName(String path, String methodName) {
-                return null;
+                return "hoge";
             }
 
             public String invoke(FacesContext context, String componentName,
@@ -117,12 +119,14 @@ public class TViewRootRendererTest extends TeedaTestCase {
 
             public String invokeInitialize(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.INITIALIZE);
             }
 
             public String invokePrerender(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.PRERENDER);
             }
 
             public boolean isInitialized(FacesContext context) {
@@ -144,7 +148,7 @@ public class TViewRootRendererTest extends TeedaTestCase {
         renderer.setHtmlComponentInvoker(new HtmlComponentInvoker() {
 
             public String getComponentName(String path, String methodName) {
-                return null;
+                return "hoge";
             }
 
             public String invoke(FacesContext context, String componentName,
@@ -159,12 +163,14 @@ public class TViewRootRendererTest extends TeedaTestCase {
 
             public String invokeInitialize(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.INITIALIZE);
             }
 
             public String invokePrerender(FacesContext context,
                     String componentName) {
-                return null;
+                return invoke(context, componentName,
+                        HtmlComponentInvoker.PRERENDER);
             }
 
             public boolean isInitialized(FacesContext context) {

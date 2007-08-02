@@ -291,18 +291,20 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
         ExternalContext externalContext = context.getExternalContext();
         Map requestMap = externalContext.getRequestMap();
         if (!PostbackUtil.isPostback(requestMap)) {
-            invoke(context, viewId, HtmlComponentInvoker.INITIALIZE);
+            String componentName = htmlComponentInvoker.getComponentName(
+                    viewId, HtmlComponentInvoker.INITIALIZE);
+            if (componentName != null) {
+                htmlComponentInvoker.invokeInitialize(context, componentName);
+            }
         }
         if (context.getResponseComplete()) {
             return;
         }
-        invoke(context, viewId, HtmlComponentInvoker.PRERENDER);
-    }
-
-    protected String invoke(FacesContext context, String path, String methodName) {
-        String componentName = htmlComponentInvoker.getComponentName(path,
-                methodName);
-        return htmlComponentInvoker.invoke(context, componentName, methodName);
+        String componentName = htmlComponentInvoker.getComponentName(viewId,
+                HtmlComponentInvoker.PRERENDER);
+        if (componentName != null) {
+            htmlComponentInvoker.invokePrerender(context, componentName);
+        }
     }
 
     /**
