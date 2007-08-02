@@ -191,7 +191,7 @@ public class SessionPagePersistence implements PagePersistence {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(nextPageClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.hasWriteMethod()) {
+            if (!pd.isWritable()) {
                 continue;
             }
             final String propertyName = pd.getPropertyName();
@@ -314,7 +314,7 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (!pd.hasReadMethod()
+            if (!pd.isReadable()
                     || !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
@@ -331,7 +331,7 @@ public class SessionPagePersistence implements PagePersistence {
             String[] properties, Map nextPageProperties) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.hasReadMethod()
+            if (!pd.isReadable()
                     || !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
@@ -348,7 +348,7 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (!pd.hasReadMethod()
+            if (!pd.isReadable()
                     || !nextPageProperties.containsKey(propertyName)) {
                 continue;
             }

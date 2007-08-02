@@ -133,7 +133,7 @@ public class TForEachRenderer extends AbstractRenderer {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (propertyName.endsWith("Items") || !pd.hasReadMethod()) {
+            if (propertyName.endsWith("Items") || !pd.isReadable()) {
                 continue;
             }
             result.put(propertyName, pd.getValue(page));
@@ -146,7 +146,7 @@ public class TForEachRenderer extends AbstractRenderer {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (!result.containsKey(propertyName) || !pd.hasWriteMethod()) {
+            if (!result.containsKey(propertyName) || !pd.isWritable()) {
                 continue;
             }
             Object value = result.get(propertyName);

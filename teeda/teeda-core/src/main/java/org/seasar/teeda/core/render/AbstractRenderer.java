@@ -154,7 +154,7 @@ public abstract class AbstractRenderer extends Renderer {
             if (ArrayUtil.contains(attributeNames, propertyName)) {
                 continue;
             }
-            if (propertyDesc.hasReadMethod()) {
+            if (propertyDesc.isReadable()) {
                 final Object value = propertyDesc.getValue(component);
                 map.put(propertyName, value);
             }

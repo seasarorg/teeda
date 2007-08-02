@@ -119,7 +119,7 @@ public class PageDescImpl implements PageDesc {
     }
 
     protected boolean isDynamicProperty(PropertyDesc pd) {
-        return pd.hasReadMethod();
+        return pd.isReadable();
     }
 
     public boolean isRedirectScopeProperty(String name) {

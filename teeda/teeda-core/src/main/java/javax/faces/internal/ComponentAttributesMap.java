@@ -16,7 +16,6 @@
 package javax.faces.internal;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +30,6 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.MethodUtil;
 
 /**
  * @author shot
@@ -114,7 +112,7 @@ public class ComponentAttributesMap implements Map, Serializable {
         if (beanDesc.hasPropertyDesc(k)) {
             propertyDesc = beanDesc.getPropertyDesc(k);
         }
-        if (propertyDesc != null && propertyDesc.hasReadMethod()) {
+        if (propertyDesc != null && propertyDesc.isReadable()) {
             Object value = getComponentProperty(propertyDesc);
             if (value != null) {
                 return value;
@@ -146,8 +144,8 @@ public class ComponentAttributesMap implements Map, Serializable {
             propertyDesc = beanDesc.getPropertyDesc(k);
         }
         Object returnValue = null;
-        if (propertyDesc != null && propertyDesc.hasWriteMethod()) {
-            if (propertyDesc.hasReadMethod()) {
+        if (propertyDesc != null && propertyDesc.isWritable()) {
+            if (propertyDesc.isReadable()) {
                 returnValue = getComponentProperty(propertyDesc);
             }
             setComponentProperty(propertyDesc, value);
@@ -163,13 +161,11 @@ public class ComponentAttributesMap implements Map, Serializable {
     }
 
     private void setComponentProperty(PropertyDesc propertyDesc, Object value) {
-        Method m = propertyDesc.getWriteMethod();
-        MethodUtil.invoke(m, component, new Object[] { value });
+        propertyDesc.setValue(component, value);
     }
 
     private Object getComponentProperty(PropertyDesc propertyDesc) {
-        Method m = propertyDesc.getReadMethod();
-        return MethodUtil.invoke(m, component, InternalConstants.EMPTY_ARGS);
+        return propertyDesc.getValue(component);
     }
 
     public Map getAttributesActual() {

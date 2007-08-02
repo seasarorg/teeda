@@ -142,7 +142,7 @@ public class TeedaPropertyResolver extends PropertyResolver {
             return false;
         }
         PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-        return !pd.hasWriteMethod();
+        return !pd.isWritable();
     }
 
     public boolean isReadOnly(Object base, int index) {
@@ -200,7 +200,7 @@ public class TeedaPropertyResolver extends PropertyResolver {
     protected void setProperty(Object base, String name, Object newValue) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(base.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc(name);
-        if (pd.hasWriteMethod()) {
+        if (pd.isWritable()) {
             pd.setValue(base, newValue);
         } else {
             throw new SetterNotFoundRuntimeException(name);

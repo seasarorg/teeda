@@ -357,7 +357,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 .getClass());
         final PropertyDesc itemsPd = pageBeanDesc
                 .getPropertyDesc(getItemsName());
-        if (!itemsPd.hasWriteMethod()) {
+        if (!itemsPd.isWritable()) {
             throw new IllegalStateException("class ["
                     + pageBeanDesc.getBeanClass().getName()
                     + "] should have writeMethod for ["
@@ -531,7 +531,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             final String propertyName) {
         if (beanDesc.hasPropertyDesc(propertyName)) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasReadMethod()) {
+            if (pd.isReadable()) {
                 return pd.getValue(page);
             }
         }

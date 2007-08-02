@@ -266,7 +266,7 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
             PropertyDesc propDesc = beanDesc
                     .getPropertyDesc(ExtensionConstants.LAYOUT_ATTR);
-            if (propDesc.hasReadMethod()) {
+            if (propDesc.isReadable()) {
                 parentPath = (String) propDesc.getValue(page);
             }
         }

@@ -136,7 +136,7 @@ public class MockPropertyResolver extends PropertyResolver {
             return false;
         }
         PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-        return !pd.hasWriteMethod();
+        return !pd.isWritable();
     }
 
     public boolean isReadOnly(Object base, int index) {

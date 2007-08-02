@@ -44,7 +44,7 @@ public class UIComponentTagPropertyUtil {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
         if (beanDesc.hasPropertyDesc(propertyName)) {
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (pd.hasWriteMethod()) {
+            if (pd.isWritable()) {
                 pd.setValue(component, value);
             }
         } else {
