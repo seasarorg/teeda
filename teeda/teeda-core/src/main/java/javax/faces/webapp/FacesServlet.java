@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -22,6 +22,8 @@ import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
+import javax.faces.event.PhaseId;
+import javax.faces.internal.PhaseUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -74,6 +76,7 @@ public final class FacesServlet implements Servlet {
 
     public void service(ServletRequest request, ServletResponse response)
             throws ServletException, IOException {
+        PhaseUtil.setCurrentPhase(PhaseId.ANY_PHASE);
         final ServletContext servletContext = config.getServletContext();
         final FacesContext context = facesContextFactory.getFacesContext(
                 servletContext, request, response, lifecycle);
@@ -87,7 +90,6 @@ public final class FacesServlet implements Servlet {
             hres.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
-
         try {
             lifecycle.execute(context);
             lifecycle.render(context);
@@ -106,6 +108,7 @@ public final class FacesServlet implements Servlet {
             }
         } finally {
             context.release();
+            PhaseUtil.clearPhase();
         }
     }
 

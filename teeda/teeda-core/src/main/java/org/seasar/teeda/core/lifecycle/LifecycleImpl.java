@@ -23,9 +23,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
-import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-import javax.faces.internal.PhaseUtil;
 import javax.faces.lifecycle.Lifecycle;
 
 import org.seasar.framework.util.ArrayUtil;
@@ -63,7 +61,6 @@ public class LifecycleImpl extends Lifecycle {
     }
 
     public void execute(final FacesContext context) throws FacesException {
-        PhaseUtil.setCurrentPhase(PhaseId.ANY_PHASE);
         final ExternalContext extContext = context.getExternalContext();
         final Map requestMap = extContext.getRequestMap();
         requestMap.put(JsfConstants.FACES_CONTEXT, context);
@@ -136,8 +133,6 @@ public class LifecycleImpl extends Lifecycle {
             throw e;
         } catch (Exception e) {
             handleException(context, e);
-        } finally {
-            PhaseUtil.clearPhase();
         }
     }
 
