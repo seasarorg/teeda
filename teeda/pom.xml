@@ -5,27 +5,37 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-project</artifactId>
+  <version>1.0.9-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <modules>
+    <module>teeda-core</module>
+    <module>teeda-extension</module>
+    <module>teeda-ajax</module>
+  </modules>
+  <properties>
+    <seasar2.version>2.4.16</seasar2.version>
+  </properties>
+
+  <!-- More Project Information -->
   <name>Teeda</name>
-    <version>1.0.9-SNAPSHOT</version>
   <description></description>
   <url>http://teeda.seasar.org/</url>
-  <ciManagement>
-    <system>continuum</system>
-    <!--
-    <notifiers>
-      <notifier>
-        <type>mail</type>
-        <configuration>
-          <address>me@example.com</address>
-        </configuration>
-      </notifier>
-    </notifiers>
-    -->
-  </ciManagement>
   <inceptionYear>2005</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>The Seasar Foundation</name>
+    <url>http://www.seasar.org/</url>
+  </organization>
   <developers>
     <developer>
       <id>shot</id>
@@ -101,22 +111,115 @@
       <timezone>+9</timezone>
     </developer>
   </developers>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+
+  <!-- Environment Settings -->
+  <ciManagement>
+    <system>continuum</system>
+    <!--
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <configuration>
+          <address>me@example.com</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+    -->
+  </ciManagement>
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
   </scm>
-  <organization>
-    <name>The Seasar Foundation</name>
-    <url>http://www.seasar.org/</url>
-  </organization>
+  <repositories>
+    <repository>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>http://maven.seasar.org/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>people.apache.org m2-snapshot</id>
+      <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>snapshots.repository.codehaus.org</id>
+      <url>http://snapshots.repository.codehaus.org</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <profiles>
+    <profile>
+      <id>example</id>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-jar</id>
+                <phase>package</phase>
+                <configuration>
+                  <tasks>
+                    <echo>*** copying jar file ... ***</echo>
+                    <copy
+                      todir="../../teeda-html-example/src/main/webapp/WEB-INF/lib"
+                      failonerror="false">
+                      <fileset dir="${project.build.directory}">
+                        <include name="${pom.build.finalName}.jar"/>
+                      </fileset>
+                    </copy>
+                    <copy
+                      todir="../../teeda-html-example/src/main/webapp/WEB-INF/lib/sources"
+                      failonerror="false">
+                      <fileset dir="${project.build.directory}">
+                        <include name="${pom.build.finalName}-sources.jar"/>
+                      </fileset>
+                    </copy>
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile>
+  </profiles>
+
+  <!-- Build Settings -->
   <build>
     <defaultGoal>validate</defaultGoal>
     <pluginManagement>
@@ -201,156 +304,6 @@
     	</extension>
     </extensions>
   </build>
-  <profiles>
-    <profile>
-      <id>example</id>
-      <build>
-        <defaultGoal>package</defaultGoal>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-jar</id>
-                <phase>package</phase>
-                <configuration>
-                  <tasks>
-                    <echo>*** copying jar file ... ***</echo>
-                    <copy
-                      todir="../../teeda-html-example/src/main/webapp/WEB-INF/lib"
-                      failonerror="false">
-                      <fileset dir="${project.build.directory}">
-                        <include name="${pom.build.finalName}.jar"/>
-                      </fileset>
-                    </copy>
-                    <copy
-                      todir="../../teeda-html-example/src/main/webapp/WEB-INF/lib/sources"
-                      failonerror="false">
-                      <fileset dir="${project.build.directory}">
-                        <include name="${pom.build.finalName}-sources.jar"/>
-                      </fileset>
-                    </copy>
-                  </tasks>
-                </configuration>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-      </properties>
-    </profile>
-  </profiles>
-  <modules>
-    <module>teeda-core</module>
-    <module>teeda-extension</module>
-    <module>teeda-ajax</module>
-  </modules>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>people.apache.org m2-snapshot</id>
-      <url>http://people.apache.org/repo/m2-snapshot-repository</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-    <pluginRepository>
-      <id>snapshots.repository.codehaus.org</id>
-      <url>http://snapshots.repository.codehaus.org</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-servlet_2.4_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jsp_2.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>portlet-api</groupId>
-      <artifactId>portlet-api</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit-addons</groupId>
-      <artifactId>junit-addons</artifactId>
-      <version>1.4</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit-addons</groupId>
-          <artifactId>junit-addons-runner</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.6.2</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xmlParserAPIs</artifactId>
-      <version>2.6.2</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.1</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <!--
-    <dependency>
-      <groupId>rhino</groupId>
-      <artifactId>rhino</artifactId>
-      <version>1.6r2</version>
-      <type>jar</type>
-    </dependency>
-    -->
-    <dependency>
-      <groupId>org.seasar.teeda</groupId>
-      <artifactId>teeda-xmlunit</artifactId>
-      <version>0.1.0</version>
-      <type>jar</type>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
   <reporting>
     <plugins>
       <plugin>
@@ -397,19 +350,70 @@
       -->
     </plugins>
   </reporting>
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>dav:https://www.seasar.org/maven/maven2</url>
-    </repository>
-    <snapshotRepository>
-      <uniqueVersion>true</uniqueVersion>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
-      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
-    </snapshotRepository>
-  </distributionManagement>
 
+  <!-- Dependency Settings -->
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-servlet_2.4_spec</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-jsp_2.0_spec</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>portlet-api</groupId>
+      <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit-addons</groupId>
+          <artifactId>junit-addons-runner</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.1</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>rhino</groupId>
+      <artifactId>rhino</artifactId>
+      <version>1.6r2</version>
+      <type>jar</type>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-xmlunit</artifactId>
+      <version>0.1.0</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

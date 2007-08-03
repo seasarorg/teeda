@@ -4,56 +4,22 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.seasar.teeda</groupId>
+
+  <!-- The Basics -->
   <artifactId>teeda-tiger</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.9-SNAPSHOT</version>
+  <parent>
+    <groupId>org.seasar.teeda</groupId>
+    <artifactId>teeda-project</artifactId>
+    <version>1.0.9-SNAPSHOT</version>
+    <relativePath>../teeda</relativePath>
+  </parent>
+
+  <!-- More Project Information -->
   <name>Teeda Tiger</name>
   <url>http://teeda.seasar.org</url>
-  <issueManagement>
-    <system>JIRA</system>
-    <url><![CDATA[https://www.seasar.org/issues/browse/TEEDA]]></url>
-  </issueManagement>
-  <inceptionYear>2005</inceptionYear>
-  <mailingLists>
-    <mailingList>
-      <name>Seasar-user</name>
-      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-user</subscribe>
-      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-user</unsubscribe>
-      <post>seasar-user@ml.seasar.org</post>
-      <archive>https://www.seasar.org/mailman/listinfo/seasar-user</archive>
-    </mailingList>
-    <mailingList>
-      <name>Seasar-dev</name>
-      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-dev</subscribe>
-      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-dev</unsubscribe>
-      <post>seasar-dev@ml.seasar.org</post>
-      <archive>https://www.seasar.org/mailman/listinfo/seasar-dev</archive>
-    </mailingList>
-    <mailingList>
-      <name>Seasar-user-en</name>
-      <subscribe>https://www.seasar.org/mailman/listinfo/seasar-user-en</subscribe>
-      <unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-user-en</unsubscribe>
-      <post>seasar-user-en@ml.seasar.org</post>
-      <archive>http://ml.seasar.org/archives/seasar-user-en/</archive>
-    </mailingList>
-  </mailingLists>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</connection>
-    <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
-  </scm>
-  <organization>
-    <name>The Seasar Foundation</name>
-    <url>http://www.seasar.org/</url>
-  </organization>
+
+  <!-- Build Settings -->
   <build>
     <defaultGoal>validate</defaultGoal>
     <pluginManagement>
@@ -68,88 +34,21 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>source-jar</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <extensions>
-    	<extension>
-    		<groupId>org.apache.maven.wagon</groupId>
-    		<artifactId>wagon-webdav</artifactId>
-    	</extension>
-    </extensions>
   </build>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-  </repositories>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-tiger</artifactId>
-      <version>2.4.13</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-j2ee_1.4_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jta_1.1_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>runtime</scope>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0.8-RC1</version>
+      <version>${version}</version>
       <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>junit-addons</groupId>
-      <artifactId>junit-addons</artifactId>
-      <version>1.4</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit-addons</groupId>
-          <artifactId>junit-addons-runner</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>dav:https://www.seasar.org/maven/maven2</url>
-    </repository>
-    <snapshotRepository>
-      <uniqueVersion>true</uniqueVersion>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
-      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>

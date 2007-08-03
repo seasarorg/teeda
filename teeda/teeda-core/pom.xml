@@ -4,17 +4,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <artifactId>teeda-core</artifactId>
+  <packaging>jar</packaging>
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
     <version>1.0.9-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>teeda-core</artifactId>
-  <packaging>jar</packaging>
+
+  <!-- More Project Information -->
   <name>Teeda Core</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+
+  <!-- Build Settings -->
   <build>
     <pluginManagement>
       <plugins>
@@ -75,23 +81,19 @@
       </plugin>
     </plugins>
   </build>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-framework</artifactId>
-      <version>2.4.13</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-extension</artifactId>
-      <version>2.4.13</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.2</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -113,6 +115,5 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 </project>
