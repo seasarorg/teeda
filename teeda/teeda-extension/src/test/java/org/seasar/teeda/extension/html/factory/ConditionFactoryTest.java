@@ -112,8 +112,8 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == true}", processor
-                .getProperty("rendered"));
+        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb eq true}",
+                processor.getProperty("rendered"));
     }
 
     public void testCreateFactory2() throws Exception {
@@ -130,8 +130,8 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == false}", processor
-                .getProperty("rendered"));
+        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb eq false}",
+                processor.getProperty("rendered"));
     }
 
     public void testCreateFactory_spanIsOk1() throws Exception {
@@ -148,8 +148,8 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == true}", processor
-                .getProperty("rendered"));
+        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb eq true}",
+                processor.getProperty("rendered"));
     }
 
     public void testCreateFactory_spanIsOk2() throws Exception {
@@ -166,8 +166,8 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == false}", processor
-                .getProperty("rendered"));
+        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb eq false}",
+                processor.getProperty("rendered"));
     }
 
 }

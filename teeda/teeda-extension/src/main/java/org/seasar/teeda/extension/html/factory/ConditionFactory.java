@@ -72,25 +72,37 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         }
         String id = elementNode.getId();
         String pageName = pageDesc.getPageName();
-        String s = null;
-        String expression = null;
-        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
-                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
-            s = id.substring(IS_PARAM_PREFIX.length());
-            s = StringUtil.decapitalize(s);
-            s = s + " == true";
-            expression = getBindingExpression(pageName, s);
+        final StringBuffer buf = new StringBuffer(100);
+        buf.append("#{");
+        final String propertyName = (isIsPrefix(id)) ? StringUtil
+                .decapitalize(id.substring(IS_PARAM_PREFIX.length()))
+                : StringUtil.decapitalize(id.substring(ISNOT_PARAM_PREFIX
+                        .length()));
+        final String pageAndProperty = pageName + "." + propertyName;
+        buf.append(pageAndProperty);
+        if (isIsPrefix(id)) {
+            //#{foo.aaa != null && foo.aaa == true}
+            buf.append(" != null && ");
+            buf.append(pageAndProperty);
+            buf.append(" eq true");
+            buf.append("}");
         } else if (StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
-            s = id.substring(ISNOT_PARAM_PREFIX.length());
-            s = StringUtil.decapitalize(s);
-            s = s + " == false";
-            expression = getBindingExpression(pageName, s);
+            //#{foo.aaa == null || foo.aaa == false}
+            buf.append(" == null || ");
+            buf.append(pageAndProperty);
+            buf.append(" eq false");
+            buf.append("}");
         }
-        properties.put("rendered", expression);
+        properties.put("rendered", buf.toString());
         String tagName = elementNode.getTagName();
         if (tagName != null && JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName)) {
             properties.put(ExtensionConstants.RENDERSPAN_ATTR, "true");
         }
+    }
+
+    private static boolean isIsPrefix(final String id) {
+        return StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
+                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX);
     }
 
     protected String getTagName() {
