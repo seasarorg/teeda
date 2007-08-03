@@ -505,5 +505,10 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
             return false;
         }
 
+        public boolean hasMapItemsProperty(String name) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
     }
 }

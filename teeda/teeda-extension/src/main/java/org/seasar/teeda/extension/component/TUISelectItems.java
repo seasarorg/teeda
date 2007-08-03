@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -47,12 +47,12 @@ public class TUISelectItems extends UISelectItems {
     private boolean nullLabelRequired = true;
 
     private static final SelectItem BLANK_SELECT_ITEM = new SelectItem();
-    
+
     static {
         BLANK_SELECT_ITEM.setValue("");
         BLANK_SELECT_ITEM.setLabel("");
     }
-    
+
     public String getItemLabel() {
         return itemLabel;
     }
@@ -94,7 +94,7 @@ public class TUISelectItems extends UISelectItems {
         }
         if (value instanceof Collection) {
             final Collection valueCollection = (Collection) value;
-            if(valueCollection.size() == 0) {
+            if (valueCollection.size() == 0) {
                 list.add(BLANK_SELECT_ITEM);
             } else {
                 for (Iterator it = valueCollection.iterator(); it.hasNext();) {
@@ -118,7 +118,8 @@ public class TUISelectItems extends UISelectItems {
                         list.add(si);
                     } else {
                         SelectItem si = new SelectItem();
-                        BeanDesc bd = BeanDescFactory.getBeanDesc(item.getClass());
+                        BeanDesc bd = BeanDescFactory.getBeanDesc(item
+                                .getClass());
                         PropertyDesc pd = bd.getPropertyDesc(itemValue);
                         Object itemValueValue = pd.getValue(item);
                         if (itemValueValue != null) {
@@ -139,7 +140,26 @@ public class TUISelectItems extends UISelectItems {
                     }
                 }
             }
+        } else if (value instanceof Map) {
+            final Map map = (Map) value;
+            if (map.size() == 0) {
+                list.add(BLANK_SELECT_ITEM);
+            } else {
+                for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+                    Object key = it.next();
+                    Object val = map.get(key);
+                    SelectItem si = new SelectItem();
+                    if (key != null) {
+                        si.setLabel(key.toString());
+                    }
+                    if (val != null) {
+                        si.setValue(val);
+                    }
+                    list.add(si);
+                }
+            }
         }
+
         return list;
     }
 

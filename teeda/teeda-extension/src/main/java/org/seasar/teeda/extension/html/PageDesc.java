@@ -15,13 +15,28 @@
  */
 package org.seasar.teeda.extension.html;
 
+/**
+ * @author shot
+ */
 public interface PageDesc {
 
     String getPageName();
 
     boolean hasProperty(String name);
 
+    /**
+     * ForEachやSelectOneMenuでのPageクラスに持つCollectionがある場合にtrueを返す.
+     * @param name
+     * @return boolean
+     */
     boolean hasItemsProperty(String name);
+
+    /**
+     * SelectOneMenuなどのPageクラスに持つMapがある場合にtrueを返す.
+     * @param name
+     * @return　boolean
+     */
+    boolean hasMapItemsProperty(String name);
 
     boolean hasDynamicProperty(String name);
 

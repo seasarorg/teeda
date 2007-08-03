@@ -53,7 +53,8 @@ public class SelectOneRadioFactory extends AbstractElementProcessorFactory {
             return false;
         }
         final String items = id + ExtensionConstants.ITEMS_SUFFIX;
-        if (!pageDesc.hasItemsProperty(items)) {
+        if (!pageDesc.hasItemsProperty(items)
+                && !pageDesc.hasMapItemsProperty(items)) {
             return false;
         }
         int elementNodeCount = 0;

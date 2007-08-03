@@ -49,6 +49,8 @@ public class PageDescImpl implements PageDesc {
 
     private Set itemsPropertyNames = new HashSet();
 
+    private Set mapItemsPropertyNames = new HashSet();
+
     private Set dynamicPropertyNames = new HashSet();
 
     private Set methodNames;
@@ -87,6 +89,9 @@ public class PageDescImpl implements PageDesc {
             if (isItemsProperty(pd)) {
                 itemsPropertyNames.add(pd.getPropertyName());
             }
+            if (isMapItemsProperty(pd)) {
+                mapItemsPropertyNames.add(pd.getPropertyName());
+            }
             propertyNames.add(pd.getPropertyName());
             if (isDynamicProperty(pd)) {
                 dynamicPropertyNames.add(pd.getPropertyName());
@@ -116,6 +121,14 @@ public class PageDescImpl implements PageDesc {
         }
         Class clazz = pd.getPropertyType();
         return clazz.isArray() || Collection.class.isAssignableFrom(clazz);
+    }
+
+    protected boolean isMapItemsProperty(PropertyDesc pd) {
+        if (!pd.getPropertyName().endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
+            return false;
+        }
+        Class clazz = pd.getPropertyType();
+        return Map.class.isAssignableFrom(clazz);
     }
 
     protected boolean isDynamicProperty(PropertyDesc pd) {
@@ -152,6 +165,10 @@ public class PageDescImpl implements PageDesc {
 
     public boolean hasItemsProperty(String name) {
         return itemsPropertyNames.contains(name);
+    }
+
+    public boolean hasMapItemsProperty(String name) {
+        return mapItemsPropertyNames.contains(name);
     }
 
     public boolean hasDynamicProperty(String name) {

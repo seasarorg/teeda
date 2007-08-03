@@ -43,7 +43,7 @@ public class THtmlSelectUtil {
         }
         final Object selected = select.getValue();
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        if (!beanDesc.hasPropertyDesc(labelName)) {
+        if (!beanDesc.hasPropertyDesc(labelName) || selected == null) {
             return;
         }
         final PropertyDesc labelPd = beanDesc.getPropertyDesc(labelName);
@@ -51,13 +51,15 @@ public class THtmlSelectUtil {
                 .hasNext();) {
             final SelectItem item = (SelectItem) it.next();
             final Object v = item.getValue();
-            if (v.equals(selected)) {
+            if (v == null) {
+                continue;
+            }
+            if (v.toString().equals(selected.toString())) {
                 final String l = item.getLabel();
                 labelPd.setValue(page, l);
                 break;
             }
         }
-
     }
 
     public static void validate(final UIComponent component) {
