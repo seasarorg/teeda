@@ -112,7 +112,7 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb eq true}",
+        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb == true}",
                 processor.getProperty("rendered"));
     }
 
@@ -130,7 +130,7 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb eq false}",
+        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb == false}",
                 processor.getProperty("rendered"));
     }
 
@@ -148,7 +148,7 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb eq true}",
+        assertEquals("3", "#{aaaPage.bbb != null && aaaPage.bbb == true}",
                 processor.getProperty("rendered"));
     }
 
@@ -166,7 +166,7 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         // ## Assert ##
         assertNotNull("1", processor);
         assertEquals("2", TConditionTag.class, processor.getTagClass());
-        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb eq false}",
+        assertEquals("3", "#{aaaPage.bbb == null || aaaPage.bbb == false}",
                 processor.getProperty("rendered"));
     }
 

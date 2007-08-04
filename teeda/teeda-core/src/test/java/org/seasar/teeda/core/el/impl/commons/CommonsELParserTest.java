@@ -22,6 +22,52 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class CommonsELParserTest extends TeedaTestCase {
 
+    public void testParse_Boolean() {
+        getContainer().register(new Foo(), "foo");
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        Object o = parser.parse("#{foo.aaa != null && foo.aaa == true}");
+        MockApplication app = getApplication();
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals(Boolean.FALSE, obj);
+    }
+
+    public void testParse_Boolean2() {
+        final Foo foo = new Foo();
+        foo.setAaa(Boolean.TRUE);
+        getContainer().register(foo, "foo");
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        Object o = parser.parse("#{foo.aaa != null && foo.aaa == true}");
+        MockApplication app = getApplication();
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals(Boolean.TRUE, obj);
+    }
+
+    public void testParse_Boolean3() {
+        final Bar foo = new Bar();
+        foo.setAaa(Boolean.TRUE);
+        getContainer().register(foo, "foo");
+        ELParser parser = new CommonsELParser();
+        parser.setExpressionProcessor(new CommonsExpressionProcessorImpl());
+        Object o = parser.parse("#{foo.aaa == true}");
+        MockApplication app = getApplication();
+        TeedaVariableResolver resolver = new TeedaVariableResolver();
+        resolver.setContainer(getContainer());
+        app.setVariableResolver(resolver);
+        Object obj = parser.getExpressionProcessor().evaluate(
+                getFacesContext(), o);
+        assertEquals(Boolean.TRUE, obj);
+    }
+
     public void testParse() {
         getContainer().register(new Hoge(), "hoge");
         ELParser parser = new CommonsELParser();
@@ -88,4 +134,33 @@ public class CommonsELParserTest extends TeedaTestCase {
             return bar;
         }
     }
+
+    public static class Foo {
+
+        private Boolean aaa = null;
+
+        public Boolean getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(Boolean aaa) {
+            this.aaa = aaa;
+        }
+
+    }
+    
+    public static class Bar {
+
+        private Boolean aaa = null;
+
+        public Boolean isAaa() {
+            return aaa;
+        }
+
+        public void setAaa(Boolean aaa) {
+            this.aaa = aaa;
+        }
+
+    }
+
 }

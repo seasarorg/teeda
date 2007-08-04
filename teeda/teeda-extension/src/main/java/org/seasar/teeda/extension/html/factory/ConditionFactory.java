@@ -84,13 +84,13 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
             //#{foo.aaa != null && foo.aaa == true}
             buf.append(" != null && ");
             buf.append(pageAndProperty);
-            buf.append(" eq true");
+            buf.append(" == true");
             buf.append("}");
         } else if (StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
             //#{foo.aaa == null || foo.aaa == false}
             buf.append(" == null || ");
             buf.append(pageAndProperty);
-            buf.append(" eq false");
+            buf.append(" == false");
             buf.append("}");
         }
         properties.put("rendered", buf.toString());
