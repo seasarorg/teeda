@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -201,6 +200,9 @@ public class SessionPagePersistence implements PagePersistence {
             if (JsfConstants.PREVIOUS_VIEW_ID.equals(propertyName)) {
                 continue;
             }
+            if (JsfConstants.FACES_CONTEXT.equals(propertyName)) {
+                continue;
+            }
             if (pageDesc.isPageScopeProperty(propertyName)) {
                 continue;
             }
@@ -261,6 +263,9 @@ public class SessionPagePersistence implements PagePersistence {
             Object page, Map nextPageProperties, PageDesc pageDesc) {
         AssertionUtil.assertNotNull("takeOverDesc", takeOverDesc);
         final String[] properties = takeOverDesc.getProperties();
+
+        //TODO TakeOver.INCLUDE/EXCLUEのときにPagePersistenceUtil.isPersistenceType()で
+        //チェックしていないので、HotDeployUtilでこける可能性がある.
         if (isTakeOverNever(takeOverDesc)) {
             refreshSubApplicationScopeMap(context, subappValues);
         } else if (isTakeOverInclude(takeOverDesc)) {
@@ -353,12 +358,11 @@ public class SessionPagePersistence implements PagePersistence {
                 continue;
             }
             final Class thisPageType = pd.getPropertyType();
-            if (!thisPageType.isArray()
-                    && !Collection.class.isAssignableFrom(thisPageType)
-                    && !PagePersistenceUtil.isPersistenceType(thisPageType)) {
+            if (!PagePersistenceUtil.isPersistenceType(thisPageType)) {
                 continue;
             }
-            Class nextPageType = (Class) nextPageProperties.get(propertyName);
+            final Class nextPageType = (Class) nextPageProperties
+                    .get(propertyName);
             if (nextPageType != thisPageType) {
                 final Object[] args = new Object[] { propertyName,
                         thisPageType.getName(), nextPageType.getName() };

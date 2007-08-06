@@ -9,18 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.util;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-
-import org.seasar.teeda.extension.component.TreeNode;
 
 /**
  * @author shot
@@ -29,18 +24,22 @@ import org.seasar.teeda.extension.component.TreeNode;
 public class PagePersistenceUtil {
 
     public static boolean isPersistenceType(Class clazz) {
-        if (Serializable.class.isAssignableFrom(clazz)) {
-            return true;
-        }
         if (clazz.isPrimitive()) {
             return true;
         }
-        return clazz == String.class || clazz == Boolean.class
-                || Number.class.isAssignableFrom(clazz)
-                || Date.class.isAssignableFrom(clazz)
-                || Calendar.class.isAssignableFrom(clazz)
-                || Map.class.isAssignableFrom(clazz) || clazz.isArray()
-                || clazz == TreeNode.class;
+        if (!Serializable.class.isAssignableFrom(clazz)) {
+            return false;
+        }
+        if (clazz.isArray()) {
+            Class componentType = clazz.getComponentType();
+            if (componentType.isPrimitive()) {
+                return true;
+            } else if (componentType.isArray()) {
+                return isPersistenceType(componentType);
+            }
+            return Serializable.class.isAssignableFrom(componentType);
+        }
+        return true;
     }
 
 }
