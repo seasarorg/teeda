@@ -58,6 +58,11 @@ public class Condition2Page {
 	}
 
 	public String doHoge() {
+		if (hoge < 1000) {
+			aaa = true;
+		} else {
+			aaa = false;
+		}
 		return null;
 	}
 }
