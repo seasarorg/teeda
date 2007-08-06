@@ -28,6 +28,8 @@ import javax.faces.internal.InternalConstants;
 import javax.faces.internal.NormalConverterBuilderImpl;
 import javax.faces.internal.NormalValidatorBuilderImpl;
 import javax.faces.internal.ValidatorBuilder;
+import javax.faces.internal.ValidatorLookupStrategy;
+import javax.faces.internal.ValidatorLookupStrategyUtil;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
@@ -76,7 +78,10 @@ public class TeedaInitializer {
             }
         }
         ValidatorResource.setValidatorBuilder(validatorBuilder);
-
+        final ValidatorLookupStrategy strategy = (ValidatorLookupStrategy) DIContainerUtil
+                .getComponentNoException(ValidatorLookupStrategy.class);
+        ValidatorLookupStrategyUtil.setValidatorLookupStrategy(strategy);
+        
         ConverterBuilder converterBuilder = (ConverterBuilder) DIContainerUtil
                 .getComponentNoException(ConverterBuilder.class);
         if (converterBuilder == null) {

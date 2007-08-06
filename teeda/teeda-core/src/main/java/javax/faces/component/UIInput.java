@@ -35,6 +35,7 @@ import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UIComponentUtil;
 import javax.faces.internal.UIInputUtil;
 import javax.faces.internal.ValidatorLookupStrategy;
+import javax.faces.internal.ValidatorLookupStrategyUtil;
 import javax.faces.internal.ValidatorResource;
 import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
@@ -367,8 +368,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
 
     protected void validateForExtension(FacesContext context, Object value) {
         Validator validator = null;
-        final ValidatorLookupStrategy strategy = (ValidatorLookupStrategy) DIContainerUtil
-                .getComponentNoException(ValidatorLookupStrategy.class);
+        final ValidatorLookupStrategy strategy = ValidatorLookupStrategyUtil
+                .getValidatorLookupStrategy();
         if (strategy != null) {
             validator = strategy.findValidator(context, this, value);
         } else {
