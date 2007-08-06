@@ -72,28 +72,21 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         }
         String id = elementNode.getId();
         String pageName = pageDesc.getPageName();
-        final StringBuffer buf = new StringBuffer(100);
-        buf.append("#{");
-        final String propertyName = (isIsPrefix(id)) ? StringUtil
-                .decapitalize(id.substring(IS_PARAM_PREFIX.length()))
-                : StringUtil.decapitalize(id.substring(ISNOT_PARAM_PREFIX
-                        .length()));
-        final String pageAndProperty = pageName + "." + propertyName;
-        buf.append(pageAndProperty);
-        if (isIsPrefix(id)) {
-            //#{foo.aaa != null && foo.aaa == true}
-            buf.append(" != null && ");
-            buf.append(pageAndProperty);
-            buf.append(" == true");
-            buf.append("}");
+        String s = null;
+        String expression = null;
+        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
+                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
+            s = id.substring(IS_PARAM_PREFIX.length());
+            s = StringUtil.decapitalize(s);
+            s = s + " == true";
+            expression = getBindingExpression(pageName, s);
         } else if (StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
-            //#{foo.aaa == null || foo.aaa == false}
-            buf.append(" == null || ");
-            buf.append(pageAndProperty);
-            buf.append(" == false");
-            buf.append("}");
+            s = id.substring(ISNOT_PARAM_PREFIX.length());
+            s = StringUtil.decapitalize(s);
+            s = s + " == false";
+            expression = getBindingExpression(pageName, s);
         }
-        properties.put("rendered", buf.toString());
+        properties.put("rendered", expression);
         String tagName = elementNode.getTagName();
         if (tagName != null && JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName)) {
             properties.put(ExtensionConstants.RENDERSPAN_ATTR, "true");

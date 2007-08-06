@@ -411,8 +411,7 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
         assertEquals("<html><body>", textProcessor.getValue());
         assertTrue(viewRoot.getChild(1) instanceof ElementProcessor);
         ElementProcessor ep = (ElementProcessor) viewRoot.getChild(1);
-        assertEquals("#{barPage.aaa != null && barPage.aaa == true}", ep
-                .getProperty("rendered"));
+        assertEquals("#{barPage.aaa == true}", ep.getProperty("rendered"));
     }
 
     protected HtmlDescCacheImpl createHtmlDescCacheImpl() {
