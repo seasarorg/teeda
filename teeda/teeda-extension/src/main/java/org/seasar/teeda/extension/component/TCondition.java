@@ -61,16 +61,28 @@ public class TCondition extends UIComponentBase {
                 .hasErrorOrFatalMessage(context);
         final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
                 : false;
-        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)
-                && (isRefresh || noError)) {
-            clearEncodedCondition();
-            return super.isRendered();
+        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)) {
+            if (isRefresh || noError) {
+                clearEncodedCondition();
+                return super.isRendered();
+            } else {
+                //no op;
+            }
         }
         Boolean condition = getEncodedCondition();
         if (condition != null) {
             return condition.booleanValue();
         }
         return super.isRendered();
+    }
+
+    protected Boolean removeEncodedCondition() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map conditions = getConditions(context);
+        if (conditions == null) {
+            return null;
+        }
+        return (Boolean) conditions.remove(getClientId(context));
     }
 
     protected Boolean getEncodedCondition() {
@@ -101,19 +113,21 @@ public class TCondition extends UIComponentBase {
     }
 
     protected void clearEncodedCondition() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map conditions = getConditions(context);
+        final FacesContext context = getFacesContext();
+        final Map conditions = getConditions(context);
         if (conditions == null) {
             return;
         }
-        conditions.remove(getClientId(context));
+        final String cid = getClientId(context);
+        conditions.remove(cid);
     }
 
     protected void saveEncodedCondition() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map conditions = getOrCreateConditions(context);
-        conditions.put(getClientId(context), Boolean
-                .valueOf(super.isRendered()));
+        final FacesContext context = getFacesContext();
+        final Map conditions = getOrCreateConditions(context);
+        final Boolean b = Boolean.valueOf(super.isRendered());
+        final String cid = getClientId(context);
+        conditions.put(cid, b);
     }
 
     public String getFamily() {
