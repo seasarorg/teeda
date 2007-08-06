@@ -9,7 +9,7 @@ public class Condition3Page {
 
 	private int flgInfoIndex;
 
-	private List/* <Boolean> */flgInfoItems;
+	private List flgInfoItems;
 
 	private Boolean flgInfo;
 

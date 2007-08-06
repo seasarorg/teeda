@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,7 @@ package examples.teeda.web.condition;
  */
 public class ConditionInputPage {
 
-	private Boolean aaa = Boolean.TRUE;
+	private boolean aaa = true;
 
 	private Boolean bbb = null;
 
@@ -28,11 +28,11 @@ public class ConditionInputPage {
 		return null;
 	}
 
-	public void setAaa(Boolean aaa) {
+	public void setAaa(boolean aaa) {
 		this.aaa = aaa;
 	}
 
-	public Boolean isAaa() {
+	public boolean isAaa() {
 		return aaa;
 	}
 
@@ -43,6 +43,5 @@ public class ConditionInputPage {
 	public void setBbb(Boolean bbb) {
 		this.bbb = bbb;
 	}
-
 
 }

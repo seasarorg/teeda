@@ -9,55 +9,62 @@ import examples.teeda.dto.LessonDto;
 
 /**
  * 研修申し込みページ
- *
+ * 
  * @version $Id: EntryTrainingPage.java,v 1.4 2007/07/05 07:23:00 taiki Exp $
  */
 public class EntryTrainingPage {
 
-	//コース一覧
-	private List<CourceDto> courceItems = null;
+	// コース一覧
+	private List/* <CourceDto> */courceItems = null;
 
-	//コース情報
+	// コース情報
 	private Integer courceID = null;
+
 	private String courceName = null;
+
 	private String courceDescription = null;
+
 	private String status = null;
 
-	//講義一覧表示
+	// 講義一覧表示
 	private boolean viewLesson = false;
-	//講義一覧
-	private List<LessonDto> lessonItems = null;
-	
-	//講義情報
+
+	// 講義一覧
+	private List/* <LessonDto> */lessonItems = null;
+
+	// 講義情報
 	private Integer lessonID = null;
+
 	private String lessonName = null;
+
 	public static final String lessonDate_dateTimeConverter = "pattern='yyyy/M/dd'";
+
 	private Date lessonDate = null;
-	
+
 	private boolean enabledEntry = false;
-	
+
 	public void initialize() {
-		
+
 		viewLesson = false;
-		courceItems = new ArrayList<CourceDto>(3);
+		courceItems = new ArrayList/* <CourceDto> */(3);
 		courceItems.add(new CourceDto(1, 1, "コース１", "説明１"));
 		courceItems.add(new CourceDto(1, 2, "コース２", "説明２"));
 		courceItems.add(new CourceDto(1, 3, "コース３", "説明３"));
-		
-		if(courceID != null) {
+
+		if (courceID != null) {
 			viewLesson = true;
-			lessonItems = new ArrayList<LessonDto>(4);
+			lessonItems = new ArrayList/* <LessonDto> */(4);
 			lessonItems.add(new LessonDto(101, "講義１", new Date()));
 			lessonItems.add(new LessonDto(102, "講義２", new Date()));
 			lessonItems.add(new LessonDto(103, "講義３", new Date()));
 			lessonItems.add(new LessonDto(104, "講義４", new Date()));
 		}
-		
-		
+
 	}
-	
+
 	/**
 	 * courceDescription
+	 * 
 	 * @return courceDescription
 	 */
 	public String getCourceDescription() {
@@ -66,7 +73,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * courceDescription
-	 * @param aCourceDescription courceDescription
+	 * 
+	 * @param aCourceDescription
+	 *            courceDescription
 	 */
 	public void setCourceDescription(String aCourceDescription) {
 		courceDescription = aCourceDescription;
@@ -74,6 +83,7 @@ public class EntryTrainingPage {
 
 	/**
 	 * courceName
+	 * 
 	 * @return courceName
 	 */
 	public String getCourceName() {
@@ -82,7 +92,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * courceName
-	 * @param aCourceName courceName
+	 * 
+	 * @param aCourceName
+	 *            courceName
 	 */
 	public void setCourceName(String aCourceName) {
 		courceName = aCourceName;
@@ -90,6 +102,7 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonDate
+	 * 
 	 * @return lessonDate
 	 */
 	public Date getLessonDate() {
@@ -98,7 +111,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonDate
-	 * @param aLessonDate lessonDate
+	 * 
+	 * @param aLessonDate
+	 *            lessonDate
 	 */
 	public void setLessonDate(Date aLessonDate) {
 		lessonDate = aLessonDate;
@@ -106,6 +121,7 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonName
+	 * 
 	 * @return lessonName
 	 */
 	public String getLessonName() {
@@ -114,7 +130,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonName
-	 * @param aLessonName lessonName
+	 * 
+	 * @param aLessonName
+	 *            lessonName
 	 */
 	public void setLessonName(String aLessonName) {
 		lessonName = aLessonName;
@@ -122,22 +140,26 @@ public class EntryTrainingPage {
 
 	/**
 	 * courceItems
+	 * 
 	 * @return courceItems
 	 */
-	public List<CourceDto> getCourceItems() {
+	public List/* <CourceDto> */getCourceItems() {
 		return courceItems;
 	}
 
 	/**
 	 * courceItems
-	 * @param aCourceItems courceItems
+	 * 
+	 * @param aCourceItems
+	 *            courceItems
 	 */
-	public void setCourceItems(List<CourceDto> aCourceItems) {
+	public void setCourceItems(List/* <CourceDto> */aCourceItems) {
 		courceItems = aCourceItems;
 	}
 
 	/**
 	 * courceID
+	 * 
 	 * @return courceID
 	 */
 	public Integer getCourceID() {
@@ -146,31 +168,36 @@ public class EntryTrainingPage {
 
 	/**
 	 * courceID
-	 * @param aCourceID courceID
+	 * 
+	 * @param aCourceID
+	 *            courceID
 	 */
 	public void setCourceID(Integer aCourceID) {
 		courceID = aCourceID;
 	}
 
-
 	/**
 	 * lessonItems
+	 * 
 	 * @return lessonItems
 	 */
-	public List<LessonDto> getLessonItems() {
+	public List/* <LessonDto> */getLessonItems() {
 		return lessonItems;
 	}
 
 	/**
 	 * lessonItems
-	 * @param aLessonItems lessonItems
+	 * 
+	 * @param aLessonItems
+	 *            lessonItems
 	 */
-	public void setLessonItems(List<LessonDto> aLessonItems) {
+	public void setLessonItems(List/* <LessonDto> */aLessonItems) {
 		lessonItems = aLessonItems;
 	}
 
 	/**
 	 * viewLesson
+	 * 
 	 * @return viewLesson
 	 */
 	public boolean isViewLesson() {
@@ -179,7 +206,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * viewLesson
-	 * @param aViewLesson viewLesson
+	 * 
+	 * @param aViewLesson
+	 *            viewLesson
 	 */
 	public void setViewLesson(boolean aViewLesson) {
 		viewLesson = aViewLesson;
@@ -187,6 +216,7 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonID
+	 * 
 	 * @return lessonID
 	 */
 	public Integer getLessonID() {
@@ -195,7 +225,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * lessonID
-	 * @param aLessonID lessonID
+	 * 
+	 * @param aLessonID
+	 *            lessonID
 	 */
 	public void setLessonID(Integer aLessonID) {
 		lessonID = aLessonID;
@@ -203,6 +235,7 @@ public class EntryTrainingPage {
 
 	/**
 	 * status
+	 * 
 	 * @return status
 	 */
 	public String getStatus() {
@@ -211,7 +244,9 @@ public class EntryTrainingPage {
 
 	/**
 	 * status
-	 * @param aStatus status
+	 * 
+	 * @param aStatus
+	 *            status
 	 */
 	public void setStatus(String aStatus) {
 		status = aStatus;

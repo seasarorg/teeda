@@ -26,13 +26,13 @@ public class ConditionPage {
 
 	private String bbb = null;
 
-	private Boolean foo;
+	private boolean foo;
 
-	public Boolean getFoo() {
+	public boolean isFoo() {
 		return foo;
 	}
 
-	public void setFoo(Boolean foo) {
+	public void setFoo(boolean foo) {
 		this.foo = foo;
 	}
 
@@ -66,10 +66,10 @@ public class ConditionPage {
 
 	public String doHoge() {
 		if (hoge <= 100) {
-			foo = Boolean.TRUE;
+			foo = true;
 			aaa = "AAA";
 		} else {
-			foo = Boolean.FALSE;
+			foo = false;
 			aaa = "BBB";
 		}
 		return null;

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,7 +24,7 @@ public class Condition2Page {
 
 	private int hoge;
 
-	private Boolean aaa = null;
+	private boolean aaa = false;
 
 	private Boolean bbb = null;
 
@@ -37,15 +37,15 @@ public class Condition2Page {
 	}
 
 	public String initialize() {
-		aaa = Boolean.TRUE;
+		aaa = true;
 		return null;
 	}
 
-	public void setAaa(Boolean aaa) {
+	public void setAaa(boolean aaa) {
 		this.aaa = aaa;
 	}
 
-	public Boolean isAaa() {
+	public boolean isAaa() {
 		return aaa;
 	}
 
