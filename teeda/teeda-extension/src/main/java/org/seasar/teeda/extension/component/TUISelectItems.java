@@ -160,8 +160,11 @@ public class TUISelectItems extends UISelectItems {
                     list.add(si);
                 }
             }
+        } else {
+            if (!nullLabelSet && value == null) {
+                list.add(BLANK_SELECT_ITEM);
+            }
         }
-
         return list;
     }
 

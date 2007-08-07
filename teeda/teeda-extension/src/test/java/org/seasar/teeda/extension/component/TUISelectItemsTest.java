@@ -105,12 +105,31 @@ public class TUISelectItemsTest extends TeedaTestCase {
         assertNotNull(((SelectItem) list.get(0)).getLabel());
     }
 
+    public void testGetValue_notNullLabelRequiredWithCollection()
+            throws Exception {
+        TUISelectItems items = new TUISelectItems();
+        items.setValue(new ArrayList());
+        items.setNullLabelRequired(false);
+        List list = (List) items.getValue();
+        assertNotNull(list);
+        assertTrue(list.size() == 1);
+    }
+
+    public void testGetValue_notNullLabelRequiredWithMap() throws Exception {
+        TUISelectItems items = new TUISelectItems();
+        items.setValue(new HashMap());
+        items.setNullLabelRequired(false);
+        List list = (List) items.getValue();
+        assertNotNull(list);
+        assertTrue(list.size() == 1);
+    }
+
     public void testGetValue_notNullLabelRequired() throws Exception {
         TUISelectItems items = new TUISelectItems();
         items.setNullLabelRequired(false);
         List list = (List) items.getValue();
         assertNotNull(list);
-        assertTrue(list.size() == 0);
+        assertTrue(list.size() == 1);
     }
 
     public static class HogeDto {
