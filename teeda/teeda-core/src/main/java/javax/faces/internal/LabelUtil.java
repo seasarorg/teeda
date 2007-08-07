@@ -17,9 +17,11 @@ package javax.faces.internal;
 
 import java.util.Locale;
 
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.log.Logger;
 import org.seasar.framework.message.MessageResourceBundle;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ViewHandlerUtil;
@@ -29,6 +31,8 @@ import org.seasar.teeda.core.util.ViewHandlerUtil;
  */
 public class LabelUtil {
 
+    private static Logger logger = Logger.getLogger(LabelUtil.class);
+
     public static String getLabelValue(String defaultKey) {
         if (defaultKey == null) {
             return null;
@@ -37,14 +41,22 @@ public class LabelUtil {
         if (index > 0) {
             defaultKey = defaultKey.substring(0, index);
         }
-        String viewId = FacesContext.getCurrentInstance().getViewRoot()
-                .getViewId();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        if (context == null) {
+            return null;
+        }
+        final UIViewRoot viewRoot = context.getViewRoot();
+        if (viewRoot == null) {
+            logger.log("WTDA0202", new Object[0]);
+            return null;
+        }
+        String viewId = viewRoot.getViewId();
         if (viewId == null) {
             return null;
         }
-        NamingConvention nc = (NamingConvention) DIContainerUtil
-                .getComponent(NamingConvention.class);
-        if (!nc.isValidViewRootPath(viewId)) {
+        final NamingConvention nc = (NamingConvention) DIContainerUtil
+                .getComponentNoException(NamingConvention.class);
+        if (nc == null || !nc.isValidViewRootPath(viewId)) {
             return null;
         }
         String pageName = nc.fromPathToPageName(viewId);

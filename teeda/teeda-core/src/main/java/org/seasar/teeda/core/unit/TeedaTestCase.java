@@ -202,7 +202,9 @@ public abstract class TeedaTestCase extends S2FrameworkTestCase {
     protected void tearDownContainer() throws Throwable {
         externalContext = null;
         application = null;
-        facesContext.release();
+        if (facesContext != null) {
+            facesContext.release();
+        }
         facesContext = null;
         renderKit = null;
         phaseListener = null;
