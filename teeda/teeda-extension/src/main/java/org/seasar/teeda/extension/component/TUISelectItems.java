@@ -83,6 +83,7 @@ public class TUISelectItems extends UISelectItems {
             return value;
         }
         List list = new ArrayList();
+        boolean nullLabelSet = false;
         if (nullLabelRequired) {
             SelectItem si = new SelectItem();
             si.setValue("");
@@ -91,10 +92,11 @@ public class TUISelectItems extends UISelectItems {
                     NULL_LABEL_MESSAGE_CODE, null);
             si.setLabel(mes.getSummary());
             list.add(si);
+            nullLabelSet = true;
         }
         if (value instanceof Collection) {
             final Collection valueCollection = (Collection) value;
-            if (valueCollection.size() == 0) {
+            if (!nullLabelSet && valueCollection.size() == 0) {
                 list.add(BLANK_SELECT_ITEM);
             } else {
                 for (Iterator it = valueCollection.iterator(); it.hasNext();) {
@@ -142,7 +144,7 @@ public class TUISelectItems extends UISelectItems {
             }
         } else if (value instanceof Map) {
             final Map map = (Map) value;
-            if (map.size() == 0) {
+            if (!nullLabelSet && map.size() == 0) {
                 list.add(BLANK_SELECT_ITEM);
             } else {
                 for (Iterator it = map.keySet().iterator(); it.hasNext();) {

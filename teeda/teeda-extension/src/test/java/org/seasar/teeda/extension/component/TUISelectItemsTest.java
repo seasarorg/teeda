@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -93,6 +93,24 @@ public class TUISelectItemsTest extends TeedaTestCase {
         SelectItem si = (SelectItem) list2.get(0);
         assertEquals("aaa", si.getLabel());
         assertEquals("1", si.getValue());
+    }
+
+    public void testGetValue_nullLabelRequired() throws Exception {
+        TUISelectItems items = new TUISelectItems();
+        items.setNullLabelRequired(true);
+        List list = (List) items.getValue();
+        assertNotNull(list);
+        assertTrue(list.size() == 1);
+        assertNotNull(list.get(0));
+        assertNotNull(((SelectItem) list.get(0)).getLabel());
+    }
+
+    public void testGetValue_notNullLabelRequired() throws Exception {
+        TUISelectItems items = new TUISelectItems();
+        items.setNullLabelRequired(false);
+        List list = (List) items.getValue();
+        assertNotNull(list);
+        assertTrue(list.size() == 0);
     }
 
     public static class HogeDto {
