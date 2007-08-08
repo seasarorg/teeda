@@ -25,7 +25,11 @@ public class CsvdownloadPage {
 	private String filename;
 
 	public void doDownload() {
-		final File file = downloadHelper.getFile("javaexpert-sample.csv");
+		String name = filename;
+		if (!filename.endsWith(".csv")) {
+			name = filename + ".csv";
+		}
+		final File file = downloadHelper.getFile(name);
 		response.setContentType("application/octet-stream");
 		response.setHeader("content-disposition", "attachment; filename=\""
 				+ file.getName() + "\"");
