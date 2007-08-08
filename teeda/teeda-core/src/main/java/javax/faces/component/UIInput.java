@@ -42,7 +42,6 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author shot

@@ -66,13 +66,18 @@ public class DynamicValidatorInvokerImpl implements DynamicValidatorInvoker {
             }
             PropertyDesc pd = beanDesc.getPropertyDesc(validatorProperty);
             if (Validator.class.isAssignableFrom(pd.getPropertyType())) {
-                Method readMethod = pd.getReadMethod();
                 if (!DIContainerUtil.hasComponent(clazz)) {
                     return null;
                 }
                 Object page = DIContainerUtil.getComponentNoException(clazz);
-                return (Validator) MethodUtil.invoke(readMethod, page,
-                        EMPTY_ARGS);
+                if (page == null) {
+                    return null;
+                }
+                if (pd.isReadable() && pd.hasReadMethod()) {
+                    Method readMethod = pd.getReadMethod();
+                    return (Validator) MethodUtil.invoke(readMethod, page,
+                            EMPTY_ARGS);
+                }
             }
         }
         return null;
