@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:x="http://myfaces.apache.org/tomahawk"
+  xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form id="Form" enctype="multipart/form-data">
+<div><span id="allMessages"></span></div>
+TITLE::<input 
+  type="text"
+  id="name"
+/>
+<br />
+
+<x:inputFileUpload 
+  id="uploadedFile1"
+  value="#{upload_uploadPage.uploadedFile1}" 
+/> 
+<br />
+<x:inputFileUpload 
+  id="uploadedFile2"
+  value="#{upload_uploadPage.uploadedFile2}" 
+/> 
+<br />
+<x:inputFileUpload 
+  id="uploadedFile3"
+  value="#{upload_uploadPage.uploadedFile3}" 
+/> 
+<br />
+
+
+<input 
+  type="submit"
+  id="doUpload" 
+  value="Upload" 
+ />
+ 
+<p> ファイル名::<span id="fileName1"></span></p>
+<p> サイズ::<span id="fileSize1"></span>byte</p>
+<p> ファイル名::<span id="fileName2"></span></p>
+<p> サイズ::<span id="fileSize2"></span>byte</p>
+<p> ファイル名::<span id="fileName3"></span></p>
+<p> サイズ::<span id="fileSize3"></span>byte</p>
+</form>
+</body>
+</html>
