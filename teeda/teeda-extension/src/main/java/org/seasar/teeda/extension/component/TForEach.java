@@ -351,12 +351,18 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             return;
         }
         final Object page = getPage(context);
-        final Object pageClone = ClassUtil.newInstance(page.getClass());
-        BeanUtil.copyProperties(page, pageClone);
-        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
-                .getClass());
-        final PropertyDesc itemsPd = pageBeanDesc
-                .getPropertyDesc(getItemsName());
+        final Class pageClass = page.getClass();
+        Object pageClone = null;
+        boolean hasDefaultConstructor = org.seasar.teeda.core.util.ConstructorUtil
+                .hasDefaultConstructor(pageClass);
+        if (hasDefaultConstructor) {
+            pageClone = ClassUtil.newInstance(pageClass);
+            BeanUtil.copyProperties(page, pageClone);
+        }
+
+        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
+        final String itemsName = getItemsName();
+        final PropertyDesc itemsPd = pageBeanDesc.getPropertyDesc(itemsName);
         if (!itemsPd.isWritable()) {
             throw new IllegalStateException("class ["
                     + pageBeanDesc.getBeanClass().getName()
@@ -370,7 +376,6 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                     + "] should be array type, so no update.");
             return;
         }
-        // TODO testing
         Object[] items = (Object[]) itemsPd.getValue(page);
         if (items == null) {
             items = (Object[]) Array.newInstance(itemClass, rowSize);
@@ -399,15 +404,17 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 leaveRow(context);
                 pageToItem(page, pageBeanDesc, item, itemBeanDesc);
             }
-            for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
-                final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
-                final String propertyName = itemPd.getPropertyName();
-                if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
-                    continue;
+            if (hasDefaultConstructor) {
+                for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+                    final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
+                    final String propertyName = itemPd.getPropertyName();
+                    if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
+                        continue;
+                    }
+                    final PropertyDesc pagePd = pageBeanDesc
+                            .getPropertyDesc(propertyName);
+                    pagePd.setValue(page, pagePd.getValue(pageClone));
                 }
-                final PropertyDesc pagePd = pageBeanDesc
-                        .getPropertyDesc(propertyName);
-                pagePd.setValue(page, pagePd.getValue(pageClone));
             }
         }
         itemsPd.setValue(page, items);

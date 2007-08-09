@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,17 +53,21 @@ public class TForEachRenderer extends AbstractRenderer {
 
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
                 .getClass());
-        /**
-         * TEEDA-305
-         */
-        final Map result = extractProperties(pageBeanDesc, page);
         final Object[] items = forEach.getItems(context);
+        final int rowSize = (items != null) ? items.length : 0;
+
+        Map result = Collections.EMPTY_MAP;
+        if (rowSize > 0) {
+            /**
+             * TEEDA-305
+             */
+            result = extractProperties(forEach, pageBeanDesc, page);
+        }
         /*
          * https://www.seasar.org/issues/browse/TEEDA-150
          * FIXME validationエラー時の対応は済んでいるので、ここでは単純に
          * itemsのサイズを採るだけでOKになった。
          */
-        final int rowSize = (items != null) ? items.length : 0;
         for (int i = 0; i < rowSize; ++i) {
             forEach.enterRow(context, i);
             if (i < items.length) {
@@ -71,7 +76,9 @@ public class TForEachRenderer extends AbstractRenderer {
             super.encodeChildren(context, component);
             forEach.leaveRow(context);
         }
-        putProperties(pageBeanDesc, page, result);
+        if (rowSize > 0) {
+            putProperties(forEach, pageBeanDesc, page, result);
+        }
     }
 
     public void decode(FacesContext context, UIComponent component) {
@@ -127,31 +134,35 @@ public class TForEachRenderer extends AbstractRenderer {
         return true;
     }
 
-    protected Map extractProperties(final BeanDesc pageBeanDesc,
-            final Object page) {
+    protected Map extractProperties(final TForEach forEach,
+            final BeanDesc pageBeanDesc, final Object page) {
         final Map result = new HashMap();
+        final String itemsName = forEach.getItemsName();
+        final String indexName = forEach.getIndexName();
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (propertyName.endsWith("Items") || !pd.isReadable()) {
+            if (propertyName.equals(itemsName)
+                    || propertyName.equals(indexName) || !pd.isReadable()
+                    || !pd.isWritable()) {
                 continue;
             }
-            result.put(propertyName, pd.getValue(page));
+            final Object value = pd.getValue(page);
+            result.put(propertyName, value);
         }
         return result;
     }
 
-    protected void putProperties(final BeanDesc pageBeanDesc,
-            final Object page, final Map result) {
+    protected void putProperties(final TForEach forEach,
+            final BeanDesc pageBeanDesc, final Object page, final Map result) {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
             if (!result.containsKey(propertyName) || !pd.isWritable()) {
                 continue;
             }
-            Object value = result.get(propertyName);
+            final Object value = result.get(propertyName);
             pd.setValue(page, value);
         }
-
     }
 }
