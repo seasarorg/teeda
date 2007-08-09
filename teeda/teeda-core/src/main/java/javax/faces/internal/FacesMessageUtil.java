@@ -70,6 +70,11 @@ public class FacesMessageUtil {
         return getTargetFacesMessages(context, severity);
     }
 
+    public static FacesMessage[] getTargetFacesMessages(Severity severity) {
+        return getTargetFacesMessages(FacesContext.getCurrentInstance(),
+                severity);
+    }
+
     public static FacesMessage[] getTargetFacesMessages(FacesContext context,
             Severity severity) {
         return getTargetFacesMessages(context,
@@ -85,6 +90,11 @@ public class FacesMessageUtil {
         return getTargetFacesMessages(context, new FacesMessage.Severity[] {
                 FacesMessage.SEVERITY_FATAL, FacesMessage.SEVERITY_ERROR,
                 FacesMessage.SEVERITY_INFO, FacesMessage.SEVERITY_WARN });
+    }
+
+    public static FacesMessage[] getTargetFacesMessages(Severity[] severities) {
+        return getTargetFacesMessages(FacesContext.getCurrentInstance(),
+                severities);
     }
 
     public static FacesMessage[] getTargetFacesMessages(FacesContext context,
@@ -209,10 +219,28 @@ public class FacesMessageUtil {
         context.addMessage(clientId, message);
     }
 
+    public static String getSummary(String messageId, Object[] args) {
+        FacesMessage message = getMessage(FacesContext.getCurrentInstance(),
+                messageId, args);
+        return (message != null) ? message.getSummary() : null;
+    }
+
     public static String getSummary(FacesContext context, String messageId,
             Object[] args) {
         FacesMessage message = getMessage(context, messageId, args);
         return (message != null) ? message.getSummary() : null;
+    }
+
+    public static String getDetail(String messageId, Object[] args) {
+        FacesMessage message = getMessage(FacesContext.getCurrentInstance(),
+                messageId, args);
+        return (message != null) ? message.getDetail() : null;
+    }
+
+    public static String getDetail(FacesContext context, String messageId,
+            Object[] args) {
+        FacesMessage message = getMessage(context, messageId, args);
+        return (message != null) ? message.getDetail() : null;
     }
 
     public static FacesMessage getMessage(FacesContext context,
@@ -317,10 +345,18 @@ public class FacesMessageUtil {
         return itr.hasNext();
     }
 
+    public static boolean hasMessages() {
+        return hasMessages(FacesContext.getCurrentInstance());
+    }
+
     public static boolean hasMessages(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
         final Iterator itr = context.getMessages();
         return itr.hasNext();
+    }
+
+    public static boolean hasErrorOrFatalMessage() {
+        return hasErrorOrFatalMessage(FacesContext.getCurrentInstance());
     }
 
     public static boolean hasErrorOrFatalMessage(final FacesContext context) {
