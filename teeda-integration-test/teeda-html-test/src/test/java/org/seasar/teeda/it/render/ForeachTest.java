@@ -29,7 +29,7 @@ public class ForeachTest extends TeedaWebTestCase {
 		return setUpTest(ForeachTest.class);
 	}
 
-	public void testSeasarUser7342() throws Exception {
+	 public void testSeasarUser7342() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -293,6 +293,21 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("foo-span2", "hogehoge");
 		tester.assertTextEqualsById("bar-span2", "foofoo");
 
+	}
+
+	/**
+	 * @see https://www.seasar.org/issues/browse/TEEDA-345
+	 */
+	public void testForeachSimple_TEEDA345() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/foreach/simpleForeach.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("aaaIndex", "2");
 	}
 
 }
