@@ -22,34 +22,37 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RedirectPage {
 
-    public static final String url_TRequiredValidator = null;
+	public static final String url_TRequiredValidator = null;
 
-    private HttpServletResponse response;
+	private HttpServletResponse response;
 
-    private FacesContext facesContext;
+	private FacesContext facesContext;
 
-    private String url;
+	private String url;
 
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
 
-    public void setFacesContext(FacesContext facesContext) {
-        this.facesContext = facesContext;
-    }
+	public void setFacesContext(FacesContext facesContext) {
+		this.facesContext = facesContext;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public String doRedirect() throws IOException {
-        response.sendRedirect(url);
-        facesContext.responseComplete();
-        return null;
-    }
+	public String doRedirect() throws IOException {
+		if (url.startsWith("http://")) {
+			url = "http://" + url;
+		}
+		response.sendRedirect(url);
+		facesContext.responseComplete();
+		return null;
+	}
 
 }

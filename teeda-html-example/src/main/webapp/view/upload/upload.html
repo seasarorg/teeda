@@ -7,36 +7,40 @@
 </head>
 <body>
 <form id="Form" enctype="multipart/form-data">
+<span>FileUploadのサンプルです.</span><br />
+<span>web.xmlの設定(uploadRepositoryPath)でWindows用に設定されています.</span><br />
+<span>設定をOSに適切にあわせてください.</span><br />
+<hr />
 <div><span id="allMessages"></span></div>
-TITLE::<input 
+TITLE::<input
   type="text"
   id="name"
 />
 <br />
 
-<x:inputFileUpload 
+<x:inputFileUpload
   id="uploadedFile1"
-  value="#{upload_uploadPage.uploadedFile1}" 
-/> 
+  value="#{upload_uploadPage.uploadedFile1}"
+/>
 <br />
-<x:inputFileUpload 
+<x:inputFileUpload
   id="uploadedFile2"
-  value="#{upload_uploadPage.uploadedFile2}" 
-/> 
+  value="#{upload_uploadPage.uploadedFile2}"
+/>
 <br />
-<x:inputFileUpload 
+<x:inputFileUpload
   id="uploadedFile3"
-  value="#{upload_uploadPage.uploadedFile3}" 
-/> 
+  value="#{upload_uploadPage.uploadedFile3}"
+/>
 <br />
 
 
-<input 
+<input
   type="submit"
-  id="doUpload" 
-  value="Upload" 
+  id="doUpload"
+  value="Upload"
  />
- 
+
 <p> ファイル名::<span id="fileName1"></span></p>
 <p> サイズ::<span id="fileSize1"></span>byte</p>
 <p> ファイル名::<span id="fileName2"></span></p>

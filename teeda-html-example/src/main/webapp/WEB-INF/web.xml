@@ -105,9 +105,10 @@
         <param-name>uploadThresholdSize</param-name>
         <param-value>100k</param-value>
       </init-param>
+      <!-- OS固有の設定 -->
       <init-param>
         <param-name>uploadRepositoryPath</param-name>
-        <param-value>/tmp</param-value>
+        <param-value>C:/</param-value>
       </init-param>
     </filter>
 

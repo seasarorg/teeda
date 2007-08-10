@@ -1,6 +1,10 @@
 package examples.teeda.dto;
 
-public class Aaa2Dto {
+import java.io.Serializable;
+
+public class Aaa2Dto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String bbb;
 

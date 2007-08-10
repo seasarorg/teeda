@@ -1,9 +1,13 @@
 package examples.teeda.web.ajax;
 
-public class ListDto {
-	
+import java.io.Serializable;
+
+public class ListDto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	public int no;
-	
+
 	public String name;
 
 	public String getName() {
@@ -21,5 +25,5 @@ public class ListDto {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	
+
 }
