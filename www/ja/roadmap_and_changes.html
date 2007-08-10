@@ -33,8 +33,10 @@
 <h2><i><a name="teeda1.0_roadmap">Teeda 1.0.x Roadmap</a></i></h2>
 <h2><a name="high">Priority high</a></h2>
 <ul>
+	<li>URL直叩き対策</li>
+	<li>相関チェック対応・簡易Validator対応</li>
 	<li>ドキュメント作成（コンポーネントリファレンス）</li>
-	<li>ドキュメント作成（カスタムValidator/Converter）</li>
+	<li><del>ドキュメント作成（カスタムValidator/Converter）</del></li>
 	<li><del>layout機能を使うと、head以下のtitleが適用されない</del></li>
 	<li><del>layout機能を使うと、head以下のCSSが適用されない</del></li>
 	<li>Teeda coreでの拡張コンポーネントの不具合修正</li>
@@ -84,7 +86,31 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
-<h2><a name="1.0.8">Teeda 1.0.8</a></h2>
+<h2><a name="1.0.9">Teeda 1.0.9&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [TEEDA-324] - ForEachでaaaItemsのaaaプロパティが存在する場合にaaaItemsが更新されない
+    * [TEEDA-334] - ポートレット環境でセッション内のものをシリアライズできない場合がある
+    * [TEEDA-336] - セッションレプリケーションを利用しているときにDTOが初期化されてしまう(Seasar-user:9227)
+    * [TEEDA-337] - xxxItems が空のときの挙動がおかしい
+    * [TEEDA-343] - Hot Deploy時にServletRequestMapのNotSerializableExceptionが発生してしまう
+    * [TEEDA-345] - ForEachでDynamicPropertyが1回多く呼ばれる
+
+** Improvement
+    * [TEEDA-325] - SelectOneMenuのようにSelect系コンポーネントもLabelを引き継ぎたい
+    * [TEEDA-339] - SelectOneMenu/RadioでMapをそのまま扱いたい
+
+** New Feature
+    * [TEEDA-338] - spanタグの出力制御にomittag属性で指定可能とする
+
+** Task
+    * [TEEDA-340] - ForEachのネストの動作が1.0.7と1.0.8で違う
+    * [TEEDA-341] - SelectOneMenuのItemsが空のときの挙動がおかしい
+    * [TEEDA-342] - SelectManyMenuでItemsが空のときselectタグそのものが表示されない
+</pre>
+
+
+<h2><a name="1.0.8">Teeda 1.0.8&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
     * [TEEDA-241] - [Seasar-user:5910] Validationエラー後の条件分岐（Condition)
@@ -103,14 +129,14 @@
     * [TEEDA-327] - OutputTextにてspanタグをレンダリングしないオプション機能を作成する
     * [TEEDA-333] - パスワードチェック等で使うようなEqualsValidatorを作成する
     * KumuによるJavaScriptでのレイアウト機能追加
-    
+
 ** Task
     * [TEEDA-332] - javax.faces.convert以下のConverterのTigerアノテーションを作成する．
 
 
 </pre>
 
-<h2><a name="1.0.7">Teeda 1.0.7</a></h2>
+<h2><a name="1.0.7">Teeda 1.0.7&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-277] - Gridの幅を調整するするスクリプトが出力されない
@@ -147,7 +173,7 @@
  * [TEEDA-294] - publicなフィールドをプロパティとして認識できるようにする
 </pre>
 
-<h2><a name="1.0.6">Teeda 1.0.6</a></h2>
+<h2><a name="1.0.6">Teeda 1.0.6&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-272] - Gridで、Itemsのクラス名とHTML上のidでまったく同一のものがあると、IllegalPropertyRuntimeException
@@ -162,7 +188,7 @@
 
 </pre>
 
-<h2><a name="1.0.5">Teeda 1.0.5</a></h2>
+<h2><a name="1.0.5">Teeda 1.0.5&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-255] - SelectItem(java.lang.Object value) で label が null になる
@@ -181,7 +207,7 @@
 
 </pre>
 
-<h2><a name="1.0.4">Teeda 1.0.4</a></h2>
+<h2><a name="1.0.4">Teeda 1.0.4&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-181] - Treeの末尾で、親の閉じTagが重複して出力される。
@@ -210,7 +236,7 @@
  * [TEEDA-253] - Gridの非同期処理
 </pre>
 
-<h2><a name="1.0.3">Teeda 1.0.3</a></h2>
+<h2><a name="1.0.3">Teeda 1.0.3&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-170] - DynamicPropertyでbuttonのときに、対応するメソッドが呼ばれない
@@ -237,7 +263,7 @@
  * [TEEDA-211] - Content-Typeの設定の制御を変更する([Seasar-user:5567][S2JSF]xhmlについて
 </pre>
 
-<h2><a name="1.0.2">Teeda 1.0.2</a></h2>
+<h2><a name="1.0.2">Teeda 1.0.2&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
  * [TEEDA-163] - Teeda Extension TConditionで初期化時ValidationにかかるとNullPointer
@@ -257,7 +283,7 @@
  * forEach/Gridでエラーメッセージ集約機能のメッセージをアプリケーション統一で出力可能にする
 </pre>
 
-<h2><a name="beta5">Teeda 1.0 beta5</a></h2>
+<h2><a name="beta5">Teeda 1.0 beta5&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 Release Notes - Teeda - Version 1.0-beta-5
 
@@ -288,7 +314,7 @@ Release Notes - Teeda - Version 1.0-beta-5
 </pre>
 <hr>
 
-<h2><a name="beta4">Teeda 1.0 beta4</a></h2>
+<h2><a name="beta4">Teeda 1.0 beta4&nbsp;変更点</a></h2>
 <h3><a name="beta4_core">Teeda Core</a></h3>
 <ul>
 	<li>redirectが効かない点を修正しました。</li>
@@ -312,7 +338,7 @@ Release Notes - Teeda - Version 1.0-beta-5
 
 <hr>
 
-<h2><a name="beta3">Teeda 1.0 beta3</a></h2>
+<h2><a name="beta3">Teeda 1.0 beta3&nbsp;変更点</a></h2>
 <h3><a name="beta3_core">Teeda Core</a></h3>
 <ul>
 	<li>PortletがTeeda上で動作するよう修正しました。</li>
