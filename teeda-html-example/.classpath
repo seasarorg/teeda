@@ -25,5 +25,6 @@
 	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-extension-1.0.9-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.9.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.16.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.16.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-fileupload-1.0.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
