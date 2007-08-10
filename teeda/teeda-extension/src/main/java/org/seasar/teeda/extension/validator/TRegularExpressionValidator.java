@@ -43,15 +43,15 @@ public class TRegularExpressionValidator implements Validator, StateHolder,
     public static final String REGULAR_EXPRRESSION_MESSAGE_ID = VALIDATOR_ID
             + ".INVALID";
 
-    private boolean transientValue = false;
+    protected boolean transientValue = false;
 
-    private String pattern;
+    protected String pattern;
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String messageId;
+    protected String messageId;
 
     public TRegularExpressionValidator() {
     }
@@ -70,8 +70,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder,
         if (!PatternUtil.matches(getPattern(), strValue)) {
             Object[] args = new Object[] { getPattern(),
                     UIComponentUtil.getLabel(component) };
-            String msgId = (messageId != null) ? messageId
-                    : REGULAR_EXPRRESSION_MESSAGE_ID;
+            String msgId = getMessageId();
             FacesMessage message = FacesMessageUtil.getMessage(context, msgId,
                     args);
             throw new ExtendValidatorException(message, new String[] { msgId });
