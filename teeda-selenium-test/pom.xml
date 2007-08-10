@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda.it</groupId>
@@ -72,7 +72,7 @@
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0.7</version>
+      <version>1.0.9</version>
       <type>jar</type>
     </dependency>
     <dependency>
