@@ -93,10 +93,6 @@ public class FacesPortlet extends GenericPortlet {
     public static final String RENDER_PARAMETER = FacesPortlet.class.getName() +
             ".RENDER_PARAMETER";
 
-    public static final String IGNORE_VIEW_IN_REQUEST_PARAMETER = FacesPortlet.class
-            .getName() +
-            ".IGNORE_VIEW_IN_REQUEST_PARAMETER";
-
     protected FacesContextFactory facesContextFactory;
 
     protected Lifecycle lifecycle;
@@ -277,8 +273,6 @@ public class FacesPortlet extends GenericPortlet {
         request.getPortletSession().removeAttribute(
                 FacesPortlet.PREVIOUS_PORTLET_MODE);
         request.setAttribute(FacesPortlet.DEFAULT_PAGE, viewId);
-        request.setAttribute(FacesPortlet.IGNORE_VIEW_IN_REQUEST_PARAMETER,
-                Boolean.TRUE);
         renderFaces(request, response);
 
     }
@@ -339,17 +333,21 @@ public class FacesPortlet extends GenericPortlet {
     }
 
     protected void restoreDefaultFacesState(FacesContext facesContext) {
-        String viewId = getCurrentViewId(facesContext);
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map requestMap = externalContext.getRequestMap();
+        // get default page
+        String viewId = (String) externalContext.getRequestMap().get(
+                DEFAULT_PAGE);
+        requestMap.put(VIEW_ID, viewId);
 
         // remove all states in session
-        for (Iterator i = facesContext.getExternalContext().getSessionMap()
-                .entrySet().iterator(); i.hasNext();) {
+        for (Iterator i = externalContext.getSessionMap().entrySet().iterator(); i
+                .hasNext();) {
             Map.Entry e = (Map.Entry) i.next();
             if (e.getKey() instanceof String) {
                 String key = (String) e.getKey();
                 if (key.startsWith(FACES_PORTLET_STATE_PREFIX)) {
-                    facesContext.getExternalContext().getSessionMap().remove(
-                            key);
+                    externalContext.getSessionMap().remove(key);
                 }
             }
         }
@@ -365,14 +363,12 @@ public class FacesPortlet extends GenericPortlet {
     protected String getCurrentViewId(FacesContext facesContext) {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map requestMap = externalContext.getRequestMap();
-        String viewId = null;
-        if (requestMap.get(FacesPortlet.IGNORE_VIEW_IN_REQUEST_PARAMETER) == null) {
-            // from request parameter
-            Map requestParameterMap = externalContext.getRequestParameterMap();
-            viewId = (String) requestParameterMap.get(VIEW_ID);
-            if (viewId != null && !checkSessionState(facesContext)) {
-                return viewId;
-            }
+
+        // from request parameter
+        Map requestParameterMap = externalContext.getRequestParameterMap();
+        String viewId = (String) requestParameterMap.get(VIEW_ID);
+        if (viewId != null && !checkSessionState(facesContext)) {
+            return viewId;
         }
 
         // from request attribute
