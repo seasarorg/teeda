@@ -15,23 +15,19 @@
  */
 package examples.teeda.web.select;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author shot
  */
-public class SelectOneInputPage {
+public class SelectOneMapInputPage {
 
 	public static final String bbb_lengthValidator = "minimum=3";
 
 	private Integer aaa;
 
-	private String aaaLabel;
-
-	private List aaaItems;
+	private Map aaaItems;
 
 	private Integer bbb;
 
@@ -44,19 +40,10 @@ public class SelectOneInputPage {
 	}
 
 	public String initialize() {
-		aaaItems = new ArrayList();
-		Map map1 = new HashMap();
-		map1.put("label", "AAAA");
-		map1.put("value", new Integer(1));
-		aaaItems.add(map1);
-		Map map2 = new HashMap();
-		map2.put("label", "BBBB");
-		map2.put("value", new Integer(2));
-		aaaItems.add(map2);
-		Map map3 = new HashMap();
-		map3.put("label", "CCCC");
-		map3.put("value", new Integer(3));
-		aaaItems.add(map3);
+		aaaItems = new TreeMap();
+		aaaItems.put("AAAA", new Integer(1));
+		aaaItems.put("BBBB", new Integer(2));
+		aaaItems.put("CCCC", new Integer(3));
 		return null;
 	}
 
@@ -68,20 +55,12 @@ public class SelectOneInputPage {
 		this.aaa = aaa;
 	}
 
-	public List getAaaItems() {
+	public Map getAaaItems() {
 		return aaaItems;
 	}
 
-	public void setAaaItems(List aaaItems) {
+	public void setAaaItems(Map aaaItems) {
 		this.aaaItems = aaaItems;
-	}
-
-	public String getAaaLabel() {
-		return aaaLabel;
-	}
-
-	public void setAaaLabel(String aaaLabel) {
-		this.aaaLabel = aaaLabel;
 	}
 
 }

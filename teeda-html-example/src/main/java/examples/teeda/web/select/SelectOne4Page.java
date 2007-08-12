@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,17 @@
  */
 package examples.teeda.web.select;
 
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author shot
  */
-public class SelectOneResultPage {
+public class SelectOne4Page {
 
-	private Integer aaa;
+	private Integer aaa = new Integer(2);
 
-	private String aaaLabel;
-	
-	private Integer bbb;
-	
-	private List aaaItems;
-
-	public String initialize() {
-		return null;
-	}
+	private Map aaaItems;
 
 	public Integer getAaa() {
 		return aaa;
@@ -42,28 +35,28 @@ public class SelectOneResultPage {
 		this.aaa = aaa;
 	}
 
-	public List getAaaItems() {
+	public Map getAaaItems() {
 		return aaaItems;
 	}
 
-	public void setAaaItems(List aaaItems) {
+	public void setAaaItems(Map aaaItems) {
 		this.aaaItems = aaaItems;
 	}
 
-	public Integer getBbb() {
-		return bbb;
+	public Class doAction() {
+		return null;
 	}
 
-	public void setBbb(Integer bbb) {
-		this.bbb = bbb;
+	public Class initialize() {
+		return null;
 	}
 
-	public String getAaaLabel() {
-		return aaaLabel;
-	}
-
-	public void setAaaLabel(String aaaLabel) {
-		this.aaaLabel = aaaLabel;
+	public Class prerender() {
+		aaaItems = new TreeMap();
+		aaaItems.put("AAA", new Integer(1));
+		aaaItems.put("BBB", new Integer(2));
+		aaaItems.put("CCC", new Integer(3));
+		return null;
 	}
 
 }
