@@ -254,9 +254,11 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
             return null;
         }
         String parentPath = FacesConfigOptions.getDefaultLayoutPath();
+        final int i = parentPath.lastIndexOf("/");
+        final String dirPath = (parentPath.length() > (i + 1)) ? parentPath
+                .substring(0, i + 1) : parentPath;
         final UIViewRoot viewRoot = context.getViewRoot();
-        if (component != viewRoot
-                || viewRoot.getViewId().indexOf("/layout/") >= 0) {
+        if (component != viewRoot || viewRoot.getViewId().indexOf(dirPath) >= 0) {
             parentPath = null;
         }
         PageDesc pageDesc = pageDescCache.getPageDesc(component.getViewId());
