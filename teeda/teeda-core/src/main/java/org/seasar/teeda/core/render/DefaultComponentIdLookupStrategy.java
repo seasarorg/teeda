@@ -18,18 +18,32 @@ package org.seasar.teeda.core.render;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.util.ForEachContext;
+
 /**
  * @author shot
+ * @author manhole
  */
 public class DefaultComponentIdLookupStrategy implements
         ComponentIdLookupStrategy {
 
-    public String getId(FacesContext context, UIComponent component) {
-        String id = component.getId();
+    private boolean cooperateWithForeach;
+
+    public String getId(final FacesContext context, final UIComponent component) {
+        if (cooperateWithForeach) {
+            if (ForEachContext.getContext().isInForEach()) {
+                return component.getClientId(context);
+            }
+        }
+        final String id = component.getId();
         if (id != null) {
             return context.getExternalContext().encodeNamespace(id);
         }
         return component.getClientId(context);
+    }
+
+    public void setCooperateWithForeach(final boolean cooperateWithForeach) {
+        this.cooperateWithForeach = cooperateWithForeach;
     }
 
 }

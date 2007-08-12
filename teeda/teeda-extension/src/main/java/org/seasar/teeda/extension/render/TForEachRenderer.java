@@ -29,6 +29,7 @@ import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.util.ForEachContext;
 import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
@@ -42,13 +43,24 @@ public class TForEachRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
-    public void encodeChildren(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeChildren(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
         }
         final TForEach forEach = (TForEach) component;
+        final ForEachContext foreachContext = ForEachContext.getContext();
+        foreachContext.begin();
+        try {
+            encodeForEachChildren(context, forEach);
+        } finally {
+            foreachContext.end();
+        }
+    }
+
+    private void encodeForEachChildren(final FacesContext context,
+            final TForEach forEach) throws IOException {
         final Object page = forEach.getPage(context);
 
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(page
@@ -73,7 +85,7 @@ public class TForEachRenderer extends AbstractRenderer {
             if (i < items.length) {
                 forEach.processItem(pageBeanDesc, page, items[i], i);
             }
-            super.encodeChildren(context, component);
+            super.encodeChildren(context, forEach);
             forEach.leaveRow(context);
         }
         if (rowSize > 0) {
@@ -81,7 +93,7 @@ public class TForEachRenderer extends AbstractRenderer {
         }
     }
 
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(final FacesContext context, final UIComponent component) {
         assertNotNull(context, component);
         final TForEach forEach = (TForEach) component;
         final int rowSize = getRowSize(context, forEach);
@@ -93,7 +105,7 @@ public class TForEachRenderer extends AbstractRenderer {
         }
     }
 
-    private int getRowSize(FacesContext context, final TForEach forEach) {
+    private int getRowSize(final FacesContext context, final TForEach forEach) {
         final Map paramMap = context.getExternalContext()
                 .getRequestParameterMap();
         final Map reqParam = AdjustValueHolderUtil.adjustParamMap(paramMap);
@@ -107,11 +119,12 @@ public class TForEachRenderer extends AbstractRenderer {
                 final int pos = name.indexOf(NamingContainer.SEPARATOR_CHAR,
                         namingPrefix.length());
                 if (-1 < pos) {
-                    String num = name.substring(namingPrefix.length(), pos);
+                    final String num = name.substring(namingPrefix.length(),
+                            pos);
                     try {
-                        int index = Integer.parseInt(num);
+                        final int index = Integer.parseInt(num);
                         rowSize = Math.max(rowSize, index);
-                    } catch (NumberFormatException e) {
+                    } catch (final NumberFormatException e) {
                         // TODO
                         e.printStackTrace();
                     }
@@ -122,7 +135,8 @@ public class TForEachRenderer extends AbstractRenderer {
         return rowSize;
     }
 
-    private void decodeChildren(FacesContext context, UIComponent component) {
+    private void decodeChildren(final FacesContext context,
+            final UIComponent component) {
         for (final Iterator it = component.getChildren().iterator(); it
                 .hasNext();) {
             final UIComponent child = (UIComponent) it.next();
@@ -142,9 +156,9 @@ public class TForEachRenderer extends AbstractRenderer {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (propertyName.equals(itemsName)
-                    || propertyName.equals(indexName) || !pd.isReadable()
-                    || !pd.isWritable()) {
+            if (propertyName.equals(itemsName) ||
+                    propertyName.equals(indexName) || !pd.isReadable() ||
+                    !pd.isWritable()) {
                 continue;
             }
             final Object value = pd.getValue(page);
