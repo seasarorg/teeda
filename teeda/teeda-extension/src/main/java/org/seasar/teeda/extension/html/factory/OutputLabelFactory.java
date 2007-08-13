@@ -24,7 +24,9 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
@@ -42,18 +44,19 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         return true;
     }
 
-    public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
+    public boolean isMatch(final ElementNode elementNode,
+            final PageDesc pageDesc, final ActionDesc actionDesc) {
         final String tagName = elementNode.getTagName();
         if (!JsfConstants.LABEL_ELEM.equalsIgnoreCase(tagName)) {
             return false;
         }
-        String id = elementNode.getId();
+        final String id = elementNode.getId();
         return (id != null);
     }
 
-    protected void customizeProperties(Map properties, ElementNode elementNode,
-            PageDesc pageDesc, ActionDesc actionDesc) {
+    protected void customizeProperties(final Map properties,
+            final ElementNode elementNode, final PageDesc pageDesc,
+            final ActionDesc actionDesc) {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
@@ -64,30 +67,41 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
                 pageDesc, namingConvention);
     }
 
-    protected void customizeDynamicProperties(String base, Map properties,
-            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+    protected void customizeDynamicProperties(final String base,
+            final Map properties, final ElementNode elementNode,
+            final PageDesc pageDesc, final ActionDesc actionDesc) {
         if (base == null) {
             return;
         }
-        for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
+        for (final Iterator i = properties.keySet().iterator(); i.hasNext();) {
+            final String key = (String) i.next();
             customizeDynamicProperty(base, key, properties, elementNode,
                     pageDesc, actionDesc);
         }
+        if (!properties.containsKey(JsfConstants.VALUE_ATTR)) {
+            if (1 == elementNode.getChildSize()) {
+                final HtmlNode child = elementNode.getChild(0);
+                if (child instanceof TextNode) {
+                    final String value = ((TextNode) child).getValue();
+                    properties.put(JsfConstants.VALUE_ATTR, value);
+                }
+            }
+        }
     }
 
-    protected void customizeDynamicProperty(String base, String name,
-            Map properties, ElementNode elementNode, PageDesc pageDesc,
-            ActionDesc actionDesc) {
+    protected void customizeDynamicProperty(final String base,
+            final String name, final Map properties,
+            final ElementNode elementNode, final PageDesc pageDesc,
+            final ActionDesc actionDesc) {
         if (pageDesc == null) {
             return;
         }
         final String pageName = pageDesc.getPageName();
         if (!StringUtil.isEmpty(base)) {
-            String propName = base + "Value";
+            final String propName = base + "Value";
             if (pageDesc.hasDynamicProperty(propName)) {
-                properties.put("value",
-                        getBindingExpression(pageName, propName));
+                properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(
+                        pageName, propName));
             }
         }
     }
@@ -104,7 +118,7 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         return namingConvention;
     }
 
-    public void setNamingConvention(NamingConvention namingConvention) {
+    public void setNamingConvention(final NamingConvention namingConvention) {
         this.namingConvention = namingConvention;
     }
 

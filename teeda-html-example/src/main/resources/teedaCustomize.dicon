@@ -2,7 +2,9 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
+	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy">
+        <property name="cooperateWithForeach">true</property>
+	</component>
 	<!-- JSF標準のIDの採番方式にしなくてはいけない場合は下記を使用。 -->
 	<!--
 	<component class="org.seasar.teeda.core.render.JsfSpecComponentIdLookupStrategy"/>

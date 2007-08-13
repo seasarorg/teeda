@@ -14,14 +14,14 @@
 <body>
 <table border="0" cellspacing="5">
 <tr>
-  <td colspan="2"><te:include te:src="/layout/header.html"/></td>
+  <td colspan="2"><te:include id="layoutHeader" te:src="/layout/header.html"/></td>
 </tr>
 <tr>
   <td width="140" valign="top">
-    <te:include te:src="/layout/menu.html"/>
+    <te:include id="layoutMenu" te:src="/layout/menu.html"/>
   </td>
   <td valign="top" align="left">
-    <te:includeChildBody/>
+    <te:includeChildBody id="layoutChildBody"/>
   </td>
 </tr>
 <tr>
@@ -31,7 +31,7 @@
 </tr>
 <tr>
   <td colspan="2">
-    <te:include te:src="/layout/footer.html"/>
+    <te:include id="layoutFooter" te:src="/layout/footer.html"/>
   </td>
 </tr>
 </table>

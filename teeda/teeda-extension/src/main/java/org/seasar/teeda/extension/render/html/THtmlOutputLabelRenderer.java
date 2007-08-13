@@ -46,8 +46,8 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         IGNORE_COMPONENT = buildIgnoreComponent();
     }
 
-    public void encodeBegin(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeBegin(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
@@ -55,15 +55,23 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         encodeTHtmlOutputLabelBegin(context, (THtmlOutputLabel) component);
     }
 
-    protected void encodeTHtmlOutputLabelBegin(FacesContext context,
-            THtmlOutputLabel label) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeTHtmlOutputLabelBegin(final FacesContext context,
+            final THtmlOutputLabel label) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.LABEL_ELEM, label);
         RendererUtil.renderIdAttributeIfNecessary(writer, label,
                 getIdForRender(context, label));
-        String forAttr = label.getFor();
-        RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR, forAttr,
-                null);
+        final String forAttr = label.getFor();
+        if (forAttr != null) {
+            final UIComponent forComponent = label.findComponent(forAttr);
+            if (forComponent == null) {
+                throw new IllegalStateException("for Component [" + forAttr +
+                        "] does not found");
+            }
+            final String forId = getIdForRender(context, forComponent);
+            RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR, forId,
+                    null);
+        }
         renderRemainAttributes(label, writer, IGNORE_COMPONENT);
         String value = ValueHolderUtil.getValueForRender(context, label);
         if (StringUtil.isEmpty(value)) {
@@ -80,8 +88,8 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         }
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeEnd(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
@@ -89,14 +97,14 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         encodeTHtmlOutputLabelEnd(context, (THtmlOutputLabel) component);
     }
 
-    protected void encodeTHtmlOutputLabelEnd(FacesContext context,
-            THtmlOutputLabel label) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeTHtmlOutputLabelEnd(final FacesContext context,
+            final THtmlOutputLabel label) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.LABEL_ELEM);
     }
 
     protected static IgnoreAttribute buildIgnoreComponent() {
-        IgnoreAttribute ignore = new IgnoreAttribute();
+        final IgnoreAttribute ignore = new IgnoreAttribute();
         ignore.addAttributeName(JsfConstants.FOR_ATTR);
         ignore.addAttributeName(JsfConstants.ID_ATTR);
         ignore.addAttributeName(JsfConstants.VALUE_ATTR);

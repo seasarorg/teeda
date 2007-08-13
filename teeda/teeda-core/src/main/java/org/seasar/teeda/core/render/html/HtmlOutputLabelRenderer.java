@@ -44,8 +44,8 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
         ignoreComponent.addAttributeName(JsfConstants.FOR_ATTR);
     }
 
-    public void encodeBegin(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeBegin(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
@@ -53,33 +53,34 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
         encodeHtmlOutputLabelBegin(context, (HtmlOutputLabel) component);
     }
 
-    protected void encodeHtmlOutputLabelBegin(FacesContext context,
-            HtmlOutputLabel htmlOutputLabel) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeHtmlOutputLabelBegin(final FacesContext context,
+            final HtmlOutputLabel htmlOutputLabel) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement(JsfConstants.LABEL_ELEM, htmlOutputLabel);
         RendererUtil.renderIdAttributeIfNecessary(writer, htmlOutputLabel,
                 getIdForRender(context, htmlOutputLabel));
 
-        String forAttr = htmlOutputLabel.getFor();
+        final String forAttr = htmlOutputLabel.getFor();
         if (forAttr != null) {
-            UIComponent forComponent = htmlOutputLabel.findComponent(forAttr);
+            final UIComponent forComponent = htmlOutputLabel
+                    .findComponent(forAttr);
             if (forComponent == null) {
-                throw new IllegalStateException("for Component [" + forAttr
-                        + "] does not found");
+                throw new IllegalStateException("for Component [" + forAttr +
+                        "] does not found");
             }
-            String forClientId = forComponent.getClientId(context);
+            final String forClientId = getIdForRender(context, forComponent);
             RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR,
                     forClientId, null);
         }
         renderRemainAttributes(htmlOutputLabel, writer, ignoreComponent);
-        String value = ValueHolderUtil.getValueForRender(context,
+        final String value = ValueHolderUtil.getValueForRender(context,
                 htmlOutputLabel);
         writer.writeText(value, null);
     }
 
-    public void encodeEnd(FacesContext context, UIComponent component)
-            throws IOException {
+    public void encodeEnd(final FacesContext context,
+            final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
             return;
@@ -87,9 +88,9 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
         encodeHtmlOutputLabelEnd(context, (HtmlOutputLabel) component);
     }
 
-    protected void encodeHtmlOutputLabelEnd(FacesContext context,
-            HtmlOutputLabel htmlOutputLabel) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeHtmlOutputLabelEnd(final FacesContext context,
+            final HtmlOutputLabel htmlOutputLabel) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.LABEL_ELEM);
     }
 

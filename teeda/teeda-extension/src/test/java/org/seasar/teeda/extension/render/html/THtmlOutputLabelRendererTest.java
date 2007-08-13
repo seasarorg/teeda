@@ -17,12 +17,16 @@ package org.seasar.teeda.extension.render.html;
 
 import java.util.Locale;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.render.AbstractRendererTest;
 import javax.faces.render.Renderer;
 
 import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
+import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.extension.component.html.THtmlOutputLabel;
@@ -41,6 +45,13 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         renderer = new THtmlOutputLabelRenderer();
         label = new MockTHtmlOutputLabel();
         label.setRenderer(renderer);
+
+        final UIInput forComponent = new MockUIInput();
+        forComponent.setId("bbb");
+        final UIComponent parent = new MockUIComponentBaseWithNamingContainer();
+        parent.setId("parentForm");
+        parent.getChildren().add(label);
+        parent.getChildren().add(forComponent);
     }
 
     public void testEncode_simple() throws Exception {
@@ -79,9 +90,9 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setId("aaa");
         label.setFor("bbb");
         label.setKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
+        final String packageName = ClassUtil.getPackageName(this.getClass());
         label.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
+        final MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
         encodeByRenderer(renderer, label);
@@ -94,9 +105,9 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setFor("bbb");
         label.setKey("no_such_key");
         label.setDefaultKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
+        final String packageName = ClassUtil.getPackageName(this.getClass());
         label.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
+        final MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
         encodeByRenderer(renderer, label);
@@ -108,9 +119,9 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setId("aaa");
         label.setFor("bbb");
         label.setKey("eee");
-        String packageName = ClassUtil.getPackageName(this.getClass());
+        final String packageName = ClassUtil.getPackageName(this.getClass());
         label.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
+        final MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
         encodeByRenderer(renderer, label);
@@ -124,9 +135,9 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setId("aaa");
         label.setFor("bbb");
         label.setKey("fff");
-        String packageName = ClassUtil.getPackageName(this.getClass());
+        final String packageName = ClassUtil.getPackageName(this.getClass());
         label.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
+        final MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
         encodeByRenderer(renderer, label);
@@ -146,9 +157,9 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
         label.setId("aaa");
         label.setFor("bbb");
         label.setDefaultKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
+        final String packageName = ClassUtil.getPackageName(this.getClass());
         label.setDefaultPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
+        final MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
         encodeByRenderer(renderer, label);
@@ -160,14 +171,14 @@ public class THtmlOutputLabelRendererTest extends AbstractRendererTest {
 
         private Renderer renderer;
 
-        public Renderer getRenderer(FacesContext context) {
+        public Renderer getRenderer(final FacesContext context) {
             if (this.renderer != null) {
                 return this.renderer;
             }
             return super.getRenderer(context);
         }
 
-        public void setRenderer(Renderer renderer) {
+        public void setRenderer(final Renderer renderer) {
             this.renderer = renderer;
         }
 

@@ -16,7 +16,6 @@
 package org.seasar.teeda.core.render.html;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
@@ -28,6 +27,7 @@ import javax.faces.render.RendererTest;
 import org.custommonkey.xmlunit.Diff;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockUIComponentBase;
+import org.seasar.teeda.core.mock.MockUIComponentBaseWithNamingContainer;
 import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.unit.ExceptionAssert;
 
@@ -105,7 +105,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
             // if forComponent doesn't exist, we throw Exception.
             renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
             fail();
-        } catch (IllegalStateException ise) {
+        } catch (final IllegalStateException ise) {
             ExceptionAssert.assertMessageExist(ise);
         }
     }
@@ -113,26 +113,17 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     public void testEncodeBegin_WithForComponent() throws Exception {
         htmlOutputLabel.setFor("forComponentId");
 
-        UIInput forComponent = new MockUIInput() {
-            protected Renderer getRenderer(FacesContext context) {
-                return null;
-            }
-        };
+        final UIInput forComponent = new MockUIInput();
         forComponent.setId("forComponentId");
 
-        UIForm parent = new UIForm() {
-            protected Renderer getRenderer(FacesContext context) {
-                return null;
-            }
-        };
+        final UIComponent parent = new MockUIComponentBaseWithNamingContainer();
         parent.setId("parentForm");
         parent.getChildren().add(htmlOutputLabel);
         parent.getChildren().add(forComponent);
 
         renderer.encodeBegin(getFacesContext(), htmlOutputLabel);
 
-        assertEquals("<label for=\"parentForm:forComponentId\">",
-                getResponseText());
+        assertEquals("<label for=\"forComponentId\">", getResponseText());
     }
 
     public void testEncode_WithAllAttributes() throws Exception {
@@ -161,7 +152,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         htmlOutputLabel.setValue("u");
         htmlOutputLabel.setId("v");
 
-        UIComponent child = new MockUIComponentBase();
+        final UIComponent child = new MockUIComponentBase();
         child.setId("c");
         htmlOutputLabel.getChildren().add(child);
 
@@ -169,7 +160,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
         encodeByRenderer(renderer, htmlOutputLabel);
 
         // ## Assert ##
-        Diff diff = new Diff("<label" + " id=\"v\"" + " accesskey=\"a\""
+        final Diff diff = new Diff("<label" + " id=\"v\"" + " accesskey=\"a\""
                 + " dir=\"b\"" + " for=\"c\"" + " lang=\"d\"" + " onblur=\"e\""
                 + " onclick=\"f\"" + " ondblclick=\"g\"" + " onfocus=\"h\""
                 + " onkeydown=\"i\"" + " onkeypress=\"j\"" + " onkeyup=\"k\""
@@ -182,7 +173,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     public void testGetConvertedValue() throws Exception {
-        Converter converter = new MockConverter() {
+        final Converter converter = new MockConverter() {
             public Object getAsObject(FacesContext context,
                     UIComponent component, String value)
                     throws ConverterException {
@@ -190,8 +181,8 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
             }
         };
         htmlOutputLabel.setConverter(converter);
-        Object convertedValue = renderer.getConvertedValue(getFacesContext(),
-                htmlOutputLabel, "c");
+        final Object convertedValue = renderer.getConvertedValue(
+                getFacesContext(), htmlOutputLabel, "c");
 
         assertEquals("c.testGetConvertedValue", convertedValue);
     }
@@ -205,7 +196,7 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
     }
 
     protected Renderer createRenderer() {
-        HtmlOutputLabelRenderer renderer = new HtmlOutputLabelRenderer();
+        final HtmlOutputLabelRenderer renderer = new HtmlOutputLabelRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
         return renderer;
     }
@@ -214,11 +205,11 @@ public class HtmlOutputLabelRendererTest extends RendererTest {
 
         private Renderer renderer_ = null;
 
-        public void setRenderer(Renderer renderer) {
+        public void setRenderer(final Renderer renderer) {
             renderer_ = renderer;
         }
 
-        protected Renderer getRenderer(FacesContext context) {
+        protected Renderer getRenderer(final FacesContext context) {
             if (renderer_ != null) {
                 return renderer_;
             }
