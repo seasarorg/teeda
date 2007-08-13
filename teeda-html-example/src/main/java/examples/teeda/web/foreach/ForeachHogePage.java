@@ -65,7 +65,7 @@ public class ForeachHogePage extends AbstractForeachHogePage {
 		return null;
 	}
 
-	public String doNothing() {
-		return "foreachHoge2";
+	public Class doNothing() {
+		return ForeachHoge2Page.class;
 	}
 }
