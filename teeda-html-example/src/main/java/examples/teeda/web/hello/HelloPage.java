@@ -19,6 +19,10 @@ public class HelloPage {
 
 	private String name = "Seasar2";
 
+	public String getLayout() {
+		return "/layout/layout2.html";
+	}
+
 	public String getName() {
 		return name;
 	}
