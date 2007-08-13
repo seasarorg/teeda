@@ -92,7 +92,7 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         assertEquals(timestamp, subappValues.get("timestamp"));
         // TODO https://www.seasar.org/issues/browse/TEEDA-88
         // でListも対応する際に、このassertは逆転する。
-        assertNull(subappValues.get("list"));
+        assertNotNull(subappValues.get("list"));
         assertNotNull(subappValues.get("strArray"));
     }
 

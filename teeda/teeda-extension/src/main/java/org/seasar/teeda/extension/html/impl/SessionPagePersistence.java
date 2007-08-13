@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -358,7 +359,9 @@ public class SessionPagePersistence implements PagePersistence {
                 continue;
             }
             final Class thisPageType = pd.getPropertyType();
-            if (!PagePersistenceUtil.isPersistenceType(thisPageType)) {
+            if (!thisPageType.isArray()
+                    && !Collection.class.isAssignableFrom(thisPageType)
+                    && !PagePersistenceUtil.isPersistenceType(thisPageType)) {
                 continue;
             }
             final Class nextPageType = (Class) nextPageProperties
