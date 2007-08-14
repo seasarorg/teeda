@@ -59,4 +59,8 @@ public class AddPage {
 	public boolean isArg1Disabled() {
 		return false;
 	}
+
+	public String getLayout() {
+		return null;
+	}
 }
