@@ -15,8 +15,11 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.Iterator;
 import java.util.Map;
 
+import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -27,9 +30,11 @@ import org.seasar.teeda.extension.html.TextNode;
 /**
  * @author shot
  */
-public class TitleFactory extends OutputLabelFactory {
+public class TitleFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "title";
+
+    private NamingConvention namingConvention;
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
@@ -54,6 +59,39 @@ public class TitleFactory extends OutputLabelFactory {
                         .getValue());
             }
         }
+        if (pageDesc == null) {
+            return;
+        }
+        LabelFactoryUtil.storeLabelAttributesTo(properties, elementNode,
+                pageDesc, namingConvention);
+    }
+
+    protected void customizeDynamicProperties(String base, Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        if (base == null) {
+            return;
+        }
+        for (Iterator i = properties.keySet().iterator(); i.hasNext();) {
+            String key = (String) i.next();
+            customizeDynamicProperty(base, key, properties, elementNode,
+                    pageDesc, actionDesc);
+        }
+    }
+
+    protected void customizeDynamicProperty(String base, String name,
+            Map properties, ElementNode elementNode, PageDesc pageDesc,
+            ActionDesc actionDesc) {
+        if (pageDesc == null) {
+            return;
+        }
+        final String pageName = pageDesc.getPageName();
+        if (!StringUtil.isEmpty(base)) {
+            String propName = base + "Value";
+            if (pageDesc.hasDynamicProperty(propName)) {
+                properties.put("value",
+                        getBindingExpression(pageName, propName));
+            }
+        }
     }
 
     public boolean isLeaf() {
@@ -62,6 +100,18 @@ public class TitleFactory extends OutputLabelFactory {
 
     protected String getTagName() {
         return TAG_NAME;
+    }
+
+    public NamingConvention getNamingConvention() {
+        return namingConvention;
+    }
+
+    public void setNamingConvention(final NamingConvention namingConvention) {
+        this.namingConvention = namingConvention;
+    }
+
+    protected String getUri() {
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
 }

@@ -56,7 +56,7 @@ public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
         NamingConventionImpl namingConvention = new NamingConventionImpl();
         namingConvention
                 .addRootPackageName("org.seasar.teeda.extension.html.factory.sub");
-        ((OutputLabelFactory) factory).setNamingConvention(namingConvention);
+        ((TitleFactory) factory).setNamingConvention(namingConvention);
         FacesConfigOptions.setDefaultSuffix(".html");
 
         Map properties = new HashMap();
@@ -79,7 +79,7 @@ public class TitleFactoryTest extends ElementProcessorFactoryTestCase {
         NamingConventionImpl namingConvention = new NamingConventionImpl();
         namingConvention
                 .addRootPackageName("org.seasar.teeda.extension.html.factory.sub");
-        ((OutputLabelFactory) factory).setNamingConvention(namingConvention);
+        ((TitleFactory) factory).setNamingConvention(namingConvention);
         FacesConfigOptions.setDefaultSuffix(".html");
 
         Map properties = new HashMap();
