@@ -256,18 +256,11 @@ public class FacesMessageUtil {
         MessageResourceBundle bundle = getBundle(context, locale);
         String summary = bundle.get(messageId);
         String detail = bundle.get(messageId + DETAIL_SUFFIX);
-        if (summary == null) {
+        if (summary == null && detail == null) {
             MessageResourceBundle defaultBundle = getDefaultBundle(context,
                     locale);
             summary = defaultBundle.get(messageId);
-            if (summary != null) {
-                detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
-            } else {
-                detail = bundle.get(messageId + DETAIL_SUFFIX);
-                if (detail == null) {
-                    detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
-                }
-            }
+            detail = defaultBundle.get(messageId + DETAIL_SUFFIX);
         }
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
