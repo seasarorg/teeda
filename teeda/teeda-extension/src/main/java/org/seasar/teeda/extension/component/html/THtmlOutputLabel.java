@@ -39,6 +39,8 @@ public class THtmlOutputLabel extends HtmlOutputLabel {
 
     private String defaultPropertiesName;
 
+    private String templateValue;
+
     public THtmlOutputLabel() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -75,39 +77,53 @@ public class THtmlOutputLabel extends HtmlOutputLabel {
                 ExtensionConstants.PROPERTIES_NAME_ATTR);
     }
 
-    public void setDefaultKey(String defaultKey) {
+    public void setDefaultKey(final String defaultKey) {
         this.defaultKey = defaultKey;
     }
 
-    public void setDefaultPropertiesName(String defaultPropertiesName) {
+    public void setDefaultPropertiesName(final String defaultPropertiesName) {
         this.defaultPropertiesName = defaultPropertiesName;
     }
 
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
-    public void setPropertiesName(String propertiesName) {
+    public void setPropertiesName(final String propertiesName) {
         this.propertiesName = propertiesName;
     }
 
-    public Object saveState(FacesContext context) {
-        Object values[] = new Object[5];
+    public String getTemplateValue() {
+        if (templateValue != null) {
+            return templateValue;
+        }
+        return ComponentUtil_.getValueBindingValueAsString(this,
+                ExtensionConstants.TEMPLATEVALUE_ATTR);
+    }
+
+    public void setTemplateValue(final String templateValue) {
+        this.templateValue = templateValue;
+    }
+
+    public Object saveState(final FacesContext context) {
+        final Object values[] = new Object[6];
         values[0] = super.saveState(context);
         values[1] = key;
         values[2] = defaultKey;
         values[3] = propertiesName;
         values[4] = defaultPropertiesName;
+        values[5] = templateValue;
         return values;
     }
 
-    public void restoreState(FacesContext context, Object state) {
-        Object[] values = (Object[]) state;
+    public void restoreState(final FacesContext context, final Object state) {
+        final Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
         key = (String) values[1];
         defaultKey = (String) values[2];
         propertiesName = (String) values[3];
         defaultPropertiesName = (String) values[4];
+        templateValue = (String) values[5];
     }
 
 }
