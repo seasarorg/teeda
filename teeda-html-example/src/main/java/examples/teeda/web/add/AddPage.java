@@ -15,14 +15,14 @@
  */
 package examples.teeda.web.add;
 
+import org.seasar.teeda.extension.annotation.validator.GreaterThanConstant;
+
 public class AddPage {
 
-	public static final String arg1_TGreaterThanConstantValidator = null;
-
-	public static final String arg2_TGreaterThanConstantValidator = null;
-
+	@GreaterThanConstant
 	private int arg1;
 
+	@GreaterThanConstant
 	private int arg2;
 
 	private int result;

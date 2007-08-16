@@ -17,25 +17,25 @@ public class DownloadHelper {
 
 	private final static String CR = "\n";
 
-	private static final List items = new ArrayList();
+	private static final List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
 
 	static {
 		{
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("aaa", "AAA1");
 			map.put("bbb", new Integer(1234));
 			map.put("ccc", Boolean.TRUE);
 			items.add(map);
 		}
 		{
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("aaa", "AAA2");
 			map.put("bbb", new Integer(2345));
 			map.put("ccc", Boolean.FALSE);
 			items.add(map);
 		}
 		{
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("aaa", "AAA3");
 			map.put("bbb", new Integer(3456));
 			map.put("ccc", Boolean.TRUE);

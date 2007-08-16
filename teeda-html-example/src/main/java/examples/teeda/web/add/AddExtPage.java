@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,24 +17,22 @@ package examples.teeda.web.add;
 
 import java.math.BigDecimal;
 
+import org.seasar.teeda.extension.annotation.convert.NumberConverter;
+import org.seasar.teeda.extension.annotation.validator.GreaterThanConstant;
+import org.seasar.teeda.extension.annotation.validator.NumberLength;
+
 public class AddExtPage {
 
-	public static final String arg1_numberConverter = "pattern='#.0000', type='currency'";
-
-	public static final String arg1_TNumberLengthValidator = "integralMax=12,fractionMax=2";
-
-	public static final String arg1_TGreaterThanConstantValidator = null;
-
-	public static final String arg2_numberConverter = "pattern='#.00', type='currency'";
-
-	public static final String result_numberConverter = "pattern='#.0000', type='currency'";
-
-	public static final String arg2_TGreaterThanConstantValidator = null;
-
+	@NumberConverter(pattern = "#.0000", type = "currency")
+	@NumberLength(integralMax = 12, fractionMax = 2)
+	@GreaterThanConstant
 	private BigDecimal arg1;
 
+	@NumberConverter(pattern = "#.0000", type = "currency")
+	@GreaterThanConstant
 	private BigDecimal arg2;
 
+	@NumberConverter(pattern = "#.0000", type = "currency")
 	private BigDecimal result;
 
 	private int arg1Fraction = 4;

@@ -9,24 +9,23 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package examples.teeda.web.add;
 
+import org.seasar.teeda.extension.annotation.validator.DoubleRange;
+import org.seasar.teeda.extension.annotation.validator.Required;
+
 public class AddInputDoublePage {
 
-	public static final String arg1_TRequiredValidator = null;
-
-	public static final String arg1_TDoubleRangeValidator = "maximum=99.9999";
-
-	public static final String arg2_TRequiredValidator = null;
-
-	public static final String arg2_TDoubleRangeValidator = "maximum=99.9999";
-
+	@Required
+	@DoubleRange(maximum = 99.9999)
 	private Double arg1;
 
+	@Required
+	@DoubleRange(maximum = 99.9999)
 	private Double arg2;
 
 	public Double getArg1() {

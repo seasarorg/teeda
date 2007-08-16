@@ -15,18 +15,17 @@
  */
 package examples.teeda.web.add;
 
+import org.seasar.teeda.extension.annotation.validator.Length;
+import org.seasar.teeda.extension.annotation.validator.Required;
+
 public class AddInputPage {
 
-	public static final String arg1_TRequiredValidator = null;
-
-	public static final String arg1_lengthValidator = "minimum=3";
-
-	public static final String arg2_TRequiredValidator = null;
-
-	public static final String arg2_lengthValidator = "minimum=3";
-
+	@Required
+	@Length(minimum = 3)
 	private Integer arg1;
 
+	@Required
+	@Length(minimum = 3)
 	private Integer arg2;
 
 	private Integer result;
