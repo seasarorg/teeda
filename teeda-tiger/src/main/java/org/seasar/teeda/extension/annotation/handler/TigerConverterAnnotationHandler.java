@@ -30,6 +30,7 @@ import org.seasar.framework.util.tiger.AnnotationUtil;
 
 /**
  * @author higa
+ * @author shot
  */
 public class TigerConverterAnnotationHandler extends
 		ConstantConverterAnnotationHandler {
@@ -61,16 +62,32 @@ public class TigerConverterAnnotationHandler extends
 		registerConverter(componentName, propertyName, converterName, props);
 	}
 
+	protected void processAnnotaions(final S2Container container,
+			final String componentName, final PropertyDesc propertyDesc,
+			final Annotation[] annotations) {
+		for (Annotation annotation : annotations) {
+			processAnnotation(container, componentName, propertyDesc
+					.getPropertyName(), annotation);
+		}
+	}
+
 	protected void processGetterMethod(S2Container container,
 			Class componentClass, String componentName,
 			NamingConvention namingConvention, BeanDesc beanDesc,
 			PropertyDesc propertyDesc) {
 		Annotation[] annotations = propertyDesc.getReadMethod()
 				.getDeclaredAnnotations();
-		for (Annotation annotation : annotations) {
-			processAnnotation(container, componentName, propertyDesc
-					.getPropertyName(), annotation);
-		}
+		processAnnotaions(container, componentName, propertyDesc, annotations);
+	}
+
+	@Override
+	protected void processSetterMethod(S2Container container,
+			Class componentClass, String componentName,
+			NamingConvention namingConvention, BeanDesc beanDesc,
+			PropertyDesc propertyDesc) {
+		Annotation[] annotations = propertyDesc.getWriteMethod()
+				.getDeclaredAnnotations();
+		processAnnotaions(container, componentName, propertyDesc, annotations);
 	}
 
 	protected String getConverterName(Annotation annotation) {

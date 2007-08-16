@@ -36,8 +36,7 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 				"TDateTimeConverter");
 		cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd);
-		ComponentDef cd2 = new ComponentDefImpl(
-				TTimestampConverter.class,
+		ComponentDef cd2 = new ComponentDefImpl(TTimestampConverter.class,
 				"TTimestampConverter");
 		cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd2);
@@ -76,6 +75,15 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		assertEquals("date", converter.getType());
 	}
 
+	public void testSetterMethod() throws Exception {
+		TigerConverterAnnotationHandler handler = new TigerConverterAnnotationHandler();
+		handler.registerConverters("hogeBean");
+		TDateTimeConverter converter = (TDateTimeConverter) ConverterResource
+				.getConverter("#{hogeBean.eee}");
+		assertNotNull(converter);
+		assertEquals("time", converter.getType());
+	}
+
 	public static class HogeBean {
 
 		@DateTimeConverter(type = "time")
@@ -89,6 +97,17 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 
 		@TimestampConverter(pattern = "yyyy/MM/dd HH:mm:ss.SSS")
 		private Timestamp ddd;
+
+		private Date eee;
+
+		public Date getEee() {
+			return eee;
+		}
+
+		@DateTimeConverter(type = "time")
+		public void setEee(Date eee) {
+			this.eee = eee;
+		}
 
 		public Timestamp getDdd() {
 			return ddd;
