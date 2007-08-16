@@ -23,9 +23,7 @@ import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
@@ -50,15 +48,7 @@ public class TitleFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
-        final int childSize = elementNode.getChildSize();
-        if (childSize > 0) {
-            HtmlNode child = elementNode.getChild(0);
-            if (child instanceof TextNode) {
-                TextNode node = (TextNode) child;
-                properties.put(ExtensionConstants.TEMPLATEVALUE_ATTR, node
-                        .getValue());
-            }
-        }
+        LabelFactoryUtil.storeTemplateValue(properties, elementNode);
         if (pageDesc == null) {
             return;
         }

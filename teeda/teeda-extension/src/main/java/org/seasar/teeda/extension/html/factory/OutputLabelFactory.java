@@ -24,9 +24,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
-import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
-import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
@@ -60,6 +58,7 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        LabelFactoryUtil.storeTemplateValue(properties, elementNode);
         if (pageDesc == null) {
             return;
         }
@@ -77,15 +76,6 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
             final String key = (String) i.next();
             customizeDynamicProperty(base, key, properties, elementNode,
                     pageDesc, actionDesc);
-        }
-        if (!properties.containsKey(JsfConstants.VALUE_ATTR)) {
-            if (1 == elementNode.getChildSize()) {
-                final HtmlNode child = elementNode.getChild(0);
-                if (child instanceof TextNode) {
-                    final String value = ((TextNode) child).getValue();
-                    properties.put(JsfConstants.VALUE_ATTR, value);
-                }
-            }
         }
     }
 

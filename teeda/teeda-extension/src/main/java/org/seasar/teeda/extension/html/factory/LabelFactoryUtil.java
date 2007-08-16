@@ -23,17 +23,20 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.TextNode;
 
 /**
  * @author shot
+ * @author manhole
  */
 public class LabelFactoryUtil {
 
     public static void storeLabelAttributesTo(final Map properties,
             final ElementNode elementNode, final PageDesc pageDesc,
             final NamingConvention nc) {
-        if (properties == null || elementNode == null || pageDesc == null) {
+        if ((properties == null) || (elementNode == null) || (pageDesc == null)) {
             return;
         }
         final String pageName = pageDesc.getPageName();
@@ -50,4 +53,18 @@ public class LabelFactoryUtil {
                 defaultPropertiesName);
 
     }
+
+    public static void storeTemplateValue(final Map properties,
+            final ElementNode elementNode) {
+        final int childSize = elementNode.getChildSize();
+        if (childSize > 0) {
+            final HtmlNode child = elementNode.getChild(0);
+            if (child instanceof TextNode) {
+                final TextNode node = (TextNode) child;
+                final String value = node.getValue();
+                properties.put(ExtensionConstants.TEMPLATEVALUE_ATTR, value);
+            }
+        }
+    }
+
 }

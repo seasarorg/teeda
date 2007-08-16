@@ -41,6 +41,11 @@ public class LabelTest extends TeedaWebTestCase {
         tester.assertTextEqualsById("aaa", "AAA");
         tester.assertTextEqualsById("bbb", "BBB");
         tester.assertTextEqualsById("ccc", "CCC");
+
+        // labelのボディ部分はレンダされないこと
+        tester.assertTextNotPresent("cccBody");
+        // 対応するpropertyやPage属性がない場合はbody値がそのまま出力されること
+        tester.assertTextPresent("dddBody");
     }
 
 }

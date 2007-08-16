@@ -65,8 +65,8 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         if (forAttr != null) {
             final UIComponent forComponent = label.findComponent(forAttr);
             if (forComponent == null) {
-                throw new IllegalStateException("for Component [" + forAttr +
-                        "] does not found");
+                throw new IllegalStateException("for Component [" + forAttr
+                        + "] does not found");
             }
             final String forId = getIdForRender(context, forComponent);
             RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR, forId,
@@ -82,6 +82,9 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
                     .getDefaultPropertiesName();
             value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
                     defaultPropertiesName);
+        }
+        if (StringUtil.isEmpty(value)) {
+            value = label.getTemplateValue();
         }
         if (value != null) {
             writer.writeText(value, null);
@@ -114,6 +117,7 @@ public class THtmlOutputLabelRenderer extends AbstractRenderer {
         ignore.addAttributeName(ExtensionConstants.DEFAULT_KEY);
         ignore
                 .addAttributeName(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
+        ignore.addAttributeName(ExtensionConstants.TEMPLATEVALUE_ATTR);
         return ignore;
     }
 }
