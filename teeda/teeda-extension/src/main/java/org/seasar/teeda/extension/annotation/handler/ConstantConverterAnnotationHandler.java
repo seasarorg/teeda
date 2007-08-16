@@ -45,6 +45,8 @@ public class ConstantConverterAnnotationHandler extends
                 namingConvention, beanDesc);
         processGetterMethods(container, componentClass, componentName,
                 namingConvention, beanDesc);
+        processSetterMethods(container, componentClass, componentName,
+                namingConvention, beanDesc);
     }
 
     protected void processFields(S2Container container, Class componentClass,
@@ -98,4 +100,23 @@ public class ConstantConverterAnnotationHandler extends
             NamingConvention namingConvention, BeanDesc beanDesc,
             PropertyDesc propertyDesc) {
     }
+
+    protected void processSetterMethods(S2Container container,
+            Class componentClass, String componentName,
+            NamingConvention namingConvention, BeanDesc beanDesc) {
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            if (pd.hasWriteMethod()) {
+                processSetterMethod(container, componentClass, componentName,
+                        namingConvention, beanDesc, pd);
+            }
+        }
+    }
+
+    protected void processSetterMethod(S2Container container,
+            Class componentClass, String componentName,
+            NamingConvention namingConvention, BeanDesc beanDesc,
+            PropertyDesc propertyDesc) {
+    }
+
 }
