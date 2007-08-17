@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIViewRoot;
@@ -33,23 +32,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.container.servlet.S2ContainerServlet;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.ViewHandlerImpl;
-import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.HtmlSuffix;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
+import org.seasar.teeda.extension.html.PageScopeHandler;
+import org.seasar.teeda.extension.html.SubApplicationScopeHandler;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorCache;
 import org.seasar.teeda.extension.jsp.PageContextImpl;
@@ -69,6 +67,14 @@ public class HtmlViewHandler extends ViewHandlerImpl {
     private TeedaStateManager stateManager;
 
     private PageDescCache pageDescCache;
+
+    public static final String pageScopeHandler_BINDING = "bindingType=may";
+
+    private PageScopeHandler pageScopeHandler = new PageScopeHandlerImpl();
+
+    public static final String subApplicationScopeHandler_BINDING = "bindingType=may";
+
+    private SubApplicationScopeHandler subApplicationScopeHandler = new SubApplicationScopeHandlerImpl();
 
     public void setTagProcessorCache(TagProcessorCache tagProcessorCache) {
         this.tagProcessorCache = tagProcessorCache;
@@ -135,56 +141,31 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         renderView(context, path);
     }
 
-    protected void renderView(FacesContext context, String path)
+    protected void renderView(final FacesContext context, final String path)
             throws IOException {
         final HttpServletRequest request = prepareRequest(context);
         final HttpServletResponse response = prepareResponse(context);
-        PageContext pageContext = createPageContext(request, response);
-        TagProcessor tagProcessor = tagProcessorCache.getTagProcessor(path);
+        final PageContext pageContext = createPageContext(request, response);
+        final TagProcessor tagProcessor = tagProcessorCache
+                .getTagProcessor(path);
+        final boolean postback = PostbackUtil.isPostback(context
+                .getExternalContext().getRequestMap());
+        final PageDesc pageDesc = pageDescCache.getPageDesc(path);
+
+        boolean changed = false;
+        if (postback) {
+            changed = pageScopeHandler.toPage(pageDesc, context);
+        }
         try {
             tagProcessor.process(pageContext, null);
         } catch (JspException ex) {
             throw new JspRuntimeException(ex);
         }
-        PageDesc pageDesc = pageDescCache.getPageDesc(path);
-        if (hasPageOrSubapplicationScope(pageDesc)) {
-            final String pageName = pageDesc.getPageName();
-            final Object component = DIContainerUtil.getComponent(pageName);
-            final Map subApplicationScopeValues = ScopeValueHelper
-                    .getOrCreateSubApplicationScopeValues(context);
-            saveValueToScope(component, subApplicationScopeValues, pageDesc
-                    .getSubapplicationScopePropertyNames());
-            final Map pageScopeValues = ScopeValueHelper
-                    .getOrCreatePageScopeValues(context);
-            saveValueToScope(component, pageScopeValues, pageDesc
-                    .getPageScopePropertyNames());
+        subApplicationScopeHandler.toScope(pageDesc, context);
+        if (!postback || changed) {
+            pageScopeHandler.toScope(pageDesc, context);
         }
         pageContext.getOut().flush();
-    }
-
-    private static boolean hasPageOrSubapplicationScope(PageDesc pageDesc) {
-        if (pageDesc == null) {
-            return false;
-        }
-        return (pageDesc.hasPageScopeProperty() || pageDesc
-                .hasSubapplicationScopeProperty());
-    }
-
-    protected void saveValueToScope(Object component, Map scopeContext,
-            String[] scopePropertyNames) {
-        if (component == null) {
-            return;
-        }
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component.getClass());
-        for (int i = 0; i < scopePropertyNames.length; i++) {
-            String propertyName = scopePropertyNames[i];
-            if (beanDesc.hasPropertyDesc(propertyName)) {
-                PropertyDesc propertyDesc = beanDesc
-                        .getPropertyDesc(propertyName);
-                scopeContext
-                        .put(propertyName, propertyDesc.getValue(component));
-            }
-        }
     }
 
     protected Servlet getServlet() {
@@ -239,6 +220,23 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public void setPageDescCache(PageDescCache pageDescCache) {
         this.pageDescCache = pageDescCache;
+    }
+
+    public PageScopeHandler getPageScopeHandler() {
+        return pageScopeHandler;
+    }
+
+    public void setPageScopeHandler(PageScopeHandler pageScopeHandler) {
+        this.pageScopeHandler = pageScopeHandler;
+    }
+
+    public SubApplicationScopeHandler getSubApplicationScopeHandler() {
+        return subApplicationScopeHandler;
+    }
+
+    public void setSubApplicationScopeHandler(
+            SubApplicationScopeHandler subApplicationScopeHandler) {
+        this.subApplicationScopeHandler = subApplicationScopeHandler;
     }
 
 }
