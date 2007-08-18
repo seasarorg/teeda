@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD, ElementType.METHOD })
 public @interface MessageAggregation {
 
-	String id() default "";
+	String id() default "org.seasar.teeda.extension.DEFAULT_MESSAGE_AGGREGATION";
 
 	String summary() default "";
 
