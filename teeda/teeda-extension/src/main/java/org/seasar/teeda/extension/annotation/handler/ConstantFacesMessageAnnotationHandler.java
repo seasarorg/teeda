@@ -59,9 +59,10 @@ public class ConstantFacesMessageAnnotationHandler extends
          return;
          }
          */
-        String s = (String) FieldUtil.get(field, null);
-        Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
-        String id = (String) m.remove("id");
+        final String s = (String) FieldUtil.get(field, null);
+        final Map m = ConstantAnnotationUtil.convertExpressionToMap(s);
+        String id = (m != null) ? (String) m.remove("id")
+                : "org.seasar.teeda.extension.DEFAULT_MESSAGE_AGGREGATION";
         FacesMessage message = createFacesMessage(id);
         if (id == null) {
             BeanUtil.copyProperties(m, message);
