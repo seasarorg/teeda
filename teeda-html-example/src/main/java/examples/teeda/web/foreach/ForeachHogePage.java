@@ -18,6 +18,10 @@ package examples.teeda.web.foreach;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.teeda.extension.annotation.message.MessageAggregation;
+
+import examples.teeda.web.foreach.AbstractForeachHogePage.FooDto;
+
 /**
  * @author shot
  */
@@ -29,8 +33,10 @@ public class ForeachHogePage extends AbstractForeachHogePage {
 
 	public static final String bbb_lengthValidator = "minimum=3";
 
-	// public static final String fooItems_MESSAGE_AGGREGATION =
-	// "id=examples.teeda.web.foreach.ForeachHoge.invaid";
+	@MessageAggregation(id = "examples.teeda.web.foreach.ForeachHoge.invalid")
+	public void setFooItems(FooDto[] fooItems) {
+		this.fooItems = fooItems;
+	}
 
 	public String initialize() {
 		List l = new ArrayList();
