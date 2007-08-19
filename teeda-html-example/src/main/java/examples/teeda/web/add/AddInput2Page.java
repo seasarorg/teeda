@@ -15,32 +15,38 @@
  */
 package examples.teeda.web.add;
 
-import javax.faces.internal.PhaseUtil;
-
+import org.seasar.teeda.extension.annotation.scope.RedirectScope;
+import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;
 import org.seasar.teeda.extension.annotation.validator.Length;
 import org.seasar.teeda.extension.annotation.validator.Required;
 
-public class AddInputPage {
+import examples.teeda.web.add2.AddResult2Page;
+
+public class AddInput2Page {
 
 	@Required
-	@Length(minimum = 3)
+	@Length(minimum=3)
+	@RedirectScope
 	private Integer arg1;
 
 	@Required
-	@Length(minimum = 3)
+	@Length(minimum=3)
+	@RedirectScope
 	private Integer arg2;
 
+	@RedirectScope
 	private Integer result;
 
 	private String message;
 
-	public AddInputPage() {
-		System.out.println(PhaseUtil.getCurrentPhase());
+	public String initialize() {
+		message = "計算サンプル";
+		return null;
 	}
 
 	public Class doCalculate() {
 		result = new Integer(arg1.intValue() + arg2.intValue());
-		return AddResultPage.class;
+		return AddResult2Page.class;
 	}
 
 	public Integer getArg1() {
@@ -75,4 +81,7 @@ public class AddInputPage {
 		this.message = message;
 	}
 
+	public String getLayout() {
+		return null;
+	}
 }

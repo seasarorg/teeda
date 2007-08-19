@@ -9,39 +9,28 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.add;
+package examples.teeda.web.add2;
 
-import javax.faces.internal.PhaseUtil;
+import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;
 
-import org.seasar.teeda.extension.annotation.validator.Length;
-import org.seasar.teeda.extension.annotation.validator.Required;
+public class AddResult2Page {
 
-public class AddInputPage {
-
-	@Required
-	@Length(minimum = 3)
+	@SubapplicationScope
 	private Integer arg1;
 
-	@Required
-	@Length(minimum = 3)
+	@SubapplicationScope
 	private Integer arg2;
 
+	@SubapplicationScope
 	private Integer result;
 
 	private String message;
-
-	public AddInputPage() {
-		System.out.println(PhaseUtil.getCurrentPhase());
-	}
-
-	public Class doCalculate() {
-		result = new Integer(arg1.intValue() + arg2.intValue());
-		return AddResultPage.class;
-	}
+	
+	public static final String jumpAddInput_TAKE_OVER = "type=never";
 
 	public Integer getArg1() {
 		return arg1;
