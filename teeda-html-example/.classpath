@@ -11,8 +11,6 @@
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/geronimo-jsp_2.0_spec-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/jstl-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/poi-2.5.1-final-20040804.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.4.ga.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.1.jar"/>
