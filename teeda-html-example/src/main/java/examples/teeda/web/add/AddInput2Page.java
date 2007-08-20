@@ -26,7 +26,7 @@ public class AddInput2Page {
 
 	@Required
 	@Length(minimum=3)
-	@RedirectScope
+	@SubapplicationScope
 	private Integer arg1;
 
 	@Required
@@ -34,7 +34,7 @@ public class AddInput2Page {
 	@RedirectScope
 	private Integer arg2;
 
-	@RedirectScope
+	@SubapplicationScope
 	private Integer result;
 
 	private String message;
