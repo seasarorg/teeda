@@ -23,7 +23,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -31,19 +31,19 @@ import org.seasar.teeda.extension.util.ValidatorUtil;
 public class TLongRangeValidator extends LongRangeValidator implements
         ValidationTargetSelectable {
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String maximumMessageId;
+    protected String maximumMessageId;
 
-    private String minimumMessageId;
+    protected String minimumMessageId;
 
-    private String notInRangeMessageId;
+    protected String notInRangeMessageId;
 
-    private String typeMessageId;
+    protected String typeMessageId;
 
-    private boolean convert = true;
+    protected boolean convert = true;
 
     public TLongRangeValidator() {
         super();
@@ -172,7 +172,7 @@ public class TLongRangeValidator extends LongRangeValidator implements
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     public String[] getTargets() {

@@ -24,9 +24,9 @@ import org.seasar.teeda.core.JsfConstants;
  * @author higa
  *
  */
-public abstract class ValidatorUtil {
+public abstract class TargetCommandUtil {
 
-    protected ValidatorUtil() {
+    protected TargetCommandUtil() {
     }
 
     public static final boolean isTargetCommand(FacesContext context,

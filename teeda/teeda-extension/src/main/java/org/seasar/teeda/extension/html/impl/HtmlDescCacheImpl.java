@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -106,7 +108,18 @@ public class HtmlDescCacheImpl implements HtmlDescCache {
         HtmlNode htmlNode = null;
         HttpServletRequest request = (HttpServletRequest) container.getRoot()
                 .getExternalContext().getRequest();
-        String encoding = request.getCharacterEncoding();
+        if (request == null) {
+            final FacesContext context = FacesContext.getCurrentInstance();
+            if (context != null) {
+                final ExternalContext externalContext = context
+                        .getExternalContext();
+                if (externalContext != null) {
+                    request = (HttpServletRequest) externalContext.getRequest();
+                }
+            }
+        }
+        String encoding = (request != null) ? request.getCharacterEncoding()
+                : JsfConstants.DEFAULT_ENCODING;
         if (encoding == null) {
             encoding = JsfConstants.DEFAULT_ENCODING;
         }

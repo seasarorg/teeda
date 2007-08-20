@@ -31,7 +31,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author manhole
@@ -53,19 +53,19 @@ public class TNumberLengthValidator implements Validator, StateHolder,
 
     private static final BigDecimal ZERO = new BigDecimal("0");
 
-    private int integralMin = Integer.MIN_VALUE;
+    protected int integralMin = Integer.MIN_VALUE;
 
-    private int integralMax = Integer.MAX_VALUE;
+    protected int integralMax = Integer.MAX_VALUE;
 
-    private int fractionMin = Integer.MIN_VALUE;
+    protected int fractionMin = Integer.MIN_VALUE;
 
-    private int fractionMax = Integer.MAX_VALUE;
+    protected int fractionMax = Integer.MAX_VALUE;
 
-    private boolean transientValue = false;
+    protected boolean transientValue = false;
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
     public void validate(final FacesContext context,
             final UIComponent component, final Object value)
@@ -251,7 +251,7 @@ public class TNumberLengthValidator implements Validator, StateHolder,
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     public String[] getTargets() {

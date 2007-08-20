@@ -26,7 +26,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -42,15 +42,15 @@ public class TByteLengthValidator extends LengthValidator implements
 
     public static final String ENCODE_MESSAGE_ID = "org.seasar.teeda.extension.validator.TByteLengthValidator.ENCODE";
 
-    private String charSet = null;
+    protected String charSet = null;
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String minimumMessageId;
+    protected String minimumMessageId;
 
-    private String maximumMessageId;
+    protected String maximumMessageId;
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
@@ -152,7 +152,7 @@ public class TByteLengthValidator extends LengthValidator implements
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     public String[] getTargets() {

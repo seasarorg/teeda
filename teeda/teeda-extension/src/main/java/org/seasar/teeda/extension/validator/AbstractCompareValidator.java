@@ -25,7 +25,7 @@ import org.seasar.framework.exception.EmptyRuntimeException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author higa
@@ -38,13 +38,13 @@ public abstract class AbstractCompareValidator implements Validator,
 
     public static final String MINIMUM_MESSAGE_ID = "javax.faces.validator.LongRangeValidator.MINIMUM";
 
-    private String target = null;
+    protected String target = null;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String targetId = null;
+    protected String targetId = null;
 
-    private boolean transientValue = false;
+    protected boolean transientValue = false;
 
     private String messageId = null;
 
@@ -117,7 +117,7 @@ public abstract class AbstractCompareValidator implements Validator,
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     protected UIComponent getTargetComponent(UIComponent component) {

@@ -28,7 +28,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author higa
@@ -41,13 +41,13 @@ public class TRequiredValidator implements Validator, StateHolder,
 
     public static final String REQUIRED_MESSAGE_ID = "javax.faces.component.UIInput.REQUIRED";
 
-    private boolean transientValue = false;
+    protected boolean transientValue = false;
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String messageId;
+    protected String messageId;
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
@@ -109,7 +109,7 @@ public class TRequiredValidator implements Validator, StateHolder,
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     public String[] getTargets() {

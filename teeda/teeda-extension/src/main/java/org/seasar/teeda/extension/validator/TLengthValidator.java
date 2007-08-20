@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,20 +23,20 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
  */
 public class TLengthValidator extends LengthValidator {
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
 
-    private String maximumMessageId;
+    protected String maximumMessageId;
 
-    private String minimumMessageId;
+    protected String minimumMessageId;
 
     public TLengthValidator() {
         super();
@@ -54,7 +54,7 @@ public class TLengthValidator extends LengthValidator {
             Object value) throws ValidatorException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if (!ValidatorUtil.isTargetCommand(context, targets)) {
+        if (!TargetCommandUtil.isTargetCommand(context, targets)) {
             return;
         }
         try {

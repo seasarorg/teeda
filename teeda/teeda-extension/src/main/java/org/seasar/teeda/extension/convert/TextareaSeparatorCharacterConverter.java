@@ -1,5 +1,6 @@
 package org.seasar.teeda.extension.convert;
 
+import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.CharacterConverter;
@@ -7,13 +8,20 @@ import javax.faces.convert.ConverterException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.util.ConverterUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 public class TextareaSeparatorCharacterConverter extends CharacterConverter
-        implements ConvertTargetSelectable {
-    private String target;
+        implements ConvertTargetSelectable, StateHolder {
+
+    protected String target;
 
     protected String[] targets;
+
+    protected String objectMessageId;
+
+    protected String stringMessageId;
+
+    protected boolean transientValue = false;
 
     private static final String SEP1 = "\r\n";
 
@@ -57,7 +65,49 @@ public class TextareaSeparatorCharacterConverter extends CharacterConverter
     }
 
     public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
-        return ConverterUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
+    }
+
+    public boolean isTransient() {
+        return transientValue;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
+        target = (String) values[0];
+        setTarget(target);
+        objectMessageId = (String) values[1];
+        stringMessageId = (String) values[2];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[3];
+        values[0] = target;
+        values[1] = objectMessageId;
+        values[2] = stringMessageId;
+        return null;
+    }
+
+    public void setTransient(boolean transientValue) {
+        this.transientValue = transientValue;
+    }
+
+    public String getObjectMessageId() {
+        return (!StringUtil.isEmpty(objectMessageId)) ? objectMessageId : super
+                .getObjectMessageId();
+    }
+
+    public void setObjectMessageId(String objectMessageId) {
+        this.objectMessageId = objectMessageId;
+    }
+
+    public String getStringMessageId() {
+        return (!StringUtil.isEmpty(stringMessageId)) ? stringMessageId : super
+                .getStringMessageId();
+    }
+
+    public void setStringMessageId(String stringMessageId) {
+        this.stringMessageId = stringMessageId;
     }
 
 }

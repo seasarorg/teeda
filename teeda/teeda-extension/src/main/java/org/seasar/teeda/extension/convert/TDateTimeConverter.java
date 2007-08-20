@@ -26,10 +26,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.DateTimeConverter;
 import javax.faces.internal.ConvertUtil;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.util.ConverterUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -38,7 +39,11 @@ import org.seasar.teeda.extension.util.ConverterUtil;
 public class TDateTimeConverter extends DateTimeConverter implements
         ConvertTargetSelectable {
 
-    private Integer threshold = null;
+    protected Integer threshold = null;
+
+    protected String objectMessageId;
+
+    protected String stringMessageId;
 
     private static final int LAST_CENTURY = 1900;
 
@@ -52,7 +57,7 @@ public class TDateTimeConverter extends DateTimeConverter implements
     private String target;
 
     protected String[] targets;
-    
+
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         Date date = null;
@@ -87,7 +92,8 @@ public class TDateTimeConverter extends DateTimeConverter implements
         if (delim == null) {
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtil.wrappedByConverterException(this, context, args);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getObjectMessageId(), args));
         }
         if (delim != null) {
             setPattern("yyyy" + delim + "MM" + delim + "dd");
@@ -108,8 +114,8 @@ public class TDateTimeConverter extends DateTimeConverter implements
         } catch (ParseException e) {
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtil.wrappedByConverterException(this, context, args,
-                    e);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getObjectMessageId(), args), e);
         } finally {
             setPattern(pattern);
         }
@@ -135,9 +141,6 @@ public class TDateTimeConverter extends DateTimeConverter implements
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
-        if (!isTargetCommandConvert(context, targets)) {
-            return "";
-        }
         return super.getAsString(context, component, value);
     }
 
@@ -150,10 +153,12 @@ public class TDateTimeConverter extends DateTimeConverter implements
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = threshold;
         values[2] = target;
+        values[3] = objectMessageId;
+        values[4] = stringMessageId;
         return values;
     }
 
@@ -163,6 +168,8 @@ public class TDateTimeConverter extends DateTimeConverter implements
         threshold = (Integer) values[1];
         target = (String) values[2];
         setTarget(target);
+        objectMessageId = (String) values[3];
+        stringMessageId = (String) values[4];
     }
 
     public String getTarget() {
@@ -178,6 +185,25 @@ public class TDateTimeConverter extends DateTimeConverter implements
     }
 
     public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
-        return ConverterUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
+
+    public void setObjectMessageId(String objectMessageId) {
+        this.objectMessageId = objectMessageId;
+    }
+
+    public String getObjectMessageId() {
+        return (!StringUtil.isEmpty(objectMessageId)) ? objectMessageId : super
+                .getObjectMessageId();
+    }
+
+    public void setStringMessageId(String stringMessageId) {
+        this.stringMessageId = stringMessageId;
+    }
+
+    public String getStringMessageId() {
+        return (!StringUtil.isEmpty(stringMessageId)) ? stringMessageId : super
+                .getStringMessageId();
+    }
+
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,12 +18,21 @@ package javax.faces.convert;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtil;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 
 public class BooleanConverter implements Converter {
 
     public static final String CONVERTER_ID = "javax.faces.Boolean";
+
+    public static final String CONVERSION_OBJECT_ID = BooleanConverter.class
+            .getName()
+            + ".CONVERSION";
+
+    public static final String CONVERSION_STRING_ID = BooleanConverter.class
+            .getName()
+            + ".CONVERSION_STRING";
 
     public BooleanConverter() {
     }
@@ -44,8 +53,8 @@ public class BooleanConverter implements Converter {
         } catch (Exception e) {
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtil.wrappedByConverterException(this, context, args,
-                    e);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getObjectMessageId(), args), e);
         }
     }
 
@@ -60,7 +69,19 @@ public class BooleanConverter implements Converter {
             return (value instanceof String) ? (String) value
                     : ((Boolean) value).toString();
         } catch (Exception e) {
-            throw ConvertUtil.wrappedByConverterException(e);
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getStringMessageId(), args), e);
         }
     }
+
+    protected String getObjectMessageId() {
+        return CONVERSION_OBJECT_ID;
+    }
+
+    protected String getStringMessageId() {
+        return CONVERSION_STRING_ID;
+    }
+
 }

@@ -17,16 +17,18 @@ package org.seasar.teeda.extension.convert;
 
 import java.math.BigDecimal;
 
+import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.BigDecimalConverter;
 import javax.faces.convert.ConverterException;
 import javax.faces.internal.ConvertUtil;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.util.BigDecimalFormatUtil;
-import org.seasar.teeda.extension.util.ConverterUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -34,21 +36,35 @@ import org.seasar.teeda.extension.util.ConverterUtil;
  * @author yone
  */
 public class TBigDecimalConverter extends BigDecimalConverter implements
-        ConvertTargetSelectable {
+        ConvertTargetSelectable, StateHolder {
 
     public static final int SCALE_NONE = -1;
 
     public static final int ROUNDINGMODE_NONE = -1;
 
-    private String pattern;
+    protected String pattern;
 
-    private Integer scale;
+    protected Integer scale;
 
-    private Integer roundingMode;
+    protected Integer roundingMode;
 
-    private String target;
+    protected String target;
 
-    private String[] targets;
+    protected String[] targets;
+
+    protected boolean transientValue = false;
+
+    protected String objectMessageId;
+
+    protected String stringMessageId;
+
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+        if (!isTargetCommandConvert(context, targets)) {
+            return null;
+        }
+        return super.getAsObject(context, component, value);
+    }
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
@@ -76,21 +92,15 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
             }
 
             String pattern = getPattern();
-
             return BigDecimalFormatUtil.format(decimalValue, pattern);
         } catch (Exception e) {
-            throw ConvertUtil.wrappedByConverterException(e);
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    (String) value);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getStringMessageId(), args));
         }
     }
-    
-    public Object getAsObject(FacesContext context, UIComponent component,
-            String value) throws ConverterException {
-        if (!isTargetCommandConvert(context, targets)) {
-            return null;
-        }
-        return super.getAsObject(context, component, value);
-    }
-    
+
     public String getPattern() {
         return pattern;
     }
@@ -128,6 +138,55 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
     }
 
     public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
-        return ConverterUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
+
+    public String getObjectMessageId() {
+        return (!StringUtil.isEmpty(objectMessageId)) ? objectMessageId : super
+                .getObjectMessageId();
+    }
+
+    public void setObjectMessageId(String objectMessageId) {
+        this.objectMessageId = objectMessageId;
+    }
+
+    public String getStringMessageId() {
+        return (!StringUtil.isEmpty(stringMessageId)) ? stringMessageId : super
+                .getStringMessageId();
+    }
+
+    public void setStringMessageId(String stringMessageId) {
+        this.stringMessageId = stringMessageId;
+    }
+
+    public boolean isTransient() {
+        return transientValue;
+    }
+
+    public void setTransient(boolean transientValue) {
+        this.transientValue = transientValue;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object[] values = (Object[]) state;
+        pattern = (String) values[0];
+        scale = (Integer) values[1];
+        roundingMode = (Integer) values[2];
+        target = (String) values[3];
+        setTarget(target);
+        objectMessageId = (String) values[4];
+        stringMessageId = (String) values[5];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] values = new Object[6];
+        values[0] = pattern;
+        values[1] = scale;
+        values[2] = roundingMode;
+        values[3] = target;
+        values[4] = objectMessageId;
+        values[5] = stringMessageId;
+        return values;
+    }
+
 }

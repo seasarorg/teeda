@@ -29,7 +29,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.PatternUtil;
 import org.seasar.teeda.extension.exception.ExtendValidatorException;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -132,7 +132,7 @@ public class TRegularExpressionValidator implements Validator, StateHolder,
 
     public boolean isTargetCommandValidation(FacesContext context,
             String[] targets) {
-        return ValidatorUtil.isTargetCommand(context, targets);
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
     public String[] getTargets() {

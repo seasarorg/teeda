@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,7 +27,7 @@ import javax.faces.validator.ValidatorException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.util.ValidatorUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
@@ -36,17 +36,17 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
 
     private static final String GC_MESSAGE_ID = "org.seasar.teeda.extension.validator.TGreaterThanConstantValidator.GC";
 
-    private boolean transientValue = false;
+    protected boolean transientValue = false;
 
     //TODO targetプロパティは、他の拡張Validatorにあわせて、どのボタンが押されたかに使用すべき（すぐには修正できない）。
-    private Object target = new Integer(0);
+    protected Object target = new Integer(0);
 
     //どのボタンが押されたかを指定
-    private String targetCommand = null;
+    protected String targetCommand = null;
 
-    private String[] targetCommands;
+    protected String[] targetCommands;
 
-    private String messageId = null;
+    protected String messageId = null;
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
@@ -58,7 +58,7 @@ public class TGreaterThanConstantValidator implements Validator, StateHolder {
         if (target == null) {
             return;
         }
-        if (!ValidatorUtil.isTargetCommand(context, targetCommands)) {
+        if (!TargetCommandUtil.isTargetCommand(context, targetCommands)) {
             return;
         }
         Object t = NumberConversionUtil.convertNumber(value.getClass(),

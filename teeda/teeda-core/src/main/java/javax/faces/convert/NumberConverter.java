@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,6 +26,7 @@ import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.ConvertUtil;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.NumberConversionUtil;
@@ -36,6 +37,14 @@ import org.seasar.framework.util.NumberConversionUtil;
 public class NumberConverter implements Converter, StateHolder {
 
     public static final String CONVERTER_ID = "javax.faces.Number";
+
+    public static final String CONVERSION_OBJECT_ID = NumberConverter.class
+            .getName()
+            + ".CONVERSION";
+
+    public static final String CONVERSION_STRING_ID = NumberConverter.class
+            .getName()
+            + ".CONVERSION_STRING";
 
     private Locale locale = null;
 
@@ -99,8 +108,8 @@ public class NumberConverter implements Converter, StateHolder {
         } catch (ParseException e) {
             Object[] args = ConvertUtil.createExceptionMessageArgs(component,
                     value);
-            throw ConvertUtil.wrappedByConverterException(this, context, args,
-                    e);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getObjectMessageId(), args), e);
         }
     }
 
@@ -126,7 +135,10 @@ public class NumberConverter implements Converter, StateHolder {
         try {
             return formatter.format(value);
         } catch (Exception e) {
-            throw ConvertUtil.wrappedByConverterException(e);
+            Object[] args = ConvertUtil.createExceptionMessageArgs(component,
+                    value);
+            throw new ConverterException(FacesMessageUtil.getMessage(context,
+                    getStringMessageId(), args), e);
         }
     }
 
@@ -366,4 +378,13 @@ public class NumberConverter implements Converter, StateHolder {
             return false;
         }
     }
+
+    protected String getObjectMessageId() {
+        return CONVERSION_OBJECT_ID;
+    }
+
+    protected String getStringMessageId() {
+        return CONVERSION_STRING_ID;
+    }
+
 }
