@@ -21,21 +21,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author higa
- * @author yone
+ * @author shot
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Converter("TBigDecimalConverter")
-public @interface BigDecimalConverter {
-
-	String pattern() default "";
-
-	String target() default "";
-
-	int scale() default -1;
-
-	int roundingMode() default -1;
+@Converter("TIntegerConverter")
+public @interface IntegerConverter {
 
 	String objectMessageId() default "";
 

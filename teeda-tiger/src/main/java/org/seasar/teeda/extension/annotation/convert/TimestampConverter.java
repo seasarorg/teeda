@@ -39,4 +39,8 @@ public @interface TimestampConverter {
 
 	String target() default "";
 
+	String objectMessageId() default "";
+
+	String stringMessageId() default "";
+
 }
