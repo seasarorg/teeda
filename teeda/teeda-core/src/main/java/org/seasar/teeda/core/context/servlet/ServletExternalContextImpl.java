@@ -131,7 +131,7 @@ public class ServletExternalContextImpl extends ExternalContext implements
         final String encodedUrl = customizer.encodeResourceUrl(this, url);
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         if (((HttpServletRequest) request).isRequestedSessionIdFromCookie()) {
-            return url;
+            return encodedUrl;
         }
         return httpResponse.encodeURL(encodedUrl);
     }
