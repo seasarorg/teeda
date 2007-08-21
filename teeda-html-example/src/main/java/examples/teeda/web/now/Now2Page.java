@@ -25,6 +25,8 @@ public class Now2Page {
 
 	private String nowPattern = "yyyy/MM";
 
+	private int nowThreshold = 88;
+	
 	private Date now;
 
 	public Date getNow() {
@@ -42,13 +44,21 @@ public class Now2Page {
 	public String doCalculate() {
 		return null;
 	}
-
+	
 	public String getNowPattern() {
 		return nowPattern;
 	}
 
 	public void setNowPattern(String nowPattern) {
 		this.nowPattern = nowPattern;
+	}
+
+	public int getNowThreshold() {
+		return nowThreshold;
+	}
+
+	public void setNowThreshold(int nowThreshold) {
+		this.nowThreshold = nowThreshold;
 	}
 
 }
