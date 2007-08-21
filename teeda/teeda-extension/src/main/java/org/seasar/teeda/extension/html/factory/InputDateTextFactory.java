@@ -52,15 +52,30 @@ public class InputDateTextFactory extends InputTextFactory {
         if (pageDesc == null) {
             return;
         }
-        properties.put(ExtensionConstants.PATTERN_ATTR, getBindingExpression(
-                pageDesc.getPageName(), elementNode.getId()
-                        + ExtensionConstants.PATTERN_SUFFIX));
-        properties.put(ExtensionConstants.LENGTH_ATTR, getBindingExpression(
-                pageDesc.getPageName(), elementNode.getId()
-                        + ExtensionConstants.LENGTH_SUFFIX));
-        properties.put(ExtensionConstants.THRESHOD_ATTR, getBindingExpression(
-                pageDesc.getPageName(), elementNode.getId()
-                        + ExtensionConstants.THRESHOLD_SUFFIX));
+        String pattern = elementNode
+                .getProperty(ExtensionConstants.PATTERN_ATTR);
+        if (pattern == null) {
+            pattern = getBindingExpression(pageDesc.getPageName(), elementNode
+                    .getId()
+                    + ExtensionConstants.PATTERN_SUFFIX);
+        }
+        properties.put(ExtensionConstants.PATTERN_ATTR, pattern);
+
+        String length = elementNode.getProperty(ExtensionConstants.LENGTH_ATTR);
+        if (length == null) {
+            length = getBindingExpression(pageDesc.getPageName(), elementNode
+                    .getId()
+                    + ExtensionConstants.LENGTH_SUFFIX);
+        }
+        properties.put(ExtensionConstants.LENGTH_ATTR, length);
+
+        String threshold = elementNode
+                .getProperty(ExtensionConstants.THRESHOD_ATTR);
+        if (threshold == null) {
+            threshold = getBindingExpression(pageDesc.getPageName(),
+                    elementNode.getId() + ExtensionConstants.THRESHOLD_SUFFIX);
+        }
+        properties.put(ExtensionConstants.THRESHOD_ATTR, threshold);
     }
 
     protected String getTagName() {

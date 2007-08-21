@@ -53,22 +53,36 @@ public class InputCommaTextFactory extends InputTextFactory {
             return;
         }
         if (!properties.containsKey(ExtensionConstants.FRACTION_ATTR)) {
-            properties.put(ExtensionConstants.FRACTION_ATTR,
-                    getBindingExpression(pageDesc.getPageName(), elementNode
-                            .getId()
-                            + ExtensionConstants.FRACTION_SUFFIX));
+            String fraction = elementNode
+                    .getProperty(ExtensionConstants.FRACTION_ATTR);
+            if (fraction == null) {
+                fraction = getBindingExpression(pageDesc.getPageName(),
+                        elementNode.getId()
+                                + ExtensionConstants.FRACTION_SUFFIX);
+            }
+            properties.put(ExtensionConstants.FRACTION_ATTR, fraction);
         }
         if (!properties.containsKey(ExtensionConstants.FRACTION_SEPARATOR_ATTR)) {
+            String fractionSep = elementNode
+                    .getProperty(ExtensionConstants.FRACTION_SEPARATOR_ATTR);
+            if (fractionSep == null) {
+                fractionSep = getBindingExpression(pageDesc.getPageName(),
+                        elementNode.getId()
+                                + ExtensionConstants.FRACTION_SEPARATOR_SUFFIX);
+            }
             properties.put(ExtensionConstants.FRACTION_SEPARATOR_ATTR,
-                    getBindingExpression(pageDesc.getPageName(), elementNode
-                            .getId()
-                            + ExtensionConstants.FRACTION_SEPARATOR_SUFFIX));
+                    fractionSep);
         }
         if (!properties.containsKey(ExtensionConstants.GROUPING_SEPARATOR_ATTR)) {
-            properties.put(ExtensionConstants.GROUPING_SEPARATOR_ATTR,
-                    getBindingExpression(pageDesc.getPageName(), elementNode
-                            .getId()
-                            + ExtensionConstants.GROUPING_SEPARATOR_SUFFIX));
+            String groupSep = elementNode
+                    .getProperty(ExtensionConstants.GROUPING_SEPARATOR_ATTR);
+            if (groupSep == null) {
+                groupSep = getBindingExpression(pageDesc.getPageName(),
+                        elementNode.getId()
+                                + ExtensionConstants.GROUPING_SEPARATOR_SUFFIX);
+            }
+            properties
+                    .put(ExtensionConstants.GROUPING_SEPARATOR_ATTR, groupSep);
         }
     }
 
