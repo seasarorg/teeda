@@ -29,6 +29,7 @@ import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.webapp.UIComponentTag;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -126,8 +127,10 @@ public class TViewTag extends UIComponentTag {
         } catch (IOException ignore) {
             //throw new JspException(e.getMessage());
         }
-        HttpSession session = null;
-        if ((session = pageContext.getSession()) != null) {
+        final HttpServletRequest request = (HttpServletRequest) pageContext
+                .getRequest();
+        HttpSession session = request.getSession(true);
+        if (session != null) {
             final String encoding = PageContextUtil
                     .getCharacterEncoding(pageContext);
             session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY, encoding);
