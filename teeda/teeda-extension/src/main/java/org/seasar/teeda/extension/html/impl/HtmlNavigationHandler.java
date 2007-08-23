@@ -36,7 +36,7 @@ import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
  * @author higa
- *
+ * @author shot
  */
 public class HtmlNavigationHandler extends NavigationHandlerImpl {
 
@@ -108,8 +108,8 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         }
     }
 
-    protected String calcPathFromOutcome(FacesContext context, String viewId,
-            String outcome) {
+    protected String calcPathFromOutcome(final FacesContext context,
+            final String viewId, final String outcome) {
         if (outcome == null) {
             return null;
         }
@@ -118,24 +118,31 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
         }
         int pos = viewId.lastIndexOf('/');
         int pos2 = viewId.lastIndexOf('.');
-        String root = namingConvention.adjustViewRootPath();
+        final String root = namingConvention.adjustViewRootPath();
+        final String[] names = StringUtil.split(outcome, "_");
         String pathFirst = null;
         if (root != null && root.trim().length() > 0) {
             pathFirst = viewId.substring(0, pos + 1);
         } else {
-            pathFirst = "/";
+            if (outcome.indexOf("_") < 0) {
+                pathFirst = viewId.substring(0, pos + 1);
+            } else {
+                pathFirst = "/";
+            }
         }
 
         String pathLast = viewId.substring(pos2);
-        String[] names = StringUtil.split(outcome, "_");
         String suffix = htmlSuffix.getSuffix(context);
         if (names.length == 1) {
-            String path = pathFirst + outcome + suffix + pathLast;
-            InputStream is = ServletContextUtil.getResourceAsStream(
-                    servletContext, path);
-            if (is != null) {
-                InputStreamUtil.close(is);
-                return path;
+            //get InputStream only if suffix exist
+            if (suffix != null) {
+                String path = pathFirst + outcome + suffix + pathLast;
+                InputStream is = ServletContextUtil.getResourceAsStream(
+                        servletContext, path);
+                if (is != null) {
+                    InputStreamUtil.close(is);
+                    return path;
+                }
             }
             return pathFirst + outcome + pathLast;
         }
@@ -151,9 +158,13 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             pathFirst = viewId.substring(0, pos + 1);
         }
 
-        String path = pathFirst + buf + suffix + pathLast;
-        if (servletContext.getResourceAsStream(path) != null) {
-            return path;
+        if (suffix != null) {
+            String path = pathFirst + buf + suffix + pathLast;
+            InputStream is = ServletContextUtil.getResourceAsStream(
+                    servletContext, path);
+            if (is != null) {
+                return path;
+            }
         }
         return pathFirst + buf + pathLast;
     }

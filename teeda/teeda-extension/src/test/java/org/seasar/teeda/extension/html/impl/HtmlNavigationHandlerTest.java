@@ -122,4 +122,31 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         assertEquals("/view/add/addResult_i.html", handler.calcPathFromOutcome(
                 getFacesContext(), "/view/add/addInput_i.html", "addResult"));
     }
+    
+    public void testCalcPathFromOutcome4() throws Exception {
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        final NamingConventionImpl nc = new NamingConventionImpl();
+        nc.setViewRootPath("");
+        handler.setNamingConvention(nc);
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        handler.setServletContext(getServletContext());
+        assertEquals("/add/addResult.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/add/addInput.html", "addResult"));
+        assertEquals("/hello/hello.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/add/addResult.html", "hello_Hello"));
+    }
+
+    public void testCalcPathFromOutcome5() throws Exception {
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        final NamingConventionImpl nc = new NamingConventionImpl();
+        nc.setViewRootPath("");
+        handler.setNamingConvention(nc);
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        handler.setServletContext(getServletContext());
+        assertEquals("/add/addResult.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/add/addInput.html", "add_addResult"));
+        assertEquals("/hello/hello2/hello.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/add/addResult.html", "hello_hello2_Hello"));
+    }
+
 }

@@ -175,8 +175,12 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
                 linkList = UIComponentUtil.collectDescendants(head,
                         THtmlLink.class);
             }
-            pushIncludedBody(context, new IncludedBody(child.getViewId(), body
-                    .getChildren()));
+            if (body != null) {
+                final List children = body.getChildren();
+                final IncludedBody includedBody = new IncludedBody(child
+                        .getViewId(), children);
+                pushIncludedBody(context, includedBody);
+            }
             child = parent;
             parent = getParentViewRoot(context, child);
         }
