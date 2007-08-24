@@ -554,7 +554,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 pdClass = ClassUtil.getWrapperClass(pdClass);
             }
             final Class valueClass = (value != null) ? value.getClass() : null;
-            if (pd.hasWriteMethod() && isRelatedClass(pdClass, valueClass)) {
+            if (pd.isWritable() && isRelatedClass(pdClass, valueClass)) {
                 pd.setValue(page, value);
             }
         }

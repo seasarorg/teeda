@@ -65,7 +65,7 @@ public class TForEachTest extends UIComponentBaseTest {
     public void testProcessUpdate() throws Exception {
         TForEach forEach = new TForEach();
         final Hoge hoge = new Hoge();
-        hoge.setName("aaa");
+        hoge.name = "aaa";
         MockFacesContext context = getFacesContext();
         context.getApplication().setVariableResolver(new VariableResolver() {
             public Object resolveVariable(FacesContext context, String name)
@@ -75,7 +75,7 @@ public class TForEachTest extends UIComponentBaseTest {
         });
         forEach.setItemsName("nameItems");
         forEach.processUpdates(context);
-        assertNull(hoge.getNameItems());
+        assertNull(hoge.nameItems);
     }
 
     public void testProcessValidators_ItemTypeWithoutDefaultConstructor()
@@ -92,7 +92,7 @@ public class TForEachTest extends UIComponentBaseTest {
         });
         forEach.setItemsName("numItems");
         forEach.processValidators(context);
-        assertEquals(new Integer(0), foo.getNum());
+        assertEquals(new Integer(0), foo.num);
     }
 
     public void testProcessValidators_ItemTypeWithoutDefaultConstructorPrimitive()
@@ -108,7 +108,7 @@ public class TForEachTest extends UIComponentBaseTest {
         });
         forEach.setItemsName("numItems");
         forEach.processValidators(context);
-        assertTrue(foo2.getNum() == 0);
+        assertTrue(foo2.num == 0);
     }
 
     public void testProcessValidators_rowAdd() throws Exception {
@@ -119,7 +119,7 @@ public class TForEachTest extends UIComponentBaseTest {
         };
         forEach.setRowSize(1);
         final Hoge hoge = new Hoge();
-        hoge.setName("aaa");
+        hoge.name = "aaa";
         MockFacesContext context = getFacesContext();
         context.getApplication().setVariableResolver(new VariableResolver() {
             public Object resolveVariable(FacesContext context, String name)
@@ -147,7 +147,7 @@ public class TForEachTest extends UIComponentBaseTest {
         };
         forEach.setRowSize(1);
         final Hoge hoge = new Hoge();
-        hoge.setName("aaa");
+        hoge.name = "aaa";
         MockFacesContext context = getFacesContext();
         context.getApplication().setVariableResolver(new VariableResolver() {
             public Object resolveVariable(FacesContext context, String name)
@@ -195,7 +195,7 @@ public class TForEachTest extends UIComponentBaseTest {
         forEach.setPageName("hoge");
         forEach.setRowSize(1);
         final Hoge2 hoge2 = new Hoge2();
-        hoge2.setName("aaa");
+        hoge2.name = "aaa";
         MockServletContextImpl servletContext = new MockServletContextImpl(
                 "s2-example");
         MockHttpServletRequest request = servletContext
@@ -240,18 +240,18 @@ public class TForEachTest extends UIComponentBaseTest {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 hoge = new HogePage1();
         forEach.processMapItem(beanDesc, hoge, item);
-        assertEquals("111", hoge.getAaa());
+        assertEquals("111", hoge.aaa);
     }
 
     public void testProcessBeanItem() throws Exception {
         final TForEach forEach = createTForEach();
         HogePage2 item = new HogePage2();
-        item.setAaa("111");
-        item.setBbb("112");
+        item.aaa = "111";
+        item.bbb = "112";
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 page = new HogePage1();
         forEach.processBeanItem(beanDesc, page, item);
-        assertEquals("111", page.getAaa());
+        assertEquals("111", page.aaa);
     }
 
     public void testProcessItem() throws Exception {
@@ -263,9 +263,9 @@ public class TForEachTest extends UIComponentBaseTest {
         HogePage1 page = new HogePage1();
         forEach.setItemsName("fooItems");
         forEach.processItem(beanDesc, page, item, 1);
-        assertEquals("111", page.getAaa());
-        assertSame(item, page.getFoo());
-        assertEquals(1, page.getFooIndex());
+        assertEquals("111", page.aaa);
+        assertSame(item, page.foo);
+        assertEquals(1, page.fooIndex);
     }
 
     private TForEach createTForEach() {
@@ -277,58 +277,25 @@ public class TForEachTest extends UIComponentBaseTest {
     }
 
     public static class Hoge {
-        private String name;
 
-        private List nameItems;
+        public String name;
 
-        public List getNameItems() {
-            return nameItems;
-        }
-
-        public void setNameItems(List nameItems) {
-            this.nameItems = nameItems;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
+        public List nameItems;
     }
 
     public static class Hoge2 {
 
         public static final String nameItems_MESSAGE_AGGREGATION = "aaa";
 
-        private String name;
+        public String name;
 
-        private List nameItems;
-
-        public List getNameItems() {
-            return nameItems;
-        }
-
-        public void setNameItems(List nameItems) {
-            this.nameItems = nameItems;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
+        public List nameItems;
     }
 
     public static class Foo {
-        private Integer num;
+        public Integer num;
 
-        private Integer[] numItems;
+        public Integer[] numItems;
 
         public Foo() {
         }
@@ -336,29 +303,12 @@ public class TForEachTest extends UIComponentBaseTest {
         public Foo(Integer[] numItems) {
             this.numItems = numItems;
         }
-
-        public Integer getNum() {
-            return num;
-        }
-
-        public void setNum(Integer num) {
-            this.num = num;
-        }
-
-        public Integer[] getNumItems() {
-            return numItems;
-        }
-
-        public void setNumItems(Integer[] numItems) {
-            this.numItems = numItems;
-        }
-
     }
 
     public static class Foo2 {
-        int num;
+        public int num;
 
-        int[] numItems;
+        public int[] numItems;
 
         public Foo2() {
         }
@@ -366,78 +316,22 @@ public class TForEachTest extends UIComponentBaseTest {
         public Foo2(int[] numItems) {
             this.numItems = numItems;
         }
-
-        public int getNum() {
-            return num;
-        }
-
-        public void setNum(int num) {
-            this.num = num;
-        }
-
-        public int[] getNumItems() {
-            return numItems;
-        }
-
-        public void setNumItems(int[] numItems) {
-            this.numItems = numItems;
-        }
     }
 
     public static class HogePage1 {
 
-        private String aaa;
+        public String aaa;
 
-        private Map foo;
+        public Map foo;
 
-        private int fooIndex;
-
-        public String getAaa() {
-            return aaa;
-        }
-
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
-        }
-
-        public Map getFoo() {
-            return foo;
-        }
-
-        public void setFoo(Map foo) {
-            this.foo = foo;
-        }
-
-        public int getFooIndex() {
-            return fooIndex;
-        }
-
-        public void setFooIndex(int fooIndex) {
-            this.fooIndex = fooIndex;
-        }
+        public int fooIndex;
     }
 
     public static class HogePage2 {
 
-        private String aaa;
+        public String aaa;
 
-        private String bbb;
-
-        public String getAaa() {
-            return aaa;
-        }
-
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
-        }
-
-        public String getBbb() {
-            return bbb;
-        }
-
-        public void setBbb(String bbb) {
-            this.bbb = bbb;
-        }
+        public String bbb;
     }
 
 }
