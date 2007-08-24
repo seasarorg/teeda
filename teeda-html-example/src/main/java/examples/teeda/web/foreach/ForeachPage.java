@@ -17,49 +17,27 @@ package examples.teeda.web.foreach;
 
 public class ForeachPage {
 
-	private String foo;
+	public String foo;
 
-	private String bar;
+	public String bar;
 
-	private FooItem[] aaaItems;
+	public FooItem[] aaaItems;
 
-	private int aaaIndex;
+	public int aaaIndex;
 
-	public FooItem[] getAaaItems() {
-		if (aaaItems == null) {
-			aaaItems = new FooItem[3];
-			aaaItems[0] = createItem("a1", "b1");
-			aaaItems[1] = createItem("a2", "b2");
-			aaaItems[2] = createItem("a3", "b3");
-		}
-		return aaaItems;
+	public Class prerender() {
+		aaaItems = new FooItem[3];
+		aaaItems[0] = createItem("a1", "b1");
+		aaaItems[1] = createItem("a2", "b2");
+		aaaItems[2] = createItem("a3", "b3");
+		return null;
 	}
 
 	private FooItem createItem(String foo, String bar) {
 		final FooItem item = new FooItem();
-		item.setFoo(foo);
-		item.setBar(bar);
+		item.foo = foo;
+		item.bar = bar;
 		return item;
-	}
-
-	public void setAaaItems(FooItem[] fooItems) {
-		this.aaaItems = fooItems;
-	}
-
-	public String getBar() {
-		return bar;
-	}
-
-	public void setBar(String bar) {
-		this.bar = bar;
-	}
-
-	public String getFoo() {
-		return foo;
-	}
-
-	public void setFoo(String foo) {
-		this.foo = foo;
 	}
 
 	public String getFooStyle() {
@@ -72,40 +50,8 @@ public class ForeachPage {
 
 	public static class FooItem {
 
-		private String foo;
+		public String foo;
 
-		private String bar;
-
-		public String getBar() {
-			return bar;
-		}
-
-		public void setBar(String bar) {
-			this.bar = bar;
-		}
-
-		public String getFoo() {
-			return foo;
-		}
-
-		public void setFoo(String foo) {
-			this.foo = foo;
-		}
+		public String bar;
 	}
-
-	/**
-	 * @return the aaaIndex
-	 */
-	public int getAaaIndex() {
-		return aaaIndex;
-	}
-
-	/**
-	 * @param aaaIndex
-	 *            the aaaIndex to set
-	 */
-	public void setAaaIndex(int aaaIndex) {
-		this.aaaIndex = aaaIndex;
-	}
-
 }
