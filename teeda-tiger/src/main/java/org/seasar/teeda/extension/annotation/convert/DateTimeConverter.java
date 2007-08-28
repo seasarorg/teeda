@@ -29,6 +29,8 @@ import java.lang.annotation.Target;
 @Converter("TDateTimeConverter")
 public @interface DateTimeConverter {
 
+	int threshold() default 71;
+
 	String type() default "";
 
 	String dateStyle() default "";

@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 
 import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.framework.util.tiger.AnnotationUtil;
 import org.seasar.teeda.extension.annotation.message.MessageAggregation;
@@ -41,12 +40,14 @@ public class TigerFacesMessageAnnotationHandler extends
 			Map props = AnnotationUtil.getProperties(annotation);
 			String id = (String) props.remove("id");
 			FacesMessage facesMessage = null;
-			if (!StringUtil.isEmpty(id)) {
-				facesMessage = createFacesMessage(id);
+			facesMessage = createFacesMessage(id);
+			String summary = (String) props.remove("summary");
+			if (!StringUtil.isEmpty(summary)) {
+                facesMessage.setSummary(summary);
 			}
-			if (facesMessage == null) {
-				facesMessage = new FacesMessage();
-				BeanUtil.copyProperties(props, facesMessage);
+			String detail = (String) props.remove("detail");
+			if (!StringUtil.isEmpty(detail)) {
+                facesMessage.setDetail(detail);
 			}
 			registerFacesMessage(componentName, field.getName(), facesMessage);
 		}
