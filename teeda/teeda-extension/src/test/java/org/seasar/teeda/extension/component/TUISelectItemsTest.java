@@ -79,6 +79,21 @@ public class TUISelectItemsTest extends TeedaTestCase {
         assertEquals("1", si.getValue());
     }
 
+    public void testGetValue_map_array() throws Exception {
+        Map[] array = new Map[1];
+        Map map = new HashMap();
+        map.put("label", "aaa");
+        map.put("value", "1");
+        array[0] = map;
+        TUISelectItems items = new TUISelectItems();
+        items.setValue(array);
+        List list2 = (List) items.getValue();
+        assertNotNull(list2);
+        SelectItem si = (SelectItem) list2.get(1);
+        assertEquals("aaa", si.getLabel());
+        assertEquals("1", si.getValue());
+    }
+
     public void testGetValue_required() throws Exception {
         List list = new ArrayList();
         HogeDto h1 = new HogeDto();

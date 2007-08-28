@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -93,6 +94,9 @@ public class TUISelectItems extends UISelectItems {
             si.setLabel(mes.getSummary());
             list.add(si);
             nullLabelSet = true;
+        }
+        if (value != null && value.getClass().isArray()) {
+            value = Arrays.asList((Object[]) value);
         }
         if (value instanceof Collection) {
             final Collection valueCollection = (Collection) value;
