@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component class="org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy" />
+	<component class="org.seasar.teeda.core.application.impl.DefaultComponentLookupStrategy" />
+	<component class="org.seasar.teeda.extension.util.SimpleLabelHelperImpl" />
+</components>

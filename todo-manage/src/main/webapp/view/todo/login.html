@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:te="http://www.seasar.org/teeda/extension">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+</head>
+<body>
+<!-- <img src="../../img/teeda.png" alt="Teeda"/> -->
+<hr/>
+<form id="loginForm">
+<div class="x">
+<span id="messages" class="err"/>
+<span class="m">※user/passwordにそれぞれteedaを入力してください</span>
+<br/>
+<fieldset class="loginfieldset" title="※user/passwordにそれぞれteedaを入力してください">
+<legend>Login</legend>
+<table>
+ <tr>
+  <td class="z">ユーザID</td>
+  <td class="v"><input type="text" id="user" maxlength="32" style="width: 100px;"/><label id="ユーザ名"/></td><td><span id="userMessage" class="err"/></td>
+ </tr>
+ <tr>
+  <td class="z">パスワード</td>
+  <td class="v"><input type="password" id="pass" te:redisplay="true" style="width: 100px;"/></td><td><span id="passMessage" class="err"/></td>
+ </tr>
+ <tr>
+  <td colspan="2" align="right"><input type="submit" id="doLogin" value=" ログイン " class="submit"/></td><td></td>
+ </tr>
+</table>
+</fieldset>
+</div>
+</form>
+<hr/>
+</body>
+</html>

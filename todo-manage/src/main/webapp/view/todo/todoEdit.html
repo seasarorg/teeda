@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ToDo更新画面</title>
+<link rel="stylesheet" type="text/css" href="../../css/global.css"/>
+</head>
+<body>
+<form id="TodoEditForm">
+<input type="hidden" id="crudType" />
+<input type="hidden" id="id-hidden" />
+<div class="x">
+<div>
+<span id="messages" class="err"/>
+</div>
+ようこそ【<span id="user" class="y"/>】さん
+<hr/>
+<fieldset class="editfieldset" title="Todoを編集します">
+<legend>▼Todo編集▼</legend>
+<table>
+ <tr>
+  <td class="z"><label id="todoTypeLabel"/></td>
+  <td class="v"><select id="todoTypeItems"/></td>
+  <td><span id="todoTypeMessage" class="err"></span></td>
+</tr>
+<tr>
+<td class="z"><label id="todoDetailLabel"/></td>
+<td class="v"><input type="text" id="todoDetail" size="60"/></td>
+<td><span id="todoDetailMessage" class="err"></span></td>
+</tr>
+<tr>
+<td class="z"><label id="todoStatusLabel"></label></td>
+<td class="v"><select id="todoStatusItems"/></td>
+<td><span id="todoStatusMessage" class="err"/></td>
+</tr>
+<tr>
+<td class="z"><label id="priorityLabel"></label></td>
+<td class="v"><select id="priorityItems"/></td>
+<td><span id="priorityMessage" class="err"></span></td>
+</tr>
+<tr>
+<td class="z"><label id="limitDateLabel"></label></td>
+<td class="v"><input type="text" id="limitDate" class="T_date"/></td>
+<td><span id="limitDateMessage" class="err"></span></td>
+</tr>
+</table>
+<input type="button" id="jumpTodoList" style="width: 80px;"
+  onclick="location.href='TodoList.html'" class="submit"/>
+<span id="foo" style="dummy">
+<input type="button" id="goTodoConfirm" class="submit" style="width: 80px;" onclick="location.href='todoConfirm.html'"/>
+</span>
+</fieldset>
+</div>
+<hr/>
+</form>
+</body>
+</html>

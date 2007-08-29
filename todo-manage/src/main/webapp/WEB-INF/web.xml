@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+
+<!--
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+-->
+
+<!DOCTYPE web-app PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <!--
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>
+            /WEB-INF/faces-config.xml
+        </param-value>
+        <description>
+            Comma separated list of URIs of (additional) faces config files.
+            (e.g. /WEB-INF/my-config.xml)
+            See JSF 1.0 PRD2, 10.3.2
+        </description>
+    </context-param>
+    -->
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+        <description>
+            State saving method: "client" or "server" (= default)
+            See JSF Specification 2.5.2
+        </description>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.html</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>encodingfilter</filter-name>
+        <filter-class>org.seasar.extension.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>s2filter</filter-name>
+        <filter-class>org.seasar.framework.container.filter.S2ContainerFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>hotdeployfilter</filter-name>
+        <filter-class>org.seasar.framework.container.hotdeploy.HotdeployFilter</filter-class>
+    </filter>
+    
+    <filter>
+        <filter-name>extensionfilter</filter-name>
+        <filter-class>org.seasar.teeda.extension.filter.ExtensionFilter</filter-class>
+    </filter>
+
+	<!--
+    <filter>
+        <filter-name>requestDumpFilter</filter-name>
+        <filter-class>org.seasar.teeda.core.filter.RequestDumpFilter</filter-class>
+    </filter>
+	-->
+
+    <filter-mapping>
+        <filter-name>encodingfilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>s2filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hotdeployfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <!--
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+         -->
+    </filter-mapping>
+
+	<!--
+    <filter-mapping>
+        <filter-name>requestDumpFilter</filter-name>
+        <url-pattern>/view/*</url-pattern>
+    </filter-mapping>
+	-->
+    
+    <filter-mapping>
+        <filter-name>extensionfilter</filter-name>
+        <url-pattern>/teedaExtension/*</url-pattern>
+    </filter-mapping>
+
+	<!--
+    <listener>
+        <listener-class>org.seasar.teeda.core.webapp.TeedaConfigureListener</listener-class>
+    </listener>
+	-->
+
+	<!-- Teeda initialize servlet -->
+    <servlet>
+        <servlet-name>teedaServlet</servlet-name>
+        <servlet-class>org.seasar.teeda.core.webapp.TeedaServlet</servlet-class>
+<!--    If you want to run teeda-html-example as Portlet, replace TeedaServlet with
+        TeedaPortletExtendedServlet and add S2Portlet and Portlet Filter.
+        S2Portlet: http://s2portlet.sandbox.seasar.org/
+        Portlet Filter: http://portals.apache.org/bridges/
+        <servlet-class>org.seasar.teeda.core.webapp.TeedaPortletExtendedServlet</servlet-class>
+-->
+        <init-param>
+        	<param-name>configPath</param-name>
+        	<param-value>app.dicon</param-value>
+    	</init-param>
+    	<init-param>
+        	<param-name>debug</param-name>
+        	<param-value>true</param-value>
+    	</init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- facesServlet -->
+    <servlet>
+        <servlet-name>facesServlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>org.seasar.teeda.ajax.AjaxServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>facesServlet</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>teedaServlet</servlet-name>
+        <url-pattern>/teedaServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>*.ajax</url-pattern>
+    </servlet-mapping>
+
+	<!--
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
+	-->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>

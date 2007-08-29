@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ToDo一覧</title>
+<link rel="stylesheet" type="text/css" href="../../css/global.css" />
+<script type="text/javascript">
+// <![CDATA[
+function confirmFunc(){
+  if(!confirm('選択されたToDoを削除します。\nよろしいですか？')){
+    return;
+  }
+}
+// ]]>
+</script>
+</head>
+<body>
+<form id="listForm">
+<input type="hidden" id="todoItemsSave"/>
+<input type="hidden" name="crudType"/>
+<div class="x">
+<span id="allMessages" class="err"/>
+ようこそ【<span id="user" class="y"/>】さん
+<input type="submit" id="doFinishLogout" value="ログアウト" class="logout"/>
+<hr/>
+<span class="t">▼Todo一覧▼</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="submit" id="doDownload" value="Todo一覧のCSV出力" class="submit"/>
+<table class="list" cellpadding="3">
+  <tr class="z">
+    <th>削除</th>
+    <th>種類</th>
+    <th>内容</th>
+    <th>状態</th>
+    <th>優先度</th>
+    <th>期限</th>
+    <th>編集</th>
+  </tr>
+  <div id="todoItems">
+  <tr id="row" style="y">
+    <td class="x" align="center"><input type="checkbox" id="delete"/></td>
+    <td class="x"><span id="typeVal">bbb</span></td>
+    <td class="x"><span id="todoDetail">ccc</span></td>
+    <td class="x"><span id="stateVal">ddd</span></td>
+    <td class="x" align="left"><img src="../../img/other.gif" id="priorityImg"/><span id="priorityVal">eee</span></td>
+    <td class="x" align="center"><span id="limitDate">fff</span></td>
+    <td class="x" align="center">
+      <a id="goTodoEdit" href="todoEdit.html?fixed_crudType=2&id=id" title="編集画面へ">編集</a>
+    </td>
+  </tr>
+  </div>
+  <tr>
+    <td><input type="submit" id="doDelete" value="削除" style="color :red;"/></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td align="right"><input type="submit" id="goTodoEdit" value="登録" class="submit" onclick="document.listForm.crudType.value='0';"/></td>
+  </tr>
+</table>
+<hr/>
+</div>
+</form>
+</body>
+</html>

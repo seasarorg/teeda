@@ -1,0 +1,107 @@
+.onTeedaError {
+	background-color: #FFCCCC;
+}
+
+.err {
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    color : red;
+    font-weight: bold;
+    white-space: nowrap; 
+}
+
+.t {
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 12pt;
+    font-weight: bold;
+    color: #00B359;
+}
+
+.x {
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    white-space: nowrap; 
+}
+
+.y {
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+.z {
+    height : 30px;
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    font-weight: bold;
+    color : white;
+    background-color: #00B359;
+    text-align : center;
+    white-space: nowrap; 
+}
+
+table.th {
+    white-space: nowrap; 
+}
+
+.v { 
+    background-color : #F2FFB7;
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    white-space: nowrap; 
+}
+
+.m {
+    color : green;
+    font-family : Osaka,"ＭＳ Ｐゴシック";
+    font-size: 11pt;
+    white-space: nowrap; 
+}
+
+.submit {
+    color: #005914;
+}
+
+.submit2 {
+    font-weight : bold;
+}
+
+.list {
+}
+hr { background-color : #00B359; color :#00B359; }
+
+a:link {color: #0000FF;}
+a:visited {color: #0000FF;}
+a:active {color: #0000FF;}
+a:hover {color: #FF0080; background-color: #FFD7FF;}
+
+
+.logout {
+    width : 70px;
+    height : 22px;
+    font-size : 12px;
+    font-weight : bold;
+    blue : red;
+    background-color : #C7FF8E;
+    color : #000000;
+}
+
+.loginfieldset {
+    border: 1px solid #CCC;
+    border-color: #00B359;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+.editfieldset {
+    border: 1px solid #CCC;
+    border-color: #00B359;
+    padding: 10px;
+    width: 360px;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #00B359;
+}

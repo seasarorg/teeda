@@ -1,0 +1,4 @@
+#Wed Aug 29 11:01:45 JST 2007
+baseDir=/todo-manage/src/main/webapp/WEB-INF/classes/data
+eclipse.preferences.version=1
+initDB=/todo-manage/src/main/resources/data

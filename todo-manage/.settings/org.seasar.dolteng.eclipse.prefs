@@ -1,0 +1,8 @@
+#Wed Aug 29 11:01:45 JST 2007
+DaoType=S2Dao
+DefaultResourcePath=/todo-manage/src/main/resources
+DefaultRootPackage=examples.todo
+DefaultSrcPath=/todo-manage/src/main/java
+ServletPath=/todo-manage
+WebContentsRoot=src/main/webapp/
+eclipse.preferences.version=1

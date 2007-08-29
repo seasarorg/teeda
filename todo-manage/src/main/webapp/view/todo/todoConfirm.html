@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ToDo確認画面</title>
+<link rel="stylesheet" type="text/css" href="../../css/global.css"/>
+</head>
+<body>
+<form id="TodoConfirmForm">
+<div class="x">
+<input type="hidden" id="crudType" />
+<input type="hidden" id="id-hidden" />
+<div>
+<span id="messages"/>
+</div>
+ようこそ【<span id="user" class="y"/>】さん
+<hr/>
+<fieldset class="editfieldset" title="Todoを確認します">
+<legend>▼Todo確認▼</legend>
+<table>
+<tr>
+    <td class="z"><label id="todoTypeLabel"></label></td>
+	<td class="v"><span id="typeVal">todoType</span><input type="hidden" id="todoType-hidden" /></td>
+	<td><span id="todoTypeMessage" class="err"></span></td>
+</tr>
+<tr>
+    <td class="z"><label id="todoDetailLabel"></label></td>
+	<td class="v"><span id="todoDetail">todoDetail</span><input type="hidden" id="todoDetail-hidden" /></td>
+	<td><span id="todoDetailMessage" class="err"></span></td>
+</tr>
+<tr>
+    <td class="z"><label id="todoStatusLabel"></label></td>
+	<td class="v"><span id="stateVal">todoStatus</span><input type="hidden" id="todoStatus-hidden" /></td>
+	<td><span id="todoStatusMessage" class="err"></span></td>
+</tr>
+<tr>
+    <td class="z"><label id="priorityLabel"></label></td>
+	<td class="v"><img src="../../img/other.gif" id="priorityImg" alt="dummy"/><span id="priorityVal">priority</span><input type="hidden" id="priority-hidden" /></td>
+	<td><span id="priorityMessage" class="err"></span></td>
+</tr>
+<tr>
+    <td class="z"><label id="limitDateLabel"></label></td>
+	<td class="v"><span id="limitDate">limitDate</span><input type="hidden" id="limitDate-hidden" /></td>
+	<td><span id="limitDateMessage" class="err"></span></td>
+</tr>
+</table>
+<input type="button" id="jumpTodoEdit" value="Previous"
+  onclick="location.href='todoEdit.html'" class="submit"/>
+<input type="button" id="doFinishUpdate" value="Finish" class="submit" onclick="location.href='todoList.html'" />
+</fieldset>
+</div>
+<hr/>
+</form>
+</body>
+</html>
