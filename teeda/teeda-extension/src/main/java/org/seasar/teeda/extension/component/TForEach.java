@@ -337,6 +337,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         } else if (itemType == Calendar.class) {
             final Locale locale = context.getViewRoot().getLocale();
             return Calendar.getInstance(locale);
+        } else if (itemType.isArray()) {
+            Class cType = itemType.getComponentType();
+            return Array.newInstance(cType, rowSize);
         } else {
             o = ClassUtil.newInstance(itemType);
             return o;
