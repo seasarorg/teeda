@@ -60,7 +60,4 @@ public class AddPage {
 		return false;
 	}
 
-	public String getLayout() {
-		return null;
-	}
 }
