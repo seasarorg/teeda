@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -34,7 +34,7 @@ public class ByteConverterTest extends AbstractConverterTestCase {
         Byte b = (Byte) o;
         assertEquals(Byte.parseByte(value), b.byteValue());
     }
-    
+
     public void testGetAsObject_convertFail() throws Exception {
         Converter converter = createConverter();
         MockUIComponent component = new MockUIComponent();
@@ -59,7 +59,7 @@ public class ByteConverterTest extends AbstractConverterTestCase {
         String str = converter.getAsString(context, component, value);
         assertEquals(Byte.parseByte(value), Byte.parseByte(str));
     }
-    
+
     public void testGetAsString_convertFail() {
         Converter converter = createConverter();
         MockUIComponent component = new MockUIComponent();
@@ -81,7 +81,7 @@ public class ByteConverterTest extends AbstractConverterTestCase {
         return createByteConverter();
     }
 
-    private ByteConverter createByteConverter() {
+    protected ByteConverter createByteConverter() {
         return new ByteConverter();
     }
 

@@ -36,7 +36,7 @@ public class TextareaSeparatorCharacterConverter extends CharacterConverter
         if (StringUtil.isEmpty(value)) {
             return null;
         }
-        if (!isTargetCommandConvert(context, targets)) {
+        if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
             return null;
         }
         return value;
@@ -85,7 +85,7 @@ public class TextareaSeparatorCharacterConverter extends CharacterConverter
         values[0] = target;
         values[1] = objectMessageId;
         values[2] = stringMessageId;
-        return null;
+        return values;
     }
 
     public void setTransient(boolean transientValue) {

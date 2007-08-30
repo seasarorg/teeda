@@ -40,7 +40,7 @@ public class TNumberConverter extends NumberConverter implements
 
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
-        if (!isTargetCommandConvert(context, targets)) {
+        if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
             return null;
         }
         return super.getAsObject(context, component, value);

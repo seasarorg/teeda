@@ -19,9 +19,32 @@ import java.math.BigDecimal;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockUIComponent;
+import org.seasar.teeda.core.mock.MockUIInput;
 import org.seasar.teeda.core.unit.TeedaTestCase;
 
 public class TBigDecimalConverterTest extends TeedaTestCase {
+
+    public void testGetAsObject_convertSuccess() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        String value = "123000000000";
+        Object o = converter.getAsObject(getFacesContext(),
+                new MockUIComponent(), value);
+        assertTrue(o instanceof BigDecimal);
+        BigDecimal b = (BigDecimal) o;
+        assertEquals(Long.valueOf(value).longValue(), b.longValue());
+    }
+
+    public void testGetAsObject_notTargeted() throws Exception {
+        TBigDecimalConverter converter = new TBigDecimalConverter();
+        String value = "123000000000";
+        converter.setTarget("aaa");
+        getFacesContext().getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "bbb");
+        MockUIInput mockUIInput = new MockUIInput();
+        Object o = converter.getAsObject(getFacesContext(), mockUIInput, value);
+        assertNull(o);
+        assertFalse(mockUIInput.isValid());
+    }
 
     public void testGetAsString() throws Exception {
         TBigDecimalConverter converter = new TBigDecimalConverter();

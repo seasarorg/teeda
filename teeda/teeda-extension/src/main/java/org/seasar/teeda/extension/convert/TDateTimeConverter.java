@@ -61,7 +61,7 @@ public class TDateTimeConverter extends DateTimeConverter implements
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         Date date = null;
-        if (!isTargetCommandConvert(context, targets)) {
+        if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
             return null;
         }
         try {

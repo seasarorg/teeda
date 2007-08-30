@@ -15,36 +15,27 @@
  */
 package org.seasar.teeda.extension.convert;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.ConverterException;
 
 /**
- * @author yone
  * @author shot
+ * just a workaround class for target and UIInput.setValid(false).
+ * see https://www.seasar.org/issues/browse/TEEDA-352
  */
-public class TTimestampConverter extends TDateTimeConverter implements
-        ConvertTargetSelectable {
+public class ConverterHelper {
 
-    public Object getAsObject(FacesContext context, UIComponent component,
-            String value) throws ConverterException {
-        if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
-            return null;
+    public static boolean isTargetCommand(final FacesContext context,
+            final UIComponent component, final String[] targets,
+            final ConvertTargetSelectable convertTarget) {
+        final boolean ret = convertTarget.isTargetCommandConvert(context,
+                targets);
+        if (!ret) {
+            if (component instanceof UIInput) {
+                ((UIInput) component).setValid(false);
+            }
         }
-        Date date = null;
-        try {
-            date = (Date) super.getAsObject(context, component, value);
-        } catch (ConverterException e) {
-            throw e;
-        }
-        if (date == null) {
-            return null;
-        }
-        Timestamp timeStamp = new Timestamp(date.getTime());
-        return timeStamp;
+        return ret;
     }
-
 }

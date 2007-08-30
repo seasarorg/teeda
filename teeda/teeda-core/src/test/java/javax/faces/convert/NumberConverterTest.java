@@ -107,7 +107,7 @@ public class NumberConverterTest extends AbstractConverterTestCase {
         return createNumberConverter();
     }
 
-    private NumberConverter createNumberConverter() {
+    protected NumberConverter createNumberConverter() {
         return new NumberConverter();
     }
 }

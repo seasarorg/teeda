@@ -16,21 +16,40 @@
 package org.seasar.teeda.extension.convert;
 
 import javax.faces.component.StateHolder;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.DoubleConverter;
 
+import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 /**
  * @author shot
  */
-public class TDoubleConverter extends DoubleConverter implements StateHolder {
+public class TDoubleConverter extends DoubleConverter implements StateHolder,
+        ConvertTargetSelectable {
 
     protected String objectMessageId;
 
     protected String stringMessageId;
 
     protected boolean transientValue = false;
+
+    protected String target;
+
+    protected String[] targets;
+
+    public Object getAsObject(FacesContext context, UIComponent component,
+            String value) throws ConverterException {
+        AssertionUtil.assertNotNull("FacesContext", context);
+        AssertionUtil.assertNotNull("UIComponent", component);
+        if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
+            return null;
+        }
+        return super.getAsObject(context, component, value);
+    }
 
     /**
      * @return Returns the objectMessageId.
@@ -70,17 +89,36 @@ public class TDoubleConverter extends DoubleConverter implements StateHolder {
         Object[] values = (Object[]) state;
         objectMessageId = (String) values[0];
         stringMessageId = (String) values[1];
+        target = (String) values[2];
+        setTarget(target);
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[2];
+        Object[] values = new Object[3];
         values[0] = objectMessageId;
         values[1] = stringMessageId;
-        return null;
+        values[2] = target;
+        return values;
     }
 
     public void setTransient(boolean transientValue) {
         this.transientValue = transientValue;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+        if (StringUtil.isEmpty(target)) {
+            return;
+        }
+        targets = StringUtil.split(target, ", ");
+    }
+
+    public boolean isTargetCommandConvert(FacesContext context, String[] targets) {
+        return TargetCommandUtil.isTargetCommand(context, targets);
     }
 
 }
