@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,10 +17,11 @@ package examples.teeda.web.now;
 
 import java.util.Date;
 
+import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
+
 public class NowPage {
 
-	public static final String now_TDateTimeConverter = "pattern='yy/MM/dd', threshold=69";
-
+	@DateTimeConverter(pattern = "yy/MM/dd", threshold = 69, target = "doCalculate")
 	private Date now;
 
 	public Date getNow() {
@@ -39,4 +40,11 @@ public class NowPage {
 		return null;
 	}
 
+	public String doCalculate2() {
+		return null;
+	}
+
+	public String getLayout() {
+		return null;
+	}
 }
