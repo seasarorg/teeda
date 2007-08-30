@@ -32,4 +32,6 @@ public @interface ByteConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

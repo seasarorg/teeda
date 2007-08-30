@@ -32,4 +32,6 @@ public @interface FloatConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

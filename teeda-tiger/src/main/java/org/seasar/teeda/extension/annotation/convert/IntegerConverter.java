@@ -32,4 +32,6 @@ public @interface IntegerConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

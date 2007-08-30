@@ -32,4 +32,6 @@ public @interface ShortConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

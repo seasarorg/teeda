@@ -32,4 +32,6 @@ public @interface BooleanConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

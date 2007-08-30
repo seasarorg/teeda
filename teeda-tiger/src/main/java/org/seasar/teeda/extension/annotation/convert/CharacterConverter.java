@@ -32,4 +32,6 @@ public @interface CharacterConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

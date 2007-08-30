@@ -32,4 +32,6 @@ public @interface BigIntegerConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }

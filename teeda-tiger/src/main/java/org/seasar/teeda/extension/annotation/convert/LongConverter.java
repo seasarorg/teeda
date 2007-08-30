@@ -32,4 +32,6 @@ public @interface LongConverter {
 
 	String stringMessageId() default "";
 
+	String target() default "";
+
 }
