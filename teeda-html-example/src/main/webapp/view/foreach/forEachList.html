@@ -8,8 +8,9 @@
 <script type="text/javascript">
 function setIndex(name) {
   var hidden = name.substring(0, name.lastIndexOf(':'));
-  var f = document.forEachListForm;
-  f.clickIndex.value = f[hidden + ':aaaIndex-x'].value;
+  var f = document['layoutChildBody:forEachListForm'];
+  f.clickIndex.value = Number(f[hidden + ':aaaIndex-x'].value) + 1;
+  alert(f.clickIndex.value);
 }
 </script>
 </head>
