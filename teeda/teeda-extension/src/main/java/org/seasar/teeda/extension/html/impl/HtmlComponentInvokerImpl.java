@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -139,7 +140,7 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("methodName", methodName);
         if (INITIALIZE.equals(methodName)) {
-            setInitialized(context, true);
+            setInitialized(context, componentName, true);
         }
         if (componentName == null) {
             return null;
@@ -189,18 +190,32 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         return next;
     }
 
-    public boolean isInitialized(FacesContext context) {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        Boolean initialized = (Boolean) requestMap.get(getClass().getName());
-        if (initialized == null) {
+    public boolean isInitialized(final FacesContext context,
+            final String componentName) {
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        final String name = getClass().getName();
+        Map map = (Map) requestMap.get(name);
+        if (map == null) {
+            requestMap.put(name, new HashMap());
             return false;
         }
-        return initialized.booleanValue();
+        if (map.containsKey(componentName)) {
+            Boolean b = (Boolean) map.get(componentName);
+            return (b != null) ? b.booleanValue() : false;
+        }
+        return false;
     }
 
-    protected void setInitialized(FacesContext context, boolean initialized) {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        requestMap.put(getClass().getName(), Boolean.valueOf(initialized));
+    protected void setInitialized(final FacesContext context,
+            final String componentName, final boolean initialized) {
+        final Map requestMap = context.getExternalContext().getRequestMap();
+        final String name = getClass().getName();
+        Map map = (Map) requestMap.get(name);
+        if (map == null) {
+            map = new HashMap();
+        }
+        map.put(componentName, Boolean.valueOf(initialized));
+        requestMap.put(name, map);
     }
 
     protected String getNextPageTransition(Class toPageClass) {

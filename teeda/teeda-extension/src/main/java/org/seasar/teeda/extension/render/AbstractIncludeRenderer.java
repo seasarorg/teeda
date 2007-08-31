@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -113,18 +113,18 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer {
             AbstractInclude component);
 
     protected void invoke(FacesContext context, String includedViewId) {
-        if (htmlComponentInvoker.isInitialized(context)) {
-            String componentName = htmlComponentInvoker.getComponentName(
-                    includedViewId, HtmlComponentInvoker.INITIALIZE);
-            if (componentName != null) {
+        String componentName = htmlComponentInvoker.getComponentName(
+                includedViewId, HtmlComponentInvoker.INITIALIZE);
+        if (componentName != null) {
+            if (!htmlComponentInvoker.isInitialized(context, componentName)) {
                 htmlComponentInvoker.invokeInitialize(context, componentName);
             }
         }
         if (context.getResponseComplete()) {
             return;
         }
-        String componentName = htmlComponentInvoker.getComponentName(
-                includedViewId, HtmlComponentInvoker.PRERENDER);
+        componentName = htmlComponentInvoker.getComponentName(includedViewId,
+                HtmlComponentInvoker.PRERENDER);
         if (componentName != null) {
             htmlComponentInvoker.invokePrerender(context, componentName);
         }

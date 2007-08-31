@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,7 +24,7 @@ import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
  * @author higa
- * 
+ *
  */
 public class HtmlComponentInvokerImplTest extends TeedaExtensionTestCase {
 
@@ -47,7 +47,7 @@ public class HtmlComponentInvokerImplTest extends TeedaExtensionTestCase {
         createPageDesc(BbbPage.class, "aaa_bbb");
         invoker.invoke(getFacesContext(), "aaa_bbb",
                 HtmlComponentInvoker.INITIALIZE);
-        assertTrue(invoker.isInitialized(getFacesContext()));
+        assertTrue(invoker.isInitialized(getFacesContext(), "aaa_bbb"));
         BbbPage bbbPage = (BbbPage) getComponent(BbbPage.class);
         assertTrue(bbbPage.isInitialized());
     }

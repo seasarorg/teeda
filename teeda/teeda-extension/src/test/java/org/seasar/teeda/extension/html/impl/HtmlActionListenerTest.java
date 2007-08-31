@@ -105,7 +105,8 @@ public class HtmlActionListenerTest extends TeedaTestCase {
                     return null;
                 }
 
-                public boolean isInitialized(FacesContext context) {
+                public boolean isInitialized(FacesContext context,
+                        String componentName) {
                     return false;
                 }
 

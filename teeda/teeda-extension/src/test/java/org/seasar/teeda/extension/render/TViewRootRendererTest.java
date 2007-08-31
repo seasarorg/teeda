@@ -86,7 +86,8 @@ public class TViewRootRendererTest extends TeedaTestCase {
                         HtmlComponentInvoker.PRERENDER);
             }
 
-            public boolean isInitialized(FacesContext context) {
+            public boolean isInitialized(FacesContext context,
+                    String componentName) {
                 return false;
             }
 
@@ -129,7 +130,8 @@ public class TViewRootRendererTest extends TeedaTestCase {
                         HtmlComponentInvoker.PRERENDER);
             }
 
-            public boolean isInitialized(FacesContext context) {
+            public boolean isInitialized(FacesContext context,
+                    String componentName) {
                 return false;
             }
 
@@ -173,7 +175,8 @@ public class TViewRootRendererTest extends TeedaTestCase {
                         HtmlComponentInvoker.PRERENDER);
             }
 
-            public boolean isInitialized(FacesContext context) {
+            public boolean isInitialized(FacesContext context,
+                    String componentName) {
                 return false;
             }
 

@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author higa
- * 
+ * @author shot
  */
 public interface HtmlComponentInvoker {
 
@@ -27,13 +27,16 @@ public interface HtmlComponentInvoker {
 
     String PRERENDER = "prerender";
 
-    String invoke(FacesContext context, String componentName, String methodName);
+    String invoke(final FacesContext context, final String componentName,
+            final String methodName);
 
-    String invokeInitialize(FacesContext context, String componentName);
+    String invokeInitialize(final FacesContext context,
+            final String componentName);
 
-    String invokePrerender(FacesContext context, String componentName);
+    String invokePrerender(final FacesContext context,
+            final String componentName);
 
-    boolean isInitialized(FacesContext context);
+    boolean isInitialized(final FacesContext context, final String componentName);
 
-    String getComponentName(String path, String methodName);
+    String getComponentName(final String path, final String methodName);
 }
