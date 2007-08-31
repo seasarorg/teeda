@@ -68,11 +68,11 @@ public class TForEachRenderer extends AbstractRenderer {
         final Object[] items = forEach.getItems(context);
         final int rowSize = (items != null) ? items.length : 0;
 
+        /**
+         * TEEDA-305(Seasar-user:7347)
+         */
         Map result = Collections.EMPTY_MAP;
         if (rowSize > 0) {
-            /**
-             * TEEDA-305
-             */
             result = extractProperties(forEach, pageBeanDesc, page);
         }
         /*
@@ -156,9 +156,9 @@ public class TForEachRenderer extends AbstractRenderer {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (propertyName.equals(itemsName) ||
-                    propertyName.equals(indexName) || !pd.isReadable() ||
-                    !pd.isWritable()) {
+            if (propertyName.equals(itemsName)
+                    || propertyName.equals(indexName) || !pd.isReadable()
+                    || !pd.isWritable()) {
                 continue;
             }
             final Object value = pd.getValue(page);

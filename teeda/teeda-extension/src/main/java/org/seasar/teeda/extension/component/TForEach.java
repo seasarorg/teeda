@@ -55,6 +55,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 /**
  * @author higa
  * @author manhole
+ * @author shot
  */
 public class TForEach extends UIComponentBase implements NamingContainer,
         ComponentStatesHolder {
@@ -174,11 +175,14 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
         final Object page = getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        if (beanDesc.hasPropertyDesc(getItemName())) {
-            final PropertyDesc itemPd = beanDesc.getPropertyDesc(getItemName());
-            final Class itemType = itemPd.getPropertyType();
-            final Object item = createNewInstance(context, itemType);
-            itemPd.setValue(page, item);
+        final String itemName = getItemName();
+        if (beanDesc.hasPropertyDesc(itemName)) {
+            final PropertyDesc itemPd = beanDesc.getPropertyDesc(itemName);
+            if (itemPd.isWritable()) {
+                final Class itemType = itemPd.getPropertyType();
+                final Object item = createNewInstance(context, itemType);
+                itemPd.setValue(page, item);
+            }
         }
         final String pageName = getPageName();
         final String id = this.getId();
@@ -356,6 +360,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         final Object page = getPage(context);
         final Class pageClass = page.getClass();
         Object pageClone = null;
+
+        // TEEDA-305(Seasar-user:7347)
         boolean hasDefaultConstructor = org.seasar.teeda.core.util.ConstructorUtil
                 .hasDefaultConstructor(pageClass);
         if (hasDefaultConstructor) {
@@ -387,7 +393,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             }
         }
         final String itemName = getItemName();
-        if (pageBeanDesc.hasPropertyDesc(itemName)) {
+        //Simple case like String[].
+        if (isSimpleItem(itemName, pageBeanDesc)) {
             final PropertyDesc itemPd = pageBeanDesc.getPropertyDesc(itemName);
             for (int i = 0; i < rowSize; ++i) {
                 setRowIndex(i);
@@ -396,7 +403,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 super.processUpdates(context);
                 leaveRow(context);
             }
-        } else {
+        }
+        //Dto case like HogeDto[].
+        else {
             final BeanDesc itemBeanDesc = BeanDescFactory
                     .getBeanDesc(itemClass);
             for (int i = 0; i < rowSize; ++i) {
@@ -407,6 +416,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 leaveRow(context);
                 pageToItem(page, pageBeanDesc, item, itemBeanDesc);
             }
+
+            //TEEDA-305(Seasar-user:7347)
             if (hasDefaultConstructor) {
                 for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
                     final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
@@ -416,11 +427,19 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                     }
                     final PropertyDesc pagePd = pageBeanDesc
                             .getPropertyDesc(propertyName);
-                    pagePd.setValue(page, pagePd.getValue(pageClone));
+                    if (pagePd.isWritable()) {
+                        final Object value = pagePd.getValue(pageClone);
+                        pagePd.setValue(page, value);
+                    }
                 }
             }
         }
         itemsPd.setValue(page, items);
+    }
+
+    private static boolean isSimpleItem(final String itemName,
+            final BeanDesc pageBeanDesc) {
+        return pageBeanDesc.hasPropertyDesc(itemName);
     }
 
     private void pageToItem(final Object page, final BeanDesc pageBeanDesc,
@@ -435,7 +454,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                     .getPropertyDesc(propertyName);
             final Object pageValue = pagePd.getValue(page);
             // https://www.seasar.org/issues/browse/TEEDA-149
-            itemPd.setValue(item, pageValue);
+            if (pagePd.isWritable()) {
+                itemPd.setValue(item, pageValue);
+            }
         }
     }
 
