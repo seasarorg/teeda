@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,10 +18,6 @@ package examples.teeda.web.hello;
 public class HelloPage {
 
 	private String name = "Seasar2";
-
-	public String getLayout() {
-		return "/layout/layout2.html";
-	}
 
 	public String getName() {
 		return name;
@@ -43,5 +39,9 @@ public class HelloPage {
 
 	public String getAaaTitleText() {
 		return "AAA";
+	}
+
+	public String getLayout() {
+		return null;
 	}
 }

@@ -7,7 +7,7 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config>
-	
+
     <application>
     	<message-bundle>appMessages</message-bundle>
     	<locale-config>
@@ -15,5 +15,14 @@
         	<supported-locale>ja</supported-locale>
     	</locale-config>
 	</application>
-	
+
+	<render-kit>
+		<renderer>
+			<component-family>javax.faces.Output</component-family>
+			<renderer-type>org.seasar.teeda.extension.HtmlOutputText</renderer-type>
+			<renderer-class>
+				examples.teeda.render.HogeOutputRenderer
+			</renderer-class>
+		</renderer>
+	</render-kit>
 </faces-config>
