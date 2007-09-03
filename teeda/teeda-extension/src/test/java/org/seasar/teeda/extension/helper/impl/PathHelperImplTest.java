@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,7 +23,7 @@ import org.seasar.teeda.extension.helper.impl.web.aaa.CccPage;
 
 /**
  * @author higa
- * 
+ *
  */
 public class PathHelperImplTest extends TestCase {
 
@@ -47,6 +47,7 @@ public class PathHelperImplTest extends TestCase {
 
     public void testFromPageClassToViewRootRelativePath() throws Exception {
         NamingConventionImpl nc = new NamingConventionImpl();
+        nc.addRootPackageName("org.seasar.teeda.extension.helper.impl");
         nc.setViewRootPath("/view");
         PathHelperImpl pathHelper = new PathHelperImpl();
         pathHelper.setNamingConvention(nc);

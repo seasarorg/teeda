@@ -46,6 +46,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.PortletUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
@@ -114,6 +115,14 @@ public class SessionPagePersistence implements PagePersistence {
                 .getRedirectScopeValues(context);
         if (redirectValues != null) {
             restoreValues(redirectValues, requestMap);
+        }
+        //TEEDA-358 : if postback and there is no input but @PageScope
+        if (PostbackUtil.isPostback(requestMap)) {
+            final Map pageScopeValues = ScopeValueHelper
+                    .getPageScopeValues(context);
+            if (pageScopeValues != null) {
+                restoreValues(pageScopeValues, requestMap);
+            }
         }
         TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
     }
