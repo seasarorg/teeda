@@ -29,7 +29,6 @@ import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.ValueBindingUtil;
 import javax.faces.internal.WebAppUtil;
 import javax.faces.webapp.UIComponentTag;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,7 +37,6 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.jstl.core.Config;
 
 import org.seasar.framework.util.AssertionUtil;
-import org.seasar.framework.util.LocaleUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.ContentTypeUtil;
 
@@ -138,16 +136,42 @@ public class TViewTag extends UIComponentTag {
         return rc;
     }
 
+    /*
+     * Teeda Extensionの場合、Localeは既にセットされるので、デフォルトを取得する必要は無い.
+     */
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         final String localeStr = getLocale();
-        FacesContext context = FacesContext.getCurrentInstance();
-        Locale locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
-        if (locale == null) {
-            locale = LocaleUtil.getLocale(localeStr);
+        Locale locale = null;
+        if(localeStr != null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
+            if (locale == null) {
+                locale = findLocale(localeStr);
+            }
+            if(locale != null) {
+                ((UIViewRoot) component).setLocale(locale);
+            }
+        } else {
+            locale = ((UIViewRoot) component).getLocale();
         }
-        ((UIViewRoot) component).setLocale(locale);
         Config.set(pageContext.getRequest(), Config.FMT_LOCALE, locale);
+    }
+
+    public static Locale findLocale(String localeStr) {
+        if (localeStr == null) {
+            return null;
+        }
+        Locale locale = null;
+        int index = localeStr.indexOf('_');
+        if (index < 0) {
+            locale = new Locale(localeStr);
+        } else {
+            String language = localeStr.substring(0, index);
+            String country = localeStr.substring(index + 1);
+            locale = new Locale(language, country);
+        }
+        return locale;
     }
 
 }
