@@ -182,7 +182,7 @@ Function.prototype.registEventToElement = function(element, scope){
   }
   var arr = Kumu.separate(ret);
   var callback = this.bindScopeAsEventListener(scope, element);
-   Kumu.Event.addEvent(element, arr[0], callback, false);
+  Kumu.Event.addEvent(element, arr[0], callback, false);
 }
 
 Function.prototype.registEvent = function(scope){
@@ -196,17 +196,18 @@ Function.prototype.registEvent = function(scope){
     ret = this.getName();
   }
   var arr = Kumu.separate(ret);
-  var callback = this.bindScopeAsEventListener(scope, arr[1]);
-  Kumu.Event.addEvent(arr[1],  arr[0], callback, false);
+  var target = (arr[1] == 'window') ? window : arr[1];
+  var callback = this.bindScopeAsEventListener(scope, target);  
+  Kumu.Event.addEvent(target,  arr[0], callback, false);
 }
 
 Function.prototype.registOnLoad = function(scope){
-  this.__name = 'window_load';
+  this.__name = 'load_window';
   this.registEvent(scope);
 }
 
 Function.prototype.registOnUnLoad = function(scope){
-  this.__name = 'window_unload';
+  this.__name = 'unload_window';
   this.registEvent(scope);
 }
 
