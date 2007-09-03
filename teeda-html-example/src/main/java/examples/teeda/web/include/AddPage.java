@@ -23,10 +23,12 @@ public class AddPage {
 	}
 
 	public Class initialize() {
+		System.out.println("add init");
 		return null;
 	}
 
 	public Class prerender() {
+		System.out.println("add prerender");
 		return null;
 	}
 

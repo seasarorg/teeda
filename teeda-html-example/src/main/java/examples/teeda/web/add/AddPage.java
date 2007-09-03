@@ -27,6 +27,14 @@ public class AddPage {
 
 	private int result;
 
+	public void initialize() {
+		System.out.println("add init");
+	}
+
+	public void prerender() {
+		System.out.println("add prerender");
+	}
+
 	public int getArg1() {
 		return arg1;
 	}

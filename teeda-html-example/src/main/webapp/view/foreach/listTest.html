@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:te="http://www.seasar.org/teeda/extension"
+ xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>検索のテスト</title>
+
+</head>
+<body>
+<form id="Form">
+
+<!-- 検索条件 -->
+<input id="inCustomerCd" class="ime-off" size="8" maxlength="8" />
+<br/>
+<input type="submit" id="doSearch" value="Search"/>
+<br/>
+
+<table width="430px" border="1">
+  <tbody id="listItems" >
+    <tr style="">
+      <!-- コード -->
+      <td class="data-left" width="100">
+        <span id="custCd">a</span>
+        <input type="hidden" id ="custCd-hidden"/>
+      </td>
+
+      <!-- 名称 -->
+      <td class="data-left" >
+        <span id="customerNm">b</span>
+        <input type="hidden" id ="customerNm-hidden"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</form>
+</body></html>

@@ -22,10 +22,12 @@ public class Teeda313Page {
 	}
 
 	public Class initialize() {
+		System.out.println("teeda313 init");
 		return null;
 	}
 
 	public Class prerender() {
+		System.out.println("teeda313 prerender");
 		return null;
 	}
 
