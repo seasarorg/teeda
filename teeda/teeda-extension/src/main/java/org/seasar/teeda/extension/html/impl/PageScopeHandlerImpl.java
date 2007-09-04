@@ -68,7 +68,9 @@ public class PageScopeHandlerImpl implements PageScopeHandler {
                     changed = true;
                     continue;
                 }
-                propertyDesc.setValue(page, scopeValue);
+                if(propertyDesc.isWritable()) {
+                    propertyDesc.setValue(page, scopeValue);
+                }
             }
         }
         return changed;
@@ -102,7 +104,10 @@ public class PageScopeHandlerImpl implements PageScopeHandler {
                 }
                 PropertyDesc propertyDesc = beanDesc
                         .getPropertyDesc(propertyName);
-                pageScopeValues.put(propertyName, propertyDesc.getValue(page));
+                if(propertyDesc.isReadable()) {
+                    final Object value = propertyDesc.getValue(page);
+                    pageScopeValues.put(propertyName, value);
+                }
             }
         }
         return true;

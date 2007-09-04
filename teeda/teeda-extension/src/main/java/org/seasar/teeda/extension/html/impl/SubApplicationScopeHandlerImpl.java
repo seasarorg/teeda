@@ -58,8 +58,10 @@ public class SubApplicationScopeHandlerImpl implements
             if (beanDesc.hasPropertyDesc(propertyName)) {
                 final PropertyDesc propertyDesc = beanDesc
                         .getPropertyDesc(propertyName);
-                final Object value = propertyDesc.getValue(component);
-                scopeContext.put(propertyName, value);
+                if(propertyDesc.isReadable()) {
+                    final Object value = propertyDesc.getValue(component);
+                    scopeContext.put(propertyName, value);
+                }
             }
         }
     }
