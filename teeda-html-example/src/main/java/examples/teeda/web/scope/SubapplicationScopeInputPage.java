@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,9 +23,9 @@ import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;
 public class SubapplicationScopeInputPage {
 
 	@SubapplicationScope
-	private String message1 = "hogehogehoge";
+	private String message1 = null;
 
-	private String message2 = "mogemogemoge";
+	private String message2 = null;
 
 	public String getMessage1() {
 		return message1;
@@ -51,6 +51,8 @@ public class SubapplicationScopeInputPage {
 	 * @return
 	 */
 	public Class initialize() {
+		message1 = "hogehogehoge";
+		message2 = "mogemogemoge";
 		return null;
 	}
 
@@ -61,4 +63,7 @@ public class SubapplicationScopeInputPage {
 		return null;
 	}
 
+	public String getLayout() {
+		return null;
+	}
 }

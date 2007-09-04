@@ -1,7 +1,8 @@
-#Thu Feb 22 13:22:11 JST 2007
+#Mon Sep 03 15:26:33 JST 2007
 eclipse.preferences.version=1
 encoding//src/main/resources/appMessages_ja.properties=UTF-8
 encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/main/webapp/view/a.html=UTF-8
 encoding//src/main/webapp/view/tree/tree3Input.html=UTF-8
 encoding//src/main/webapp/view/tree/tree3Result.html=UTF-8
 encoding/<project>=UTF-8

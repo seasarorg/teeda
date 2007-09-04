@@ -1,0 +1,23 @@
+<html>
+<head>
+<script type="text/javascript">
+<!--
+function go(url) {
+  if(location.href.indexOf("inited=true") == -1){
+    if(location.href.indexOf("?") != -1){
+      url = location.href + "&inited=true";
+    } else {
+      url = location.href + "?inited=true";
+    }
+    window.open(url, "w1", "scrollbars=1, width=780, height=480");
+    window.opener=self;
+    window.close();
+  }
+}
+//-->
+</script>
+</head>
+<body onload="go('a.html')">
+<span id="aaa">hohoho</span>
+</body>
+</html>

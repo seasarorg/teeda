@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -32,7 +32,8 @@ public class SubapplicationScopeResultPage {
 	}
 
 	/**
-	 * @param message1 the message1 to set
+	 * @param message1
+	 *            the message1 to set
 	 */
 	public void setMessage1(String message1) {
 		this.message1 = message1;
@@ -46,7 +47,8 @@ public class SubapplicationScopeResultPage {
 	}
 
 	/**
-	 * @param message2 the message2 to set
+	 * @param message2
+	 *            the message2 to set
 	 */
 	public void setMessage2(String message2) {
 		this.message2 = message2;
@@ -65,6 +67,10 @@ public class SubapplicationScopeResultPage {
 	public Class prerender() {
 		System.out.println(message1);
 		System.out.println(message2);
+		return null;
+	}
+
+	public String getLayout() {
 		return null;
 	}
 

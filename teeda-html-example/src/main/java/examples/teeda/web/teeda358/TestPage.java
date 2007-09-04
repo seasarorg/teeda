@@ -17,13 +17,17 @@ public class TestPage {
 	}
 
 	public Class prerender() {
-		System.out.println("prerender pageFiled=" + pageField);
+		// System.out.println("prerender pageFiled=" + pageField);
 		System.out.println("prerender subAppField=" + subAppField);
 		return null;
 	}
 
 	public void doUpdate() {
-		System.out.println("doUpdate pageFiled=" + pageField);
+		// System.out.println("doUpdate pageFiled=" + pageField);
 		System.out.println("doUpdate subAppField=" + subAppField);
+	}
+
+	public String getLayout() {
+		return null;
 	}
 }
