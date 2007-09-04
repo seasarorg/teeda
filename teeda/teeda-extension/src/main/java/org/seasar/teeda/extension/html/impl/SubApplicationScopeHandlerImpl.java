@@ -40,23 +40,26 @@ public class SubApplicationScopeHandlerImpl implements
         final Object page = DIContainerUtil.getComponent(pageName);
         final Map subApplicationScopeValues = ScopeValueHelper
                 .getOrCreateSubApplicationScopeValues(context);
-        saveValueToScope(page, subApplicationScopeValues, pageDesc
-                .getSubapplicationScopePropertyNames());
+        final String[] propertyNames = pageDesc
+                .getSubapplicationScopePropertyNames();
+        saveValueToScope(page, subApplicationScopeValues, propertyNames);
         return true;
     }
 
-    protected void saveValueToScope(Object page, Map scopeContext,
+    protected void saveValueToScope(Object component, Map scopeContext,
             String[] scopePropertyNames) {
-        if (page == null) {
+        if (component == null) {
             return;
         }
-        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(component
+                .getClass());
         for (int i = 0; i < scopePropertyNames.length; i++) {
-            String propertyName = scopePropertyNames[i];
+            final String propertyName = scopePropertyNames[i];
             if (beanDesc.hasPropertyDesc(propertyName)) {
-                PropertyDesc propertyDesc = beanDesc
+                final PropertyDesc propertyDesc = beanDesc
                         .getPropertyDesc(propertyName);
-                propertyDesc.setValue(page, scopeContext.get(propertyName));
+                final Object value = propertyDesc.getValue(component);
+                scopeContext.put(propertyName, value);
             }
         }
     }
