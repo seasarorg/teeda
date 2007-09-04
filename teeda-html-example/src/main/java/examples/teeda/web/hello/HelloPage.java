@@ -41,7 +41,4 @@ public class HelloPage {
 		return "AAA";
 	}
 
-	public String getLayout() {
-		return null;
-	}
 }

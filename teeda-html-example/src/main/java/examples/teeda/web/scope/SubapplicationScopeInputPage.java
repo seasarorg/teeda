@@ -63,7 +63,4 @@ public class SubapplicationScopeInputPage {
 		return null;
 	}
 
-	public String getLayout() {
-		return null;
-	}
 }

@@ -70,8 +70,4 @@ public class SubapplicationScopeResultPage {
 		return null;
 	}
 
-	public String getLayout() {
-		return null;
-	}
-
 }
