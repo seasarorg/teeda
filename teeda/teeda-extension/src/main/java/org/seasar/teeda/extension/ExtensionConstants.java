@@ -94,9 +94,9 @@ public interface ExtensionConstants {
     String TIME_ATTR = "time";
 
     String RENDERSPAN_ATTR = "renderSpan";
-    
+
     String INVISIBLE_ATTR = "invisible";
-    
+
     String OMITTAG_ATTR = "omittag";
 
     //Suffix and prefix
@@ -179,4 +179,7 @@ public interface ExtensionConstants {
 
     String EXCEPTOION_PROPERTY = "exception";
 
+    String DO_FINISH = "doFinish";
+
+    String DO_ONCE_FINISH = "doOnceFinish";
 }

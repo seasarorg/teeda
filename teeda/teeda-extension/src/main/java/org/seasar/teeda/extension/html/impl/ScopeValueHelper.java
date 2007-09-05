@@ -23,6 +23,7 @@ import javax.faces.internal.scope.PageScope;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.PagePersistence;
 
 /**
@@ -88,4 +89,11 @@ public class ScopeValueHelper {
         return values;
     }
 
+    public static void removeIfDoFinish(final String methodName,
+            final FacesContext context) {
+        if (ExtensionConstants.DO_FINISH.equals(methodName)
+                || ExtensionConstants.DO_ONCE_FINISH.equals(methodName)) {
+            SubApplicationScope.removeContext(context);
+        }
+    }
 }

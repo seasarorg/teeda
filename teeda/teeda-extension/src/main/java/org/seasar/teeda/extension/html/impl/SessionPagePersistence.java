@@ -262,9 +262,7 @@ public class SessionPagePersistence implements PagePersistence {
                         beanDesc, page, nextPageProperties, pageDesc);
             }
         } finally {
-            if (methodName != null && methodName.startsWith("doFinish")) {
-                SubApplicationScope.removeContext(context);
-            }
+            ScopeValueHelper.removeIfDoFinish(methodName, context);
         }
     }
 

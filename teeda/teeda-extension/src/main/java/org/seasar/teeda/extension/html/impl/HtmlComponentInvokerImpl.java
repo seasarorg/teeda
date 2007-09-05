@@ -22,7 +22,6 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.el.EvaluationException;
-import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
@@ -158,9 +157,7 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         Object ret = null;
         try {
             ret = beanDesc.invoke(component, methodName, null);
-            if ("doFinish".equals(methodName)) {
-                SubApplicationScope.removeContext(context);
-            }
+            ScopeValueHelper.removeIfDoFinish(methodName, context);
             if (ret instanceof Class) {
                 Class retClass = (Class) ret;
                 if (retClass != null
