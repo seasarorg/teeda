@@ -29,37 +29,38 @@ import org.seasar.teeda.extension.html.TakeOverDesc;
  * @author higa
  * @author shot
  */
-public class TigerTakeOverDescAnnotationHandler extends
-		ConstantTakeOverDescAnnotationHandler {
+public class TigerTakeOverDescAnnotationHandler extends ConstantTakeOverDescAnnotationHandler {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected Map getTakeOverDescs(S2Container container,
-			ComponentDef componentDef, Class componentClass,
-			String componentName, BeanDesc beanDesc) {
-		Map<String, TakeOverDesc> ret = new HashMap<String, TakeOverDesc>();
-		Method[] methods = componentClass.getMethods();
-		for (int i = 0; i < methods.length; ++i) {
-			Method method = methods[i];
-			String methodName = method.getName();
-			if (!methodName.startsWith("do") && !methodName.startsWith("go")
-					&& !methodName.startsWith("jump")) {
-				continue;
-			}
-			TakeOver takeOver = method.getAnnotation(TakeOver.class);
-			if (takeOver == null) {
-				continue;
-			}
-			TakeOverDesc takeOverDesc = createTakeOverDesc(takeOver.type()
-					.getName(), takeOver.properties());
-			ret.put(methodName, takeOverDesc);
-		}
-		final Map<String, TakeOverDesc> m = super.getTakeOverDescs(container,
-				componentDef, componentClass, componentName, beanDesc);
-		if (!m.isEmpty()) {
-			ret.putAll(m);
-		}
-		return ret;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Map getTakeOverDescs(S2Container container, ComponentDef componentDef,
+            Class componentClass, String componentName, BeanDesc beanDesc) {
+        Map<String, TakeOverDesc> ret = new HashMap<String, TakeOverDesc>();
+        Method[] methods = componentClass.getMethods();
+        for (int i = 0; i < methods.length; ++i) {
+            Method method = methods[i];
+            if (method.isBridge() || method.isSynthetic()) {
+                continue;
+            }
+            String methodName = method.getName();
+            if (!methodName.startsWith("do") && !methodName.startsWith("go")
+                    && !methodName.startsWith("jump")) {
+                continue;
+            }
+            TakeOver takeOver = method.getAnnotation(TakeOver.class);
+            if (takeOver == null) {
+                continue;
+            }
+            TakeOverDesc takeOverDesc = createTakeOverDesc(takeOver.type().getName(), takeOver
+                    .properties());
+            ret.put(methodName, takeOverDesc);
+        }
+        final Map<String, TakeOverDesc> m = super.getTakeOverDescs(container, componentDef,
+                componentClass, componentName, beanDesc);
+        if (!m.isEmpty()) {
+            ret.putAll(m);
+        }
+        return ret;
+    }
 
 }

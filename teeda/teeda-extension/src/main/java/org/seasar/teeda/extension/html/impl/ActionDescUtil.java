@@ -19,6 +19,8 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.seasar.framework.util.MethodUtil;
+
 /**
  * @author higa
  *
@@ -33,6 +35,9 @@ public class ActionDescUtil {
         Method[] methods = actionClass.getMethods();
         for (int i = 0; i < methods.length; ++i) {
             Method m = methods[i];
+            if (MethodUtil.isBridgeMethod(m) || MethodUtil.isSyntheticMethod(m)) {
+                continue;
+            }
             if (isActionMethodCandidate(m)) {
                 methodNames.add(m.getName());
             }
