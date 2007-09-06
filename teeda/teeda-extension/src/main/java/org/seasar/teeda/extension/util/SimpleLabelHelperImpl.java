@@ -25,6 +25,8 @@ import javax.faces.internal.LabelUtil;
  */
 public class SimpleLabelHelperImpl implements LabelHelper {
 
+    private static final long serialVersionUID = 7899530966928250287L;
+
     public String getLabelValue(String defaultKey) {
         return LabelUtil.getLabelValue(defaultKey);
     }

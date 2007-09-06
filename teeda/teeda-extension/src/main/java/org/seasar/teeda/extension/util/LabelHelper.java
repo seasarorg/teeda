@@ -15,13 +15,15 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.io.Serializable;
+
 /**
  * @author shot
  *
  * ユーザ側でLabelを簡単に使うためのUtilクラス．
  * このクラスは基本変更しない．
  */
-public interface LabelHelper {
+public interface LabelHelper extends Serializable {
 
     public String getLabelValue(String defaultKey);
 }
