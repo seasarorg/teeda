@@ -27,6 +27,7 @@ import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.render.RenderKitFactory;
 import javax.portlet.PortletURL;
@@ -53,7 +54,7 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
  * @author shot
  */
 public class ViewHandlerImpl extends ViewHandler {
-
+    
     public ViewHandlerImpl() {
     }
 
@@ -330,18 +331,23 @@ public class ViewHandlerImpl extends ViewHandler {
     protected void storeResponseCharacterEncoding(
             ExternalContext externalContext) {
         // Portlet: RenderRequest does not have getCharacterEncoding()
+        final String pathInfo = externalContext.getRequestPathInfo();
+        if(!pathInfo.endsWith(FacesConfigOptions.getDefaultSuffix())) {
+            return;
+        }
         if (externalContext.getResponse() instanceof ServletResponse) {
             ServletResponse res = (ServletResponse) externalContext
                     .getResponse();
-            if (ServletExternalContextUtil.isHttpServletResponse(res)) {
-                HttpServletResponse httpRes = ServletExternalContextUtil
-                        .getResponse(externalContext);
-                HttpSession session = (HttpSession) externalContext
-                        .getSession(false);
-                if (session != null) {
-                    session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY,
-                            httpRes.getCharacterEncoding());
-                }
+            if (!ServletExternalContextUtil.isHttpServletResponse(res)) {
+                return;
+            }
+            HttpServletResponse httpRes = ServletExternalContextUtil
+                    .getResponse(externalContext);
+            HttpSession session = (HttpSession) externalContext
+                    .getSession(false);
+            if (session != null) {
+                final String enc = httpRes.getCharacterEncoding();
+                session.setAttribute(ViewHandler.CHARACTER_ENCODING_KEY, enc);
             }
         }
     }
