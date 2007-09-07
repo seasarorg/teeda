@@ -169,7 +169,9 @@ public class AjaxServlet extends HttpServlet {
                     && propertyDesc.getPropertyType() != String.class) {
                 value = null;
             }
-            propertyDesc.setValue(target, value);
+            if (propertyDesc.isWritable()) {
+                propertyDesc.setValue(target, value);
+            }
         } catch (PropertyNotFoundRuntimeException e1) {
         }
     }
