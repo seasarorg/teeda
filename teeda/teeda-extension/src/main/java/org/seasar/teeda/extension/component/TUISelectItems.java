@@ -127,14 +127,16 @@ public class TUISelectItems extends UISelectItems {
                         BeanDesc bd = BeanDescFactory.getBeanDesc(item
                                 .getClass());
                         PropertyDesc pd = bd.getPropertyDesc(itemValue);
-                        Object itemValueValue = pd.getValue(item);
+                        Object itemValueValue = (pd.isReadable()) ? pd
+                                .getValue(item) : null;
                         if (itemValueValue != null) {
                             si.setValue(itemValueValue);
                         }
                         Object itemLabelValue = null;
                         if (bd.hasPropertyDesc(itemLabel)) {
                             pd = bd.getPropertyDesc(itemLabel);
-                            itemLabelValue = pd.getValue(item);
+                            itemLabelValue = (pd.isReadable()) ? pd
+                                    .getValue(item) : null;
                         }
                         if (itemLabelValue == null) {
                             itemLabelValue = itemValueValue;

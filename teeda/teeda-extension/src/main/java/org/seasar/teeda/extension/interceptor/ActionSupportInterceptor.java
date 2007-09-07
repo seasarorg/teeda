@@ -63,14 +63,14 @@ public class ActionSupportInterceptor extends AbstractInterceptor {
         Object action = container.getComponent(actionComponentName);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(actionClass);
         for (int i = 0; i < beanDesc.getPropertyDescSize(); i++) {
-            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-            Class propertyType = propertyDesc.getPropertyType();
+            PropertyDesc pd = beanDesc.getPropertyDesc(i);
+            Class propertyType = pd.getPropertyType();
             String propertyClassName = deleteEnhancedSuffix(propertyType
                     .getName());
             if (propertyClassName.endsWith(namingConvention.getPageSuffix())) {
                 String pageComponentName = namingConvention
                         .fromClassNameToComponentName(propertyClassName);
-                Object page = propertyDesc.getValue(action);
+                Object page = (pd.isReadable()) ? pd.getValue(action) : null;
                 InstanceDef instanceDef = componentDef.getInstanceDef();
                 savePage(instanceDef, pageComponentName, page);
             }

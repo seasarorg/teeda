@@ -56,7 +56,9 @@ public class THtmlSelectUtil {
             }
             if (v.toString().equals(selected.toString())) {
                 final String l = item.getLabel();
-                labelPd.setValue(page, l);
+                if (labelPd.isWritable()) {
+                    labelPd.setValue(page, l);
+                }
                 break;
             }
         }

@@ -87,7 +87,10 @@ public class TransactionTokenUtil {
         Object session = extCtx.getSession(true);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(session.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc("id");
-        String id = (String) pd.getValue(session);
+        String id = null;
+        if (pd.isReadable()) {
+            id = (String) pd.getValue(session);
+        }
         String token = generate(id);
         Map sessionMap = extCtx.getSessionMap();
         Set tokens = getTokens(sessionMap);

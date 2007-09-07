@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -45,23 +45,25 @@ public class UIParameterUtil {
         }
     }
 
-    public static void saveParametersToInstance(UIComponent component, Object obj) {
+    public static void saveParametersToInstance(UIComponent component,
+            Object obj) {
         AssertionUtil.assertNotNull("component", component);
         AssertionUtil.assertNotNull("obj", obj);
-        for(Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
+        for (Iterator itr = component.getChildren().iterator(); itr.hasNext();) {
             Object o = itr.next();
-            if(o instanceof UIParameter) {
+            if (o instanceof UIParameter) {
                 UIParameter param = (UIParameter) o;
                 String name = param.getName();
                 Object value = param.getValue();
                 BeanDesc beanDesc = BeanDescFactory.getBeanDesc(obj.getClass());
-                if(beanDesc.hasPropertyDesc(name)) {
+                if (beanDesc.hasPropertyDesc(name)) {
                     PropertyDesc propertyDesc = beanDesc.getPropertyDesc(name);
-                    propertyDesc.setValue(obj, value);
+                    if (propertyDesc.isWritable()) {
+                        propertyDesc.setValue(obj, value);
+                    }
                 }
             }
         }
     }
-
 
 }

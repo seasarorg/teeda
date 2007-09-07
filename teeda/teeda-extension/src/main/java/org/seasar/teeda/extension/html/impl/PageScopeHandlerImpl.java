@@ -60,16 +60,16 @@ public class PageScopeHandlerImpl implements PageScopeHandler {
         for (int i = 0; i < names.length; i++) {
             String propertyName = names[i];
             if (beanDesc.hasPropertyDesc(propertyName)) {
-                PropertyDesc propertyDesc = beanDesc
-                        .getPropertyDesc(propertyName);
-                final Object pageValue = propertyDesc.getValue(page);
+                PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
+                final Object pageValue = (pd.isReadable()) ? pd.getValue(page)
+                        : null;
                 final Object scopeValue = pageScopeValues.get(propertyName);
                 if (pageValue != null && !pageValue.equals(scopeValue)) {
                     changed = true;
                     continue;
                 }
-                if(propertyDesc.isWritable()) {
-                    propertyDesc.setValue(page, scopeValue);
+                if (pd.isWritable()) {
+                    pd.setValue(page, scopeValue);
                 }
             }
         }
@@ -104,7 +104,7 @@ public class PageScopeHandlerImpl implements PageScopeHandler {
                 }
                 PropertyDesc propertyDesc = beanDesc
                         .getPropertyDesc(propertyName);
-                if(propertyDesc.isReadable()) {
+                if (propertyDesc.isReadable()) {
                     final Object value = propertyDesc.getValue(page);
                     pageScopeValues.put(propertyName, value);
                 }

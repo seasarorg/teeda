@@ -259,7 +259,9 @@ public class ElementProcessorImpl implements ElementProcessor {
             }
             if (beanDesc.hasPropertyDesc(propertyName)) {
                 final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-                pd.setValue(tag, value);
+                if (pd.isWritable()) {
+                    pd.setValue(tag, value);
+                }
             } else {
                 ignoredProperties.put(propertyName, value);
             }

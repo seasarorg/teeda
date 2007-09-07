@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -119,9 +119,11 @@ public class JSONSerializer {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(bean.getClass());
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            buf.append(pd.getPropertyName() + AjaxConstants.COLON);
-            appendSerializeObject(buf, pd.getValue(bean));
-            buf.append(AjaxConstants.COMMA);
+            if (pd.isReadable()) {
+                buf.append(pd.getPropertyName() + AjaxConstants.COLON);
+                appendSerializeObject(buf, pd.getValue(bean));
+                buf.append(AjaxConstants.COMMA);
+            }
         }
         if (beanDesc.getPropertyDescSize() > 0) {
             buf.setLength(buf.length() - 1);

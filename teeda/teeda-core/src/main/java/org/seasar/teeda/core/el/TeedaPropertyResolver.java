@@ -210,7 +210,11 @@ public class TeedaPropertyResolver extends PropertyResolver {
     protected Object getProperty(Object base, String name) {
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(base.getClass());
         PropertyDesc pd = beanDesc.getPropertyDesc(name);
-        return pd.getValue(base);
+        if (pd.isReadable()) {
+            return pd.getValue(base);
+        } else {
+            return null;
+        }
     }
 
 }
