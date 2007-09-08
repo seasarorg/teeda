@@ -1,5 +1,6 @@
 package examples.teeda.it;
 
+import org.seasar.teeda.core.unit.seleniumunit.SeleniumTestCase;
 
 /**
  * jettyでseleniumのテスト(add.html)

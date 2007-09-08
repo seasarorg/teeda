@@ -36,7 +36,9 @@
   </build>
   <modules>
     <module>teeda-tomcat5x-test</module>
+    <!--
     <module>teeda-jetty6x-test</module>
+    -->
     <!--
     <module>teeda-jboss3x-test</module>
     <module>teeda-jboss4x-test</module>
@@ -53,54 +55,18 @@
       <name>The Seasar Foundation Maven2 Repository</name>
       <url>http://maven.seasar.org/maven2</url>
     </repository>
-    <repository>
-      <id>openqa</id>
-      <url>http://maven.openqa.org</url>
-    </repository>
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.openqa.selenium.client-drivers</groupId>
-      <artifactId>selenium-java-client-driver</artifactId>
-      <version>0.9.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.openqa.selenium.server</groupId>
-      <artifactId>selenium-server</artifactId>
-      <version>0.9.0</version>
-      <scope>test</scope>
-    </dependency>    
-    <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-extension</artifactId>
-      <version>1.0.9</version>
+      <version>1.0.11-RC2</version>
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jsp_2.0_spec</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jta_1.1_spec</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.6.2</version>
+      <groupId>org.seasar.teeda</groupId>
+      <artifactId>teeda-seleniumunit</artifactId>
+      <version>0.0.1</version>
       <type>jar</type>
     </dependency>
   </dependencies>
