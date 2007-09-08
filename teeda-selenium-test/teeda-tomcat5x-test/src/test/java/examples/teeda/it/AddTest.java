@@ -18,7 +18,7 @@ public class AddTest extends SeleniumTestCase {
         // for DEBUG
         System.out.println(selenium.getHtmlSource());
 
-        assertEquals("Teeda HTML example2", selenium.getTitle());
+        assertEquals("Add2", selenium.getTitle());
 
         selenium.type("arg1", "111");
         selenium.type("arg2", "222");

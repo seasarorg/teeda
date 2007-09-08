@@ -22,6 +22,6 @@ public class IndexTest extends SeleniumTestCase {
     public void testIndexHtml() throws Exception {
         selenium.open("/teeda-selenium-project/");
 
-        assertEquals("Teeda HTML example2", selenium.getTitle());
+        assertEquals("Teeda Extension samples", selenium.getTitle());
     }
 }
