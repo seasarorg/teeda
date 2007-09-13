@@ -43,10 +43,14 @@ public class THtmlSelectUtil {
         }
         final Object selected = select.getValue();
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        if (!beanDesc.hasPropertyDesc(labelName) || selected == null) {
+        if (!beanDesc.hasPropertyDesc(labelName)) {
             return;
         }
         final PropertyDesc labelPd = beanDesc.getPropertyDesc(labelName);
+        if (selected == null) {
+            labelPd.setValue(page, null);
+            return;
+        }
         for (final SelectItemsIterator it = new SelectItemsIterator(select); it
                 .hasNext();) {
             final SelectItem item = (SelectItem) it.next();
@@ -103,8 +107,8 @@ public class THtmlSelectUtil {
         for (final Iterator it = parent.getChildren().iterator(); it.hasNext();) {
             final UIComponent brotherOrChild = (UIComponent) it.next();
             final String childId = brotherOrChild.getId();
-            if (saveId.equals(childId)
-                    && (brotherOrChild instanceof THtmlItemsSaveHidden)) {
+            if (saveId.equals(childId) &&
+                    (brotherOrChild instanceof THtmlItemsSaveHidden)) {
                 final Object found = ((THtmlItemsSaveHidden) brotherOrChild)
                         .getValue();
                 return found;

@@ -58,6 +58,37 @@ public class THtmlSelectUtilTest extends TeedaTestCase {
         assertEquals("hoge", page.getAaaLabel());
     }
 
+    public void testTakeOverLabel2() throws Exception {
+        FacesContext context = getFacesContext();
+        THtmlSelectOneMenu select = new THtmlSelectOneMenu();
+        select.setValue(null);
+        select.getChildren().add(new UISelectItem() {
+
+            public String getId() {
+                return "aaa";
+            }
+
+            public Object getValue() {
+                return new SelectItem() {
+
+                    public String getLabel() {
+                        return "hoge";
+                    }
+
+                    public Object getValue() {
+                        return "1";
+                    }
+
+                };
+            }
+
+        });
+        HogePage page = new HogePage();
+        page.setAaa(new Integer(0));
+        THtmlSelectUtil.takeOverLabel(context, select, page, "aaaLabel");
+        assertNull(page.getAaaLabel());
+    }
+
     public static class HogePage {
 
         private Integer aaa;
