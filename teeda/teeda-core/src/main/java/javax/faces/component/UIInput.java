@@ -307,7 +307,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         return value;
     }
 
-    private void handleConverterException(FacesContext context,
+    protected void handleConverterException(FacesContext context,
             ConverterException e) {
         setValid(false);
         FacesMessage facesMessage = e.getFacesMessage();
