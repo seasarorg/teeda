@@ -22,13 +22,13 @@ import javax.faces.internal.WindowIdEncodeUrlCustomizer;
 import javax.faces.internal.WindowIdUtil;
 import javax.faces.mock.servlet.MockServletRequestImpl;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import junitx.framework.ArrayAssert;
 
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.framework.mock.servlet.MockHttpServletRequestImpl;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
 
 /**
  * @author shot
@@ -45,7 +45,7 @@ public class ServletExternalContextImplTest extends S2TestCase {
         ServletRequest request2 = new MockServletRequestImpl(
                 getServletContext(), "/hoge");
         ExternalContext context2 = new ServletExternalContextImpl(
-                getServletContext(), request2, (ServletResponse) getResponse());
+                getServletContext(), request2, getResponse());
         assertNull(context2.getRequestServletPath());
     }
 
@@ -60,7 +60,7 @@ public class ServletExternalContextImplTest extends S2TestCase {
         ServletRequest request2 = new MockServletRequestImpl(
                 getServletContext(), "/hoge");
         ExternalContext context2 = new ServletExternalContextImpl(
-                getServletContext(), request2, (ServletResponse) getResponse());
+                getServletContext(), request2, getResponse());
         assertNull(context2.getRequestPathInfo());
     }
 
@@ -138,5 +138,52 @@ public class ServletExternalContextImplTest extends S2TestCase {
         assertEquals("hoge?wid=1", context.encodeResourceURL("hoge"));
         assertEquals("hoge?aaa=bbb&wid=1", context
                 .encodeResourceURL("hoge?aaa=bbb"));
+    }
+
+    public void testEncodeResourceURL_WithoutCookie() {
+        setResponse(new MockHttpServletResponseImpl(getRequest()) {
+            public String encodeURL(String url) {
+                return url + ";jsessionid=HOGEHOGE";
+            }
+        });
+        ServletExternalContextImpl context = new ServletExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+        context.setEncodeUrlCustomizer(new WindowIdEncodeUrlCustomizer());
+        assertEquals("hoge;jsessionid=HOGEHOGE", context
+                .encodeResourceURL("hoge"));
+        WindowIdUtil.setWindowId(context, "1");
+        assertEquals("hoge?wid=1;jsessionid=HOGEHOGE", context
+                .encodeResourceURL("hoge"));
+        assertEquals("hoge?aaa=bbb&wid=1;jsessionid=HOGEHOGE", context
+                .encodeResourceURL("hoge?aaa=bbb"));
+    }
+
+    public void testEncodeActionURL() {
+        ServletExternalContextImpl context = new ServletExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+        context.setEncodeUrlCustomizer(new WindowIdEncodeUrlCustomizer());
+        assertEquals("hoge", context.encodeActionURL("hoge"));
+        WindowIdUtil.setWindowId(context, "1");
+        assertEquals("hoge?wid=1", context.encodeActionURL("hoge"));
+        assertEquals("hoge?aaa=bbb&wid=1", context
+                .encodeActionURL("hoge?aaa=bbb"));
+    }
+
+    public void testEncodeActionURL_WithoutCookie() {
+        setResponse(new MockHttpServletResponseImpl(getRequest()) {
+            public String encodeURL(String url) {
+                return url + ";jsessionid=HOGEHOGE";
+            }
+        });
+        ServletExternalContextImpl context = new ServletExternalContextImpl(
+                getServletContext(), getRequest(), getResponse());
+        context.setEncodeUrlCustomizer(new WindowIdEncodeUrlCustomizer());
+        assertEquals("hoge;jsessionid=HOGEHOGE", context
+                .encodeActionURL("hoge"));
+        WindowIdUtil.setWindowId(context, "1");
+        assertEquals("hoge?wid=1;jsessionid=HOGEHOGE", context
+                .encodeActionURL("hoge"));
+        assertEquals("hoge?aaa=bbb&wid=1;jsessionid=HOGEHOGE", context
+                .encodeActionURL("hoge?aaa=bbb"));
     }
 }

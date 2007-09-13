@@ -183,6 +183,30 @@ public class HtmlFormRendererTest extends RendererTest {
         assertEquals(diff.toString(), true, diff.identical());
     }
 
+    public void testEncode_WithoutCookie() throws Exception {
+        MockFacesContext facesContext = getFacesContext();
+        MockExternalContext externalContext = (MockExternalContext) facesContext
+                .getExternalContext();
+        externalContext
+                .setMockHttpServletResponse(new MockHttpServletResponseImpl(
+                        externalContext.getMockHttpServletRequest()) {
+                    public String encodeURL(String url) {
+                        return url + ";jsessionid=HOGEHOGE";
+                    }
+                });
+        facesContext.getViewRoot().setViewId("/aa");
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlForm);
+
+        // ## Assert ##
+        System.out.println(getResponseText());
+        assertEquals(
+                "<form name=\"_id0\" method=\"post\" enctype=\"application/x-www-form-urlencoded\" action=\"/aa;jsessionid=HOGEHOGE\">"
+                        + "<input type=\"hidden\" name=\"_id0/aa\" value=\"_id0\" />"
+                        + "</form>", getResponseText());
+    }
+
     public void testDecode_None() throws Exception {
         // ## Arrange ##
         htmlForm.setClientId("key");

@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,7 +99,7 @@ public class MockExternalContextImpl extends MockExternalContext {
     }
 
     public String encodeActionURL(String sb) {
-        return getMockHttpServletResponse().encodeUrl(sb);
+        return getMockHttpServletResponse().encodeURL(sb);
     }
 
     public String encodeNamespace(String aValue) {

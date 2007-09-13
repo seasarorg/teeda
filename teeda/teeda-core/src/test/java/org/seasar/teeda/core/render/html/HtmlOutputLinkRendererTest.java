@@ -23,6 +23,8 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
+import org.seasar.framework.mock.servlet.MockHttpServletResponseImpl;
+import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlOutputLink;
@@ -289,6 +291,28 @@ public class HtmlOutputLinkRendererTest extends RendererTest {
                 + " class=\"x\"" + " tabindex=\"y\"" + " target=\"z\""
                 + " title=\"A\"" + " type=\"B\"></a>", getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_WithoutCookie() throws Exception {
+        // ## Arrange ##
+        htmlOutputLink.setValue("a");
+        MockFacesContext facesContext = getFacesContext();
+        MockExternalContext externalContext = (MockExternalContext) facesContext
+                .getExternalContext();
+        externalContext
+                .setMockHttpServletResponse(new MockHttpServletResponseImpl(
+                        externalContext.getMockHttpServletRequest()) {
+                    public String encodeURL(String url) {
+                        return url + ";jsessionid=HOGEHOGE";
+                    }
+                });
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlOutputLink);
+
+        // ## Assert ##
+        assertEquals("<a href=\"a;jsessionid=HOGEHOGE\"></a>",
+                getResponseText());
     }
 
     public void testGetRendersChildren() throws Exception {
