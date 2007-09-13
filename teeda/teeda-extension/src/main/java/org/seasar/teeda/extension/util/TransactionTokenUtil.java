@@ -42,11 +42,11 @@ public class TransactionTokenUtil {
     public static String TOKEN = null;
 
     public static final String DEFAULT_TOKEN = TransactionTokenUtil.class
-            .getName()
-            + ".TOKEN";
+            .getName() +
+            ".TOKEN";
 
-    private static final String TOKENS = TransactionTokenUtil.class.getName()
-            + ".TOKENS";
+    private static final String TOKENS = TransactionTokenUtil.class.getName() +
+            ".TOKENS";
 
     private static final String DO_ONCE = "doOnce";
 
@@ -80,6 +80,15 @@ public class TransactionTokenUtil {
         requestMap.put(TOKEN, token);
         RendererUtil.renderHidden(component, context.getResponseWriter(),
                 TOKEN, token);
+    }
+
+    public static synchronized void resetToken(final FacesContext context) {
+        if (TOKEN == null) {
+            return;
+        }
+        final ExternalContext extCtx = context.getExternalContext();
+        final Map requestMap = extCtx.getRequestMap();
+        requestMap.remove(TOKEN);
     }
 
     protected static String generate(FacesContext context) {

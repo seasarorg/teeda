@@ -328,4 +328,12 @@
 			org.seasar.teeda.extension.component.html.THtmlLink
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlForm
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlForm
+		</component-class>
+	</component>
 </faces-config>

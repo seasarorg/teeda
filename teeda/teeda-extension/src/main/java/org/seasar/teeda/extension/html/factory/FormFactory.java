@@ -48,7 +48,7 @@ public class FormFactory extends AbstractElementProcessorFactory {
     }
 
     protected String getUri() {
-        return JsfConstants.JSF_HTML_URI;
+        return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
 }
