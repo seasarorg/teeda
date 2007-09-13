@@ -118,7 +118,13 @@ public class ServletExternalContextImpl extends ExternalContext implements
     }
 
     public String encodeActionURL(String url) {
-        return customizer.encodeActionUrl(this, url);
+        assertHttpServletResponse();
+        final String encodedUrl = customizer.encodeActionUrl(this, url);
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        if (((HttpServletRequest) request).isRequestedSessionIdFromCookie()) {
+            return encodedUrl;
+        }
+        return httpResponse.encodeURL(encodedUrl);
     }
 
     public String encodeNamespace(final String name) {
