@@ -15,9 +15,16 @@
  */
 package org.seasar.teeda.extension.render.html;
 
+import java.io.IOException;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.render.AbstractRendererTest;
+import javax.faces.render.Renderer;
 
 import org.seasar.teeda.extension.component.html.THtmlHead;
+import org.seasar.teeda.extension.mock.MockUITitle;
+import org.seasar.teeda.extension.render.TTitleRenderer;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -30,10 +37,24 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
 
     private THtmlHead component;
 
+    private MockUITitle title;
+
     public void setUp() throws Exception {
         super.setUp();
         renderer = new THtmlHeadRenderer();
         component = new THtmlHead();
+        title = new MockUITitle();
+        title.setTemplateValue("タイトル");
+        title.setRenderer(new TTitleRenderer());
+        title.setParent(component);
+        component.getChildren().add(title);
+    }
+
+    protected void encodeByRenderer(Renderer renderer, FacesContext context,
+            UIComponent component) throws IOException {
+        renderer.encodeBegin(context, component);
+        super.encodeByRenderer(title.getRenderer(context), context, title);
+        renderer.encodeEnd(context, component);
     }
 
     public void testEncode_jsResource() throws Exception {
@@ -41,7 +62,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\n</head>\n",
+                "<head>\n<title>タイトル</title><script language=\"JavaScript\" type=\"text/javascript\" src=\"/mock-context/teedaExtension/hoge.js\"></script>\n</head>\n",
                 getResponseText());
     }
 
@@ -50,7 +71,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"../hoge.js\"></script>\n</head>\n",
+                "<head>\n<title>タイトル</title><script language=\"JavaScript\" type=\"text/javascript\" src=\"../hoge.js\"></script>\n</head>\n",
                 getResponseText());
     }
 
@@ -59,7 +80,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<script language=\"JavaScript\" type=\"text/javascript\" src=\"./hoge.js\"></script>\n</head>\n",
+                "<head>\n<title>タイトル</title><script language=\"JavaScript\" type=\"text/javascript\" src=\"./hoge.js\"></script>\n</head>\n",
                 getResponseText());
     }
 
@@ -68,7 +89,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n\n<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\nhoge\n//-->\n</script>\n</head>\n",
+                "<head>\n<title>タイトル</title>\n<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\nhoge\n//-->\n</script>\n</head>\n",
                 getResponseText());
     }
 
@@ -77,7 +98,8 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
                 "<style></style>\n");
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
-        assertEquals("<head>\n<style></style>\n</head>\n", getResponseText());
+        assertEquals("<head>\n<title>タイトル</title><style></style>\n</head>\n",
+                getResponseText());
     }
 
     public void testEncode_cssResource() throws Exception {
@@ -85,7 +107,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"/mock-context/teedaExtension/aaa\" />\n</head>\n",
+                "<head>\n<title>タイトル</title><link type=\"text/css\" rel=\"stylesheet\" href=\"/mock-context/teedaExtension/aaa\" />\n</head>\n",
                 getResponseText());
     }
 
@@ -94,7 +116,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"../aaa\" />\n</head>\n",
+                "<head>\n<title>タイトル</title><link type=\"text/css\" rel=\"stylesheet\" href=\"../aaa\" />\n</head>\n",
                 getResponseText());
     }
 
@@ -103,7 +125,7 @@ public class THtmlHeadRendererTest extends AbstractRendererTest {
         encodeByRenderer(renderer, component);
         System.out.println(getResponseText());
         assertEquals(
-                "<head>\n<link type=\"text/css\" rel=\"stylesheet\" href=\"./aaa\" />\n</head>\n",
+                "<head>\n<title>タイトル</title><link type=\"text/css\" rel=\"stylesheet\" href=\"./aaa\" />\n</head>\n",
                 getResponseText());
     }
 

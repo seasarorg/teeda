@@ -34,7 +34,7 @@ public class MockUITitle extends UITitle {
         this.renderer = renderer;
     }
 
-    protected Renderer getRenderer(FacesContext context) {
+    public Renderer getRenderer(FacesContext context) {
         if (renderer != null) {
             return renderer;
         }

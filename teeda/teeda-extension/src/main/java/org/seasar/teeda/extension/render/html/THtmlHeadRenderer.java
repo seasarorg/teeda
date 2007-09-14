@@ -44,15 +44,15 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.HEAD_ELEM, component);
         writer.write(JsfConstants.LINE_SP);
-        renderCssResources(context);
-        renderJsResources(context);
-        renderInlineCssResources(context);
-        renderInlineJsResources(context);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
+        renderCssResources(context);
+        renderJsResources(context);
+        renderInlineCssResources(context);
+        renderInlineJsResources(context);
         ResponseWriter writer = context.getResponseWriter();
         writer.endElement(JsfConstants.HEAD_ELEM);
         writer.write(JsfConstants.LINE_SP);
