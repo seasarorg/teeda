@@ -15,12 +15,13 @@
  */
 package examples.teeda.web.aaa;
 
-
 /**
  * @author yone
  * 
  */
 public class DialogPage {
 
-
+	public String getLayout() {
+		return null;
+	}
 }

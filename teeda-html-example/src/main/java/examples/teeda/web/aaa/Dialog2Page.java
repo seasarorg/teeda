@@ -15,22 +15,28 @@
  */
 package examples.teeda.web.aaa;
 
-
 /**
  * @author yone
  * 
  */
 public class Dialog2Page {
-	
+
 	private String aaa = "タイトルだお♪";
 
 	public Class doSame() {
 		System.out.println("****************");
 		return null;
 	}
-	
+
 	public String getAaa() {
 		return this.aaa;
 	}
 
+	public void setAaa(String aaa) {
+		this.aaa = aaa;
+	}
+
+	public String getLayout() {
+		return null;
+	}
 }

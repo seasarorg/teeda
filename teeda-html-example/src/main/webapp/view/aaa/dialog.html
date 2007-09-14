@@ -7,7 +7,8 @@
 </head>
 <body>
 <form id="yobidashiForm">
-<input type="button" onclick="showModalDialog('dialog2.html','','dialogWidth=400px; dialogHeight=400px;')" value="ダイアログ呼び出し" />
+<input type="button"
+  onclick="showModalDialog('dialog2.html?newwindow=true&x='+(new Date()).getTime(),'','dialogWidth=400px; dialogHeight=400px;')" value="ダイアログ呼び出し" />
 </form>
 </body>
 </html>
