@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,8 +26,6 @@ public class AaaPage {
 
 	private boolean dayReport;
 
-	private boolean notDayReport;
-	
 	@Required
 	private Date inYearMonth;
 
@@ -41,7 +39,6 @@ public class AaaPage {
 	 */
 	public Class initialize() {
 		dayReport = true;
-		notDayReport = false;
 		return null;
 	}
 
@@ -87,18 +84,10 @@ public class AaaPage {
 	public String getLayout() {
 		return null;
 	}
-	
+
 	public Class doExecute() {
 		dayReport = false;
-		notDayReport = true;
 		return null;
 	}
 
-	public boolean isNotDayReport() {
-		return notDayReport;
-	}
-
-	public void setNotDayReport(boolean notDayReport) {
-		this.notDayReport = notDayReport;
-	}
 }
