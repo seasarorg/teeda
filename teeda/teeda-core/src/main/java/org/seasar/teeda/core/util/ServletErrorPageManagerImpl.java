@@ -34,7 +34,7 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
     private static final Logger logger = Logger
             .getLogger(ServletErrorPageManagerImpl.class);
 
-    private Map locations = new HashMap();
+    protected Map locations = new HashMap();
 
     public void addErrorPage(Class exceptionType, String location) {
         locations.put(exceptionType, location);
