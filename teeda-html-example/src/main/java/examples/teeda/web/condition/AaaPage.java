@@ -86,7 +86,7 @@ public class AaaPage {
 	}
 
 	public Class doExecute() {
-		dayReport = false;
+		dayReport = true;
 		return null;
 	}
 
