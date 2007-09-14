@@ -23,7 +23,7 @@ public class Dialog2Page {
 
 	private String aaa = "タイトルだお♪";
 
-	public Class doSame() {
+	public Class doOnceSame() {
 		System.out.println("****************");
 		return null;
 	}
