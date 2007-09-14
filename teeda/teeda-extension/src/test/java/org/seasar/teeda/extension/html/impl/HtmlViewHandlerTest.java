@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.html.impl;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIViewRoot;
-import javax.faces.component.html.HtmlForm;
 import javax.faces.render.RenderKit;
 
 import org.seasar.framework.convention.impl.NamingConventionImpl;
@@ -27,10 +26,11 @@ import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.application.impl.TeedaStateManagerImpl;
 import org.seasar.teeda.core.application.impl.TreeStructureManagerImpl;
 import org.seasar.teeda.core.render.DefaultComponentIdLookupStrategy;
-import org.seasar.teeda.core.render.html.HtmlFormRenderer;
 import org.seasar.teeda.core.taglib.html.FormTag;
 import org.seasar.teeda.core.util.PostbackUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.UIText;
+import org.seasar.teeda.extension.component.html.THtmlForm;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
 import org.seasar.teeda.extension.config.taglib.element.impl.TagElementImpl;
@@ -42,6 +42,8 @@ import org.seasar.teeda.extension.html.impl.page.FooAction;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.render.html.HtmlTextRenderer;
+import org.seasar.teeda.extension.render.html.THtmlFormRenderer;
+import org.seasar.teeda.extension.taglib.TFormTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -53,15 +55,15 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
         RenderKit renderKit = getRenderKit();
         renderKit.addRenderer(UIText.COMPONENT_FAMILY,
                 UIText.DEFAULT_RENDERER_TYPE, new HtmlTextRenderer());
-        HtmlFormRenderer formRenderer = new HtmlFormRenderer();
+        THtmlFormRenderer formRenderer = new THtmlFormRenderer();
         formRenderer
                 .setComponentIdLookupStrategy(new DefaultComponentIdLookupStrategy());
-        renderKit.addRenderer(HtmlForm.COMPONENT_FAMILY, "javax.faces.Form",
-                formRenderer);
+        renderKit.addRenderer(THtmlForm.COMPONENT_FAMILY,
+                "org.seasar.teeda.extension.HtmlForm", formRenderer);
         Application app = getApplication();
         app.addComponent(UIViewRoot.COMPONENT_TYPE, UIViewRoot.class.getName());
         app.addComponent(UIText.COMPONENT_TYPE, UIText.class.getName());
-        app.addComponent(HtmlForm.COMPONENT_TYPE, HtmlForm.class.getName());
+        app.addComponent(THtmlForm.COMPONENT_TYPE, THtmlForm.class.getName());
     }
 
     public void testRestoreAndRenderView() throws Exception {
@@ -152,10 +154,10 @@ public class HtmlViewHandlerTest extends TeedaExtensionTestCase {
     public void testCreateView() throws Exception {
         MockTaglibManager taglibManager = new MockTaglibManager();
         TaglibElement jsfHtml = new TaglibElementImpl();
-        jsfHtml.setUri(JsfConstants.JSF_HTML_URI);
+        jsfHtml.setUri(ExtensionConstants.TEEDA_EXTENSION_URI);
         TagElement tagElement = new TagElementImpl();
         tagElement.setName("form");
-        tagElement.setTagClass(FormTag.class);
+        tagElement.setTagClass(TFormTag.class);
         jsfHtml.addTagElement(tagElement);
         taglibManager.addTaglibElement(jsfHtml);
 
