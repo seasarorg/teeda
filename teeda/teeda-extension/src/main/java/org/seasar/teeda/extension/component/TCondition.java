@@ -64,9 +64,8 @@ public class TCondition extends UIComponentBase {
         if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)) {
             if (isRefresh || noError) {
                 clearEncodedCondition();
-                return super.isRendered();
-            } else {
-                //no op;
+                final boolean b = super.isRendered();
+                return b;
             }
         }
         Boolean condition = getEncodedCondition();
@@ -119,6 +118,7 @@ public class TCondition extends UIComponentBase {
             return;
         }
         final String cid = getClientId(context);
+        System.out.println("cid :: " + cid);
         conditions.remove(cid);
     }
 
@@ -170,7 +170,13 @@ public class TCondition extends UIComponentBase {
 
     public void encodeEnd(FacesContext context) throws IOException {
         super.encodeEnd(context);
-        saveEncodedCondition();
+        final boolean noError = !FacesMessageUtil
+                .hasErrorOrFatalMessage(context);
+        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
+                : false;
+        if (isRefresh || noError) {
+            saveEncodedCondition();
+        }
     }
 
     public boolean isRenderSpan() {
