@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.exception.AlreadyRedirectingException;
 import org.seasar.teeda.core.mock.MockExternalContext;
 import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -75,6 +76,17 @@ public class TeedaExtensionErrorPageManagerImplTest extends
         assertEquals("aaa", req.getAttribute(JsfConstants.ERROR_MESSAGE));
 
         assertTrue(calls[0]);
+    }
+
+    public void testHandleException_AlreadyRedirecting() throws Exception {
+        // # Arrange #
+        TeedaExtensionErrorPageManagerImpl manager = new TeedaExtensionErrorPageManagerImpl();
+        manager.addErrorPage(Throwable.class, "a.jsp");
+        MockFacesContext context = getFacesContext();
+
+        // # Act & Assert #
+        assertFalse(manager.handleException(new AlreadyRedirectingException(),
+                context, context.getExternalContext()));
     }
 
     public void testSaveAndRestoreException1() throws Exception {

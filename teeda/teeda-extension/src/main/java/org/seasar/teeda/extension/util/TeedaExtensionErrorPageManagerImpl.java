@@ -52,6 +52,9 @@ public class TeedaExtensionErrorPageManagerImpl extends
         if (logger.isDebugEnabled()) {
             logger.debug(exception.getMessage(), exception);
         }
+        if (exception instanceof AlreadyRedirectingException) {
+            return false;
+        }
         final String location = getLocation(exception.getClass());
         if (location == null) {
             return false;
@@ -71,8 +74,8 @@ public class TeedaExtensionErrorPageManagerImpl extends
         }
         final String redirectingPath = RedirectScope
                 .getRedirectingPath(context);
-        if (RedirectScope.isRedirecting(context)
-                && actionURL.equals(redirectingPath)) {
+        if (RedirectScope.isRedirecting(context) &&
+                actionURL.equals(redirectingPath)) {
             throw new AlreadyRedirectingException();
         }
         NavigationHandlerUtil.redirect(context, actionURL);
