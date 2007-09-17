@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2004-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,9 +19,9 @@ if (typeof(Kumu) == 'undefined') {
 
 if (typeof(Kumu.Event) == 'undefined') {
   Kumu.Event = {};
-}
 
 KumuEventConf = false;
+
 
 Kumu.extend(Kumu.Event, {
     
@@ -212,3 +212,4 @@ Function.prototype.registOnUnLoad = function(scope){
 
 Kumu.Event.addOnLoadEvent(Kumu.Event.loadEvent.bindScope(Kumu.Event));
 Kumu.Event.addOnUnLoadEvent(Kumu.Event.unloadEvent.bindScope(Kumu.Event));
+}
