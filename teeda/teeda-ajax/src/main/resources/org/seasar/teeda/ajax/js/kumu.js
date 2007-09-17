@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2004-2006 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ var _global = (function (){return this;})();
 
 if (typeof(Kumu) == 'undefined') {
   Kumu = {};
-}
 
 Kumu.VERSION = "0.1";
 Kumu.NAME = "Kumu";
@@ -1505,4 +1504,5 @@ $dump = function(obj){
     obj = obj.innerHTML;
   }
   Kumu.log(Kumu.JSONSerializer.serialize(obj));
+}
 }

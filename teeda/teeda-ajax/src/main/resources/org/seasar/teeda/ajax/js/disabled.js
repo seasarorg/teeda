@@ -27,7 +27,6 @@ if (typeof(Kumu.Html) == 'undefined') {
 
 if (typeof(Kumu.Html.Disabled) == 'undefined') {
   Kumu.Html.Disabled = {};
-}
 
 DisabledConf = false;
 
@@ -133,3 +132,4 @@ Kumu.extend(Kumu.Html.Disabled, {
   }
 });
 Kumu.Event.addOnLoadEvent(Kumu.Html.Disabled.loadDisabled.bindScope(Kumu.Html.Disabled));
+}
