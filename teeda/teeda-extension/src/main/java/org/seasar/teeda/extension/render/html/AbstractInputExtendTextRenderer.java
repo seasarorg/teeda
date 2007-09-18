@@ -54,7 +54,7 @@ public abstract class AbstractInputExtendTextRenderer extends
         }
     }
 
-    public void encodePrepare(FacesContext context, UIComponent component)
+    public void encodeBefore(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {

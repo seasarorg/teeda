@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,6 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.RenderPreparableUtil;
-
 
 /**
  * @author shot
@@ -90,7 +89,11 @@ public class THtmlInputCommaText extends THtmlInputText implements
         fractionSeparator = (String) values[3];
     }
 
-    public void encodePrepare(FacesContext context) throws IOException {
-        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    public void encodeBefore(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodeBeforeForRenderer(context, this);
     }
+
+    public void encodeAfter(FacesContext context) throws IOException {
+    }
+
 }

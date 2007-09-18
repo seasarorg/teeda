@@ -173,8 +173,11 @@ public class THtmlGrid extends TForEach implements NamingContainer,
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void encodePrepare(FacesContext context) throws IOException {
-        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    public void encodeBefore(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodeBeforeForRenderer(context, this);
+    }
+
+    public void encodeAfter(FacesContext context) throws IOException {
     }
 
 }

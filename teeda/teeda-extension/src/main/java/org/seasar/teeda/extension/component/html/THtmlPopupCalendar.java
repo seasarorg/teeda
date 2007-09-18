@@ -151,8 +151,11 @@ public class THtmlPopupCalendar extends HtmlInputText implements
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void encodePrepare(FacesContext context) throws IOException {
-        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    public void encodeBefore(final FacesContext context) throws IOException {
+        RenderPreparableUtil.encodeBeforeForRenderer(context, this);
+    }
+
+    public void encodeAfter(final FacesContext context) throws IOException {
     }
 
     public Object saveState(FacesContext context) {

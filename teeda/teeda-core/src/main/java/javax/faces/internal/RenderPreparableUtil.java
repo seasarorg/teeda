@@ -34,18 +34,18 @@ public abstract class RenderPreparableUtil {
     protected RenderPreparableUtil() {
     }
 
-    public static void encodePrepareForRenderer(FacesContext context,
+    public static void encodeBeforeForRenderer(FacesContext context,
             UIComponent component) throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
         Renderer renderer = UIComponentUtil.getRenderer(context, component);
         if (renderer != null && renderer instanceof RenderPreparableRenderer) {
-            ((RenderPreparableRenderer) renderer).encodePrepare(context,
+            ((RenderPreparableRenderer) renderer).encodeBefore(context,
                     component);
         }
     }
 
-    public static void encodePrepareForComponent(FacesContext context,
+    public static void encodeBeforeForComponent(FacesContext context,
             UIComponent component) throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
@@ -55,12 +55,27 @@ public abstract class RenderPreparableUtil {
             return;
         }
         if ((component instanceof RenderPreparable)) {
-            ((RenderPreparable) component).encodePrepare(context);
+            ((RenderPreparable) component).encodeBefore(context);
         }
         if (component.getChildCount() > 0) {
             for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
                 UIComponent child = (UIComponent) it.next();
-                encodePrepareForComponent(context, child);
+                encodeBeforeForComponent(context, child);
+            }
+        }
+    }
+
+    public static void encodeAfterForComponent(final FacesContext context,
+            final UIComponent component) throws IOException {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("component", component);
+        if ((component instanceof RenderPreparable)) {
+            ((RenderPreparable) component).encodeAfter(context);
+        }
+        if (component.getChildCount() > 0) {
+            for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
+                UIComponent child = (UIComponent) it.next();
+                encodeAfterForComponent(context, child);
             }
         }
     }

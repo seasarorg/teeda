@@ -158,8 +158,11 @@ public class THtmlHolidayCalendar extends HtmlSelectManyCheckbox implements
         this.showYear = showYear;
     }
 
-    public void encodePrepare(FacesContext context) throws IOException {
-        RenderPreparableUtil.encodePrepareForRenderer(context, this);
+    public void encodeBefore(FacesContext context) throws IOException {
+        RenderPreparableUtil.encodeBeforeForRenderer(context, this);
+    }
+
+    public void encodeAfter(FacesContext context) throws IOException {
     }
 
     public Object saveState(FacesContext context) {

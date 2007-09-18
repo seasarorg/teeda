@@ -176,7 +176,7 @@ public class ViewHandlerImpl extends ViewHandler {
             throws IOException, FacesException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("viewRoot", viewRoot);
-        RenderPreparableUtil.encodePrepareForComponent(context, viewRoot);
+        RenderPreparableUtil.encodeBeforeForComponent(context, viewRoot);
 
         ExternalContext externalContext = context.getExternalContext();
 

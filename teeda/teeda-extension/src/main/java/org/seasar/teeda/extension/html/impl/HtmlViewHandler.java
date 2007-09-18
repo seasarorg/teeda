@@ -135,10 +135,11 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     public void renderView(FacesContext context, UIViewRoot viewRoot)
             throws IOException {
-        RenderPreparableUtil.encodePrepareForComponent(context, viewRoot);
+        RenderPreparableUtil.encodeBeforeForComponent(context, viewRoot);
         ExternalContext externalContext = context.getExternalContext();
         String path = ExternalContextUtil.getViewId(externalContext);
         renderView(context, path);
+        RenderPreparableUtil.encodeAfterForComponent(context, viewRoot);
     }
 
     protected void renderView(final FacesContext context, final String path)

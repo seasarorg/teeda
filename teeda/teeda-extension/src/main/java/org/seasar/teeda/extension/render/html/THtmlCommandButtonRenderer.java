@@ -54,7 +54,7 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
     }
 
-    public void encodePrepare(FacesContext context, UIComponent component)
+    public void encodeBefore(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {

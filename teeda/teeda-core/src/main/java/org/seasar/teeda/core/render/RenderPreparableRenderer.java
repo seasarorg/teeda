@@ -26,6 +26,6 @@ import javax.faces.context.FacesContext;
  */
 public interface RenderPreparableRenderer {
 
-    void encodePrepare(FacesContext context, UIComponent component)
+    void encodeBefore(FacesContext context, UIComponent component)
             throws IOException;
 }

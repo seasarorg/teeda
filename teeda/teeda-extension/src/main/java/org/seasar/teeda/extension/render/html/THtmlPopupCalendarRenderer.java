@@ -50,7 +50,7 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
 
     private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/popupcalendar/";
 
-    public void encodePrepare(FacesContext context, UIComponent component)
+    public void encodeBefore(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {

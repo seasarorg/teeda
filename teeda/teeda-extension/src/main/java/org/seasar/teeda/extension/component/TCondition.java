@@ -28,6 +28,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.PhaseUtil;
+import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -36,7 +37,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 /**
  * @author shot
  */
-public class TCondition extends UIComponentBase {
+public class TCondition extends UIComponentBase implements RenderPreparable {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Condition";
 
@@ -118,7 +119,6 @@ public class TCondition extends UIComponentBase {
             return;
         }
         final String cid = getClientId(context);
-        System.out.println("cid :: " + cid);
         conditions.remove(cid);
     }
 
@@ -170,13 +170,6 @@ public class TCondition extends UIComponentBase {
 
     public void encodeEnd(FacesContext context) throws IOException {
         super.encodeEnd(context);
-        final boolean noError = !FacesMessageUtil
-                .hasErrorOrFatalMessage(context);
-        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
-                : false;
-        if (isRefresh || noError) {
-            saveEncodedCondition();
-        }
     }
 
     public boolean isRenderSpan() {
@@ -220,6 +213,19 @@ public class TCondition extends UIComponentBase {
         values[1] = renderSpan;
         values[2] = refresh;
         return values;
+    }
+
+    public void encodeBefore(final FacesContext context) throws IOException {
+    }
+
+    public void encodeAfter(final FacesContext context) throws IOException {
+        final boolean noError = !FacesMessageUtil
+                .hasErrorOrFatalMessage(context);
+        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
+                : false;
+        if (isRefresh || noError) {
+            saveEncodedCondition();
+        }
     }
 
 }

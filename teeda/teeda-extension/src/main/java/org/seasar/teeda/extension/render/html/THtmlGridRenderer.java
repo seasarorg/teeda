@@ -143,7 +143,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         tdIgnoreAttribute.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 
-    public void encodePrepare(final FacesContext context,
+    public void encodeBefore(final FacesContext context,
             final UIComponent component) throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {

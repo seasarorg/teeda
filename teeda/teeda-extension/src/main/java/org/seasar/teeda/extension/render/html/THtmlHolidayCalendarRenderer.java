@@ -54,7 +54,7 @@ public class THtmlHolidayCalendarRenderer extends AbstractInputRenderer
 
     public static final String WEEKDAYS_MESSAGE_ID = "org.seasar.teeda.extension.component.HtmlHolidayCalendar.WEEKDAYS";
 
-    public void encodePrepare(FacesContext context, UIComponent component)
+    public void encodeBefore(FacesContext context, UIComponent component)
             throws IOException {
         assertNotNull(context, component);
         if (!component.isRendered()) {
