@@ -16,6 +16,9 @@
 package examples.teeda.web.condition;
 
 import java.util.Date;
+import java.util.Random;
+
+import javax.faces.internal.PhaseUtil;
 
 import org.seasar.teeda.extension.annotation.validator.Required;
 
@@ -46,6 +49,16 @@ public class AaaPage {
 	 * @return
 	 */
 	public Class prerender() {
+		Random random = new Random();
+		int nextInt = random.nextInt(10);
+		System.out.println("nextInt = " + nextInt);
+		if (nextInt % 2 == 0) {
+			System.out.println("ふぉるす");
+			dayReport = false;
+		} else {
+			System.out.println("とぅるーー");
+			dayReport = true;
+		}
 		return null;
 	}
 
@@ -55,6 +68,8 @@ public class AaaPage {
 
 	public void setDayReport(boolean dayReport) {
 		this.dayReport = dayReport;
+		System.out.println("dayReport = " + dayReport);
+		System.out.println("phase = " + PhaseUtil.getCurrentPhase());
 	}
 
 	public Date getInYearMonth() {
@@ -86,7 +101,6 @@ public class AaaPage {
 	}
 
 	public Class doExecute() {
-		dayReport = true;
 		return null;
 	}
 
