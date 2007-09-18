@@ -200,6 +200,17 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
         validator.validate(getFacesContext(), component, new BigDecimal("123"));
     }
 
+    // OK:整数部だけ入力されていて範囲内(最大値のみ指定)
+    public void testValidate_IntegralInRange2() throws Exception {
+        final TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setIntegralMax(5);
+        final MockUIComponent component = new MockUIComponent();
+        component.setId("a");
+        validator.validate(getFacesContext(), component,
+                new BigDecimal("12345"));
+        validator.validate(getFacesContext(), component, new BigDecimal("0"));
+    }
+
     // OK:整数部だけ入力されていて範囲内(最小値 == x)
     public void testValidate_IntegralMin() throws Exception {
         final TNumberLengthValidator validator = new TNumberLengthValidator();
@@ -230,6 +241,19 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
         component.setId("a");
         validator.validate(getFacesContext(), component, new BigDecimal(
                 "0.1234"));
+    }
+
+    // OK:小数部だけ入力されていて範囲内(最小値のみ指定)
+    public void testValidate_FractionInRange2() throws Exception {
+        final TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setFractionMax(5);
+        final MockUIComponent component = new MockUIComponent();
+        component.setId("a");
+        validator.validate(getFacesContext(), component, new BigDecimal("123"));
+        validator.validate(getFacesContext(), component,
+                new BigDecimal("0.123"));
+        validator.validate(getFacesContext(), component, new BigDecimal(
+                "0.12345"));
     }
 
     // OK:小数部だけ入力されていて範囲内(最小値 == x)
@@ -264,6 +288,18 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
         component.setId("a");
         validator.validate(getFacesContext(), component, new BigDecimal(
                 "1234567.123"));
+    }
+
+    // OK:整数部も小数部も範囲内 (最大のみ指定)
+    public void testValidate_BothIntegralAndFractionInRange2() throws Exception {
+        final TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setIntegralMax(10);
+        validator.setFractionMax(4);
+        final MockUIComponent component = new MockUIComponent();
+        component.setId("a");
+        validator.validate(getFacesContext(), component, new BigDecimal("0"));
+        validator.validate(getFacesContext(), component, new BigDecimal(
+                "1234567890.1234"));
     }
 
     // OK:入力値がnull

@@ -53,11 +53,11 @@ public class TNumberLengthValidator implements Validator, StateHolder,
 
     private static final BigDecimal ZERO = new BigDecimal("0");
 
-    protected int integralMin = Integer.MIN_VALUE;
+    protected int integralMin = 1;
 
     protected int integralMax = Integer.MAX_VALUE;
 
-    protected int fractionMin = Integer.MIN_VALUE;
+    protected int fractionMin = 0;
 
     protected int fractionMax = Integer.MAX_VALUE;
 
