@@ -48,7 +48,9 @@ public class THtmlSelectUtil {
         }
         final PropertyDesc labelPd = beanDesc.getPropertyDesc(labelName);
         if (selected == null) {
-            labelPd.setValue(page, null);
+            if (labelPd.isWritable()) {
+                labelPd.setValue(page, null);
+            }
             return;
         }
         for (final SelectItemsIterator it = new SelectItemsIterator(select); it
@@ -107,8 +109,8 @@ public class THtmlSelectUtil {
         for (final Iterator it = parent.getChildren().iterator(); it.hasNext();) {
             final UIComponent brotherOrChild = (UIComponent) it.next();
             final String childId = brotherOrChild.getId();
-            if (saveId.equals(childId) &&
-                    (brotherOrChild instanceof THtmlItemsSaveHidden)) {
+            if (saveId.equals(childId)
+                    && (brotherOrChild instanceof THtmlItemsSaveHidden)) {
                 final Object found = ((THtmlItemsSaveHidden) brotherOrChild)
                         .getValue();
                 return found;
