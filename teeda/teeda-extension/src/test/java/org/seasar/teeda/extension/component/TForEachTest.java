@@ -78,39 +78,6 @@ public class TForEachTest extends UIComponentBaseTest {
         assertNull(hoge.nameItems);
     }
 
-    public void testProcessValidators_ItemTypeWithoutDefaultConstructor()
-            throws Exception {
-        TForEach forEach = new TForEach();
-        final Foo foo = new Foo(
-                new Integer[] { new Integer(1), new Integer(2) });
-        MockFacesContext context = getFacesContext();
-        context.getApplication().setVariableResolver(new VariableResolver() {
-            public Object resolveVariable(FacesContext context, String name)
-                    throws EvaluationException {
-                return foo;
-            }
-        });
-        forEach.setItemsName("numItems");
-        forEach.processValidators(context);
-        assertEquals(new Integer(0), foo.num);
-    }
-
-    public void testProcessValidators_ItemTypeWithoutDefaultConstructorPrimitive()
-            throws Exception {
-        TForEach forEach = new TForEach();
-        final Foo2 foo2 = new Foo2(new int[] { 1, 2 });
-        MockFacesContext context = getFacesContext();
-        context.getApplication().setVariableResolver(new VariableResolver() {
-            public Object resolveVariable(FacesContext context, String name)
-                    throws EvaluationException {
-                return foo2;
-            }
-        });
-        forEach.setItemsName("numItems");
-        forEach.processValidators(context);
-        assertTrue(foo2.num == 0);
-    }
-
     public void testProcessValidators_rowAdd() throws Exception {
         TForEach forEach = new TForEach() {
             public String getClientId(FacesContext context) {

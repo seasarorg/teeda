@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.render;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import javax.faces.component.UIForm;
@@ -282,105 +283,6 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         return vb;
     }
 
-    public void testDecode_Foo1() throws Exception {
-        // ## Arrange ##
-        final MockUIViewRoot root = new MockUIViewRoot();
-        root.getChildren().add(forEach);
-
-        final FacesContext context = getFacesContext();
-
-        final FooPage page = new FooPage();
-        {
-            final String pageName = "fooPage";
-            container.register(page, pageName);
-            forEach.setPageName(pageName);
-            forEach.setItemsName("barItems");
-            forEach.setId("a");
-        }
-
-        {
-            MockHtmlInputText text = new MockHtmlInputText();
-            text.setId("z");
-            text.setRenderer(inputTextRenderer);
-            text.setValueBinding("value",
-                    createValueBinding("#{fooPage.bar.aaa}"));
-            forEach.getChildren().add(text);
-        }
-
-        // input parameters
-        {
-            final Map req = context.getExternalContext()
-                    .getRequestParameterMap();
-            req.put("a:0:z", "A");
-            req.put("a:1:z", "B");
-            req.put("a:2:z", "C");
-        }
-
-        // ## Act ##
-        forEach.decode(context);
-        forEach.processValidators(context);
-        forEach.processUpdates(context);
-
-        // ## Assert ##
-        final Bar[] items = page.getBarItems();
-        assertEquals(3, items.length);
-        assertEquals("A", items[0].getAaa());
-        assertEquals("B", items[1].getAaa());
-        assertEquals("C", items[2].getAaa());
-    }
-
-    public void testDecode_Foo2() throws Exception {
-        // ## Arrange ##
-        final MockUIViewRoot root = new MockUIViewRoot();
-        final UIForm namingContainer = new UIForm();
-        namingContainer.setId("form");
-        root.getChildren().add(namingContainer);
-        namingContainer.getChildren().add(forEach);
-
-        final FacesContext context = getFacesContext();
-
-        final FooPage page = new FooPage();
-        {
-            final String pageName = "fooPage";
-            getVariableResolver().putValue(pageName, page);
-            forEach.setPageName(pageName);
-            forEach.setItemsName("barItems");
-            forEach.setId("forEach");
-        }
-
-        {
-            MockHtmlInputText text = new MockHtmlInputText();
-            text.setId("zz");
-            text.setRenderer(inputTextRenderer);
-            text.setValueBinding("value",
-                    createValueBinding("#{fooPage.bar.aaa}"));
-            forEach.getChildren().add(text);
-        }
-
-        // input parameters
-        {
-            final Map req = context.getExternalContext()
-                    .getRequestParameterMap();
-            req.put("form:forEach:0:zz", "A1");
-            req.put("form:forEach:1:zz", "B1");
-            req.put("form:forEach:2:zz", "C1");
-            req.put("form:forEach:3:zz", "D1");
-        }
-
-        // ## Act ##
-        forEach.decode(context);
-        forEach.processValidators(context);
-        forEach.processUpdates(context);
-
-        // ## Assert ##
-        final Bar[] items = page.getBarItems();
-        assertEquals(4, items.length);
-        assertEquals("A1", items[0].getAaa());
-        assertEquals("B1", items[1].getAaa());
-        assertEquals("C1", items[2].getAaa());
-        assertEquals("D1", items[3].getAaa());
-    }
-
     public void testDecode_Hoge1() throws Exception {
         // ## Arrange ##
         final MockUIViewRoot root = new MockUIViewRoot();
@@ -434,7 +336,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         forEach.processUpdates(context);
 
         // ## Assert ##
-        final Fuga[] items = page.getFugaItems();
+        final Fuga[] items = (Fuga[]) page.fugaItems.getFirst();
         assertEquals(3, items.length);
         assertEquals("A", items[0].getAaa());
         assertEquals("B", items[1].getAaa());
@@ -459,24 +361,30 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
      */
     public static class FooPage {
 
-        private Bar bar;
+        private LinkedList bar = new LinkedList();
 
-        private Bar[] barItems;
+        private LinkedList barItems = new LinkedList();
 
         public Bar[] getBarItems() {
-            return barItems;
+            if (barItems.isEmpty()) {
+                return null;
+            }
+            return (Bar[]) barItems.getLast();
         }
 
         public void setBarItems(Bar[] hogeItems) {
-            this.barItems = hogeItems;
+            this.barItems.addLast(hogeItems);
         }
 
         public Bar getBar() {
-            return bar;
+            if (bar.isEmpty()) {
+                return null;
+            }
+            return (Bar) bar.getLast();
         }
 
         public void setBar(Bar bar) {
-            this.bar = bar;
+            this.bar.addLast(bar);
         }
 
     }
@@ -534,14 +442,17 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
      */
     public static class HogePage {
 
-        private Fuga[] fugaItems;
+        private LinkedList fugaItems = new LinkedList();
 
         public Fuga[] getFugaItems() {
-            return fugaItems;
+            if (fugaItems.isEmpty()) {
+                return null;
+            }
+            return (Fuga[]) fugaItems.getLast();
         }
 
         public void setFugaItems(Fuga[] hogeItems) {
-            this.fugaItems = hogeItems;
+            this.fugaItems.addLast(hogeItems);
         }
 
         private String aaa;

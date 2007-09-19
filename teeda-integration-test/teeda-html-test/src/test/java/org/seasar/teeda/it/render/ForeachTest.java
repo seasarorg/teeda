@@ -29,7 +29,7 @@ public class ForeachTest extends TeedaWebTestCase {
 		return setUpTest(ForeachTest.class);
 	}
 
-	 public void testSeasarUser7342() throws Exception {
+	public void testSeasarUser7342() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -308,6 +308,28 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.assertTextEqualsById("aaaIndex", "2");
+	}
+
+	public void testForeachDto_TEEDA324() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachDto.html");
+		tester.dumpHtml();
+		tester.setTextByName("form:aaaItems:0:foo", "x1");
+		tester.setTextByName("form:aaaItems:1:foo", "x2");
+		tester.setTextByName("form:aaaItems:2:bar", "y3");
+		tester.submitById("doSubmit");
+
+		// --------
+		assertTrue(tester.getCurrentUri().indexOf("foreachDto.html") > 0);
+
+		tester.dumpHtml();
+		final String[][] tableExpected = new String[][] { { "x1", "b1" },
+				{ "x2", "b2" }, { "a3", "y3" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
 }

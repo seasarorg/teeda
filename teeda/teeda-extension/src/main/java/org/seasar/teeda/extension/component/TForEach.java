@@ -44,7 +44,6 @@ import javax.faces.internal.NamingContainerUtil;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
@@ -115,8 +114,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     }
 
     public void setItemsName(final String itemsName) {
-        if ((itemsName != null)
-                && !itemsName.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
+        if ((itemsName != null) &&
+                !itemsName.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
             throw new IllegalArgumentException(itemsName);
         }
         this.itemsName = itemsName;
@@ -126,8 +125,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (itemsName == null) {
             return null;
         }
-        return itemsName.substring(0, itemsName.length()
-                - ExtensionConstants.ITEMS_SUFFIX.length());
+        return itemsName.substring(0, itemsName.length() -
+                ExtensionConstants.ITEMS_SUFFIX.length());
     }
 
     public String getIndexName() {
@@ -172,17 +171,6 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
         if (!isRendered()) {
             return;
-        }
-        final Object page = getPage(context);
-        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
-        final String itemName = getItemName();
-        if (beanDesc.hasPropertyDesc(itemName)) {
-            final PropertyDesc itemPd = beanDesc.getPropertyDesc(itemName);
-            if (itemPd.isWritable()) {
-                final Class itemType = itemPd.getPropertyType();
-                final Object item = createNewInstance(context, itemType);
-                itemPd.setValue(page, item);
-            }
         }
         final String pageName = getPageName();
         final String id = this.getId();
@@ -284,10 +272,10 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                         fm.setSummary(summary + lineErrorMessage);
                     } else {
                         fm
-                                .setSummary(summary
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                                        + (row + 1)
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                                .setSummary(summary +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX +
+                                        (row + 1) +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                     }
                 }
                 if (detail != null) {
@@ -295,10 +283,10 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                         fm.setDetail(detail + lineErrorMessage);
                     } else {
                         fm
-                                .setDetail(detail
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                                        + (row + 1)
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                                .setDetail(detail +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX +
+                                        (row + 1) +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                     }
                 }
             }
@@ -359,30 +347,30 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
         final Object page = getPage(context);
         final Class pageClass = page.getClass();
-        Object pageClone = null;
+        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
 
         // TEEDA-305(Seasar-user:7347)
-        boolean hasDefaultConstructor = org.seasar.teeda.core.util.ConstructorUtil
-                .hasDefaultConstructor(pageClass);
-        if (hasDefaultConstructor) {
-            pageClone = ClassUtil.newInstance(pageClass);
-            BeanUtil.copyProperties(page, pageClone);
+        final Map savedProperties = new HashMap();
+        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
+            if (pd.isReadable() && pd.isWritable()) {
+                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
+            }
         }
 
-        final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
         final String itemsName = getItemsName();
         final PropertyDesc itemsPd = pageBeanDesc.getPropertyDesc(itemsName);
         if (!itemsPd.isWritable()) {
-            throw new IllegalStateException("class ["
-                    + pageBeanDesc.getBeanClass().getName()
-                    + "] should have writeMethod for ["
-                    + itemsPd.getPropertyName() + "]");
+            throw new IllegalStateException("class [" +
+                    pageBeanDesc.getBeanClass().getName() +
+                    "] should have writeMethod for [" +
+                    itemsPd.getPropertyName() + "]");
         }
         final Class itemsClass = itemsPd.getPropertyType();
         final Class itemClass = itemsClass.getComponentType();
         if (itemClass == null) {
-            logger.debug("class [" + itemsClass.getName()
-                    + "] should be array type, so no update.");
+            logger.debug("class [" + itemsClass.getName() +
+                    "] should be array type, so no update.");
             return;
         }
         Object[] items = (Object[]) itemsPd.getValue(page);
@@ -392,71 +380,25 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 items[i] = createNewInstance(context, itemClass);
             }
         }
-        final String itemName = getItemName();
-        //Simple case like String[].
-        if (isSimpleItem(itemName, pageBeanDesc)) {
-            final PropertyDesc itemPd = pageBeanDesc.getPropertyDesc(itemName);
-            for (int i = 0; i < rowSize; ++i) {
-                setRowIndex(i);
-                itemPd.setValue(page, items[i]);
-                enterRow(context, i);
-                super.processUpdates(context);
-                leaveRow(context);
-            }
-        }
-        //Dto case like HogeDto[].
-        else {
-            final BeanDesc itemBeanDesc = BeanDescFactory
-                    .getBeanDesc(itemClass);
-            for (int i = 0; i < rowSize; ++i) {
-                final Object item = items[i];
-                itemToPage(pageBeanDesc, page, item);
-                enterRow(context, i);
-                super.processUpdates(context);
-                leaveRow(context);
-                pageToItem(page, pageBeanDesc, item, itemBeanDesc);
-            }
-
-            //TEEDA-305(Seasar-user:7347)
-            if (hasDefaultConstructor) {
-                for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
-                    final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
-                    final String propertyName = itemPd.getPropertyName();
-                    if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
-                        continue;
-                    }
-                    final PropertyDesc pagePd = pageBeanDesc
-                            .getPropertyDesc(propertyName);
-                    if (pagePd.isWritable()) {
-                        final Object value = pagePd.getValue(pageClone);
-                        pagePd.setValue(page, value);
-                    }
-                }
-            }
-        }
         itemsPd.setValue(page, items);
-    }
 
-    private static boolean isSimpleItem(final String itemName,
-            final BeanDesc pageBeanDesc) {
-        return pageBeanDesc.hasPropertyDesc(itemName);
-    }
+        final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
+        for (int i = 0; i < rowSize; ++i) {
+            final Object item = items[i];
+            itemToPage(pageBeanDesc, page, item);
+            enterRow(context, i);
+            super.processUpdates(context);
+            leaveRow(context);
+            pageToItem(page, pageBeanDesc, item, itemBeanDesc);
+        }
 
-    private void pageToItem(final Object page, final BeanDesc pageBeanDesc,
-            final Object item, final BeanDesc itemBeanDesc) {
-        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
-            final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
-            final String propertyName = itemPd.getPropertyName();
-            if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
-                continue;
-            }
-            final PropertyDesc pagePd = pageBeanDesc
-                    .getPropertyDesc(propertyName);
-            final Object pageValue = pagePd.getValue(page);
-            // https://www.seasar.org/issues/browse/TEEDA-149
-            if (pagePd.isWritable()) {
-                itemPd.setValue(item, pageValue);
-            }
+        // TEEDA-305(Seasar-user:7347)
+        for (final Iterator it = savedProperties.entrySet().iterator(); it
+                .hasNext();) {
+            final Entry entry = (Entry) it.next();
+            final String name = (String) entry.getKey();
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(name);
+            pd.setValue(page, entry.getValue());
         }
     }
 
@@ -523,7 +465,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         itemToPage(pageBeanDesc, page, item);
     }
 
-    private void itemToPage(final BeanDesc pageBeanDesc, final Object page,
+    protected void itemToPage(final BeanDesc pageBeanDesc, final Object page,
             final Object item) {
         if (item == null) {
             return;
@@ -534,6 +476,24 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             processMapItem(pageBeanDesc, page, (Map) item);
         } else {
             processBeanItem(pageBeanDesc, page, item);
+        }
+    }
+
+    protected void pageToItem(final Object page, final BeanDesc pageBeanDesc,
+            final Object item, final BeanDesc itemBeanDesc) {
+        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
+            final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
+            final String propertyName = itemPd.getPropertyName();
+            if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
+                continue;
+            }
+            final PropertyDesc pagePd = pageBeanDesc
+                    .getPropertyDesc(propertyName);
+            final Object pageValue = pagePd.getValue(page);
+            // https://www.seasar.org/issues/browse/TEEDA-149
+            if (pagePd.isWritable()) {
+                itemPd.setValue(item, pageValue);
+            }
         }
     }
 
@@ -589,8 +549,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (valueClass == null) {
             return true;
         }
-        return (pdClass == valueClass)
-                || (pdClass.isAssignableFrom(valueClass));
+        return (pdClass == valueClass) ||
+                (pdClass.isAssignableFrom(valueClass));
     }
 
 }

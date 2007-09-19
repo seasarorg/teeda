@@ -41,6 +41,21 @@ public class ForeachRadioPage {
 		this.dtoItems = dtoItems;
 	}
 
+	/**
+	 * @return the dto
+	 */
+	public MyDto getDto() {
+		return dto;
+	}
+
+	/**
+	 * @param dto
+	 *            the dto to set
+	 */
+	public void setDto(MyDto dto) {
+		this.dto = dto;
+	}
+
 	public Class initialize() {
 		dtoItems = new MyDto[2];
 		MyDto myDto = new MyDto();
