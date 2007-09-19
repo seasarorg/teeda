@@ -20,6 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.seasar.teeda.extension.validator.TNumberLengthValidator;
+
 /**
  * @author shot
  */
@@ -28,13 +30,13 @@ import java.lang.annotation.Target;
 @Validator("TNumberLengthValidator")
 public @interface NumberLength {
 
-	int integralMin() default 1;
+	int integralMin() default TNumberLengthValidator.INTEGRAL_DEFAULT_MIN;
 
-	int integralMax() default Integer.MAX_VALUE;
+	int integralMax() default TNumberLengthValidator.INTEGRAL_DEFAULT_MAX;
 
-	int fractionMin() default 0;
+	int fractionMin() default TNumberLengthValidator.FRACTAL_DEFAULT_MIN;
 
-	int fractionMax() default Integer.MAX_VALUE;
+	int fractionMax() default TNumberLengthValidator.FRACTAL_DEFAULT_MAX;
 
 	String target() default "";
 
