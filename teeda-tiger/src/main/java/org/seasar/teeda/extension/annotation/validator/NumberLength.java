@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,14 +28,14 @@ import java.lang.annotation.Target;
 @Validator("TNumberLengthValidator")
 public @interface NumberLength {
 
-    int integralMin() default Integer.MIN_VALUE;
+	int integralMin() default 1;
 
-    int integralMax() default Integer.MAX_VALUE;
+	int integralMax() default Integer.MAX_VALUE;
 
-    int fractionMin() default Integer.MIN_VALUE;
+	int fractionMin() default 0;
 
-    int fractionMax() default Integer.MAX_VALUE;
+	int fractionMax() default Integer.MAX_VALUE;
 
-    String target() default "";
+	String target() default "";
 
 }
