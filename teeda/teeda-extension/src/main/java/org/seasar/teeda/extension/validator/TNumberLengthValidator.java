@@ -55,13 +55,21 @@ public class TNumberLengthValidator implements Validator, StateHolder,
 
     private static final BigDecimal ZERO = new BigDecimal("0");
 
-    protected int integralMin = 1;
+    public static final int INTEGRAL_DEFAULT_MIN = 1;
 
-    protected int integralMax = Integer.MAX_VALUE;
+    public static final int INTEGRAL_DEFAULT_MAX = Integer.MAX_VALUE;
 
-    protected int fractionMin = 0;
+    public static final int FRACTAL_DEFAULT_MIN = 0;
 
-    protected int fractionMax = Integer.MAX_VALUE;
+    public static final int FRACTAL_DEFAULT_MAX = Integer.MAX_VALUE;
+
+    protected int integralMin = INTEGRAL_DEFAULT_MIN;
+
+    protected int integralMax = INTEGRAL_DEFAULT_MAX;
+
+    protected int fractionMin = FRACTAL_DEFAULT_MIN;
+
+    protected int fractionMax = FRACTAL_DEFAULT_MAX;
 
     protected boolean transientValue = false;
 
