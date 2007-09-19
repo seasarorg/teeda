@@ -15,14 +15,19 @@
  */
 package org.seasar.teeda.core.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author shot
  */
-public interface CancelHandler {
+public interface CancelHandler extends Serializable {
 
     List getCancellableExceptions();
 
+    List getCancellableExceptionNames();
+
     void addCancellableException(Class c);
+
+    void addCancellableException(String exceptionName);
 }

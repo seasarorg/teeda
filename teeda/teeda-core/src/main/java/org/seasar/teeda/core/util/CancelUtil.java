@@ -48,6 +48,14 @@ public class CancelUtil {
                 return true;
             }
         }
+        final List nameCandidates = handler.getCancellableExceptionNames();
+        for (Iterator itr = nameCandidates.iterator(); itr.hasNext();) {
+            final String name = (String) itr.next();
+            if (t.getClass().getName().endsWith(name)) {
+                logger.log("WTDA0206", new Object[] { t });
+                return true;
+            }
+        }
         return false;
     }
 

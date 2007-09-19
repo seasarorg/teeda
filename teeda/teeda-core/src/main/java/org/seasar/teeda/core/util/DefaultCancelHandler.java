@@ -23,14 +23,26 @@ import java.util.List;
  */
 public class DefaultCancelHandler implements CancelHandler {
 
-    private List candidates = new ArrayList();
+    private static final long serialVersionUID = 1L;
+
+    private List classCandidates = new ArrayList();
+
+    private List nameCandidates = new ArrayList();
 
     public void addCancellableException(Class c) {
-        candidates.add(c);
+        classCandidates.add(c);
     }
 
     public List getCancellableExceptions() {
-        return candidates;
+        return classCandidates;
+    }
+
+    public void addCancellableException(String exceptionName) {
+        nameCandidates.add(exceptionName);
+    }
+
+    public List getCancellableExceptionNames() {
+        return nameCandidates;
     }
 
 }

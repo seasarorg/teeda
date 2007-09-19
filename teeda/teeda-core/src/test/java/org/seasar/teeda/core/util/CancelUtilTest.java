@@ -18,6 +18,7 @@ package org.seasar.teeda.core.util;
 import java.io.IOException;
 import java.net.SocketException;
 
+import javax.faces.FacesException;
 import javax.faces.event.AbortProcessingException;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
@@ -32,11 +33,26 @@ public class CancelUtilTest extends TeedaTestCase {
             CancelHandler handler = new DefaultCancelHandler();
             handler.addCancellableException(SocketException.class);
             handler.addCancellableException(AbortProcessingException.class);
+            handler.addCancellableException("javax.faces.FacesException");
             register(handler);
             assertFalse(CancelUtil.isCancelled(new IOException()));
             assertTrue(CancelUtil.isCancelled(new SocketException()));
+            assertTrue(CancelUtil.isCancelled(new FacesException()));
         } finally {
             CancelUtil.clear();
         }
     }
+
+    public void testIsCancelled2() throws Exception {
+        try {
+            CancelHandler handler = new DefaultCancelHandler();
+            register(handler);
+            assertFalse(CancelUtil.isCancelled(new IOException()));
+            assertFalse(CancelUtil.isCancelled(new SocketException()));
+            assertFalse(CancelUtil.isCancelled(new FacesException()));
+        } finally {
+            CancelUtil.clear();
+        }
+    }
+
 }
