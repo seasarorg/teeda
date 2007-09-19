@@ -13,4 +13,9 @@
 	<component class="org.seasar.teeda.extension.util.TreeNavigationImageLocatorImpl">
 		<property name="imageRoot">"/img/"</property>
 	</component>
+	<component class="org.seasar.teeda.core.util.DefaultCancelHandler">
+		<initMethod name="addCancellableException">
+			<arg>@java.net.SocketException@class</arg>
+		</initMethod>
+	</component>
 </components>
