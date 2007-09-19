@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.validator;
 import java.math.BigDecimal;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.AbstractValidatorTest;
 import javax.faces.validator.Validator;
@@ -33,6 +34,26 @@ import org.seasar.teeda.core.unit.ExceptionAssert;
  * @author shot
  */
 public class TNumberLengthValidatorTest extends AbstractValidatorTest {
+
+    public void testValidate_DoubleNotAllowed() throws Exception {
+        final TNumberLengthValidator validator = new TNumberLengthValidator();
+        validator.setIntegralMax(3);
+        validator.setIntegralMin(1);
+        final MockUIComponent component = new MockUIComponent();
+        component.setId("aaa");
+        try {
+            validator
+                    .validate(getFacesContext(), component, new Double("1234"));
+            fail();
+        } catch (final ValidatorException e) {
+            final FacesMessage facesMessage = e.getFacesMessage();
+            System.out.println(facesMessage.getSummary());
+            System.out.println(facesMessage.getDetail());
+            assertEquals(TNumberLengthValidator.DOUBLE_NOT_ALLOWED, e
+                    .getMessageId());
+            ExceptionAssert.assertMessageExist(e);
+        }
+    }
 
     // NG:整数部が最大桁数より大きい
     public void testValidate_IntegralGreater() throws Exception {
@@ -316,33 +337,34 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
     public void testGetDigits_Integer() throws Exception {
         final TNumberLengthValidator validator = new TNumberLengthValidator();
         final FacesContext context = getFacesContext();
+        UIInput input = new UIInput();
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Integer(123));
+                    context, input, new Integer(123));
             assertEquals(3, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Integer(1234567890));
+                    context, input, new Integer(1234567890));
             assertEquals(10, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Integer(0));
+                    context, input, new Integer(0));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Integer(1));
+                    context, input, new Integer(1));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Integer(-1124));
+                    context, input, new Integer(-1124));
             assertEquals(4, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
@@ -351,33 +373,34 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
     public void testGetDigits_Long() throws Exception {
         final TNumberLengthValidator validator = new TNumberLengthValidator();
         final FacesContext context = getFacesContext();
+        UIInput input = new UIInput();
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Long(123));
+                    context, input, new Long(123));
             assertEquals(3, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Long(1234567890123456789L));
+                    context, input, new Long(1234567890123456789L));
             assertEquals(19, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Long(0));
+                    context, input, new Long(0));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Long(1));
+                    context, input, new Long(1));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new Long(-1234));
+                    context, input, new Long(-1234));
             assertEquals(4, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
@@ -386,39 +409,41 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
     public void testGetDigits_BigDecimal_Integral() throws Exception {
         final TNumberLengthValidator validator = new TNumberLengthValidator();
         final FacesContext context = getFacesContext();
+        UIInput input = new UIInput();
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("123"));
+                    context, input, new BigDecimal("123"));
             assertEquals(3, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("1234567890123456789"));
+                    context, input, new BigDecimal("1234567890123456789"));
             assertEquals(19, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("123456789012345678901234567890"));
+                    context, input, new BigDecimal(
+                            "123456789012345678901234567890"));
             assertEquals(30, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("0"));
+                    context, input, new BigDecimal("0"));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("1"));
+                    context, input, new BigDecimal("1"));
             assertEquals(1, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("-123456"));
+                    context, input, new BigDecimal("-123456"));
             assertEquals(6, digits.getIntegral());
             assertEquals(0, digits.getFraction());
         }
@@ -427,34 +452,35 @@ public class TNumberLengthValidatorTest extends AbstractValidatorTest {
     public void testGetDigits_BigDecimal_Fraction() throws Exception {
         final TNumberLengthValidator validator = new TNumberLengthValidator();
         final FacesContext context = getFacesContext();
+        UIInput input = new UIInput();
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("0.1"));
+                    context, input, new BigDecimal("0.1"));
             assertEquals(1, digits.getIntegral());
             assertEquals(1, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("0.1234567890123456789"));
+                    context, input, new BigDecimal("0.1234567890123456789"));
             assertEquals(1, digits.getIntegral());
             assertEquals(19, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context,
-                    new BigDecimal("10.123456789012345678901234567890"));
+                    context, input, new BigDecimal(
+                            "10.123456789012345678901234567890"));
             assertEquals(2, digits.getIntegral());
             assertEquals(30, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("0.0"));
+                    context, input, new BigDecimal("0.0"));
             assertEquals(1, digits.getIntegral());
             assertEquals(1, digits.getFraction());
         }
         {
             final TNumberLengthValidator.Digits digits = validator.getDigits(
-                    context, new BigDecimal("-1.123456"));
+                    context, input, new BigDecimal("-1.123456"));
             assertEquals(1, digits.getIntegral());
             assertEquals(6, digits.getFraction());
         }

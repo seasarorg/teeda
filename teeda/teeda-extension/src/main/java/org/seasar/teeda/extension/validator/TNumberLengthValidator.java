@@ -45,11 +45,13 @@ public class TNumberLengthValidator implements Validator, StateHolder,
      *
      */
 
-    static final String INTEGRAL_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.INTEGRAL";
+    public static final String INTEGRAL_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.INTEGRAL";
 
-    static final String FRACTION_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.FRACTION";
+    public static final String FRACTION_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.FRACTION";
 
-    static final String BOTH_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.BOTH";
+    public static final String BOTH_MESSAGE_ID = "org.seasar.teeda.extension.validator.TNumberLengthValidator.BOTH";
+
+    public static final String DOUBLE_NOT_ALLOWED = "org.seasar.teeda.extension.validator.TNumberLengthValidator.DOUBLE_NOT_ALLOWED";
 
     private static final BigDecimal ZERO = new BigDecimal("0");
 
@@ -78,7 +80,7 @@ public class TNumberLengthValidator implements Validator, StateHolder,
         if (!isTargetCommandValidation(context, targets)) {
             return;
         }
-        final Digits digits = getDigits(context, value);
+        final Digits digits = getDigits(context, component, value);
         final boolean integralSuccess = validateIntegral(digits);
         final boolean fractionSuccess = validateFraction(digits);
 
@@ -124,7 +126,8 @@ public class TNumberLengthValidator implements Validator, StateHolder,
         return true;
     }
 
-    protected Digits getDigits(final FacesContext context, final Object value) {
+    protected Digits getDigits(final FacesContext context,
+            final UIComponent component, final Object value) {
         final Digits digits = new Digits();
         if (value instanceof Integer) {
             final Integer num = (Integer) value;
@@ -150,6 +153,11 @@ public class TNumberLengthValidator implements Validator, StateHolder,
             } else {
                 digits.setIntegral(s.length());
             }
+        } else if (value instanceof Double) {
+            final Object[] args = { UIComponentUtil.getLabel(component), value };
+            final FacesMessage message = FacesMessageUtil.getMessage(context,
+                    DOUBLE_NOT_ALLOWED, args);
+            throw new ValidatorException(message, DOUBLE_NOT_ALLOWED, args);
         }
         return digits;
     }
