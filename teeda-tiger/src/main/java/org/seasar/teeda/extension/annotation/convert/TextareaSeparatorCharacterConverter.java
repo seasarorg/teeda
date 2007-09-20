@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Converter("TextareaSeparatorCharacterConverter")
+@Converter("textareaSeparatorCharacterConverter")
 public @interface TextareaSeparatorCharacterConverter {
 
 	String target() default "";
