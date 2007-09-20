@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
@@ -27,6 +28,7 @@ import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
@@ -54,10 +56,16 @@ public class THtmlCommandButton extends HtmlCommandButton implements
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
         if (TransactionTokenUtil.isDoOnce(getId())) {
-            FacesContext context = FacesContext.getCurrentInstance();
+            final FacesContext context = FacesContext.getCurrentInstance();
             if (TransactionTokenUtil.verify(context)) {
                 super.broadcast(event);
             } else {
+                final Map requestMap = context.getExternalContext()
+                        .getRequestMap();
+                if (PostbackUtil.isPostback(requestMap)) {
+                    context.renderResponse();
+                    return;
+                }
                 String path = RedirectScope.getRedirectingPath(context);
                 if (path == null) {
                     path = RedirectScope.getRedirectedPath(context);

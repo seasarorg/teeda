@@ -9,12 +9,13 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.teeda.extension.component.html;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.event.AbortProcessingException;
@@ -22,7 +23,10 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
 
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -59,6 +63,30 @@ public class THtmlCommandButtonTest extends TeedaTestCase {
         button.broadcast(event);
         assertFalse(actionListener.called);
         assertTrue(getFacesContext().getRenderResponse());
+    }
+
+    public void testVerify_ng_postback() throws Exception {
+        THtmlCommandButton button = new THtmlCommandButton();
+        MockExternalContext orgExtContext = getExternalContext();
+        try {
+            MockExternalContext context = new MockExternalContextImpl() {
+
+                public void redirect(String requestURI) throws IOException {
+                    fail();
+                }
+
+            };
+            setExternalContext(context);
+            getFacesContext().setExternalContext(context);
+            PostbackUtil.setPostback(context.getRequestMap(), true);
+            button.setId("doOnceSubmit");
+            FacesEvent event = new ActionEvent(button);
+            button.broadcast(event);
+            assertFalse(actionListener.called);
+            assertTrue(getFacesContext().getRenderResponse());
+        } finally {
+            setExternalContext(orgExtContext);
+        }
     }
 
     private static class MyActionListener implements ActionListener {
