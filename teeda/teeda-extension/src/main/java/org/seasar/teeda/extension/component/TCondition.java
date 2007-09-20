@@ -215,10 +215,10 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         return values;
     }
 
-    public void encodeBefore(final FacesContext context) throws IOException {
+    public void preEncodeBegin(final FacesContext context) throws IOException {
     }
 
-    public void encodeAfter(final FacesContext context) throws IOException {
+    public void postEncodeEnd(final FacesContext context) throws IOException {
         final boolean noError = !FacesMessageUtil
                 .hasErrorOrFatalMessage(context);
         final boolean isRefresh = (refresh != null) ? refresh.booleanValue()

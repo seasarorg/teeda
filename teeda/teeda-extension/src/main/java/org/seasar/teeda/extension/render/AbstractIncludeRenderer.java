@@ -20,7 +20,9 @@ import java.util.Iterator;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.internal.RenderPreparable;
 
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.extension.component.AbstractInclude;
@@ -30,7 +32,8 @@ import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 /**
  * @author higa
  */
-public abstract class AbstractIncludeRenderer extends AbstractRenderer {
+public abstract class AbstractIncludeRenderer extends AbstractRenderer
+        implements RenderPreparable {
 
     private ViewHandler viewHandler;
 
@@ -97,7 +100,6 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeEnd(context, component);
-        component.getChildren().clear();
     }
 
     protected void include(FacesContext context, AbstractInclude component) {
@@ -132,4 +134,15 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer {
             return;
         }
     }
+
+    public void postEncodeEnd(final FacesContext context) throws IOException {
+        final UIViewRoot viewRoot = context.getViewRoot();
+        if (viewRoot != null) {
+            viewRoot.getChildren().clear();
+        }
+    }
+
+    public void preEncodeBegin(final FacesContext context) throws IOException {
+    }
+
 }

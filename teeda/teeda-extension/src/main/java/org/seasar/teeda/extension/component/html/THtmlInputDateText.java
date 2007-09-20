@@ -84,11 +84,11 @@ public class THtmlInputDateText extends THtmlInputText implements
         return state;
     }
 
-    public void encodeBefore(final FacesContext context) throws IOException {
+    public void preEncodeBegin(final FacesContext context) throws IOException {
         RenderPreparableUtil.encodeBeforeForRenderer(context, this);
     }
 
-    public void encodeAfter(final FacesContext context) throws IOException {
+    public void postEncodeEnd(final FacesContext context) throws IOException {
     }
 
 }

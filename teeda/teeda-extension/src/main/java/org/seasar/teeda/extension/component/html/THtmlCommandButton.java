@@ -121,11 +121,11 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         return values;
     }
 
-    public void encodeBefore(FacesContext context) throws IOException {
+    public void preEncodeBegin(FacesContext context) throws IOException {
         RenderPreparableUtil.encodeBeforeForRenderer(context, this);
     }
 
-    public void encodeAfter(FacesContext context) throws IOException {
+    public void postEncodeEnd(FacesContext context) throws IOException {
     }
 
 }

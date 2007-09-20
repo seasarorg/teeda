@@ -55,7 +55,7 @@ public abstract class RenderPreparableUtil {
             return;
         }
         if ((component instanceof RenderPreparable)) {
-            ((RenderPreparable) component).encodeBefore(context);
+            ((RenderPreparable) component).preEncodeBegin(context);
         }
         if (component.getChildCount() > 0) {
             for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
@@ -69,14 +69,14 @@ public abstract class RenderPreparableUtil {
             final UIComponent component) throws IOException {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        if ((component instanceof RenderPreparable)) {
-            ((RenderPreparable) component).encodeAfter(context);
-        }
         if (component.getChildCount() > 0) {
             for (Iterator it = component.getChildren().iterator(); it.hasNext();) {
                 UIComponent child = (UIComponent) it.next();
                 encodeAfterForComponent(context, child);
             }
+        }
+        if ((component instanceof RenderPreparable)) {
+            ((RenderPreparable) component).postEncodeEnd(context);
         }
     }
 }

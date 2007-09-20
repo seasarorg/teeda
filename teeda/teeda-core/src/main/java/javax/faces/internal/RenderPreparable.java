@@ -25,8 +25,8 @@ import javax.faces.context.FacesContext;
  */
 public interface RenderPreparable {
 
-    void encodeBefore(final FacesContext context) throws IOException;
+    void preEncodeBegin(final FacesContext context) throws IOException;
 
-    void encodeAfter(final FacesContext context) throws IOException;
+    void postEncodeEnd(final FacesContext context) throws IOException;
 
 }
