@@ -47,7 +47,7 @@ public class RedirectPage {
 	}
 
 	public String doRedirect() throws IOException {
-		if (url.startsWith("http://")) {
+		if (!url.startsWith("http://")) {
 			url = "http://" + url;
 		}
 		response.sendRedirect(url);
