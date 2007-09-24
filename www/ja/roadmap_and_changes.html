@@ -86,6 +86,56 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.11-RC2">Teeda&nbsp;1.0.11-RC2&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+Teeda 1.0.11の修正内容となるべき一覧です.
+問題なければこのリストがそのまま1.0.11の修正内容になります.
+
+** Bug
+    * [TEEDA-303] - DoltengのScaffoldでGridのJavaScriptがエラーになる問題を修正しました．
+    * [TEEDA-324] - ForEachでaaaItemsのaaaプロパティが存在する場合にaaaItemsが
+                       更新されない問題を修正しました．
+    * [TEEDA-326] - エラーページの表示中に，現在のエラーページを表示する条件とマッチする
+                       例外が発生すると，無限リダイレクトになる問題を修正しました．
+    * [TEEDA-348] - Pageへ付けるTigerアノテーションをsetterにも書けるようにする
+    * [TEEDA-349] - [Seasar-user:9918] Labelが機能しなくなった
+    * [TEEDA-351] - @PageScopeによる値引継ぎについて
+    * [TEEDA-352] - target指定されておらずConverterが動作しない場合に、再表示時に入力欄が
+                       空になってしまう
+    * [TEEDA-353] - ConverterアノテーションにメッセージID指定が出来ない
+    * [TEEDA-355] - TInputDate, TInputCommaTextでte:で独自属性を指定できない
+    * [TEEDA-356] - ForEachでpublic fieldに対応していない
+    * [TEEDA-357] - TUISelectItemsが配列に対応していない
+    * [TEEDA-360] - ConditionとValidatorの同時使用
+    * [TEEDA-361] - Teedaでレイアウト化したそれぞれのPageクラスにdoOnceをおくとdoOnceメソッドが
+                       呼ばれない問題を修正しました．
+    * [TEEDA-364] - SelectOneMenu が一度値を選択された後，ブラウザで戻って未選択にしてサブミットすると
+                       ラベルだけ直前に選択した値を引き継いでしまう問題を修正しました．
+    * [TEEDA-365] - マルチパートのフォームでリクエストパラメータの値が Page クラスにバインドされない
+                       問題を修正しました．
+    * [TEEDA-373] - クッキーを無効にしているブラウザでフォームをサブミットした場合にセッションIDが
+                       引き継がれない問題を修正しました．
+    * [TEEDA-374] - doOnce() メソッドを使った場合など，Teeda が &lt;head&gt; 内の &lt;tile&gt;より前に
+                    &lt;script&gt; 等を追加するため，IE でタイトルが表示されなくなる問題を修正しました．
+    * [TEEDA-376] - Kumu を使用してイベントを登録している画面で，
+                    doOnce() ボタン(te:renderJs="true")を使用するとイベントハンドラが
+                       呼び出されない問題を修正しました．
+    * [TEEDA-377] - @NumberLengthにてDecimal型のチェックが行われない
+    * [TEEDA-379] - @TextareaSeparatorCharacterConverterを使用すると
+                    ComponentNotFoundRuntimeExceptionが発生する
+    * [TEEDA-381] - doOnceでTokenのベリファイに失敗した場合、ポストバック時の挙動がおかしい
+
+** Improvement
+    * [TEEDA-378] - TNumberLengthValidator の整数部の最少桁数 (integralMin) は初期値 1，
+                       小数部の最少桁数 (fractionMin) は初期値 0 にしました．
+
+** Task
+    * [TEEDA-350] - teeda-html-exampleをTiger前提にする
+    * [TEEDA-358] - Teeda1.0.11-RC1の@PageScope、@SubapplicationScopeの挙動について
+    * [TEEDA-359] - JSPのcharsetが無視される
+    * [TEEDA-375] - ダウンロードを IE でキャンセルした際の対応について
+</pre>
+
 <h2><a name="1.0.10">Teeda&nbsp;1.0.10&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
