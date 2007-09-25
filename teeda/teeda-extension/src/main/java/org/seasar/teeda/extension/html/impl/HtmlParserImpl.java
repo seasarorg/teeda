@@ -23,7 +23,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.xerces.parsers.SAXParser;
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.exception.SAXRuntimeException;
 import org.seasar.framework.util.InputStreamReaderUtil;
@@ -33,6 +34,7 @@ import org.seasar.teeda.extension.html.HtmlNode;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * @author higa
@@ -47,7 +49,7 @@ public class HtmlParserImpl implements HtmlParser {
 
     public HtmlNode parse(InputStream is, String viewId) {
         try {
-            SAXParser parser = new TeedaSAXParser();
+            XMLReader parser = createXMLReader();
             HtmlNodeHandler handler = createHtmlNodeHandler();
             InputStreamReader reader = InputStreamReaderUtil.create(is,
                     getEncoding());
@@ -62,6 +64,19 @@ public class HtmlParserImpl implements HtmlParser {
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
+    }
+
+    protected XMLReader createXMLReader() throws SAXException {
+        final S2Container container = SingletonS2ContainerFactory
+                .getContainer();
+        final TeedaXMLReaderFactory factory;
+        if (container.hasComponentDef(TeedaXMLReaderFactory.class)) {
+            factory = (TeedaXMLReaderFactory) container
+                    .getComponent(TeedaXMLReaderFactory.class);
+        } else {
+            factory = new TeedaXMLReaderFactory.DEFAULT();
+        }
+        return factory.createXMLReader();
     }
 
     protected HtmlNodeHandler createHtmlNodeHandler() {
