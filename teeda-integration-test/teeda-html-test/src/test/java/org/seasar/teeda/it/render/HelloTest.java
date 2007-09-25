@@ -39,6 +39,8 @@ public class HelloTest extends TeedaWebTestCase {
 
 		// ## Assert ##
 		tester.assertTextEqualsById("aaa", "Teeda Extension Tests");
+		tester.assertTextEqualsById("charRef", "&<>\"'");
+		tester.assertTextEqualsById("numberRef", "@A");
 	}
 
 }
