@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ForeachDelete</title>
+<script type="text/javascript">
+function setIndex(name) {
+  var hidden = name.substring(0, name.lastIndexOf(':'));
+  var f = document['layoutChildBody:foreachDeleteForm'];
+  f.clickIndex.value = Number(f[hidden + ':aaaIndex-x'].value) + 1;
+}
+</script>
+</head>
+<body>
+<span>Foreach sample with delete.</span>
+<form id="foreachDeleteForm">
+<input type="hidden" name="clickIndex"/>
+<input type="hidden" id="aaaItemsSave"/>
+<table border="1">
+ <thead>
+  <tr bgcolor="#7777FF">
+   <th>Key</th>
+   <th colspan="2">Test</th>
+  </tr>
+ </thead>
+ <tbody id="aaaItems">
+  <tr>
+   <td><span id="key">dummy1</span></td>
+   <td>
+    <input type="button" id="doDelete" value="delete" onclick="setIndex(this.name);"/>
+    <input type="hidden" id="aaaIndex-x"/>
+   </td>
+  </tr>
+ </tbody>
+</table>
+</form>
+</body>
+</html>
