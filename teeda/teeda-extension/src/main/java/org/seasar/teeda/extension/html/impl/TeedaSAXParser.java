@@ -18,10 +18,8 @@ package org.seasar.teeda.extension.html.impl;
 import org.apache.xerces.parsers.SAXParser;
 import org.apache.xerces.util.XMLAttributesImpl;
 import org.apache.xerces.xni.Augmentations;
-import org.apache.xerces.xni.NamespaceContext;
 import org.apache.xerces.xni.QName;
 import org.apache.xerces.xni.XMLAttributes;
-import org.apache.xerces.xni.XMLLocator;
 import org.apache.xerces.xni.XMLString;
 import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLParserConfiguration;
@@ -33,12 +31,6 @@ public class TeedaSAXParser extends SAXParser {
 
     public TeedaSAXParser(final XMLParserConfiguration config) {
         super(config);
-    }
-
-    public void startDocument(XMLLocator locator, String encoding,
-            NamespaceContext namespaceContext, Augmentations augs)
-            throws XNIException {
-        super.startDocument(locator, encoding, namespaceContext, augs);
     }
 
     public void xmlDecl(final String version, final String encoding,
