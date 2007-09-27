@@ -349,15 +349,6 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         final Class pageClass = page.getClass();
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
 
-        // TEEDA-305(Seasar-user:7347)
-        final Map savedProperties = new HashMap();
-        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
-            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
-            if (pd.isReadable() && pd.isWritable()) {
-                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
-            }
-        }
-
         final String itemsName = getItemsName();
         final PropertyDesc itemsPd = pageBeanDesc.getPropertyDesc(itemsName);
         if (!itemsPd.isWritable()) {
@@ -381,6 +372,15 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             }
         }
         itemsPd.setValue(page, items);
+
+        // TEEDA-305(Seasar-user:7347)
+        final Map savedProperties = new HashMap();
+        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
+            if (pd.isReadable() && pd.isWritable()) {
+                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
+            }
+        }
 
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
         for (int i = 0; i < rowSize; ++i) {
@@ -409,6 +409,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     public void leaveRow(final FacesContext context) {
         componentStates.saveDescendantComponentStates(context, this);
+        setRowIndex(INITIAL_ROW_INDEX);
     }
 
     public Object getPage(final FacesContext context) {
