@@ -96,6 +96,7 @@ public class TForEachRenderer extends AbstractRenderer {
     public void decode(final FacesContext context, final UIComponent component) {
         assertNotNull(context, component);
         final TForEach forEach = (TForEach) component;
+        forEach.setRowIndex(TForEach.INITIAL_ROW_INDEX);
         final int rowSize = getRowSize(context, forEach);
         forEach.setRowSize(rowSize);
         for (int i = 0; i < rowSize; i++) {
@@ -156,9 +157,9 @@ public class TForEachRenderer extends AbstractRenderer {
         for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (propertyName.equals(itemsName)
-                    || propertyName.equals(indexName) || !pd.isReadable()
-                    || !pd.isWritable()) {
+            if (propertyName.equals(itemsName) ||
+                    propertyName.equals(indexName) || !pd.isReadable() ||
+                    !pd.isWritable()) {
                 continue;
             }
             final Object value = pd.getValue(page);

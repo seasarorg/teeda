@@ -69,7 +69,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     private static final String INDEX_SUFFIX = "Index";
 
-    private static final int INITIAL_ROW_INDEX = -1;
+    public static final int INITIAL_ROW_INDEX = -1;
 
     private int rowIndex = INITIAL_ROW_INDEX;
 
