@@ -15,10 +15,17 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.io.IOException;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.extension.helper.impl.PathHelperImpl;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
+import org.seasar.teeda.extension.html.impl.page.ThrowsExceptionPage;
 import org.seasar.teeda.extension.html.impl.web.aaa.BbbPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
@@ -50,5 +57,47 @@ public class HtmlComponentInvokerImplTest extends TeedaExtensionTestCase {
         assertTrue(invoker.isInitialized(getFacesContext(), "aaa_bbb"));
         BbbPage bbbPage = (BbbPage) getComponent(BbbPage.class);
         assertTrue(bbbPage.isInitialized());
+    }
+
+    public void testInvoke_CheckedException() throws Exception {
+        HtmlComponentInvokerImpl invoker = new HtmlComponentInvokerImpl();
+        invoker.setErrorPageManager(new ErrorPageManager() {
+            public void addErrorPage(Class exceptionType, String location) {
+            }
+
+            public boolean handleException(Throwable exception,
+                    FacesContext context, ExternalContext extContext)
+                    throws IOException {
+                assertTrue(exception instanceof IOException);
+                return true;
+            }
+        });
+        NamingConventionImpl nc = new NamingConventionImpl();
+        nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        invoker.setNamingConvention(nc);
+        createPageDesc(ThrowsExceptionPage.class, "throwsException");
+        invoker.invoke(getFacesContext(), "throwsException",
+                HtmlComponentInvoker.INITIALIZE);
+    }
+
+    public void testInvoke_RuntimeException() throws Exception {
+        HtmlComponentInvokerImpl invoker = new HtmlComponentInvokerImpl();
+        invoker.setErrorPageManager(new ErrorPageManager() {
+            public void addErrorPage(Class exceptionType, String location) {
+            }
+
+            public boolean handleException(Throwable exception,
+                    FacesContext context, ExternalContext extContext)
+                    throws IOException {
+                assertTrue(exception instanceof IllegalStateException);
+                return true;
+            }
+        });
+        NamingConventionImpl nc = new NamingConventionImpl();
+        nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
+        invoker.setNamingConvention(nc);
+        createPageDesc(ThrowsExceptionPage.class, "throwsException");
+        invoker.invoke(getFacesContext(), "throwsException",
+                HtmlComponentInvoker.PRERENDER);
     }
 }
