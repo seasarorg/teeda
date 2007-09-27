@@ -383,7 +383,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
 
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
-        for (int i = 0; i < rowSize; ++i) {
+        for (int i = 0; i < items.length; ++i) {
             final Object item = items[i];
             itemToPage(pageBeanDesc, page, item);
             enterRow(context, i);
