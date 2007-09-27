@@ -103,6 +103,7 @@ h3.underline {
       <li><a href="#commandButton">commandButton</a></li>
       <li><a href="#forEach">forEach</a></li>
       <li><a href="#itemsSave">itemsSave</a></li>
+      <li><a href="#itemsSessionSave">itemsSessionSave</a></li>
       <li><a href="#label">label</a></li>
       <li><a href="#title">title</a></li>
       <li><a href="#link">link</a></li>
@@ -901,6 +902,72 @@ h3.underline {
         <td>その他</td>
         <td>
           <span>ForEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もForEachの状態復元の為、ItemsSaveが必要です</span><br/>
+          <span>ForEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="itemsSessionSave">itemsSessionSave</a></h3>
+<p>itemsSessionSaveは、Page側で持つList/配列をSessionに格納し、画面にList/配列を引き継ぐ機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>List/配列状態維持コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;form id="aaaForm"/&gt;<br/>
+          <b class="boldorange">
+          &lt;input type="hidden" id="aaaItemsSessionSave"&gt;<br/>
+          </b>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          </b>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          &lt;/table&gt;<br/>
+          &lt;/form&gt;
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-hiddenタグに状態を維持したいList/配列の<b class="boldorange">プロパティ名+SessionSaveのid</b>を付ける<br/>
+            <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:sessionSave</td>
+      </tr>
+      <tr>
+        <td>タグの各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>ForEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もForEachの状態復元の為、ItemsSessionSaveが必要です</span><br/>
           <span>ForEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
         </td>
       </tr>
