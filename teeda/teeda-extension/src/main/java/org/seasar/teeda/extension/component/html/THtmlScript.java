@@ -19,6 +19,9 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.extension.util.PathUtil;
+
 /**
  * @author higa
  */
@@ -78,6 +81,9 @@ public class THtmlScript extends UIComponentBase {
     }
 
     public Object saveState(FacesContext context) {
+        if (!StringUtil.isEmpty(src)) {
+            src = PathUtil.toAbsolutePath(context, this, src);
+        }
         Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = type;

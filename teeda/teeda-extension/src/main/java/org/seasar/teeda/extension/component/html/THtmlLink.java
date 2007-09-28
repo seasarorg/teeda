@@ -19,7 +19,9 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.extension.util.PathUtil;
 
 /**
  * @author shot
@@ -43,6 +45,9 @@ public class THtmlLink extends UIComponentBase {
     }
 
     public Object saveState(FacesContext context) {
+        if (!StringUtil.isEmpty(href)) {
+            href = PathUtil.toAbsolutePath(context, this, href);
+        }
         Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = rel;

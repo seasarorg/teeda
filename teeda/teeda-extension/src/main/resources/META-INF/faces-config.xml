@@ -336,4 +336,12 @@
 			org.seasar.teeda.extension.component.html.THtmlForm
 		</component-class>
 	</component>
+	<component>
+		<component-type>
+			org.seasar.teeda.extension.HtmlGraphicImage
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlGraphicImage
+		</component-class>
+	</component>
 </faces-config>
