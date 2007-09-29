@@ -16,8 +16,10 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.faces.component.NamingContainer;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.FacesConfigOptions;
@@ -85,6 +87,40 @@ public class THtmlGrid extends TForEach implements NamingContainer,
 
     public void setHeight(String width) {
         this.height = width;
+    }
+
+    public void processValidators(final FacesContext context) {
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        if (!isRendered()) {
+            return;
+        }
+        for (final Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
+            final UIComponent component = (UIComponent) itr.next();
+            if (component instanceof THtmlGridBody) {
+                processValidatorsAllRows(context, component);
+            } else {
+                component.processValidators(context);
+            }
+        }
+    }
+
+    public void processUpdates(final FacesContext context) {
+        if (context == null) {
+            throw new NullPointerException("context");
+        }
+        if (!isRendered()) {
+            return;
+        }
+        for (final Iterator itr = getFacetsAndChildren(); itr.hasNext();) {
+            final UIComponent component = (UIComponent) itr.next();
+            if (component instanceof THtmlGridBody) {
+                processUpdatesAllRows(context, component);
+            } else {
+                component.processUpdates(context);
+            }
+        }
     }
 
     public Object saveState(FacesContext context) {

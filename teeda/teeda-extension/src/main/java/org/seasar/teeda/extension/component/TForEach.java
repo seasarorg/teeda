@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.NamingContainer;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -172,17 +173,25 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (!isRendered()) {
             return;
         }
+        processValidatorsAllRows(context, this);
+    }
+
+    protected void processValidatorsAllRows(final FacesContext context,
+            final UIComponent base) {
         final String pageName = getPageName();
-        final String id = this.getId();
+        final String id = getId();
         final String expression = BindingUtil.getExpression(pageName, id);
         for (int i = 0; i < rowSize; ++i) {
-            enterRow(context, i);
-            super.processValidators(context);
+            enterRow(context, i, base);
+            for (Iterator itr = base.getFacetsAndChildren(); itr.hasNext();) {
+                final UIComponent component = (UIComponent) itr.next();
+                component.processValidators(context);
+            }
             final String parentClientId = getClientId(context);
             if (!FacesMessageResource.hasMessages(expression)) {
                 processEachRowValidation(context, i, parentClientId);
             }
-            leaveRow(context);
+            leaveRow(context, base);
         }
         aggregateErrorMessageIfNeed(context, expression);
     }
@@ -345,6 +354,11 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (!isRendered()) {
             return;
         }
+        processUpdatesAllRows(context, this);
+    }
+
+    public void processUpdatesAllRows(final FacesContext context,
+            final UIComponent base) {
         final Object page = getPage(context);
         final Class pageClass = page.getClass();
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
@@ -386,9 +400,12 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         for (int i = 0; i < items.length; ++i) {
             final Object item = items[i];
             itemToPage(pageBeanDesc, page, item);
-            enterRow(context, i);
-            super.processUpdates(context);
-            leaveRow(context);
+            enterRow(context, i, base);
+            for (Iterator itr = base.getFacetsAndChildren(); itr.hasNext();) {
+                final UIComponent component = (UIComponent) itr.next();
+                component.processUpdates(context);
+            }
+            leaveRow(context, base);
             pageToItem(page, pageBeanDesc, item, itemBeanDesc);
         }
 
@@ -402,13 +419,14 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
     }
 
-    public void enterRow(final FacesContext context, final int rowIndex) {
+    public void enterRow(final FacesContext context, final int rowIndex,
+            final UIComponent base) {
         setRowIndex(rowIndex);
-        componentStates.restoreDescendantState(context, this);
+        componentStates.restoreDescendantState(context, base);
     }
 
-    public void leaveRow(final FacesContext context) {
-        componentStates.saveDescendantComponentStates(context, this);
+    public void leaveRow(final FacesContext context, final UIComponent base) {
+        componentStates.saveDescendantComponentStates(context, base);
         setRowIndex(INITIAL_ROW_INDEX);
     }
 

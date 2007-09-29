@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Grid</title>
+</head>
+<body>
+Grid
+<form id="gridForm">
+
+<input type="hidden" id="fooItemsSessionSave" />
+<table id="fooGridY" height="100px">
+    <colgroup>
+        <col span="4" width="100px"/>
+    </colgroup>
+    <thead>
+        <tr>
+           <th id="aaa-header" class="sorttable"><input id="labelaaa"  type="text" value="aaaa" class="label" readonly="true" size="2" tabindex="-1"/></th>
+
+            <th id="bbb-header" class="sorttable">bbb</th>
+            <th id="ccc-header" class="sorttable">ccc</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="">
+            <td><span id="aaa" /></td>
+            <td><input type="text" id="bbb" autocomplete="off"/></td>
+            <td><span id="ccc" /></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<input type="submit" id="doAdd" value="追加"/>
+<input type="submit" id="goGridEditConfirm" value="登録"/>
+
+</form>
+</body>
+</html>
