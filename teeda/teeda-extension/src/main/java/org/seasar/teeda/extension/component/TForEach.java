@@ -17,13 +17,17 @@ package org.seasar.teeda.extension.component;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +53,7 @@ import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FieldUtil;
+import org.seasar.framework.util.MethodUtil;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
@@ -71,6 +76,10 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     private static final String INDEX_SUFFIX = "Index";
 
     public static final int INITIAL_ROW_INDEX = -1;
+
+    protected static final Method IS_PARAMETERIZED_METHOD = getIsParameterizedMethod();
+
+    protected static final Method GET_ELEMENT_CLASS_METHOD = getGetElementClassMethod();
 
     private int rowIndex = INITIAL_ROW_INDEX;
 
@@ -340,7 +349,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             return Calendar.getInstance(locale);
         } else if (itemType.isArray()) {
             Class cType = itemType.getComponentType();
-            return Array.newInstance(cType, rowSize);
+            return Array.newInstance(cType, 0);
+        } else if (List.class.isAssignableFrom(itemType)) {
+            return new ArrayList();
         } else {
             o = ClassUtil.newInstance(itemType);
             return o;
@@ -372,20 +383,41 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                     itemsPd.getPropertyName() + "]");
         }
         final Class itemsClass = itemsPd.getPropertyType();
-        final Class itemClass = itemsClass.getComponentType();
-        if (itemClass == null) {
-            logger.debug("class [" + itemsClass.getName() +
-                    "] should be array type, so no update.");
+        final Class itemClass;
+        if (itemsClass.isArray()) {
+            itemClass = itemsClass.getComponentType();
+        } else if (List.class.isAssignableFrom(itemsClass) &&
+                isParameterized(itemsPd)) {
+            itemClass = getElementClass(itemsPd);
+        } else {
+            logger
+                    .debug("class [" + itemsClass.getName() +
+                            "] should be array type or parameterized List, so no update.");
             return;
         }
-        Object[] items = (Object[]) itemsPd.getValue(page);
-        if (items == null) {
-            items = (Object[]) Array.newInstance(itemClass, rowSize);
-            for (int i = 0; i < items.length; i++) {
-                items[i] = createNewInstance(context, itemClass);
+
+        final Object items = itemsPd.getValue(page);
+        final List itemList;
+        if (items != null) {
+            if (itemsClass.isArray()) {
+                itemList = Arrays.asList((Object[]) items);
+            } else {
+                itemList = (List) items;
+            }
+        } else {
+            if (itemsClass.isArray()) {
+                final Object[] array = (Object[]) Array.newInstance(itemClass,
+                        rowSize);
+                itemsPd.setValue(page, array);
+                itemList = Arrays.asList(array);
+            } else {
+                itemList = new ArrayList(rowSize);
+                itemsPd.setValue(page, itemList);
+            }
+            for (int i = 0; i < itemList.size(); i++) {
+                itemList.set(i, createNewInstance(context, itemClass));
             }
         }
-        itemsPd.setValue(page, items);
 
         // TEEDA-305(Seasar-user:7347)
         final Map savedProperties = new HashMap();
@@ -397,8 +429,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
 
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
-        for (int i = 0; i < items.length; ++i) {
-            final Object item = items[i];
+        for (int i = 0; i < itemList.size(); ++i) {
+            final Object item = itemList.get(i);
             itemToPage(pageBeanDesc, page, item);
             enterRow(context, i, base);
             for (Iterator itr = base.getFacetsAndChildren(); itr.hasNext();) {
@@ -570,6 +602,38 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         }
         return (pdClass == valueClass) ||
                 (pdClass.isAssignableFrom(valueClass));
+    }
+
+    protected static Method getIsParameterizedMethod() {
+        try {
+            return PropertyDesc.class.getMethod("isParameterized", null);
+        } catch (final Exception e) {
+            return null;
+        }
+    }
+
+    protected static Method getGetElementClassMethod() {
+        try {
+            return PropertyDesc.class.getMethod("getElementClassOfCollection",
+                    null);
+        } catch (final Exception e) {
+            return null;
+        }
+    }
+
+    protected boolean isParameterized(final PropertyDesc pd) {
+        if (IS_PARAMETERIZED_METHOD == null) {
+            return false;
+        }
+        return ((Boolean) MethodUtil.invoke(IS_PARAMETERIZED_METHOD, pd,
+                null)).booleanValue();
+    }
+
+    protected Class getElementClass(final PropertyDesc pd) {
+        if (GET_ELEMENT_CLASS_METHOD == null) {
+            return null;
+        }
+        return (Class) MethodUtil.invoke(GET_ELEMENT_CLASS_METHOD, pd, null);
     }
 
 }

@@ -16,12 +16,12 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jcaptcha-all-1.0-RC6.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/jcaptcha-src-1.0-RC6.zip"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.13.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.9-patch-20070624.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.9-patch-20070908.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-3.0-FINAL.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/portlet-api-1.0.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.17.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.17-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.17.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.17-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-tiger-2.4.17.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-tiger-2.4.17-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.18-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.18-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.18-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.18-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-tiger-2.4.18-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-tiger-2.4.18-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
