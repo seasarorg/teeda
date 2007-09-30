@@ -96,8 +96,8 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
         converter.setPattern(pattern);
 
         String dateValue = "8/3/05";
-        Date date = (Date) converter.getAsObject(context, new NullUIComponent(),
-                dateValue);
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
         Date dateTarget = createDateTarget(pattern, locale, dateValue);
         assertEquals(date, dateTarget);
     }
@@ -126,7 +126,7 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
                 .getDateInstance(DateFormat.MEDIUM, locale);
 
         Date dateTarget = format.parse(dateValue);
-        assertEquals((Date) o3, dateTarget);
+        assertEquals(o3, dateTarget);
     }
 
     public void testGetAsObject5() throws Exception {
@@ -292,7 +292,14 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
 
         converter.setLocale(locale);
         assertEquals(locale, converter.getLocale());
+    }
 
+    public void testSetLocaleAsString() {
+        DateTimeConverter converter = new DateTimeConverter();
+        Locale locale = new Locale("en", "US");
+
+        converter.setLocaleAsString("en_US");
+        assertEquals(locale, converter.getLocale());
     }
 
     private Date createDateTarget(String pattern, Locale locale, String date)

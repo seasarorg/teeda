@@ -35,6 +35,8 @@ public @interface DateTimeConverter {
 
 	String dateStyle() default "";
 
+	String localeAsString() default "";
+
 	String pattern() default "";
 
 	String timeStyle() default "";
