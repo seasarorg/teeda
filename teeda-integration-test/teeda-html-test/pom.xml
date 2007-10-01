@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda.it</groupId>
     <artifactId>teeda-integration-test-project</artifactId>
-    <version>1.0.11-RC2</version>
+    <version>1.0.11</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>teeda-html-test</artifactId>
