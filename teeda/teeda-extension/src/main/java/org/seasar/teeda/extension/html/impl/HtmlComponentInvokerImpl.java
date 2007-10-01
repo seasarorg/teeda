@@ -26,6 +26,7 @@ import javax.faces.el.EvaluationException;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.exception.InvocationTargetRuntimeException;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
@@ -160,8 +161,8 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
             ScopeValueHelper.removeIfDoFinish(methodName, context);
             if (ret instanceof Class) {
                 Class retClass = (Class) ret;
-                if (retClass != null
-                        && !retClass.getName().endsWith(pageSuffix)) {
+                if (retClass != null &&
+                        !retClass.getName().endsWith(pageSuffix)) {
                     throw new IllegalPageTransitionException(retClass);
                 }
                 next = getNextPageTransition(retClass);
@@ -170,8 +171,11 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
                 next = (String) ret;
             }
             NavigationHandlerUtil.handleNavigation(context, fromAction, next);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             try {
+                if (e instanceof InvocationTargetRuntimeException) {
+                    e = e.getCause();
+                }
                 ExternalContext extContext = context.getExternalContext();
                 if (errorPageManager.handleException(e, context, extContext)) {
                     context.responseComplete();

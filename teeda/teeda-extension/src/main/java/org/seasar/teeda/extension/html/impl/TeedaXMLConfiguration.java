@@ -15,9 +15,8 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import org.apache.xerces.impl.XMLNSDocumentScannerImpl;
 import org.apache.xerces.parsers.XML11Configuration;
-import org.apache.xerces.xni.XMLDocumentHandler;
-import org.apache.xerces.xni.parser.XMLComponent;
 
 /**
  * @author shot
@@ -26,28 +25,11 @@ import org.apache.xerces.xni.parser.XMLComponent;
 public class TeedaXMLConfiguration extends XML11Configuration {
 
     public TeedaXMLConfiguration() {
-        TeedaXMLDocumentScannerImpl scanner = new TeedaXMLDocumentScannerImpl();
+        XMLNSDocumentScannerImpl scanner = new TeedaXMLDocumentScannerImpl();
         setProperty(DOCUMENT_SCANNER, scanner);
-        addComponent((XMLComponent) scanner);
+        addComponent(scanner);
         fEntityManager.setEntityHandler(scanner);
         fNamespaceScanner = scanner;
-    }
-
-    protected void configurePipeline() {
-        wrapDocumentHandler();
-        super.configurePipeline();
-    }
-
-    protected void configureXML11Pipeline() {
-        wrapDocumentHandler();
-        super.configureXML11Pipeline();
-    }
-
-    protected void wrapDocumentHandler() {
-        XMLDocumentHandler orgHandler = getDocumentHandler();
-        TeedaXMLDocumentFilterImpl filter = new TeedaXMLDocumentFilterImpl();
-        filter.setDocumentHandler(orgHandler);
-        setDocumentHandler(filter);
     }
 
 }

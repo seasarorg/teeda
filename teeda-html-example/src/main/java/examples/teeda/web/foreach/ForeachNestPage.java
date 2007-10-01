@@ -55,10 +55,6 @@ public class ForeachNestPage {
 	}
 
 	public String initialize() {
-		return null;
-	}
-
-	public String prerender() {
 		aaaItemsItems = new FooDto[2][2];
 		for (int i = 0; i < 2; i++) {
 			FooDto[] items = new FooDto[2];
@@ -70,6 +66,10 @@ public class ForeachNestPage {
 			aaaItemsItems[i] = items;
 		}
 
+		return null;
+	}
+
+	public String prerender() {
 		return null;
 	}
 

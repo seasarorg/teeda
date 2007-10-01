@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry output="build/view" kind="src" path="src/main/webapp/view"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_06"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-el-1.0.jar"/>
@@ -22,10 +22,10 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.17.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.17.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-tiger-2.4.17.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.11.jar"/>
-	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.11.jar"/>
-	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.11.jar"/>
-	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-tiger-1.0.11-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.11.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.12-EA1-SNAPSHOT.jar" sourcepath="/teeda-tiger"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>

@@ -39,12 +39,12 @@ public class DateTimeConverter implements Converter, StateHolder {
     public static final String CONVERTER_ID = "javax.faces.DateTime";
 
     public static final String CONVERSION_OBJECT_ID = DateTimeConverter.class
-            .getName()
-            + ".CONVERSION";
+            .getName() +
+            ".CONVERSION";
 
     public static final String CONVERSION_STRING_ID = DateTimeConverter.class
-            .getName()
-            + ".CONVERSION_STRING";
+            .getName() +
+            ".CONVERSION_STRING";
 
     protected static final String STYLE_DEFAULT = "default";
 
@@ -185,6 +185,19 @@ public class DateTimeConverter implements Converter, StateHolder {
         this.locale = locale;
     }
 
+    public void setLocaleAsString(final String locale) {
+        final String[] array = locale.split("_");
+        if (array.length == 1) {
+            setLocale(new Locale(locale));
+        } else if (array.length == 2) {
+            setLocale(new Locale(array[0], array[1]));
+        } else if (array.length == 3) {
+            setLocale(new Locale(array[0], array[1], array[2]));
+        } else {
+            throw new IllegalArgumentException(locale);
+        }
+    }
+
     public String getPattern() {
         return pattern;
     }
@@ -244,9 +257,9 @@ public class DateTimeConverter implements Converter, StateHolder {
     }
 
     protected boolean isDefaultStyle() {
-        return TYPE_DATE.equalsIgnoreCase(getType())
-                && STYLE_DEFAULT.equalsIgnoreCase(getDateStyle())
-                && STYLE_DEFAULT.equalsIgnoreCase(getTimeStyle());
+        return TYPE_DATE.equalsIgnoreCase(getType()) &&
+                STYLE_DEFAULT.equalsIgnoreCase(getDateStyle()) &&
+                STYLE_DEFAULT.equalsIgnoreCase(getTimeStyle());
     }
 
     protected DateFormat getDateFormatForType() {

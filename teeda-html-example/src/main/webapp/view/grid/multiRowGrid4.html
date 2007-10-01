@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>MultiRowGrid2</title>
+</head>
+<body>
+<!-- TEEDA-295/296の対応待ち -->
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+	height: 15px;
+}
+.gridTable {
+	background-color: green;
+}
+.gridCell {
+	height: 25px;
+}
+.gridCellEdit {
+	border-width: 1px;
+	background-color: #FFC0CB;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+Grid
+<form id="gridForm">
+<table id="fooGridXY" width="200px" height="300px">
+	<colgroup>
+		<col span="1" width="60px" class="T_leftFixed" />
+		<col span="1" width="0px" class="T_leftFixed" />
+		<col span="2" width="65px" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th rowspan="2">aaa</th>
+			<th></th>
+			<th>bbb</th>
+			<th>ccc</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>ddd</th>
+			<th>eee</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="2"><span id="aaa">aaa</span></td>
+			<td></td>
+			<td><span id="bbb">bbb</span></td>
+			<td><span id="ccc">ccc</span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><span id="ddd">ddd</span></td>
+			<td><input type="text" id="eee" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="submit" />
+</form>
+</body>
+</html>

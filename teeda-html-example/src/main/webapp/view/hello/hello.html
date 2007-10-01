@@ -6,6 +6,14 @@
 <title id="aaa">Hello</title>
 </head>
 <body>
-こんにちは&nbsp;&nbsp;&nbsp;<span id="name">World!!!</span>
+こんにちは<span id="name">World!!!</span>
+<hr/>
+文字参照：&amp;&lt;&gt;&quot;&apos;<br />
+数値参照：&#64;&#x41;<br />
+実体参照:&nbsp;&copy;<br />
+CDATA:<![CDATA[<<hoge>>]]><br />
+コメント:<!-- コメント --><br />
+不正な属性:<a href="aaa.html?a=b&c=d">hoge</a><br />
+PI:<?xml-stylesheet href="article-view.xsl" type="text/xsl"?><br />
 </body>
 </html>

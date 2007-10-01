@@ -143,6 +143,19 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         tdIgnoreAttribute.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 
+    public void decode(final FacesContext context, final UIComponent component) {
+        assertNotNull(context, component);
+        for (final Iterator it = component.getChildren().iterator(); it
+                .hasNext();) {
+            final UIComponent child = (UIComponent) it.next();
+            if (child instanceof THtmlGridBody) {
+                decodeAllRows(context, (THtmlGrid) component, child);
+            } else {
+                child.processDecodes(context);
+            }
+        }
+    }
+
     public void encodeBefore(final FacesContext context,
             final UIComponent component) throws IOException {
         assertNotNull(context, component);
@@ -549,7 +562,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
             writer.startElement(JsfConstants.TBODY_ELEM, body);
             for (int i = 0; i < rowSize; ++i) {
-                htmlGrid.enterRow(context, i);
+                htmlGrid.enterRow(context, i, body);
                 if (i < items.length) {
                     htmlGrid.processItem(beanDesc, page, items[i], i);
                 }
@@ -566,7 +579,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 if (rowContext == null) {
                     rowContext = row;
                 }
-                htmlGrid.leaveRow(context);
+                htmlGrid.leaveRow(context, body);
             }
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
@@ -623,7 +636,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
         for (int i = 0; i < rowSize; ++i) {
-            htmlGrid.enterRow(context, i);
+            htmlGrid.enterRow(context, i, body);
             if (i < items.length) {
                 htmlGrid.processItem(beanDesc, page, items[i], i);
             }
@@ -636,7 +649,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             attribute, rowContext);
                 }
             }
-            htmlGrid.leaveRow(context);
+            htmlGrid.leaveRow(context, body);
         }
 
         writer.endElement(JsfConstants.TBODY_ELEM);
@@ -1046,7 +1059,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         scriptCallList = new ArrayList();
                     }
                     for (int i = renderRowLength; i < items.length; ++i) {
-                        htmlGrid.enterRow(context, i);
+                        htmlGrid.enterRow(context, i, body);
                         htmlGrid.processItem(beanDesc, page, items[i], i);
                         final GridRowContext row = new GridRowContext();
                         for (final Iterator it = getRenderedChildrenIterator(body); it
@@ -1062,7 +1075,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         if (rowContext == null) {
                             rowContext = row;
                         }
-                        htmlGrid.leaveRow(context);
+                        htmlGrid.leaveRow(context, body);
                         if (i != 0 && (items.length % (i + 1) == 0)
                                 && htmlGrid.isAsync()) {
                             String str = writer.toString();
@@ -1116,7 +1129,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                     scriptCallList = new ArrayList();
                 }
                 for (int i = renderRowLength; i < items.length; ++i) {
-                    htmlGrid.enterRow(context, i);
+                    htmlGrid.enterRow(context, i, body);
                     htmlGrid.processItem(beanDesc, page, items[i], i);
                     rowContext.resetRow();
                     for (final Iterator it = getRenderedChildrenIterator(body); it
@@ -1127,7 +1140,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                                     writer, attribute, rowContext);
                         }
                     }
-                    htmlGrid.leaveRow(context);
+                    htmlGrid.leaveRow(context, body);
                     if (i != 0 && (items.length % (i + 1) == 0)
                             && htmlGrid.isAsync()) {
                         String str = writer.toString();

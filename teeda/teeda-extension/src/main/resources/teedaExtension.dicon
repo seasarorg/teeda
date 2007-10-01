@@ -48,6 +48,9 @@
 		<initMethod name="addElementNodeDecision">
 			<arg><component class="org.seasar.teeda.extension.html.impl.LinkElementNodeDecision"/></arg>
 		</initMethod>
+		<initMethod name="addElementNodeDecision">
+			<arg><component class="org.seasar.teeda.extension.html.impl.GraphicImageElementNodeDecision"/></arg>
+		</initMethod>
 	</component>
 
 	<component
@@ -61,6 +64,8 @@
     <component
 		class="org.seasar.teeda.extension.html.impl.HtmlComponentInvokerImpl" />
 
+	<component name="graphicImageFactory"
+		class="org.seasar.teeda.extension.html.factory.GraphicImageFactory" />
 	<component name="linkFactory"
 		class="org.seasar.teeda.extension.html.factory.LinkFactory" />
 	<component name="styleFactory"

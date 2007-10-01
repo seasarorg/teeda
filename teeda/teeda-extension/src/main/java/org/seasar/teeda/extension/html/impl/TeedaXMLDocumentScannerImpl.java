@@ -79,8 +79,8 @@ public class TeedaXMLDocumentScannerImpl extends XMLNSDocumentScannerImpl {
                                 fStringBuffer2);
                         if (ch != -1) {
                             if (DEBUG_ATTR_NORMALIZATION) {
-                                System.out.println("** value3: \""
-                                        + fStringBuffer.toString() + "\"");
+                                System.out.println("** value3: \"" +
+                                        fStringBuffer.toString() + "\"");
                             }
                         }
                     } else {

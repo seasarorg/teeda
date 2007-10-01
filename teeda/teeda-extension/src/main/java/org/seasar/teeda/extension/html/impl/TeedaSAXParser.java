@@ -16,15 +16,48 @@
 package org.seasar.teeda.extension.html.impl;
 
 import org.apache.xerces.parsers.SAXParser;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
+import org.apache.xerces.util.XMLAttributesImpl;
+import org.apache.xerces.xni.Augmentations;
+import org.apache.xerces.xni.QName;
+import org.apache.xerces.xni.XMLAttributes;
+import org.apache.xerces.xni.XMLString;
+import org.apache.xerces.xni.XNIException;
+import org.apache.xerces.xni.parser.XMLParserConfiguration;
 
 public class TeedaSAXParser extends SAXParser {
 
-    public TeedaSAXParser() throws SAXNotRecognizedException,
-            SAXNotSupportedException {
-        super(new TeedaXMLConfiguration());
-        setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+    protected static final String LINE_SEP = System
+            .getProperty("line.separator");
+
+    public TeedaSAXParser(final XMLParserConfiguration config) {
+        super(config);
+    }
+
+    public void xmlDecl(final String version, final String encoding,
+            final String standalone, final Augmentations augs)
+            throws XNIException {
+        final StringBuffer buf = new StringBuffer(128);
+        buf.append("<?xml");
+        if (version != null) {
+            buf.append(" version=\"").append(version).append("\"");
+        }
+        if (encoding != null) {
+            buf.append(" encoding=\"").append(encoding).append("\"");
+        }
+        if (standalone != null) {
+            buf.append(" standalone=\"").append(standalone).append("\"");
+        }
+        buf.append("?>").append(LINE_SEP);
+        final String xmlDecl = buf.toString();
+        super.characters(new XMLString(xmlDecl.toCharArray(), 0, xmlDecl
+                .length()), augs);
+    }
+
+    public void startElement(final QName element,
+            final XMLAttributes attributes, final Augmentations augs)
+            throws XNIException {
+        super.startElement(element, new TeedaXMLAttributesImpl(
+                (XMLAttributesImpl) attributes), augs);
     }
 
 }
