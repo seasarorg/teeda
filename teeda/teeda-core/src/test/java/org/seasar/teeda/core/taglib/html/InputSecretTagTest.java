@@ -134,10 +134,10 @@ public class InputSecretTagTest extends TeedaTestCase {
         // # Arrange #
         InputSecretTag tag = new InputSecretTag();
         tag.setRedisplay("true");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getRedisplay());
     }

@@ -86,12 +86,12 @@ public class ValueChangeListenerTagTest extends TeedaTestCase {
         // # Arrange #
         ValueChangeListenerTag tag = new ValueChangeListenerTag();
         tag.setType("hoge");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getType());
     }
-    
+
 }

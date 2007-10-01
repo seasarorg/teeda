@@ -42,11 +42,11 @@ public class TransactionTokenUtil {
     public static String TOKEN = null;
 
     public static final String DEFAULT_TOKEN = TransactionTokenUtil.class
-            .getName() +
-            ".TOKEN";
+            .getName()
+            + ".TOKEN";
 
-    private static final String TOKENS = TransactionTokenUtil.class.getName() +
-            ".TOKENS";
+    private static final String TOKENS = TransactionTokenUtil.class.getName()
+            + ".TOKENS";
 
     private static final String DO_ONCE = "doOnce";
 

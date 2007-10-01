@@ -24,7 +24,8 @@ import org.seasar.teeda.extension.component.html.THtmlCommandButton;
  */
 public interface DoubleSubmitProtectionLoader {
 
-    String SUBMIT_MESSAGE_KEY = DoubleSubmitProtectionLoader.class.getName() + ".SUBMIT_MESSAGE";
+    String SUBMIT_MESSAGE_KEY = DoubleSubmitProtectionLoader.class.getName()
+            + ".SUBMIT_MESSAGE";
 
     void loadScript(final FacesContext context, final THtmlCommandButton button);
 }

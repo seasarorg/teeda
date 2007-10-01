@@ -36,7 +36,7 @@ public class TGridTag extends TForEachTag {
     private String async;
 
     private String callback;
-    
+
     public String getCallback() {
         return callback;
     }
@@ -62,7 +62,8 @@ public class TGridTag extends TForEachTag {
         setComponentProperty(component, ExtensionConstants.SCROLL_VERTICAL,
                 getScrollVertical());
         setComponentProperty(component, ExtensionConstants.ASYNC, getAsync());
-        setComponentProperty(component, ExtensionConstants.CALLBACK, getCallback());
+        setComponentProperty(component, ExtensionConstants.CALLBACK,
+                getCallback());
     }
 
     public String getScrollHorizontal() {

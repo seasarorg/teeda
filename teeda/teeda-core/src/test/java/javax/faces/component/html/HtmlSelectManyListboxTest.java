@@ -473,7 +473,7 @@ public class HtmlSelectManyListboxTest extends UISelectManyTest {
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlSelectManyListbox component = createHtmlSelectManyListbox();
         MockValueBinding vb = new MockValueBinding();
@@ -481,7 +481,8 @@ public class HtmlSelectManyListboxTest extends UISelectManyTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
     }
 
     private HtmlSelectManyListbox createHtmlSelectManyListbox() {

@@ -23,11 +23,11 @@ import javax.servlet.jsp.JspWriter;
  * @author yone
  */
 public class MockJspWriter extends JspWriter {
-    
+
     public MockJspWriter() {
         super(0, true);
     }
-    
+
     public void newLine() throws IOException {
     }
 

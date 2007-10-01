@@ -117,10 +117,10 @@ public class PanelGridTagTest extends TestCase {
         tag.setFooterClass("FooterClass");
         tag.setHeaderClass("HeaderClass");
         tag.setRowClasses("RowClass");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getColumnClasses());
         assertEquals(null, tag.getColumns());

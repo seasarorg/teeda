@@ -74,8 +74,8 @@ public class TeedaExtensionErrorPageManagerImpl extends
         }
         final String redirectingPath = RedirectScope
                 .getRedirectingPath(context);
-        if (RedirectScope.isRedirecting(context) &&
-                actionURL.equals(redirectingPath)) {
+        if (RedirectScope.isRedirecting(context)
+                && actionURL.equals(redirectingPath)) {
             throw new AlreadyRedirectingException();
         }
         NavigationHandlerUtil.redirect(context, actionURL);

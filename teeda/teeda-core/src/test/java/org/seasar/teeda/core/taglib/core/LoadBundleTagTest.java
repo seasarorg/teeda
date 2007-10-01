@@ -133,10 +133,10 @@ public class LoadBundleTagTest extends TeedaTestCase {
         LoadBundleTag tag = new LoadBundleTag();
         tag.setBasename("org.seasar.teeda.core.taglib.core.TestMessages");
         tag.setVar("messages");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getBasename());
         assertEquals(null, tag.getVar());

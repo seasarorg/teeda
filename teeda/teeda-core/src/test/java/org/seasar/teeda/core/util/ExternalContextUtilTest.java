@@ -39,7 +39,7 @@ public class ExternalContextUtilTest extends TestCase {
         context.setMockHttpServletRequest(request);
         assertEquals("aaa", ExternalContextUtil.getViewId(context));
     }
-    
+
     public void testGetViewId_servletPath() throws Exception {
         MockExternalContext context = new MockExternalContextImpl();
         MockHttpServletRequest request = new MockHttpServletRequestImpl(
@@ -47,7 +47,7 @@ public class ExternalContextUtilTest extends TestCase {
         context.setMockHttpServletRequest(request);
         assertEquals("/bbb", ExternalContextUtil.getViewId(context));
     }
-    
+
     public void testGetViewId_servletPath2() throws Exception {
         MockExternalContext context = new MockExternalContextImpl();
         MockHttpServletRequest request = new MockHttpServletRequestImpl(
@@ -58,8 +58,10 @@ public class ExternalContextUtilTest extends TestCase {
 
     public void testGetViewId_initParameter() throws Exception {
         MockExternalContext context = new MockExternalContextImpl();
-        MockServletContext servletContext = new MockServletContextImpl("/context");
-        servletContext.setInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME, ".html");
+        MockServletContext servletContext = new MockServletContextImpl(
+                "/context");
+        servletContext.setInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME,
+                ".html");
         MockHttpServletRequest request = new MockHttpServletRequestImpl(
                 servletContext, "/bbb.hoge");
         context.setMockHttpServletRequest(request);

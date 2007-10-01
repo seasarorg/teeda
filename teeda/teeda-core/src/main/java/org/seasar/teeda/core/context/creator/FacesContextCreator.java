@@ -24,5 +24,6 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public interface FacesContextCreator {
 
-    public FacesContext create(Object context, Object request, Object response, Lifecycle lifecycle);
+    public FacesContext create(Object context, Object request, Object response,
+            Lifecycle lifecycle);
 }

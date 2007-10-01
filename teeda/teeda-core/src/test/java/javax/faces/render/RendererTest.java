@@ -15,8 +15,6 @@
  */
 package javax.faces.render;
 
-
-
 import org.seasar.teeda.core.mock.NullFacesContext;
 import org.seasar.teeda.core.mock.NullRenderer;
 import org.seasar.teeda.core.mock.NullUIComponent;

@@ -30,9 +30,9 @@ import org.seasar.teeda.core.context.creator.servlet.ServletFacesContextCreator;
 public class DispatchableFacesContextCreator implements FacesContextCreator {
 
     private ServletFacesContextCreator servletFacesContextCreator = new ServletFacesContextCreator();
-    
+
     private PortletFacesContextCreator portletFacesContextCreator = new PortletFacesContextCreator();
-    
+
     //TODO need to change pluggable.
     public FacesContext create(Object context, Object request, Object response,
             Lifecycle lifecycle) {

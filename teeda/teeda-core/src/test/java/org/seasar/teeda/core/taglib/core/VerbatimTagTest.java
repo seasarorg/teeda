@@ -70,7 +70,7 @@ public class VerbatimTagTest extends TestCase {
                 JsfConstants.ESCAPE_ATTR));
         assertEquals(true, output.isTransient());
     }
-    
+
     public void testDoAfterBody() throws Exception {
         // # Arrange #
         VerbatimTag tag = new VerbatimTag();
@@ -79,7 +79,7 @@ public class VerbatimTagTest extends TestCase {
         int rc = tag.doAfterBody();
 
         // # Assert #
-        assertEquals(rc, Tag.SKIP_BODY);      
+        assertEquals(rc, Tag.SKIP_BODY);
     }
 
     private UIOutput createUIOutput() {

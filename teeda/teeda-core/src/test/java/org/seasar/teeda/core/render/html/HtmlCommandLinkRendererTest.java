@@ -94,7 +94,7 @@ public class HtmlCommandLinkRendererTest extends RendererTest {
         form.setRenderer(new HtmlFormRenderer());
         form.setId("a");
         form.getChildren().add(htmlCommandLink);
-        
+
         htmlCommandLink.setOnclick("hoge();");
 
         // ## Act ##

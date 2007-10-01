@@ -54,7 +54,8 @@ public class ExtendFacesException extends FacesException {
         messageCode_ = messageCode;
         args_ = args;
         simpleMessage_ = MessageFormatter.getSimpleMessage(messageCode_, args_);
-        message_ = MessageFormatter.getFormattedMessage(messageCode_, simpleMessage_);
+        message_ = MessageFormatter.getFormattedMessage(messageCode_,
+                simpleMessage_);
     }
 
     public final String getMessageCode() {

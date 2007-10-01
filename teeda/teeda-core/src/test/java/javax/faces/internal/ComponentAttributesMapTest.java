@@ -102,7 +102,7 @@ public class ComponentAttributesMapTest extends TestCase {
             fail();
         }
     }
-    
+
     private static class MyMockUIComponent extends MockUIComponent {
         // read only
         public String getFooProperty() {

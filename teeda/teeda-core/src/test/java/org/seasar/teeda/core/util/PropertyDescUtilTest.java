@@ -23,10 +23,10 @@ import junit.framework.TestCase;
 public class PropertyDescUtilTest extends TestCase {
 
     public void testGetProperty() throws Exception {
-        assertEquals(String.class, PropertyDescUtil.getProperty(new A().getClass(),
-                "name"));
-        assertEquals(int.class, PropertyDescUtil.getProperty(new A().getClass(),
-                "num"));
+        assertEquals(String.class, PropertyDescUtil.getProperty(new A()
+                .getClass(), "name"));
+        assertEquals(int.class, PropertyDescUtil.getProperty(
+                new A().getClass(), "num"));
     }
 
     public void testSetValue() throws Exception {

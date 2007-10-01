@@ -34,7 +34,7 @@ public interface ManagedBeanFactory {
             String initMethodName, String destroyMethodName);
 
     public void registerManagedBean(ComponentDef componentDef, Scope scope);
-    
+
     public void setScopeManager(ScopeManager ScopeManager);
 
     public ScopeManager getScopeManager();

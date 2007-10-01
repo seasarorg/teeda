@@ -31,11 +31,14 @@ public class PortletEnvironmentUtilTest extends TestCase {
         String str = "a";
         PortletContext context = new MockPortletContextImpl("aaa");
         PortletRequest request = new MockPortletRequestImpl(context);
-        PortletResponse response = new MockPortletResponseImpl(); 
+        PortletResponse response = new MockPortletResponseImpl();
         assertFalse(PortletEnvironmentUtil.isPortletEnvironment(str, str, str));
-        assertFalse(PortletEnvironmentUtil.isPortletEnvironment(context, str, str));
-        assertFalse(PortletEnvironmentUtil.isPortletEnvironment(context, request, str));
-        assertTrue(PortletEnvironmentUtil.isPortletEnvironment(context, request, response));
+        assertFalse(PortletEnvironmentUtil.isPortletEnvironment(context, str,
+                str));
+        assertFalse(PortletEnvironmentUtil.isPortletEnvironment(context,
+                request, str));
+        assertTrue(PortletEnvironmentUtil.isPortletEnvironment(context,
+                request, response));
     }
 
 }

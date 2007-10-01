@@ -78,8 +78,7 @@ public class UIMessages extends UIComponentBase {
         if (showSummarySet) {
             return showSummary;
         }
-        Object value = ComponentUtil_
-                .getValueBindingValue(this, "showSummary");
+        Object value = ComponentUtil_.getValueBindingValue(this, "showSummary");
         return (value != null) ? Boolean.TRUE.equals(value) : showSummary;
     }
 

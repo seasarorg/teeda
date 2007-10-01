@@ -83,7 +83,7 @@ public class VirtualResourceTest extends TeedaTestCase {
         };
         assertTrue(VirtualResource.isVirtualPath(req));
     }
-    
+
     public void testIsNotVirtualPath() throws Exception {
         final MockHttpServletRequest req = new MockHttpServletRequestImpl(
                 getServletContext(), "hoge") {

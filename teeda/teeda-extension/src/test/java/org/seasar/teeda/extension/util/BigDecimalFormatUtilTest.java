@@ -17,7 +17,6 @@ package org.seasar.teeda.extension.util;
 
 import java.math.BigDecimal;
 
-
 import junit.framework.TestCase;
 
 /**

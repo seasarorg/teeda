@@ -30,7 +30,7 @@ public class EditableValueHolderDecoder extends AbstractDecoder {
             throw new NoEditableValueHolderRuntimeException(component
                     .getClass());
         }
-        return new ValueHolderWrapper((EditableValueHolder)component);
+        return new ValueHolderWrapper((EditableValueHolder) component);
     }
 
 }

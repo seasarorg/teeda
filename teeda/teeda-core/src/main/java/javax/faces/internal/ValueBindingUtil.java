@@ -31,7 +31,8 @@ public class ValueBindingUtil {
         return createValueBinding(FacesContext.getCurrentInstance(), ref);
     }
 
-    public static ValueBinding createValueBinding(FacesContext context, String ref) {
+    public static ValueBinding createValueBinding(FacesContext context,
+            String ref) {
         return context.getApplication().createValueBinding(ref);
     }
 

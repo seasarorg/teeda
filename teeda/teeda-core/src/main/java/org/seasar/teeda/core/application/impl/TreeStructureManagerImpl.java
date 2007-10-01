@@ -30,7 +30,8 @@ import org.seasar.teeda.core.application.TreeStructureManager;
 /**
  * @author shot
  */
-public class TreeStructureManagerImpl implements TreeStructureManager, Serializable {
+public class TreeStructureManagerImpl implements TreeStructureManager,
+        Serializable {
 
     private static final long serialVersionUID = 1L;
 

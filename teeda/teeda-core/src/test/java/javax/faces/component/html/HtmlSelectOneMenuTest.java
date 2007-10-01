@@ -450,13 +450,13 @@ public class HtmlSelectOneMenuTest extends UISelectOneTest {
         assertEquals("bar title", component.getValueBinding("title").getValue(
                 context));
     }
-    
+
     public void testSetGetLabel() throws Exception {
         HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
@@ -464,7 +464,8 @@ public class HtmlSelectOneMenuTest extends UISelectOneTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
     }
 
     private HtmlSelectOneMenu createHtmlSelectOneMenu() {

@@ -35,7 +35,7 @@ public class ProcessValidationsPhaseTest extends TeedaTestCase {
 
         // # Act
         phase.executePhase(context);
-        
+
         // # Assert
         MockViewRoot root = (MockViewRoot) context.getViewRoot();
         assertTrue(root.isCalled());
@@ -49,11 +49,11 @@ public class ProcessValidationsPhaseTest extends TeedaTestCase {
     private static class MockViewRoot extends UIViewRoot {
 
         private boolean isCalled_ = false;
-        
+
         public void processValidators(FacesContext context) {
             isCalled_ = true;
         }
-        
+
         public boolean isCalled() {
             return isCalled_;
         }

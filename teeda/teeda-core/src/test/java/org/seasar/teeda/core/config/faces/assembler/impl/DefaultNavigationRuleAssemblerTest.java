@@ -61,8 +61,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         assembler.assemble();
 
         // ## Assert ##
-        Map map = NavigationResource
-                .getNavigationContexts();
+        Map map = NavigationResource.getNavigationContexts();
         assertTrue(map.containsKey("aaa"));
         List l = (List) map.get("aaa");
         NavigationContext navContext = (NavigationContext) l.get(0);
@@ -96,8 +95,7 @@ public class DefaultNavigationRuleAssemblerTest extends TeedaTestCase {
         assembler.assemble();
 
         // ## Assert ##
-        Map map = NavigationResource
-                .getDefaultMatchNavigationContexts();
+        Map map = NavigationResource.getDefaultMatchNavigationContexts();
         assertTrue(map.containsKey("*"));
         List l = (List) map.get("*");
         NavigationContext navContext = (NavigationContext) l.get(0);

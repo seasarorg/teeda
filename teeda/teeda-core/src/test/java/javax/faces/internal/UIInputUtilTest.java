@@ -27,5 +27,5 @@ public class UIInputUtilTest extends TestCase {
         assertTrue(UIInputUtil.isEmpty(""));
         assertTrue(UIInputUtil.isEmpty(new String[0]));
         assertFalse(UIInputUtil.isEmpty("a"));
-    }   
+    }
 }

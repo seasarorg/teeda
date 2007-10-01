@@ -22,9 +22,9 @@ import junit.framework.TestCase;
  *
  */
 public class StreamClosedExceptionTest extends TestCase {
-	
-	public void testGetMessage() throws Exception {
-		StreamClosedException ex = new StreamClosedException();
-		System.out.println(ex.getMessage());
-	}
+
+    public void testGetMessage() throws Exception {
+        StreamClosedException ex = new StreamClosedException();
+        System.out.println(ex.getMessage());
+    }
 }

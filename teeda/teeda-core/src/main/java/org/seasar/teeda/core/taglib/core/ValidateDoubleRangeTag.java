@@ -60,7 +60,7 @@ public class ValidateDoubleRangeTag extends MaxMinValidatorTag {
         return validator;
     }
 
-private void evaluateExpressions() throws JspException {
+    private void evaluateExpressions() throws JspException {
         FacesContext context = FacesContext.getCurrentInstance();
         final String min = getMinimum();
         if (min != null) {
@@ -82,4 +82,5 @@ private void evaluateExpressions() throws JspException {
                 maximum = ConverterUtil.convertToDouble(max);
             }
         }
-    }}
+    }
+}

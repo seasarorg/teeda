@@ -25,12 +25,12 @@ import org.seasar.teeda.extension.component.UIText;
  */
 public class HtmlTextRendererTest extends AbstractRendererTest {
 
-	public void testEncode() throws Exception {
+    public void testEncode() throws Exception {
         UIText component = new UIText();
         String value = "hoge";
         component.setValue(value);
         HtmlTextRenderer renderer = new HtmlTextRenderer();
         encodeByRenderer(renderer, component);
-		assertEquals("1", value, getResponseText());
-	}
+        assertEquals("1", value, getResponseText());
+    }
 }

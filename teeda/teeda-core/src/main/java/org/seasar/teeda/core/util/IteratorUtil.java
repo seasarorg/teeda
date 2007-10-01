@@ -48,14 +48,14 @@ public class IteratorUtil {
             return EMPTY_ITERATOR;
         }
     }
-    
+
     public static Iterator getCompositeIterator(Map map1, Map map2) {
         IteratorChain chain = new IteratorChain();
         chain.addIterator(map1.keySet().iterator());
         chain.addIterator(map2.keySet().iterator());
         return chain;
     }
-    
+
     public static Iterator getResourcesIterator(ClassLoader loader, String path) {
         try {
             Enumeration e = loader.getResources(path);

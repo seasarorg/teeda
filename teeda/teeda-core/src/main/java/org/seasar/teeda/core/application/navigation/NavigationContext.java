@@ -25,7 +25,7 @@ import java.util.List;
 public class NavigationContext {
 
     protected static final String WILDCARD = "*";
-    
+
     private String fromViewId_ = WILDCARD;
 
     private boolean isWildCardMatch_ = false;

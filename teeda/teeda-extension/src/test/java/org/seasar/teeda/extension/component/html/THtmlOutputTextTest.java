@@ -32,7 +32,7 @@ public class THtmlOutputTextTest extends TeedaTestCase {
         t.restoreState(context, saveState);
         assertEquals(true, t.isInvisible());
     }
-    
+
     public void testSaveAndRestoreForOmitTag() throws Exception {
         THtmlOutputText t = new THtmlOutputText();
         assertEquals(false, t.isOmittag());

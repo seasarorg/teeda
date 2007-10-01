@@ -76,10 +76,10 @@ public class OutputTextTagTest extends TeedaTestCase {
         // # Arrange #
         OutputTextTag tag = new OutputTextTag();
         tag.setEscape("true");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getEscape());
     }

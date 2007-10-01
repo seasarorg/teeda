@@ -108,10 +108,10 @@ public class OutputLabelTagTest extends TeedaTestCase {
         // # Arrange #
         OutputLabelTag tag = new OutputLabelTag();
         tag.setFor("forId");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getFor());
     }

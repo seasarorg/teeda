@@ -85,7 +85,7 @@ public class TeedaVariableResolver extends VariableResolver {
 
     public void setContainer(S2Container container) {
         this.container = container;
-        if(container != null) {
+        if (container != null) {
             this.container = container.getRoot();
         }
     }

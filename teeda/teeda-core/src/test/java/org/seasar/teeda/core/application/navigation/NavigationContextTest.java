@@ -22,11 +22,11 @@ public class NavigationContextTest extends TestCase {
     public void testAddNavigationCase_setNull() throws Exception {
         NavigationContext context = new NavigationContext();
         context.addNavigationCaseContext(null);
-        
+
         assertEquals(NavigationContext.WILDCARD, context.getFromViewId());
         assertTrue(context.getNavigationCases().size() == 0);
-   }
-    
+    }
+
     public void testGetFromViewId() throws Exception {
         //TODO testing
     }

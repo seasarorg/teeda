@@ -232,19 +232,20 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertEquals(3, ((HogeConverter) c).getNum());
     }
 
-//    public void testCreateConverter_notCreatedFromDI() throws Exception {
-//        // ## Arrange ##
-//        ComponentDef componentDef = new ComponentDefImpl(
-//                DateTimeConverter.class);
-//        componentDef.setComponentName("java.util.Date");
-//        getContainer().register(componentDef);
-//        ApplicationImpl app = createApplication();
-//        // ## Act & Assert ##
-//        assertNull(app.createConverter(Date.class));
-//    }
-    
+    //    public void testCreateConverter_notCreatedFromDI() throws Exception {
+    //        // ## Arrange ##
+    //        ComponentDef componentDef = new ComponentDefImpl(
+    //                DateTimeConverter.class);
+    //        componentDef.setComponentName("java.util.Date");
+    //        getContainer().register(componentDef);
+    //        ApplicationImpl app = createApplication();
+    //        // ## Act & Assert ##
+    //        assertNull(app.createConverter(Date.class));
+    //    }
+
     public void testGetWellKnownConverter() throws Exception {
-        assertEquals(IntegerConverter.class, ApplicationImpl.getWellKnownConverter(int.class).getClass());
+        assertEquals(IntegerConverter.class, ApplicationImpl
+                .getWellKnownConverter(int.class).getClass());
     }
 
     public void testCreateValueBinding() throws Exception {

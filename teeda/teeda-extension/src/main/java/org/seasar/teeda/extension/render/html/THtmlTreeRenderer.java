@@ -139,8 +139,7 @@ public class THtmlTreeRenderer extends AbstractRenderer {
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
-        final TViewRoot sRoot = (TViewRoot) context
-                .getViewRoot();
+        final TViewRoot sRoot = (TViewRoot) context.getViewRoot();
         final ResponseWriter writer = context.getResponseWriter();
         final String scriptKey = getScriptKey();
         if (!sRoot.containsScript(scriptKey)) {

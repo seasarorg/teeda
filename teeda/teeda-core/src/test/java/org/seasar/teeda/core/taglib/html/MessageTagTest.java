@@ -97,10 +97,10 @@ public class MessageTagTest extends TestCase {
         tag.setTooltip("true");
         tag.setWarnClass("WarnClass");
         tag.setWarnStyle("WarnStyle");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getFor());
         assertEquals(null, tag.getShowDetail());

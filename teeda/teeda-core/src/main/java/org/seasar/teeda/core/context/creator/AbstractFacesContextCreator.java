@@ -19,18 +19,19 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 
-
 /**
  * @author shot
  * 
  */
-public abstract class AbstractFacesContextCreator implements FacesContextCreator {
+public abstract class AbstractFacesContextCreator implements
+        FacesContextCreator {
 
     private ExternalContextCreator externalContextCreator = new NullExternalContextCreator();
 
     public FacesContext create(Object context, Object request, Object response,
             Lifecycle lifecycle) {
-        ExternalContext externalContext = getExternalContextCreator().create(context, request, response);
+        ExternalContext externalContext = getExternalContextCreator().create(
+                context, request, response);
         return doCreateFacesContext(externalContext);
     }
 
@@ -38,7 +39,7 @@ public abstract class AbstractFacesContextCreator implements FacesContextCreator
             ExternalContextCreator externalContextCreator) {
         this.externalContextCreator = externalContextCreator;
     }
-    
+
     public ExternalContextCreator getExternalContextCreator() {
         return externalContextCreator;
     }
@@ -47,14 +48,17 @@ public abstract class AbstractFacesContextCreator implements FacesContextCreator
     protected void handleLifecycle(Lifecycle lifecycle) {
         //do nothing.
     }
-    
-    protected abstract FacesContext doCreateFacesContext(ExternalContext externalContext);
-    
-    private static class NullExternalContextCreator implements ExternalContextCreator{
 
-        public ExternalContext create(Object context, Object request, Object response) {
+    protected abstract FacesContext doCreateFacesContext(
+            ExternalContext externalContext);
+
+    private static class NullExternalContextCreator implements
+            ExternalContextCreator {
+
+        public ExternalContext create(Object context, Object request,
+                Object response) {
             return null;
         }
-        
+
     }
 }

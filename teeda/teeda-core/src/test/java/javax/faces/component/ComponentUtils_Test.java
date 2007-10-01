@@ -133,8 +133,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
         assertTrue(ComponentUtil_.isPerformNoConversion(null));
         assertTrue(ComponentUtil_.isPerformNoConversion(String.class));
         assertTrue(ComponentUtil_.isPerformNoConversion(Object.class));
-        assertFalse(ComponentUtil_
-                .isPerformNoConversion(MockUIComponent.class));
+        assertFalse(ComponentUtil_.isPerformNoConversion(MockUIComponent.class));
     }
 
     public void testCalculateLocale() throws Exception {
@@ -149,8 +148,7 @@ public class ComponentUtils_Test extends TeedaTestCase {
 
     public void testGetLocale() throws Exception {
         getFacesContext().getViewRoot().setLocale(Locale.CANADA);
-        assertEquals(Locale.CANADA, ComponentUtil_
-                .getLocale(getFacesContext()));
+        assertEquals(Locale.CANADA, ComponentUtil_.getLocale(getFacesContext()));
     }
 
     public void testIsLocaleShort_null() throws Exception {

@@ -15,7 +15,6 @@
  */
 package javax.faces.internal;
 
-
 /**
  * @author shot
  */
@@ -26,8 +25,9 @@ public class ValidatorLookupStrategyUtil {
     public static ValidatorLookupStrategy getValidatorLookupStrategy() {
         return validatorLookupStrategy;
     }
-    
-    public static void setValidatorLookupStrategy(ValidatorLookupStrategy strategy) {
+
+    public static void setValidatorLookupStrategy(
+            ValidatorLookupStrategy strategy) {
         validatorLookupStrategy = strategy;
     }
 }

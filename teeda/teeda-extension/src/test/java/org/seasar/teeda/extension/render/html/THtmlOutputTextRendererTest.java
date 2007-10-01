@@ -358,7 +358,7 @@ public class THtmlOutputTextRendererTest extends RendererTest {
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
-    
+
     public void testInvisibleTrue() throws Exception {
         assertFalse("default is false", htmlOutputText.isInvisible());
         // ## Arrange ##
@@ -387,7 +387,7 @@ public class THtmlOutputTextRendererTest extends RendererTest {
                 getResponseText());
         assertEquals(diff.toString(), true, diff.identical());
     }
-    
+
     public void testOmittagTrue() throws Exception {
         assertFalse("default is false", htmlOutputText.isOmittag());
         // ## Arrange ##

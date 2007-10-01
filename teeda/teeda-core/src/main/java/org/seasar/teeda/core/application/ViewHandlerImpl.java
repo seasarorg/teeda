@@ -54,7 +54,7 @@ import org.seasar.teeda.core.util.WebappConfigUtil;
  * @author shot
  */
 public class ViewHandlerImpl extends ViewHandler {
-    
+
     public ViewHandlerImpl() {
     }
 
@@ -332,7 +332,7 @@ public class ViewHandlerImpl extends ViewHandler {
             ExternalContext externalContext) {
         // Portlet: RenderRequest does not have getCharacterEncoding()
         final String pathInfo = externalContext.getRequestPathInfo();
-        if(!pathInfo.endsWith(FacesConfigOptions.getDefaultSuffix())) {
+        if (!pathInfo.endsWith(FacesConfigOptions.getDefaultSuffix())) {
             return;
         }
         if (externalContext.getResponse() instanceof ServletResponse) {

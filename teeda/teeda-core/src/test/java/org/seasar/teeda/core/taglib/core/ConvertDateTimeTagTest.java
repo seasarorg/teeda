@@ -176,7 +176,7 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
     public void tearDownCreateConverter() {
         setApplication(orgApp_);
     }
-    
+
     public void testRelease() throws Exception {
         // # Arrange #
         ConvertDateTimeTag tag = new ConvertDateTimeTag();
@@ -186,20 +186,19 @@ public class ConvertDateTimeTagTest extends TeedaTestCase {
         tag.setTimeStyle("style");
         tag.setTimeZone("America/Los_Angeles");
         tag.setType("type");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
-        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE,
-                tag.getDateStyle());
+        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_DATE_STYLE, tag
+                .getDateStyle());
         assertEquals(null, tag.getLocale());
         assertEquals(null, tag.getParent());
-        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE,
-                tag.getTimeStyle());
+        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_TIME_STYLE, tag
+                .getTimeStyle());
         assertEquals(null, tag.getTimeZone());
-        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_TYPE,
-                tag.getType());
+        assertEquals(JsfConstants.DEFAULT_CONVERTDATETIME_TYPE, tag.getType());
     }
 
 }

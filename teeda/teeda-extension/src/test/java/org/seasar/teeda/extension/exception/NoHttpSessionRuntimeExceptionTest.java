@@ -22,9 +22,9 @@ import junit.framework.TestCase;
  *
  */
 public class NoHttpSessionRuntimeExceptionTest extends TestCase {
-	
-	public void testGetMessage() throws Exception {
-		NoHttpSessionRuntimeException ex = new NoHttpSessionRuntimeException();
-		System.out.println(ex.getMessage());
-	}
+
+    public void testGetMessage() throws Exception {
+        NoHttpSessionRuntimeException ex = new NoHttpSessionRuntimeException();
+        System.out.println(ex.getMessage());
+    }
 }

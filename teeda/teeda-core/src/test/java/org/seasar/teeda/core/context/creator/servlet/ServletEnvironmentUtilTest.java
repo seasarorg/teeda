@@ -22,8 +22,11 @@ public class ServletEnvironmentUtilTest extends TeedaTestCase {
     public void testIsServletEnvironment() throws Exception {
         String str = "a";
         assertFalse(ServletEnvironmentUtil.isServletEnvironment(str, str, str));
-        assertFalse(ServletEnvironmentUtil.isServletEnvironment(getServletContext(), str, str));
-        assertFalse(ServletEnvironmentUtil.isServletEnvironment(getServletContext(), getRequest(), str));
-        assertTrue(ServletEnvironmentUtil.isServletEnvironment(getServletContext(), getRequest(), getResponse()));
+        assertFalse(ServletEnvironmentUtil.isServletEnvironment(
+                getServletContext(), str, str));
+        assertFalse(ServletEnvironmentUtil.isServletEnvironment(
+                getServletContext(), getRequest(), str));
+        assertTrue(ServletEnvironmentUtil.isServletEnvironment(
+                getServletContext(), getRequest(), getResponse()));
     }
 }

@@ -24,9 +24,9 @@ import org.seasar.teeda.core.mock.NullExternalContext;
 public class ExternalContextWrapperTest extends TestCase {
 
     public void test() throws Exception {
-        final boolean[] calls = new boolean[] {false};
+        final boolean[] calls = new boolean[] { false };
         ExternalContextWrapper wrapper = new ExternalContextWrapper();
-        wrapper.setExternalContext(new NullExternalContext(){
+        wrapper.setExternalContext(new NullExternalContext() {
             public void dispatch(String path) throws IOException {
                 calls[0] = true;
             }
@@ -34,5 +34,5 @@ public class ExternalContextWrapperTest extends TestCase {
         wrapper.dispatch("a");
         assertTrue(calls[0]);
     }
-    
+
 }

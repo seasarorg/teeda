@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.ajax;
 
-
 /**
  * @author yone
  */
@@ -43,7 +42,7 @@ public class AjaxBean1 {
     public Object ajaxHoge() {
         return this;
     }
-    
+
     public Object ajaxFoo(int arg1, String arg2) {
         //return "foo";
         return this;

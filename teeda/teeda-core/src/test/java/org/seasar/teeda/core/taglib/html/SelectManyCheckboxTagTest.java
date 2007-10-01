@@ -138,10 +138,10 @@ public class SelectManyCheckboxTagTest extends TeedaTestCase {
         // # Arrange #
         SelectManyCheckboxTag tag = new SelectManyCheckboxTag();
         tag.setLayout("pageDirection");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getLayout());
     }

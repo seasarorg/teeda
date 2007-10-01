@@ -24,7 +24,7 @@ import org.seasar.teeda.core.config.faces.element.FacesConfig;
 public class AssemblerAssembler {
 
     private AssembleProvider provider = new DefaultAssembleProvider();
-    
+
     public void assembleFactories(FacesConfig facesConfig) {
         getProvider().assembleFactories(facesConfig).assemble();
     }

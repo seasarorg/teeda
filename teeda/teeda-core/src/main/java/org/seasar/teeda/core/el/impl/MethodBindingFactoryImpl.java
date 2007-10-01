@@ -28,8 +28,7 @@ import org.seasar.teeda.core.exception.IllegalClassTypeException;
 /**
  * @author shot
  */
-public class MethodBindingFactoryImpl implements
-        MethodBindingFactory {
+public class MethodBindingFactoryImpl implements MethodBindingFactory {
 
     private ValueBindingFactory valueBindingContextFactory;
 

@@ -96,8 +96,8 @@ public class DateTimeConverterTest extends AbstractConverterTestCase {
         converter.setPattern(pattern);
 
         String dateValue = "8/3/05";
-        Date date = (Date) converter.getAsObject(context, new NullUIComponent(),
-                dateValue);
+        Date date = (Date) converter.getAsObject(context,
+                new NullUIComponent(), dateValue);
         Date dateTarget = createDateTarget(pattern, locale, dateValue);
         assertEquals(date, dateTarget);
     }

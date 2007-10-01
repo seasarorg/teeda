@@ -199,8 +199,8 @@ public class MethodBindingImplTest extends TeedaTestCase {
         mb2.restoreState(context, restored);
 
         assertEquals("#{a.getNum}", mb2.getExpressionString());
-        
-        Object o = mb2.invoke(context, new Object[]{});
+
+        Object o = mb2.invoke(context, new Object[] {});
         assertEquals(new Integer(4), o);
     }
 

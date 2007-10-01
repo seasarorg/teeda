@@ -66,8 +66,8 @@ public class HtmlOutputLabelRenderer extends AbstractRenderer {
             final UIComponent forComponent = htmlOutputLabel
                     .findComponent(forAttr);
             if (forComponent == null) {
-                throw new IllegalStateException("for Component [" + forAttr +
-                        "] does not found");
+                throw new IllegalStateException("for Component [" + forAttr
+                        + "] does not found");
             }
             final String forClientId = getIdForRender(context, forComponent);
             RendererUtil.renderAttribute(writer, JsfConstants.FOR_ATTR,

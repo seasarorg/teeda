@@ -148,7 +148,7 @@ public class CommonsELParserTest extends TeedaTestCase {
         }
 
     }
-    
+
     public static class Bar {
 
         private Boolean aaa = null;

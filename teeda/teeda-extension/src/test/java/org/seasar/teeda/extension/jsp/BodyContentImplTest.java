@@ -22,12 +22,12 @@ import org.seasar.framework.unit.S2FrameworkTestCase;
  *
  */
 public class BodyContentImplTest extends S2FrameworkTestCase {
-	
-	public void testWrite() throws Exception {
-		JspWriterImpl writer = new JspWriterImpl(getResponse(), 2, true);
-		BodyContentImpl bodyContent = new BodyContentImpl(writer, 2);
-		String s = "abcde";
-		bodyContent.write(s);
-		assertEquals("1", s, bodyContent.getString());
-	}
+
+    public void testWrite() throws Exception {
+        JspWriterImpl writer = new JspWriterImpl(getResponse(), 2, true);
+        BodyContentImpl bodyContent = new BodyContentImpl(writer, 2);
+        String s = "abcde";
+        bodyContent.write(s);
+        assertEquals("1", s, bodyContent.getString());
+    }
 }

@@ -74,7 +74,9 @@ public class ValueBindingFactoryImpl implements ValueBindingFactory {
     protected ValueBinding getRestoredValueBinding(StateHolder holder,
             String expression) {
         FacesContext context = FacesContext.getCurrentInstance();
-        holder.restoreState(context, new Object[] { expression, getELParser() });
+        holder
+                .restoreState(context,
+                        new Object[] { expression, getELParser() });
         return (ValueBinding) holder;
     }
 

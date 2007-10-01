@@ -28,13 +28,13 @@ import javax.servlet.http.HttpSession;
 public class MockPageContext extends NullPageContext {
 
     private Map attr_ = new HashMap();
-    
+
     private ServletRequest request_;
-    
+
     private ServletResponse response_;
-    
+
     private HttpSession session_;
-    
+
     public void setAttribute(String arg0, Object arg1) {
         attr_.put(arg0, arg1);
     }
@@ -50,11 +50,11 @@ public class MockPageContext extends NullPageContext {
     public Object getAttribute(String arg0, int arg1) {
         return attr_.get(arg0);
     }
-    
+
     public void setRequest(ServletRequest request) {
         request_ = request;
     }
-    
+
     public ServletRequest getRequest() {
         return request_;
     }

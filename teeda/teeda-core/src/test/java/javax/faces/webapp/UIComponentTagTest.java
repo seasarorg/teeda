@@ -51,7 +51,7 @@ public class UIComponentTagTest extends TeedaTestCase {
             success();
         }
     }
-    
+
     public void testSetId_notStartsWithUniqueIdPrefix() throws Exception {
         TargetUIComponentTag tag = new TargetUIComponentTag();
         try {

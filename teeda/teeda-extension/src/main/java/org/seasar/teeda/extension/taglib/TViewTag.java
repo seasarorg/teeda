@@ -143,13 +143,13 @@ public class TViewTag extends UIComponentTag {
         super.setProperties(component);
         final String localeStr = getLocale();
         Locale locale = null;
-        if(localeStr != null) {
+        if (localeStr != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
             if (locale == null) {
                 locale = findLocale(localeStr);
             }
-            if(locale != null) {
+            if (locale != null) {
                 ((UIViewRoot) component).setLocale(locale);
             }
         } else {

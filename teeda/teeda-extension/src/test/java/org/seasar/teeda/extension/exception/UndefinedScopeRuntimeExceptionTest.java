@@ -22,9 +22,9 @@ import junit.framework.TestCase;
  *
  */
 public class UndefinedScopeRuntimeExceptionTest extends TestCase {
-	
-	public void testGetMessage() throws Exception {
-		RuntimeException ex = new UndefinedScopeRuntimeException(99);
-		System.out.println(ex.getMessage());
-	}
+
+    public void testGetMessage() throws Exception {
+        RuntimeException ex = new UndefinedScopeRuntimeException(99);
+        System.out.println(ex.getMessage());
+    }
 }

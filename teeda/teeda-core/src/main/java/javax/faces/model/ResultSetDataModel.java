@@ -158,8 +158,7 @@ public class ResultSetDataModel extends DataModel {
             resultSet.absolute(mapIndex + 1);
             metaData = getMetaData();
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                super.put(metaData.getColumnName(i), metaData
-                        .getColumnName(i));
+                super.put(metaData.getColumnName(i), metaData.getColumnName(i));
             }
         }
 

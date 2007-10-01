@@ -55,7 +55,7 @@ public class JavaScriptPermissionUtilTest extends TeedaTestCase {
     public void testNotPermitted5() throws Exception {
         MockExternalContext context = getExternalContext();
         context.setRequestPathInfo(null);
-        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/"});
+        FacesConfigOptions.setJavascriptNotPermittedPath(new String[] { "/" });
         assertFalse(JavaScriptPermissionUtil
                 .isJavaScriptPermitted(getFacesContext()));
     }
@@ -71,7 +71,7 @@ public class JavaScriptPermissionUtilTest extends TeedaTestCase {
     public void testPermitted2() throws Exception {
         MockExternalContext context = getExternalContext();
         context.setRequestPathInfo(null);
-        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/i"});
+        FacesConfigOptions.setJavascriptNotPermittedPath(new String[] { "/i" });
         assertTrue(JavaScriptPermissionUtil
                 .isJavaScriptPermitted(getFacesContext()));
     }
@@ -79,7 +79,8 @@ public class JavaScriptPermissionUtilTest extends TeedaTestCase {
     public void testPermitted3() throws Exception {
         MockExternalContext context = getExternalContext();
         context.setRequestPathInfo("/i/hoge");
-        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/au"});
+        FacesConfigOptions
+                .setJavascriptNotPermittedPath(new String[] { "/au" });
         assertTrue(JavaScriptPermissionUtil
                 .isJavaScriptPermitted(getFacesContext()));
     }
@@ -87,7 +88,7 @@ public class JavaScriptPermissionUtilTest extends TeedaTestCase {
     public void testPermitted4() throws Exception {
         MockExternalContext context = getExternalContext();
         context.setRequestPathInfo("/index.html");
-        FacesConfigOptions.setJavascriptNotPermittedPath(new String[]{"/i"});
+        FacesConfigOptions.setJavascriptNotPermittedPath(new String[] { "/i" });
         assertTrue(JavaScriptPermissionUtil
                 .isJavaScriptPermitted(getFacesContext()));
     }

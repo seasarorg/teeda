@@ -36,8 +36,10 @@ public class SelectBooleanCheckboxTag extends InputTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, getOnchange());
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, getOnselect());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
     }
 
     public void release() {

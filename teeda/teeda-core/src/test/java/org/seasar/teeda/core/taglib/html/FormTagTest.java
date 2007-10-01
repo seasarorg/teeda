@@ -93,17 +93,18 @@ public class FormTagTest extends TeedaTestCase {
         assertEquals("title", component.getTitle());
         assertEquals("_blank", component.getTarget());
     }
-    
+
     public void testSetEnctype_default() throws Exception {
         // # Arrange #
         HtmlForm component = createHtmlForm();
         FormTag tag = new FormTag();
-        
+
         // # Act #
         tag.setProperties(component);
 
         // # Assert #
-        assertEquals("application/x-www-form-urlencoded", component.getEnctype());        
+        assertEquals("application/x-www-form-urlencoded", component
+                .getEnctype());
     }
 
     private HtmlForm createHtmlForm() {

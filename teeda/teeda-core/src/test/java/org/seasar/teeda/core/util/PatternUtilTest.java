@@ -40,7 +40,7 @@ public class PatternUtilTest extends TestCase {
         assertNotSame(p, p1);
         assertEquals(p1, p2);
     }
-    
+
     public void testClearPatternCache() throws Exception {
         Pattern p1 = PatternUtil.getPattern("^[1-9][a-z]");
         Pattern p2 = PatternUtil.getPattern("^[1-9][a-z]");

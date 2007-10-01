@@ -44,8 +44,7 @@ public class HtmlPanelGridRenderer extends AbstractRenderer {
         ignoreComponent.addAttributeName(JsfConstants.HEADER_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.FOOTER_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.COLUMNS_ATTR);
-        ignoreComponent
-                .addAttributeName(JsfConstants.COLUMN_CLASSES_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.COLUMN_CLASSES_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ROW_CLASSES_ATTR);
     }
 

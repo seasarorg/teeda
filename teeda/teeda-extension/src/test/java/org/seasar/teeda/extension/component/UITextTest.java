@@ -28,11 +28,11 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 public class UITextTest extends AbstractUIComponentTest {
 
     private MockFacesContext facesContext = new MockFacesContextImpl();
-	
+
     protected UIComponent createUIComponent() {
         return new UIText();
     }
-    
+
     protected UIText createUIText() {
         return (UIText) createUIComponent();
     }
@@ -45,5 +45,5 @@ public class UITextTest extends AbstractUIComponentTest {
         UIText component2 = createUIText();
         component2.restoreState(facesContext, state);
         assertEquals("1", value, component2.getValue());
-	}
+    }
 }

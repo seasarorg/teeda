@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.ajax;
 
-
 /**
  * @author yone
  */

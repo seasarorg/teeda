@@ -30,9 +30,9 @@ public class ServletFacesContextCreator extends AbstractFacesContextCreator {
     public ServletFacesContextCreator() {
         setExternalContextCreator(new ServletExternalContextCreator());
     }
-    
+
     protected FacesContext doCreateFacesContext(ExternalContext externalContext) {
-        if(externalContext == null) {
+        if (externalContext == null) {
             return null;
         }
         return new ServletFacesContextImpl(externalContext);

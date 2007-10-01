@@ -43,7 +43,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
     }
 
     public Object getManagedBean(String name) {
-        if(container.hasComponentDef(name)) {
+        if (container.hasComponentDef(name)) {
             return container.getComponent(name);
         } else {
             return null;
@@ -76,8 +76,9 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
     public Scope getManagedBeanScope(String name) {
         Scope scope = null;
-        if(container.hasComponentDef(name)) {
-            InstanceDef instanceDef = container.getComponentDef(name).getInstanceDef();
+        if (container.hasComponentDef(name)) {
+            InstanceDef instanceDef = container.getComponentDef(name)
+                    .getInstanceDef();
             scope = scopeManager.getScopeTranslator().toScope(instanceDef);
         }
         return scope;
@@ -106,7 +107,7 @@ public class ManagedBeanFactoryImpl implements ManagedBeanFactory {
 
     public void setContainer(S2Container container) {
         this.container = container;
-        if(container != null) {
+        if (container != null) {
             this.container = container.getRoot();
         }
     }

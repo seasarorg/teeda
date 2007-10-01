@@ -30,7 +30,8 @@ import org.seasar.teeda.extension.taglib.TItemsSaveHiddenTag;
 /**
  * @author shot
  */
-public class TItemsSaveHiddenFactoryTest extends ElementProcessorFactoryTestCase {
+public class TItemsSaveHiddenFactoryTest extends
+        ElementProcessorFactoryTestCase {
 
     protected AbstractElementProcessorFactory createFactory() {
         return new TItemsSaveHiddenFactory();
@@ -65,7 +66,8 @@ public class TItemsSaveHiddenFactoryTest extends ElementProcessorFactoryTestCase
                 pageDesc, actionDesc);
         // ## Assert ##
         assertNotNull("1", parentProcessor);
-        assertEquals("2", TItemsSaveHiddenTag.class, parentProcessor.getTagClass());
+        assertEquals("2", TItemsSaveHiddenTag.class, parentProcessor
+                .getTagClass());
         assertEquals("3", "#{fooPage.hogeItems}", parentProcessor
                 .getProperty("value"));
     }

@@ -15,14 +15,13 @@
  */
 package org.seasar.teeda.ajax;
 
-
 /**
  * @author yone
  */
 public class AjaxBean4 {
-    
+
     private int arg1;
-    
+
     private Number argNum = new Integer(100);
 
     public int getArg1() {

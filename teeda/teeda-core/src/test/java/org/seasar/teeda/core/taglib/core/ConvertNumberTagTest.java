@@ -333,25 +333,24 @@ public class ConvertNumberTagTest extends TeedaTestCase {
         tag.setMinIntegerDigits("5");
         tag.setPattern("###,###.###");
         tag.setType("percent");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getCurrencyCode());
         assertEquals(null, tag.getCurrencySymbol());
-        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_GROUPING_USED,
-                tag.getGroupingUsed());
-        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_INTEGER_ONLY,
-                tag.getIntegerOnly());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_GROUPING_USED, tag
+                .getGroupingUsed());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_INTEGER_ONLY, tag
+                .getIntegerOnly());
         assertEquals(null, tag.getLocale());
         assertEquals(null, tag.getMaxFractionDigits());
         assertEquals(null, tag.getMaxIntegerDigits());
         assertEquals(null, tag.getMinFractionDigits());
         assertEquals(null, tag.getMinIntegerDigits());
         assertEquals(null, tag.getPattern());
-        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_TYPE,
-                tag.getType());
+        assertEquals(JsfConstants.DEFAULT_CONVERTNUMBER_TYPE, tag.getType());
     }
 
 }

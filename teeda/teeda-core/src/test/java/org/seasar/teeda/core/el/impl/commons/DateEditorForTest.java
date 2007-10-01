@@ -21,7 +21,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class DateEditorForTest extends PropertyEditorSupport {
-    
+
     public void setAsText(String text) throws IllegalArgumentException {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         try {
@@ -31,5 +31,5 @@ public class DateEditorForTest extends PropertyEditorSupport {
             throw new IllegalArgumentException("date format");
         }
     }
-    
+
 }

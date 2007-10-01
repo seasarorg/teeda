@@ -26,10 +26,10 @@ import org.seasar.teeda.core.render.AbstractDecoder;
 public class ValueHolderDecoder extends AbstractDecoder {
 
     protected ValueHolderWrapper createValueHolderWrapper(UIComponent component) {
-        if(!(component instanceof ValueHolder)) {
+        if (!(component instanceof ValueHolder)) {
             throw new IllegalStateException();
         }
-        return new ValueHolderWrapper((ValueHolder)component);
+        return new ValueHolderWrapper((ValueHolder) component);
     }
 
 }

@@ -44,7 +44,7 @@ public class ElementProcessorImplTest extends TeedaExtensionTestCase {
         processor.composeComponentTree(context, pageContext, parentTag);
         Tag child = parentTag.getChild();
         assertTrue(child instanceof MockTagSupport);
-        assertEquals("aaa", ((MockTagSupport)child).getName());
+        assertEquals("aaa", ((MockTagSupport) child).getName());
         parentTag = null;
         child = null;
     }

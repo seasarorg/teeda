@@ -24,9 +24,9 @@ import junit.framework.TestCase;
  *
  */
 public class JspRuntimeExceptionTest extends TestCase {
-	
-	public void testGetMessage() throws Exception {
-		RuntimeException ex = new JspRuntimeException(new JspException("hoge"));
-		System.out.println(ex.getMessage());
-	}
+
+    public void testGetMessage() throws Exception {
+        RuntimeException ex = new JspRuntimeException(new JspException("hoge"));
+        System.out.println(ex.getMessage());
+    }
 }

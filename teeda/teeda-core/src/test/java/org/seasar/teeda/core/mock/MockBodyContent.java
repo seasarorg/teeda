@@ -33,7 +33,7 @@ public class MockBodyContent extends BodyContent {
     public MockBodyContent(MockJspWriter writer) {
         super(writer);
     }
-    
+
     public Reader getReader() {
         return null;
     }

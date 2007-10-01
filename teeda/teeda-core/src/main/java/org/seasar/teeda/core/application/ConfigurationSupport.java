@@ -29,13 +29,11 @@ public interface ConfigurationSupport {
     public void addConverterConfiguration(Class targetClass,
             ConverterConfiguration converterConfig);
 
-    public void setValueBindingFactory(
-            ValueBindingFactory vbContextFactory);
+    public void setValueBindingFactory(ValueBindingFactory vbContextFactory);
 
     public ValueBindingFactory getValueBindingFactory();
 
-    public void setMethodBindingFactory(
-            MethodBindingFactory mbContextFactory);
+    public void setMethodBindingFactory(MethodBindingFactory mbContextFactory);
 
     public MethodBindingFactory getMethodBindingFactory();
 }

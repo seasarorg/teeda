@@ -137,10 +137,10 @@ public class SelectOneRadioTagTest extends TeedaTestCase {
         // # Arrange #
         SelectOneRadioTag tag = new SelectOneRadioTag();
         tag.setLayout("pageDirection");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getLayout());
     }

@@ -58,7 +58,8 @@ public abstract class AbstractDecoder implements Decoder {
         }
     }
 
-    protected abstract ValueHolderWrapper createValueHolderWrapper(UIComponent component);
+    protected abstract ValueHolderWrapper createValueHolderWrapper(
+            UIComponent component);
 
     protected Map getRequestParameterMap(FacesContext context) {
         return context.getExternalContext().getRequestParameterMap();

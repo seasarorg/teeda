@@ -34,7 +34,8 @@ public class GenericElementProcessor extends ElementProcessorImpl {
 
     private String tagName;
 
-    public GenericElementProcessor(Class tagClass, Map properties, String tagName) {
+    public GenericElementProcessor(Class tagClass, Map properties,
+            String tagName) {
         super(tagClass, properties);
         this.tagName = tagName;
     }

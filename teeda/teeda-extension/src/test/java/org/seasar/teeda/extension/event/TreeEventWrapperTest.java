@@ -52,12 +52,12 @@ public class TreeEventWrapperTest extends TeedaTestCase {
                 return true;
             }
 
-
         };
         TreeEventWrapper e = new TreeEventWrapper(original, "0", component);
-        assertFalse(e.isAppropriateListener(new FacesListener(){}));
+        assertFalse(e.isAppropriateListener(new FacesListener() {
+        }));
     }
-    
+
     public void testProcessListener_throwException() throws Exception {
         MockUIComponent component = new MockUIComponent();
         component.setId("a");
@@ -68,9 +68,10 @@ public class TreeEventWrapperTest extends TeedaTestCase {
         };
         TreeEventWrapper e = new TreeEventWrapper(original, "0", component);
         try {
-            e.processListener(new FacesListener(){});
+            e.processListener(new FacesListener() {
+            });
             fail();
-        }catch(UnsupportedOperationException expected) {
+        } catch (UnsupportedOperationException expected) {
             success();
         }
     }

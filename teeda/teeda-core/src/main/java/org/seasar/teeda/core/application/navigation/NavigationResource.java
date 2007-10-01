@@ -37,7 +37,7 @@ public class NavigationResource {
     private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationResource.class
             .getName()
             + "_DEFAULT_NAVIGATION_CONTEXTS";
-    
+
     private static Map cache = new HashMap();
 
     private NavigationResource() {
@@ -51,19 +51,19 @@ public class NavigationResource {
         if (navigationContext.isWildCardMatch()) {
             //if default match
             if (NavigationContext.WILDCARD.equals(fromViewId)) {
-                storeNavigationContext(fromViewId,
-                        navigationContext, DEFAULT_NAVIGATION_CONTEXTS);
+                storeNavigationContext(fromViewId, navigationContext,
+                        DEFAULT_NAVIGATION_CONTEXTS);
             } else {
-                storeNavigationContext(fromViewId,
-                        navigationContext, WILDCARD_NAVIGATION_CONTEXTS);
+                storeNavigationContext(fromViewId, navigationContext,
+                        WILDCARD_NAVIGATION_CONTEXTS);
             }
 
         } else {
-            storeNavigationContext(fromViewId,
-                    navigationContext, NAVIGATON_CONTEXTS);
+            storeNavigationContext(fromViewId, navigationContext,
+                    NAVIGATON_CONTEXTS);
         }
     }
-    
+
     public static void removeNavigationContext(String fromViewId) {
         if (fromViewId == null) {
             throw new IllegalArgumentException(fromViewId);
@@ -86,14 +86,13 @@ public class NavigationResource {
     public static Map getDefaultMatchNavigationContexts() {
         return (Map) cache.get(DEFAULT_NAVIGATION_CONTEXTS);
     }
-    
+
     public static void removeAll() {
         cache.clear();
     }
 
-    protected static void storeNavigationContext(
-            String fromViewId, NavigationContext navContext,
-            String applicationKey) {
+    protected static void storeNavigationContext(String fromViewId,
+            NavigationContext navContext, String applicationKey) {
         Map navContextsMap = (Map) cache.get(applicationKey);
         if (navContextsMap == null) {
             navContextsMap = Collections.synchronizedMap(new HashMap());

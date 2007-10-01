@@ -81,7 +81,7 @@ public class TeedaInitializer {
         final ValidatorLookupStrategy strategy = (ValidatorLookupStrategy) DIContainerUtil
                 .getComponentNoException(ValidatorLookupStrategy.class);
         ValidatorLookupStrategyUtil.setValidatorLookupStrategy(strategy);
-        
+
         ConverterBuilder converterBuilder = (ConverterBuilder) DIContainerUtil
                 .getComponentNoException(ConverterBuilder.class);
         if (converterBuilder == null) {

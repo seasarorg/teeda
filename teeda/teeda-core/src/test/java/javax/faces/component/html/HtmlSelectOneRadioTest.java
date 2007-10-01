@@ -490,7 +490,7 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlSelectOneRadio component = createHtmlSelectOneRadio();
         MockValueBinding vb = new MockValueBinding();
@@ -498,7 +498,8 @@ public class HtmlSelectOneRadioTest extends UISelectOneTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
     }
 
     private HtmlSelectOneRadio createHtmlSelectOneRadio() {

@@ -55,8 +55,7 @@ public class AttributeTag extends TagSupport {
         }
         String nameObj = name;
         if (UIComponentTag.isValueReference(name)) {
-            nameObj = (String) WebAppUtil
-                    .getValueFromCreatedValueBinding(name);
+            nameObj = (String) WebAppUtil.getValueFromCreatedValueBinding(name);
         }
         Object valueObj = value;
         if (UIComponentTag.isValueReference(value)) {

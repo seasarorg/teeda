@@ -23,8 +23,7 @@ import javax.faces.el.MethodBinding;
  */
 public interface MethodBindingFactory {
 
-    public void setValueBindingContext(
-            ValueBindingFactory valueBindingContext);
+    public void setValueBindingContext(ValueBindingFactory valueBindingContext);
 
     public MethodBinding createMethodBinding(Application application,
             String ref, Class[] params);

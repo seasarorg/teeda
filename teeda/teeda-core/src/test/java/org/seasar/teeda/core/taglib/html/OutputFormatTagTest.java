@@ -76,10 +76,10 @@ public class OutputFormatTagTest extends TeedaTestCase {
         // # Arrange #
         OutputFormatTag tag = new OutputFormatTag();
         tag.setEscape("true");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getEscape());
     }

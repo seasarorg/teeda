@@ -26,7 +26,7 @@ import org.seasar.teeda.extension.util.JavaScriptContext;
  * @author shot
  */
 public class ScriptEnhanceUIViewRootTest extends TeedaTestCase {
-    
+
     public void testAddScript() throws Exception {
         TViewRoot root = new TViewRoot();
         root.addScript("a", new JavaScriptContext() {

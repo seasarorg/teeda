@@ -26,7 +26,7 @@ public interface TreeNavigationImageLocator {
     boolean shouldRenderLineBackground();
 
     String getLineBackgroundSrc(boolean shouldShowLineBackground);
-    
+
     String getAltSrc();
 
     String getNavSrc();

@@ -491,7 +491,7 @@ public class HtmlInputSecretTest extends UIInputTest {
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlInputSecret component = createHtmlInputSecret();
         MockValueBinding vb = new MockValueBinding();
@@ -499,9 +499,10 @@ public class HtmlInputSecretTest extends UIInputTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
     }
-    
+
     private HtmlInputSecret createHtmlInputSecret() {
         return (HtmlInputSecret) createUIComponent();
     }

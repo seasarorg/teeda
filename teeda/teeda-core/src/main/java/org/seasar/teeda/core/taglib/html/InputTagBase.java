@@ -46,7 +46,8 @@ public abstract class InputTagBase extends UIComponentTagBase {
                 getRequired());
         setValidatorProperty(component, getValidator());
         setValueChangeListenerProperty(component, getValueChangeListener());
-        setComponentProperty(component, JsfConstants.READONLY_ATTR, getReadonly());
+        setComponentProperty(component, JsfConstants.READONLY_ATTR,
+                getReadonly());
         setComponentProperty(component, JsfConstants.LABEL_ATTR, getLabel());
     }
 

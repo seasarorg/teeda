@@ -56,7 +56,8 @@ public class ExtendEvaluationException extends EvaluationException {
         args_ = new Object[] { className, expressionString };
         messageCode_ = messageCode;
         simpleMessage_ = MessageFormatter.getSimpleMessage(messageCode_, args_);
-        message_ = MessageFormatter.getFormattedMessage(messageCode_, simpleMessage_);
+        message_ = MessageFormatter.getFormattedMessage(messageCode_,
+                simpleMessage_);
 
     }
 

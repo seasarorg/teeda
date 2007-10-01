@@ -18,7 +18,8 @@ package org.seasar.teeda.core.exception;
 /**
  * @author shot
  */
-public class UIComponentInstantiateFailureException extends ExtendFacesException {
+public class UIComponentInstantiateFailureException extends
+        ExtendFacesException {
 
     private static final long serialVersionUID = 1L;
 

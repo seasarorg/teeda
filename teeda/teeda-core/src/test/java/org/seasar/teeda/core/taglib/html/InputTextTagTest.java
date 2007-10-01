@@ -143,10 +143,10 @@ public class InputTextTagTest extends TeedaTestCase {
         tag.setValueChangeListener("#{mock.listener}");
         tag.setReadonly("true");
         tag.setAutocomplete("off");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getImmediate());
         assertEquals(null, tag.getRequired());

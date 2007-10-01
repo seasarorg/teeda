@@ -122,7 +122,7 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         assertEquals("/view/add/addResult_i.html", handler.calcPathFromOutcome(
                 getFacesContext(), "/view/add/addInput_i.html", "addResult"));
     }
-    
+
     public void testCalcPathFromOutcome4() throws Exception {
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         final NamingConventionImpl nc = new NamingConventionImpl();

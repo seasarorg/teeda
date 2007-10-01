@@ -22,7 +22,7 @@ public class Foo2Page {
     private String aaa;
 
     private int bbb;
-    
+
     private AaaDto aaaDto;
 
     /**

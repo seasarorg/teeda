@@ -22,5 +22,6 @@ import javax.faces.context.ExternalContext;
  */
 public interface ExternalContextCreator {
 
-    public ExternalContext create(Object context, Object request, Object response);
+    public ExternalContext create(Object context, Object request,
+            Object response);
 }

@@ -55,16 +55,16 @@ public class DispatchableFacesContextCreatorTest extends TeedaTestCase {
         });
         MockPortletContext portletContext = new MockPortletContextImpl("/hoge");
         FacesContext context = creator.create(portletContext,
-                new MockPortletRequestImpl(portletContext), new MockPortletResponseImpl(),
-                getLifecycle());
+                new MockPortletRequestImpl(portletContext),
+                new MockPortletResponseImpl(), getLifecycle());
         assertNotNull(context);
         assertTrue(context instanceof MockFacesContext);
     }
 
     public void testCreate_inCaseOfNoSuchEnvironment() throws Exception {
-        
+
         assertTrue(true);
-        
+
     }
 
 }

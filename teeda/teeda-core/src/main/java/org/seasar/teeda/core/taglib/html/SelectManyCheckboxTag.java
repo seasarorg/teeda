@@ -39,8 +39,10 @@ public class SelectManyCheckboxTag extends InputTagBase {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         setComponentProperty(component, JsfConstants.BORDER_ATTR, getBorder());
-        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR, getOnchange());
-        setComponentProperty(component, JsfConstants.ONSELECT_ATTR, getOnselect());
+        setComponentProperty(component, JsfConstants.ONCHANGE_ATTR,
+                getOnchange());
+        setComponentProperty(component, JsfConstants.ONSELECT_ATTR,
+                getOnselect());
         setComponentProperty(component, JsfConstants.DISABLED_CLASS_ATTR,
                 getDisabledClass());
         setComponentProperty(component, JsfConstants.ENABLED_CLASS_ATTR,

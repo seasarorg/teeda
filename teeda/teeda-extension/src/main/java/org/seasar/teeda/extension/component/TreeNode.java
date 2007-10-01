@@ -29,7 +29,7 @@ public interface TreeNode extends Serializable {
     List getChildren();
 
     void setChildren(List children);
-    
+
     String getType();
 
     void setType(String type);

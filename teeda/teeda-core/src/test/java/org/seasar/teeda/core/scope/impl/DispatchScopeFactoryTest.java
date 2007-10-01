@@ -23,12 +23,12 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
  * @author yone
  */
 public class DispatchScopeFactoryTest extends TestCase {
-    
+
     public void testGetRequestMapNotNull() {
         setCurrentInstanceMock();
         assertNotNull(DispatchScopeFactory.getRequestMap());
     }
-    
+
     public void testGetRequestMapNull() {
         setCurrentInstanceNull();
         assertNull(DispatchScopeFactory.getRequestMap());

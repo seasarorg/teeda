@@ -114,7 +114,7 @@ public class DataTableTagTest extends TestCase {
         assertEquals("title", table.getTitle());
         assertEquals("600", table.getWidth());
     }
-    
+
     public void testRelease() throws Exception {
         // # Arrange #
         DataTableTag tag = new DataTableTag();
@@ -124,10 +124,10 @@ public class DataTableTagTest extends TestCase {
         tag.setFooterClass("footerClass");
         tag.setHeaderClass("headerClass2");
         tag.setRowClasses("rowClasses");
-        
+
         // # Act #
         tag.release();
-        
+
         // # Assert #
         assertEquals(null, tag.getFirst());
         assertEquals(null, tag.getVar());
@@ -136,7 +136,7 @@ public class DataTableTagTest extends TestCase {
         assertEquals(null, tag.getHeaderClass());
         assertEquals(null, tag.getRowClasses());
     }
-    
+
     private HtmlDataTable createHtmlDataTable() {
         return (HtmlDataTable) createUIComponent();
     }
