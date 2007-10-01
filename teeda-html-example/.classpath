@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" output="build/view" path="src/main/webapp/view"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry output="build/view" kind="src" path="src/main/webapp/view"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_06"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-el-1.0.jar"/>
@@ -13,7 +13,7 @@
 	<classpathentry kind="lib" path="lib/geronimo-jsp_2.0_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-servlet_2.4_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.4.ga.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jcaptcha-all-1.0-RC6.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/jcaptcha-src-1.0-RC6.zip"/>
+	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/jcaptcha-src-1.0-RC6.zip" kind="lib" path="src/main/webapp/WEB-INF/lib/jcaptcha-all-1.0-RC6.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.9-patch-20070624.jar"/>
@@ -22,13 +22,13 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.17.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.17.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-tiger-2.4.17.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.11-RC2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.11-RC2.jar" sourcepath="/teeda"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.11-RC2.jar" sourcepath="/teeda"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.11-RC2.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-tiger-1.0.11-RC2-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.11.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.11.jar"/>
+	<classpathentry sourcepath="/teeda" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.11.jar"/>
+	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-tiger-1.0.11-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.11.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomahawk-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar"/>
+	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
+	<classpathentry sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar" kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
