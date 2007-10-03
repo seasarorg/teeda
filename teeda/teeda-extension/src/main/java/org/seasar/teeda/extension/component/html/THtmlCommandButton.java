@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
@@ -28,8 +27,8 @@ import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
-import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.exception.DoubleSubmittedException;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -55,30 +54,35 @@ public class THtmlCommandButton extends HtmlCommandButton implements
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
-        if (TransactionTokenUtil.isDoOnce(getId())) {
-            final FacesContext context = FacesContext.getCurrentInstance();
-            if (TransactionTokenUtil.verify(context)) {
-                super.broadcast(event);
-            } else {
-                final Map requestMap = context.getExternalContext()
-                        .getRequestMap();
-                if (PostbackUtil.isPostback(requestMap)) {
-                    context.renderResponse();
-                    return;
-                }
-                String path = RedirectScope.getRedirectingPath(context);
-                if (path == null) {
-                    path = RedirectScope.getRedirectedPath(context);
-                }
-                if (path != null) {
-                    NavigationHandlerUtil.assertNotAlreadyRedirect(context);
-                    NavigationHandlerUtil.redirect(context, path);
-                }
-                context.renderResponse();
-            }
+        if (isDoubleSubmitted()) {
             return;
         }
         super.broadcast(event);
+    }
+
+    protected boolean isDoubleSubmitted() {
+        if (!TransactionTokenUtil.isDoOnce(getId())) {
+            return false;
+        }
+        final FacesContext context = FacesContext.getCurrentInstance();
+        if (TransactionTokenUtil.verify(context)) {
+            return false;
+        }
+        if (!TransactionTokenUtil.isPrevious(context)) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        String path = RedirectScope.getRedirectingPath(context);
+        if (path == null) {
+            path = RedirectScope.getRedirectedPath(context);
+        }
+        if (path == null) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
+        NavigationHandlerUtil.redirect(context, path);
+        return true;
     }
 
     public boolean isRenderJs() {
