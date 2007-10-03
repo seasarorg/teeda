@@ -25,6 +25,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -69,6 +70,10 @@ public class THtmlCommandButton extends HtmlCommandButton implements
             return false;
         }
         if (!TransactionTokenUtil.isPrevious(context)) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        if (SubApplicationScope.getContext(context) == null) {
             throw new DoubleSubmittedException(context.getViewRoot()
                     .getViewId(), getId());
         }
