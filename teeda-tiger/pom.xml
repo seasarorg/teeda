@@ -11,7 +11,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.11-SP1-SNAPSHOT</version>
     <relativePath>../teeda</relativePath>
   </parent>
 
