@@ -64,14 +64,10 @@
     <component
 		class="org.seasar.teeda.extension.html.impl.HtmlComponentInvokerImpl" />
 
-	<component name="graphicImageFactory"
-		class="org.seasar.teeda.extension.html.factory.GraphicImageFactory" />
-	<component name="linkFactory"
-		class="org.seasar.teeda.extension.html.factory.LinkFactory" />
-	<component name="styleFactory"
-		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="mockFactory"
 		class="org.seasar.teeda.extension.html.factory.MockFactory" />
+	<component name="graphicImageFactory"
+		class="org.seasar.teeda.extension.html.factory.GraphicImageFactory" />
 	<component name="treeHiddenFactory"
 		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
 	<component name="scopeOutputTextFactory"
@@ -152,6 +148,10 @@
 		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
 	<component name="headFactory"
 		class="org.seasar.teeda.extension.html.factory.HeadFactory" />
+	<component name="linkFactory"
+		class="org.seasar.teeda.extension.html.factory.LinkFactory" />
+	<component name="styleFactory"
+		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="scriptFactory"
 		class="org.seasar.teeda.extension.html.factory.ScriptFactory" />
 	<component name="genericFactory"
