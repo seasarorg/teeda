@@ -23,7 +23,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
-import javax.faces.internal.scope.WindowScope;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -125,47 +125,47 @@ public class TransactionTokenUtil {
     }
 
     protected static String getCurrentToken(final FacesContext context) {
-        final Map windowScope = WindowScope.getContext(context);
-        if (windowScope == null) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
             return null;
         }
-        return (String) windowScope.get(CURRENT_TOKEN);
+        return (String) subAppScope.get(CURRENT_TOKEN);
     }
 
     protected static void setCurrentToken(final FacesContext context,
             String currentToken) {
-        final Map windowScope = WindowScope.getOrCreateContext(context);
-        windowScope.put(CURRENT_TOKEN, currentToken);
+        final Map subAppScope = SubApplicationScope.getOrCreateContext(context);
+        subAppScope.put(CURRENT_TOKEN, currentToken);
     }
 
     protected static void removeCurrentTokens(final FacesContext context) {
-        final Map windowScope = WindowScope.getContext(context);
-        if (windowScope == null) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
             return;
         }
-        windowScope.remove(CURRENT_TOKEN);
+        subAppScope.remove(CURRENT_TOKEN);
     }
 
     protected static String getPreviousToken(final FacesContext context) {
-        final Map windowScope = WindowScope.getContext(context);
-        if (windowScope == null) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
             return null;
         }
-        return (String) windowScope.get(PREVIOUS_TOKEN);
+        return (String) subAppScope.get(PREVIOUS_TOKEN);
     }
 
     protected static void setPreviousToken(final FacesContext context,
             String previousToken) {
-        final Map windowScope = WindowScope.getOrCreateContext(context);
-        windowScope.put(PREVIOUS_TOKEN, previousToken);
+        final Map subAppScope = SubApplicationScope.getOrCreateContext(context);
+        subAppScope.put(PREVIOUS_TOKEN, previousToken);
     }
 
     protected static void removePreviousToken(final FacesContext context) {
-        final Map windowScope = WindowScope.getContext(context);
-        if (windowScope == null) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
             return;
         }
-        windowScope.remove(PREVIOUS_TOKEN);
+        subAppScope.remove(PREVIOUS_TOKEN);
     }
 
     public static synchronized boolean verify(FacesContext context) {
