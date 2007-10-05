@@ -13,19 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.doonce;
+package examples.teeda.web.doublesubmit;
 
 import org.seasar.teeda.extension.annotation.validator.Required;
 
 /**
  * @author koichik
  */
-public class DoInputPage {
+public class InputPage {
 
 	@Required
 	public String text;
 
-	public Class<?> doConfirm() {
+	public Class<?> doOnceConfirm() {
 		return ConfirmPage.class;
 	}
 

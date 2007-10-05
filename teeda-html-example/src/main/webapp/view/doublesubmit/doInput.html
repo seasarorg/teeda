@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title id="aaa">Redirecting</title>
+<title>Input (not doOnce)</title>
 <style>
 .onTeedaError {
 	background-color: #FFCCCC;
@@ -12,10 +12,9 @@
 </head>
 <body>
 <form id="form">
-text : <span id="text">aaa</span><br />
-<input type="hidden" id="text-hidden" />
-<input type="submit" value="complete" id="doOnceComplete" />
-doOnce → リダイレクト<br />
+<input type="text" id="text" name="text" /><br />
+<input type="submit" value="confirm" id="doConfirm" />
+do → リダイレクト<br />
 </form>
 </body>
 </html>
