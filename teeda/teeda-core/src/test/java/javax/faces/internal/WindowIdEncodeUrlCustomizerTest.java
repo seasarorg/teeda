@@ -48,7 +48,6 @@ public class WindowIdEncodeUrlCustomizerTest extends TeedaTestCase {
 
     public void testEncodeActionUrl_noWindowId() throws Exception {
         final MockExternalContext externalContext = getExternalContext();
-        final Map requestMap = externalContext.getRequestMap();
         final WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
         final String encodeActionUrl = customizer.encodeActionUrl(
                 externalContext, "http://foo.com/bar/baz.html?aaa=bbb");
