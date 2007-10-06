@@ -26,24 +26,33 @@ import org.seasar.teeda.core.unit.TeedaTestCase;
 public class WindowIdEncodeUrlCustomizerTest extends TeedaTestCase {
 
     public void testEncodeActionUrl() throws Exception {
-        MockExternalContext externalContext = getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
+        final MockExternalContext externalContext = getExternalContext();
+        final Map requestMap = externalContext.getRequestMap();
         requestMap.put(WindowIdUtil.WID, "123");
-        WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
-        String encodeActionUrl = customizer.encodeActionUrl(externalContext,
-                "http://foo.com/bar/baz.html");
+        final WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
+        final String encodeActionUrl = customizer.encodeActionUrl(
+                externalContext, "http://foo.com/bar/baz.html");
         assertEquals("http://foo.com/bar/baz.html?wid=123", encodeActionUrl);
     }
 
     public void testEncodeActionUrl2() throws Exception {
-        MockExternalContext externalContext = getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
+        final MockExternalContext externalContext = getExternalContext();
+        final Map requestMap = externalContext.getRequestMap();
         requestMap.put(WindowIdUtil.WID, "123");
-        WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
-        String encodeActionUrl = customizer.encodeActionUrl(externalContext,
-                "http://foo.com/bar/baz.html?aaa=bbb");
+        final WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
+        final String encodeActionUrl = customizer.encodeActionUrl(
+                externalContext, "http://foo.com/bar/baz.html?aaa=bbb");
         assertEquals("http://foo.com/bar/baz.html?aaa=bbb&wid=123",
                 encodeActionUrl);
+    }
+
+    public void testEncodeActionUrl_noWindowId() throws Exception {
+        final MockExternalContext externalContext = getExternalContext();
+        final Map requestMap = externalContext.getRequestMap();
+        final WindowIdEncodeUrlCustomizer customizer = new WindowIdEncodeUrlCustomizer();
+        final String encodeActionUrl = customizer.encodeActionUrl(
+                externalContext, "http://foo.com/bar/baz.html?aaa=bbb");
+        assertEquals("http://foo.com/bar/baz.html?aaa=bbb", encodeActionUrl);
     }
 
 }
