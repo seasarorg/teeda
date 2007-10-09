@@ -57,8 +57,8 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         } else {
             s = id.substring(ISNOT_PARAM_PREFIX.length());
         }
-        final boolean hasProperty = pageDesc.hasProperty(StringUtil
-                .decapitalize(s));
+        final boolean hasProperty = (pageDesc != null) ? pageDesc.hasProperty(StringUtil
+                .decapitalize(s)) : false;
         return (isDiv(tagName) || isSpan(tagName)) && hasProperty;
     }
 
@@ -91,11 +91,6 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         if (tagName != null && JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName)) {
             properties.put(ExtensionConstants.RENDERSPAN_ATTR, "true");
         }
-    }
-
-    private static boolean isIsPrefix(final String id) {
-        return StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
-                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX);
     }
 
     protected String getTagName() {

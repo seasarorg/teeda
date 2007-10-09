@@ -82,6 +82,13 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         assertFalse(factory.isMatch(elementNode, pageDesc, null));
     }
 
+    public void testIsMatch_noPageDesc() throws Exception {
+        Map props = new HashMap();
+        props.put("id", "isBbb");
+        ElementNode elementNode = createElementNode("div", props);
+        assertFalse(factory.isMatch(elementNode, null, null));
+    }
+
     public void testIsMatch_spanIsOk() throws Exception {
         Map props = new HashMap();
         props.put("id", "isBbb");
