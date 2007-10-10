@@ -86,21 +86,21 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.11-SP1">Teeda&nbsp;1.0.11-SP1&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [TEEDA-393] - doOnce～() で二重サブミットされた場合，遷移前の画面に戻って新しい
+                       トランザクショントークンが発行されるため，結果的に二重登録が可能となる．
+    * [TEEDA-395] - ForEach で itemsSave を使っていない場合，do～() が呼び出された際に
+                       xxxItems が null になってしまう問題を修正しました．
+</pre>
+
 <h2><a name="1.0.11">Teeda&nbsp;1.0.11&nbsp;変更点</a></h2>
 <pre style="background-color:white">
-
-　以下の　<a href="#1.0.11-RC2">1.0.11-RC2</a>　と同じになります。
-　
  <font color="red">
 <b>org.seasar.teeda.extension.util.ValidatorUtil</b> クラスは，
 <b>org.seasar.teeda.extension.util.TargetCommandUtil</b> クラスに変更になっていますのでご注意下さい．
  </font>
-</pre>
-
-<h2><a name="1.0.11-RC2">Teeda&nbsp;1.0.11-RC2&nbsp;変更点</a></h2>
-<pre style="background-color:white">
-Teeda 1.0.11の修正内容となるべき一覧です.
-問題なければこのリストがそのまま1.0.11の修正内容になります.
 
 ** Bug
     * [TEEDA-303] - DoltengのScaffoldでGridのJavaScriptがエラーになる問題を修正しました．
