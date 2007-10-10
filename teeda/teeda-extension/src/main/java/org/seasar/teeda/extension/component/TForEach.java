@@ -114,8 +114,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     }
 
     public void setItemsName(final String itemsName) {
-        if ((itemsName != null)
-                && !itemsName.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
+        if ((itemsName != null) &&
+                !itemsName.endsWith(ExtensionConstants.ITEMS_SUFFIX)) {
             throw new IllegalArgumentException(itemsName);
         }
         this.itemsName = itemsName;
@@ -125,8 +125,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (itemsName == null) {
             return null;
         }
-        return itemsName.substring(0, itemsName.length()
-                - ExtensionConstants.ITEMS_SUFFIX.length());
+        return itemsName.substring(0, itemsName.length() -
+                ExtensionConstants.ITEMS_SUFFIX.length());
     }
 
     public String getIndexName() {
@@ -272,10 +272,10 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                         fm.setSummary(summary + lineErrorMessage);
                     } else {
                         fm
-                                .setSummary(summary
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                                        + (row + 1)
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                                .setSummary(summary +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX +
+                                        (row + 1) +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                     }
                 }
                 if (detail != null) {
@@ -283,10 +283,10 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                         fm.setDetail(detail + lineErrorMessage);
                     } else {
                         fm
-                                .setDetail(detail
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX
-                                        + (row + 1)
-                                        + ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
+                                .setDetail(detail +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_PREFIX +
+                                        (row + 1) +
+                                        ExtensionConstants.VALIDATION_ERROR_LINE_SUFFIX);
                     }
                 }
             }
@@ -349,28 +349,19 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         final Class pageClass = page.getClass();
         final BeanDesc pageBeanDesc = BeanDescFactory.getBeanDesc(pageClass);
 
-        // TEEDA-305(Seasar-user:7347)
-        final Map savedProperties = new HashMap();
-        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
-            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
-            if (pd.isReadable() && pd.isWritable()) {
-                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
-            }
-        }
-
         final String itemsName = getItemsName();
         final PropertyDesc itemsPd = pageBeanDesc.getPropertyDesc(itemsName);
         if (!itemsPd.isWritable()) {
-            throw new IllegalStateException("class ["
-                    + pageBeanDesc.getBeanClass().getName()
-                    + "] should have writeMethod for ["
-                    + itemsPd.getPropertyName() + "]");
+            throw new IllegalStateException("class [" +
+                    pageBeanDesc.getBeanClass().getName() +
+                    "] should have writeMethod for [" +
+                    itemsPd.getPropertyName() + "]");
         }
         final Class itemsClass = itemsPd.getPropertyType();
         final Class itemClass = itemsClass.getComponentType();
         if (itemClass == null) {
-            logger.debug("class [" + itemsClass.getName()
-                    + "] should be array type, so no update.");
+            logger.debug("class [" + itemsClass.getName() +
+                    "] should be array type, so no update.");
             return;
         }
         Object[] items = (Object[]) itemsPd.getValue(page);
@@ -381,6 +372,15 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             }
         }
         itemsPd.setValue(page, items);
+
+        // TEEDA-305(Seasar-user:7347)
+        final Map savedProperties = new HashMap();
+        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
+            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
+            if (pd.isReadable() && pd.isWritable()) {
+                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
+            }
+        }
 
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
         for (int i = 0; i < rowSize; ++i) {
@@ -549,8 +549,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         if (valueClass == null) {
             return true;
         }
-        return (pdClass == valueClass)
-                || (pdClass.isAssignableFrom(valueClass));
+        return (pdClass == valueClass) ||
+                (pdClass.isAssignableFrom(valueClass));
     }
 
 }
