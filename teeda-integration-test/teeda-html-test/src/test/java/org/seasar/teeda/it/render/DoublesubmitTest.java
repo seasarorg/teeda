@@ -15,10 +15,14 @@
  */
 package org.seasar.teeda.it.render;
 
+import java.lang.reflect.Method;
+
 import junit.framework.Test;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
+
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
 
 /**
  * @author shot
@@ -39,6 +43,84 @@ public class DoublesubmitTest extends TeedaWebTestCase {
 
 		// ## Assert ##
 		assertTrue(tester.getPageSource().indexOf("DisabledConf") > 0);
+	}
+
+	public void testTeeda393_withRedirect() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		Method getElementById = TeedaWebTester.class.getDeclaredMethod(
+				"getElementById", new Class[] { String.class });
+		getElementById.setAccessible(true);
+
+		// ## Act ##
+		// ## Assert ##
+		// display input.html
+		tester.beginAt(getBaseUrl(), "view/doublesubmit/input.html");
+		tester.assertTitleEquals("Input");
+		tester.dumpHtml();
+		HtmlInput confirmButton = (HtmlInput) getElementById.invoke(tester,
+				new Object[] { "doOnceConfirm" });
+
+		// submit 'confirm' button
+		tester.setTextById("text", "aaa");
+		tester.submitById("doOnceConfirm");
+		tester.dumpHtml();
+		tester.assertTitleEquals("Confirm");
+		tester.assertTextEqualsById("text", "aaa");
+
+		// back to input.html then submit 'confirm' button again
+		confirmButton.click();
+		tester.dumpHtml();
+		tester.assertTitleEquals("Confirm");
+		tester.assertTextEqualsById("text", "aaa");
+		HtmlInput completeButton = (HtmlInput) getElementById.invoke(tester,
+				new Object[] { "doOnceComplete" });
+
+		// submit 'complete' button
+		tester.submitById("doOnceComplete");
+		tester.dumpHtml();
+		tester.assertTitleEquals("Complete");
+		tester.assertTextEqualsById("text", "aaa");
+
+		// back to confirm.html then submit 'complete' button again
+		completeButton.click();
+		tester.dumpHtml();
+		tester.assertTitleEquals("Complete");
+		tester.assertTextEqualsById("text", "aaa");
+
+		// back and back to input.html then submit 'confirm' button again
+		confirmButton.click();
+		tester.dumpHtml();
+		tester.assertTitleEquals("error result");
+	}
+
+	public void testTeeda393_withForward() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		Method getElementById = TeedaWebTester.class.getDeclaredMethod(
+				"getElementById", new Class[] { String.class });
+		getElementById.setAccessible(true);
+
+		// ## Act ##
+		// ## Assert ##
+		// display forward.html
+		tester.beginAt(getBaseUrl(), "view/doublesubmit/forward.html");
+		tester.assertTitleEquals("Forward");
+		tester.dumpHtml();
+		HtmlInput completeButton = (HtmlInput) getElementById.invoke(tester,
+				new Object[] { "doOnceComplete" });
+
+		// submit 'complete' button
+		tester.setTextById("text", "aaa");
+		tester.submitById("doOnceComplete");
+		tester.dumpHtml();
+		tester.assertTitleEquals("Forward");
+		tester.assertTextEqualsById("text", "aaa");
+
+		// back to previous page then submit 'complete' button again
+		completeButton.click();
+		tester.dumpHtml();
+		tester.assertTitleEquals("error result");
 	}
 
 }

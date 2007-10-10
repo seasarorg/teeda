@@ -8,6 +8,10 @@
 			<arg>@org.seasar.teeda.it.web.error.WebAppRuntimeException@class</arg>
 			<arg>"/view/error/errorResult.html"</arg>
 		</initMethod>
+		<initMethod name="addErrorPage">
+			<arg>@org.seasar.teeda.extension.exception.DoubleSubmittedException@class</arg>
+			<arg>"/view/error/errorResult.html"</arg>
+		</initMethod>
 	</component>
 
 </components>

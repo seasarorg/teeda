@@ -332,6 +332,29 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
+	public void testForeachDto_TEEDA395() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/noItemsSave.html");
+		tester.dumpHtml();
+		tester.setTextByName("form:fooItems:0:bbb", "b1x");
+		tester.setTextByName("form:fooItems:0:ccc", "c1x");
+		tester.setTextByName("form:fooItems:1:bbb", "b2x");
+		tester.setTextByName("form:fooItems:1:ccc", "c2x");
+		tester.setTextByName("form:fooItems:2:bbb", "b3x");
+		tester.setTextByName("form:fooItems:2:ccc", "c3x");
+		tester.submitById("doTest");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		final String[][] tableExpected = new String[][] {
+				{ "a1", "b1x", "c1x" }, { "a2", "b2x", "c2x" },
+				{ "a3", "b3x", "c3x" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
 	public void testForeachNest_TEEDA386() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();

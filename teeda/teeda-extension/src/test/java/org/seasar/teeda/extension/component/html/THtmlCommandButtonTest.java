@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.event.AbortProcessingException;
@@ -23,10 +22,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
 
-import org.seasar.teeda.core.mock.MockExternalContext;
-import org.seasar.teeda.core.mock.MockExternalContextImpl;
 import org.seasar.teeda.core.unit.TeedaTestCase;
-import org.seasar.teeda.core.util.PostbackUtil;
+import org.seasar.teeda.extension.exception.DoubleSubmittedException;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -60,33 +57,12 @@ public class THtmlCommandButtonTest extends TeedaTestCase {
         THtmlCommandButton button = new THtmlCommandButton();
         button.setId("doOnceSubmit");
         FacesEvent event = new ActionEvent(button);
-        button.broadcast(event);
-        assertFalse(actionListener.called);
-        assertTrue(getFacesContext().getRenderResponse());
-    }
-
-    public void testVerify_ng_postback() throws Exception {
-        THtmlCommandButton button = new THtmlCommandButton();
-        MockExternalContext orgExtContext = getExternalContext();
         try {
-            MockExternalContext context = new MockExternalContextImpl() {
-
-                public void redirect(String requestURI) throws IOException {
-                    fail();
-                }
-
-            };
-            setExternalContext(context);
-            getFacesContext().setExternalContext(context);
-            PostbackUtil.setPostback(context.getRequestMap(), true);
-            button.setId("doOnceSubmit");
-            FacesEvent event = new ActionEvent(button);
             button.broadcast(event);
-            assertFalse(actionListener.called);
-            assertTrue(getFacesContext().getRenderResponse());
-        } finally {
-            setExternalContext(orgExtContext);
+            fail();
+        } catch (DoubleSubmittedException expected) {
         }
+        assertFalse(actionListener.called);
     }
 
     private static class MyActionListener implements ActionListener {

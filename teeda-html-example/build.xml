@@ -15,6 +15,32 @@
 				<exclude name="**/.DS_Store"/>
 			</zipfileset>
 		</zip>
+		<zip zipfile="target/teeda-jars-${ver}.zip">
+			<zipfileset prefix="teeda-jars" dir="src/main/webapp/WEB-INF/lib">
+				<include name="*.jar"/>
+				<exclude name="s2-tiger*.jar"/>
+				<exclude name="teeda-tiger*.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda-jars/sources" dir="src/main/webapp/WEB-INF/lib/sources">
+				<include name="*.jar"/>
+				<exclude name="s2-tiger*.jar"/>
+				<exclude name="teeda-tiger*.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda-jars" dir="lib">
+				<include name="*.jar"/>
+			</zipfileset>
+		</zip>
+		<zip zipfile="target/teeda-tiger-jars-${ver}.zip">
+			<zipfileset prefix="teeda-tiger-jars" dir="src/main/webapp/WEB-INF/lib">
+				<include name="*.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda-tiger-jars/sources" dir="src/main/webapp/WEB-INF/lib/sources">
+				<include name="*.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda-tigerjars" dir="lib">
+				<include name="*.jar"/>
+			</zipfileset>
+		</zip>
 	</target>
 
 </project>
