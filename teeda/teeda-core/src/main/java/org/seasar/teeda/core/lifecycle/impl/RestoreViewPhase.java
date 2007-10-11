@@ -101,6 +101,8 @@ public class RestoreViewPhase extends AbstractPhase {
         // PortletSupport
         if (!PortletUtil.isPortlet(context)) {
             isPost = ServletExternalContextUtil.isPost(externalContext);
+        } else {
+            isPost = !PortletUtil.isRender(context);
         }
         PostbackUtil.setPostback(requestMap, isPost);
         return holder;
