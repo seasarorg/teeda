@@ -26,6 +26,7 @@ import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.util.FacesContextUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shot
@@ -55,7 +56,10 @@ public class RenderResponsePhase extends AbstractPhase {
                     RedirectScope.clearContext(context);
                     RedirectScope.setRedirectedPath(context, path);
                 } else {
-                    RedirectScope.clearContext(context);
+                    // PortletSupport
+                    if (!PortletUtil.isPortlet(context)) {
+                        RedirectScope.clearContext(context);
+                    }
                 }
             }
         }
