@@ -64,7 +64,7 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             HtmlCommandButton htmlCommandButton) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlCommandButton);
-        final String image = htmlCommandButton.getImage();
+        final String image = getImage(context, htmlCommandButton);
         final boolean isImageType = StringUtil.isNotBlank(image);
         String type;
         if (isImageType) {
@@ -90,6 +90,11 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
+    protected String getImage(FacesContext context,
+            HtmlCommandButton htmlCommandButton) {
+        return htmlCommandButton.getImage();
+    }
+
     protected void renderValueAttribute(FacesContext context,
             UICommand command, ResponseWriter writer) throws IOException {
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, command
@@ -105,9 +110,9 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             HtmlCommandButton htmlCommandButton) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String clientId = htmlCommandButton.getClientId(context);
-        if (paramMap.containsKey(clientId)
-                || paramMap.containsKey(clientId + ".x")
-                || paramMap.containsKey(clientId + ".y")) {
+        if (paramMap.containsKey(clientId) ||
+                paramMap.containsKey(clientId + ".x") ||
+                paramMap.containsKey(clientId + ".y")) {
             if (JsfConstants.RESET_VALUE.equalsIgnoreCase(htmlCommandButton
                     .getType())) {
             } else {

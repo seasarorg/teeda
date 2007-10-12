@@ -27,6 +27,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlLink;
+import org.seasar.teeda.extension.util.PathUtil;
 
 /**
  * @author shot
@@ -63,8 +64,8 @@ public class THtmlLinkRenderer extends AbstractRenderer {
         }
         final String href = link.getHref();
         if (!StringUtil.isEmpty(href)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, href,
-                    null);
+            RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR,
+                    PathUtil.toAbsolutePath(context, link, href), null);
         }
         final String src = link.getSrc();
         if (!StringUtil.isEmpty(src)) {

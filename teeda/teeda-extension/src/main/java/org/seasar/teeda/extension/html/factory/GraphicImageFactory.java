@@ -54,6 +54,9 @@ public class GraphicImageFactory extends AbstractElementProcessorFactory {
     protected void customizeProperties(final Map properties,
             final ElementNode elementNode, final PageDesc pageDesc,
             final ActionDesc actionDesc) {
+        super
+                .customizeProperties(properties, elementNode, pageDesc,
+                        actionDesc);
         renameProperty(properties, JsfConstants.SRC_ATTR, JsfConstants.URL_ATTR);
     }
 

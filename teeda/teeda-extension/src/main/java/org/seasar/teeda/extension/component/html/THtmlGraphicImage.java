@@ -16,10 +16,6 @@
 package org.seasar.teeda.extension.component.html;
 
 import javax.faces.component.html.HtmlGraphicImage;
-import javax.faces.context.FacesContext;
-
-import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.extension.util.PathUtil;
 
 /**
  * @author koichik
@@ -39,14 +35,6 @@ public class THtmlGraphicImage extends HtmlGraphicImage {
 
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    public Object saveState(final FacesContext context) {
-        final String src = getUrl();
-        if (!StringUtil.isEmpty(src)) {
-            setUrl(PathUtil.toAbsolutePath(context, this, src));
-        }
-        return super.saveState(context);
     }
 
 }

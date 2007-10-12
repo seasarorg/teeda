@@ -19,10 +19,12 @@ import java.io.IOException;
 
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.LabelUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
@@ -31,6 +33,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
 import org.seasar.teeda.extension.util.DoubleSubmitProtectionLoader;
 import org.seasar.teeda.extension.util.KumuDisabledScriptLoader;
+import org.seasar.teeda.extension.util.PathUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -85,6 +88,15 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
             return;
         }
         TransactionTokenUtil.renderTokenIfNeed(context, component);
+    }
+
+    protected String getImage(FacesContext context,
+            HtmlCommandButton htmlCommandButton) {
+        final String image = super.getImage(context, htmlCommandButton);
+        if (StringUtil.isEmpty(image)) {
+            return image;
+        }
+        return PathUtil.toAbsolutePath(context, htmlCommandButton, image);
     }
 
     protected void renderValueAttribute(FacesContext context,

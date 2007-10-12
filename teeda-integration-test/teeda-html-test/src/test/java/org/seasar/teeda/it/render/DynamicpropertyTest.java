@@ -25,31 +25,36 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class DynamicpropertyTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(DynamicpropertyTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(DynamicpropertyTest.class);
+	}
 
-    /*
-     * "aaa": getAaaStyle
-     * "aaa-header": getAaaHeaderStyle
-     * "aaa-footer": Pageにプロパティが無いのでhtmlに書かれたまま
-     */
-    public void testRender() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	/*
+	 * "aaa": getAaaStyle "aaa-header": getAaaHeaderStyle "aaa-footer":
+	 * Pageにプロパティが無いのでhtmlに書かれたまま
+	 */
+	public void testRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(),
-            "view/dynamicproperty/dynamicproperty.html");
-        tester.dumpHtml();
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(),
+				"view/dynamicproperty/dynamicproperty.html");
+		tester.dumpHtml();
+		tester.assertAttributeEqualsById("aaa-header", "style",
+				"background-color:yellow");
+		tester.assertAttributeEqualsById("aaa", "style",
+				"background-color:blue");
+		tester.assertAttributeEqualsById("aaa-footer", "style",
+				"background-color:green");
 
-        // ## Assert ##
-        tester.assertAttributeEqualsById("aaa-header", "style",
-            "background-color:yellow");
-        tester.assertAttributeEqualsById("aaa", "style",
-            "background-color:blue");
-        tester.assertAttributeEqualsById("aaa-footer", "style",
-            "background-color:green");
-    }
+		tester.submitById("goDynamicproperty2");
+		tester.dumpHtml();
+		tester.assertAttributeEqualsById("foo", "src", "/foo.gif");
+		tester.assertAttributeEqualsById("bar", "href", "/bar.css");
+		tester.assertAttributeEqualsById("baz", "src", "/js/baz.js");
+		tester.assertAttributeEqualsById("hoge", "src", "/hoge.gif");
+	}
 
 }

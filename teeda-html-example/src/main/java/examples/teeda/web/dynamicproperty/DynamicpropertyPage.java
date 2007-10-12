@@ -48,4 +48,11 @@ public class DynamicpropertyPage {
 			return RED;
 		}
 	}
+
+	public String getImgSrc() {
+		int mod = Math.abs(random.nextInt()) % 2;
+		return mod == 0 ? "../../img/nav-collapse.gif"
+				: "../../img/nav-expand.gif";
+	}
+
 }

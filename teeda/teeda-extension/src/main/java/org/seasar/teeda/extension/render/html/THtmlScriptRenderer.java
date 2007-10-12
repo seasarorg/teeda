@@ -27,6 +27,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlScript;
+import org.seasar.teeda.extension.util.PathUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -72,8 +73,10 @@ public class THtmlScriptRenderer extends AbstractRenderer {
         String src = script.getSrc();
         if (!StringUtil.isEmpty(src)) {
             if (VirtualResource.startsWithVirtualPath(src)) {
-                src = context.getExternalContext().getRequestContextPath()
-                        + src;
+                src = context.getExternalContext().getRequestContextPath() +
+                        src;
+            } else {
+                src = PathUtil.toAbsolutePath(context, script, src);
             }
             RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, src,
                     null);

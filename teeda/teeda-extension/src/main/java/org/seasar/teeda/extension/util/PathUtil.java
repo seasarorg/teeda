@@ -21,6 +21,8 @@ import java.util.LinkedList;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.extension.component.TInclude;
+import org.seasar.teeda.extension.component.TIncludeChildBody;
 import org.seasar.teeda.extension.component.TViewRoot;
 
 /**
@@ -37,18 +39,25 @@ public abstract class PathUtil {
         final String contextRoot = context.getExternalContext()
                 .getRequestContextPath();
         final String viewId = getViewId(component);
+        if (viewId == null) {
+            return path;
+        }
         final String absolutePath = contextRoot + viewId + "/../" + path;
         return normalizePath(absolutePath);
     }
 
     protected static String getViewId(UIComponent component) {
         while (component != null) {
-            if (component instanceof TViewRoot) {
-                return ((TViewRoot) component).getViewId();
+            if (component instanceof TIncludeChildBody) {
+                return ((TIncludeChildBody) component).getIncludedViewId();
+            } else if (component instanceof TInclude) {
+                return ((TInclude) component).getIncludedViewId();
+            } else if (component instanceof TViewRoot) {
+                return ((TViewRoot) component).getRootViewId();
             }
             component = component.getParent();
         }
-        throw new IllegalStateException();
+        return null;
     }
 
     protected static String normalizePath(final String absolutePath) {

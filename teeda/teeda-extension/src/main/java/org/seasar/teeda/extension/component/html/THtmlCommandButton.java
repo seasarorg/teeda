@@ -27,11 +27,9 @@ import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.exception.DoubleSubmittedException;
-import org.seasar.teeda.extension.util.PathUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -126,10 +124,6 @@ public class THtmlCommandButton extends HtmlCommandButton implements
     }
 
     public Object saveState(FacesContext context) {
-        final String image = getImage();
-        if (!StringUtil.isEmpty(image)) {
-            setImage(PathUtil.toAbsolutePath(context, this, image));
-        }
         Object values[] = new Object[2];
         values[0] = super.saveState(context);
         values[1] = renderJs;
