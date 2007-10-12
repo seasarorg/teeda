@@ -46,7 +46,7 @@ public final class FactoryFinder {
         AssertionUtil.assertNotNull("factoryName", factoryName);
         if (!factoryClassNames.containsKey(factoryName)) {
             throw new IllegalStateException("no factory " + factoryName
-                    + " configured for this appliction");
+                    + " configured for this application");
         }
         Object factory = factories.get(factoryName);
         if (factory == null) {
