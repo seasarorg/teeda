@@ -222,6 +222,9 @@
 	<component name="teedaGridHelper"
 		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
 
-    <component
+	<component
 		class="org.seasar.teeda.extension.helper.impl.PathHelperImpl"/>
+
+	<component
+		class="org.seasar.teeda.extension.util.SimpleFacesMessageHelperImpl"/>
 </components>
