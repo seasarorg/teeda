@@ -306,21 +306,21 @@ Kumu = Kumu.extend(Kumu, {
   },
 
   ltrim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     return str.replace(/^[ 　]+/, '');
   },
   
   rtrim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     return str.replace(/[ 　]+$/, '');
   },
   
   trim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     var tmp = Kumu.ltrim(str);
