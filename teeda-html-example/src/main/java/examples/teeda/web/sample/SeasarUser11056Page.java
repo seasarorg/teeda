@@ -22,7 +22,7 @@ public class SeasarUser11056Page {
     }
 
     public void prerender() {
-        // System.out.println("#####prerender#####");
+        System.out.println("#####prerender#####");
     }
 
     public Class doTest() {
@@ -45,7 +45,7 @@ public class SeasarUser11056Page {
         return null;
     }
 
-    public String getLayout() {
-        return null;
-    }
+//    public String getLayout() {
+//        return null;
+//    }
 }
