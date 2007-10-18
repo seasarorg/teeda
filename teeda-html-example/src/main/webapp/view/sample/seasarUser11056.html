@@ -14,6 +14,10 @@ DisabledConf = {
   excludeForm : ['test2Form'],
   submitMessage : function(){
     alert('submit 送信中です');
+  },
+  excludeAnchor : ['a2'],
+  anchorMessage : function(){
+    alert('link 遷移中です');
   }
 }
 //]]>
@@ -33,6 +37,12 @@ DisabledConf = {
 <fieldset title="ダブルサブミットチェック無し">
   <legend>このformは2重送信チェック無</legend>
   <input id="doTest2" type="submit" value="submit test2"/>  
+</fieldset>
+<hr/>
+<fieldset title="ダブルサブミットチェック">
+<legend>リンクのテスト</legend>
+<a id="a1" href="seasarUser11056.html">test link1（2重送信防止）</a><br/>
+<a id="a2" href="seasarUser11056.html">test link2（ノーマル）</a>
 </fieldset>
 </form>
 </body>
