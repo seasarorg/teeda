@@ -37,7 +37,7 @@ public class TextareaSeparatorCharacterConverter extends CharacterConverter
             return null;
         }
         if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
-            return null;
+            return value;
         }
         return value;
     }

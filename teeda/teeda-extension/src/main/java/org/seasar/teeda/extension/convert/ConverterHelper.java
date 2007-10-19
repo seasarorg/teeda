@@ -16,7 +16,7 @@
 package org.seasar.teeda.extension.convert;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
+import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
 /**
@@ -32,8 +32,8 @@ public class ConverterHelper {
         final boolean ret = convertTarget.isTargetCommandConvert(context,
                 targets);
         if (!ret) {
-            if (component instanceof UIInput) {
-                ((UIInput) component).setValid(false);
+            if (component instanceof UIComponentBase) {
+                ((UIComponentBase) component).setValueBinding("value", null);
             }
         }
         return ret;

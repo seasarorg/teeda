@@ -63,7 +63,7 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
         if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
-            return null;
+            return value;
         }
         return super.getAsObject(context, component, value);
     }
@@ -84,8 +84,8 @@ public class TBigDecimalConverter extends BigDecimalConverter implements
             }
             BigDecimal decimalValue = (BigDecimal) value;
             if (this.scale != null && scale.intValue() != SCALE_NONE) {
-                if (this.roundingMode != null
-                        && scale.intValue() != ROUNDINGMODE_NONE) {
+                if (this.roundingMode != null &&
+                        scale.intValue() != ROUNDINGMODE_NONE) {
                     decimalValue = decimalValue.setScale(this.scale.intValue(),
                             this.roundingMode.intValue());
                 } else {

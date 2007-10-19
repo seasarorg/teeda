@@ -46,7 +46,7 @@ public class TBigIntegerConverter extends BigIntegerConverter implements
         AssertionUtil.assertNotNull("FacesContext", context);
         AssertionUtil.assertNotNull("UIComponent", component);
         if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
-            return null;
+            return value;
         }
         return super.getAsObject(context, component, value);
     }

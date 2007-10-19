@@ -141,10 +141,7 @@ public class TTimestampConverterTest extends TeedaTestCase {
         String dateValue = "2006/06/06 12:45:50";
         Object o = converter.getAsObject(context, new NullUIComponent(),
                 dateValue);
-
-        //        assertNotNull(o);
-        //        assertTrue(o instanceof Timestamp);
-        assertNull(o);
+        assertEquals(dateValue, o);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {
@@ -162,8 +159,7 @@ public class TTimestampConverterTest extends TeedaTestCase {
         String dateValue = "AAA";
         Object o = converter.getAsObject(context, new MockUIComponent(),
                 dateValue);
-
-        assertNull(o);
+        assertEquals(dateValue, o);
     }
 
     private Timestamp createTimestampTarget(String pattern, Locale locale,

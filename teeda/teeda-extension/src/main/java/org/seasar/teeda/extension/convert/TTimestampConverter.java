@@ -32,7 +32,7 @@ public class TTimestampConverter extends TDateTimeConverter implements
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) throws ConverterException {
         if (!ConverterHelper.isTargetCommand(context, component, targets, this)) {
-            return null;
+            return value;
         }
         Date date = null;
         try {

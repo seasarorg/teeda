@@ -446,12 +446,9 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
 
         String dateValue = "2005/08/01";
-        Date date = (Date) converter.getAsObject(context,
-                new NullUIComponent(), dateValue);
-
-        //        Date dateTarget = createDateTarget(pattern, defaultLocale, dateValue);
-        //        assertEquals(date, dateTarget);
-        assertNull(date);
+        Object o = converter.getAsObject(context, new NullUIComponent(),
+                dateValue);
+        assertEquals(dateValue, o);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {
@@ -466,10 +463,10 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
 
         String dateValue = "AAA";
-        Date date = (Date) converter.getAsObject(context,
-                new MockUIComponent(), dateValue);
+        Object o = converter.getAsObject(context, new MockUIComponent(),
+                dateValue);
 
-        assertNull(date);
+        assertEquals(dateValue, o);
     }
 
     private Date createDateTarget(String pattern, Locale locale, String date)

@@ -42,8 +42,8 @@ public class TBigDecimalConverterTest extends TeedaTestCase {
                 JsfConstants.SUBMITTED_COMMAND, "bbb");
         MockUIInput mockUIInput = new MockUIInput();
         Object o = converter.getAsObject(getFacesContext(), mockUIInput, value);
-        assertNull(o);
-        assertFalse(mockUIInput.isValid());
+        assertEquals(value, o);
+        assertNull(mockUIInput.getValueBinding("value"));
     }
 
     public void testGetAsString() throws Exception {
