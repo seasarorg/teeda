@@ -15,9 +15,11 @@
  */
 package org.seasar.teeda.it.render;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import junit.framework.Test;
+import net.sourceforge.jwebunit.junit.WebTester;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
@@ -121,6 +123,24 @@ public class DoublesubmitTest extends TeedaWebTestCase {
 		completeButton.click();
 		tester.dumpHtml();
 		tester.assertTitleEquals("error result");
+	}
+
+	public void testTeeda398() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		Field testerField = TeedaWebTester.class.getDeclaredField("tester");
+		testerField.setAccessible(true);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/doublesubmit/multiForm.html");
+		tester.dumpHtml();
+		WebTester webTester = (WebTester) testerField.get(tester);
+		String token1 = webTester.getElementAttributByXPath(
+				"//form[@id='firstForm']/input[@type='hidden']", "value");
+		String token2 = webTester.getElementAttributByXPath(
+				"//form[@id='secondForm']/input[@type='hidden']", "value");
+		assertEquals(token1, token2);
 	}
 
 }

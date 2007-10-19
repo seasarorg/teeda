@@ -40,6 +40,8 @@ public class TransactionTokenUtil {
 
     public static String TOKEN = null;
 
+    public static String SAVED_TOKEN_SUFFIX = ".SAVED";
+
     public static final String DEFAULT_TOKEN = TransactionTokenUtil.class
             .getName() +
             ".TOKEN";
@@ -80,7 +82,10 @@ public class TransactionTokenUtil {
         if (!StringUtil.isEmpty(token)) {
             return;
         }
-        token = generate(context);
+        token = (String) requestMap.remove(TOKEN + SAVED_TOKEN_SUFFIX);
+        if (StringUtil.isEmpty(token)) {
+            token = generate(context);
+        }
         requestMap.put(TOKEN, token);
         RendererUtil.renderHidden(component, context.getResponseWriter(),
                 TOKEN, token);
@@ -92,7 +97,10 @@ public class TransactionTokenUtil {
         }
         final ExternalContext extCtx = context.getExternalContext();
         final Map requestMap = extCtx.getRequestMap();
-        requestMap.remove(TOKEN);
+        String token = (String) requestMap.remove(TOKEN);
+        if (!StringUtil.isEmpty(token)) {
+            requestMap.put(TOKEN + SAVED_TOKEN_SUFFIX, token);
+        }
     }
 
     protected static String generate(FacesContext context) {
