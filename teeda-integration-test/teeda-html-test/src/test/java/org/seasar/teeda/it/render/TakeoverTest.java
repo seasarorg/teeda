@@ -25,74 +25,74 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class TakeoverTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(TakeoverTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(TakeoverTest.class);
+	}
 
-    public void testTakeover1() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testTakeover1() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
+		tester.dumpHtml();
 
-        tester.assertTextEqualsById("aaaa", "a1");
-        tester.assertTextEqualsById("bbbb", "b1");
-        tester.assertTextEqualsById("cccc", "c1");
+		tester.assertTextEqualsById("aaaa", "a1");
+		tester.assertTextEqualsById("bbbb", "b1");
+		tester.assertTextEqualsById("cccc", "c1");
 
-        tester.submitById("goTakeover2");
-        tester.dumpHtml();
+		tester.submitById("goTakeover2-1");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
-        tester.assertTextEqualsById("aaaa", "a1");
-        tester.assertTextEqualsById("bbbb", "");
-        tester.assertTextEqualsById("cccc", "c1");
-    }
+		// ## Assert ##
+		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		tester.assertTextEqualsById("aaaa", "a1");
+		tester.assertTextEqualsById("bbbb", "");
+		tester.assertTextEqualsById("cccc", "c1");
+	}
 
-    public void testTakeover2() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testTakeover2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
+		tester.dumpHtml();
 
-        tester.assertTextEqualsById("aaaa", "a1");
-        tester.assertTextEqualsById("bbbb", "b1");
-        tester.assertTextEqualsById("cccc", "c1");
+		tester.assertTextEqualsById("aaaa", "a1");
+		tester.assertTextEqualsById("bbbb", "b1");
+		tester.assertTextEqualsById("cccc", "c1");
 
-        tester.submitById("doSomething1");
-        tester.dumpHtml();
+		tester.submitById("doSomething1-1");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
-        tester.assertTextEqualsById("aaaa", "a1");
-        tester.assertTextEqualsById("bbbb", "b1");
-        tester.assertTextEqualsById("cccc", "");
-    }
+		// ## Assert ##
+		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		tester.assertTextEqualsById("aaaa", "a1");
+		tester.assertTextEqualsById("bbbb", "b1");
+		tester.assertTextEqualsById("cccc", "");
+	}
 
-    public void testTakeover3() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testTakeover3() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/takeover1.html");
+		tester.dumpHtml();
 
-        tester.assertTextEqualsById("aaaa", "a1");
-        tester.assertTextEqualsById("bbbb", "b1");
-        tester.assertTextEqualsById("cccc", "c1");
+		tester.assertTextEqualsById("aaaa", "a1");
+		tester.assertTextEqualsById("bbbb", "b1");
+		tester.assertTextEqualsById("cccc", "c1");
 
-        tester.submitById("doSomething2");
-        tester.dumpHtml();
+		tester.submitById("doSomething2-1");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
-        tester.assertTextEqualsById("aaaa", "");
-        tester.assertTextEqualsById("bbbb", "");
-        tester.assertTextEqualsById("cccc", "c1");
-    }
+		// ## Assert ##
+		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		tester.assertTextEqualsById("aaaa", "");
+		tester.assertTextEqualsById("bbbb", "");
+		tester.assertTextEqualsById("cccc", "c1");
+	}
 
 }

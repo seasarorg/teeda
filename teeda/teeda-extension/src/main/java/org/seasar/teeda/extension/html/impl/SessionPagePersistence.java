@@ -223,9 +223,8 @@ public class SessionPagePersistence implements PagePersistence {
                     cd = DIContainerUtil.getComponentDefNoException(pd
                             .getPropertyType());
                 }
-                if (cd != null
-                        && cd.getInstanceDef().equals(
-                                InstanceDefFactory.SESSION)) {
+                if (cd != null &&
+                        cd.getInstanceDef().equals(InstanceDefFactory.SESSION)) {
                     continue;
                 }
             }
@@ -243,17 +242,22 @@ public class SessionPagePersistence implements PagePersistence {
     protected void savePageValues(Map subappValues, Map redirectValues,
             FacesContext context, BeanDesc beanDesc, String previousViewId,
             PageDesc pageDesc, Object page, Map nextPageProperties) {
-        final String methodName = UICommandUtil.getSubmittedCommand(context);
+        final String submittedCommand = UICommandUtil
+                .getSubmittedCommand(context);
+        final int pos = submittedCommand == null ? -1 : submittedCommand
+                .indexOf('-');
+        final String methodName = pos == -1 ? submittedCommand
+                : submittedCommand.substring(0, pos);
         try {
             final ActionDesc actionDesc = actionDescCache
                     .getActionDesc(previousViewId);
-            if (methodName != null && actionDesc != null
-                    && actionDesc.hasTakeOverDesc(methodName)) {
+            if (methodName != null && actionDesc != null &&
+                    actionDesc.hasTakeOverDesc(methodName)) {
                 savePageValues(subappValues, redirectValues, context, beanDesc,
                         actionDesc.getTakeOverDesc(methodName), page,
                         nextPageProperties, pageDesc);
-            } else if (methodName != null && pageDesc != null
-                    && pageDesc.hasTakeOverDesc(methodName)) {
+            } else if (methodName != null && pageDesc != null &&
+                    pageDesc.hasTakeOverDesc(methodName)) {
                 savePageValues(subappValues, redirectValues, context, beanDesc,
                         pageDesc.getTakeOverDesc(methodName), page,
                         nextPageProperties, pageDesc);
@@ -296,14 +300,14 @@ public class SessionPagePersistence implements PagePersistence {
 
     private static boolean isTakeOverInclude(TakeOverDesc desc) {
         return TakeOverTypeDescFactory.INCLUDE.equals(desc
-                .getTakeOverTypeDesc())
-                && desc.getProperties().length != 0;
+                .getTakeOverTypeDesc()) &&
+                desc.getProperties().length != 0;
     }
 
     private static boolean isTakeOverExclude(TakeOverDesc desc) {
         return TakeOverTypeDescFactory.EXCLUDE.equals(desc
-                .getTakeOverTypeDesc())
-                && desc.getProperties().length != 0;
+                .getTakeOverTypeDesc()) &&
+                desc.getProperties().length != 0;
     }
 
     protected Map refreshSubApplicationScopeMap(FacesContext context,
@@ -327,8 +331,8 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (!pd.isReadable()
-                    || !nextPageProperties.containsKey(pd.getPropertyName())) {
+            if (!pd.isReadable() ||
+                    !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
             if (pageDesc.isRedirectScopeProperty(propertyName)) {
@@ -344,8 +348,8 @@ public class SessionPagePersistence implements PagePersistence {
             String[] properties, Map nextPageProperties) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.isReadable()
-                    || !nextPageProperties.containsKey(pd.getPropertyName())) {
+            if (!pd.isReadable() ||
+                    !nextPageProperties.containsKey(pd.getPropertyName())) {
                 continue;
             }
             if (ArrayUtil.contains(properties, pd.getPropertyName())) {
@@ -361,14 +365,14 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (!pd.isReadable()
-                    || !nextPageProperties.containsKey(propertyName)) {
+            if (!pd.isReadable() ||
+                    !nextPageProperties.containsKey(propertyName)) {
                 continue;
             }
             final Class thisPageType = pd.getPropertyType();
-            if (!thisPageType.isArray()
-                    && !Collection.class.isAssignableFrom(thisPageType)
-                    && !PagePersistenceUtil.isPersistenceType(thisPageType)) {
+            if (!thisPageType.isArray() &&
+                    !Collection.class.isAssignableFrom(thisPageType) &&
+                    !PagePersistenceUtil.isPersistenceType(thisPageType)) {
                 continue;
             }
             final Class nextPageType = (Class) nextPageProperties
