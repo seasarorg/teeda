@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.StateManager;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
@@ -39,12 +40,16 @@ import javax.portlet.GenericPortlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.ServletException;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.DIContainerUtil;
+import org.seasar.teeda.core.util.ErrorPageManager;
+import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
 
 /**
  * @author shinsuke
@@ -203,11 +208,11 @@ public class FacesPortlet extends GenericPortlet {
         }
     }
 
-    protected void storePortletConfig(PortletRequest request) {
+    private void storePortletConfig(PortletRequest request) {
         request.setAttribute(PORTLET_CONFIG, getPortletConfig());
     }
 
-    protected void setCurrentPortletMode(PortletRequest request) {
+    private void setCurrentPortletMode(PortletRequest request) {
         request.setAttribute(CURRENT_PORTLET_MODE, request.getPortletMode()
                 .toString());
     }
@@ -221,6 +226,9 @@ public class FacesPortlet extends GenericPortlet {
         // create excluded list
         createExcludedAttributeList(request);
 
+        // restore error info
+        restoreErrorInfo(request);
+
         storePortletConfig(request);
         setCurrentPortletMode(request);
 
@@ -232,14 +240,15 @@ public class FacesPortlet extends GenericPortlet {
         try {
             restoreFacesState(facesContext);
             lifecycle.render(facesContext);
+            saveFacesState(facesContext);
+        } catch (Throwable e) {
+            handleException(facesContext, e);
+        } finally {
             redirectPath = RedirectScope.getRedirectingPath(facesContext);
             if (redirectPath != null) {
                 //remove redirect scope
                 RedirectScope.removeContext(facesContext);
             }
-        } catch (Throwable e) {
-            handleException(e);
-        } finally {
             facesContext.release();
             request.getPortletSession().setAttribute(PREVIOUS_PORTLET_MODE,
                     request.getPortletMode().toString());
@@ -251,6 +260,9 @@ public class FacesPortlet extends GenericPortlet {
         if (redirectPath != null) {
             redirectRenderFaces(request, response, redirectPath);
         }
+
+        // clear error info
+        clearErrorInfo(request);
     }
 
     protected void redirectRenderFaces(RenderRequest request,
@@ -308,6 +320,7 @@ public class FacesPortlet extends GenericPortlet {
                 String viewId = state.getViewId();
                 requestMap.put(VIEW_ID, viewId);
 
+                // restore view
                 restoreView(facesContext);
 
                 // restore message information
@@ -331,6 +344,7 @@ public class FacesPortlet extends GenericPortlet {
                     facesContext.getViewRoot().processRestoreState(
                             facesContext, s);
                 }
+
             }
         } else {
             // display new page
@@ -413,6 +427,9 @@ public class FacesPortlet extends GenericPortlet {
 
         try {
             lifecycle.execute(facesContext);
+        } catch (Throwable e) {
+            handleException(facesContext, e);
+        } finally {
             if (!facesContext.getResponseComplete()) {
                 request.setAttribute(VIEW_ID, facesContext.getViewRoot()
                         .getViewId());
@@ -423,10 +440,6 @@ public class FacesPortlet extends GenericPortlet {
             } else if (RedirectScope.isRedirecting(facesContext)) {
                 saveFacesState(facesContext);
             }
-
-        } catch (Throwable e) {
-            handleException(e);
-        } finally {
             // release the FacesContext instance for this request
             facesContext.release();
         }
@@ -442,7 +455,6 @@ public class FacesPortlet extends GenericPortlet {
         sessionMap.put(PREVIOUS_PORTLET_MODE, currentPortletMode);
 
         FacesPortletState state = new FacesPortletState();
-        state.setViewId(facesContext.getViewRoot().getViewId());
 
         // save message information from this FacesContext
         Iterator clientIds = facesContext.getClientIdsWithMessages();
@@ -456,6 +468,8 @@ public class FacesPortlet extends GenericPortlet {
 
         String redirectPath = RedirectScope.getRedirectingPath(facesContext);
         if (redirectPath == null) {
+            state.setViewId(facesContext.getViewRoot().getViewId());
+
             List excludedNameList = (List) requestMap
                     .get(EXCLUDED_ATTRIBUTE_LIST);
             // save request attributes
@@ -463,10 +477,14 @@ public class FacesPortlet extends GenericPortlet {
             copyMap(requestMap, map, excludedNameList);
             state.setRequestMap(map);
 
-            // save state for UIViewRoot
+            // save state
+            StateManager stateManager = facesContext.getApplication()
+                    .getStateManager();
+            stateManager.saveSerializedView(facesContext);
+
+            // store state to FacesPortletState
             state.setState(facesContext.getViewRoot().processSaveState(
                     facesContext));
-
         } else {
             // replace viewId
             state.setViewId(redirectPath);
@@ -488,18 +506,31 @@ public class FacesPortlet extends GenericPortlet {
     // Others
     //
 
-    protected void handleException(Throwable e) throws PortletException,
-            IOException {
-
-        if (e instanceof IOException) {
-            throw (IOException) e;
-        } else if (e instanceof PortletException) {
-            throw (PortletException) e;
-        } else if (e.getMessage() != null) {
-            throw new PortletException(e.getMessage(), e);
+    protected void handleException(FacesContext context, Throwable e)
+            throws PortletException, IOException {
+        ErrorPageManager errorPageManager = null;
+        try {
+            errorPageManager = (ErrorPageManager) DIContainerUtil
+                    .getComponent(ErrorPageManager.class);
+        } catch (Exception e1) {
+        }
+        if (errorPageManager == null) {
+            errorPageManager = new NullErrorPageManagerImpl();
         }
 
-        throw new PortletException(e);
+        ExternalContext extContext = context.getExternalContext();
+        if (errorPageManager.handleException(e, context, extContext)) {
+            context.responseComplete();
+        } else {
+            if (e instanceof IOException) {
+                throw (IOException) e;
+            } else if (e instanceof PortletException) {
+                throw (PortletException) e;
+            } else if (e.getMessage() != null) {
+                throw new PortletException(e.getMessage(), e);
+            }
+            throw new PortletException(e);
+        }
     }
 
     protected boolean checkSessionState(PortletRequest request) {
@@ -545,4 +576,21 @@ public class FacesPortlet extends GenericPortlet {
         }
     }
 
+    protected void restoreErrorInfo(PortletRequest request) {
+        PortletSession portletSession = request.getPortletSession();
+        Throwable exception = (Throwable) portletSession
+                .getAttribute(JsfConstants.ERROR_EXCEPTION);
+        if (exception != null) {
+            request.setAttribute(JsfConstants.ERROR_EXCEPTION, exception);
+            request.setAttribute(JsfConstants.ERROR_EXCEPTION_TYPE, exception
+                    .getClass());
+            request.setAttribute(JsfConstants.ERROR_MESSAGE, exception
+                    .getMessage());
+        }
+    }
+
+    protected void clearErrorInfo(PortletRequest request) {
+        request.getPortletSession().removeAttribute(
+                JsfConstants.ERROR_EXCEPTION);
+    }
 }
