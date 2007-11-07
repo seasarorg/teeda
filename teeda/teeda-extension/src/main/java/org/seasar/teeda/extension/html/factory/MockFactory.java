@@ -29,9 +29,6 @@ public class MockFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (pageDesc == null) {
-            return false;
-        }
         final String id = elementNode.getId();
         if (id == null) {
             return false;
