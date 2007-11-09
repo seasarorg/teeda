@@ -49,11 +49,12 @@ public class RenderResponsePhase extends AbstractPhase {
             }
         } finally {
             synchronized (this) {
-                if (RedirectScope.isRedirecting(context) &&
-                        !context.getResponseComplete()) {
-                    String path = RedirectScope.getRedirectingPath(context);
-                    RedirectScope.clearContext(context);
-                    RedirectScope.setRedirectedPath(context, path);
+                if (RedirectScope.isRedirecting(context)) {
+                    if (!context.getResponseComplete()) {
+                        String path = RedirectScope.getRedirectingPath(context);
+                        RedirectScope.clearContext(context);
+                        RedirectScope.setRedirectedPath(context, path);
+                    }
                 } else {
                     RedirectScope.clearContext(context);
                 }
