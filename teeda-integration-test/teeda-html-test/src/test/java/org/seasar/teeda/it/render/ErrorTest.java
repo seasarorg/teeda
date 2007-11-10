@@ -43,7 +43,7 @@ public class ErrorTest extends TeedaWebTestCase {
 		assertTrue(tester.getCurrentUri().endsWith("errorResult.html"));
 	}
 
-	 public void testErrorOnInitialize() throws Exception {
+	public void testErrorOnInitialize() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -53,6 +53,7 @@ public class ErrorTest extends TeedaWebTestCase {
 
 		// ## Assert ##
 		assertTrue(tester.getCurrentUri().indexOf("errorResult.html") >= 0);
+		tester.assertTextPresent("ErrorPage throws exception.");
 	}
 
 	public void testErrorOnPrerender() throws Exception {
@@ -65,6 +66,7 @@ public class ErrorTest extends TeedaWebTestCase {
 
 		// ## Assert ##
 		assertTrue(tester.getCurrentUri().indexOf("errorResult.html") >= 0);
+		tester.assertTextPresent("ErrorPage throws exception.");
 	}
 
 }
