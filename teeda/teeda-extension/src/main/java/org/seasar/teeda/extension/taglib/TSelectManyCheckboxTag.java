@@ -15,7 +15,10 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectManyCheckbox;
+import javax.faces.component.UIComponent;
+
+import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.html.THtmlSelectManyCheckbox;
 
 /**
  * @author higa
@@ -23,13 +26,27 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
  */
 public class TSelectManyCheckboxTag extends TSelectTagBase {
 
-    private static final String RENDERER_TYPE = "javax.faces.Checkbox";
+    private String col;
 
     public String getComponentType() {
-        return HtmlSelectManyCheckbox.COMPONENT_TYPE;
+        return THtmlSelectManyCheckbox.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return RENDERER_TYPE;
+        return THtmlSelectManyCheckbox.DEFAULT_RENDERER_TYPE;
     }
+
+    public String getCol() {
+        return col;
+    }
+
+    public void setCol(String col) {
+        this.col = col;
+    }
+
+    protected void setProperties(UIComponent component) {
+        super.setProperties(component);
+        setComponentProperty(component, ExtensionConstants.COL_ATTR, col);
+    }
+
 }

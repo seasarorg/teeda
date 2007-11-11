@@ -123,7 +123,7 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
     protected void renderSelectItems(FacesContext context,
             UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
             Iterator it, String[] selectedValues,
-            final boolean pageDirectionLayout, boolean noneLayout)
+            final boolean pageDirectionLayout, final boolean noneLayout)
             throws IOException {
 
         while (it.hasNext()) {
@@ -138,26 +138,9 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
                         htmlSelectManyCheckbox);
             }
             if (selectItem instanceof SelectItemGroup) {
-                SelectItemGroup selectItemGroup = (SelectItemGroup) selectItem;
-                SelectItem[] selectItems = selectItemGroup.getSelectItems();
-                Iterator selectItemsIt = new ArrayIterator(selectItems);
-                if (!noneLayout) {
-                    writer.startElement(JsfConstants.TABLE_ELEM,
-                            htmlSelectManyCheckbox);
-                    if (!pageDirectionLayout) {
-                        writer.startElement(JsfConstants.TR_ELEM,
-                                htmlSelectManyCheckbox);
-                    }
-                }
-                renderSelectItems(context, htmlSelectManyCheckbox, writer,
-                        selectItemsIt, selectedValues, pageDirectionLayout,
+                renderSelectItemGroup(context, htmlSelectManyCheckbox, writer,
+                        selectedValues, selectItem, pageDirectionLayout,
                         noneLayout);
-                if (!noneLayout) {
-                    if (!pageDirectionLayout) {
-                        writer.endElement(JsfConstants.TR_ELEM);
-                    }
-                    writer.endElement(JsfConstants.TABLE_ELEM);
-                }
             } else {
                 renderSelectItem(context, htmlSelectManyCheckbox, writer,
                         selectedValues, selectItem);
@@ -171,6 +154,33 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
         }
     }
 
+    protected void renderSelectItemGroup(FacesContext context,
+            UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
+            String[] selectedValues, final SelectItem selectItem,
+            final boolean pageDirectionLayout, final boolean noneLayout)
+            throws IOException {
+        SelectItemGroup selectItemGroup = (SelectItemGroup) selectItem;
+        SelectItem[] selectItems = selectItemGroup.getSelectItems();
+        Iterator selectItemsIt = new ArrayIterator(selectItems);
+        if (!noneLayout) {
+            writer
+                    .startElement(JsfConstants.TABLE_ELEM,
+                            htmlSelectManyCheckbox);
+            if (!pageDirectionLayout) {
+                writer.startElement(JsfConstants.TR_ELEM,
+                        htmlSelectManyCheckbox);
+            }
+        }
+        renderSelectItems(context, htmlSelectManyCheckbox, writer,
+                selectItemsIt, selectedValues, pageDirectionLayout, noneLayout);
+        if (!noneLayout) {
+            if (!pageDirectionLayout) {
+                writer.endElement(JsfConstants.TR_ELEM);
+            }
+            writer.endElement(JsfConstants.TABLE_ELEM);
+        }
+    }
+
     protected void renderSelectItem(FacesContext context,
             UIComponent htmlSelectManyCheckbox, ResponseWriter writer,
             String[] selectedValues, final SelectItem selectItem)
@@ -178,8 +188,8 @@ public class HtmlSelectManyCheckboxRenderer extends AbstractInputRenderer {
 
         writer.startElement(JsfConstants.LABEL_ELEM, htmlSelectManyCheckbox);
         final boolean disabled = UIComponentUtil
-                .isDisabled(htmlSelectManyCheckbox)
-                || selectItem.isDisabled();
+                .isDisabled(htmlSelectManyCheckbox) ||
+                selectItem.isDisabled();
         final String labelClass = getLabelStyleClass(htmlSelectManyCheckbox,
                 disabled);
         if (labelClass != null) {
