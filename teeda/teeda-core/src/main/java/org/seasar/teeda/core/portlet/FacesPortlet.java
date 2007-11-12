@@ -50,6 +50,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ErrorPageManager;
 import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
+import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shinsuke
@@ -456,13 +457,15 @@ public class FacesPortlet extends GenericPortlet {
 
         FacesPortletState state = new FacesPortletState();
 
-        // save message information from this FacesContext
-        Iterator clientIds = facesContext.getClientIdsWithMessages();
-        while (clientIds.hasNext()) {
-            String clientId = (String) clientIds.next();
-            Iterator msgs = facesContext.getMessages(clientId);
-            while (msgs.hasNext()) {
-                state.addMessage(clientId, (FacesMessage) msgs.next());
+        if (!PortletUtil.isRender(facesContext)) {
+            // save message information from this FacesContext
+            Iterator clientIds = facesContext.getClientIdsWithMessages();
+            while (clientIds.hasNext()) {
+                String clientId = (String) clientIds.next();
+                Iterator msgs = facesContext.getMessages(clientId);
+                while (msgs.hasNext()) {
+                    state.addMessage(clientId, (FacesMessage) msgs.next());
+                }
             }
         }
 
