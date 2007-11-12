@@ -2,7 +2,7 @@
 
 	<property name="ver" value="1.0.11"/>
 
-	<target name="dist">
+	<target name="dist" depends="copy-jar">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="target"/>
 		</delete>
@@ -43,4 +43,25 @@
 		</zip>
 	</target>
 
+	<target name="copy-jar">
+		<copy file="../teeda/teeda-core/target/teeda-core-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-core/target/teeda-core-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+
+		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+
+		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+
+		<copy file="../teeda-tiger/target/teeda-tiger-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda-tiger/target/teeda-tiger-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+	</target>
 </project>
