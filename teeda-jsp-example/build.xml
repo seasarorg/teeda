@@ -2,7 +2,7 @@
 
 	<property name="ver" value="1.0.11-SP2"/>
 
-	<target name="dist">
+	<target name="dist" depends="copy-jar">
 		<mkdir dir="target"/>
 		<zip zipfile="target/teeda-jsp-example-${ver}.zip">
 			<zipfileset prefix="teeda-jsp-example" dir=".">
@@ -12,4 +12,20 @@
 		</zip>
 	</target>
 
+	<target name="copy-jar">
+		<copy file="../teeda/teeda-core/target/teeda-core-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-core/target/teeda-core-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+
+		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+
+		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}.jar"
+			todir="src/main/webapp/WEB-INF/lib"/>
+		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}-sources.jar"
+			todir="src/main/webapp/WEB-INF/lib/sources"/>
+	</target>
 </project>
