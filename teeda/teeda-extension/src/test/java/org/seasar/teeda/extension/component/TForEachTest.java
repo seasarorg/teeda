@@ -221,6 +221,16 @@ public class TForEachTest extends UIComponentBaseTest {
         assertEquals("111", page.aaa);
     }
 
+    public void testProcessBeanItem2() throws Exception {
+        final TForEach forEach = createTForEach();
+        HogeDto item = new HogeDto();
+        item.aaa = "111";
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage3.class);
+        HogePage3 page = new HogePage3();
+        forEach.processBeanItem(beanDesc, page, item);
+        assertEquals("111", page.aaa);
+    }
+
     public void testProcessItem() throws Exception {
         final TForEach forEach = createTForEach();
         Map item = new HashMap();
@@ -299,6 +309,35 @@ public class TForEachTest extends UIComponentBaseTest {
         public String aaa;
 
         public String bbb;
+    }
+
+    public static class HogePage3 {
+
+        public String aaa;
+
+    }
+
+    public static class HogeDto {
+
+        String aaa;
+
+        String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            throw new RuntimeException();
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
+        }
     }
 
 }

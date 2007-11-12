@@ -555,8 +555,11 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
             final String name = pd.getPropertyName();
-            final Object value = getValue(itemBeanDesc, item, name);
-            setValue(beanDesc, page, name, value);
+            if (beanDesc.hasPropertyDesc(name) &&
+                    beanDesc.getPropertyDesc(name).isWritable()) {
+                final Object value = getValue(itemBeanDesc, item, name);
+                setValue(beanDesc, page, name, value);
+            }
         }
     }
 
@@ -564,8 +567,11 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             final Map item) {
         for (final Iterator i = item.keySet().iterator(); i.hasNext();) {
             final String name = (String) i.next();
-            final Object value = item.get(name);
-            setValue(beanDesc, page, name, value);
+            if (beanDesc.hasPropertyDesc(name) &&
+                    beanDesc.getPropertyDesc(name).isWritable()) {
+                final Object value = item.get(name);
+                setValue(beanDesc, page, name, value);
+            }
         }
     }
 
