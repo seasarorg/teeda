@@ -48,6 +48,7 @@ public class DynamicpropertyTest extends TeedaWebTestCase {
 				"background-color:blue");
 		tester.assertAttributeEqualsById("aaa-footer", "style",
 				"background-color:green");
+		tester.assertAttributeEqualsById("bbb-1", "href", "Dynamic2");
 
 		tester.submitById("goDynamicproperty2");
 		tester.dumpHtml();

@@ -55,4 +55,8 @@ public class DynamicpropertyPage {
 				: "../../img/nav-expand.gif";
 	}
 
+	public String getBbb1Href() {
+		return "HOGE";
+	}
+
 }

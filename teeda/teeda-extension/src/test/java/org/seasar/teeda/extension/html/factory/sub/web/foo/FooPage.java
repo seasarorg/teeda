@@ -37,6 +37,8 @@ public class FooPage {
 
     private Integer holidaysYear;
 
+    private String bbbXHref;
+
     /**
      * @return Returns the holidaysYear.
      */
@@ -143,6 +145,14 @@ public class FooPage {
 
     public String getHogeRowStyle() {
         return "mystyle";
+    }
+
+    public String getBbbXHref() {
+        return bbbXHref;
+    }
+
+    public void setBbbXHref(String bbbXHref) {
+        this.bbbXHref = bbbXHref;
     }
 
 }

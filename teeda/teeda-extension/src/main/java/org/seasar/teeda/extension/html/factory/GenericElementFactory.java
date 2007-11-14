@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
@@ -35,12 +36,17 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        String id = elementNode.getId();
+        String id = elementNode.getProperty(JsfConstants.ID_ATTR);
+        if (pageDesc == null) {
+            return false;
+        }
         if (id == null) {
             return false;
         }
-        if (pageDesc == null) {
-            return false;
+        final int pos = id.indexOf('-');
+        if (pos > -1) {
+            id = id.substring(0, pos) +
+                    StringUtil.capitalize(id.substring(pos + 1));
         }
         for (Iterator i = elementNode.getPropertyNameIterator(); i.hasNext();) {
             String key = (String) i.next();
