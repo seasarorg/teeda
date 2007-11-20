@@ -25,28 +25,47 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class InputRadioTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(InputRadioTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(InputRadioTest.class);
+	}
 
-    public void testSelectValueAndSubmit() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testSelectValueAndSubmit() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
+		tester.dumpHtml();
 
-        tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "3");
-        tester.assertTextEqualsById("aaa-display", "3");
+		tester.clickRadioOptionByName("inputRadioForm:aaa", "2");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
 
-        tester.clickRadioOptionByName("inputRadioForm:aaa", "2");
-        tester.submitByName("inputRadioForm:doAction");
-        tester.dumpHtml();
+		// ## Assert ##
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "2");
+		tester.assertTextEqualsById("aaa-display", "2");
+	}
 
-        // ## Assert ##
-        tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "2");
-        tester.assertTextEqualsById("aaa-display", "2");
-    }
+	public void testInputRadio_required() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
+		tester.dumpHtml();
+
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextInElementById("allMessages", "aaa");
+
+		tester.clickRadioOptionByName("inputRadioForm:aaa", "1");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		tester.assertElementNotPresentById("allMessages");
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "1");
+	}
 
 }

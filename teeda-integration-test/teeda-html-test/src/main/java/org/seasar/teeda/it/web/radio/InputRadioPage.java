@@ -15,27 +15,30 @@
  */
 package org.seasar.teeda.it.web.radio;
 
+import org.seasar.teeda.extension.annotation.validator.Required;
+
 /**
  * @author manhole
  */
 public class InputRadioPage {
 
-    public String prerender() {
-        return null;
-    }
+	public String prerender() {
+		return null;
+	}
 
-    private int aaa = 3;
+	@Required
+	private Integer aaa;
 
-    public int getAaa() {
-        return aaa;
-    }
+	public Integer getAaa() {
+		return aaa;
+	}
 
-    public void setAaa(final int aaa) {
-        this.aaa = aaa;
-    }
+	public void setAaa(final Integer aaa) {
+		this.aaa = aaa;
+	}
 
-    public String doAction() {
-        return null;
-    }
+	public String doAction() {
+		return null;
+	}
 
 }

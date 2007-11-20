@@ -314,6 +314,14 @@
 	</component>
 	<component>
 		<component-type>
+			org.seasar.teeda.extension.HtmlInputRadio
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlInputRadio
+		</component-class>
+	</component>
+	<component>
+		<component-type>
 			org.seasar.teeda.extension.HtmlRadioItem
 		</component-type>
 		<component-class>
