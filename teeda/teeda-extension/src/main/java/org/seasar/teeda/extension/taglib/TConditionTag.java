@@ -30,6 +30,10 @@ public class TConditionTag extends UIComponentTagBase {
 
     private String refresh;
 
+    private String invisible;
+
+    private String omittag;
+
     public TConditionTag() {
     }
 
@@ -46,6 +50,8 @@ public class TConditionTag extends UIComponentTagBase {
         setComponentProperty(component, ExtensionConstants.RENDERSPAN_ATTR,
                 renderSpan);
         setComponentProperty(component, "refresh", refresh);
+        setComponentProperty(component, "invisible", invisible);
+        setComponentProperty(component, "omittag", omittag);
     }
 
     public void setRenderSpan(String renderSpan) {
@@ -62,6 +68,30 @@ public class TConditionTag extends UIComponentTagBase {
 
     public void setRefresh(String refresh) {
         this.refresh = refresh;
+    }
+
+    public String getInvisible() {
+        return invisible;
+    }
+
+    public void setInvisible(String invisible) {
+        this.invisible = invisible;
+    }
+
+    public String getOmittag() {
+        return omittag;
+    }
+
+    public void setOmittag(String omittag) {
+        this.omittag = omittag;
+    }
+
+    public void release() {
+        super.release();
+        renderSpan = null;
+        refresh = null;
+        invisible = null;
+        omittag = null;
     }
 
 }

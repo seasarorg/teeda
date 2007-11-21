@@ -163,4 +163,28 @@ public class ConditionTest extends TeedaWebTestCase {
 				"view/condition/conditionResult.html") > 0);
 		tester.assertTextEqualsById("bbb", "hogehoge");
 	}
+
+	public void testConditionOmittag_TEEDA409() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/conditionOmittag.html");
+		tester.dumpHtml();
+
+		tester.assertElementNotPresentById("isAaa");
+		tester.assertElementPresentById("bbb-1");
+		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertElementNotPresentById("bbb-2");
+
+		tester.setTextById("hoge", "111");
+		tester.submitById("doFalse");
+
+		tester.dumpHtml();
+		// ## Assert ##
+		tester.assertElementNotPresentById("isAaa");
+		tester.assertElementNotPresentById("bbb-1");
+		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertElementPresentById("bbb-2");
+	}
 }

@@ -52,15 +52,19 @@ public class TConditionRenderer extends AbstractRenderer {
             return;
         }
         TCondition condition = (TCondition) component;
-        final ResponseWriter writer = context.getResponseWriter();
-        if (!condition.isRenderSpan()) {
-            writer.startElement(JsfConstants.DIV_ELEM, condition);
-        } else {
-            writer.startElement(JsfConstants.SPAN_ELEM, condition);
+        final boolean invisible = condition.isInvisible();
+        final boolean omittag = condition.isOmittag();
+        if (!(invisible || omittag)) {
+            final ResponseWriter writer = context.getResponseWriter();
+            if (!condition.isRenderSpan()) {
+                writer.startElement(JsfConstants.DIV_ELEM, condition);
+            } else {
+                writer.startElement(JsfConstants.SPAN_ELEM, condition);
+            }
+            RendererUtil.renderIdAttributeIfNecessary(writer, component,
+                    getIdForRender(context, condition));
+            renderRemainAttributes(condition, writer, attribute);
         }
-        RendererUtil.renderIdAttributeIfNecessary(writer, component,
-                getIdForRender(context, condition));
-        renderRemainAttributes(condition, writer, attribute);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -69,11 +73,16 @@ public class TConditionRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        final ResponseWriter writer = context.getResponseWriter();
-        if (!((TCondition) component).isRenderSpan()) {
-            writer.endElement(JsfConstants.DIV_ELEM);
-        } else {
-            writer.endElement(JsfConstants.SPAN_ELEM);
+        TCondition condition = (TCondition) component;
+        final boolean invisible = condition.isInvisible();
+        final boolean omittag = condition.isOmittag();
+        if (!(invisible || omittag)) {
+            final ResponseWriter writer = context.getResponseWriter();
+            if (!((TCondition) component).isRenderSpan()) {
+                writer.endElement(JsfConstants.DIV_ELEM);
+            } else {
+                writer.endElement(JsfConstants.SPAN_ELEM);
+            }
         }
     }
 

@@ -11,17 +11,19 @@
 <span>Edit ConditionPage.aaa property.</span><br/>
 <input type="text" id="hoge" /><br/><br/>
 <hr/>
-<div id="isFoo" te:omittag="true">
- <span>true</span><br />
- <span id="aaa-1">hoge</span>
+<div id="isAaa" te:omittag="true">
+ <input type="checkbox" id="bbb-1"/>
+ <span>hoge</span><br/>
+ <input type="submit" id="doFalse"/><br/>
 </div>
-<div id="isNotFoo" te:omittag="true">
- <span>false</span><br />
- <span id="aaa-2">hoge</span>
+<div id="isNotAaa" te:omittag="true">
+ <input type="checkbox" id="bbb-2"/>
+ <span>foo</span><br/>
+ <input type="submit" id="doTrue"/><br/>
 </div>
-<input type="submit" id="doHoge"/><br/>
-<input type="hidden" id="aaa-hidden" />
-<input type="hidden" id="foo-hidden" />
+<!-- 
+<input type="submit" id="goConditionResult"/>
+ -->
 </form>
 </body>
 </html>

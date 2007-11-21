@@ -51,6 +51,10 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
 
     private Boolean refresh;
 
+    private Boolean invisible;
+
+    private Boolean omittag;
+
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
     }
@@ -200,18 +204,48 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         this.refresh = new Boolean(ref);
     }
 
+    public boolean isInvisible() {
+        if (invisible != null) {
+            return invisible.booleanValue();
+        }
+        ValueBinding vb = getValueBinding(ExtensionConstants.INVISIBLE_ATTR);
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = Boolean.valueOf(invisible);
+    }
+
+    public boolean isOmittag() {
+        if (omittag != null) {
+            return omittag.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("omittag");
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setOmittag(boolean omittag) {
+        this.omittag = new Boolean(omittag);
+    }
+
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         renderSpan = (Boolean) values[1];
         refresh = (Boolean) values[2];
+        omittag = (Boolean) values[3];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[4];
         values[0] = super.saveState(context);
         values[1] = renderSpan;
         values[2] = refresh;
+        values[3] = omittag;
         return values;
     }
 
