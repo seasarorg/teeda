@@ -107,7 +107,8 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     protected void setUpRequestForExternalBinding(FacesContext context,
             String viewId) {
-        if (viewId.equals(context.getExternalContext().getRequestServletPath())) {
+        final ExternalContext external = context.getExternalContext();
+        if (viewId.equals(ExternalContextUtil.getViewId(external))) {
             pagePersistence.restore(context, viewId);
         }
     }
