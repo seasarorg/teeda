@@ -28,7 +28,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.UICommandUtil;
-import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -45,9 +44,8 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.application.TeedaStateManager;
 import org.seasar.teeda.core.util.DIContainerUtil;
-import org.seasar.teeda.core.util.PortletUtil;
 import org.seasar.teeda.core.util.PostbackUtil;
-import org.seasar.teeda.core.util.ServletExternalContextUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlSuffix;
@@ -55,6 +53,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
 import org.seasar.teeda.extension.html.PagePersistence;
 import org.seasar.teeda.extension.html.TakeOverDesc;
+import org.seasar.teeda.extension.html.TakeOverTypeDesc;
 import org.seasar.teeda.extension.util.PagePersistenceUtil;
 import org.seasar.teeda.extension.util.TeedaExtensionErrorPageManagerImpl;
 
@@ -103,7 +102,7 @@ public class SessionPagePersistence implements PagePersistence {
         }
         final ExternalContext extCtx = context.getExternalContext();
         final Map requestMap = extCtx.getRequestMap();
-        if (isOutputlinkTransition(context, extCtx, viewId)) {
+        if (isNotTakeOver(extCtx)) {
             return;
         }
         final Map subappValues = ScopeValueHelper
@@ -127,20 +126,11 @@ public class SessionPagePersistence implements PagePersistence {
         TeedaExtensionErrorPageManagerImpl.restoreMessage(context);
     }
 
-    protected boolean isOutputlinkTransition(FacesContext context,
-            ExternalContext externalContext, String viewId) {
-        // PortletSupport
-        boolean isPost = false;
-        if (!PortletUtil.isPortlet(context)) {
-            isPost = ServletExternalContextUtil.isPost(externalContext);
-        } else {
-            isPost = !PortletUtil.isRender(context);
-        }
-        final boolean maybeReload = stateManager.hasSerializedView(context,
-                viewId);
-        final boolean isNotRedirect = !RedirectScope.isRedirecting(context);
-        // TODO in portlet, other flag might be needed..
-        return isNotRedirect && !isPost && !maybeReload;
+    protected boolean isNotTakeOver(ExternalContext externalContext) {
+        final Map map = externalContext.getRequestParameterMap();
+        final String takeOver = (String) map
+                .get(ExtensionConstants.TAKE_OVER_PARAMETER);
+        return TakeOverTypeDesc.NEVER_NAME.equals(takeOver);
     }
 
     protected void saveFacesMessage(FacesContext from, Map to) {

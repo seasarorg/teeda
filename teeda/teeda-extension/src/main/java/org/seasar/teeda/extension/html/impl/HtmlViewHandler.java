@@ -107,7 +107,9 @@ public class HtmlViewHandler extends ViewHandlerImpl {
 
     protected void setUpRequestForExternalBinding(FacesContext context,
             String viewId) {
-        pagePersistence.restore(context, viewId);
+        if (viewId.equals(context.getExternalContext().getRequestServletPath())) {
+            pagePersistence.restore(context, viewId);
+        }
     }
 
     public UIViewRoot createView(FacesContext context, String viewId) {

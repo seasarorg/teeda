@@ -182,4 +182,7 @@ public interface ExtensionConstants {
     String DO_FINISH = "doFinish";
 
     String DO_ONCE_FINISH = "doOnceFinish";
+
+    String TAKE_OVER_PARAMETER = "te-takeover";
+
 }

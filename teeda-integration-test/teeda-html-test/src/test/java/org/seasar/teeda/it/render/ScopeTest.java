@@ -75,4 +75,91 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("hoge", "foofoo");
 	}
 
+	public void testSubapplicationScope_do() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+	}
+
+	public void testSubapplicationScope_link() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.clickLinkById("goResult-1");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+	}
+
+	public void testRedirectScope_linkNever() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.clickLinkById("goResult-2");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "");
+		tester.assertTextEqualsById("message2", "");
+	}
+
 }
