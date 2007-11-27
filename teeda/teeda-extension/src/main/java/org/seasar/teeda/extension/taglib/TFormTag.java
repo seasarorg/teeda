@@ -15,14 +15,13 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.webapp.UIComponentTag;
-
+import org.seasar.teeda.core.taglib.html.FormTag;
 import org.seasar.teeda.extension.component.html.THtmlForm;
 
 /**
  * @author koichik
  */
-public class TFormTag extends UIComponentTag {
+public class TFormTag extends FormTag {
 
     public TFormTag() {
     }
