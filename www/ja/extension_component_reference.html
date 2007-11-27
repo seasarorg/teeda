@@ -201,12 +201,16 @@ h3.underline {
       </tr>
       <tr>
         <td>HTML上での使用方法</td>
-        <td><b class="boldorange">&lt;span id="aaa"&gt;bbb&lt;/span&gt;</b><br/>実行時にはbbbは無視される</td>
+        <td>
+        <b class="boldorange">&lt;span id="aaa"&gt;bbb&lt;/span&gt;</b><br/>
+        または<br/>
+        <b class="boldorange">&lt;div id="aaa"&gt;bbb&lt;/div&gt;</b><br/>
+        実行時にはbbbは無視される</td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">span</b>タグ</span><br/>
+            <span>-<b class="boldorange">span</b>タグまたは<b class="boldorange">div</b>タグ</span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
       </tr>
@@ -216,7 +220,11 @@ h3.underline {
       </tr>
       <tr>
         <td>タグの各属性の使い方</td>
-        <td>特になし</td>
+        <td>
+          <span>-<b class="boldorange">te:omittag</b></span><br/>
+          <p>この属性は、&lt;span&gt;タグまたは&lt;div&gt;タグを出力しない場合に使います．</p>
+          &lt;span te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -224,7 +232,9 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>なし</td>
+        <td align="left">
+            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -593,6 +603,12 @@ h3.underline {
           <span>-<b class="boldorange">style属性</b></span><br/>
           <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．</p>
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;タグが出力されません．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性が指定されなかった場合のみ有効です．</p>
+          <span>-<b class="boldorange">te:col属性</b></span><br/>
+          <p>style属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
         </td>
       </tr>
       <tr>
@@ -601,7 +617,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Templateに書いてある値は実行時には消える</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -701,6 +720,12 @@ h3.underline {
           <span>-<b class="boldorange">style属性</b></span><br/>
           <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．</p>
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;タグが出力されません．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性が指定されなかった場合のみ有効です．</p>
+          <span>-<b class="boldorange">te:col属性</b> (Teeda 1.0.12以降)</span><br/>
+          <p>style属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
         </td>
       </tr>
       <tr>
@@ -709,7 +734,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Templateに書いてある値は実行時には消える</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -770,7 +798,7 @@ h3.underline {
         <td>
         	<span>-ダブルサブミット防止JavaScriptの設定詳細は<a href="http://teeda.seasar.org/ja/kumu_disabled.html">こちら</a>を参照ください．</span><br />
         	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
-        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされます．値の引継ぎ機能は無効です．</b></span>
+        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされません．値の引継ぎ機能は無効です．</b></span>
         	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
         </td>
       </tr>
@@ -834,8 +862,10 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td>
-          <span><b class="boldorange">値を更新する場合には配列</b>、<b class="boldorange">表示のみの場合はList</b>を使う</span><br/>
-          <span>forEachのネストは表示の場合のみ可能．</span><br/>
+          <span>Teeda 1.0.11以前の場合、<b class="boldorange">値を更新する場合には配列</b>、<b class="boldorange">表示のみの場合はList</b>を使う
+          (Teeda 1.0.12以降は配列でもListでも更新可能)．</span><br/>
+          <span>Teeda 1.0.11以前の場合、forEachのネストは表示の場合のみ可能
+          (Teeda 1.0.12以降はネストしたforEachの更新も可能)．</span><br/>
           <span><b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
           <span>ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
         </td>
@@ -1145,13 +1175,15 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td>
-          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;&lt;またはdiv id="isNotCondition"&gt;&lt;/div&gt;</b>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;</b>または<b class="boldorange">&lt;div id="isNotCondition"&gt;&lt;/div&gt;</b><br/>
+          または<br/>
+          <b class="boldorange">&lt;span id="isCondition"&gt;&lt;/span&gt;</b>または<b class="boldorange">&lt;span id="isNotCondition"&gt;&lt;/span&gt;</b>
         </td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">div</b>タグ</span><br/>
+            <span>-<b class="boldorange">div</b>タグまたは<b class="boldorange">span</b>タグ</span><br/>
             <span>-<b class="boldorange">id</b>がisまたはisNotで始まっている</span><br/>
             <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティとアクセサが定義してある</span>
         </td>
@@ -1162,7 +1194,16 @@ h3.underline {
       </tr>
       <tr>
         <td>タグの各属性の使い方</td>
-        <td>特になし</td>
+        <td>
+          <span>-<b class="boldorange">te:omittag</b> (Teeda 1.0.12以降)</span><br/>
+          <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、
+          条件が成立した場合でも&lt;div&gt;タグまたは&lt;span&gt;タグは出力されません
+          (要素の内容は出力されます)．<br/>
+          te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、
+          条件が成立した場合は&lt;div&gt;タグまたは&lt;span&gt;タグが出力されます．
+          </p>
+          &lt;span id=&quot;isXxx&quot; te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -1170,12 +1211,13 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>
-          <span>Conditionは条件にマッチしたときにのみ描画される</span><br/>
+        <td align="left">
+          <span>-Conditionは条件にマッチしたときにのみ描画される</span><br/>
           <span>
           &nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される<br/>
           &nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される<br/>
           &nbsp;&nbsp;Validationエラーになったときは元の状態に復元される<br/>
+            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
         </td>
       </tr>
     </tbody>
@@ -1418,7 +1460,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">teを使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te:include</b>タグ</span><br/>
         </td>
       </tr>
       <tr>
@@ -1438,7 +1480,8 @@ h3.underline {
         <td align="left">
             <span>-<b class="boldorange">includeページに対応するPageクラスのinitialize()が呼ばれる．</b></span><br/>
             <span>-<b class="boldorange">includeページに対応するPageクラスのprerender()が呼ばれる．</b></span><br/>
-            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span>
+            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span><br/>
+            <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
         </td>
       </tr>
     </tbody>
@@ -1468,7 +1511,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">teを使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+          <b class="boldorange">te:includeChildBody</b>タグ
         </td>
       </tr>
       <tr>
@@ -1485,7 +1528,9 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>なし</td>
+        <td align="left">
+            <span>-<b class="boldorange">te</b>名前空間を使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+        </td>
       </tr>
     </tbody>
   </table>
