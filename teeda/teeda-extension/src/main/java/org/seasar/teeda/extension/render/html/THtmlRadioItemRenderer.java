@@ -60,19 +60,21 @@ public class THtmlRadioItemRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        final HtmlSelectOneRadio parent = (HtmlSelectOneRadio) UIComponentUtil
-                .findParent(component, HtmlSelectOneRadio.class);
+        final THtmlRadioItem htmlInputRadio = (THtmlRadioItem) component;
+        final String name = htmlInputRadio.getName();
+        final HtmlSelectOneRadio parent = (HtmlSelectOneRadio) (name != null ? UIComponentUtil
+                .findParent(component, name)
+                : component.getParent());
         final String valueStr = ValueHolderUtil.getValueForRender(context,
                 parent);
         final String clientId = parent.getClientId(context);
         final Converter converter = RendererUtil.findConverter(context, parent);
-        final THtmlRadioItem htmlInputRadio = (THtmlRadioItem) component;
         final Object itemValue = htmlInputRadio.getValue();
         final String itemValueStr = UIValueUtil.getValueAsString(context,
                 component, itemValue, converter);
         final boolean checked = valueStr.equals(itemValueStr);
-        final boolean disabled = parent.isDisabled()
-                || htmlInputRadio.isDisabled();
+        final boolean disabled = parent.isDisabled() ||
+                htmlInputRadio.isDisabled();
         renderRadio(context, htmlInputRadio, itemValueStr, clientId, checked,
                 disabled);
     }

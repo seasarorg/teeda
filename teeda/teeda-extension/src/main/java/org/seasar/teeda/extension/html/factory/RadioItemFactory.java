@@ -66,8 +66,9 @@ public class RadioItemFactory extends AbstractElementProcessorFactory {
             final PageDesc pageDesc, final String name) {
         for (ElementNode parentNode = elementNode.getParent(); parentNode != null; parentNode = parentNode
                 .getParent()) {
-            if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(parentNode
-                    .getTagName())) {
+            final String tagName = parentNode.getTagName();
+            if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName) &&
+                    !JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName)) {
                 continue;
             }
             final String id = parentNode.getId();

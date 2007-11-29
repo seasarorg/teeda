@@ -397,4 +397,46 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
+	public void testForeachInputRadio_TEEDA414() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachInputRadio.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] tableExpected = new String[][] {
+				{ "unchecked", "One", "unchecked", "A" },
+				{ "unchecked", "Two", "unchecked", "B" },
+				{ "unchecked", "Three", "unchecked", "C" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		tester.clickRadioOptionByName("form:aaa", "1");
+		tester.clickRadioOptionByName("form:bbb", "b");
+		tester.submitByName("form:doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tableExpected = new String[][] {
+				{ "checked", "One", "unchecked", "A" },
+				{ "unchecked", "Two", "checked", "B" },
+				{ "unchecked", "Three", "unchecked", "C" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		tester.clickRadioOptionByName("form:aaa", "2");
+		tester.clickRadioOptionByName("form:bbb", "c");
+		tester.submitByName("form:doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tableExpected = new String[][] {
+				{ "unchecked", "One", "unchecked", "A" },
+				{ "checked", "Two", "unchecked", "B" },
+				{ "unchecked", "Three", "checked", "C" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
 }

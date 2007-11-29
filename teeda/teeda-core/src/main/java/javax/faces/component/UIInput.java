@@ -213,6 +213,7 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             context.renderResponse();
             throw e;
         }
+        super.processUpdates(context);
         renderResponseIfNotValid(context);
     }
 
@@ -231,8 +232,8 @@ public class UIInput extends UIOutput implements EditableValueHolder {
                             new Object[] { event });
                 } catch (EvaluationException e) {
                     Throwable cause = e.getCause();
-                    if (cause != null
-                            && cause instanceof AbortProcessingException) {
+                    if (cause != null &&
+                            cause instanceof AbortProcessingException) {
                         throw (AbortProcessingException) cause;
                     } else {
                         throw e;

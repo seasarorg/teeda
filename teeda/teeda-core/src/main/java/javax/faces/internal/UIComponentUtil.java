@@ -139,8 +139,19 @@ public class UIComponentUtil {
             return parent;
         }
         // TODO 例外をどうにかする
-        throw new IllegalArgumentException("parent element not found ["
-                + parentClass.getName() + "]");
+        throw new IllegalArgumentException("parent element not found [" +
+                parentClass.getName() + "]");
+    }
+
+    public static UIComponent findParent(final UIComponent component,
+            final String id) {
+        final UIComponent parent = findParentOrNull(component, id);
+        if (parent != null) {
+            return parent;
+        }
+        // TODO 例外をどうにかする
+        throw new IllegalArgumentException("parent element not found [" + id +
+                "]");
     }
 
     private static UIComponent findParentOrNull(final UIComponent component,
@@ -148,6 +159,17 @@ public class UIComponentUtil {
         for (UIComponent parent = component.getParent(); parent != null; parent = parent
                 .getParent()) {
             if (parentClass.isInstance(parent)) {
+                return parent;
+            }
+        }
+        return null;
+    }
+
+    private static UIComponent findParentOrNull(final UIComponent component,
+            final String id) {
+        for (UIComponent parent = component.getParent(); parent != null; parent = parent
+                .getParent()) {
+            if (id.equals(parent.getId())) {
                 return parent;
             }
         }

@@ -19,6 +19,8 @@ import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
+import org.seasar.teeda.core.JsfConstants;
+
 /**
  * @author manhole
  */
@@ -30,12 +32,28 @@ public class THtmlRadioItem extends UIComponentBase {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlRadioItem";
 
+    private String name;
+
     private Object value;
 
     private Boolean disabled;
 
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public String getName() {
+        if (name != null) {
+            return name;
+        }
+        Object value = ComponentUtil_.getValueBindingValue(this,
+                JsfConstants.NAME_ATTR);
+        return (value != null) ? (String) value : null;
+
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Object getValue() {
@@ -63,18 +81,20 @@ public class THtmlRadioItem extends UIComponentBase {
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[7];
+        final Object[] values = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = value;
-        values[2] = disabled;
+        values[1] = name;
+        values[2] = value;
+        values[3] = disabled;
         return values;
     }
 
     public void restoreState(final FacesContext context, final Object state) {
         final Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        value = values[1];
-        disabled = (Boolean) values[2];
+        name = (String) values[1];
+        value = values[2];
+        disabled = (Boolean) values[3];
     }
 
 }

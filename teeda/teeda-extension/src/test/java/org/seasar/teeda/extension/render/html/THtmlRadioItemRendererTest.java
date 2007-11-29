@@ -62,6 +62,18 @@ public class THtmlRadioItemRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_WithNameAndValue() throws Exception {
+        parent.setId("aaa");
+        parent.setClientId("form:aaa");
+        parent.getChildren().add(component);
+        component.setName("aaa");
+        component.setValue("abc");
+        encodeByRenderer(renderer, component);
+        assertEquals(
+                "<input type=\"radio\" name=\"form:aaa\" value=\"abc\" />",
+                getResponseText());
+    }
+
     protected Renderer createRenderer() {
         THtmlRadioItemRenderer renderer = new THtmlRadioItemRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
