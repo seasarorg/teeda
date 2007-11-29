@@ -3,7 +3,8 @@
 <body>
 <form id="treeForm">
 	<input type="hidden" id="treeTreeSave" />
-	<te:tree value="#{tree_tree2Page.tree}" id="client-tree" var="node" varNodeToggler="t">
+	<te:inputRadio id="aaa" value="#{tree_treeRadioPage.aaa}">
+	<te:tree value="#{tree_treeRadioPage.tree}" id="client-tree" var="node" varNodeToggler="t">
 		<f:facet name="folder-A">
 			<h:panelGroup>
 				<f:facet name="expand">
@@ -12,6 +13,7 @@
 				<f:facet name="collapse">
 				<te:graphicImage style="border: 0px" value="/img/yellow-folder-collapse.png" rendered="#{!t.nodeExpanded}"/>
 				</f:facet>
+				<te:radioItem name="aaa" value="#{node.value}" />
 				<h:outputText value="#{node.description}"/>
 			</h:panelGroup>
 		</f:facet>
@@ -23,17 +25,19 @@
 				<f:facet name="collapse">
 					<te:graphicImage style="border: 0px" value="/img/yellow-folder-collapse.png" rendered="#{!t.nodeExpanded}"/>
 				</f:facet>
+				<te:radioItem name="aaa" value="#{node.value}" />
 				<h:outputText value="#{node.description}" />
 				<h:outputText value=" (#{node.childCount})" rendered="#{!empty node.children}"/>
 			</h:panelGroup>
 		</f:facet>
 		<f:facet name="document">
 			<h:panelGroup>
-				<h:selectBooleanCheckbox value="#{node.value}" />
+				<te:radioItem name="aaa" value="#{node.value}" />
 				<h:outputText value="#{node.description}"/>
 			</h:panelGroup>
 		</f:facet>
 	</te:tree>
+	</te:inputRadio>
 	<input type="submit" id="doHoge" />
 </form>
 </body>
