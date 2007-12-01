@@ -45,7 +45,7 @@ public class TakeoverTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		// ## Assert ##
-		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		assertTrue(tester.getCurrentUri().contains("takeover2.html"));
 		tester.assertTextEqualsById("aaaa", "a1");
 		tester.assertTextEqualsById("bbbb", "");
 		tester.assertTextEqualsById("cccc", "c1");
@@ -67,7 +67,7 @@ public class TakeoverTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		// ## Assert ##
-		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		assertTrue(tester.getCurrentUri().contains("takeover2.html"));
 		tester.assertTextEqualsById("aaaa", "a1");
 		tester.assertTextEqualsById("bbbb", "b1");
 		tester.assertTextEqualsById("cccc", "");
@@ -89,7 +89,7 @@ public class TakeoverTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		// ## Assert ##
-		assertTrue(tester.getCurrentUri().endsWith("takeover2.html"));
+		assertTrue(tester.getCurrentUri().contains("takeover2.html"));
 		tester.assertTextEqualsById("aaaa", "");
 		tester.assertTextEqualsById("bbbb", "");
 		tester.assertTextEqualsById("cccc", "c1");

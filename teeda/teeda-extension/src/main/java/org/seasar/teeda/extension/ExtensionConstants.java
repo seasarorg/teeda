@@ -187,4 +187,6 @@ public interface ExtensionConstants {
 
     String TAKE_OVER_PARAMETER = "te-takeover";
 
+    String REDIRECT_UNIQUE_KEY_PARAMETER = "te-uniquekey";
+
 }

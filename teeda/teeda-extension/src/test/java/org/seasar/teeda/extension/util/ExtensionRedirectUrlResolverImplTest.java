@@ -25,9 +25,29 @@ import org.seasar.teeda.extension.html.impl.RedirectDescImpl;
  */
 public class ExtensionRedirectUrlResolverImplTest extends TeedaTestCase {
 
+    public void testresolveUrl() throws Exception {
+        ExtensionRedirectUrlResolverImpl resolver = new ExtensionRedirectUrlResolverImpl();
+        String url1 = resolver.resolveUrl("/hoge.html", getFacesContext(),
+                getRequest(), getResponse());
+        System.out.println(url1);
+        assertTrue(url1.startsWith("/hoge.html?te-uniquekey="));
+
+        Thread.sleep(100);
+        String url2 = resolver.resolveUrl("/hoge.html", getFacesContext(),
+                getRequest(), getResponse());
+        System.out.println(url2);
+        assertTrue(url2.startsWith("/hoge.html?te-uniquekey="));
+
+        assertFalse(url1.equals(url2));
+
+        resolver.setAddUniqueKeyParameter(false);
+        String url3 = resolver.resolveUrl("/hoge.html", getFacesContext(),
+                getRequest(), getResponse());
+        assertTrue(url3.startsWith("/hoge.html"));
+    }
+
     public void testBuildRedirectUrl() throws Exception {
         MockHttpServletRequest request = getRequest();
-        System.out.println(request.getRequestURL());
         ExtensionRedirectUrlResolverImpl resolver = new ExtensionRedirectUrlResolverImpl();
         assertEquals("https://localhost/hoge.html", resolver.buildRedirectUrl(
                 "/hoge.html", getRequest(), new RedirectDescImpl("https", -1)));

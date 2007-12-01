@@ -40,7 +40,7 @@ public class ErrorTest extends TeedaWebTestCase {
 		tester.submitById("doHoge");
 
 		// ## Assert ##
-		assertTrue(tester.getCurrentUri().endsWith("errorResult.html"));
+		assertTrue(tester.getCurrentUri().contains("errorResult.html"));
 	}
 
 	public void testErrorOnInitialize() throws Exception {

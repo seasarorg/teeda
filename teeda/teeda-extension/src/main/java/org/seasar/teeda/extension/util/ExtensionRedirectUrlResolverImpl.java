@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.seasar.framework.exception.IORuntimeException;
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.core.util.DefaultRedirectUrlResolverImpl;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.RedirectDesc;
 
 /**
@@ -34,16 +35,36 @@ import org.seasar.teeda.extension.html.RedirectDesc;
 public class ExtensionRedirectUrlResolverImpl extends
         DefaultRedirectUrlResolverImpl {
 
+    protected boolean addUniqueKeyParameter = true;
+
+    protected String uniqueKeyParameterName = ExtensionConstants.REDIRECT_UNIQUE_KEY_PARAMETER;
+
+    public void setAddUniqueKeyParameter(final boolean addUniqueKeyParameter) {
+        this.addUniqueKeyParameter = addUniqueKeyParameter;
+    }
+
+    public void setUniqueKeyParameterName(final String uniqueKeyParameterName) {
+        this.uniqueKeyParameterName = uniqueKeyParameterName;
+    }
+
     public String resolveUrl(final String contextPath,
             final FacesContext context, final HttpServletRequest request,
             final HttpServletResponse response) throws FacesException {
         AssertionUtil.assertNotNull("contextPath", contextPath);
+        final String redirectUrl;
         final RedirectDesc redirectDesc = RedirectUtil.getRedirectDesc();
         if (redirectDesc != null) {
-            return buildRedirectUrl(contextPath, request, redirectDesc);
+            redirectUrl = buildRedirectUrl(contextPath, request, redirectDesc);
+        } else {
+            redirectUrl = super.resolveUrl(contextPath, context, request,
+                    response);
         }
 
-        return super.resolveUrl(contextPath, context, request, response);
+        if (!addUniqueKeyParameter) {
+            return redirectUrl;
+        }
+        return redirectUrl + "?" + uniqueKeyParameterName + "=" +
+                Long.toHexString(System.currentTimeMillis());
     }
 
     protected String buildRedirectUrl(final String contextPath,
