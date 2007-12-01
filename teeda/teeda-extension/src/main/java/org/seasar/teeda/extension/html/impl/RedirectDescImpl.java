@@ -13,15 +13,34 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl.page;
+package org.seasar.teeda.extension.html.impl;
 
-public class FooAction {
+import org.seasar.teeda.extension.html.RedirectDesc;
 
-    public static final String doAaa_TAKE_OVER = "properties='aaa, bbb'";
+/**
+ * @author koichik
+ */
+public class RedirectDescImpl implements RedirectDesc {
 
-    public static final String doAaa_REDIRECT = "protocol=https";
+    protected String protocol;
 
-    public String doAaa() {
-        return null;
+    protected int port;
+
+    public RedirectDescImpl(final String protocol) {
+        this(protocol, -1);
     }
+
+    public RedirectDescImpl(final String protocol, final int port) {
+        this.protocol = protocol;
+        this.port = port;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
 }

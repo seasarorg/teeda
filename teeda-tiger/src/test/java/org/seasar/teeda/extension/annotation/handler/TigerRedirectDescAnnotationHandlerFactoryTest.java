@@ -13,15 +13,21 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl.page;
+package org.seasar.teeda.extension.annotation.handler;
 
-public class FooAction {
+import junit.framework.TestCase;
 
-    public static final String doAaa_TAKE_OVER = "properties='aaa, bbb'";
+/**
+ * 
+ * @author koichik
+ */
+public class TigerRedirectDescAnnotationHandlerFactoryTest extends TestCase {
 
-    public static final String doAaa_REDIRECT = "protocol=https";
+	public void testGetAnnotationHandler() throws Exception {
+		RedirectDescAnnotationHandler handler = RedirectDescAnnotationHandlerFactory
+				.getAnnotationHandler();
+		assertEquals(TigerRedirectDescAnnotationHandler.class, handler
+				.getClass());
+	}
 
-    public String doAaa() {
-        return null;
-    }
 }

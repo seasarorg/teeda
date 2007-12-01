@@ -19,8 +19,10 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
+import org.seasar.teeda.extension.annotation.handler.RedirectDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
@@ -34,6 +36,8 @@ public class ActionDescImpl implements ActionDesc {
     private Set methodNames;
 
     private Map takeOverDescs;
+
+    private Map redirectDescs;
 
     private File file;
 
@@ -60,6 +64,8 @@ public class ActionDescImpl implements ActionDesc {
         methodNames = ActionDescUtil.getActionMethodNames(actionClass);
         takeOverDescs = TakeOverDescAnnotationHandlerFactory
                 .getAnnotationHandler().getTakeOverDescs(actionName);
+        redirectDescs = RedirectDescAnnotationHandlerFactory
+                .getAnnotationHandler().getRedirectDescs(actionName);
     }
 
     public boolean hasMethod(String name) {
@@ -86,4 +92,16 @@ public class ActionDescImpl implements ActionDesc {
     public boolean hasTakeOverDesc(String methodName) {
         return takeOverDescs.containsKey(methodName);
     }
+
+    public boolean hasRedirectDesc(String methodName) {
+        return redirectDescs.containsKey(methodName);
+    }
+
+    public RedirectDesc getRedirectDesc(String methodName) {
+        if (!hasRedirectDesc(methodName)) {
+            throw new IllegalArgumentException(methodName);
+        }
+        return (RedirectDesc) redirectDescs.get(methodName);
+    }
+
 }

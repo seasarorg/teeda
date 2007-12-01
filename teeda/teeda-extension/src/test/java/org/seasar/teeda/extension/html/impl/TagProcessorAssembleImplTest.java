@@ -26,6 +26,7 @@ import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TakeOverDesc;
@@ -463,6 +464,14 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
 
         public boolean hasTakeOverDesc(String methodName) {
             return false;
+        }
+
+        public boolean hasRedirectDesc(String methodName) {
+            return false;
+        }
+
+        public RedirectDesc getRedirectDesc(String methodName) {
+            return null;
         }
 
         public boolean isSubapplicationScopeProperty(String name) {

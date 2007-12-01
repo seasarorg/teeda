@@ -13,15 +13,31 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl.page;
+package org.seasar.teeda.extension.html;
 
-public class FooAction {
+/**
+ * @author koichik
+ * 
+ */
+public interface RedirectDesc {
 
-    public static final String doAaa_TAKE_OVER = "properties='aaa, bbb'";
+    /** HTTPプロトコル */
+    String HTTP = "http";
 
-    public static final String doAaa_REDIRECT = "protocol=https";
+    /** HTTPSプロトコル */
+    String HTTPS = "https";
 
-    public String doAaa() {
-        return null;
-    }
+    /**
+     * プロトコルを返します。
+     * 
+     * @return プロトコル
+     */
+    String getProtocol();
+
+    /**
+     * ポート番号を返します。
+     * 
+     * @return ポート番号
+     */
+    int getPort();
 }

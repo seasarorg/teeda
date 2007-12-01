@@ -64,5 +64,9 @@ public interface PageDesc {
 
     TakeOverDesc getTakeOverDesc(String methodName);
 
+    boolean hasRedirectDesc(String methodName);
+
+    RedirectDesc getRedirectDesc(String methodName);
+
     boolean isModified();
 }

@@ -21,8 +21,11 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -62,4 +65,13 @@ public class ActionDescImplTest extends TeedaExtensionTestCase {
         assertEquals("aaa", props[0]);
         assertEquals("bbb", props[1]);
     }
+
+    public void testGetRedirectDesc() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooAction");
+        assertTrue(pd.hasRedirectDesc("doBar"));
+        RedirectDesc rd = pd.getRedirectDesc("doBar");
+        assertNotNull(rd);
+        assertEquals(RedirectDesc.HTTPS, rd.getProtocol());
+    }
+
 }

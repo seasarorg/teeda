@@ -227,4 +227,7 @@
 
 	<component
 		class="org.seasar.teeda.extension.util.SimpleFacesMessageHelperImpl"/>
+
+	<component
+		class="org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl"/>
 </components>

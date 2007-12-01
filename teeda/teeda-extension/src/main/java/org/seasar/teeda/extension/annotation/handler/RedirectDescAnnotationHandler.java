@@ -13,15 +13,15 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl.page;
+package org.seasar.teeda.extension.annotation.handler;
 
-public class FooAction {
+import java.util.Map;
 
-    public static final String doAaa_TAKE_OVER = "properties='aaa, bbb'";
+/**
+ * @author koichik
+ */
+public interface RedirectDescAnnotationHandler {
 
-    public static final String doAaa_REDIRECT = "protocol=https";
+    Map getRedirectDescs(String componentName);
 
-    public String doAaa() {
-        return null;
-    }
 }

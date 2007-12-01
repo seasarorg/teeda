@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,17 +32,21 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.annotation.handler.ConverterAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.FacesMessageAnnotationHandlerFactory;
+import org.seasar.teeda.extension.annotation.handler.RedirectDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ScopeAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.TakeOverDescAnnotationHandlerFactory;
 import org.seasar.teeda.extension.annotation.handler.ValidatorAnnotationHandlerFactory;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 
 /**
  * @author higa
  * @author shot
  */
-public class PageDescImpl implements PageDesc {
+public class PageDescImpl implements PageDesc, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String pageName;
 
@@ -58,6 +63,8 @@ public class PageDescImpl implements PageDesc {
     private Map takeOverDescs;
 
     private Map propertyScopes;
+
+    private Map redirectDescs;
 
     private File file;
 
@@ -111,6 +118,8 @@ public class PageDescImpl implements PageDesc {
                 .getAnnotationHandler().getTakeOverDescs(pageName);
         propertyScopes = ScopeAnnotationHandlerFactory.getAnnotationHandler()
                 .getPropertyScopes(pageName);
+        redirectDescs = RedirectDescAnnotationHandlerFactory
+                .getAnnotationHandler().getRedirectDescs(pageName);
         FacesMessageAnnotationHandlerFactory.getAnnotationHandler()
                 .registerFacesMessages(pageName);
     }
@@ -188,6 +197,17 @@ public class PageDescImpl implements PageDesc {
 
     public boolean hasTakeOverDesc(String methodName) {
         return takeOverDescs.containsKey(methodName);
+    }
+
+    public boolean hasRedirectDesc(String methodName) {
+        return redirectDescs.containsKey(methodName);
+    }
+
+    public RedirectDesc getRedirectDesc(String methodName) {
+        if (!hasRedirectDesc(methodName)) {
+            throw new IllegalArgumentException(methodName);
+        }
+        return (RedirectDesc) redirectDescs.get(methodName);
     }
 
     public boolean isModified() {

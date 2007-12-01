@@ -51,6 +51,10 @@ public class HtmlComponentInvokerImplTest extends TeedaExtensionTestCase {
         NamingConventionImpl nc = new NamingConventionImpl();
         nc.addRootPackageName(ClassUtil.getPackageName(getClass()));
         invoker.setNamingConvention(nc);
+        PageDescCacheImpl pc = new PageDescCacheImpl();
+        pc.setHtmlSuffix(new HtmlSuffixImpl());
+        pc.setNamingConvention(nc);
+        invoker.setPageDescCache(pc);
         createPageDesc(BbbPage.class, "aaa_bbb");
         invoker.invoke(getFacesContext(), "aaa_bbb",
                 HtmlComponentInvoker.INITIALIZE);

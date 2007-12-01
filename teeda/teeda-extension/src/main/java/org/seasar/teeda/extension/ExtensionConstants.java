@@ -158,6 +158,8 @@ public interface ExtensionConstants {
 
     String TAKE_OVER_SUFFIX = "_TAKE_OVER";
 
+    String REDIRECT_SUFFIX = "_REDIRECT";
+
     String FACES_MESSAGE_AGGREGATION_SUFFIX = "_MESSAGE_AGGREGATION";
 
     String TEEDA_EXTENSION_MESSAGE_CLIENTIDS = "org.seasar.teeda.extension.message.clientids";

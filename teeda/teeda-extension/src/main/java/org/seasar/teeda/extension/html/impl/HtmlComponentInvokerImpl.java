@@ -32,6 +32,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.ErrorPageManager;
+import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.core.util.NullErrorPageManagerImpl;
@@ -42,6 +43,8 @@ import org.seasar.teeda.extension.html.ActionDescCache;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.PageDescCache;
+import org.seasar.teeda.extension.html.RedirectDesc;
+import org.seasar.teeda.extension.util.RedirectUtil;
 
 /**
  * @author higa
@@ -166,10 +169,10 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
                     throw new IllegalPageTransitionException(retClass);
                 }
                 next = getNextPageTransition(retClass);
-
             } else {
                 next = (String) ret;
             }
+            setRedirectDesc(context, methodName);
             NavigationHandlerUtil.handleNavigation(context, fromAction, next);
         } catch (Throwable e) {
             try {
@@ -189,6 +192,21 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         }
 
         return next;
+    }
+
+    protected void setRedirectDesc(final FacesContext context,
+            final String methodName) {
+        if (RedirectUtil.getRedirectDesc() != null) {
+            return;
+        }
+        final String viewId = ExternalContextUtil.getViewId(context
+                .getExternalContext());
+        final PageDesc pageDesc = pageDescCache.getPageDesc(viewId);
+        if (pageDesc == null || !pageDesc.hasRedirectDesc(methodName)) {
+            return;
+        }
+        final RedirectDesc redirectDesc = pageDesc.getRedirectDesc(methodName);
+        RedirectUtil.setRedirectDesc(redirectDesc);
     }
 
     public boolean isInitialized(final FacesContext context,

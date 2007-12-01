@@ -25,6 +25,8 @@ public class FooPage {
 
     public static final String PAGE_SCOPE = "eee";
 
+    public static final String doBar_REDIRECT = "protocol=https";
+
     private boolean initialized = false;
 
     private boolean prerendered = false;

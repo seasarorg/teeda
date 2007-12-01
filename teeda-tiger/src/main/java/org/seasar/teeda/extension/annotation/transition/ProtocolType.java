@@ -13,15 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.html.impl.page;
+package org.seasar.teeda.extension.annotation.transition;
 
-public class FooAction {
+/**
+ * プロトコルを示す列挙です。
+ * 
+ * @author koichik
+ */
+public enum ProtocolType {
 
-    public static final String doAaa_TAKE_OVER = "properties='aaa, bbb'";
+	/**
+	 * HTTPプロトコル
+	 */
+	HTTP,
 
-    public static final String doAaa_REDIRECT = "protocol=https";
+	/**
+	 * HTTPSプロトコル
+	 */
+	HTTPS;
 
-    public String doAaa() {
-        return null;
-    }
+	/**
+	 * プロトコルの外部表現を返します。
+	 * 
+	 * @return プロトコルの外部表現
+	 */
+	public String getExternalForm() {
+		return name().toLowerCase();
+	}
+
 }
