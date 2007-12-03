@@ -1,5 +1,7 @@
 package examples.teeda.web.takeover;
 
+import java.util.List;
+
 /**
  * @author yone
  */
@@ -8,6 +10,10 @@ public class TakeoverPage {
 	private Integer arg1;
 
 	private Integer arg2;
+
+	public Object arg3;
+
+	public transient List arg4;
 
 	public Integer getArg1() {
 		return arg1;

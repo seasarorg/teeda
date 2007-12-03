@@ -16,7 +16,6 @@
 package org.seasar.teeda.extension.html.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -321,8 +320,8 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (!pd.isReadable() ||
-                    !nextPageProperties.containsKey(pd.getPropertyName())) {
+            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
+                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
             if (pageDesc.isRedirectScopeProperty(propertyName)) {
@@ -338,8 +337,8 @@ public class SessionPagePersistence implements PagePersistence {
             String[] properties, Map nextPageProperties) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!pd.isReadable() ||
-                    !nextPageProperties.containsKey(pd.getPropertyName())) {
+            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
+                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
             if (ArrayUtil.contains(properties, pd.getPropertyName())) {
@@ -355,16 +354,11 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
             final String propertyName = pd.getPropertyName();
-            if (!pd.isReadable() ||
-                    !nextPageProperties.containsKey(propertyName)) {
+            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
+                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
             final Class thisPageType = pd.getPropertyType();
-            if (!thisPageType.isArray() &&
-                    !Collection.class.isAssignableFrom(thisPageType) &&
-                    !PagePersistenceUtil.isPersistenceType(thisPageType)) {
-                continue;
-            }
             final Class nextPageType = (Class) nextPageProperties
                     .get(propertyName);
             if (nextPageType != thisPageType) {
