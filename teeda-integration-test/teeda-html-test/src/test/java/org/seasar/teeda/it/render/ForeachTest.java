@@ -363,6 +363,10 @@ public class ForeachTest extends TeedaWebTestCase {
 		// ## Assert ##
 		tester.beginAt(getBaseUrl(), "view/foreach/foreachNest.html");
 		tester.dumpHtml();
+		String[][] tableExpected = new String[][] { { "00", "01" },
+				{ "10", "11" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
 		tester.setTextByName("form:aaaItemsItems:0:aaaItems:0:foo", "a");
 		tester.setTextByName("form:aaaItemsItems:0:aaaItems:1:foo", "b");
 		tester.setTextByName("form:aaaItemsItems:1:aaaItems:0:foo", "c");
@@ -371,8 +375,7 @@ public class ForeachTest extends TeedaWebTestCase {
 
 		// --------
 		tester.dumpHtml();
-		final String[][] tableExpected = new String[][] { { "a", "b" },
-				{ "c", "d" } };
+		tableExpected = new String[][] { { "a", "b" }, { "c", "d" } };
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 

@@ -26,11 +26,23 @@ import org.seasar.teeda.extension.component.TForEach;
  */
 public class TForEachTag extends UIComponentTagBase {
 
+    private String tagName;
+
     private String pageName;
 
     private String itemsName;
 
+    private String omittag;
+
     public TForEachTag() {
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getItemsName() {
@@ -49,6 +61,14 @@ public class TForEachTag extends UIComponentTagBase {
         this.pageName = pageName;
     }
 
+    public String getOmittag() {
+        return omittag;
+    }
+
+    public void setOmittag(String omittag) {
+        this.omittag = omittag;
+    }
+
     public String getComponentType() {
         return TForEach.COMPONENT_TYPE;
     }
@@ -62,9 +82,10 @@ public class TForEachTag extends UIComponentTagBase {
      */
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        TForEach forEach = (TForEach) component;
-        forEach.setPageName(pageName);
-        forEach.setItemsName(itemsName);
+        setComponentProperty(component, "tagName", tagName);
+        setComponentProperty(component, "pageName", pageName);
+        setComponentProperty(component, "itemsName", itemsName);
+        setComponentProperty(component, "omittag", omittag);
     }
 
     /**
@@ -72,7 +93,9 @@ public class TForEachTag extends UIComponentTagBase {
      */
     public void release() {
         super.release();
+        tagName = null;
         pageName = null;
         itemsName = null;
+        omittag = null;
     }
 }

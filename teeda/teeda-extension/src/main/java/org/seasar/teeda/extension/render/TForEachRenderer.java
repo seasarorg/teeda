@@ -24,6 +24,8 @@ import java.util.Map;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -43,6 +45,33 @@ public class TForEachRenderer extends AbstractRenderer {
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
 
+    private final static IgnoreAttribute attribute = new IgnoreAttribute();
+    static {
+        attribute.addAttributeName("tagName");
+        attribute.addAttributeName("pageName");
+        attribute.addAttributeName("itemsName");
+        attribute.addAttributeName("itemName");
+        attribute.addAttributeName("indexName");
+        attribute.addAttributeName("rowSize");
+        attribute.addAttributeName("omittag");
+    }
+
+    public void encodeBegin(final FacesContext context,
+            final UIComponent component) throws IOException {
+        super.encodeBegin(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        final TForEach forEach = (TForEach) component;
+        if (forEach.isOmittag()) {
+            return;
+        }
+        final String tagName = forEach.getTagName();
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement(tagName, component);
+        renderRemainAttributes(forEach, writer, attribute);
+    }
+
     public void encodeChildren(final FacesContext context,
             final UIComponent component) throws IOException {
         assertNotNull(context, component);
@@ -57,6 +86,21 @@ public class TForEachRenderer extends AbstractRenderer {
         } finally {
             foreachContext.end();
         }
+    }
+
+    public void encodeEnd(FacesContext context, UIComponent component)
+            throws IOException {
+        super.encodeBegin(context, component);
+        if (!component.isRendered()) {
+            return;
+        }
+        final TForEach forEach = (TForEach) component;
+        if (forEach.isOmittag()) {
+            return;
+        }
+        final String tagName = forEach.getTagName();
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.endElement(tagName);
     }
 
     private void encodeForEachChildren(final FacesContext context,

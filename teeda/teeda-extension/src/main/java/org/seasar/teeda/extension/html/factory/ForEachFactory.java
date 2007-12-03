@@ -15,13 +15,17 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.processor.ForEachElementProcessor;
 
 /**
  * @author higa
@@ -29,24 +33,35 @@ import org.seasar.teeda.extension.html.PageDesc;
  */
 public class ForEachFactory extends AbstractElementProcessorFactory {
 
+    private static final Set acceptableElements = new HashSet();
+    static {
+        acceptableElements.add(JsfConstants.DIV_ELEM);
+        acceptableElements.add(JsfConstants.SPAN_ELEM);
+        acceptableElements.add(JsfConstants.TABLE_ELEM);
+        acceptableElements.add(JsfConstants.TBODY_ELEM);
+        acceptableElements.add(JsfConstants.TR_ELEM);
+        acceptableElements.add(JsfConstants.UL_ELEM);
+        acceptableElements.add(JsfConstants.OL_ELEM);
+        acceptableElements.add(JsfConstants.DL_ELEM);
+    }
+
     private static final String TAG_NAME = "forEach";
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (elementNode == null) {
+        if (elementNode == null || pageDesc == null) {
             return false;
         }
-        final String tagName = elementNode.getTagName();
-        if (!JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName)
-                && !JsfConstants.TBODY_ELEM.equalsIgnoreCase(tagName)) {
+        final String elementName = elementNode.getTagName();
+        if (!acceptableElements.contains(elementName.toLowerCase())) {
             return false;
         }
         String id = elementNode.getId();
         if (id == null) {
             return false;
         }
-        return id.endsWith(ExtensionConstants.ITEMS_SUFFIX) && pageDesc != null
-                && pageDesc.hasItemsProperty(id);
+        return id.endsWith(ExtensionConstants.ITEMS_SUFFIX) &&
+                pageDesc.hasItemsProperty(id);
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -69,6 +84,16 @@ public class ForEachFactory extends AbstractElementProcessorFactory {
 
     protected String getUri() {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
+    }
+
+    protected ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
+        Class tagClass = getTagClass(uri, tagName);
+        Map props = createProperties(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = new ForEachElementProcessor(tagClass,
+                props, elementNode.getTagName());
+        customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        return processor;
     }
 
 }

@@ -39,26 +39,67 @@ public class ForEachFactoryTest extends ElementProcessorFactoryTestCase {
                 TForEachTag.class);
     }
 
-    public void testIsMatch() throws Exception {
+    public void testIsMatch_div() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("div", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
-        ElementNode elementNode2 = createElementNode("hoge", properties);
-        assertFalse(factory.isMatch(elementNode2, pageDesc, null));
-        properties.put("id", "xxx");
-        ElementNode elementNode3 = createElementNode("input", properties);
-        assertFalse(factory.isMatch(elementNode3, pageDesc, null));
     }
 
-    public void testIsMatch2() throws Exception {
+    public void testIsMatch_span() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("span", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_table() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("table", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_tbody() throws Exception {
         Map properties = new HashMap();
         properties.put("id", "hogeItems");
         ElementNode elementNode = createElementNode("tbody", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_ul() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("ul", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_ol() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("ol", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_dl() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        ElementNode elementNode = createElementNode("dl", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_notMatch() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
         ElementNode elementNode2 = createElementNode("hoge", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertFalse(factory.isMatch(elementNode2, pageDesc, null));
         properties.put("id", "xxx");
         ElementNode elementNode3 = createElementNode("input", properties);

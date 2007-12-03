@@ -189,7 +189,11 @@ public interface JsfConstants {
 
     String TR_ELEM = "tr";
 
+    String OL_ELEM = "ol";
+
     String UL_ELEM = "ul";
+
+    String DL_ELEM = "dl";
 
     String HEAD_ELEM = "head";
 

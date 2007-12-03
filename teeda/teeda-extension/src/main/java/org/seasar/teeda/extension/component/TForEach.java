@@ -39,6 +39,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
 import javax.faces.el.VariableResolver;
 import javax.faces.internal.ComponentStates;
 import javax.faces.internal.ComponentStatesHolder;
@@ -54,6 +55,7 @@ import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FieldUtil;
 import org.seasar.framework.util.MethodUtil;
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
@@ -81,20 +83,28 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     protected static final Method GET_ELEMENT_CLASS_METHOD = getGetElementClassMethod();
 
+    private String tagName;
+
+    private String pageName;
+
+    private String itemsName;
+
+    private Boolean omittag;
+
     private int rowIndex = INITIAL_ROW_INDEX;
 
     private int rowSize;
 
     private final ComponentStates componentStates = new ComponentStates();
 
-    private String pageName;
-
-    private String itemsName;
-
     private static final Logger logger = Logger.getLogger(TForEach.class);
 
     public TForEach() {
         setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    public String getFamily() {
+        return COMPONENT_FAMILY;
     }
 
     public void setId(final String id) {
@@ -111,12 +121,12 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         return clientId + NamingContainer.SEPARATOR_CHAR + rowIndex;
     }
 
-    private int getRowIndex() {
-        return rowIndex;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setRowIndex(final int rowIndex) {
-        this.rowIndex = rowIndex;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getItemsName() {
@@ -155,11 +165,30 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         this.pageName = pageName;
     }
 
-    /**
-     * @see javax.faces.component.UIComponent#getFamily()
-     */
-    public String getFamily() {
-        return COMPONENT_FAMILY;
+    public boolean isOmittag() {
+        if (omittag != null) {
+            return omittag.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("omittag");
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        if (v != null) {
+            return v.booleanValue();
+        }
+        return JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName) ||
+                JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName);
+    }
+
+    public void setOmittag(boolean omittag) {
+        this.omittag = new Boolean(omittag);
+    }
+
+    private int getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(final int rowIndex) {
+        this.rowIndex = rowIndex;
     }
 
     public void processDecodes(FacesContext context) {
@@ -469,18 +498,22 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[3];
+        final Object[] values = new Object[5];
         values[0] = super.saveState(context);
-        values[1] = pageName;
-        values[2] = itemsName;
+        values[1] = tagName;
+        values[2] = pageName;
+        values[3] = itemsName;
+        values[4] = omittag;
         return values;
     }
 
     public void restoreState(final FacesContext context, final Object state) {
         final Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        pageName = (String) values[1];
-        itemsName = (String) values[2];
+        tagName = (String) values[1];
+        pageName = (String) values[2];
+        itemsName = (String) values[3];
+        omittag = (Boolean) values[4];
     }
 
     public int getRowSize() {
