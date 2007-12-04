@@ -192,26 +192,37 @@ public class HogePage {
 </div>
 <h2><a name="parse-xhtml">(X)HTMLのパーズについて</a></h2>
 <p>Teeda 1.0.12以降では，(X)HTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．</p>
+<p>あらかじめ，4種類のパーズ方法を用意しています．</p>
+<ul>
+<li>DEFAULT (デフォルト)
+<li>CLASSIC
+<li>STRICT
+<li>HTML
+</ul>
+<p>カスタマイズしない場合はDEFAULTが使用されます．</p>
 <h3>DEFAULT</h3>
 <p>DEFAULTは，Teeda Extension標準の方法でXHTMLをパーズします．<strong>この方法はTeeda1.0.11以前とは異なります</strong>．</p>
 <ul>
 <li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．</li>
-<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
-<li>XHTMLはXerces2.6.2でパーズします．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>CLASSIC</h3>
 <p>CLASSICは，<strong>Teeda 1.0.11以前と互換性のある方法</strong>でXHTMLをパーズします．</p>
 <ul>
-<li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;lt;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;lt;</code>と一段階余計にエスケープして記述する必要があります．</li>
-<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
-<li>XHTMLはXerces2.6.2でパーズします．</li>
+<li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;amp;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;amp;</code>と一段階余計にエスケープして記述する必要があります．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>STRICT</h3>
 <p>STRICTは，厳密に正しいXMLとしてXHTMLをパーズします．</p>
 <ul>
 <li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
-<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，&amp;等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;lt;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;lt;</code>と一段階余計にエスケープして記述する必要があります．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．&amp;を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
-<li>XHTMLはJAXP標準のXMLパーザでパーズします．このため，Xerces2.6.2を使用することが出来ない環境でも問題なく利用することが出来ます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．<code>&amp;</code>を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
+<li>JAXP標準のXMLパーザでXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用することが出来ない環境でも問題なく利用することが出来ます．</li>
 </ul>
 <h3>HTML</h3>
 <p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
@@ -219,11 +230,10 @@ public class HogePage {
 <li>テンプレートHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
 <li>テンプレートHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
 <li>テンプレートHTMLの属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
-<li>HTMLモードの場合，HTMLはXerces2.6.2とNekoHTMLの組み合わせでパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてください．
+<li>Xerces2.6.2とNekoHTMLの組み合わせでHTMLをパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてください．
 <ul>
 <li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
-</ul>
-</li>
+</ul>WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>各モードの要約</h3>
 <table border="1">
@@ -256,7 +266,7 @@ public class HogePage {
 <td>STRICT</td>
 <td><code>&lt;br/&gt;</code></td>
 <td><code>&amp;amp;</code></td>
-<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code></td>
 <td>エラー</td>
 <td>JAXP準拠の任意のXMLパーザ</td>
 </tr>
@@ -272,8 +282,10 @@ public class HogePage {
 </table>
 <h3>カスタマイズの方法</h3>
 <p>(X)HTMLをパーズする方法をカスタマイズするには，diconファイルに<code>TeedaXMLReaderFactory</code>を登録します．標準のモードはTeedaXMLReaderFactoryのネステッドクラスとして用意されているので，次のように記述します．</p>
-<pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$CLASSIC&quot;/&gt;</pre>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
 <h2><a name="redirect">リダイレクトについて</a></h2>
+<h3>プロトコルの変更</h3>
+<h3>キャッシュ対策</h3>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
