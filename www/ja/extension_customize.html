@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
-<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
 <body onload="preload('ja')">
@@ -36,11 +36,13 @@
 <li><a href="#validator">Validatorのカスタマイズについて</a></li>
 <li><a href="#converter">Convererのカスタマイズについて</a></li>
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
+<li><a href="#parse-xhtml">(X)HTMLのパーズについて</a></li>
+<li><a href="#redirect">リダイレクトについて</a></li>
 </ul>
 </div>
 
 <div class="section">
-<h3><a id="validator" name="validator">Validatorのカスタマイズについて</a></h3>
+<h2><a id="validator" name="validator">Validatorのカスタマイズについて</a></h2>
 <p>TeedaではJSF共通のValidatorのほかにExtension共通のValidatorを準備しています．<br/>
 しかし、実案件ではカスタムでValidatorを作成しなくてはいけない場合があるはずです．<br/>
 このような場合でのカスタムValidatorの作り方を下記に示します．<br/>
@@ -148,7 +150,7 @@ import org.seasar.teeda.extension.annotation.validator.Validator;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Validator("myRequiredValidator")//<b><font color="red">[a]</font></b>Teeda独自の指定
+@Validator("myRequiredValidator")//<b style="color: red;">[a]</b>Teeda独自の指定
 public @interface MyRequired {
 
     String target() default "";
@@ -181,17 +183,97 @@ public class HogePage {
   //以下、getter/setter
 }
 </pre>
-
-<h3><a id="converter" name="converter">Converterのカスタマイズについて</a></h3>
-
+<h2><a id="converter" name="converter">Converterのカスタマイズについて</a></h2>
 <p>TODO：作成</p>
-
-<h3><a id="uicomponent" name="uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></h3>
-
+<h2><a id="uicomponent" name="uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></h2>
 <p>TODO：作成</p>
 
 
 </div>
+<h2><a name="parse-xhtml">(X)HTMLのパーズについて</a></h2>
+<p>Teeda 1.0.12以降では，(X)HTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．</p>
+<h3>DEFAULT</h3>
+<p>DEFAULTは，Teeda Extension標準の方法でXHTMLをパーズします．<strong>この方法はTeeda1.0.11以前とは異なります</strong>．</p>
+<ul>
+<li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>XHTMLはXerces2.6.2でパーズします．</li>
+</ul>
+<h3>CLASSIC</h3>
+<p>CLASSICは，<strong>Teeda 1.0.11以前と互換性のある方法</strong>でXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;lt;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;lt;</code>と一段階余計にエスケープして記述する必要があります．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でブラウザに出力されます．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>XHTMLはXerces2.6.2でパーズします．</li>
+</ul>
+<h3>STRICT</h3>
+<p>STRICTは，厳密に正しいXMLとしてXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，&amp;等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;lt;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;lt;</code>と一段階余計にエスケープして記述する必要があります．属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．&amp;を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
+<li>XHTMLはJAXP標準のXMLパーザでパーズします．このため，Xerces2.6.2を使用することが出来ない環境でも問題なく利用することが出来ます．</li>
+</ul>
+<h3>HTML</h3>
+<p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
+<ul>
+<li>テンプレートHTMLの要素中に記述した<code>&amp;amp</code>;等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>HTMLモードの場合，HTMLはXerces2.6.2とNekoHTMLの組み合わせでパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてください．
+<ul>
+<li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
+</ul>
+</li>
+</ul>
+<h3>各モードの要約</h3>
+<table border="1">
+<tbody>
+<tr>
+<th></th>
+<th>空要素</th>
+<th>要素中の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;</code>(非参照)</th>
+<th>XMLパーザ</th>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>CLASSIC</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>STRICT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>エラー</td>
+<td>JAXP準拠の任意のXMLパーザ</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td><code>&lt;br&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2+NekoHTML</td>
+</tr>
+</tbody>
+</table>
+<h3>カスタマイズの方法</h3>
+<p>(X)HTMLをパーズする方法をカスタマイズするには，diconファイルに<code>TeedaXMLReaderFactory</code>を登録します．標準のモードはTeedaXMLReaderFactoryのネステッドクラスとして用意されているので，次のように記述します．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$CLASSIC&quot;/&gt;</pre>
+<h2><a name="redirect">リダイレクトについて</a></h2>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
