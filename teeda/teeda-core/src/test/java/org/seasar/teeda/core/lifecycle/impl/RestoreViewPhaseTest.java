@@ -106,6 +106,7 @@ public class RestoreViewPhaseTest extends TeedaTestCase {
         getExternalContext().setRequestPathInfo("hoge2.html");
         Map ctx = PageScope.getOrCreateContext(getFacesContext());
         ctx.put("aaa", "111");
+        WindowIdUtil.setupWindowId(getExternalContext());
         phase.executePhase(getFacesContext());
         ctx = PageScope.getOrCreateContext(getFacesContext());
         assertNull(ctx.get("aaa"));

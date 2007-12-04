@@ -59,7 +59,7 @@ public class VariableScope {
         String wid = WindowIdUtil.getWindowId(extCtx);
         Map ctx = (Map) contexts.get(wid);
         if (ctx == null) {
-            ctx = Collections.synchronizedMap(new HashMap());
+            ctx = new HashMap();
             contexts.put(wid, ctx);
         }
         return ctx;

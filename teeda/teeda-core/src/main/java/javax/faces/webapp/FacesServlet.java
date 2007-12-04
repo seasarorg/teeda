@@ -16,6 +16,7 @@
 package javax.faces.webapp;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
@@ -25,6 +26,8 @@ import javax.faces.context.FacesContextFactory;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.PhaseUtil;
 import javax.faces.internal.WebAppUtil;
+import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.PageScope;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.Servlet;
@@ -83,16 +86,20 @@ public final class FacesServlet implements Servlet {
 
         final ExternalContext externalContext = context.getExternalContext();
         final String pathInfo = externalContext.getRequestPathInfo();
-        if (pathInfo != null
-                && (pathInfo.startsWith("/WEB-INF") || pathInfo
+        if (pathInfo != null &&
+                (pathInfo.startsWith("/WEB-INF") || pathInfo
                         .startsWith("/META-INF"))) {
             final HttpServletResponse hres = (HttpServletResponse) response;
             hres.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
         try {
-            lifecycle.execute(context);
-            lifecycle.render(context);
+            WindowIdUtil.setupWindowId(externalContext);
+            final Map pageScope = PageScope.getOrCreateContext(context);
+            synchronized (pageScope) {
+                lifecycle.execute(context);
+                lifecycle.render(context);
+            }
         } catch (FacesException e) {
             Throwable t = e.getCause();
             if (t == null) {

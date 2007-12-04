@@ -46,8 +46,8 @@ import org.seasar.teeda.core.util.ServletExternalContextUtil;
 public class RestoreViewPhase extends AbstractPhase {
 
     private static final String VIEW_ID_LRU_ATTR = RestoreViewPhase.class
-            .getName()
-            + ".VIEW_ID_LRU";
+            .getName() +
+            ".VIEW_ID_LRU";
 
     private int viewIdLruSize = 16;
 
@@ -74,8 +74,8 @@ public class RestoreViewPhase extends AbstractPhase {
         String subAppPath = SubApplicationUtil.getSubApplicationPath(viewId);
         String previousSubAppPath = SubApplicationUtil
                 .getSubApplicationPath(previousViewId);
-        if (previousSubAppPath != null
-                && !previousSubAppPath.equals(subAppPath)) {
+        if (previousSubAppPath != null &&
+                !previousSubAppPath.equals(subAppPath)) {
             SubApplicationScope.removeContext(context, wid);
         }
         final UIViewRoot viewRoot = composeViewRoot(context, viewId);
@@ -166,7 +166,7 @@ public class RestoreViewPhase extends AbstractPhase {
             final ExternalContext externalContext = context
                     .getExternalContext();
             this.currentViewId = getViewId(context, externalContext);
-            this.wid = WindowIdUtil.setupWindowId(externalContext);
+            this.wid = WindowIdUtil.getWindowId(externalContext);
             this.previousViewId = getViewIdFromSession(externalContext
                     .getSessionMap(), this.wid);
         }
