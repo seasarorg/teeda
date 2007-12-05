@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
 <style>
+<!--
 table.tbline {
   border-collapse: collapse;
   border: 1px solid #999999;
@@ -61,6 +62,7 @@ h3.underline {
 	#margin-right: 20px;
 }
 
+-->
 </style>
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
@@ -233,7 +235,7 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td align="left">
-            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -336,7 +338,8 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td><span>Validationフェーズを正常終了すると、すぐにModelを更新する</span></td>
+        <td><span>-Validationフェーズを正常終了すると、すぐにModelを更新する</span><br>
+</td>
       </tr>
     </tbody>
   </table>
@@ -392,7 +395,8 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Teeda 1.0.7から使用できます</td>
+        <td><span>-<b class="boldorange">forEach</b>と組み合わせて使用する場合は，<b class="boldorange">span</b>要素をforEachの外側に，<b class="boldorange">input</b>要素をforEachの内側に記述する</span><br>
+</td>
       </tr>
     </tbody>
   </table>
@@ -619,7 +623,7 @@ h3.underline {
         <td>その他</td>
         <td align="left">
             <span>-Templateに書いてある値は実行時には消える</span><br/>
-            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -644,7 +648,7 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td>
-          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;
+          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;</b>
         </td>
       </tr>
       <tr>
@@ -736,7 +740,7 @@ h3.underline {
         <td>その他</td>
         <td align="left">
             <span>-Templateに書いてある値は実行時には消える</span><br/>
-            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -768,11 +772,11 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>要素<br/>
-            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．<br/>
-            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．<br/>
-            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．<br/>
-            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．<br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．</span><br/>
+            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．</span><br/>
+            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．</span><br/>
+            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．</span><br/>
         </td>
       </tr>
       <tr>
@@ -799,7 +803,8 @@ h3.underline {
         	<span>-ダブルサブミット防止JavaScriptの設定詳細は<a href="http://teeda.seasar.org/ja/kumu_disabled.html">こちら</a>を参照ください．</span><br />
         	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
         	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされません．値の引継ぎ機能は無効です．</b></span>
-        	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
+        	<br>
+<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
         </td>
       </tr>
     </tbody>
@@ -841,8 +846,9 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">div</b>要素か<b class="boldorange">tbody</b>要素</span><br/>
-            <span>-<b class="boldorange">idの語尾がItemsで終わっている</b></span><br/>
+            <span>-次の要素のいずれか<br>
+&nbsp;&nbsp;<b class="boldorange">div</b>要素，<b class="boldorange">span</b>要素，<b class="boldorange">table</b>要素，<b class="boldorange">tbody</b>要素，<b class="boldorange">tr</b>要素，<b class="boldorange">ol</b>要素，<b class="boldorange">ul</b>要素，<b class="boldorange">dl</b>要素</span><br/>
+<span>-<b class="boldorange">idの語尾がItemsで終わっている</b></span><br/>
             <span>-<b class="boldorange">id（xxxItems）と同名のListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
         </td>
@@ -853,7 +859,11 @@ h3.underline {
       </tr>
       <tr>
         <td>要素の各属性の使い方</td>
-        <td align="left">特になし</td>
+        <td align="left"><span>-<b class="boldorange">te:omittag</b></span><br/>
+          <span>&nbsp;&nbsp;この属性は、要素の開始タグおよび終了タグの出力を制御する場合に使います．</span><br>
+<span>&nbsp;&nbsp;<b class="boldorange">true</b>を指定するとタグが出力されず，<b class="boldorange">false</b>を指定するとタグが出力されます．</span><br>
+<span>&nbsp;&nbsp;デフォルトでは，<b class="boldorange">div</b>要素または<b class="boldorange">span</b>要素の場合はタグが出力されず，それ以外の要素の場合はタグが出力されます．</span><br/>
+</td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -861,13 +871,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>
-          <span>Teeda 1.0.11以前の場合、<b class="boldorange">値を更新する場合には配列</b>、<b class="boldorange">表示のみの場合はList</b>を使う
-          (Teeda 1.0.12以降は配列でもListでも更新可能)．</span><br/>
-          <span>Teeda 1.0.11以前の場合、forEachのネストは表示の場合のみ可能
-          (Teeda 1.0.12以降はネストしたforEachの更新も可能)．</span><br/>
-          <span><b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
-          <span>ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
+        <td><span>-プロパティが<b class="boldorange">配列</b>の場合は，<b class="boldorange">表示・更新</b>とも可能．</span><br>
+            <span>-プロパティが<b class="boldorange">リスト</b>の場合は，<b class="boldorange">Seasar2.4.18以降+Java5以降</b>との組み合わせで<b class="boldorange">generics</b>を使った場合のみ<b class="boldorange">表示・更新</b>とも可能．それ以外の場合は<b class="boldorange">表示のみ</b>可能．</span><br>
+<span>-<b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
+          <span>-ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
         </td>
       </tr>
     </tbody>
@@ -912,7 +919,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+Saveのid</b>を付ける<br/>
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+Saveのid</b>を付ける</span><br/>
             <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
         </td>
@@ -978,7 +985,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+SessionSaveのid</b>を付ける<br/>
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+SessionSaveのid</b>を付ける</span><br/>
             <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
         </td>
@@ -1148,9 +1155,8 @@ h3.underline {
         <td>その他</td>
         <td>
           <span>href属性に記述したkey=value形式のvalue部分は、以下のように決定する</span><br/>
-          <span>
-          &nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b><br/>
-          &nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b><br/>
+          <span>&nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b></span><br/>
+          <span>&nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b></span><br/>
         </td>
       </tr>
     </tbody>
@@ -1213,11 +1219,10 @@ h3.underline {
         <td>その他</td>
         <td align="left">
           <span>-Conditionは条件にマッチしたときにのみ描画される</span><br/>
-          <span>
-          &nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される<br/>
-          &nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される<br/>
-          &nbsp;&nbsp;Validationエラーになったときは元の状態に復元される<br/>
-            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+          <span>&nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;Validationエラーになったときは元の状態に復元される</span><br/>
+          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -1481,7 +1486,7 @@ h3.underline {
             <span>-<b class="boldorange">includeページに対応するPageクラスのinitialize()が呼ばれる．</b></span><br/>
             <span>-<b class="boldorange">includeページに対応するPageクラスのprerender()が呼ばれる．</b></span><br/>
             <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span><br/>
-            <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -1529,7 +1534,7 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td align="left">
-            <span>-<b class="boldorange">te</b>名前空間を使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te</b>名前空間を使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>

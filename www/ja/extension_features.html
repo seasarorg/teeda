@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
-<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
 <body onload="preload('ja')">
@@ -35,8 +35,10 @@
 <ul class="arabic simple">
 <li><a href="#initialize">初期化(initialize)メソッド</a></li>
 <li><a href="#prerender">描画前(prerender)メソッド</a></li>
+<li><a href="#do">doメソッド</a></li>
 <li><a href="#previousViewId">previousViewId</a></li>
 <li><a href="#postback">ポストバック</a></li>
+<li><a href="#redirect">リダイレクト</a></li>
 <li><a href="#dynamicproperty">DynamicProperty</a></li>
 <li><a href="#newwindow">WindowIdとnewwindowクエリストリング</a></li>
 <li><a href="#layout">レイアウト</a></li>
@@ -44,12 +46,12 @@
 </ul>
 </div>
 
-<div class="section">
 <h3><b><a id="initialize" name="initialize">■初期化(initialize)メソッド</a></b></h3>
-<p>初期化(initialize)メソッドとは、あるPageが初期化されたタイミングで<b><font color="red">1度だけ</font></b>呼び出されるライフサイクルメソッドです．<br />
-Pageクラスに<b>[initialize]</b>というメソッドを定義しておくと初期化されたタイミングでTeedaが呼び出してくれます．<br />
-initializeの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
-戻り値の型の選択はinitializeメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+<p>初期化(initialize)メソッドとは、他のページから遷移されたタイミングで<b><font color="red">1度だけ</font></b>呼び出されるライフサイクルメソッドです．同じページから<a href="#postback">ポストバック</a>された場合には呼び出されません．<br />
+Pageクラスに<b>[initialize]</b>というメソッドを定義しておくと，他のページから遷移されたタイミングでTeedaが呼び出してくれます．<br />
+<code>initialize()</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br>
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，<code><a href="#prerender">prerender()</a></code>メソッドが呼び出されることなく，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は，(もしあれば) 続けてprerender()メソッドが呼び出されます．<br />
+戻り値の型の選択は<code>initialize()</code>メソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
 
 <table border="1">
 <caption><font size="3">[ initializeメソッドの戻り値型一覧 ]</font></caption>
@@ -81,8 +83,9 @@ initializeの戻り値の型としてはClass/String/void型をどれかを選�
 <h3><b><a id="prerender" name="prerender">■描画前(prerender)メソッド</a></b></h3>
 <p>描画前(prerender)メソッドとは、あるPageが描画される直前で<b><font color="red">毎回</font></b>呼び出されるライフサイクルメソッドです．<br />
 Pageクラスに<b>[prerender]</b>というメソッドを定義しておくと描画される直前にTeedaが呼び出してくれます．<br />
-prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶことが出来ます．<br />
-戻り値の型の選択はprerenderメソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+<code>prerender()</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br />
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は自画面が表示されます．<br />
+戻り値の型の選択は<code>prerender()</code>メソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
 
 <table border="1">
 <caption><font size="3">[ prerenderメソッドの戻り値型一覧 ]</font></caption>
@@ -109,8 +112,41 @@ prerenderの戻り値の型としてはClass/String/void型をどれかを選ぶ
 </table>
 <br />
 <br />
-
-
+<h3><a name="do">■doメソッド</a></h3>
+<p>doメソッドとは，あるPageのフォームがサブミットされると呼び出されるライフサイクルメソッドです．<br>
+Pageクラスに<b>[do]</b>で始まるメソッドを定義しておくと，フォームがサブミットされた際にTeedaが呼び出してくれます．<br>
+<code>do</code>メソッドの名前はフォームのsubmitボタンのidと一致させます．<br>
+<code>do</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br />
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は，(もしあれば) 続けて<code><a href="#prerender">prerender()</a></code>メソッドが呼び出されます．</p>
+<table border="1">
+<caption><font size="3">[ doメソッドの戻り値型一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap">
+<div>戻り値の型</div>
+</th>
+		<th nowrap="nowrap">
+<div>説明</div>
+</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+<br>
+<br>
 <h3><b><a id="previousViewId" name="previousViewId">■previousViewId</a></b></h3>
 <p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから遷移してきたかを判別する機能です．<br />
 Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．<br />
@@ -118,7 +154,7 @@ previousViewIdには、/view/hoge/foo.htmlのような形式のHTMLまでのパ�
 
 <pre>
 public class NextPage {
-    <b><font color="red">private String previousViewId;</font></b>
+    <b style="color: red;">private String previousViewId;</b>
 
     public String prerender() {
         System.out.println(previousViewId);
@@ -139,12 +175,12 @@ public class NextPage {
 
 
 <h3><b><a id="postback" name="postback">■ポストバック</a></b></h3>
-<p>postback(ポストバック)とは、ある画面からデータがポストされてきたときに、その送り先が同一のページである事を指します．<br />
+<p>postback(ポストバック)とは、ある画面でフォームがサブミットされたときに、そのPOSTリクエストの送り先が同一のページである事を指します．<br />
 Pageクラスに<b>[postback]</b>というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
 
 <pre>
 public class HogePage {
-    <b><font color="red">private boolean postback;</font></b>
+    <b style="color: red;">private boolean postback;</b>
 
     public boolean isPostback() {
         return postback;
@@ -163,8 +199,48 @@ public class HogePage {
 </pre>
 <br />
 <br />
+<h3><a name="redirect">■リダイレクト</a></h3>
+<p>ポストバックの後，別画面へ遷移する場合はリダイレクトが使われます．これはPRG (Post-Redirect-Get) パターンと呼ばれます．</p>
+<p>リダイレクトする際のURLは，ポストバックされたURLに基づいて同じプロトコル・同じホスト・同じポート番号で組み立てられます (「<a href="extension_customize.html#redirect">リダイレクトについて</a>」も参照してください)．<br>
+異なるプロトコルまたはポート番号でリダイレクト (画面遷移) したい場合は，アノテーションで指定することが出来ます．</p>
+<h4>Tigerアノテーション</h4>
+<pre><b style="color: red;">@Redirect(protocol=ProtocolType.HTTPS)</b>
+public Class doSomething() {
+    ...
+}</pre>
+<h4>定数アノテーション</h4>
+<pre><b style="color: red;">public static final String doSomething_REDIRECT = &quot;protocol=https&quot;;</b>
 
-
+public Class doSomething() {
+    ...
+}</pre>
+<h4>Redirectアノテーションで指定可能な属性</h4>
+<table border="1">
+<col span="1">
+<col span="1" align="center">
+<caption><font size="3">[ Redirectアノテーションの属性一覧 ]</font></caption>
+<tbody>
+<tr>
+<th>属性</th>
+<th>デフォルト</th>
+<th>説明</th>
+</tr>
+<tr>
+<td>protocol</td>
+<td>NA (必須)</td>
+<td>リダイレクトするURLのプロトコルです．<br>
+httpまたはhttpsを指定することが出来ます．</td>
+</tr>
+<tr>
+<td>port</td>
+<td>-1</td>
+<td>リダイレクトするURLのポート番号です．<br>
+-1の場合，リダイレクトURLにポート番号は含まれません．</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
 <h3><b><a id="dynamicproperty" name="dynamicproperty">■DynamicProperty(ダイナミックプロパティ)</a></b></h3>
 <p>DynamicProperty(ダイナミックプロパティ)とは、Pageクラス側で動的にHTMLの属性値を変更できる機能です．<br />
 この機能は、例えば動的にCSSなどを切り替えたりする場合に有効な機能です．</p>
@@ -209,11 +285,11 @@ newwindowクエリストリングです．newwindow=trueのようなクエリス
 Teeda側でwindowIdを新たに採番し、スコープも別管理になります．<br />
 
 通常の場合は、
-
+</p>
 <pre>
 &lt;a id="goAddInput" href="../add/addInput.html" target="_blank"&gt;足し算による入力サンプル(新規Windowが開く)&lt;/a&gt;
 </pre>
-
+<p>
 のようにtargetを_blank指定すると、newwindowクエリストリングは自動的に割り当てられます．<br />
 この機能はFormタグ、Aタグにて使用することができます．
 </p>
@@ -239,7 +315,7 @@ layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込�
 getLayout()の値は動的に変えることもできます．layout.htmlのボディのサンプルは次のようになります．
 <pre>
 &lt;table border="0" cellspacing="5"&gt;
-&lt;tr>
+&lt;tr&gt;
   &lt;td colspan="2"&gt;&lt;te:include te:src="/layout/header.html"/&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
