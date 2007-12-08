@@ -30,6 +30,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.internal.WebAppUtil;
+import javax.faces.internal.WindowIdUtil;
+import javax.faces.internal.scope.PageScope;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -239,8 +241,12 @@ public class FacesPortlet extends GenericPortlet {
 
         String redirectPath = null;
         try {
-            restoreFacesState(facesContext);
-            lifecycle.render(facesContext);
+            WindowIdUtil.setupWindowId(facesContext.getExternalContext());
+            final Map pageScope = PageScope.getOrCreateContext(facesContext);
+            synchronized (pageScope) {
+                restoreFacesState(facesContext);
+                lifecycle.render(facesContext);
+            }
             saveFacesState(facesContext);
         } catch (Throwable e) {
             handleException(facesContext, e);
@@ -427,7 +433,11 @@ public class FacesPortlet extends GenericPortlet {
                 getPortletContext(), request, response, lifecycle);
 
         try {
-            lifecycle.execute(facesContext);
+            WindowIdUtil.setupWindowId(facesContext.getExternalContext());
+            final Map pageScope = PageScope.getOrCreateContext(facesContext);
+            synchronized (pageScope) {
+                lifecycle.execute(facesContext);
+            }
         } catch (Throwable e) {
             handleException(facesContext, e);
         } finally {
