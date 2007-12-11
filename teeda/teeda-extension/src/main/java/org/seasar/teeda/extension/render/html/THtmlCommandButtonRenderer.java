@@ -30,7 +30,9 @@ import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
+import org.seasar.teeda.extension.event.TActionEvent;
 import org.seasar.teeda.extension.util.DoubleSubmitProtectionLoader;
 import org.seasar.teeda.extension.util.KumuDisabledScriptLoader;
 import org.seasar.teeda.extension.util.PathUtil;
@@ -55,6 +57,19 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
         super();
         addIgnoreAttributeName(ExtensionConstants.RENDERJS_ATTR);
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
+    }
+
+    protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {
+        TActionEvent event = new TActionEvent(htmlCommandButton);
+        UIComponent component = htmlCommandButton.getParent();
+        while (component != null) {
+            if (component instanceof TForEach) {
+                TForEach forEach = (TForEach) component;
+                event.addIndex(forEach, forEach.getRowIndex());
+            }
+            component = component.getParent();
+        }
+        htmlCommandButton.queueEvent(event);
     }
 
     public void encodeBefore(FacesContext context, UIComponent component)

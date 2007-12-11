@@ -106,8 +106,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private static final String LEFT_BODY_SOURCE = LEFT_BODY + "Source";
 
-    private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName()
-            + ".GRID_ATTRIBUTE";
+    private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName() +
+            ".GRID_ATTRIBUTE";
 
     private int firstRenderRowCount = 50;
 
@@ -122,11 +122,14 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         gridIgnoreAttribute.addAttributeName("scrollHorizontal");
         gridIgnoreAttribute.addAttributeName("scrollVertical");
         // forEach
-        gridIgnoreAttribute.addAttributeName("indexName");
-        gridIgnoreAttribute.addAttributeName("itemName");
-        gridIgnoreAttribute.addAttributeName("itemsName");
+        gridIgnoreAttribute.addAttributeName("tagName");
         gridIgnoreAttribute.addAttributeName("pageName");
+        gridIgnoreAttribute.addAttributeName("itemsName");
+        gridIgnoreAttribute.addAttributeName("itemName");
+        gridIgnoreAttribute.addAttributeName("indexName");
+        gridIgnoreAttribute.addAttributeName("rowIndex");
         gridIgnoreAttribute.addAttributeName("rowSize");
+        gridIgnoreAttribute.addAttributeName("omittag");
         gridIgnoreAttribute.addAttributeName(ExtensionConstants.ASYNC);
     }
 
@@ -264,12 +267,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         // 横方向にscrollするときは全体の横幅を自動調整する
         if (attribute.getTableWidth() > 0 && htmlGrid.isScrollHorizontal()) {
-            scriptBody.append(" document.getElementById('" + id + RIGHT_HEADER
-                    + "').style.width = '" + attribute.getRightHeaderWidth()
-                    + "px';");
-            scriptBody.append(" document.getElementById('" + id + RIGHT_BODY
-                    + "').style.width = '" + attribute.getRightBodyWidth()
-                    + "px';");
+            scriptBody.append(" document.getElementById('" + id + RIGHT_HEADER +
+                    "').style.width = '" + attribute.getRightHeaderWidth() +
+                    "px';");
+            scriptBody.append(" document.getElementById('" + id + RIGHT_BODY +
+                    "').style.width = '" + attribute.getRightBodyWidth() +
+                    "px';");
         }
         //renderJavaScriptElement(writer, new String(scriptBody));
         renderJavaScriptElementOnBodyEnd(context, htmlGrid, scriptBody
@@ -318,14 +321,14 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         // encodeLeftHeader
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.DIV_ELEM, header);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                    + LEFT_HEADER);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                    LEFT_HEADER);
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     GRID_LEFT_HEADER_CLASS_NAME);
 
             writer.startElement(JsfConstants.TABLE_ELEM, header);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                    + LEFT_HEADER_TABLE);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                    LEFT_HEADER_TABLE);
             renderInnerTableAttributes(writer);
 
             // https://www.seasar.org/issues/browse/TEEDA-176
@@ -350,8 +353,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         // encodeRightHeader
         writer.startElement(JsfConstants.DIV_ELEM, header);
 
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                + RIGHT_HEADER);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                RIGHT_HEADER);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 GRID_RIGHT_HEADER_CLASS_NAME);
         if (htmlGrid.isScrollHorizontal()) {
@@ -360,8 +363,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, header);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                + RIGHT_HEADER_TABLE);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                RIGHT_HEADER_TABLE);
         renderInnerTableAttributes(writer);
         rowContext.resetRow();
         writer.startElement(JsfConstants.THEAD_ELEM, header);
@@ -545,19 +548,19 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         // encodeLeftBody
         if (attribute.hasLeftFixCols()) {
             writer.startElement(JsfConstants.DIV_ELEM, body);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                    + LEFT_BODY);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                    LEFT_BODY);
             RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                     GRID_LEFT_BODY_CLASS_NAME);
             if (htmlGrid.isScrollVertical()) {
                 RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                        "overflow:hidden; height:"
-                                + attribute.getLeftBodyHeight() + "px;");
+                        "overflow:hidden; height:" +
+                                attribute.getLeftBodyHeight() + "px;");
             }
 
             writer.startElement(JsfConstants.TABLE_ELEM, body);
-            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                    + LEFT_BODY_TABLE);
+            RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                    LEFT_BODY_TABLE);
             renderInnerTableAttributes(writer);
 
             writer.startElement(JsfConstants.TBODY_ELEM, body);
@@ -596,19 +599,19 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
         // encodeRightBody
         writer.startElement(JsfConstants.DIV_ELEM, body);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                + RIGHT_BODY);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                RIGHT_BODY);
         RendererUtil.renderAttribute(writer, JsfConstants.CLASS_ATTR,
                 GRID_RIGHT_BODY_CLASS_NAME);
         if (htmlGrid.isScrollHorizontal() && htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow:scroll; height:" + attribute.getRightBodyHeight()
-                            + "px;");
-            String onscroll = "document.getElementById('" + id
-                    + "RightHeader').scrollLeft=this.scrollLeft;";
+                    "overflow:scroll; height:" +
+                            attribute.getRightBodyHeight() + "px;");
+            String onscroll = "document.getElementById('" + id +
+                    "RightHeader').scrollLeft=this.scrollLeft;";
             if (attribute.hasLeftFixCols()) {
-                onscroll = onscroll + " document.getElementById('" + id
-                        + "LeftBody').scrollTop=this.scrollTop;";
+                onscroll = onscroll + " document.getElementById('" + id +
+                        "LeftBody').scrollTop=this.scrollTop;";
             }
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
                     onscroll);
@@ -616,22 +619,23 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                     "overflow-x:scroll;");
             RendererUtil.renderAttribute(writer, JsfConstants.ONSCROLL_ATTR,
-                    "document.getElementById('" + id
-                            + "RightHeader').scrollLeft=this.scrollLeft;");
+                    "document.getElementById('" + id +
+                            "RightHeader').scrollLeft=this.scrollLeft;");
         } else if (htmlGrid.isScrollVertical()) {
             RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
-                    "overflow-y:scroll; height:"
-                            + attribute.getRightBodyHeight() + "px;");
+                    "overflow-y:scroll; height:" +
+                            attribute.getRightBodyHeight() + "px;");
             if (attribute.hasLeftFixCols()) {
                 RendererUtil.renderAttribute(writer,
-                        JsfConstants.ONSCROLL_ATTR, "document.getElementById('"
-                                + id + "LeftBody').scrollTop=this.scrollTop;");
+                        JsfConstants.ONSCROLL_ATTR,
+                        "document.getElementById('" + id +
+                                "LeftBody').scrollTop=this.scrollTop;");
             }
         }
 
         writer.startElement(JsfConstants.TABLE_ELEM, body);
-        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                + RIGHT_BODY_TABLE);
+        RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                RIGHT_BODY_TABLE);
         renderInnerTableAttributes(writer);
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
@@ -809,8 +813,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         final String styleClass = col.getStyleClass();
                         if (StringUtil.contains(styleClass,
                                 LEFT_FIXED_CLASS_NAME)) {
-                            attribute.setLeftFixCols(span
-                                    + attribute.getLeftFixCols());
+                            attribute.setLeftFixCols(span +
+                                    attribute.getLeftFixCols());
                         }
                         final String widthStr = col.getWidth();
                         if (widthStr == null) {
@@ -820,8 +824,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             if (StringUtil.contains(styleClass,
                                     LEFT_FIXED_CLASS_NAME)) {
                                 // TODO check
-                                attribute.setLeftWidth(width * span
-                                        + attribute.getLeftWidth());
+                                attribute.setLeftWidth(width * span +
+                                        attribute.getLeftWidth());
                             }
                             for (int i = 0; i < span; i++) {
                                 columnNo++;
@@ -849,8 +853,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         final THtmlGridTr tr = (THtmlGridTr) headerChild;
                         final String height = tr.getHeight();
                         if (height != null) {
-                            attribute.setHeaderHeight(toDigit(height)
-                                    + attribute.getHeaderHeight());
+                            attribute.setHeaderHeight(toDigit(height) +
+                                    attribute.getHeaderHeight());
                         }
                     }
                 }
@@ -1076,8 +1080,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             rowContext = row;
                         }
                         htmlGrid.leaveRow(context, body);
-                        if (i != 0 && (items.length % (i + 1) == 0)
-                                && htmlGrid.isAsync()) {
+                        if (i != 0 && (items.length % (i + 1) == 0) &&
+                                htmlGrid.isAsync()) {
                             String str = writer.toString();
                             scriptCallList.add(str);
                             writer = createNewResponseWriter();
@@ -1094,10 +1098,10 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             String s = (String) scriptCallList.get(i);
                             String token = gridHelper.addTable(s);
                             if (i == 0) {
-                                script.append("ajaxGetTable('" + id
-                                        + LEFT_BODY_TABLE + "', " + token
-                                        + ", " + (renderRowLength + 1) + ", "
-                                        + renderRowLength + ");");
+                                script.append("ajaxGetTable('" + id +
+                                        LEFT_BODY_TABLE + "', " + token + ", " +
+                                        (renderRowLength + 1) + ", " +
+                                        renderRowLength + ");");
                                 script.append(JsfConstants.LINE_SP);
                             }
                         }
@@ -1117,8 +1121,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                     : (HtmlResponseWriter) context.getResponseWriter();
             try {
                 writer.startElement(JsfConstants.TABLE_ELEM, body);
-                RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id
-                        + RIGHT_BODY_SOURCE);
+                RendererUtil.renderAttribute(writer, JsfConstants.ID_ATTR, id +
+                        RIGHT_BODY_SOURCE);
                 RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR,
                         "display:none;");
                 writer.startElement(JsfConstants.TBODY_ELEM, body);
@@ -1141,8 +1145,8 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         }
                     }
                     htmlGrid.leaveRow(context, body);
-                    if (i != 0 && (items.length % (i + 1) == 0)
-                            && htmlGrid.isAsync()) {
+                    if (i != 0 && (items.length % (i + 1) == 0) &&
+                            htmlGrid.isAsync()) {
                         String str = writer.toString();
                         scriptCallList.add(str);
                         writer = createNewResponseWriter();
@@ -1159,10 +1163,10 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         String s = (String) scriptCallList.get(i);
                         String token = gridHelper.addTable(s);
                         if (i == 0) {
-                            script.append("ajaxGetTable('" + id
-                                    + RIGHT_BODY_TABLE + "', " + token + ", "
-                                    + (renderRowLength + 1) + ", "
-                                    + renderRowLength + ");");
+                            script.append("ajaxGetTable('" + id +
+                                    RIGHT_BODY_TABLE + "', " + token + ", " +
+                                    (renderRowLength + 1) + ", " +
+                                    renderRowLength + ");");
                             script.append(JsfConstants.LINE_SP);
                         }
                     }
@@ -1215,25 +1219,25 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                     .lastIndexOf("("));
             StringBuffer buf = new StringBuffer(255);
             buf
-                    .append("function ajaxGetTable(destId, token, firstNum, range) {\n"
-                            + "var _token = token;\n"
-                            + "var f = function teedaGridHelper_ajaxGetTable(table) {\n"
-                            + "  if(table == 'null' || !table || table == ''){\n"
-                            + "    return;\n"
-                            + "  }\n"
-                            + "  var dummy = document.createElement('div');\n"
-                            + "  dummy.innerHTML = '<table><tbody>' + table + '</tbody></table>';\n"
-                            + "  var dest = document.getElementById(destId);\n"
-                            + "  var o = dummy.getElementsByTagName('tbody')[0];\n"
-                            + "  var lastNum = firstNum + range;\n"
-                            + callbackPrefix
-                            + "( destId, firstNum, lastNum, o);\n"
-                            + "  dest.appendChild(o);\n"
-                            + "  _token = _token + 1;\n"
-                            + "  firstNum = lastNum;\n"
-                            + "  ajaxGetTable(destId, _token, firstNum, range);\n"
-                            + "};\n"
-                            + "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
+                    .append("function ajaxGetTable(destId, token, firstNum, range) {\n" +
+                            "var _token = token;\n" +
+                            "var f = function teedaGridHelper_ajaxGetTable(table) {\n" +
+                            "  if(table == 'null' || !table || table == ''){\n" +
+                            "    return;\n" +
+                            "  }\n" +
+                            "  var dummy = document.createElement('div');\n" +
+                            "  dummy.innerHTML = '<table><tbody>' + table + '</tbody></table>';\n" +
+                            "  var dest = document.getElementById(destId);\n" +
+                            "  var o = dummy.getElementsByTagName('tbody')[0];\n" +
+                            "  var lastNum = firstNum + range;\n" +
+                            callbackPrefix +
+                            "( destId, firstNum, lastNum, o);\n" +
+                            "  dest.appendChild(o);\n" +
+                            "  _token = _token + 1;\n" +
+                            "  firstNum = lastNum;\n" +
+                            "  ajaxGetTable(destId, _token, firstNum, range);\n" +
+                            "};\n" +
+                            "Kumu.Ajax.executeTeedaAjax(f, [token], Kumu.Ajax.RESPONSE_TYPE_HTML);}");
             buf.append(JsfConstants.LINE_SP);
             return buf;
         }

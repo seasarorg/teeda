@@ -183,7 +183,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         this.omittag = new Boolean(omittag);
     }
 
-    private int getRowIndex() {
+    public int getRowIndex() {
         return rowIndex;
     }
 
@@ -489,6 +489,13 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     public void leaveRow(final FacesContext context, final UIComponent base) {
         componentStates.saveDescendantComponentStates(context, base);
         setRowIndex(INITIAL_ROW_INDEX);
+    }
+
+    public void bindRowIndex(final FacesContext context, final Integer rowIndex) {
+        final Object page = getPage(context);
+        final Class pageClass = page.getClass();
+        final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
+        setValue(beanDesc, page, getIndexName(), rowIndex);
     }
 
     public Object getPage(final FacesContext context) {

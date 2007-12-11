@@ -52,6 +52,7 @@ public class TForEachRenderer extends AbstractRenderer {
         attribute.addAttributeName("itemsName");
         attribute.addAttributeName("itemName");
         attribute.addAttributeName("indexName");
+        attribute.addAttributeName("rowIndex");
         attribute.addAttributeName("rowSize");
         attribute.addAttributeName("omittag");
     }

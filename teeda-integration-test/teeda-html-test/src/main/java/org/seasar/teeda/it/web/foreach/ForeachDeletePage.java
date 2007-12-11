@@ -1,4 +1,4 @@
-package examples.teeda.web.foreach;
+package org.seasar.teeda.it.web.foreach;
 
 import java.io.Serializable;
 import java.util.ArrayList;

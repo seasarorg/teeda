@@ -116,10 +116,13 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             if (JsfConstants.RESET_VALUE.equalsIgnoreCase(htmlCommandButton
                     .getType())) {
             } else {
-                htmlCommandButton
-                        .queueEvent(new ActionEvent(htmlCommandButton));
+                enqueueEvent(htmlCommandButton);
             }
         }
+    }
+
+    protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {
+        htmlCommandButton.queueEvent(new ActionEvent(htmlCommandButton));
     }
 
     protected void addIgnoreAttributeName(final String attr) {

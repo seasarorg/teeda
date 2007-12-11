@@ -442,4 +442,112 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
+	public void testForeachDelete() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachDelete.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "333", "delete" }, { "444", "delete" },
+				{ "555", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:2:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "444", "delete" }, { "555", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:3:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "444", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:0:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "222", "delete" },
+				{ "444", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:1:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "222", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:0:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[0][];
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
+	public void testForeachNestButton_TEEDA417() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachNestButton.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] tableExpected = new String[][] {
+				{ "0:0", "0:1", "0:2", "0:3" }, { "1:0", "1:1", "1:2", "1:3" },
+				{ "2:0", "2:1", "2:2", "2:3" }, };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("form:aaaItemsItems:0:aaaItems:0:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("selectedIndex", "0:0");
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("form:aaaItemsItems:1:aaaItems:0:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("selectedIndex", "1:0");
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("form:aaaItemsItems:0:aaaItems:1:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("selectedIndex", "0:1");
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("form:aaaItemsItems:1:aaaItems:1:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("selectedIndex", "1:1");
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("form:aaaItemsItems:2:aaaItems:3:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("selectedIndex", "2:3");
+	}
+
 }
