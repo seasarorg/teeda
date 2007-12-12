@@ -332,7 +332,7 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
-	public void testForeachDto_TEEDA395() throws Exception {
+	public void testForeachDto_noItemsSave_TEEDA395() throws Exception {
 		// ## Arrange ##
 		TeedaWebTester tester = new TeedaWebTester();
 
@@ -352,6 +352,25 @@ public class ForeachTest extends TeedaWebTestCase {
 		final String[][] tableExpected = new String[][] {
 				{ "a1", "b1x", "c1x" }, { "a2", "b2x", "c2x" },
 				{ "a3", "b3x", "c3x" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
+	public void testForeachDto_noItemsSaveList() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/noItemsSaveList.html");
+		tester.dumpHtml();
+		String[][] tableExpected = new String[][] { { "a1", "b1", "c1" },
+				{ "a2", "b2", "c2" }, { "a3", "b3", "c3" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+		tester.submitById("doTest");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		tableExpected = new String[][] { { "a2", "b2", "c2" },
+				{ "a3", "b3", "c3" } };
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 
@@ -448,6 +467,64 @@ public class ForeachTest extends TeedaWebTestCase {
 
 		// ## Act ##
 		tester.beginAt(getBaseUrl(), "view/foreach/foreachDelete.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "333", "delete" }, { "444", "delete" },
+				{ "555", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:2:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "444", "delete" }, { "555", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:3:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "111", "delete" },
+				{ "222", "delete" }, { "444", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:0:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "222", "delete" },
+				{ "444", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:1:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[][] { { "222", "delete" } };
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+
+		// ## Act ##
+		// ## Assert ##
+		tester.submitByName("foreachDeleteForm:aaaItems:0:doDelete");
+		tester.dumpHtml();
+
+		tableExpected = new String[0][];
+		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
+	public void testForeachDeleteList() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachDeleteList.html");
 		tester.dumpHtml();
 
 		// ## Assert ##
