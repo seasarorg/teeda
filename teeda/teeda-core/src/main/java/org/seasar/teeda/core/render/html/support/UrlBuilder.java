@@ -27,6 +27,8 @@ public class UrlBuilder {
 
     private String base;
 
+    private String parameterDelimiter = "&";
+
     private final Map urlParameters = new LinkedHashMap() {
 
         private static final long serialVersionUID = 1L;
@@ -45,6 +47,10 @@ public class UrlBuilder {
 
     public void setBase(final String base) {
         this.base = base;
+    }
+
+    public void setParameterDelimiter(String delimiter) {
+        this.parameterDelimiter = delimiter;
     }
 
     public String build() {
@@ -82,7 +88,7 @@ public class UrlBuilder {
             for (int i = 0; i < values.length; i++) {
                 final String value = values[i];
                 if (questionAppeared) {
-                    sb.append('&');
+                    sb.append(parameterDelimiter);
                 } else {
                     sb.append('?');
                     questionAppeared = true;

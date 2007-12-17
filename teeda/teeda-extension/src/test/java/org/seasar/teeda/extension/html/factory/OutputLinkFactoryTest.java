@@ -83,4 +83,30 @@ public class OutputLinkFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("aaa", paramProcessor.getProperty("name"));
         assertEquals("#{fooPage.aaa}", paramProcessor.getProperty("value"));
     }
+
+    public void testCreateFactory2() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "goHoge");
+        properties.put("href", "hoge.html?aaa=111&amp;bbb=222&amp;fixed_ccc=1");
+        ElementNode elementNode = createElementNode("a", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(TOutputLinkTag.class, processor.getTagClass());
+        assertEquals("hoge.html?bbb=222&ccc=1", processor.getProperty("value"));
+        assertEquals(1, processor.getChildSize());
+
+        ElementProcessor paramProcessor = (ElementProcessor) processor
+                .getChild(0);
+        assertEquals(ParamTag.class, paramProcessor.getTagClass());
+        assertEquals("aaa", paramProcessor.getProperty("name"));
+        assertEquals("#{fooPage.aaa}", paramProcessor.getProperty("value"));
+    }
+
 }

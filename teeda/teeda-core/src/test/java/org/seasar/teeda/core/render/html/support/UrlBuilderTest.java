@@ -49,6 +49,23 @@ public class UrlBuilderTest extends TestCase {
         assertEquals(actual, true, urlDiff.isIdentical());
     }
 
+    public void testBuildWithParamsSpecifyDelim() throws Exception {
+        // ## Arrange ##
+        UrlBuilder urlBuilder = new UrlBuilder();
+        urlBuilder.setBase("a");
+        urlBuilder.setParameterDelimiter("&amp;");
+
+        // ## Act ##
+        urlBuilder.add("1", "2");
+        urlBuilder.add("3", "4");
+        final String actual = urlBuilder.build();
+        System.out.println(actual);
+
+        // ## Assert ##
+        UrlDiff urlDiff = new UrlDiff("a?1=2&amp;3=4", actual);
+        assertEquals(actual, true, urlDiff.isIdentical());
+    }
+
     public void testBuildWithQueryString() throws Exception {
         // ## Arrange ##
         UrlBuilder urlBuilder = new UrlBuilder();

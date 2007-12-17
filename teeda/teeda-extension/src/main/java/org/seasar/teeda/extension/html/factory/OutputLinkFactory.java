@@ -55,8 +55,8 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         // PortletSupport
         //TODO facesContext?
         if (PortletUtil.isPortlet(FacesContext.getCurrentInstance())) {
-            return id.startsWith(ExtensionConstants.GO_PREFIX)
-                    || id.startsWith(ExtensionConstants.JUMP_PREFIX);
+            return id.startsWith(ExtensionConstants.GO_PREFIX) ||
+                    id.startsWith(ExtensionConstants.JUMP_PREFIX);
         }
         return id.startsWith(ExtensionConstants.GO_PREFIX);
     }
@@ -89,6 +89,9 @@ public class OutputLinkFactory extends AbstractElementProcessorFactory {
         String[] entries = StringUtil.split(queryString, "&");
         for (int i = 0; i < entries.length; ++i) {
             String entry = entries[i];
+            if (entry.startsWith("amp;")) {
+                entry = entry.substring(4);
+            }
             if (entry.startsWith(FIXED_PREFIX)) {
                 buf.append(entry.substring(FIXED_PREFIX.length())).append("&");
             } else {

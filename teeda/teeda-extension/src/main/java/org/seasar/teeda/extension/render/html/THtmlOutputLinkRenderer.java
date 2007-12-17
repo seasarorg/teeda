@@ -68,8 +68,8 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                 htmlOutputLink);
         // PortletSupport
         if (PortletUtil.isPortlet(context)) {
-            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX)
-                    || htmlOutputLink.getId().startsWith(
+            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX) ||
+                    htmlOutputLink.getId().startsWith(
                             ExtensionConstants.JUMP_PREFIX)) {
                 PortletUrlBuilder urlBuilder = new PortletUrlBuilder();
                 urlBuilder.setBase(base);
@@ -92,6 +92,7 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
             UrlBuilder urlBuilder = new UrlBuilder();
             final String sufiixedBase = getSuffixedBase(context, base);
             urlBuilder.setBase(sufiixedBase);
+            urlBuilder.setParameterDelimiter("&amp;");
             for (Iterator it = htmlOutputLink.getChildren().iterator(); it
                     .hasNext();) {
                 UIComponent child = (UIComponent) it.next();
