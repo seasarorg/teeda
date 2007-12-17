@@ -100,7 +100,7 @@ public class PagePersistenceUtilTest extends TestCase {
 
         assertTrue(PagePersistenceUtil.isPersistenceType(TreeMap.class));
 
-        assertTrue(PagePersistenceUtil.isPersistenceType(Map.class));
+        assertFalse(PagePersistenceUtil.isPersistenceType(Map.class));
 
         assertTrue(PagePersistenceUtil.isPersistenceType(List.class));
 

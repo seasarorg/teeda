@@ -19,7 +19,6 @@ import java.io.Externalizable;
 import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
-import java.util.Map;
 
 import org.seasar.framework.beans.PropertyDesc;
 
@@ -55,9 +54,6 @@ public class PagePersistenceUtil {
             return isPersistenceType(componentType);
         }
         if (Collection.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        if (Map.class.isAssignableFrom(clazz)) {
             return true;
         }
         return false;
