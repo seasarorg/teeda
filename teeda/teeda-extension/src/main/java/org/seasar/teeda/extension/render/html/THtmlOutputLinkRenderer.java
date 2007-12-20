@@ -73,6 +73,7 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                             ExtensionConstants.JUMP_PREFIX)) {
                 PortletUrlBuilder urlBuilder = new PortletUrlBuilder();
                 urlBuilder.setBase(base);
+                urlBuilder.setParameterDelimiter("&amp;");
                 for (Iterator it = htmlOutputLink.getChildren().iterator(); it
                         .hasNext();) {
                     UIComponent child = (UIComponent) it.next();
