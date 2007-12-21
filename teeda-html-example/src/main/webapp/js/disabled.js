@@ -35,6 +35,8 @@ Kumu.extend(Kumu.Html.Disabled, {
   time : 1000,
 
   anchor : false,
+  
+  button : false,
 
   submitMessage : false,
 
@@ -68,12 +70,12 @@ Kumu.extend(Kumu.Html.Disabled, {
     }
   },
 
-  disableAnchor : function(){
+  disableAction : function(){
     document.body.onclick = function(e){
       var element = e.target || e.srcElement;
       if(element){
         if(this.anchor && element.id){
-          for(var i = 0; i < this.anchor.length; i++){
+          for(var i = 0, len = this.anchor.length; i < len; i++){
             if(element.id == this.anchor[i]){
               return;
             }
@@ -83,10 +85,20 @@ Kumu.extend(Kumu.Html.Disabled, {
         if(name == 'A'){
 			return this.disable(e, element, this.anchorMessage);
         }
+        if(this.button && element.id){
+          for(var i = 0, len = this.button.length; i < len; i++){
+            if(element.id == this.button[i]){
+              var name = element.getAttribute('type').toUpperCase();
+              if(name == 'SUBMIT' || name == 'BUTTON'){
+		    	return this.disable(e, element, this.submitMessage);
+              }
+            }
+          }
+        }
       }
     }.bindScopeAsEventListener(this);
   },
-
+  
   disableForms: function(forms) {
     Kumu.map(function(f){
       if(f.onsubmit){
@@ -113,22 +125,28 @@ Kumu.extend(Kumu.Html.Disabled, {
       if(DisabledConf.anchorMessage){
         this.anchorMessage = DisabledConf.anchorMessage;
       }
-      if(DisabledConf.excludeForm){
-        var ids  = DisabledConf.excludeForm;
-        forms = Kumu.filter(function(f){
-          if(f.id){
-            for(var i = 0; i < ids.length; i++){
-              if(f.id == ids[i]){
-                return false;
+      if(DisabledConf.includeButton){
+        this.button = DisabledConf.includeButton;
+      }else{
+        if(DisabledConf.excludeForm){
+          var ids  = DisabledConf.excludeForm;
+          forms = Kumu.filter(function(f){
+            if(f.id){
+              for(var i = 0; i < ids.length; i++){
+                if(f.id == ids[i]){
+                  return false;
+                }
               }
             }
-          }
-          return true;
-        }, forms);
+            return true;
+          }, forms);
+        }
       }
     }
-    this.disableForms(forms);
-    this.disableAnchor();
+    this.disableAction();
+    if(!DisabledConf.includeButton){
+      this.disableForms(forms);
+    }
   }
 });
 Kumu.Event.addOnLoadEvent(Kumu.Html.Disabled.loadDisabled.bindScope(Kumu.Html.Disabled));
