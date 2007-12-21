@@ -133,6 +133,17 @@ public abstract class VirtualResource {
         }
     }
 
+    public static void addInlineJsResource(FacesContext context, String key,
+            JavaScriptProvider provider) {
+        AssertionUtil.assertNotNull("context", context);
+        AssertionUtil.assertNotNull("path", key);
+        AssertionUtil.assertNotNull("script", provider);
+        Map resources = getInlineJsResources(context);
+        if (!resources.containsKey(key)) {
+            resources.put(key, provider);
+        }
+    }
+
     public static void addInlineCssResource(FacesContext context, String key,
             String style) {
         AssertionUtil.assertNotNull("context", context);
@@ -145,8 +156,8 @@ public abstract class VirtualResource {
     }
 
     public static String convertVirtualPath(FacesContext context, String path) {
-        return context.getExternalContext().getRequestContextPath()
-                + VIRTUAL_PATH + path;
+        return context.getExternalContext().getRequestContextPath() +
+                VIRTUAL_PATH + path;
     }
 
     public static boolean isVirtualPath(HttpServletRequest request) {

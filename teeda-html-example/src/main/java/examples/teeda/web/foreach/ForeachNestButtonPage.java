@@ -75,11 +75,11 @@ public class ForeachNestButtonPage {
 		}
 	}
 
-	public String getDoActionValue() {
+	public String getDoOnceActionValue() {
 		return aaa;
 	}
 
-	public void doAction() {
+	public void doOnceAction() {
 		selectedIndex = "" + aaaItemsIndex + ":" + aaaIndex;
 	}
 

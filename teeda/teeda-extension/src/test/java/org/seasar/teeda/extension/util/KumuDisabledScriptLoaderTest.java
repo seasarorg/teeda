@@ -20,7 +20,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
+import org.seasar.teeda.extension.util.KumuDisabledScriptLoader.JavaScriptProviderImpl;
 
 /**
  * @author shot
@@ -28,9 +30,20 @@ import org.seasar.teeda.extension.component.html.THtmlCommandButton;
 public class KumuDisabledScriptLoaderTest extends TeedaTestCase {
 
     public void test1() throws Exception {
-        KumuDisabledScriptLoader loader = new KumuDisabledScriptLoader();
+        TForEach forEach1 = new TForEach();
+        forEach1.setId("fooItemsItems");
+
+        TForEach forEach2 = new TForEach();
+        forEach2.setId("fooItems");
+        forEach2.setParent(forEach1);
+        forEach1.getChildren().add(forEach2);
+
         THtmlCommandButton button = new THtmlCommandButton();
         button.setId("doOnceAaa");
+        button.setParent(forEach2);
+        forEach2.getChildren().add(button);
+
+        KumuDisabledScriptLoader loader = new KumuDisabledScriptLoader();
         loader.loadScript(getFacesContext(), button);
         Set r = VirtualResource.getJsResources(getFacesContext());
         assertNotNull(r);
@@ -41,11 +54,19 @@ public class KumuDisabledScriptLoaderTest extends TeedaTestCase {
 
         Map r2 = VirtualResource.getInlineJsResources(getFacesContext());
         assertNotNull(r2);
+        assertEquals(1, r2.size());
         String key = (String) r2.keySet().iterator().next();
-        String value = (String) r2.get(key);
-        assertEquals(button.getClass().getName() + "." + button.getId(), key);
+        assertEquals(KumuDisabledScriptLoader.class.getName(), key);
+
+        JavaScriptProviderImpl value = (JavaScriptProviderImpl) r2.get(key);
         assertTrue(value != null);
-        assertTrue(value.indexOf("time : 50000") > 0);
-        assertTrue(value.indexOf("submitMessage") > 0);
+        assertEquals(1, value.buttons.size());
+        assertEquals("doOnceAaa", value.buttons.get(0));
+
+        String script = value.getScript();
+        assertTrue(script.indexOf("time : 50000") > 0);
+        assertTrue(script.indexOf("submitMessage") > 0);
+        System.out.println(script);
     }
+
 }

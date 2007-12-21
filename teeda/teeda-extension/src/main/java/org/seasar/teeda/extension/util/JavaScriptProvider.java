@@ -9,27 +9,17 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.doublesubmit;
-
-import org.seasar.teeda.extension.annotation.validator.Required;
+package org.seasar.teeda.extension.util;
 
 /**
  * @author koichik
  */
-public class InputPage {
+public interface JavaScriptProvider {
 
-	@Required
-	public String text;
-
-	public Class<?> doOnceConfirm() {
-		return ConfirmPage.class;
-	}
-
-	public void doDummy() {
-	}
+    String getScript();
 
 }
