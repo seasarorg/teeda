@@ -17,7 +17,7 @@
     <module>teeda-ajax</module>
   </modules>
   <properties>
-    <seasar2.version>2.4.17</seasar2.version>
+    <seasar2.version>2.4.19</seasar2.version>
   </properties>
 
   <!-- More Project Information -->
