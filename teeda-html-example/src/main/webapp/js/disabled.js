@@ -87,7 +87,7 @@ Kumu.extend(Kumu.Html.Disabled, {
         }
         if(this.button && element.id){
           for(var i = 0, len = this.button.length; i < len; i++){
-            if(element.id == this.button[i]){
+            if(element.id == this.button[i] || 0 < element.id.indexOf(":" + this.button[i])){
               var name = element.getAttribute('type').toUpperCase();
               if(name == 'SUBMIT' || name == 'BUTTON' || name == 'IMAGE'){
 		    	return this.disable(e, element, this.submitMessage);
