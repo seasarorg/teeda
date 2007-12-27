@@ -16,8 +16,10 @@
 package org.seasar.teeda.extension.component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
@@ -53,7 +55,7 @@ public class TCondition extends UIComponentBase {
 
     private Boolean omittag;
 
-    private boolean encoded;
+    private Set encodedClientId = new HashSet();
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
@@ -61,19 +63,21 @@ public class TCondition extends UIComponentBase {
 
     public boolean isRendered() {
         final PhaseId phaseId = PhaseUtil.getCurrentPhase();
-        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE) &&
-                !encoded) {
-            encoded = true;
+        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)) {
             final FacesContext context = FacesContext.getCurrentInstance();
-            final boolean noError = !FacesMessageUtil
-                    .hasErrorOrFatalMessage(context);
-            final boolean isRefresh = (refresh != null) ? refresh
-                    .booleanValue() : false;
-            if (noError || isRefresh) {
-                clearEncodedCondition();
-                final boolean b = super.isRendered();
-                saveEncodedCondition(b);
-                return b;
+            final String clientId = getClientId(context);
+            if (!encodedClientId.contains(clientId)) {
+                encodedClientId.add(clientId);
+                final boolean noError = !FacesMessageUtil
+                        .hasErrorOrFatalMessage(context);
+                final boolean isRefresh = (refresh != null) ? refresh
+                        .booleanValue() : false;
+                if (noError || isRefresh) {
+                    clearEncodedCondition();
+                    final boolean b = super.isRendered();
+                    saveEncodedCondition(b);
+                    return b;
+                }
             }
         }
         final Boolean condition = getEncodedCondition();
