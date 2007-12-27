@@ -1,139 +1,135 @@
-/*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- */
 package examples.teeda.web.foreach;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.dao.pager.DefaultPagerCondition;
+import org.seasar.dao.pager.PagerUtil;
+import org.seasar.teeda.extension.annotation.scope.PageScope;
+
 public class ForeachInputPage {
 
-    private FooDto[] fooItems;
+	private static final int ROWLIMIT = 5;
+	private static final int RECOARDS = 50;
 
-    public String doNothing() {
-        return null;
-    }
+	@PageScope
+	public List<Foo> targetItems;
 
-    public String initialize() {
-        List l = new ArrayList();
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(1));
-            f.setAaa("aa1");
-            f.setBbb("bb1");
-            l.add(f);
-        }
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(2));
-            f.setAaa("aa2");
-            f.setBbb("bb2");
-            l.add(f);
-        }
-        {
-            FooDto f = new FooDto();
-            f.setFooNo(new Integer(3));
-            f.setAaa("aa3");
-            f.setBbb("bb3");
-            l.add(f);
-        }
-        fooItems = new FooDto[3];
-        l.toArray(fooItems);
+	private String aaa;
+	private List<Foo> fooItems;
+	public int find_count;
+	public int current_page;
+	public int total_page;
 
-        return null;
-    }
+	public Class initialize() {
+		if (targetItems == null) {
+			int count = RECOARDS;
+			targetItems = new ArrayList<Foo>();
+			for (int i = 1; i <= count; i++) {
+				Foo item = new Foo();
+				item.setAaa("a" + String.valueOf(i));
+				targetItems.add(item);
+			}
+		}
+		current_page = 1;
+		return null;
+	}
 
-    public String prerender() {
-        return null;
-    }
+	public Class prerender() {
+		find_count = targetItems.size();
+		current_page = find_count == 0 ? 0 : current_page;
+		current_page = current_page <= 0 ? 1 : current_page;
+		current_page = current_page > getTotal_page() ? getTotal_page()
+				: current_page;
 
-    //    public Foo getFoo() {
-    //        return foo;
-    //    }
-    //
-    //    public void setFoo(Foo foo) {
-    //        this.foo = foo;
-    //    }
+		DefaultPagerCondition condition = new DefaultPagerCondition();
+		condition.setLimit(ROWLIMIT);
+		condition.setOffset((current_page - 1) * ROWLIMIT);
+		fooItems = PagerUtil.filter(targetItems, condition);
 
-    public FooDto[] getFooItems() {
-        return fooItems;
-    }
+		System.out.println("current_page:" + current_page);
+		for (int i = 0; i < fooItems.size(); i++) {
+			Foo array_element = fooItems.get(i);
+			System.out.println(array_element);
+		}
+		return null;
+	}
 
-    public void setFooItems(FooDto[] fooItems) {
-        this.fooItems = fooItems;
-    }
+	public String doPageFirst() {
+		current_page = 1;
+		return null;
+	}
 
-    private Integer fooNo;
-    private String aaa;
-    private String bbb;
+	public String doPagePrv() {
+		current_page = current_page > 1 ? current_page - 1 : 1;
+		return null;
+	}
 
-    public Integer getFooNo() {
-        return fooNo;
-    }
+	public String doPageMove() {
+		return null;
+	}
 
-    public void setFooNo(Integer no) {
-        this.fooNo = no;
-    }
+	public String doPageNext() {
+		current_page = current_page >= getTotal_page() - 1 ? getTotal_page()
+				: current_page + 1;
+		return null;
+	}
 
-    public String getAaa() {
-        return aaa;
-    }
+	public String doPageFinal() {
+		current_page = getTotal_page();
+		return null;
+	}
 
-    public void setAaa(String aaa) {
-        this.aaa = aaa;
-    }
+	public int getTotal_page() {
+		int result = 0;
+		result = find_count == 0 ? 0 : (int) (find_count / ROWLIMIT)
+				+ ((find_count % ROWLIMIT) == 0 ? 0 : 1);
+		return result;
+	}
 
-    public String getBbb() {
-        return bbb;
-    }
+	public String doTest() {
+		System.out.println("=== 入力値 ===");
+		for (int i = 0; i < fooItems.size(); i++) {
+			Foo array_element = fooItems.get(i);
+			System.out.println(array_element);
+		}
+		return null;
+	}
 
-    public void setBbb(String bbb) {
-        this.bbb = bbb;
-    }
+	public static class Foo implements Serializable {
 
-    public static class FooDto implements Serializable {
+		private static final long serialVersionUID = 1L;
 
-        private static final long serialVersionUID = 1L;
-        private Integer fooNo;
-        private String aaa;
-        private String bbb;
+		private String aaa;
 
-        public Integer getFooNo() {
-            return fooNo;
-        }
+		public String getAaa() {
+			return aaa;
+		}
 
-        public void setFooNo(Integer no) {
-            this.fooNo = no;
-        }
+		public void setAaa(String aaa) {
+			this.aaa = aaa;
+		}
 
-        public String getAaa() {
-            return aaa;
-        }
+		public String toString() {
+			return "[" + aaa + "]";
+		}
+	}
 
-        public void setAaa(String aaa) {
-            this.aaa = aaa;
-        }
+	public String getAaa() {
+		return aaa;
+	}
 
-        public String getBbb() {
-            return bbb;
-        }
+	public void setAaa(String aaa) {
+		this.aaa = aaa;
+	}
 
-        public void setBbb(String bbb) {
-            this.bbb = bbb;
-        }
+	public List<Foo> getFooItems() {
+		return fooItems;
+	}
 
-    }
+	public void setFooItems(List<Foo> fooItems) {
+		this.fooItems = fooItems;
+	}
+
 }

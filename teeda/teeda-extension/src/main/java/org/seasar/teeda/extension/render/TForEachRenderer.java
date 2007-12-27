@@ -127,6 +127,7 @@ public class TForEachRenderer extends AbstractRenderer {
          */
         for (int i = 0; i < rowSize; ++i) {
             forEach.enterRow(context, i, forEach);
+            forEach.bindRowIndex(context, new Integer(i));
             if (i < items.length) {
                 forEach.processItem(pageBeanDesc, page, items[i], i);
             }
@@ -150,6 +151,7 @@ public class TForEachRenderer extends AbstractRenderer {
         forEach.setRowSize(rowSize);
         for (int i = 0; i < rowSize; i++) {
             forEach.enterRow(context, i, base);
+            forEach.bindRowIndex(context, new Integer(i));
             decodeChildren(context, base);
             forEach.leaveRow(context, base);
         }

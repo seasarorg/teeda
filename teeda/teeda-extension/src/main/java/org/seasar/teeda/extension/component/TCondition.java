@@ -15,7 +15,6 @@
  */
 package org.seasar.teeda.extension.component;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,7 +27,6 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.PhaseUtil;
-import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
@@ -37,7 +35,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 /**
  * @author shot
  */
-public class TCondition extends UIComponentBase implements RenderPreparable {
+public class TCondition extends UIComponentBase {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Condition";
 
@@ -55,25 +53,30 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
 
     private Boolean omittag;
 
+    private boolean encoded;
+
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public boolean isRendered() {
         final PhaseId phaseId = PhaseUtil.getCurrentPhase();
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final boolean noError = !FacesMessageUtil
-                .hasErrorOrFatalMessage(context);
-        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
-                : false;
-        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)) {
-            if (isRefresh || noError) {
+        if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE) &&
+                !encoded) {
+            encoded = true;
+            final FacesContext context = FacesContext.getCurrentInstance();
+            final boolean noError = !FacesMessageUtil
+                    .hasErrorOrFatalMessage(context);
+            final boolean isRefresh = (refresh != null) ? refresh
+                    .booleanValue() : false;
+            if (noError || isRefresh) {
                 clearEncodedCondition();
                 final boolean b = super.isRendered();
+                saveEncodedCondition(b);
                 return b;
             }
         }
-        Boolean condition = getEncodedCondition();
+        final Boolean condition = getEncodedCondition();
         if (condition != null) {
             return condition.booleanValue();
         }
@@ -126,10 +129,10 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         conditions.remove(cid);
     }
 
-    protected void saveEncodedCondition() {
+    protected void saveEncodedCondition(boolean rendered) {
         final FacesContext context = getFacesContext();
         final Map conditions = getOrCreateConditions(context);
-        final Boolean b = Boolean.valueOf(super.isRendered());
+        final Boolean b = Boolean.valueOf(rendered);
         final String cid = getClientId(context);
         conditions.put(cid, b);
     }
@@ -163,17 +166,6 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
             ComponentUtil_.processAppropriatePhaseAction(context, component,
                     phase);
         }
-    }
-
-    public void encodeBegin(FacesContext context) throws IOException {
-        if (!context.getMessages().hasNext()) {
-            clearEncodedCondition();
-        }
-        super.encodeBegin(context);
-    }
-
-    public void encodeEnd(FacesContext context) throws IOException {
-        super.encodeEnd(context);
     }
 
     public boolean isRenderSpan() {
@@ -247,19 +239,6 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         values[2] = refresh;
         values[3] = omittag;
         return values;
-    }
-
-    public void preEncodeBegin(final FacesContext context) throws IOException {
-    }
-
-    public void postEncodeEnd(final FacesContext context) throws IOException {
-        final boolean noError = !FacesMessageUtil
-                .hasErrorOrFatalMessage(context);
-        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
-                : false;
-        if (isRefresh || noError) {
-            saveEncodedCondition();
-        }
     }
 
 }

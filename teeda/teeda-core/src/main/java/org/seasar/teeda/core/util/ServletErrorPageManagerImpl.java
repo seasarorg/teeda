@@ -43,7 +43,7 @@ public class ServletErrorPageManagerImpl implements ErrorPageManager {
     public boolean handleException(Throwable exception, FacesContext context,
             ExternalContext extContext) throws IOException {
         if (logger.isDebugEnabled()) {
-            logger.debug(exception);
+            logger.log("ETDA0001", new Object[0], exception);
         }
         String location = getLocation(exception.getClass());
         if (location == null) {

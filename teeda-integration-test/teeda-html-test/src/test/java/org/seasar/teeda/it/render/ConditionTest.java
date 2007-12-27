@@ -187,4 +187,56 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.assertElementNotPresentById("isNotAaa");
 		tester.assertElementPresentById("bbb-2");
 	}
+
+	public void testConditionForEach_TEEDA420() {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition4.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] table = new String[][] { { "0", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" }, { "2", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:2:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "2");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" },
+				{ "2", "foo" }, { "3", "bar" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" },
+				{ "2", "foo" }, { "3", "bar" }, { "4", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+	}
+
 }

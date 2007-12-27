@@ -42,6 +42,9 @@ public class TForEachRendererTest extends RendererTest {
                 return "hogeItems";
             }
 
+            public void bindRowIndex(FacesContext context, Integer rowIndex) {
+            }
+
         };
         renderer.decode(context, t);
         assertTrue(t.getRowSize() == 3);

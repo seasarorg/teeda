@@ -35,12 +35,10 @@ public class TConditionTest extends TeedaTestCase {
 
     public void testEncodedValue() throws Exception {
         TCondition c = new TCondition();
-        c.setRendered(true);
-        c.saveEncodedCondition();
+        c.saveEncodedCondition(true);
         assertEquals(Boolean.TRUE, c.getEncodedCondition());
 
-        c.setRendered(false);
-        c.saveEncodedCondition();
+        c.saveEncodedCondition(false);
         assertEquals(Boolean.FALSE, c.getEncodedCondition());
 
         c.clearEncodedCondition();

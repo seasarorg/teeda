@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ForeachCondition</title>
+<style>
+.onTeedaError {
+	background-color: #FFCCCC;
+}
+</style>
+</head>
+<body>
+<span>Foreach sample with condition.</span>
+<form id="foreachConditionForm">
+<div>
+<span id="messages"></span>
+</div>
+<input id="required" type="text"/><span id="requiredMessage">errorMessage</span><br/>
+<span id="selected">dummy</span>
+<input type="hidden" id="aaaItemsSave"/>
+<table border="1">
+ <thead>
+  <tr bgcolor="#7777FF">
+   <th>Key</th>
+   <th colspan="2">Test</th>
+  </tr>
+ </thead>
+ <tbody id="aaaItems">
+  <tr>
+   <td><span id="key">dummy1</span></td>
+   <td>
+    <div id="isEven">
+     <input type="button" id="doEven" value="even"/>
+    </div>
+    <div id="isOdd">
+     <input type="button" id="doOdd" value="odd"/>
+    </div>
+   </td>
+  </tr>
+ </tbody>
+</table>
+</form>
+</body>
+</html>
