@@ -15,9 +15,12 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+
+import org.seasar.teeda.extension.component.TViewRoot;
 
 /**
  * @author higa
@@ -37,8 +40,23 @@ public class THtmlScript extends UIComponentBase {
 
     private String src;
 
+    private String baseViewId;
+
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public void setParent(UIComponent parent) {
+        super.setParent(parent);
+        if (baseViewId == null) {
+            while (parent != null) {
+                if (parent instanceof TViewRoot) {
+                    baseViewId = ((TViewRoot) parent).getViewId();
+                    break;
+                }
+                parent = parent.getParent();
+            }
+        }
     }
 
     public String getType() {
@@ -77,12 +95,21 @@ public class THtmlScript extends UIComponentBase {
         this.src = src;
     }
 
+    public String getBaseViewId() {
+        return baseViewId;
+    }
+
+    public void setBaseViewId(String baseViewId) {
+        this.baseViewId = baseViewId;
+    }
+
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[4];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = type;
         values[2] = language;
         values[3] = src;
+        values[4] = baseViewId;
         return values;
     }
 
@@ -92,5 +119,7 @@ public class THtmlScript extends UIComponentBase {
         type = (String) values[1];
         language = (String) values[2];
         src = (String) values[3];
+        baseViewId = (String) values[4];
     }
+
 }

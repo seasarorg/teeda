@@ -64,8 +64,10 @@ public class THtmlLinkRenderer extends AbstractRenderer {
         }
         final String href = link.getHref();
         if (!StringUtil.isEmpty(href)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR,
-                    PathUtil.toAbsolutePath(context, link, href), null);
+            RendererUtil
+                    .renderAttribute(writer, JsfConstants.HREF_ATTR,
+                            PathUtil.toAbsolutePath(context, href, link
+                                    .getBaseViewId()), null);
         }
         final String src = link.getSrc();
         if (!StringUtil.isEmpty(src)) {

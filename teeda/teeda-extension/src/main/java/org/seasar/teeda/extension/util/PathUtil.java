@@ -18,12 +18,9 @@ package org.seasar.teeda.extension.util;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.seasar.teeda.extension.component.TInclude;
-import org.seasar.teeda.extension.component.TIncludeChildBody;
-import org.seasar.teeda.extension.component.TViewRoot;
+import org.seasar.framework.util.StringUtil;
 
 /**
  * @author koichik
@@ -32,32 +29,17 @@ import org.seasar.teeda.extension.component.TViewRoot;
 public abstract class PathUtil {
 
     public static String toAbsolutePath(final FacesContext context,
-            final UIComponent component, final String path) {
+            final String path, final String basePath) {
         if (path.charAt(0) == '/' || path.indexOf(':') != -1) {
+            return path;
+        }
+        if (StringUtil.isEmpty(basePath)) {
             return path;
         }
         final String contextRoot = context.getExternalContext()
                 .getRequestContextPath();
-        final String viewId = getViewId(component);
-        if (viewId == null) {
-            return path;
-        }
-        final String absolutePath = contextRoot + viewId + "/../" + path;
+        final String absolutePath = contextRoot + basePath + "/../" + path;
         return normalizePath(absolutePath);
-    }
-
-    protected static String getViewId(UIComponent component) {
-        while (component != null) {
-            if (component instanceof TIncludeChildBody) {
-                return ((TIncludeChildBody) component).getIncludedViewId();
-            } else if (component instanceof TInclude) {
-                return ((TInclude) component).getIncludedViewId();
-            } else if (component instanceof TViewRoot) {
-                return ((TViewRoot) component).getRootViewId();
-            }
-            component = component.getParent();
-        }
-        return null;
     }
 
     protected static String normalizePath(final String absolutePath) {

@@ -37,7 +37,9 @@ public class THtmlGraphicImageRenderer extends HtmlGraphicImageRenderer {
         if (StringUtil.isEmpty(url)) {
             return url;
         }
-        return PathUtil.toAbsolutePath(context, htmlGraphicImage, url);
+        final String baseViewId = ((THtmlGraphicImage) htmlGraphicImage)
+                .getBaseViewId();
+        return PathUtil.toAbsolutePath(context, url, baseViewId);
     }
 
 }

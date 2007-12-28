@@ -76,7 +76,8 @@ public class THtmlScriptRenderer extends AbstractRenderer {
                 src = context.getExternalContext().getRequestContextPath() +
                         src;
             } else {
-                src = PathUtil.toAbsolutePath(context, script, src);
+                final String baseViewId = script.getBaseViewId();
+                src = PathUtil.toAbsolutePath(context, src, baseViewId);
             }
             RendererUtil.renderAttribute(writer, JsfConstants.SRC_ATTR, src,
                     null);

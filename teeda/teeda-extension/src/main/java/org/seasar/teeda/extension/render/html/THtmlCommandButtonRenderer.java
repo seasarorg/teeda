@@ -111,7 +111,9 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
         if (StringUtil.isEmpty(image)) {
             return image;
         }
-        return PathUtil.toAbsolutePath(context, htmlCommandButton, image);
+        final String baseViewId = ((THtmlCommandButton) htmlCommandButton)
+                .getBaseViewId();
+        return PathUtil.toAbsolutePath(context, image, baseViewId);
     }
 
     protected void renderValueAttribute(FacesContext context,

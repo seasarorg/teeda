@@ -15,7 +15,11 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.context.FacesContext;
+
+import org.seasar.teeda.extension.component.TViewRoot;
 
 /**
  * @author koichik
@@ -29,12 +33,48 @@ public class THtmlGraphicImage extends HtmlGraphicImage {
 
     public static final String DEFAULT_RENDERER_TYPE = "org.seasar.teeda.extension.HtmlGraphicImage";
 
+    private String baseViewId;
+
     public THtmlGraphicImage() {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public void setParent(UIComponent parent) {
+        super.setParent(parent);
+        if (baseViewId == null) {
+            while (parent != null) {
+                if (parent instanceof TViewRoot) {
+                    baseViewId = ((TViewRoot) parent).getViewId();
+                    break;
+                }
+                parent = parent.getParent();
+            }
+        }
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        baseViewId = (String) values[1];
+    }
+
+    public Object saveState(FacesContext context) {
+        Object values[] = new Object[2];
+        values[0] = super.saveState(context);
+        values[1] = baseViewId;
+        return values;
+    }
+
+    public String getBaseViewId() {
+        return baseViewId;
+    }
+
+    public void setBaseViewId(String baseViewId) {
+        this.baseViewId = baseViewId;
     }
 
 }

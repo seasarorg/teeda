@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
@@ -29,6 +30,7 @@ import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.TViewRoot;
 import org.seasar.teeda.extension.exception.DoubleSubmittedException;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
@@ -49,9 +51,24 @@ public class THtmlCommandButton extends HtmlCommandButton implements
 
     private Long time;
 
+    private String baseViewId;
+
     public THtmlCommandButton() {
         super();
         setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    public void setParent(UIComponent parent) {
+        super.setParent(parent);
+        if (baseViewId == null) {
+            while (parent != null) {
+                if (parent instanceof TViewRoot) {
+                    baseViewId = ((TViewRoot) parent).getViewId();
+                    break;
+                }
+                parent = parent.getParent();
+            }
+        }
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
@@ -104,6 +121,14 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         this.renderJs = new Boolean(renderJs);
     }
 
+    public String getBaseViewId() {
+        return baseViewId;
+    }
+
+    public void setBaseViewId(String baseViewId) {
+        this.baseViewId = baseViewId;
+    }
+
     public long getTime() {
         if (time != null) {
             return time.longValue();
@@ -121,12 +146,14 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         renderJs = (Boolean) values[1];
+        baseViewId = (String) values[2];
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[2];
+        Object values[] = new Object[3];
         values[0] = super.saveState(context);
         values[1] = renderJs;
+        values[2] = baseViewId;
         return values;
     }
 

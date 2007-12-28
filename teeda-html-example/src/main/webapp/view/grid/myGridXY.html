@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>GridXY</title>
+
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	overflow: hidden;
+}
+.ddd {
+	background-color: #B4CDCD;
+}
+td div.ddd {
+	color: black;
+}
+.gridTable {
+	background-color: white;
+}
+.gridCell {
+	height: 25px;
+}
+.gridCellEdit {
+	border-width: 1px;
+	background-color: #FFC0CB;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+// <![CDATA[
+	function changeLineLabel(){
+		
+		
+		var i = prompt("値の替えるする行番は？","0");
+		
+		var tbl = document.getElementById('fooGridXYRightBodyTable');
+
+		var row = tbl.rows[i];
+		getElementInNodeById(row,'ccc').innerHTML='c変';
+		getElementInNodeById(row,'ddd').innerHTML='d変';
+		getElementInNodeById(row,'eee').innerHTML='e変';
+		getElementInNodeById(row,'fff').innerHTML='f変';
+		
+		
+		
+	}
+	
+	 /**
+	  * ノードの中からidでノードを検索して取得する
+	  * 
+	  * @param {Object} inNode
+	  * @param {Object} id
+	  */
+	 function getElementInNodeById(inNode,id){
+		if(inNode.id==id){
+			return inNode;
+		}
+		
+		var nodes = inNode.childNodes;
+		for(var i=0;i<nodes.length;i++){
+			var node = getElementInNodeById(nodes[i],id);
+			if(node) return node;
+		}		
+		
+		return false;
+		
+	}
+
+// ]]>
+
+</script>
+
+
+
+</head>
+<body>
+
+
+<form id="form">
+
+
+<table id="fooGridXY" width="300px" height="200px">
+	<colgroup>
+		<col span="2" width="60px" class="T_leftFixed" />
+		<col span="4" width="70px" />
+	</colgroup>
+	<thead>
+		<tr height="50px">
+			<th>aaa</th>
+			<th>bbb</th>
+			<th>ccc</th>
+			<th>ddd</th>
+			<th>eee</th>
+			<th>fff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><span id="aaa" /></td>
+			<td><span id="bbb" /></td>
+			<td><span id="ccc" /></td>
+			<td><span id="ddd" /></td>
+			<td><span id="eee" /></td>
+			<td><span id="fff" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="button" value="行のラベルを動的に変える" onclick="changeLineLabel();"/>
+
+
+</form>
+</body>
+</html>
