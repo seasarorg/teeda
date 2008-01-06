@@ -12,13 +12,13 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ognl-2.6.9-patch-20070624.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/poi-3.0-FINAL.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/portlet-api-1.0.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.19.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.19-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.19.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.19-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-extension-2.4.20.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-extension-2.4.20-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.20.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/s2-framework-2.4.20-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.12-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-ajax-1.0.12-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.12-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-core-1.0.12-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.12-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-extension-1.0.12-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.12-rc1.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-ajax-1.0.12-rc1-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.12-rc1.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-core-1.0.12-rc1-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.12-rc1.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/teeda-extension-1.0.12-rc1-sources.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>

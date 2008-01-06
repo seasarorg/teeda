@@ -4,17 +4,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <artifactId>teeda-core-test-client</artifactId>
+  <packaging>war</packaging>
   <parent>
     <groupId>org.seasar.teeda.it</groupId>
     <artifactId>teeda-integration-test-project</artifactId>
-    <version>1.0.12-SNAPSHOT</version>
+    <version>1.0.12-rc1</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>teeda-core-test-client</artifactId>
-  <packaging>war</packaging>
+
+  <!-- More Project Information -->
   <name>Teeda Integration Test (STATE_SAVING_METHOD=clinet)</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+
+  <!-- Build Settings -->
   <build>
     <finalName>${pom.artifactId}</finalName>
     <pluginManagement>
@@ -73,6 +79,8 @@
       </plugin>
     </plugins>
   </build>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
