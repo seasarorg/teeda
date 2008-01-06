@@ -46,6 +46,24 @@ public class ExtensionRedirectUrlResolverImplTest extends TeedaTestCase {
         assertTrue(url3.startsWith("/hoge.html"));
     }
 
+    public void testresolveUrl_withParam() throws Exception {
+        ExtensionRedirectUrlResolverImpl resolver = new ExtensionRedirectUrlResolverImpl();
+        String url1 = resolver.resolveUrl("/hoge.html?wid=1",
+                getFacesContext(), getRequest(), getResponse());
+        System.out.println(url1);
+        assertTrue(url1.startsWith("/hoge.html?wid=1&te-uniquekey="));
+    }
+
+    public void testresolveUrl_override() throws Exception {
+        ExtensionRedirectUrlResolverImpl resolver = new ExtensionRedirectUrlResolverImpl();
+        String url1 = resolver.resolveUrl(
+                "/hoge.html?wid=1&te-uniquekey=1&newwindow=true",
+                getFacesContext(), getRequest(), getResponse());
+        System.out.println(url1);
+        assertTrue(url1.startsWith("/hoge.html?wid=1&te-uniquekey="));
+        assertTrue(url1.endsWith("&newwindow=true"));
+    }
+
     public void testBuildRedirectUrl() throws Exception {
         MockHttpServletRequest request = getRequest();
         ExtensionRedirectUrlResolverImpl resolver = new ExtensionRedirectUrlResolverImpl();

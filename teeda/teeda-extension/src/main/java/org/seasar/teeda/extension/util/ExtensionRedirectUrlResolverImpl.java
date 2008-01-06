@@ -63,8 +63,22 @@ public class ExtensionRedirectUrlResolverImpl extends
         if (!addUniqueKeyParameter) {
             return redirectUrl;
         }
-        return redirectUrl + "?" + uniqueKeyParameterName + "=" +
-                Long.toHexString(System.currentTimeMillis());
+        int pos = redirectUrl.lastIndexOf('?');
+        if (pos == -1) {
+            return redirectUrl + "?" + uniqueKeyParameterName + "=" +
+                    Long.toHexString(System.currentTimeMillis());
+        }
+        pos = redirectUrl.indexOf(uniqueKeyParameterName + "=", pos + 1);
+        if (pos == -1) {
+            return redirectUrl + "&" + uniqueKeyParameterName + "=" +
+                    Long.toHexString(System.currentTimeMillis());
+        }
+        pos += uniqueKeyParameterName.length() + 1;
+        int pos2 = redirectUrl.indexOf('&', pos);
+        pos2 = pos2 == -1 ? redirectUrl.length() : pos2;
+        return redirectUrl.substring(0, pos) +
+                Long.toHexString(System.currentTimeMillis()) +
+                redirectUrl.substring(pos2);
     }
 
     protected String buildRedirectUrl(final String contextPath,
