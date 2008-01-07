@@ -214,12 +214,11 @@ formタグは付け忘れて開発時に悩むケースが多いので、
 
 
 <h3>タグの属性値</h3>
-<p>
-属性の値は必ず引用符で囲みます。（属性値が数字であっても囲む）
-<br>
-<b>例：</b><br>
+<p>属性の値は必ず引用符で囲みます。（属性値が数字であっても囲む）</p>
+<b>例：</b>
+<pre class="literal-block">
 　　width="100"
-</p>
+</pre>
 <br>
 
 
@@ -267,6 +266,22 @@ formタグは付け忘れて開発時に悩むケースが多いので、
 <b>悪い例</b><br />
 <pre class="literal-block">
 &lt;input type="radio" name="bar" <span style="color: red;">checked</span> /&gt;
+</pre>
+
+
+<h3>スクリプトはCDATAセクションを使う</h3>
+<p>スクリプト中の不等号記号('&lt;'等)をエスケープしなくてすむように、スクリプトはCDATAセクションに記述することを推奨します。</p>
+<b>例</b>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+//<span style="color: red;">&lt;![CDATA[</span>
+function hoge() {
+  for(i = 0; i &lt; 10; i++) {
+    alert("hoge");
+  }
+}
+//<span style="color: red;">]]&gt;</span>
+&lt;/script&gt;
 </pre>
 
 <br>
