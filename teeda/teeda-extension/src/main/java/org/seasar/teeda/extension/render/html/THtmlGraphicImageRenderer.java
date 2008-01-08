@@ -33,13 +33,15 @@ public class THtmlGraphicImageRenderer extends HtmlGraphicImageRenderer {
     public static final String RENDERER_TYPE = THtmlGraphicImage.DEFAULT_RENDERER_TYPE;
 
     protected String getUrl(FacesContext context, UIGraphic htmlGraphicImage) {
-        final String url = super.getUrl(context, htmlGraphicImage);
+        String url = htmlGraphicImage.getUrl();
         if (StringUtil.isEmpty(url)) {
             return url;
         }
         final String baseViewId = ((THtmlGraphicImage) htmlGraphicImage)
                 .getBaseViewId();
-        return PathUtil.toAbsolutePath(context, url, baseViewId);
+        url = PathUtil.toAbsolutePath(context, url, baseViewId);
+        url = context.getExternalContext().encodeResourceURL(url);
+        return url;
     }
 
 }
