@@ -91,8 +91,11 @@ public class ScopeValueHelper {
 
     public static void removeIfDoFinish(final String methodName,
             final FacesContext context) {
-        if (ExtensionConstants.DO_FINISH.equals(methodName)
-                || ExtensionConstants.DO_ONCE_FINISH.equals(methodName)) {
+        if (methodName == null) {
+            return;
+        }
+        if (methodName.startsWith(ExtensionConstants.DO_FINISH) ||
+                methodName.startsWith(ExtensionConstants.DO_ONCE_FINISH)) {
             SubApplicationScope.removeContext(context);
         }
     }

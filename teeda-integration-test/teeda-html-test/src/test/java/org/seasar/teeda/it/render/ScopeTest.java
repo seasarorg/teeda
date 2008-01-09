@@ -75,4 +75,23 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("hoge", "foofoo");
 	}
 
+	public void testDoFinish() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/doFinishInput.html");
+		tester.dumpHtml();
+
+		tester.setTextByName("form:message", "hogehoge");
+
+		tester.submitById("doFinishExecute");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/doFinishResult.html") > 0);
+		tester.assertTextEqualsById("message", "");
+	}
+
 }
