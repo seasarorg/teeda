@@ -30,8 +30,8 @@ import org.seasar.teeda.core.ProductInfo;
 public class TeedaConfigureListener extends S2ContainerListener {
 
     private static final String FACES_INIT_DONE = TeedaConfigureListener.class
-            .getName()
-            + ".FACES_INIT_DONE";
+            .getName() +
+            ".FACES_INIT_DONE";
 
     private static Logger logger = Logger
             .getLogger(TeedaConfigureListener.class);
@@ -43,6 +43,9 @@ public class TeedaConfigureListener extends S2ContainerListener {
         try {
             initializeFaces(event.getServletContext());
         } catch (RuntimeException e) {
+            logger.log(e);
+            throw e;
+        } catch (Error e) {
             logger.log(e);
             throw e;
         }
