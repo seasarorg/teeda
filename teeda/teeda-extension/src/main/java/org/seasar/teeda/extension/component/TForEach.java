@@ -577,15 +577,18 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             final Object item, final BeanDesc itemBeanDesc) {
         for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
+            if (!itemPd.isWritable()) {
+                continue;
+            }
             final String propertyName = itemPd.getPropertyName();
             if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
                 continue;
             }
             final PropertyDesc pagePd = pageBeanDesc
                     .getPropertyDesc(propertyName);
-            final Object pageValue = pagePd.getValue(page);
-            // https://www.seasar.org/issues/browse/TEEDA-149
-            if (pagePd.isWritable()) {
+            if (pagePd.isReadable()) {
+                final Object pageValue = pagePd.getValue(page);
+                // https://www.seasar.org/issues/browse/TEEDA-149
                 itemPd.setValue(item, pageValue);
             }
         }

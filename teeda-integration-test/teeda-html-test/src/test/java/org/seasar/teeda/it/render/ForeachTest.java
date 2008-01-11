@@ -327,8 +327,9 @@ public class ForeachTest extends TeedaWebTestCase {
 		assertTrue(tester.getCurrentUri().indexOf("foreachDto.html") > 0);
 
 		tester.dumpHtml();
-		final String[][] tableExpected = new String[][] { { "x1", "b1" },
-				{ "x2", "b2" }, { "a3", "y3" } };
+		final String[][] tableExpected = new String[][] {
+				{ "x1", "b1", "x1b1" }, { "x2", "b2", "x2b2" },
+				{ "a3", "y3", "a3y3" } };
 		tester.assertTableEqualsById("foreachTable", tableExpected);
 	}
 

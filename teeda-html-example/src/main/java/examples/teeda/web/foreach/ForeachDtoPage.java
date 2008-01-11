@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.it.web.foreach;
+package examples.teeda.web.foreach;
 
 import java.io.Serializable;
 import java.util.Arrays;
