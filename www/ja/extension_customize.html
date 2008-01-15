@@ -286,7 +286,7 @@ XML Parser を含む) でXHTMLをパーズします．WebSphereなど，Xerces2.
 </tbody>
 </table>
 <h3>カスタマイズの方法</h3>
-<p>(X)HTMLをパーズする方法をカスタマイズするには，diconファイルに<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
+<p>(X)HTMLをパーズする方法をカスタマイズするには，app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
 <pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
 <h2><a name="redirect">リダイレクトについて</a></h2>
 <p>Teeda Extensionは，画面遷移にPRG (Post-Redirect-Get) パターンを使用します．<br>
@@ -300,7 +300,7 @@ XML Parser を含む) でXHTMLをパーズします．WebSphereなど，Xerces2.
 <li><code>org.seasar.teeda.core.util.DefaultRedirectUrlResolverImpl</code>
 <li><code>org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl</code>
 </ul>
-<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．diconファイルに<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
+<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
 <h3>ベースURL</h3>
 <p><code>DefaultRedirectUrlResolverImpl</code>および<code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクトURLのベース部分をカスタマイズすることが出来ます．<br>
 ベースURLは，web.xmlの<code>&lt;context-param&gt;</code>で定義することが出来ます．</p>
