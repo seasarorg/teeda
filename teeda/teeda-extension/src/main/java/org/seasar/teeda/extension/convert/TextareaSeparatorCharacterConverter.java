@@ -23,6 +23,7 @@ import javax.faces.convert.ConverterException;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.framework.util.StringUtil;
+import org.seasar.teeda.core.util.HTMLEncodeUtil;
 import org.seasar.teeda.extension.util.TargetCommandUtil;
 
 public class TextareaSeparatorCharacterConverter extends CharacterConverter
@@ -63,6 +64,7 @@ public class TextareaSeparatorCharacterConverter extends CharacterConverter
             return null;
         }
         String s = super.getAsString(context, component, value);
+        s = HTMLEncodeUtil.encodeAll(s);
         return s.replaceAll(SEP1, "<br/>").replaceAll(SEP2, "<br/>")
                 .replaceAll(SEP3, "<br/>");
     }

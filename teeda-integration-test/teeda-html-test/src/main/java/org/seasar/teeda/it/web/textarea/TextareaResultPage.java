@@ -13,15 +13,13 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.textarea;
+package org.seasar.teeda.it.web.textarea;
 
-public class TextareaPage {
+public class TextareaResultPage {
 
-	public static final String bbb_textareaSeparatorCharacterConverter = null;
+	public static final String aaa_textareaSeparatorCharacterConverter = null;
 
 	private String aaa;
-
-	private String bbb;
 
 	public String getAaa() {
 		return aaa;
@@ -29,18 +27,6 @@ public class TextareaPage {
 
 	public void setAaa(String aaa) {
 		this.aaa = aaa;
-	}
-
-	public String getBbb() {
-		return bbb;
-	}
-
-	public void setBbb(String bbb) {
-		this.bbb = bbb;
-	}
-
-	public void prerender() {
-		bbb = aaa;
 	}
 
 }

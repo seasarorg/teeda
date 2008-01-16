@@ -64,6 +64,15 @@ public class TextareaSeparatorCharacterConverterTest extends
         assertEquals("abc<br/><br/><br/><br/>def", o.toString());
     }
 
+    public void testGetAsString_convertSuccess5() {
+        Converter converter = createConverter();
+        MockUIComponent component = new MockUIComponent();
+        MockFacesContext context = getFacesContext();
+        String value = "abc<br/>" + "\n" + "def";
+        Object o = converter.getAsString(context, component, value);
+        assertEquals("abc&lt;br/&gt;<br/>def", o.toString());
+    }
+
     public void testConvertTargetNotPointed() throws Exception {
         TextareaSeparatorCharacterConverter converter = (TextareaSeparatorCharacterConverter) createConverter();
         converter.setTarget("aaa");

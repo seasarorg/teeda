@@ -25,27 +25,42 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class InputTextareaTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(InputTextareaTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(InputTextareaTest.class);
+	}
 
-    // https://www.seasar.org/issues/browse/TEEDA-230
-    public void testJIRA230() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	// https://www.seasar.org/issues/browse/TEEDA-230
+	public void testJIRA230() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/textarea/textarea1.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/textarea/textarea1.html");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertTitleEquals("textarea 1");
-        tester.assertTextEqualsById("aaa", "AAA");
-        tester.assertTextEqualsById("bbb", "");
-        tester.assertTextEqualsById("ccc", "12345");
-        tester.assertTextPresent("AAA");
-        tester.assertTextNotPresent("BBB");
-        tester.assertTextNotPresent("CCC");
-    }
+		// ## Assert ##
+		tester.assertTitleEquals("textarea 1");
+		tester.assertTextEqualsById("aaa", "AAA");
+		tester.assertTextEqualsById("bbb", "");
+		tester.assertTextEqualsById("ccc", "12345");
+		tester.assertTextPresent("AAA");
+		tester.assertTextNotPresent("BBB");
+		tester.assertTextNotPresent("CCC");
+	}
+
+	// https://www.seasar.org/issues/browse/TEEDA-425
+	public void testTEEDA425() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/textarea/textareaInput.html");
+		tester.dumpHtml();
+		tester.setTextById("aaa", "aaa<br>bbb\nccc");
+		tester.submitById("doExec");
+
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "aaa<br>bbb ccc");
+	}
 
 }
