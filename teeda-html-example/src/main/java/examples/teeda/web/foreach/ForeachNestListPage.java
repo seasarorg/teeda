@@ -23,7 +23,7 @@ public class ForeachNestListPage {
 
 	private int aaaIndex;
 
-	private int aaaIndexIndex;
+	private int aaaItemsIndex;
 
 	private List<FooDto> aaaItems;
 
@@ -39,12 +39,12 @@ public class ForeachNestListPage {
 		this.aaaIndex = aaaIndex;
 	}
 
-	public int getAaaIndexIndex() {
-		return aaaIndexIndex;
+	public int getAaaItemsIndex() {
+		return aaaItemsIndex;
 	}
 
-	public void setAaaIndexIndex(int aaaIndexIndex) {
-		this.aaaIndexIndex = aaaIndexIndex;
+	public void setAaaItemsIndex(int aaaIndexIndex) {
+		this.aaaItemsIndex = aaaIndexIndex;
 	}
 
 	public List<FooDto> getAaaItems() {
@@ -88,6 +88,26 @@ public class ForeachNestListPage {
 
 	public String prerender() {
 		return null;
+	}
+
+	public void doInsertRow() {
+		List<FooDto> items = new ArrayList<FooDto>();
+		aaaItemsItems.add(0, items);
+	}
+
+	public void doAppendRow() {
+		List<FooDto> items = new ArrayList<FooDto>();
+		aaaItemsItems.add(items);
+	}
+
+	public void doInsertColumn() {
+		List<FooDto> items = aaaItemsItems.get(aaaItemsIndex);
+		items.add(0, new FooDto());
+	}
+
+	public void doAppendColumn() {
+		List<FooDto> items = aaaItemsItems.get(aaaItemsIndex);
+		items.add(new FooDto());
 	}
 
 	public static final class FooDto implements Serializable {

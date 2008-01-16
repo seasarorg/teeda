@@ -7,15 +7,20 @@
 <span>Foreach Nest sample</span>
 <form id="form">
 <input type="hidden" id="aaaItemsItemsSave"/>
+<input type="submit" id="doInsertRow" value="↑"/>
 <table border="1">
 	<div id="aaaItemsItems">
 	<tr>
-	    <div id="aaaItems">
+		<td><input type="submit" id="doInsertColumn" value="←"/></td>
+		<div id="aaaItems">
 		<td><input type="text" id="foo"/></td>
 		</div>
+		<td><input type="submit" id="doAppendColumn" value="→"/></td>
 	</tr>
 	</div>
 </table>
+<input type="submit" id="doAppendRow" value="↓"/><br />
+<br />
 <input type="submit" value="submit"/>
 </form>
 </body>
