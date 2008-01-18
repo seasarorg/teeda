@@ -209,7 +209,7 @@ public class HogePage {
 <li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
 <li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
 <li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
-<li>Xerces2.6.2でXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>CLASSIC</h3>
 <p>CLASSICは，<strong>Teeda 1.0.11以前と互換性のある方法</strong>でXHTMLをパーズします．</p>
@@ -217,7 +217,7 @@ public class HogePage {
 <li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;amp;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;amp;</code>と一段階余計にエスケープして記述する必要があります．</li>
 <li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
 <li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
-<li>Xerces2.6.2でXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>STRICT</h3>
 <p>STRICTは，厳密に正しいXMLとしてXHTMLをパーズします．</p>
@@ -225,8 +225,7 @@ public class HogePage {
 <li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でレンダリングされます．</li>
 <li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
 <li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．<code>&amp;</code>を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
-<li>XNI (Xerces Native Interface) をサポートした任意のバージョンのXerces (IBM JDKにバンドルされる IBM
-XML Parser を含む) でXHTMLをパーズします．WebSphereなど，Xerces2.6.2を使用することが出来ない環境でも利用することが出来ます．</li>
+<li>XNI (Xerces Native Interface) をサポートした任意のバージョンのXercesでXHTMLをパーズします．Xerces2.6.2を使用することが出来ない環境でも利用することが出来ます．</li>
 </ul>
 <h3>HTML</h3>
 <p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
@@ -237,7 +236,7 @@ XML Parser を含む) でXHTMLをパーズします．WebSphereなど，Xerces2.
 <li>Xerces2.6.2とNekoHTMLの組み合わせでHTMLをパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてWEB-INF/libに配置してください．
 <ul>
 <li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
-</ul>WebSphereなど，Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
 <h3>各モードの要約</h3>
 <table border="1">
