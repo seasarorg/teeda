@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>JSON</title>
+<script type="text/javascript">
+//<![CDATA[
+	function view(id) {
+		var form = Kumu.FormHelper.create(id);
+		var s = Kumu.JSONSerializer.serialize(form);
+		//alert(s);
+		var textarea = document.getElementById('result');
+		textarea.value = s;
+	}
+//]]>  
+</script>
+
+</head>
+<body>
+<form id="sampleForm">
+	<input type="text" id="aaa" name="aaa" />
+	<input type="text" id="bbb" name="bbb" />
+	<input type="button" onclick="view('sampleForm')" value="view JSON" />
+	<br />
+	<textarea id="result" rows="20" cols="100"></textarea>
+</form>
+</body>
+</html>
