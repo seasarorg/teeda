@@ -1267,7 +1267,12 @@ Kumu.define('Kumu.JSONSerializer')({
       }
     }
     if (type == "string") {
-      return o;
+		return ('"' + o.replace(/(["\\])/g, '\\$1') + '"'
+			).replace(/[\f]/g, "\\f"
+			).replace(/[\b]/g, "\\b"
+			).replace(/[\n]/g, "\\n"
+			).replace(/[\t]/g, "\\t"
+			).replace(/[\r]/g, "\\r");
     }
     if(o.innerHTML){
       return o.innerHTML;
