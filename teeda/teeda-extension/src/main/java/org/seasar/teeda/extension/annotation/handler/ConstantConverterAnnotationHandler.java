@@ -35,6 +35,7 @@ public class ConstantConverterAnnotationHandler extends
         AbstractConverterAnnotationHandler {
 
     public void registerConverters(String componentName) {
+        removeConverters(componentName);
         S2Container container = getContainer();
         NamingConvention namingConvention = (NamingConvention) container
                 .getComponent(NamingConvention.class);
@@ -65,17 +66,17 @@ public class ConstantConverterAnnotationHandler extends
 
         boolean isConstantAnnotation = ConstantAnnotationUtil
                 .isConstantAnnotation(field);
-        if (!isConstantAnnotation
-                || !field.getName().endsWith(
-                        namingConvention.getConverterSuffix())) {
+        if (!isConstantAnnotation ||
+                !field.getName()
+                        .endsWith(namingConvention.getConverterSuffix())) {
             return;
         }
         final String fieldString = field.getName();
         final int index = fieldString.lastIndexOf("_");
         final String fieldName = fieldString.substring(0, index);
         final String converterName = fieldString.substring(index + 1);
-        if (!beanDesc.hasPropertyDesc(fieldName)
-                || !container.hasComponentDef(converterName)) {
+        if (!beanDesc.hasPropertyDesc(fieldName) ||
+                !container.hasComponentDef(converterName)) {
             return;
         }
         final String s = (String) FieldUtil.get(field, null);

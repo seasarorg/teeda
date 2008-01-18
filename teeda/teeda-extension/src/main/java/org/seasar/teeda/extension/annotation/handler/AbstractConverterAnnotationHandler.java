@@ -15,7 +15,11 @@
  */
 package org.seasar.teeda.extension.annotation.handler;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.internal.ConverterResource;
 
@@ -29,15 +33,46 @@ import org.seasar.teeda.core.util.BindingUtil;
 public abstract class AbstractConverterAnnotationHandler implements
         ConverterAnnotationHandler {
 
+    private Map expressionsMap = new HashMap();
+
     public void registerConverter(String componentName, String propertyName,
             String converterName, Map properties) {
         final String expression = BindingUtil.getExpression(componentName,
                 propertyName);
         ConverterResource.addConverter(expression, converterName, properties);
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            expressions = new HashSet();
+            expressionsMap.put(componentName, expressions);
+        }
+        expressions.add(expression);
+    }
+
+    public void removeConverters(String componentName) {
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            return;
+        }
+        for (Iterator i = expressions.iterator(); i.hasNext();) {
+            String expression = (String) i.next();
+            ConverterResource.removeConverter(expression);
+        }
+        expressionsMap.remove(componentName);
     }
 
     public void removeAll() {
-        ConverterResource.removeAll();
+        for (Iterator i = expressionsMap.keySet().iterator(); i.hasNext();) {
+            String componentName = (String) i.next();
+            removeConverters(componentName);
+        }
+    }
+
+    public int getExpressionSize(String componentName) {
+        Set expressions = (Set) expressionsMap.get(componentName);
+        if (expressions == null) {
+            return 0;
+        }
+        return expressions.size();
     }
 
     protected S2Container getContainer() {
