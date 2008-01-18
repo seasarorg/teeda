@@ -37,7 +37,7 @@ public class HogeOutputRenderer extends THtmlOutputTextRenderer {
 	@Override
 	protected void encodeHtmlOutputTextEnd(FacesContext arg0,
 			HtmlOutputText arg1) throws IOException {
-		System.out.println("増えるわかめちゃんか・・・");
+		System.out.println("encodeHtmlOutputTextEnd");
 		super.encodeHtmlOutputTextEnd(arg0, arg1);
 	}
 
