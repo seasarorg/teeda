@@ -32,6 +32,7 @@ import javax.faces.internal.PhaseUtil;
 import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -68,11 +69,19 @@ public class TCondition extends UIComponentBase {
             final String clientId = getClientId(context);
             if (!encodedClientId.contains(clientId)) {
                 encodedClientId.add(clientId);
+                final Boolean condition = getEncodedCondition();
+                if (condition == null) {
+                    final boolean b = super.isRendered();
+                    saveEncodedCondition(b);
+                    return b;
+                }
+                final boolean postback = PostbackUtil.isPostback(context
+                        .getExternalContext().getRequestMap());
                 final boolean noError = !FacesMessageUtil
                         .hasErrorOrFatalMessage(context);
                 final boolean isRefresh = (refresh != null) ? refresh
                         .booleanValue() : false;
-                if (noError || isRefresh) {
+                if (!postback || noError || isRefresh) {
                     clearEncodedCondition();
                     final boolean b = super.isRendered();
                     saveEncodedCondition(b);
