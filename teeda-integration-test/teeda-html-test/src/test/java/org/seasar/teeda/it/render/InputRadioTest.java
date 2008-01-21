@@ -68,4 +68,21 @@ public class InputRadioTest extends TeedaWebTestCase {
 		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "1");
 	}
 
+	public void testSelectWithSuffix_TEEDA429() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio2.html");
+		tester.dumpHtml();
+
+		tester.clickRadioOptionByName("inputRadioForm:aaa-hoge", "2");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa-hoge", "2");
+		tester.assertTextEqualsById("aaa-display", "2");
+	}
+
 }

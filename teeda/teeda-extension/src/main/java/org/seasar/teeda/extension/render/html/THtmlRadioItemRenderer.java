@@ -63,7 +63,7 @@ public class THtmlRadioItemRenderer extends AbstractRenderer {
         final THtmlRadioItem htmlInputRadio = (THtmlRadioItem) component;
         final String name = htmlInputRadio.getName();
         final HtmlSelectOneRadio parent = (HtmlSelectOneRadio) (name != null ? UIComponentUtil
-                .findParent(component, name)
+                .findParent(component, HtmlSelectOneRadio.class, name)
                 : component.getParent());
         final String valueStr = ValueHolderUtil.getValueForRender(context,
                 parent);

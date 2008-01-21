@@ -31,6 +31,7 @@ import javax.faces.render.Renderer;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.TagNotFoundRuntimeException;
 
@@ -65,6 +66,18 @@ public class UIComponentUtil {
             return 0;
         }
         return ((Integer) value).intValue();
+    }
+
+    protected static String getNormalizeId(UIComponent component) {
+        String id = component.getId();
+        if (StringUtil.isEmpty(id)) {
+            return id;
+        }
+        int indexOf = id.indexOf("-");
+        if (indexOf < 0) {
+            return id;
+        }
+        return id.substring(0, indexOf);
     }
 
     public static String getLabel(UIComponent component) {
@@ -144,8 +157,8 @@ public class UIComponentUtil {
     }
 
     public static UIComponent findParent(final UIComponent component,
-            final String id) {
-        final UIComponent parent = findParentOrNull(component, id);
+            final Class parentClass, final String id) {
+        final UIComponent parent = findParentOrNull(component, parentClass, id);
         if (parent != null) {
             return parent;
         }
@@ -166,10 +179,11 @@ public class UIComponentUtil {
     }
 
     private static UIComponent findParentOrNull(final UIComponent component,
-            final String id) {
+            final Class parentClass, final String id) {
         for (UIComponent parent = component.getParent(); parent != null; parent = parent
                 .getParent()) {
-            if (id.equals(parent.getId())) {
+            if (parentClass.isInstance(parent) &&
+                    id.equals(getNormalizeId(parent))) {
                 return parent;
             }
         }
