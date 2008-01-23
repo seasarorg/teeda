@@ -42,7 +42,8 @@ public class TForEachRendererTest extends RendererTest {
                 return "hogeItems";
             }
 
-            public void bindRowIndex(FacesContext context, Integer rowIndex) {
+            public Integer bindRowIndex(FacesContext context, Integer rowIndex) {
+                return null;
             }
 
         };

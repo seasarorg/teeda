@@ -206,8 +206,11 @@ public class TForEachTest extends UIComponentBaseTest {
         item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 hoge = new HogePage1();
-        forEach.processMapItem(beanDesc, hoge, item);
+        hoge.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processMapItem(beanDesc, hoge, item, savedValues);
         assertEquals("111", hoge.aaa);
+        assertEquals("000", savedValues.get("aaa"));
     }
 
     public void testProcessBeanItem() throws Exception {
@@ -217,8 +220,11 @@ public class TForEachTest extends UIComponentBaseTest {
         item.bbb = "112";
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 page = new HogePage1();
-        forEach.processBeanItem(beanDesc, page, item);
+        page.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processBeanItem(beanDesc, page, item, savedValues);
         assertEquals("111", page.aaa);
+        assertEquals("000", savedValues.get("aaa"));
     }
 
     public void testProcessBeanItem2() throws Exception {
@@ -227,19 +233,30 @@ public class TForEachTest extends UIComponentBaseTest {
         item.aaa = "111";
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage3.class);
         HogePage3 page = new HogePage3();
-        forEach.processBeanItem(beanDesc, page, item);
+        page.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processBeanItem(beanDesc, page, item, savedValues);
         assertEquals("111", page.aaa);
+        assertEquals("000", savedValues.get("aaa"));
     }
 
-    public void testProcessItem() throws Exception {
+    public void testItemToPage() throws Exception {
         final TForEach forEach = createTForEach();
         Map item = new HashMap();
         item.put("aaa", "111");
         item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
-        HogePage1 page = new HogePage1();
+        final HogePage1 page = new HogePage1();
         forEach.setItemsName("fooItems");
-        forEach.processItem(beanDesc, page, item, 1);
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return page;
+            }
+        });
+        Integer savedIndex = forEach.bindRowIndex(context, new Integer(1));
+        Map savedValues = forEach.itemToPage(beanDesc, page, item);
         assertEquals("111", page.aaa);
         assertSame(item, page.foo);
         assertEquals(1, page.fooIndex);

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,6 +47,7 @@ import javax.faces.internal.ComponentStatesHolder;
 import javax.faces.internal.FacesMessageResource;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.NamingContainerUtil;
+import javax.faces.internal.SavedState;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -220,6 +222,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         final String id = getId();
         final String expression = BindingUtil.getExpression(pageName, id);
         for (int i = 0; i < rowSize; ++i) {
+            final Integer savedIndex = bindRowIndex(context, new Integer(i));
             enterRow(context, i, base);
             for (Iterator itr = base.getFacetsAndChildren(); itr.hasNext();) {
                 final UIComponent component = (UIComponent) itr.next();
@@ -230,6 +233,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
                 processEachRowValidation(context, i, parentClientId);
             }
             leaveRow(context, base);
+            bindRowIndex(context, savedIndex);
         }
         aggregateErrorMessageIfNeed(context, expression);
     }
@@ -451,35 +455,24 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             }
         }
 
-        // TEEDA-305(Seasar-user:7347)
-        final Map savedProperties = new HashMap();
-        for (int i = 0; i < pageBeanDesc.getPropertyDescSize(); ++i) {
-            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(i);
-            if (pd.isReadable() && pd.isWritable()) {
-                savedProperties.put(pd.getPropertyName(), pd.getValue(page));
-            }
-        }
-
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(itemClass);
         for (int i = 0; i < itemList.size(); ++i) {
             final Object item = itemList.get(i);
-            itemToPage(pageBeanDesc, page, item);
+            if (item == null) {
+                continue;
+            }
+            final Integer savedIndex = bindRowIndex(context, new Integer(i));
+            final Map savedValues = itemToPage(pageBeanDesc, page, item);
             enterRow(context, i, base);
+
             for (Iterator itr = base.getFacetsAndChildren(); itr.hasNext();) {
                 final UIComponent component = (UIComponent) itr.next();
                 component.processUpdates(context);
             }
-            leaveRow(context, base);
-            pageToItem(page, pageBeanDesc, item, itemBeanDesc);
-        }
 
-        // TEEDA-305(Seasar-user:7347)
-        for (final Iterator it = savedProperties.entrySet().iterator(); it
-                .hasNext();) {
-            final Entry entry = (Entry) it.next();
-            final String name = (String) entry.getKey();
-            final PropertyDesc pd = pageBeanDesc.getPropertyDesc(name);
-            pd.setValue(page, entry.getValue());
+            leaveRow(context, base);
+            pageToItem(page, pageBeanDesc, item, itemBeanDesc, savedValues);
+            bindRowIndex(context, savedIndex);
         }
     }
 
@@ -494,11 +487,15 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         setRowIndex(INITIAL_ROW_INDEX);
     }
 
-    public void bindRowIndex(final FacesContext context, final Integer rowIndex) {
+    public Integer bindRowIndex(final FacesContext context,
+            final Integer rowIndex) {
         final Object page = getPage(context);
         final Class pageClass = page.getClass();
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
-        setValue(beanDesc, page, getIndexName(), rowIndex);
+        final String indexName = getIndexName();
+        final Map savedValues = new HashMap();
+        setValue(beanDesc, page, indexName, rowIndex, savedValues);
+        return (Integer) savedValues.get(indexName);
     }
 
     public Object getPage(final FacesContext context) {
@@ -526,6 +523,15 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         omittag = (Boolean) values[4];
     }
 
+    public void save(final SavedState state) {
+        state.setLocalValue(new Integer(rowSize));
+    }
+
+    public void restore(final SavedState state) {
+        Integer value = (Integer) state.getLocalValue();
+        rowSize = value == null ? 0 : value.intValue();
+    }
+
     public int getRowSize() {
         return rowSize;
     }
@@ -551,72 +557,75 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         throw new IllegalStateException(items.getClass().toString());
     }
 
-    public void processItem(final BeanDesc pageBeanDesc, final Object page,
-            final Object item, final int index) {
-        final String indexName = getIndexName();
-        final Integer indexValue = new Integer(index);
-        setValue(pageBeanDesc, page, indexName, indexValue);
-        itemToPage(pageBeanDesc, page, item);
-    }
-
-    protected void itemToPage(final BeanDesc pageBeanDesc, final Object page,
+    public Map itemToPage(final BeanDesc pageBeanDesc, final Object page,
             final Object item) {
         if (item == null) {
-            return;
+            return Collections.EMPTY_MAP;
         }
         final String itemName = getItemName();
-        setValue(pageBeanDesc, page, itemName, item);
+        setValue(pageBeanDesc, page, itemName, item, null);
+        final Map savedValues = new HashMap();
         if (item instanceof Map) {
-            processMapItem(pageBeanDesc, page, (Map) item);
+            processMapItem(pageBeanDesc, page, (Map) item, savedValues);
         } else {
-            processBeanItem(pageBeanDesc, page, item);
+            processBeanItem(pageBeanDesc, page, item, savedValues);
         }
+        return savedValues;
     }
 
-    protected void pageToItem(final Object page, final BeanDesc pageBeanDesc,
-            final Object item, final BeanDesc itemBeanDesc) {
-        for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
-            final PropertyDesc itemPd = itemBeanDesc.getPropertyDesc(i);
-            if (!itemPd.isWritable()) {
-                continue;
-            }
-            final String propertyName = itemPd.getPropertyName();
-            if (!pageBeanDesc.hasPropertyDesc(propertyName)) {
-                continue;
-            }
+    public void pageToItem(final Object page, final BeanDesc pageBeanDesc,
+            final Object item, final BeanDesc itemBeanDesc,
+            final Map savedValues) {
+        for (final Iterator it = savedValues.entrySet().iterator(); it
+                .hasNext();) {
+            Entry entry = (Entry) it.next();
+            String propertyName = (String) entry.getKey();
+            Object savedPageValue = entry.getValue();
             final PropertyDesc pagePd = pageBeanDesc
                     .getPropertyDesc(propertyName);
-            if (pagePd.isReadable()) {
-                final Object pageValue = pagePd.getValue(page);
-                // https://www.seasar.org/issues/browse/TEEDA-149
-                itemPd.setValue(item, pageValue);
+            if (!pagePd.isReadable()) {
+                continue;
+            }
+            final Object pageValue = pagePd.getValue(page);
+            if (pagePd.isWritable()) {
+                pagePd.setValue(page, savedPageValue);
+            }
+            if (item instanceof Map) {
+                ((Map) item).put(propertyName, pageValue);
+            } else {
+                final PropertyDesc itemPd = itemBeanDesc
+                        .getPropertyDesc(propertyName);
+                if (itemPd.isWritable()) {
+                    itemPd.setValue(item, pageValue);
+                }
             }
         }
     }
 
-    protected void processBeanItem(final BeanDesc beanDesc, final Object page,
-            final Object item) {
+    protected void processBeanItem(final BeanDesc pageBeanDesc,
+            final Object page, final Object item, final Map savedValues) {
         final BeanDesc itemBeanDesc = BeanDescFactory.getBeanDesc(item
                 .getClass());
         for (int i = 0; i < itemBeanDesc.getPropertyDescSize(); i++) {
             final PropertyDesc pd = itemBeanDesc.getPropertyDesc(i);
-            final String name = pd.getPropertyName();
-            if (beanDesc.hasPropertyDesc(name) &&
-                    beanDesc.getPropertyDesc(name).isWritable()) {
-                final Object value = getValue(itemBeanDesc, item, name);
-                setValue(beanDesc, page, name, value);
+            final String propertyName = pd.getPropertyName();
+            if (pageBeanDesc.hasPropertyDesc(propertyName) &&
+                    pageBeanDesc.getPropertyDesc(propertyName).isWritable()) {
+                final Object value = getValue(itemBeanDesc, item, propertyName);
+                setValue(pageBeanDesc, page, propertyName, value, savedValues);
             }
         }
     }
 
-    protected void processMapItem(final BeanDesc beanDesc, final Object page,
-            final Map item) {
-        for (final Iterator i = item.keySet().iterator(); i.hasNext();) {
-            final String name = (String) i.next();
-            if (beanDesc.hasPropertyDesc(name) &&
-                    beanDesc.getPropertyDesc(name).isWritable()) {
-                final Object value = item.get(name);
-                setValue(beanDesc, page, name, value);
+    protected void processMapItem(final BeanDesc pageBeanDesc,
+            final Object page, final Map item, final Map savedValues) {
+        for (final Iterator it = item.entrySet().iterator(); it.hasNext();) {
+            Entry entry = (Entry) it.next();
+            String propertyName = (String) entry.getKey();
+            Object value = entry.getValue();
+            if (pageBeanDesc.hasPropertyDesc(propertyName) &&
+                    pageBeanDesc.getPropertyDesc(propertyName).isWritable()) {
+                setValue(pageBeanDesc, page, propertyName, value, savedValues);
             }
         }
     }
@@ -633,7 +642,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     }
 
     protected void setValue(final BeanDesc beanDesc, final Object page,
-            final String propertyName, final Object value) {
+            final String propertyName, final Object value, final Map savedValues) {
         if (beanDesc.hasPropertyDesc(propertyName)) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
             Class pdClass = pd.getPropertyType();
@@ -642,6 +651,9 @@ public class TForEach extends UIComponentBase implements NamingContainer,
             }
             final Class valueClass = (value != null) ? value.getClass() : null;
             if (pd.isWritable() && isRelatedClass(pdClass, valueClass)) {
+                if (savedValues != null && pd.isReadable()) {
+                    savedValues.put(propertyName, pd.getValue(page));
+                }
                 pd.setValue(page, value);
             }
         }

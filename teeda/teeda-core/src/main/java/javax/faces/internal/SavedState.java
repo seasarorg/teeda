@@ -87,4 +87,12 @@ public class SavedState implements Serializable {
         holder.setSubmittedValue(getSubmittedValue());
     }
 
+    public void save(ComponentStatesHolder holder) {
+        holder.save(this);
+    }
+
+    public void restore(ComponentStatesHolder holder) {
+        holder.restore(this);
+    }
+
 }

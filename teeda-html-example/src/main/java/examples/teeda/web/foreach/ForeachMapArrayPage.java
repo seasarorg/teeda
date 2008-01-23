@@ -13,16 +13,24 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package javax.faces.internal;
+package examples.teeda.web.foreach;
 
-/**
- * @author higa
- * 
- */
-public interface ComponentStatesHolder {
+import java.util.HashMap;
+import java.util.Map;
 
-    void save(SavedState state);
+public class ForeachMapArrayPage {
 
-    void restore(SavedState state);
+	public Map[] aaaItems;
 
+	public Map aaa;
+
+	public String foo;
+
+	public void initialize() {
+		aaaItems = new Map[4];
+		for (int i = 0; i < 4; ++i) {
+			aaaItems[i] = new HashMap();
+			aaaItems[i].put("foo", Integer.toString(i));
+		}
+	}
 }

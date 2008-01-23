@@ -565,10 +565,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
             writer.startElement(JsfConstants.TBODY_ELEM, body);
             for (int i = 0; i < rowSize; ++i) {
-                htmlGrid.enterRow(context, i, body);
-                if (i < items.length) {
-                    htmlGrid.processItem(beanDesc, page, items[i], i);
+                final Object item = items[i];
+                if (item == null) {
+                    continue;
                 }
+                final Integer savedIndex = htmlGrid.bindRowIndex(context,
+                        new Integer(i));
+                final Map savedValues = htmlGrid.itemToPage(beanDesc, page,
+                        item);
+                htmlGrid.enterRow(context, i, body);
+
                 final GridRowContext row = new GridRowContext();
                 for (final Iterator it = getRenderedChildrenIterator(body); it
                         .hasNext();) {
@@ -582,7 +588,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 if (rowContext == null) {
                     rowContext = row;
                 }
+
                 htmlGrid.leaveRow(context, body);
+                htmlGrid.pageToItem(page, beanDesc, item, BeanDescFactory
+                        .getBeanDesc(item.getClass()), savedValues);
+                htmlGrid.bindRowIndex(context, savedIndex);
             }
             writer.endElement(JsfConstants.TBODY_ELEM);
             writer.endElement(JsfConstants.TABLE_ELEM);
@@ -640,10 +650,15 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         writer.startElement(JsfConstants.TBODY_ELEM, body);
 
         for (int i = 0; i < rowSize; ++i) {
-            htmlGrid.enterRow(context, i, body);
-            if (i < items.length) {
-                htmlGrid.processItem(beanDesc, page, items[i], i);
+            final Object item = items[i];
+            if (item == null) {
+                continue;
             }
+            final Map savedValues = htmlGrid.itemToPage(beanDesc, page, item);
+            final Integer savedIndex = htmlGrid.bindRowIndex(context,
+                    new Integer(i));
+            htmlGrid.enterRow(context, i, body);
+
             rowContext.resetRow();
             for (final Iterator it = getRenderedChildrenIterator(body); it
                     .hasNext();) {
@@ -653,7 +668,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                             attribute, rowContext);
                 }
             }
+
             htmlGrid.leaveRow(context, body);
+            htmlGrid.bindRowIndex(context, savedIndex);
+            htmlGrid.pageToItem(page, beanDesc, item, BeanDescFactory
+                    .getBeanDesc(item.getClass()), savedValues);
         }
 
         writer.endElement(JsfConstants.TBODY_ELEM);
@@ -1063,8 +1082,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         scriptCallList = new ArrayList();
                     }
                     for (int i = renderRowLength; i < items.length; ++i) {
+                        final Object item = items[i];
+                        if (item == null) {
+                            continue;
+                        }
+                        final Integer savedIndex = htmlGrid.bindRowIndex(
+                                context, new Integer(i));
+                        final Map savedValues = htmlGrid.itemToPage(beanDesc,
+                                page, item);
                         htmlGrid.enterRow(context, i, body);
-                        htmlGrid.processItem(beanDesc, page, items[i], i);
+
                         final GridRowContext row = new GridRowContext();
                         for (final Iterator it = getRenderedChildrenIterator(body); it
                                 .hasNext();) {
@@ -1079,7 +1106,13 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                         if (rowContext == null) {
                             rowContext = row;
                         }
+
                         htmlGrid.leaveRow(context, body);
+                        htmlGrid.pageToItem(page, beanDesc, item,
+                                BeanDescFactory.getBeanDesc(item.getClass()),
+                                savedValues);
+                        htmlGrid.bindRowIndex(context, savedIndex);
+
                         if (i != 0 && (items.length % (i + 1) == 0) &&
                                 htmlGrid.isAsync()) {
                             String str = writer.toString();
@@ -1133,8 +1166,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                     scriptCallList = new ArrayList();
                 }
                 for (int i = renderRowLength; i < items.length; ++i) {
+                    final Object item = items[i];
+                    if (item == null) {
+                        continue;
+                    }
+                    final Map savedValues = htmlGrid.itemToPage(beanDesc, page,
+                            item);
+                    final Integer savedIndex = htmlGrid.bindRowIndex(context,
+                            new Integer(i));
                     htmlGrid.enterRow(context, i, body);
-                    htmlGrid.processItem(beanDesc, page, items[i], i);
+
                     rowContext.resetRow();
                     for (final Iterator it = getRenderedChildrenIterator(body); it
                             .hasNext();) {
@@ -1144,7 +1185,12 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                                     writer, attribute, rowContext);
                         }
                     }
+
                     htmlGrid.leaveRow(context, body);
+                    htmlGrid.bindRowIndex(context, savedIndex);
+                    htmlGrid.pageToItem(page, beanDesc, item, BeanDescFactory
+                            .getBeanDesc(item.getClass()), savedValues);
+
                     if (i != 0 && (items.length % (i + 1) == 0) &&
                             htmlGrid.isAsync()) {
                         String str = writer.toString();
