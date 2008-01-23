@@ -64,4 +64,20 @@
 		<copy file="../teeda-tiger/target/teeda-tiger-${ver}-sources.jar"
 			todir="src/main/webapp/WEB-INF/lib/sources"/>
 	</target>
+
+	<target name="create-war-was61">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="target"/>
+		</delete>
+		<mkdir dir="target"/>
+		<war destfile="target/teeda-html-example.war" webxml="src/main/webapp/WEB-INF/web.xml">
+			<fileset dir="src/main/webapp">
+				<exclude name="WEB-INF/lib/sources/"/>
+				<exclude name="WEB-INF/lib/geronimo-jta_1.1_spec-1.0.jar"/>
+			</fileset>
+			<lib dir="lib">
+				<include name="geronimo-jta_1.1_spec-1.0-tsr.jar"/>
+			</lib>
+		</war>
+	</target>
 </project>
