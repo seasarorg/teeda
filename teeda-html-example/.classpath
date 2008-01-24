@@ -29,8 +29,5 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomahawk-1.1.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/lib/sources/xercesImpl-2.6.2-sources.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>
