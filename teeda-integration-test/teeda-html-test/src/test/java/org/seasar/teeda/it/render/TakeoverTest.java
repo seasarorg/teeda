@@ -95,4 +95,286 @@ public class TakeoverTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("cccc", "c1");
 	}
 
+	public void testTakeover_Default() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doDefault");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "c");
+		tester.assertTextEqualsById("redirect2", "d");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "f");
+
+		// ## Act ##
+		tester.clickLinkById("reload");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "f");
+	}
+
+	public void testTakeover_Never() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doNever");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
+	public void testTakeover_IncludeRedirect1() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doIncludeRedirect1");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "c");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "");
+		tester.assertTextEqualsById("subapp2", "");
+
+		// ## Act ##
+		tester.clickLinkById("reload");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
+	public void testTakeover_ExcludeRedirect2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doExcludeRedirect2");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "c");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "f");
+
+		// ## Act ##
+		tester.clickLinkById("reload");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "f");
+	}
+
+	public void testTakeover_IncludeSubapp1() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doIncludeSubapp1");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+
+		// ## Act ##
+		tester.clickLinkById("reload");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
+	public void testTakeover_ExcludeSubapp2() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doExcludeSubapp2");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "c");
+		tester.assertTextEqualsById("redirect2", "d");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+
+		// ## Act ##
+		tester.clickLinkById("reload");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "a");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
+	public void testTakeover_IncludeSubapp1NoProperty() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doIncludeSubapp1NoProperty");
+		tester.dumpHtml();
+
+		tester.submitById("doConfirm");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
+	public void testTakeover_ExcludeSubapp2NoProperty() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/takeover/input.html");
+		tester.dumpHtml();
+
+		tester.setTextById("data", "a");
+		tester.setTextById("page", "b");
+		tester.setTextById("redirect1", "c");
+		tester.setTextById("redirect2", "d");
+		tester.setTextById("subapp1", "e");
+		tester.setTextById("subapp2", "f");
+
+		tester.submitById("doExcludeSubapp2NoProperty");
+		tester.dumpHtml();
+
+		tester.submitById("doConfirm");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data", "");
+		tester.assertTextEqualsById("page", "");
+		tester.assertTextEqualsById("redirect1", "");
+		tester.assertTextEqualsById("redirect2", "");
+		tester.assertTextEqualsById("subapp1", "e");
+		tester.assertTextEqualsById("subapp2", "");
+	}
+
 }

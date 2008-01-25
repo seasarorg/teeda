@@ -181,4 +181,25 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("message", "");
 	}
 
+	public void testNoProperty_TEEDA431() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/hasProperty.html");
+		tester.dumpHtml();
+
+		tester.setTextByName("Form:data1", "foo");
+		tester.setTextByName("Form:data2", "bar");
+		tester.submitById("doOtherPage");
+		tester.dumpHtml();
+
+		tester.submitById("doBack");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data1", "");
+		tester.assertTextEqualsById("data2", "bar");
+	}
+
 }
