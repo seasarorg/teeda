@@ -167,9 +167,6 @@ public class SessionPagePersistence implements PagePersistence {
         Class pageClass = page.getClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(pageClass);
         Map nextPageProperties = getNextPageProperties(pageDesc, viewId);
-        if (nextPageProperties.isEmpty()) {
-            return;
-        }
         savePageValues(subappValues, redirectValues, context, beanDesc,
                 previousViewId, pageDesc, page, nextPageProperties);
     }
@@ -275,8 +272,8 @@ public class SessionPagePersistence implements PagePersistence {
                     beanDesc, page, properties, nextPageProperties, pageDesc);
         } else if (isTakeOverExclude(takeOverDesc)) {
             subappValues = refreshSubApplicationScopeMap(context, subappValues);
-            saveExcludePageValues(subappValues, context, beanDesc, page,
-                    properties, nextPageProperties);
+            saveExcludePageValues(subappValues, redirectValues, context,
+                    beanDesc, page, properties, nextPageProperties, pageDesc);
         } else {
             saveDefaultPageValues(subappValues, redirectValues, context,
                     beanDesc, page, nextPageProperties, pageDesc);
@@ -320,31 +317,38 @@ public class SessionPagePersistence implements PagePersistence {
         for (int i = 0; i < properties.length; ++i) {
             String propertyName = properties[i];
             PropertyDesc pd = beanDesc.getPropertyDesc(propertyName);
-            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
-                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
+            if (!PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
             if (pageDesc.isRedirectScopeProperty(propertyName)) {
                 putValue(redirectValues, page, pd);
-            } else {
+            } else if (pageDesc.isSubapplicationScopeProperty(propertyName)) {
+                putValue(subappValues, page, pd);
+            } else if (nextPageProperties.containsKey(pd.getPropertyName())) {
                 putValue(subappValues, page, pd);
             }
         }
     }
 
-    protected void saveExcludePageValues(Map subappValues,
+    protected void saveExcludePageValues(Map subappValues, Map redirectValues,
             FacesContext context, BeanDesc beanDesc, Object page,
-            String[] properties, Map nextPageProperties) {
+            String[] properties, Map nextPageProperties, PageDesc pageDesc) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
-                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
+            final String propertyName = pd.getPropertyName();
+            if (ArrayUtil.contains(properties, propertyName)) {
                 continue;
             }
-            if (ArrayUtil.contains(properties, pd.getPropertyName())) {
+            if (!PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
-            putValue(subappValues, page, pd);
+            if (pageDesc.isRedirectScopeProperty(propertyName)) {
+                putValue(redirectValues, page, pd);
+            } else if (pageDesc.isSubapplicationScopeProperty(propertyName)) {
+                putValue(subappValues, page, pd);
+            } else if (nextPageProperties.containsKey(pd.getPropertyName())) {
+                putValue(subappValues, page, pd);
+            }
         }
     }
 
@@ -353,24 +357,25 @@ public class SessionPagePersistence implements PagePersistence {
             Map nextPageProperties, PageDesc pageDesc) {
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             final PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            final String propertyName = pd.getPropertyName();
-            if (!nextPageProperties.containsKey(pd.getPropertyName()) ||
-                    !PagePersistenceUtil.isPersistenceProperty(pd)) {
+            if (!PagePersistenceUtil.isPersistenceProperty(pd)) {
                 continue;
             }
-            final Class thisPageType = pd.getPropertyType();
-            final Class nextPageType = (Class) nextPageProperties
-                    .get(propertyName);
-            if (nextPageType != thisPageType) {
-                final Object[] args = new Object[] { propertyName,
-                        thisPageType.getName(), nextPageType.getName() };
-                final String message = MessageFormatter.getMessage("WTDA0201",
-                        args);
-                logger.debug(message);
-            }
+            final String propertyName = pd.getPropertyName();
             if (pageDesc.isRedirectScopeProperty(propertyName)) {
                 putValue(redirectValues, page, pd);
-            } else {
+            } else if (pageDesc.isSubapplicationScopeProperty(propertyName)) {
+                putValue(subappValues, page, pd);
+            } else if (nextPageProperties.containsKey(pd.getPropertyName())) {
+                final Class thisPageType = pd.getPropertyType();
+                final Class nextPageType = (Class) nextPageProperties
+                        .get(propertyName);
+                if (nextPageType != thisPageType) {
+                    final Object[] args = new Object[] { propertyName,
+                            thisPageType.getName(), nextPageType.getName() };
+                    final String message = MessageFormatter.getMessage(
+                            "WTDA0201", args);
+                    logger.debug(message);
+                }
                 putValue(subappValues, page, pd);
             }
         }

@@ -156,8 +156,10 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         Map nextPageProperties = persistence.getNextPageProperties(pageDesc,
                 null);
         Map subappValues = new HashMap();
-        persistence.saveExcludePageValues(subappValues, getFacesContext(),
-                beanDesc, hoge, new String[] { "int1" }, nextPageProperties);
+        Map redirectValues = new HashMap();
+        persistence.saveExcludePageValues(subappValues, redirectValues,
+                getFacesContext(), beanDesc, hoge, new String[] { "int1" },
+                nextPageProperties, pageDesc);
         assertNull(subappValues.get("int1"));
         assertEquals(new Integer(2), subappValues.get("int2"));
         assertEquals(Boolean.TRUE, subappValues.get("bool1"));
@@ -176,8 +178,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         spp.setHtmlSuffix(htmlSuffix);
         NamingConventionImpl convention = new NamingConventionImpl();
         convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
-        String rootPath = "/"
-                + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/" +
+                ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         spp.setNamingConvention(convention);
@@ -358,8 +360,8 @@ public class SessionPagePersistenceTest extends TeedaExtensionTestCase {
         spp.setHtmlSuffix(htmlSuffix);
         NamingConventionImpl convention = new NamingConventionImpl();
         convention.addRootPackageName("org.seasar.teeda.extension.html.impl");
-        String rootPath = "/"
-                + ClassUtil.getPackageName(getClass()).replace('.', '/');
+        String rootPath = "/" +
+                ClassUtil.getPackageName(getClass()).replace('.', '/');
         convention.setViewRootPath(rootPath);
         convention.setViewExtension(".html");
         spp.setNamingConvention(convention);
