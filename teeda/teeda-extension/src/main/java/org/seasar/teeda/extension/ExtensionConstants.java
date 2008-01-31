@@ -93,8 +93,6 @@ public interface ExtensionConstants {
 
     String TIME_ATTR = "time";
 
-    String RENDERSPAN_ATTR = "renderSpan";
-
     String INVISIBLE_ATTR = "invisible";
 
     String OMITTAG_ATTR = "omittag";

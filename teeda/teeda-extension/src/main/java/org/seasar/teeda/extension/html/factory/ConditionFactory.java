@@ -18,11 +18,12 @@ package org.seasar.teeda.extension.html.factory;
 import java.util.Map;
 
 import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
+import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.processor.ConditionElementProcessor;
 
 /**
  * @author shot
@@ -38,14 +39,16 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
+        if (elementNode == null || pageDesc == null) {
+            return false;
+        }
         final String id = elementNode.getId();
         if (StringUtil.isEmpty(id)) {
             return false;
         }
-        final String tagName = elementNode.getTagName();
         final boolean isId = StringUtil.startsWithIgnoreCase(id,
-                IS_PARAM_PREFIX)
-                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX);
+                IS_PARAM_PREFIX) &&
+                !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX);
         final boolean isNotId = StringUtil.startsWithIgnoreCase(id,
                 ISNOT_PARAM_PREFIX);
         if (!isId && !isNotId) {
@@ -57,9 +60,7 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         } else {
             s = id.substring(ISNOT_PARAM_PREFIX.length());
         }
-        final boolean hasProperty = (pageDesc != null) ? pageDesc.hasProperty(StringUtil
-                .decapitalize(s)) : false;
-        return (isDiv(tagName) || isSpan(tagName)) && hasProperty;
+        return pageDesc.hasProperty(StringUtil.decapitalize(s));
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,
@@ -74,8 +75,8 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         String pageName = pageDesc.getPageName();
         String s = null;
         String expression = null;
-        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX)
-                && !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
+        if (StringUtil.startsWithIgnoreCase(id, IS_PARAM_PREFIX) &&
+                !StringUtil.startsWithIgnoreCase(id, ISNOT_PARAM_PREFIX)) {
             s = id.substring(IS_PARAM_PREFIX.length());
             s = StringUtil.decapitalize(s);
             s = s + " == true";
@@ -87,10 +88,6 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
             expression = getBindingExpression(pageName, s);
         }
         properties.put("rendered", expression);
-        String tagName = elementNode.getTagName();
-        if (tagName != null && JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName)) {
-            properties.put(ExtensionConstants.RENDERSPAN_ATTR, "true");
-        }
     }
 
     protected String getTagName() {
@@ -101,12 +98,14 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         return ExtensionConstants.TEEDA_EXTENSION_URI;
     }
 
-    private static final boolean isDiv(final String tagName) {
-        return JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName);
-    }
-
-    private static final boolean isSpan(final String tagName) {
-        return JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName);
+    protected ElementProcessor createProcessor(ElementNode elementNode,
+            PageDesc pageDesc, ActionDesc actionDesc, String uri, String tagName) {
+        Class tagClass = getTagClass(uri, tagName);
+        Map props = createProperties(elementNode, pageDesc, actionDesc);
+        ElementProcessor processor = new ConditionElementProcessor(tagClass,
+                props, elementNode.getTagName());
+        customizeProcessor(processor, elementNode, pageDesc, actionDesc);
+        return processor;
     }
 
 }

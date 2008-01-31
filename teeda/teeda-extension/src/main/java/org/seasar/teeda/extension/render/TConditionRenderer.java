@@ -41,7 +41,7 @@ public class TConditionRenderer extends AbstractRenderer {
     {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
         attribute.addAttributeName(ExtensionConstants.SUBMITTED);
-        attribute.addAttributeName(ExtensionConstants.RENDERSPAN_ATTR);
+        attribute.addAttributeName("tagName");
         attribute.addAttributeName("refresh");
     }
 
@@ -56,11 +56,7 @@ public class TConditionRenderer extends AbstractRenderer {
         final boolean omittag = condition.isOmittag();
         if (!(invisible || omittag)) {
             final ResponseWriter writer = context.getResponseWriter();
-            if (!condition.isRenderSpan()) {
-                writer.startElement(JsfConstants.DIV_ELEM, condition);
-            } else {
-                writer.startElement(JsfConstants.SPAN_ELEM, condition);
-            }
+            writer.startElement(condition.getTagName(), condition);
             RendererUtil.renderIdAttributeIfNecessary(writer, component,
                     getIdForRender(context, condition));
             renderRemainAttributes(condition, writer, attribute);
@@ -78,11 +74,7 @@ public class TConditionRenderer extends AbstractRenderer {
         final boolean omittag = condition.isOmittag();
         if (!(invisible || omittag)) {
             final ResponseWriter writer = context.getResponseWriter();
-            if (!((TCondition) component).isRenderSpan()) {
-                writer.endElement(JsfConstants.DIV_ELEM);
-            } else {
-                writer.endElement(JsfConstants.SPAN_ELEM);
-            }
+            writer.endElement(condition.getTagName());
         }
     }
 

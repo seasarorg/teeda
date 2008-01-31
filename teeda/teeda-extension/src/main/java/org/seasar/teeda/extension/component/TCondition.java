@@ -48,7 +48,7 @@ public class TCondition extends UIComponentBase {
 
     private static final int CONDITION_SIZE = 17;
 
-    private Boolean renderSpan = null;
+    private String tagName;
 
     private Boolean refresh;
 
@@ -60,6 +60,10 @@ public class TCondition extends UIComponentBase {
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
+    }
+
+    public String getFamily() {
+        return COMPONENT_FAMILY;
     }
 
     public boolean isRendered() {
@@ -150,10 +154,6 @@ public class TCondition extends UIComponentBase {
         conditions.put(cid, b);
     }
 
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
-
     public void processDecodes(FacesContext context) {
         AssertionUtil.assertNotNull("context", context);
         decode(context);
@@ -181,18 +181,12 @@ public class TCondition extends UIComponentBase {
         }
     }
 
-    public boolean isRenderSpan() {
-        if (renderSpan != null) {
-            return renderSpan.booleanValue();
-        }
-        ValueBinding vb = getValueBinding(ExtensionConstants.RENDERSPAN_ATTR);
-        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
-                : null;
-        return v != null ? v.booleanValue() : false;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setRenderSpan(boolean renderSpan) {
-        this.renderSpan = new Boolean(renderSpan);
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public boolean isRefresh() {
@@ -240,7 +234,7 @@ public class TCondition extends UIComponentBase {
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        renderSpan = (Boolean) values[1];
+        tagName = (String) values[1];
         refresh = (Boolean) values[2];
         omittag = (Boolean) values[3];
     }
@@ -248,7 +242,7 @@ public class TCondition extends UIComponentBase {
     public Object saveState(FacesContext context) {
         Object[] values = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = renderSpan;
+        values[1] = tagName;
         values[2] = refresh;
         values[3] = omittag;
         return values;

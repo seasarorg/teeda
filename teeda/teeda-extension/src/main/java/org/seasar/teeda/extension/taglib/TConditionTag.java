@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.taglib;
 import javax.faces.component.UIComponent;
 
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
@@ -26,7 +25,7 @@ import org.seasar.teeda.extension.component.TCondition;
  */
 public class TConditionTag extends UIComponentTagBase {
 
-    private String renderSpan;
+    private String tagName;
 
     private String refresh;
 
@@ -47,19 +46,18 @@ public class TConditionTag extends UIComponentTagBase {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, ExtensionConstants.RENDERSPAN_ATTR,
-                renderSpan);
+        setComponentProperty(component, "tagName", tagName);
         setComponentProperty(component, "refresh", refresh);
         setComponentProperty(component, "invisible", invisible);
         setComponentProperty(component, "omittag", omittag);
     }
 
-    public void setRenderSpan(String renderSpan) {
-        this.renderSpan = renderSpan;
+    public String getTagName() {
+        return tagName;
     }
 
-    public String getRenderSpan() {
-        return renderSpan;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getRefresh() {
@@ -88,7 +86,6 @@ public class TConditionTag extends UIComponentTagBase {
 
     public void release() {
         super.release();
-        renderSpan = null;
         refresh = null;
         invisible = null;
         omittag = null;
