@@ -1,6 +1,6 @@
 <project name="teeda-html-example" default="dist" basedir=".">
 
-	<property name="ver" value="1.0.12-rc2"/>
+	<property name="ver" value="1.0.12-rc3-SNAPSHOT"/>
 
 	<target name="dist" depends="copy-jar">
 		<delete includeemptydirs="true" failonerror="false">
