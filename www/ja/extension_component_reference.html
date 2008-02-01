@@ -1181,17 +1181,14 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td>
-          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;</b>または<b class="boldorange">&lt;div id="isNotCondition"&gt;&lt;/div&gt;</b><br/>
-          または<br/>
-          <b class="boldorange">&lt;span id="isCondition"&gt;&lt;/span&gt;</b>または<b class="boldorange">&lt;span id="isNotCondition"&gt;&lt;/span&gt;</b>
-        </td>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;</b>または<b class="boldorange">&lt;div id="isNotCondition"&gt;&lt;/div&gt;</b></td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">div</b>要素または<b class="boldorange">span</b>要素</span><br/>
-            <span>-<b class="boldorange">id</b>がisまたはisNotで始まっている</span><br/>
-            <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティとアクセサが定義してある</span>
+            <span>-</span><b class="boldorange">html</b>，<b class="boldorange">head</b>，<b class="boldorange">link，<b class="boldorange">style，<b class="boldorange">script</b></b></b>，<b class="boldorange">body</b>を除く任意の要素<br/>
+            <span>-<b class="boldorange">id</b>が<code>is</code>または<code>isNot</code>で始まっている</span><br/>
+            <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティが定義してある</span>
         </td>
       </tr>
       <tr>
@@ -1202,12 +1199,8 @@ h3.underline {
         <td>要素の各属性の使い方</td>
         <td>
           <span>-<b class="boldorange">te:omittag</b> (Teeda 1.0.12以降)</span><br/>
-          <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、
-          条件が成立した場合でも&lt;div&gt;要素または&lt;span&gt;要素の開始タグおよび終了タグは出力されません
-          (要素の内容は出力されます)．<br/>
-          te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、
-          条件が成立した場合は&lt;div&gt;要素または&lt;span&gt;要素の開始タグおよび終了タグが出力されます．
-          </p>
+          <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、 条件が成立した場合でも要素の開始タグおよび終了タグは出力されません (要素の内容は出力されます)．<br/>
+          te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、 条件が成立した場合は要素の開始タグおよび終了タグが出力されます．</p>
           &lt;span id=&quot;isXxx&quot; te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
         </td>
       </tr>
