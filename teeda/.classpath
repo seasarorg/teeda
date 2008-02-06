@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry output="build/teeda-core/classes" kind="src" path="teeda-core/src/main/java"/>
-	<classpathentry output="build/teeda-core/classes" kind="src" path="teeda-core/src/main/resources"/>
-	<classpathentry output="build/teeda-core/test-classes" kind="src" path="teeda-core/src/test/java"/>
-	<classpathentry output="build/teeda-core/test-classes" kind="src" path="teeda-core/src/test/resources"/>
-	<classpathentry output="build/teeda-extension/classes" kind="src" path="teeda-extension/src/main/java"/>
-	<classpathentry output="build/teeda-extension/classes" kind="src" path="teeda-extension/src/main/resources"/>
-	<classpathentry output="build/teeda-extension/test-classes" kind="src" path="teeda-extension/src/test/java"/>
-	<classpathentry output="build/teeda-extension/test-classes" kind="src" path="teeda-extension/src/test/resources"/>
-	<classpathentry output="build/teeda-ajax/classes" kind="src" path="teeda-ajax/src/main/java"/>
-	<classpathentry output="build/teeda-ajax/classes" kind="src" path="teeda-ajax/src/main/resources"/>
-	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/java"/>
-	<classpathentry output="build/teeda-ajax/test-classes" kind="src" path="teeda-ajax/src/test/resources"/>
+	<classpathentry kind="src" output="build/teeda-core/classes" path="teeda-core/src/main/java"/>
+	<classpathentry kind="src" output="build/teeda-core/classes" path="teeda-core/src/main/resources"/>
+	<classpathentry kind="src" output="build/teeda-core/test-classes" path="teeda-core/src/test/java"/>
+	<classpathentry kind="src" output="build/teeda-core/test-classes" path="teeda-core/src/test/resources"/>
+	<classpathentry kind="src" output="build/teeda-extension/classes" path="teeda-extension/src/main/java"/>
+	<classpathentry kind="src" output="build/teeda-extension/classes" path="teeda-extension/src/main/resources"/>
+	<classpathentry kind="src" output="build/teeda-extension/test-classes" path="teeda-extension/src/test/java"/>
+	<classpathentry kind="src" output="build/teeda-extension/test-classes" path="teeda-extension/src/test/resources"/>
+	<classpathentry kind="src" output="build/teeda-ajax/classes" path="teeda-ajax/src/main/java"/>
+	<classpathentry kind="src" output="build/teeda-ajax/classes" path="teeda-ajax/src/main/resources"/>
+	<classpathentry kind="src" output="build/teeda-ajax/test-classes" path="teeda-ajax/src/test/java"/>
+	<classpathentry kind="src" output="build/teeda-ajax/test-classes" path="teeda-ajax/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry sourcepath="lib/sources/commons-collections-3.1-sources.jar" kind="lib" path="lib/commons-collections-3.1.jar"/>
-	<classpathentry sourcepath="lib/sources/commons-el-1.0-sources.jar" kind="lib" path="lib/commons-el-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar" sourcepath="lib/sources/commons-collections-3.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-el-1.0.jar" sourcepath="lib/sources/commons-el-1.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-fileupload-1.2.jar" sourcepath="lib/sources/commons-fileupload-1.2-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-1.3.2.jar" sourcepath="lib/sources/commons-io-1.3.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlunit-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/geronimo-jsp_2.0_spec-1.0.jar"/>
@@ -23,6 +25,6 @@
 	<classpathentry kind="lib" path="lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlParserAPIs-2.6.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/seasar2"/>
-	<classpathentry sourcepath="lib/sources/teeda-xmlunit-0.1.0-sources.jar" kind="lib" path="lib/teeda-xmlunit-0.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/teeda-xmlunit-0.1.0.jar" sourcepath="lib/sources/teeda-xmlunit-0.1.0-sources.jar"/>
 	<classpathentry kind="output" path="build/teeda-core/classes"/>
 </classpath>

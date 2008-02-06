@@ -15,7 +15,9 @@
  */
 package examples.teeda.web.upload;
 
-import org.apache.myfaces.custom.fileupload.UploadedFile;
+import java.io.File;
+
+import org.seasar.teeda.extension.util.UploadedFile;
 
 public class UploadPage {
 	public static final String name_TRequiredValidator = null;
@@ -26,115 +28,65 @@ public class UploadPage {
 
 	public static final String uploadedFile3_TRequiredValidator = null;
 
-	private String name;
+	public String name;
 
-	private String fileName1;
+	public UploadedFile uploadedFile1;
 
-	private long fileSize1;
+	public String fileName1;
 
-	private UploadedFile uploadedFile1;
+	public long fileSize1;
 
-	private String fileName2;
+	public File fileLocation1;
 
-	private long fileSize2;
+	public String fileContent1;
 
-	private UploadedFile uploadedFile2;
+	public UploadedFile uploadedFile2;
 
-	private String fileName3;
+	public String fileName2;
 
-	private long fileSize3;
+	public long fileSize2;
 
-	private UploadedFile uploadedFile3;
+	public File fileLocation2;
 
-	public Class doUpload() {
-		fileName1 = uploadedFile1.getName();
+	public String fileContent2;
+
+	public UploadedFile uploadedFile3;
+
+	public String fileName3;
+
+	public long fileSize3;
+
+	public File fileLocation3;
+
+	public String fileContent3;
+
+	public Class doUpload() throws Exception {
+		fileName1 = uploadedFile1.getOriginalName();
 		fileSize1 = uploadedFile1.getSize();
+		if (!uploadedFile1.isInMemory()) {
+			fileLocation1 = uploadedFile1.getStoreLocation();
+		}
+		if (isTextContent(uploadedFile1)) {
+			fileContent1 = uploadedFile1.getString();
+		}
 		fileName2 = uploadedFile2.getName();
 		fileSize2 = uploadedFile2.getSize();
+		fileLocation2 = uploadedFile2.getStoreLocation();
+		if (isTextContent(uploadedFile2)) {
+			fileContent2 = uploadedFile2.getString();
+		}
 		fileName3 = uploadedFile3.getName();
 		fileSize3 = uploadedFile3.getSize();
+		fileLocation3 = uploadedFile3.getStoreLocation();
+		if (isTextContent(uploadedFile3)) {
+			fileContent3 = "" + uploadedFile3.getString();
+		}
 
 		return null;
 	}
 
-	public UploadedFile getUploadedFile1() {
-		return uploadedFile1;
+	protected boolean isTextContent(UploadedFile uploadedFile) {
+		String contentType = uploadedFile.getContentType();
+		return contentType != null && contentType.startsWith("text/");
 	}
-
-	public void setUploadedFile1(UploadedFile upliadFile) {
-		this.uploadedFile1 = upliadFile;
-	}
-
-	public UploadedFile getUploadedFile2() {
-		return uploadedFile2;
-	}
-
-	public void setUploadedFile2(UploadedFile uploadedFile2) {
-		this.uploadedFile2 = uploadedFile2;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public UploadedFile getUploadedFile3() {
-		return uploadedFile3;
-	}
-
-	public void setUploadedFile3(UploadedFile uploadedFile3) {
-		this.uploadedFile3 = uploadedFile3;
-	}
-
-	public String getFileName1() {
-		return fileName1;
-	}
-
-	public void setFileName1(String fileName1) {
-		this.fileName1 = fileName1;
-	}
-
-	public String getFileName2() {
-		return fileName2;
-	}
-
-	public void setFileName2(String fileName2) {
-		this.fileName2 = fileName2;
-	}
-
-	public String getFileName3() {
-		return fileName3;
-	}
-
-	public void setFileName3(String fileName3) {
-		this.fileName3 = fileName3;
-	}
-
-	public long getFileSize1() {
-		return fileSize1;
-	}
-
-	public void setFileSize1(long fileSize1) {
-		this.fileSize1 = fileSize1;
-	}
-
-	public long getFileSize2() {
-		return fileSize2;
-	}
-
-	public void setFileSize2(long fileSize2) {
-		this.fileSize2 = fileSize2;
-	}
-
-	public long getFileSize3() {
-		return fileSize3;
-	}
-
-	public void setFileSize3(long fileSize3) {
-		this.fileSize3 = fileSize3;
-	}
-
 }

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:x="http://myfaces.apache.org/tomahawk"
-  xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>FileUpload</title>
+<style>
+.onTeedaError {
+	background-color: #FFCCCC;
+}
+</style>
 </head>
 <body>
 <form id="Form" enctype="multipart/form-data">
@@ -12,41 +17,30 @@
 <span>設定をOSに適切にあわせてください.</span><br />
 <hr />
 <div><span id="allMessages"></span></div>
-TITLE::<input
-  type="text"
-  id="name"
-/>
+TITLE::<input type="text" id="name" />
 <br />
 
-<x:inputFileUpload
-  id="uploadedFile1"
-  value="#{upload_uploadPage.uploadedFile1}"
-/>
+<input type="file" id="uploadedFile1" accept="text/plain" />
 <br />
-<x:inputFileUpload
-  id="uploadedFile2"
-  value="#{upload_uploadPage.uploadedFile2}"
-/>
+<input type="file" id="uploadedFile2" accept="text/plain" />
 <br />
-<x:inputFileUpload
-  id="uploadedFile3"
-  value="#{upload_uploadPage.uploadedFile3}"
-/>
+<input type="file" id="uploadedFile3" accept="text/plain" />
 <br />
 
-
-<input
-  type="submit"
-  id="doUpload"
-  value="Upload"
- />
+<input type="submit" id="doUpload" value="Upload" />
 
 <p> ファイル名::<span id="fileName1"></span></p>
 <p> サイズ::<span id="fileSize1"></span>byte</p>
+<p> ロケーション::<span id="fileLocation1"></span></p>
+<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent1" te:omittag="true"></span></pre></p>
 <p> ファイル名::<span id="fileName2"></span></p>
 <p> サイズ::<span id="fileSize2"></span>byte</p>
+<p> ロケーション::<span id="fileLocation2"></span></p>
+<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent2" te:omittag="true"></span></pre></p>
 <p> ファイル名::<span id="fileName3"></span></p>
 <p> サイズ::<span id="fileSize3"></span>byte</p>
+<p> ロケーション::<span id="fileLocation3"></span></p>
+<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent3" te:omittag="true"></span></pre></p>
 </form>
 </body>
 </html>

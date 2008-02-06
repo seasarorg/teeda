@@ -85,6 +85,8 @@ public interface JsfConstants {
 
     String COL_VALUE = "col";
 
+    String FILE_VALUE = "file";
+
     String HIDDEN_VALUE = "hidden";
 
     String IMAGE_VALUE = "image";

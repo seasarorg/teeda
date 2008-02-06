@@ -100,4 +100,8 @@ public class HtmlInputTextRenderer extends AbstractInputRenderer {
         ignoreComponent.addAttributeName(name);
     }
 
+    public IgnoreAttribute getIgnoreAttributes() {
+        return ignoreComponent;
+    }
+
 }

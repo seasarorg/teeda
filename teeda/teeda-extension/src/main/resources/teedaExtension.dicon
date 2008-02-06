@@ -130,6 +130,8 @@
 		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory" />
 	<component name="inputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
+	<component name="inputFileFactory"
+		class="org.seasar.teeda.extension.html.factory.InputFileFactory" />
 	<component name="inputRadioFactory"
 		class="org.seasar.teeda.extension.html.factory.InputRadioFactory" />
 	<component name="radioItemFactory"

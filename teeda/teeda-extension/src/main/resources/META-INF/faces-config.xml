@@ -202,6 +202,14 @@
 	</component>
 	<component>
 		<component-type>
+			org.seasar.teeda.extension.HtmlInputFile
+		</component-type>
+		<component-class>
+			org.seasar.teeda.extension.component.html.THtmlInputFile
+		</component-class>
+	</component>
+	<component>
+		<component-type>
 			org.seasar.teeda.extension.HtmlCommandButton
 		</component-type>
 		<component-class>

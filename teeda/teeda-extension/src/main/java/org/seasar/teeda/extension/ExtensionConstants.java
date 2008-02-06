@@ -187,4 +187,6 @@ public interface ExtensionConstants {
 
     String REDIRECT_UNIQUE_KEY_PARAMETER = "te-uniquekey";
 
+    String REQUEST_ATTRIBUTE_UPLOADED_FILES = "org.seasar.teeda.core.filter.MultipartFormData.itemFiles";
+
 }
