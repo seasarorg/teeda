@@ -17,22 +17,20 @@ package examples.teeda.web.upload;
 
 import java.io.File;
 
+import org.seasar.teeda.extension.annotation.convert.UploadedFileFileConverter;
+import org.seasar.teeda.extension.annotation.convert.UploadedFileStringConverter;
+import org.seasar.teeda.extension.annotation.validator.Required;
 import org.seasar.teeda.extension.util.UploadedFile;
 
 public class UploadPage {
-	public static final String name_TRequiredValidator = null;
 
-	public static final String uploadedFile1_TRequiredValidator = null;
-
-	public static final String uploadedFile2_TRequiredValidator = null;
-
-	public static final String uploadedFile3_TRequiredValidator = null;
-
+	@Required
 	public String name;
 
+	@Required
 	public UploadedFile uploadedFile1;
 
-	public String fileName1;
+	public String fileName1 = "";
 
 	public long fileSize1;
 
@@ -40,17 +38,13 @@ public class UploadPage {
 
 	public String fileContent1;
 
-	public UploadedFile uploadedFile2;
+	@Required
+	@UploadedFileStringConverter
+	public String uploadedFile2;
 
-	public String fileName2;
-
-	public long fileSize2;
-
-	public File fileLocation2;
-
-	public String fileContent2;
-
-	public UploadedFile uploadedFile3;
+	@Required
+	@UploadedFileFileConverter
+	public File uploadedFile3;
 
 	public String fileName3;
 
@@ -69,18 +63,9 @@ public class UploadPage {
 		if (isTextContent(uploadedFile1)) {
 			fileContent1 = uploadedFile1.getString();
 		}
-		fileName2 = uploadedFile2.getName();
-		fileSize2 = uploadedFile2.getSize();
-		fileLocation2 = uploadedFile2.getStoreLocation();
-		if (isTextContent(uploadedFile2)) {
-			fileContent2 = uploadedFile2.getString();
-		}
+
 		fileName3 = uploadedFile3.getName();
-		fileSize3 = uploadedFile3.getSize();
-		fileLocation3 = uploadedFile3.getStoreLocation();
-		if (isTextContent(uploadedFile3)) {
-			fileContent3 = "" + uploadedFile3.getString();
-		}
+		// fileContent3 = new String(FileUtil.getBytes(uploadedFile3));
 
 		return null;
 	}

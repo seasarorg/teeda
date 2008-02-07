@@ -20,27 +20,34 @@
 TITLE::<input type="text" id="name" />
 <br />
 
-<input type="file" id="uploadedFile1" accept="text/plain" />
+File1::<input type="file" id="uploadedFile1" accept="text/plain" />
 <br />
-<input type="file" id="uploadedFile2" accept="text/plain" />
+File2::<input type="file" id="uploadedFile2" accept="text/plain" />
 <br />
-<input type="file" id="uploadedFile3" accept="text/plain" />
+File3::<input type="file" id="uploadedFile3" accept="text/plain" />
 <br />
-
+(File3にはweb.xmlのuploadThresholdSizeで指定したサイズより大きなファイルを指定してください．
+<br />
 <input type="submit" id="doUpload" value="Upload" />
 
-<p> ファイル名::<span id="fileName1"></span></p>
-<p> サイズ::<span id="fileSize1"></span>byte</p>
-<p> ロケーション::<span id="fileLocation1"></span></p>
-<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent1" te:omittag="true"></span></pre></p>
-<p> ファイル名::<span id="fileName2"></span></p>
-<p> サイズ::<span id="fileSize2"></span>byte</p>
-<p> ロケーション::<span id="fileLocation2"></span></p>
-<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent2" te:omittag="true"></span></pre></p>
-<p> ファイル名::<span id="fileName3"></span></p>
-<p> サイズ::<span id="fileSize3"></span>byte</p>
-<p> ロケーション::<span id="fileLocation3"></span></p>
-<p> 内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent3" te:omittag="true"></span></pre></p>
+<fieldset>
+<legend>File1</legend>
+<div>ファイル名::<span id="fileName1"></span></div>
+<div>サイズ::<span id="fileSize1"></span>byte</div>
+<div>サーバ側保存ファイル名::<span id="fileLocation1"></span></div>
+<div>内容::<pre style="border-style: solid; border-width: thin;"><span id="fileContent1" te:omittag="true"></span></pre></div>
+</fieldset>
+
+<fieldset>
+<legend>File2</legend>
+<div>内容::<pre style="border-style: solid; border-width: thin;"><span id="uploadedFile2-out" te:omittag="true"></span></pre></div>
+</fieldset>
+
+<fieldset>
+<legend>File3</legend>
+<div>サーバ側保存ファイル名::<span id="fileName3"></span></div>
+</fieldset>
+
 </form>
 </body>
 </html>

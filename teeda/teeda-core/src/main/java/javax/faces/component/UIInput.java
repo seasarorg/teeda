@@ -328,8 +328,12 @@ public class UIInput extends UIOutput implements EditableValueHolder {
             String expression = vb.getExpressionString();
             Converter converter = ConverterResource.getConverter(expression);
             if (converter != null) {
-                return converter.getAsObject(context, this,
-                        (String) submittedValue);
+                return converter
+                        .getAsObject(
+                                context,
+                                this,
+                                (submittedValue instanceof String) ? (String) submittedValue
+                                        : null);
             }
         }
         return null;
@@ -345,8 +349,12 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (submittedValue instanceof String) {
             Converter converter = getConverterWithType(context);
             if (converter != null) {
-                return converter.getAsObject(context, this,
-                        (String) submittedValue);
+                return converter
+                        .getAsObject(
+                                context,
+                                this,
+                                (submittedValue instanceof String) ? (String) submittedValue
+                                        : null);
             }
         }
         return submittedValue;

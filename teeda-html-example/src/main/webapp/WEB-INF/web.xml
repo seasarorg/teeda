@@ -88,7 +88,7 @@
       </init-param>
       <init-param>
         <param-name>uploadThresholdSize</param-name>
-        <param-value>1m</param-value>
+        <param-value>10k</param-value>
       </init-param>
       <!-- OS固有の設定 -->
       <init-param>

@@ -243,7 +243,9 @@ public class RendererUtil {
         if (converter == null) {
             return submittedValue;
         }
-        return converter.getAsObject(context, output, (String) submittedValue);
+        return converter.getAsObject(context, output,
+                (submittedValue instanceof String) ? (String) submittedValue
+                        : null);
     }
 
     public static Object getConvertedUIOutputValues(final FacesContext context,
@@ -260,7 +262,8 @@ public class RendererUtil {
         final Object ret = Array.newInstance(valueType, length);
         for (int i = 0; i < length; ++i) {
             final Object target = Array.get(submittedValue, i);
-            final String value = (String) target;
+            final String value = (target instanceof String) ? (String) target
+                    : null;
             final Object o = converter.getAsObject(context, output, value);
             ArrayUtil.setArrayValue(ret, valueType, o, i);
         }
