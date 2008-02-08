@@ -102,7 +102,6 @@ public class THtmlCommandButton extends HtmlCommandButton implements
             throw new DoubleSubmittedException(context.getViewRoot()
                     .getViewId(), getId());
         }
-        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
         NavigationHandlerUtil.redirect(context, path);
         return true;
     }
