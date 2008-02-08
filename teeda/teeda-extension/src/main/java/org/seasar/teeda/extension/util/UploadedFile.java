@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 public interface UploadedFile {
 
     /**
-     * アップロードされたファイルのクライアント側ファイルシステム上のベースファイル名を返します。
+     * アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のベースファイル名を返します。
      * <p>
      * 返されるベースファイル名にパスは含まれません。
      * </p>
@@ -41,9 +41,9 @@ public interface UploadedFile {
     String getName();
 
     /**
-     * アップロードされたファイルのクライアント側ファイルシステム上のファイル名を返します。
+     * アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のファイル名を返します。
      * <p>
-     * 返されるベースファイル名にパスが含まれる場合があります。
+     * ブラウザによっては，返されるファイル名にはパスが含まれる場合があります。
      * </p>
      * 
      * @return アップロードされたファイルのクライアント側ファイルシステム上のベースファイル名
@@ -127,7 +127,7 @@ public interface UploadedFile {
     void write(File file) throws Exception;
 
     /**
-     * アップロードされたファイルを保存したサーバ側ファイルシステム上の{@link File}を返します。
+     * アップロードされたファイルを保存した<strong>サーバ側</strong>ファイルシステム上の{@link File}を返します。
      * <p>
      * {@link #isInMemory()}が<code>true</code>の場合、 このメソッドは<code>null</code>を返します。
      * </p>

@@ -53,12 +53,12 @@ public class MultpartFormDataRequestWrapper extends HttpServletRequestWrapper {
 
     /**
      * @param request 
-     * @param maxSize 
+     * @param maxFileSize 
      * @param thresholdSize 
      * @param repositoryPath 
      */
     public MultpartFormDataRequestWrapper(final HttpServletRequest request,
-            final int maxSize, final int thresholdSize,
+            final int maxFileSize, final int thresholdSize,
             final String repositoryPath) {
         super(request);
         final DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -67,7 +67,7 @@ public class MultpartFormDataRequestWrapper extends HttpServletRequestWrapper {
             factory.setRepository(new File(repositoryPath));
         }
         fileUpload = new ServletFileUpload(factory);
-        fileUpload.setSizeMax(maxSize);
+        fileUpload.setFileSizeMax(maxFileSize);
         parseRequest(request);
     }
 

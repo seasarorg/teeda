@@ -3,7 +3,7 @@
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
@@ -43,6 +43,7 @@
 <li><a href="#newwindow">WindowIdとnewwindowクエリストリング</a></li>
 <li><a href="#layout">レイアウト</a></li>
 <li><a href="#dynamicValidation">動的なバリデーション</a></li>
+<li><a href="#fileupload">ファイルアップロード</a></li>
 </ul>
 </div>
 
@@ -371,7 +372,125 @@ public Validator getAaaValidator() {
     return chain;
 }
 </pre>
+<h3><b><a name="fileupload">ファイルアップロード</a></b></h3>
+<h4>web.xml</h4>
+<p>ファイルアップロードを利用するには，<code>web.xml</code>に<code>MultipartFormDataFilter</code>を設定します．<code>MultipartFormDataFilter</code>の設定は，Seasar2の<code>EncodingFilter</code>と<code>S2ContainerFilter</code>の間に記述してください．</p>
+<pre>&lt;filter&gt;
+  &lt;filter-name&gt;multipartFilter&lt;/filter-name&gt;
+  &lt;filter-class&gt;
+    org.seasar.teeda.extension.filter.MultipartFormDataFilter
+  &lt;/filter-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadMaxFileSize&lt;/param-name&gt;
+    &lt;param-value&gt;100m&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadThresholdSize&lt;/param-name&gt;
+    &lt;param-value&gt;100k&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;!-- OS固有の設定 --&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadRepositoryPath&lt;/param-name&gt;
+    &lt;param-value&gt;C:/temp/&lt;/param-value&gt;
+  &lt;/init-param&gt;
+&lt;/filter&gt;</pre>
+<pre>&lt;filter-mapping&gt;
+  &lt;filter-name&gt;multipartFilter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</pre>
+<p><code>&lt;filter&gt;</code>要素では以下の初期化パラメータを設定します．</p>
+<table border="1">
+<tbody>
+<tr>
+<th>パラメータ</th>
+<th>説明</th>
+</tr>
+<tr>
+<td><code>uploadMaxFileSize</code></td>
+<td>アップロードすることのできるファイルの最大サイズです．<br>
+数値の後にk(キロ)，m(メガ)，g（ギガ）を指定することができます．</td>
+</tr>
+<tr>
+<td><code>uploadThresholdSize</code></td>
+<td>アップロードされたファイルをサーバ側のファイルシステムに保存するかしないかの閾値です．指定されたサイズより大きなファイルはサーバ側のファイルシステム上に保存されます．<br>数値の後にk(キロ)，m(メガ)，g（ギガ）を指定することができます．</td>
+</tr>
+<tr>
+<td><code>uploadRepositoryPath</code></td>
+<td>アップロードされたファイルを保存するディレクトリです．</td>
+</tr>
+</tbody>
+</table>
+<h4>テンプレートHTML</h4>
+<p>テンプレートHTMLには，通常のHTMLとして<code>&lt;input type=&quot;file&quot;&gt;</code>要素を記述し，id属性を付与します．</p>
+<pre>&lt;input type=&quot;file&quot; id=&quot;uploadedFile&quot; /&gt;</pre>
+<h4>ページクラス</h4>
+<p>ページクラスには，次の型のプロパティを定義します．プロパティ名はテンプレートHTMLのid属性値と一致させます．</p>
+<ul>
+<li><code>org.seasar.teeda.extension.util.UploadedFile</code>
+</ul>
+<pre>public UploadedFile uploadedFile;</pre>
+<h4><code>UploadedFile</code></h4>
+<p>UploadedFileクラスには以下のメソッドがあります．</p>
+<dl>
+<dt><code>String getName()</code>
+<dd>アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のベースファイル名を返します．<br>
+返されるベースファイル名にパスは含まれません．
+<dt><code>String getOriginalName()</code>
+<dd>アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のファイル名を返します．<br>
+ブラウザによっては，返されるファイル名にはパスが含まれる場合があります．
+<dt><code>String getContentType()</code>
+<dd>アップロードされたファイルのコンテントタイプを返します．
+<dt><code>long getSize()</code>
+<dd>アップロードされたファイルのサイズを返します．
+<dt><code>boolean isInMemory()</code>
+<dd>アップロードされたファイルがメモリ上にある場合は<code>true</code>を返します．
+<dt><code>byte[] get()</code>
+<dd>アップロードされたファイルの内容を含むバイト配列を返します．
+<dt><code>String getString()</code>
+<dd>アップロードされたファイルの内容を文字列として返します．<br>
+アップロードされたファイルのコンテントタイプにエンコーディングが含まれていればそれが使われます．コンテントタイプにエンコーディングが含まれていない場合はISO-8859-1が使われます．
+<dt><code>String getString(String encoding) throws UnsupportedEncodingException</code>
+<dd>アップロードされたファイルの内容を指定のエンコーディングによる文字列として返します．
+<dt><code>InputStream getInputStream() throws IOException</code>
+<dd>アップロードされたファイルの内容を読み込むための入力ストリームを返します．<br>
+返された入力ストリームは呼び出し側でクローズする必要があります．
+<dt><code>void write(File file) throws Exception</code>
+<dd>アップロードされたファイルの内容を指定のファイルに書き込みます．
+<dt><code>File getStoreLocation()</code>
+<dd>アップロードされたファイルを保存した<strong>サーバ側</strong>ファイルシステム上の<code>File</code>を返します．<br>
+<code>isInMemory()</code>が<code>true</code>の場合， このメソッドは<code>null</code>を返します．
+<dt><code>void delete()</code>
+<dd>アップロードされたファイルがサーバ側のファイルシステムに保存されている場合、それを削除します．
+</dl>
+<h4>コンバータ</h4>
+<p>コンバータを使用するとプロパティの型を<code>UploadedFile</code>以外の型にすることができます．</p>
+<table border="1">
 
+<tr>
+<th>コンバータ</th>
+<th>プロパティの型</th>
+<th>説明</th>
+</tr>
+<tr><td><code>TUploadedFileBytesConverter</code></td>
+<td><code>byte[]</code></td>
+<td>アップロードされたファイルの内容をバイト列に変換します．</td>
+</tr>
+<tr><td><code>TUploadedFileStringConverter</code></td>
+<td><code>String</code></td>
+<td>アップロードされたファイルの内容を文字列に変換します．<br>
+encoding属性でエンコーディングを指定することもできます．省略するとアップロードされたファイルのコンテントタイプにエンコーディングが含まれていればそれが使われます．コンテントタイプにエンコーディングが含まれていない場合はISO-8859-1が使われます．</td>
+</tr>
+<tr><td><code>TUploadedFileInputStreamConverter</code></td>
+<td><code>java.io.InputStream</code></td>
+<td>アップロードされたファイルの内容を読み込むための入力ストリームに変換します．<br>
+返された入力ストリームは呼び出し側でクローズする必要があります．</td>
+</tr>
+<tr><td><code>TUploadedFileFileConverter</code></td>
+<td><code>java.io.File</code></td>
+<td>アップロードされたファイルを保存したサーバ側ファイルシステム上の<code>File</code>に変換します．<br>
+アップロードされたファイルがサーバ側ファイルシステム上に保存されていない場合、プロパティは<code>null</code>に設定されます．</td>
+</tr>
+</table>
 <!-- document end -->
 <!-- don't edit start -->
 </td>
