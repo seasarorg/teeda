@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.html.THtmlLink;
+import org.seasar.teeda.extension.util.PathUtil;
 
 /**
  * @author shot
@@ -63,8 +64,10 @@ public class THtmlLinkRenderer extends AbstractRenderer {
         }
         final String href = link.getHref();
         if (!StringUtil.isEmpty(href)) {
-            RendererUtil.renderAttribute(writer, JsfConstants.HREF_ATTR, href,
-                    null);
+            RendererUtil
+                    .renderAttribute(writer, JsfConstants.HREF_ATTR,
+                            PathUtil.toAbsolutePath(context, href, link
+                                    .getBaseViewId()), null);
         }
         final String src = link.getSrc();
         if (!StringUtil.isEmpty(src)) {

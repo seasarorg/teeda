@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -46,7 +46,9 @@ public class InputRadioFactory extends AbstractElementProcessorFactory {
         if (pageDesc == null) {
             return false;
         }
-        if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        final String tagName = elementNode.getTagName();
+        if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(tagName) &&
+                !JsfConstants.DIV_ELEM.equalsIgnoreCase(tagName)) {
             return false;
         }
         final String id = elementNode.getId();
@@ -56,28 +58,34 @@ public class InputRadioFactory extends AbstractElementProcessorFactory {
         if (!pageDesc.hasProperty(id)) {
             return false;
         }
-        int radioNodeCount = 0;
+        if (!hasRadioNode(id, elementNode)) {
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean hasRadioNode(final String id,
+            final ElementNode elementNode) {
         for (int i = 0; i < elementNode.getChildSize(); i++) {
             final HtmlNode child = elementNode.getChild(i);
             if (child instanceof ElementNode) {
                 final ElementNode node = (ElementNode) child;
                 final String childTagName = node.getTagName();
-                if (!JsfConstants.INPUT_ELEM.equalsIgnoreCase(childTagName)
-                        || !JsfConstants.RADIO_VALUE.equalsIgnoreCase(node
+                if (JsfConstants.INPUT_ELEM.equalsIgnoreCase(childTagName) &&
+                        JsfConstants.RADIO_VALUE.equalsIgnoreCase(node
                                 .getProperty(JsfConstants.TYPE_ATTR))) {
-                    continue;
+                    final String name = node
+                            .getProperty(JsfConstants.NAME_ATTR);
+                    if (id.equals(name)) {
+                        return true;
+                    }
                 }
-                final String name = node.getProperty(JsfConstants.NAME_ATTR);
-                if ((name == null) || !name.equals(id)) {
-                    continue;
+                if (hasRadioNode(id, node)) {
+                    return true;
                 }
-                radioNodeCount++;
             }
         }
-        if (radioNodeCount == 0) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     protected void customizeProperties(Map properties, ElementNode elementNode,

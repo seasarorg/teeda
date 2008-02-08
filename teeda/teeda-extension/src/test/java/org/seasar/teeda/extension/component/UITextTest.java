@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,11 +28,11 @@ import org.seasar.teeda.core.mock.MockFacesContextImpl;
 public class UITextTest extends AbstractUIComponentTest {
 
     private MockFacesContext facesContext = new MockFacesContextImpl();
-	
+
     protected UIComponent createUIComponent() {
         return new UIText();
     }
-    
+
     protected UIText createUIText() {
         return (UIText) createUIComponent();
     }
@@ -45,5 +45,5 @@ public class UITextTest extends AbstractUIComponentTest {
         UIText component2 = createUIText();
         component2.restoreState(facesContext, state);
         assertEquals("1", value, component2.getValue());
-	}
+    }
 }

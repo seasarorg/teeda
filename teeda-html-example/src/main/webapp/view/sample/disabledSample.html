@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="JavaScript" type="text/javascript" src="../../js/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/event.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/disabled.js"></script>
+<title>Disabled Sample</title>
+<script type="text/javascript">
+//<![CDATA[
+//Kumu.dynamicLoad('disabled');
+
+//以下のincludeButtonコメントをDisabledConfに入れるとボタンのID指定で有効になります
+//そのかわりボタンのID指定を使用する時はform指定のexcludeFormは
+//無効になるので注意してください。
+DisabledConf = {
+  time : 50000,
+　　includeButton : ['doOnceHoge'],
+  excludeForm : ['test1', 'test3'],
+  submitMessage : function(){
+    alert('送信中です');
+  },
+  excludeAnchor : ['a2'],
+  anchorMessage : function(){
+    alert('遷移中です');
+  }
+}
+//]]>
+</script>
+</head>
+<body>
+<a id="a1" href="https://www.seasar.org/issues/">テストリンク1（2重送信防止）</a>&nbsp;
+<a id="a2" href="https://www.seasar.org/issues/">テストリンク2（ノーマル）</a><br/>
+<hr/>
+このformはボタンのID指定だよ
+<form id="test1" action="https://www.seasar.org/issues/">
+  <input type="submit" id="doOnceHoge" value="test1" />
+  <input type="submit" id="mope" value="test2" />
+</form>
+<hr/>
+このformは2重送信チェック有り
+<form id="test2" action="https://www.seasar.org/issues/">
+  <input type="submit" value="サブミットテスト1">  
+  <input type="submit" value="javascriptサブミットテスト1" onclick="document.forms[0].submit();"> 
+</form>
+<hr/>
+このformは2重送信チェック無し
+<form id="test3" action="https://www.seasar.org/issues/">
+  <input type="submit" value="サブミットテスト2">  
+  <input type="submit" value="javascriptサブミットテスト2" onclick="document.forms[1].submit();"> 
+</form>
+
+</body>
+</html>

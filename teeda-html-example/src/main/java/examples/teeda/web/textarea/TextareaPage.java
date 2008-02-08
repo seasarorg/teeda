@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,11 @@ package examples.teeda.web.textarea;
 
 public class TextareaPage {
 
+	public static final String bbb_textareaSeparatorCharacterConverter = null;
+
 	private String aaa;
+
+	private String bbb;
 
 	public String getAaa() {
 		return aaa;
@@ -25,6 +29,18 @@ public class TextareaPage {
 
 	public void setAaa(String aaa) {
 		this.aaa = aaa;
+	}
+
+	public String getBbb() {
+		return bbb;
+	}
+
+	public void setBbb(String bbb) {
+		this.bbb = bbb;
+	}
+
+	public void prerender() {
+		bbb = aaa;
 	}
 
 }

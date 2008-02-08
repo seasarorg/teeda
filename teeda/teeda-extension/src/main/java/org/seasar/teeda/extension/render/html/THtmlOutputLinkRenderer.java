@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,11 +68,12 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
                 htmlOutputLink);
         // PortletSupport
         if (PortletUtil.isPortlet(context)) {
-            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX)
-                    || htmlOutputLink.getId().startsWith(
+            if (htmlOutputLink.getId().startsWith(ExtensionConstants.GO_PREFIX) ||
+                    htmlOutputLink.getId().startsWith(
                             ExtensionConstants.JUMP_PREFIX)) {
                 PortletUrlBuilder urlBuilder = new PortletUrlBuilder();
                 urlBuilder.setBase(base);
+                urlBuilder.setParameterDelimiter("&amp;");
                 for (Iterator it = htmlOutputLink.getChildren().iterator(); it
                         .hasNext();) {
                     UIComponent child = (UIComponent) it.next();
@@ -92,6 +93,7 @@ public class THtmlOutputLinkRenderer extends HtmlOutputLinkRenderer {
             UrlBuilder urlBuilder = new UrlBuilder();
             final String sufiixedBase = getSuffixedBase(context, base);
             urlBuilder.setBase(sufiixedBase);
+            urlBuilder.setParameterDelimiter("&amp;");
             for (Iterator it = htmlOutputLink.getChildren().iterator(); it
                     .hasNext();) {
                 UIComponent child = (UIComponent) it.next();

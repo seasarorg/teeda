@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -232,19 +232,20 @@ public class ApplicationImplTest extends TeedaTestCase {
         assertEquals(3, ((HogeConverter) c).getNum());
     }
 
-//    public void testCreateConverter_notCreatedFromDI() throws Exception {
-//        // ## Arrange ##
-//        ComponentDef componentDef = new ComponentDefImpl(
-//                DateTimeConverter.class);
-//        componentDef.setComponentName("java.util.Date");
-//        getContainer().register(componentDef);
-//        ApplicationImpl app = createApplication();
-//        // ## Act & Assert ##
-//        assertNull(app.createConverter(Date.class));
-//    }
-    
+    //    public void testCreateConverter_notCreatedFromDI() throws Exception {
+    //        // ## Arrange ##
+    //        ComponentDef componentDef = new ComponentDefImpl(
+    //                DateTimeConverter.class);
+    //        componentDef.setComponentName("java.util.Date");
+    //        getContainer().register(componentDef);
+    //        ApplicationImpl app = createApplication();
+    //        // ## Act & Assert ##
+    //        assertNull(app.createConverter(Date.class));
+    //    }
+
     public void testGetWellKnownConverter() throws Exception {
-        assertEquals(IntegerConverter.class, ApplicationImpl.getWellKnownConverter(int.class).getClass());
+        assertEquals(IntegerConverter.class, ApplicationImpl
+                .getWellKnownConverter(int.class).getClass());
     }
 
     public void testCreateValueBinding() throws Exception {

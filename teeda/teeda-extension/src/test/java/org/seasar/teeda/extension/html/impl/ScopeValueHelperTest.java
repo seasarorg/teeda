@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.html.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.internal.scope.PageScope;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
@@ -99,6 +100,34 @@ public class ScopeValueHelperTest extends TeedaTestCase {
         final Map map2 = ScopeValueHelper
                 .getOrCreatePageScopeValues(getFacesContext());
         assertEquals("AAA", map2.get("aaa"));
+    }
+
+    public void testRemoveIfDoFinish() {
+        FacesContext context = getFacesContext();
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doXxx", context);
+        assertNotNull(ScopeValueHelper.getSubApplicationScopeValues(context));
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doFinish", context);
+        assertNull(ScopeValueHelper.getSubApplicationScopeValues(context));
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doFinishXxx", context);
+        assertNull(ScopeValueHelper.getSubApplicationScopeValues(context));
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doOnceXxx", context);
+        assertNotNull(ScopeValueHelper.getSubApplicationScopeValues(context));
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doOnceFinish", context);
+        assertNull(ScopeValueHelper.getSubApplicationScopeValues(context));
+
+        ScopeValueHelper.getOrCreateSubApplicationScopeValues(context);
+        ScopeValueHelper.removeIfDoFinish("doOnceFinishXxx", context);
+        assertNull(ScopeValueHelper.getSubApplicationScopeValues(context));
     }
 
 }

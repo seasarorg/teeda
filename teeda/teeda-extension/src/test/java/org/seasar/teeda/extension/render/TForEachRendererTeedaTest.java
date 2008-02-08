@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.render.AbstractRendererTeedaTest;
@@ -67,6 +66,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final String pageName = "fooPage";
         FooPage page = new FooPage();
         container.register(page, pageName);
+        forEach.setTagName("div");
         forEach.setPageName(pageName);
         forEach.setItemsName("barItems");
 
@@ -101,8 +101,10 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final String pageName = "fooPage";
         FooMapPage page = new FooMapPage();
         container.register(page, pageName);
+        forEach.setTagName("tbody");
         forEach.setPageName(pageName);
         forEach.setItemsName("barItems");
+        forEach.setOmittag(true);
 
         // items
         {
@@ -139,6 +141,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
             final String pageName = "fooPage";
             FooPage page = new FooPage();
             container.register(page, pageName);
+            forEach.setTagName("tbody");
             forEach.setPageName(pageName);
             forEach.setItemsName("barItems");
             forEach.setId("a");
@@ -165,10 +168,11 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
 
         // ## Assert ##
         assertEquals(
-                "<input type=\"text\" id=\"z\" name=\"a:0:z\" value=\"111\" />"
+                "<tbody id=\"a\">"
+                        + "<input type=\"text\" id=\"z\" name=\"a:0:z\" value=\"111\" />"
                         + "<input type=\"text\" id=\"z\" name=\"a:1:z\" value=\"222\" />"
-                        + "<input type=\"text\" id=\"z\" name=\"a:2:z\" value=\"333\" />",
-                getResponseText());
+                        + "<input type=\"text\" id=\"z\" name=\"a:2:z\" value=\"333\" />"
+                        + "</tbody>", getResponseText());
     }
 
     public void testEncode_Hoge1() throws Exception {
@@ -178,6 +182,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final String pageName = "hogePage";
         final HogePage page = new HogePage();
         container.register(page, pageName);
+        forEach.setTagName("div");
         forEach.setPageName(pageName);
         forEach.setItemsName("fugaItems");
 
@@ -213,6 +218,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final String pageName = "hogePage";
         final HogeMapPage page = new HogeMapPage();
         container.register(page, pageName);
+        forEach.setTagName("div");
         forEach.setPageName(pageName);
         forEach.setItemsName("fugaItems");
 
@@ -254,6 +260,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         final String pageName = "fooPage";
         final StringArrayPage page = new StringArrayPage();
         container.register(page, pageName);
+        forEach.setTagName("div");
         forEach.setPageName(pageName);
         forEach.setItemsName("aaaItems");
 
@@ -294,6 +301,7 @@ public class TForEachRendererTeedaTest extends AbstractRendererTeedaTest {
         {
             final String pageName = "hogePage";
             container.register(page, pageName);
+            forEach.setTagName("tbody");
             forEach.setPageName(pageName);
             forEach.setItemsName("fugaItems");
             forEach.setId("a");

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"
+	xmlns:te="http://www.seasar.org/teeda/extension">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>入力画面</title>
+</head>
+<body>
+<form id="Form">
+<div><span id="messages"></span></div>
+<table border="1">
+<tr><th>スコープ</th><th>値</th></tr>
+<tr><td>デフォルト</td><td><input type="text" id="data" /></td></tr>
+<tr><td>Page</td><td><input type="text" id="page" /></td></tr>
+<tr><td>Redirect 1</td><td><input type="text" id="redirect1" /></td></tr>
+<tr><td>Redirect 2</td><td><input type="text" id="redirect2" /></td></tr>
+<tr><td>Subapp 1</td><td><input type="text" id="subapp1" /></td></tr>
+<tr><td>Subapp 2</td><td><input type="text" id="subapp2" /></td></tr>
+</table>
+<input type="submit" id="doDefault" value="Default" /><br/>
+<input type="submit" id="doNever" value="Never" /><br/>
+<input type="submit" id="doIncludeRedirect1" value="Include Redirect1" /><br/>
+<input type="submit" id="doExcludeRedirect2" value="Exclude Redirect2" /><br/>
+<input type="submit" id="doIncludeSubapp1" value="Include Subapp1" /><br/>
+<input type="submit" id="doExcludeSubapp2" value="Exclude Subapp2" /><br/>
+<input type="submit" id="doIncludeSubapp1NoProperty" value="Include Subapp1(NoProperty)" /><br/>
+<input type="submit" id="doExcludeSubapp2NoProperty" value="Exclude Subapp2(NoProperty)" /><br/>
+</form>
+</body></html>

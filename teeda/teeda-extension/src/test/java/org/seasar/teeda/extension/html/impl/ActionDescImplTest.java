@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,8 +21,11 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.core.application.navigation.NavigationResource;
 import org.seasar.teeda.extension.html.ActionDesc;
+import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.impl.page.FooAction;
+import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -62,4 +65,13 @@ public class ActionDescImplTest extends TeedaExtensionTestCase {
         assertEquals("aaa", props[0]);
         assertEquals("bbb", props[1]);
     }
+
+    public void testGetRedirectDesc() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooAction");
+        assertTrue(pd.hasRedirectDesc("doBar"));
+        RedirectDesc rd = pd.getRedirectDesc("doBar");
+        assertNotNull(rd);
+        assertEquals(RedirectDesc.HTTPS, rd.getProtocol());
+    }
+
 }

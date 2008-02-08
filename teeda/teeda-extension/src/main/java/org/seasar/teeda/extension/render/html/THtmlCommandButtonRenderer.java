@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,23 @@ import java.io.IOException;
 
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.internal.LabelUtil;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.render.html.HtmlCommandButtonRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.component.html.THtmlCommandButton;
+import org.seasar.teeda.extension.event.TActionEvent;
 import org.seasar.teeda.extension.util.DoubleSubmitProtectionLoader;
 import org.seasar.teeda.extension.util.KumuDisabledScriptLoader;
+import org.seasar.teeda.extension.util.PathUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -52,6 +57,19 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
         super();
         addIgnoreAttributeName(ExtensionConstants.RENDERJS_ATTR);
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
+    }
+
+    protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {
+        TActionEvent event = new TActionEvent(htmlCommandButton);
+        UIComponent component = htmlCommandButton.getParent();
+        while (component != null) {
+            if (component instanceof TForEach) {
+                TForEach forEach = (TForEach) component;
+                event.addIndex(forEach, forEach.getRowIndex());
+            }
+            component = component.getParent();
+        }
+        htmlCommandButton.queueEvent(event);
     }
 
     public void encodeBefore(FacesContext context, UIComponent component)
@@ -85,6 +103,17 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
             return;
         }
         TransactionTokenUtil.renderTokenIfNeed(context, component);
+    }
+
+    protected String getImage(FacesContext context,
+            HtmlCommandButton htmlCommandButton) {
+        final String image = super.getImage(context, htmlCommandButton);
+        if (StringUtil.isEmpty(image)) {
+            return image;
+        }
+        final String baseViewId = ((THtmlCommandButton) htmlCommandButton)
+                .getBaseViewId();
+        return PathUtil.toAbsolutePath(context, image, baseViewId);
     }
 
     protected void renderValueAttribute(FacesContext context,

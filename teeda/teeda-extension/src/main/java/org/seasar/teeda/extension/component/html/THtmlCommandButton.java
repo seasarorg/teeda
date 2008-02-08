@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
-import java.util.Map;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
@@ -26,12 +26,12 @@ import javax.faces.event.FacesEvent;
 import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.RenderPreparableUtil;
 import javax.faces.internal.scope.RedirectScope;
+import javax.faces.internal.scope.SubApplicationScope;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
-import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
-import org.seasar.teeda.extension.util.PathUtil;
+import org.seasar.teeda.extension.component.TViewRoot;
+import org.seasar.teeda.extension.exception.DoubleSubmittedException;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -51,36 +51,60 @@ public class THtmlCommandButton extends HtmlCommandButton implements
 
     private Long time;
 
+    private String baseViewId;
+
     public THtmlCommandButton() {
         super();
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
-    public void broadcast(FacesEvent event) throws AbortProcessingException {
-        if (TransactionTokenUtil.isDoOnce(getId())) {
-            final FacesContext context = FacesContext.getCurrentInstance();
-            if (TransactionTokenUtil.verify(context)) {
-                super.broadcast(event);
-            } else {
-                final Map requestMap = context.getExternalContext()
-                        .getRequestMap();
-                if (PostbackUtil.isPostback(requestMap)) {
-                    context.renderResponse();
-                    return;
+    public void setParent(UIComponent parent) {
+        super.setParent(parent);
+        if (baseViewId == null) {
+            while (parent != null) {
+                if (parent instanceof TViewRoot) {
+                    baseViewId = ((TViewRoot) parent).getViewId();
+                    break;
                 }
-                String path = RedirectScope.getRedirectingPath(context);
-                if (path == null) {
-                    path = RedirectScope.getRedirectedPath(context);
-                }
-                if (path != null) {
-                    NavigationHandlerUtil.assertNotAlreadyRedirect(context);
-                    NavigationHandlerUtil.redirect(context, path);
-                }
-                context.renderResponse();
+                parent = parent.getParent();
             }
+        }
+    }
+
+    public void broadcast(FacesEvent event) throws AbortProcessingException {
+        if (isDoubleSubmitted()) {
             return;
         }
         super.broadcast(event);
+    }
+
+    protected boolean isDoubleSubmitted() {
+        if (!TransactionTokenUtil.isDoOnce(getId())) {
+            return false;
+        }
+        final FacesContext context = FacesContext.getCurrentInstance();
+        if (TransactionTokenUtil.verify(context)) {
+            return false;
+        }
+        if (!TransactionTokenUtil.isPrevious(context)) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        if (SubApplicationScope.getContext(context) == null) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        String path = RedirectScope.getRedirectingPath(context);
+        if (path == null) {
+            path = RedirectScope.getRedirectedPath(context);
+        }
+        if (path == null) {
+            throw new DoubleSubmittedException(context.getViewRoot()
+                    .getViewId(), getId());
+        }
+        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
+        NavigationHandlerUtil.redirect(context, path);
+        return true;
     }
 
     public boolean isRenderJs() {
@@ -95,6 +119,14 @@ public class THtmlCommandButton extends HtmlCommandButton implements
 
     public void setRenderJs(boolean renderJs) {
         this.renderJs = new Boolean(renderJs);
+    }
+
+    public String getBaseViewId() {
+        return baseViewId;
+    }
+
+    public void setBaseViewId(String baseViewId) {
+        this.baseViewId = baseViewId;
     }
 
     public long getTime() {
@@ -114,16 +146,14 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         renderJs = (Boolean) values[1];
+        baseViewId = (String) values[2];
     }
 
     public Object saveState(FacesContext context) {
-        final String image = getImage();
-        if (!StringUtil.isEmpty(image)) {
-            setImage(PathUtil.toAbsolutePath(context, this, image));
-        }
-        Object values[] = new Object[2];
+        Object values[] = new Object[3];
         values[0] = super.saveState(context);
         values[1] = renderJs;
+        values[2] = baseViewId;
         return values;
     }
 

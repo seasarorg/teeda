@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -163,4 +163,178 @@ public class ConditionTest extends TeedaWebTestCase {
 				"view/condition/conditionResult.html") > 0);
 		tester.assertTextEqualsById("bbb", "hogehoge");
 	}
+
+	public void testConditionOmittag_TEEDA409() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/conditionOmittag.html");
+		tester.dumpHtml();
+
+		tester.assertElementNotPresentById("isAaa");
+		tester.assertElementPresentById("bbb-1");
+		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertElementNotPresentById("bbb-2");
+
+		tester.setTextById("hoge", "111");
+		tester.submitById("doFalse");
+
+		tester.dumpHtml();
+		// ## Assert ##
+		tester.assertElementNotPresentById("isAaa");
+		tester.assertElementNotPresentById("bbb-1");
+		tester.assertElementNotPresentById("isNotAaa");
+		tester.assertElementPresentById("bbb-2");
+	}
+
+	public void testConditionForEach_TEEDA420() {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition4.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] table = new String[][] { { "0", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" }, { "2", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:2:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "2");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" },
+				{ "2", "foo" }, { "3", "bar" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitByName("form:aaaItems:0:doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("selected", "0");
+		table = new String[][] { { "0", "foo" }, { "1", "bar" },
+				{ "2", "foo" }, { "3", "bar" }, { "4", "foo" } };
+		tester.assertTableEqualsById("aaaItems", table);
+	}
+
+	public void testConditionForEachValidator_TEEDA420() {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition5.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] table = new String[0][0];
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "値を入力してください(bbb)(line : 1)" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.setTextByName("form:aaaItems:0:bbb", "a");
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "a" }, { "1", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "a" }, { "1", "" }, { "2", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "a" }, { "1", "" },
+				{ "2", "値を入力してください(bbb)(line : 3)" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.setTextByName("form:aaaItems:2:bbb", "c");
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "a" }, { "1", "" }, { "2", "c" },
+				{ "3", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "a" }, { "1", "" }, { "2", "c" },
+				{ "3", "" }, { "4", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.setTextByName("form:aaaItems:0:bbb", "");
+		tester.setTextByName("form:aaaItems:2:bbb", "");
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "値を入力してください(bbb)(line : 1)" },
+				{ "1", "" }, { "2", "値を入力してください(bbb)(line : 3)" }, { "3", "" },
+				{ "4", "値を入力してください(bbb)(line : 5)" } };
+		tester.assertTableEqualsById("aaaItems", table);
+
+		// ## Act ##
+		tester.setTextByName("form:aaaItems:0:bbb", "x");
+		tester.setTextByName("form:aaaItems:2:bbb", "y");
+		tester.setTextByName("form:aaaItems:4:bbb", "z");
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "0", "x" }, { "1", "" }, { "2", "y" },
+				{ "3", "" }, { "4", "z" }, { "5", "" } };
+		tester.assertTableEqualsById("aaaItems", table);
+	}
+
 }

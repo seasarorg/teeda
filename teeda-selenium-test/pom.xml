@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0.11-RC2</version>
+    <version>1.0.11</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.seasar.teeda.it</groupId>
@@ -36,15 +36,11 @@
   </build>
   <modules>
     <module>teeda-tomcat5x-test</module>
-    <!--
     <module>teeda-jetty6x-test</module>
-    -->
-    <!--
     <module>teeda-jboss3x-test</module>
     <module>teeda-jboss4x-test</module>
     <module>teeda-resin3x-test</module>
     <module>teeda-geronimo1x-test</module>
-    -->
     <!-- weblogic install
     <module>teeda-weblogic8x-test</module>
     -->

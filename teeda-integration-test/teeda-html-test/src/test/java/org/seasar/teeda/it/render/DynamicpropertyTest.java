@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,31 +25,37 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class DynamicpropertyTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(DynamicpropertyTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(DynamicpropertyTest.class);
+	}
 
-    /*
-     * "aaa": getAaaStyle
-     * "aaa-header": getAaaHeaderStyle
-     * "aaa-footer": Pageにプロパティが無いのでhtmlに書かれたまま
-     */
-    public void testRender() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	/*
+	 * "aaa": getAaaStyle "aaa-header": getAaaHeaderStyle "aaa-footer":
+	 * Pageにプロパティが無いのでhtmlに書かれたまま
+	 */
+	public void testRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(),
-            "view/dynamicproperty/dynamicproperty.html");
-        tester.dumpHtml();
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(),
+				"view/dynamicproperty/dynamicproperty.html");
+		tester.dumpHtml();
+		tester.assertAttributeEqualsById("aaa-header", "style",
+				"background-color:yellow");
+		tester.assertAttributeEqualsById("aaa", "style",
+				"background-color:blue");
+		tester.assertAttributeEqualsById("aaa-footer", "style",
+				"background-color:green");
+		tester.assertAttributeEqualsById("bbb-1", "href", "Dynamic2");
 
-        // ## Assert ##
-        tester.assertAttributeEqualsById("aaa-header", "style",
-            "background-color:yellow");
-        tester.assertAttributeEqualsById("aaa", "style",
-            "background-color:blue");
-        tester.assertAttributeEqualsById("aaa-footer", "style",
-            "background-color:green");
-    }
+		tester.submitById("goDynamicproperty2");
+		tester.dumpHtml();
+		tester.assertAttributeEqualsById("foo", "src", "/foo.gif");
+		tester.assertAttributeEqualsById("bar", "href", "/bar.css");
+		tester.assertAttributeEqualsById("baz", "src", "/js/baz.js");
+		tester.assertAttributeEqualsById("hoge", "src", "/hoge.gif");
+	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ public class ProductInfo {
 
     private static final String MINOR_VERSION = "0";
 
-    private static final String LOCAL_VERSION = "11";
+    private static final String LOCAL_VERSION = "12";
 
     private static boolean isSnapshot = false;
 
@@ -34,8 +34,8 @@ public class ProductInfo {
     }
 
     public static String getVersion() {
-        return MAJOR_VERSION + "." + MINOR_VERSION + "." + LOCAL_VERSION
-                + ((isSnapshot) ? "-SNAPSHOT" : "");
+        return MAJOR_VERSION + "." + MINOR_VERSION + "." + LOCAL_VERSION +
+                ((isSnapshot) ? "-SNAPSHOT" : "");
     }
 
     /*

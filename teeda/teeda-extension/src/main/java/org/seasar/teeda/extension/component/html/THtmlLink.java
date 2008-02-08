@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  */
 package org.seasar.teeda.extension.component.html;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.extension.util.PathUtil;
+import org.seasar.teeda.extension.component.TViewRoot;
 
 /**
  * @author shot
@@ -40,19 +40,32 @@ public class THtmlLink extends UIComponentBase {
 
     private String src;
 
+    private String baseViewId;
+
+    public void setParent(UIComponent parent) {
+        super.setParent(parent);
+        if (baseViewId == null) {
+            while (parent != null) {
+                if (parent instanceof TViewRoot) {
+                    baseViewId = ((TViewRoot) parent).getViewId();
+                    break;
+                }
+                parent = parent.getParent();
+            }
+        }
+    }
+
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
 
     public Object saveState(FacesContext context) {
-        if (!StringUtil.isEmpty(href)) {
-            href = PathUtil.toAbsolutePath(context, this, href);
-        }
-        Object[] values = new Object[4];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = rel;
         values[2] = href;
         values[3] = src;
+        values[4] = baseViewId;
         return values;
     }
 
@@ -62,6 +75,7 @@ public class THtmlLink extends UIComponentBase {
         rel = (String) values[1];
         href = (String) values[2];
         src = (String) values[3];
+        baseViewId = (String) values[4];
     }
 
     public String getRel() {
@@ -99,4 +113,13 @@ public class THtmlLink extends UIComponentBase {
     public void setSrc(String src) {
         this.src = src;
     }
+
+    public String getBaseViewId() {
+        return baseViewId;
+    }
+
+    public void setBaseViewId(String baseViewId) {
+        this.baseViewId = baseViewId;
+    }
+
 }

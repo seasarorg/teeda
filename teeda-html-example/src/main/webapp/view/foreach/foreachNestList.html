@@ -2,20 +2,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>ForEach Nest</title>
+<style>
+.onTeedaError {
+	background-color: #FFCCCC;
+}
+</style>
 </head>
 <body>
 <span>Foreach Nest sample</span>
 <form id="form">
+<div>
+<span id="allMessages"></span>
+</div>
 <input type="hidden" id="aaaItemsItemsSave"/>
+<input type="submit" id="doInsertRow" value="↑"/>
 <table border="1">
 	<div id="aaaItemsItems">
 	<tr>
-	    <div id="aaaItems">
+		<td><input type="submit" id="doInsertColumn" value="←"/></td>
+		<div id="aaaItems">
 		<td><input type="text" id="foo"/></td>
 		</div>
+		<td><input type="submit" id="doAppendColumn" value="→"/></td>
 	</tr>
 	</div>
 </table>
+<input type="submit" id="doAppendRow" value="↓"/><br />
+<br />
 <input type="submit" value="submit"/>
 </form>
 </body>

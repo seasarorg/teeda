@@ -306,21 +306,21 @@ Kumu = Kumu.extend(Kumu, {
   },
 
   ltrim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     return str.replace(/^[ 　]+/, '');
   },
   
   rtrim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     return str.replace(/[ 　]+$/, '');
   },
   
   trim : function(str){
-    if(!str){
+    if(!arguments.length > 0){
       str = this;
     }
     var tmp = Kumu.ltrim(str);
@@ -1267,7 +1267,12 @@ Kumu.define('Kumu.JSONSerializer')({
       }
     }
     if (type == "string") {
-      return o;
+		return ('"' + o.replace(/(["\\])/g, '\\$1') + '"'
+			).replace(/[\f]/g, "\\f"
+			).replace(/[\b]/g, "\\b"
+			).replace(/[\n]/g, "\\n"
+			).replace(/[\t]/g, "\\t"
+			).replace(/[\r]/g, "\\r");
     }
     if(o.innerHTML){
       return o.innerHTML;

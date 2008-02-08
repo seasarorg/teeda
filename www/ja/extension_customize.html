@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
-<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
 <body onload="preload('ja')">
@@ -36,11 +36,13 @@
 <li><a href="#validator">Validatorのカスタマイズについて</a></li>
 <li><a href="#converter">Convererのカスタマイズについて</a></li>
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
+<li><a href="#parse-xhtml">(X)HTMLのパーズについて</a></li>
+<li><a href="#redirect">リダイレクトについて</a></li>
 </ul>
 </div>
 
 <div class="section">
-<h3><a id="validator" name="validator">Validatorのカスタマイズについて</a></h3>
+<h2><a id="validator" name="validator">Validatorのカスタマイズについて</a></h2>
 <p>TeedaではJSF共通のValidatorのほかにExtension共通のValidatorを準備しています．<br/>
 しかし、実案件ではカスタムでValidatorを作成しなくてはいけない場合があるはずです．<br/>
 このような場合でのカスタムValidatorの作り方を下記に示します．<br/>
@@ -148,7 +150,7 @@ import org.seasar.teeda.extension.annotation.validator.Validator;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-@Validator("myRequiredValidator")//<b><font color="red">[a]</font></b>Teeda独自の指定
+@Validator("myRequiredValidator")//<b style="color: red;">[a]</b>Teeda独自の指定
 public @interface MyRequired {
 
     String target() default "";
@@ -181,17 +183,140 @@ public class HogePage {
   //以下、getter/setter
 }
 </pre>
-
-<h3><a id="converter" name="converter">Converterのカスタマイズについて</a></h3>
-
+<h2><a id="converter" name="converter">Converterのカスタマイズについて</a></h2>
 <p>TODO：作成</p>
-
-<h3><a id="uicomponent" name="uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></h3>
-
+<h2><a id="uicomponent" name="uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></h2>
 <p>TODO：作成</p>
 
 
 </div>
+<h2><a name="parse-xhtml">(X)HTMLのパーズについて</a></h2>
+<p>Teeda 1.0.12以降では，(X)HTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．カスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
+<ul>
+<li><code>org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory</code>
+</ul>
+<p>あらかじめ，4種類の実装クラスを用意しています．</p>
+<ul>
+<li>DEFAULT (デフォルト)
+<li>CLASSIC
+<li>STRICT
+<li>HTML
+</ul>
+<p>カスタマイズしない場合はDEFAULTが使用されます．</p>
+<h3>DEFAULT</h3>
+<p>DEFAULTは，Teeda Extension標準の方法でXHTMLをパーズします．<strong>この方法はTeeda1.0.11以前とは異なります</strong>．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+<h3>CLASSIC</h3>
+<p>CLASSICは，<strong>Teeda 1.0.11以前と互換性のある方法</strong>でXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;amp;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;amp;</code>と一段階余計にエスケープして記述する必要があります．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+<h3>STRICT</h3>
+<p>STRICTは，厳密に正しいXMLとしてXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．<code>&amp;</code>を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
+<li>XNI (Xerces Native Interface) をサポートした任意のバージョンのXercesでXHTMLをパーズします．Xerces2.6.2を使用することが出来ない環境でも利用することが出来ます．</li>
+</ul>
+<h3>HTML</h3>
+<p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
+<ul>
+<li>テンプレートHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2とNekoHTMLの組み合わせでHTMLをパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてWEB-INF/libに配置してください．
+<ul>
+<li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
+</ul>Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+<h3>各モードの要約</h3>
+<table border="1">
+<tbody>
+<tr>
+<th></th>
+<th>空要素</th>
+<th>要素内容の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;</code>(非参照)</th>
+<th>XMLパーザ</th>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>CLASSIC</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><strong><code>&amp;</code></strong></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>STRICT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><strong>エラー</strong></td>
+<td>XNIをサポートした任意の<br>
+バージョンのXerces</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td><strong><code>&lt;br&gt;</code></strong></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2<strong>+NekoHTML</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>カスタマイズの方法</h3>
+<p>(X)HTMLをパーズする方法をカスタマイズするには，app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
+<h2><a name="redirect">リダイレクトについて</a></h2>
+<p>Teeda Extensionは，画面遷移にPRG (Post-Redirect-Get) パターンを使用します．<br>
+リダイレクトする際のURLは，現在のリクエストのURLに基づいて，同じプロトコル・同じホスト・同じポート番号・同じコンテキストルートで組み立てられます．<br>
+これをカスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
+<ul>
+<li><code>org.seasar.teeda.core.resolver.RedirectUrlResolver</code>
+</ul>
+<p>Teedaでは，次の実装クラスを用意しています．</p>
+<ul>
+<li><code>org.seasar.teeda.core.util.DefaultRedirectUrlResolverImpl</code>
+<li><code>org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl</code>
+</ul>
+<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
+<h3>ベースURL</h3>
+<p><code>DefaultRedirectUrlResolverImpl</code>および<code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクトURLのベース部分をカスタマイズすることが出来ます．<br>
+ベースURLは，web.xmlの<code>&lt;context-param&gt;</code>で定義することが出来ます．</p>
+<pre>&lt;context-param&gt;
+    &lt;param-name&gt;teeda.REDIRECT_URL&lt;/param-name&gt;
+    &lt;param-value&gt;https://127.0.0.1:8443/contest/&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+<h3>キャッシュ対策</h3>
+<p><code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクト先のURLがブラウザにキャッシュされることを防ぐために，リクエストパラメータにユニークなパラメータを付加します．<br>
+この機能は，<code>ExtensionRedirectUrlResolverImpl</code>の<code>addUniqueKeyParameter</code>プロパティに<code>false</code>を設定することで無効にすることが出来ます．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
+  &lt;property name=&quot;addUniqueKeyParameter&quot;&gt;false&lt;/property&gt;
+&lt;/component&gt;</pre>
+<p>デフォルトでは，パラメータ名は<code>te-uniquekey</code>が使われます．この名前は，<code>ExtensionRedirectUrlResolverImpl</code>の<code>uniqueKeyParameterName</code>プロパティに<code>false</code>を設定することで無効にすることが出来ます．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
+  &lt;property name=&quot;uniqueKeyParameterName&quot;&gt;&quot;requestId&quot;&lt;/property&gt;
+&lt;/component&gt;</pre>
 <!-- document end -->
 <!-- don't edit start -->
 </td>

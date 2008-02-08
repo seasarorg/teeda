@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
  */
 package org.seasar.teeda.extension.component;
 
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
@@ -28,16 +29,16 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
 import javax.faces.internal.FacesMessageUtil;
 import javax.faces.internal.PhaseUtil;
-import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.scope.PageScope;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
  * @author shot
  */
-public class TCondition extends UIComponentBase implements RenderPreparable {
+public class TCondition extends UIComponentBase {
 
     public static final String COMPONENT_TYPE = "org.seasar.teeda.extension.Condition";
 
@@ -47,29 +48,52 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
 
     private static final int CONDITION_SIZE = 17;
 
-    private Boolean renderSpan = null;
+    private String tagName;
 
     private Boolean refresh;
+
+    private Boolean invisible;
+
+    private Boolean omittag;
+
+    private Set encodedClientId = new HashSet();
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
     public boolean isRendered() {
         final PhaseId phaseId = PhaseUtil.getCurrentPhase();
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final boolean noError = !FacesMessageUtil
-                .hasErrorOrFatalMessage(context);
-        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
-                : false;
         if (phaseId != null && phaseId.equals(PhaseId.RENDER_RESPONSE)) {
-            if (isRefresh || noError) {
-                clearEncodedCondition();
-                final boolean b = super.isRendered();
-                return b;
+            final FacesContext context = FacesContext.getCurrentInstance();
+            final String clientId = getClientId(context);
+            if (!encodedClientId.contains(clientId)) {
+                encodedClientId.add(clientId);
+                final Boolean condition = getEncodedCondition();
+                if (condition == null) {
+                    final boolean b = super.isRendered();
+                    saveEncodedCondition(b);
+                    return b;
+                }
+                final boolean postback = PostbackUtil.isPostback(context
+                        .getExternalContext().getRequestMap());
+                final boolean noError = !FacesMessageUtil
+                        .hasErrorOrFatalMessage(context);
+                final boolean isRefresh = (refresh != null) ? refresh
+                        .booleanValue() : false;
+                if (!postback || noError || isRefresh) {
+                    clearEncodedCondition();
+                    final boolean b = super.isRendered();
+                    saveEncodedCondition(b);
+                    return b;
+                }
             }
         }
-        Boolean condition = getEncodedCondition();
+        final Boolean condition = getEncodedCondition();
         if (condition != null) {
             return condition.booleanValue();
         }
@@ -122,16 +146,12 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         conditions.remove(cid);
     }
 
-    protected void saveEncodedCondition() {
+    protected void saveEncodedCondition(boolean rendered) {
         final FacesContext context = getFacesContext();
         final Map conditions = getOrCreateConditions(context);
-        final Boolean b = Boolean.valueOf(super.isRendered());
+        final Boolean b = Boolean.valueOf(rendered);
         final String cid = getClientId(context);
         conditions.put(cid, b);
-    }
-
-    public String getFamily() {
-        return COMPONENT_FAMILY;
     }
 
     public void processDecodes(FacesContext context) {
@@ -161,29 +181,12 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         }
     }
 
-    public void encodeBegin(FacesContext context) throws IOException {
-        if (!context.getMessages().hasNext()) {
-            clearEncodedCondition();
-        }
-        super.encodeBegin(context);
+    public String getTagName() {
+        return tagName;
     }
 
-    public void encodeEnd(FacesContext context) throws IOException {
-        super.encodeEnd(context);
-    }
-
-    public boolean isRenderSpan() {
-        if (renderSpan != null) {
-            return renderSpan.booleanValue();
-        }
-        ValueBinding vb = getValueBinding(ExtensionConstants.RENDERSPAN_ATTR);
-        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
-                : null;
-        return v != null ? v.booleanValue() : false;
-    }
-
-    public void setRenderSpan(boolean renderSpan) {
-        this.renderSpan = new Boolean(renderSpan);
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public boolean isRefresh() {
@@ -200,32 +203,49 @@ public class TCondition extends UIComponentBase implements RenderPreparable {
         this.refresh = new Boolean(ref);
     }
 
+    public boolean isInvisible() {
+        if (invisible != null) {
+            return invisible.booleanValue();
+        }
+        ValueBinding vb = getValueBinding(ExtensionConstants.INVISIBLE_ATTR);
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = Boolean.valueOf(invisible);
+    }
+
+    public boolean isOmittag() {
+        if (omittag != null) {
+            return omittag.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("omittag");
+        Boolean v = vb != null ? (Boolean) vb.getValue(getFacesContext())
+                : null;
+        return v != null ? v.booleanValue() : false;
+    }
+
+    public void setOmittag(boolean omittag) {
+        this.omittag = new Boolean(omittag);
+    }
+
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        renderSpan = (Boolean) values[1];
+        tagName = (String) values[1];
         refresh = (Boolean) values[2];
+        omittag = (Boolean) values[3];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[3];
+        Object[] values = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = renderSpan;
+        values[1] = tagName;
         values[2] = refresh;
+        values[3] = omittag;
         return values;
-    }
-
-    public void preEncodeBegin(final FacesContext context) throws IOException {
-    }
-
-    public void postEncodeEnd(final FacesContext context) throws IOException {
-        final boolean noError = !FacesMessageUtil
-                .hasErrorOrFatalMessage(context);
-        final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
-                : false;
-        if (isRefresh || noError) {
-            saveEncodedCondition();
-        }
     }
 
 }

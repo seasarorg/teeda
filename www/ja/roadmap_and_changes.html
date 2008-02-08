@@ -40,7 +40,7 @@
 	<li><del>layout機能を使うと、head以下のtitleが適用されない</del></li>
 	<li><del>layout機能を使うと、head以下のCSSが適用されない</del></li>
 	<li>Teeda coreでの拡張コンポーネントの不具合修正</li>
-	<li>forEachのネスト更新</li>
+	<li><del>forEachのネスト更新</del></li>
 	<li>Teeda extの規約を集約する</li>
 	<li><del>Xercesのバージョンアップに追従する</del></li>
 	<li>faces-configのロードする順番の制御</li>
@@ -64,32 +64,161 @@
 	<li></li>
 </ul>
 <br/>
-<h2><i><a name="teeda1.1_roadmap">Teeda 1.1.x Roadmap</a></i></h2>
-<h2><a name="high">Priority high</a></h2>
-<ul>
-	<li>publicフィールド対応</li>
-	<li>bluescreen機能</li>
-</ul>
-
-<h2><a name="middle">Priority middle</a></h2>
-<ul>
-	<li>JSF1.2対応</li>
-</ul>
-
-<h2><a name="low">Priority low</a></h2>
-<ul>
-	<li></li>
-</ul>
 </div>
 <br/>
 
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
-<h2><a name="1.0.11-RC2">Teeda&nbsp;1.0.11-RC2&nbsp;変更点</a></h2>
+<h2><a name="1.0.12">Teeda&nbsp;1.0.12&nbsp;変更点</a></h2>
 <pre style="background-color:white">
-Teeda 1.0.11の修正内容となるべき一覧です.
-問題なければこのリストがそのまま1.0.11の修正内容になります.
+** Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-432'>TEEDA-432</a>] - condition を &lt;div&gt; や &lt;span&gt; に限らず，任意の要素で指定できるようにしました．
+                       [Seasar-user:12708]
+</pre>
+
+<h2><a name="1.0.12-rc2">Teeda&nbsp;1.0.12-rc2&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+
+** Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-424'>TEEDA-424</a>] - xxxItems の DTO にあるプロパティがリードオンリーで，Page クラスの同名プロパティが
+                       リードライト可の場合に， IllegalStateException が発生する問題を修正しました．
+                       [Seasar-user:12480]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-425'>TEEDA-425</a>] - textarea で入力された文字列を表示用に変換するコンバータで改行文字を "&lt;br&gt;" に
+                       変換しているが，その前に "<" 等をエスケープしていない問題を修正しました．
+                       [Seasar-user:12518]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-426'>TEEDA-426</a>] - Kumu.JSONSerializerでstringの型のときにクオートで囲んでいない。
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-427'>TEEDA-427</a>] - HOT deploy 時に，Page クラスにアノテーションで指定したコンバータのプロパティを
+                       変更しても，その後のリクエストで反映されない問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-428'>TEEDA-428</a>] - 初期表示でエラーメッセージが設定されると，condition の状態がセッションに保存されないため，
+                       ポストバック時に初期表示時の状態で処理されない問題を修正しました．
+                       [Seasar-user:12568]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-429'>TEEDA-429</a>] - inputRadio で，<span> 要素の id 属性をaaa-hoge のようにすると IllegalArgumentException が
+                       発生する問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-430'>TEEDA-430</a>] - ネストした forEach で内側の xxxItems のエントリ数が一定でない場合に
+                       正しく動作しない問題を修正しました．
+
+** Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-431'>TEEDA-431</a>] - @SubapplicationScope 等のアノテーションが明示的に指定されたプロパティは，
+                       次ページに引き継ぐプロパティが無くてもスコープに追加するようにしました．
+                       [Seasar-user:12629]
+</pre>
+
+<h2><a name="1.0.12-rc1">Teeda&nbsp;1.0.12-rc1&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+ <font color="red">
+ テンプレートXHTMLの要素内容に記述した文字参照・実体参照は，そのままレンダリングするようになりました．
+1.0.11以前と同様にすることも可能です．詳細は「<a href="extension_customize.html#parse-xhtml">(X)HTMLのパーズについて</a>」を参照してください．
+
+ teedaExtension.diconにリダイレクトURLをカスタマイズするRedirectUrlResolverの実装クラスが定義されました．
+独自のRedirectUrlResolverを定義している場合は，そのdiconファイルをteedaExtension.diconより先に
+インクルードしてください．詳細は「<a href="extension_customize.html#redirect">リダイレクトについて</a>」を参照してください．
+ </font>
+
+** Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-380'>TEEDA-380</a>] - HTMLテンプレート中に書いた&amp;lt;などがレンダリング後にデコードされてしまう問題を
+                       修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-382'>TEEDA-382</a>] - HTML テンプレートがレイアウトのテンプレートと異なったディレクトリ階層にあると，レイアウトの
+                       テンプレート中に記述した &lt;img&gt;，&lt;script&gt;，&lt;link&gt; 要素の相対パスが不正になってしまう問題を
+                       修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-383'>TEEDA-383</a>] - go～() で移動する際に，Page クラスが無く HTML のみのページに移動すると 
+                       NullPointerException が発生する．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-384'>TEEDA-384</a>] - TakeOver を指定している場合に，Page クラスにシリアライズ不可能なプロパティがあると
+                       例外が発生する問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-385'>TEEDA-385</a>] - Grid の &lt;thead&gt; に &lt;input&gt; があると，行を削除した後のサブミットで 
+                       ArrayIndexOutOfBoundsException が発生する問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-390'>TEEDA-390</a>] - ErrorPageManager で checked 例外を扱えない問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-396'>TEEDA-396</a>] - ポートレット環境でPageScopeに含まれる値が正しくない
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-397'>TEEDA-397</a>] - ポートレット環境で initialize() が正しく呼ばれていない
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-398'>TEEDA-398</a>] - 一つのページの複数の &lt;form&gt; に doOnce～() ボタンがある場合，
+                       最後の &lt;form&gt; 以外のボタンを押すと常に二重サブミットと判定されてしまう問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-399'>TEEDA-399</a>] - Converter に target 属性を指定した場合，対象外のボタンをサブミットしても 
+                       do～() メソッドが呼び出されず，画面遷移することもできない問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-400'>TEEDA-400</a>] - サブミットボタンの id が &quot;xxx-yyy&quot; のようになっていると TakeOver が
+                       効かない問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-401'>TEEDA-401</a>] - ポートレット環境でErrorPageManagerが機能していない
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-404'>TEEDA-404</a>] - Page/Action クラスで例外が発生した場合，エラーページにメッセージが表示されない
+                       問題を修正しました．[Seasar-user:11573]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-406'>TEEDA-406</a>] - ポートレット環境でrender処理内でFacesMessageを重複して登録してしまう
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-408'>TEEDA-408</a>] - 特定のコンポーネントにマッピングされない要素で，id にハイフンが含まれていると
+                       ダイナミックプロパティが使えない問題を修正しました．[Seasar-user:11641]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-410'>TEEDA-410</a>] - InputRadioで必須チェックが効かない問題を修正しました．[Seasar-user:11700]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-412'>TEEDA-412</a>] - レイアウトを使っていない画面にリンクで遷移した場合，最初の一回だけサブアプリケーション
+                       スコープのプロパティが引き継がれない問題を修正しました．[Seasar-user:11756]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-418'>TEEDA-418</a>] - outputLink のパラメータの区切りに &amp;amp; を使用すると，amp;がパラメータ名の
+                       一部として解釈される問題を修正しました．[Seasar-user:12137]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-420'>TEEDA-420</a>] - forEach の中で condition を使うと正しく機能しない問題を修正しました．
+                       [Seasar-user:11043][Seasar-user:11130]
+
+** Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-321'>TEEDA-321</a>] - layout機能で個別のJS/CSSの読み込みをOFFにできるようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-386'>TEEDA-386</a>] - ネストした forEach の更新をサポートしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-387'>TEEDA-387</a>] - forEach を div，tbody 要素に加えて table，tr，ol，ul，dl，span 要素でも
+                       使えるようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-391'>TEEDA-391</a>] - forEach で items プロパティに List&lt;T&gt; を使った場合の更新を
+                       サポートしました (Seasar2.4.18 以降との組み合わせで有効)．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-392'>TEEDA-392</a>] - DateTimeConverter アノテーションでロケールを指定できるようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-402'>TEEDA-402</a>] - Page クラスが無くても id 属性が mock～ で始まる要素は表示されないように
+                       しました．[Seasar-user:11514]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-405'>TEEDA-405</a>] - forEach で，xxxItems の要素が Dto (JavaBeans) の場合，ページクラスに
+                       更新可能なプロパティがない場合は Dto のプロパティにアクセスしないようにしました．
+                       [Seasar-user:11427]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-409'>TEEDA-409</a>] - condition で te:omittag を使えるようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-411'>TEEDA-411</a>] - リダイレクト時のプロトコルをアノテーションで指定できるようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-414'>TEEDA-414</a>] - forEach の中で同じグループのラジオボタンを使えるようにしました．
+                       [Seasar-user:11837]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-415'>TEEDA-415</a>] - PRG によるリダイレクト URL がブラウザのキャッシュにヒットしないように，ユニークな
+                       パラメータを付加するようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-416'>TEEDA-416</a>] - ウィンドウ単位でリクエストを排他的に処理するようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-417'>TEEDA-417</a>] - forEach の中の commandButton が押された場合，押されたボタンに対応する 
+                       xxxIndex を設定してから do～() メソッドを呼び出すようにしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-419'>TEEDA-419</a>] - ダブルサブミット対策の JavaScript が te:renderJs 属性に true が
+                       指定されたボタンだけに適用されるようにしました． [Seasar-user:12016]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-422'>TEEDA-422</a>] - TeedaConfigureListener で Error もログ出力するようにしました．
+
+** New Feature
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-403'>TEEDA-403</a>] - SelectManyCheckbox で，col 属性により 1 行に表示する checkbox の数を
+                       指定できるようにしました．[Seasar-user:11369]
+
+</pre>
+
+<h2><a name="1.0.11-SP4">Teeda&nbsp;1.0.11-SP4&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-423'>TEEDA-423</a>] - doFinishXxx ボタンが doFinish として認識されない問題を
+                       修正しました．[Seasar-user:12422]
+</pre>
+
+<h2><a name="1.0.11-SP3">Teeda&nbsp;1.0.11-SP3&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-413'>TEEDA-413</a>] - HTML テンプレートの &lt;form&gt; 要素に action 属性を記述すると，
+                       レンダリングされた HTML に action 属性が二つ表示されてしまい，
+                       画面遷移できない問題を修正しました．[Seasar-user:11813]
+</pre>
+
+<h2><a name="1.0.11-SP2">Teeda&nbsp;1.0.11-SP2&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-404'>TEEDA-404</a>] - Page/Action クラスで例外が発生した場合，エラーページにメッセージが
+                       表示されない問題を修正しました．[Seasar-user:11573]
+</pre>
+
+<h2><a name="1.0.11-SP1">Teeda&nbsp;1.0.11-SP1&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+** Bug
+    * [TEEDA-393] - doOnce～() で二重サブミットされた場合，遷移前の画面に戻って新しい
+                       トランザクショントークンが発行されるため，結果的に二重登録が可能となる．
+    * [TEEDA-395] - ForEach で itemsSave を使っていない場合，do～() が呼び出された際に
+                       xxxItems が null になってしまう問題を修正しました．
+</pre>
+
+<h2><a name="1.0.11">Teeda&nbsp;1.0.11&nbsp;変更点</a></h2>
+<pre style="background-color:white">
+ <font color="red">
+<b>org.seasar.teeda.extension.util.ValidatorUtil</b> クラスは，
+<b>org.seasar.teeda.extension.util.TargetCommandUtil</b> クラスに変更になっていますのでご注意下さい．
+ </font>
 
 ** Bug
     * [TEEDA-303] - DoltengのScaffoldでGridのJavaScriptがエラーになる問題を修正しました．
@@ -238,7 +367,8 @@ Teeda 1.0.11の修正内容となるべき一覧です.
 <h2><a name="1.0.6">Teeda 1.0.6&nbsp;変更点</a></h2>
 <pre style="background-color:white">
 ** Bug
- * [TEEDA-272] - Gridで、Itemsのクラス名とHTML上のidでまったく同一のものがあると、IllegalPropertyRuntimeException
+ * [TEEDA-272] - Gridで、Itemsのクラス名とHTML上のidでまったく同一のものがあると、
+                 IllegalPropertyRuntimeException
  * [TEEDA-275] - ポートレット環境でアクション処理後にレンダー処理がされるとコンテンツが表示されない
 
 ** Improvement

@@ -64,16 +64,10 @@
     <component
 		class="org.seasar.teeda.extension.html.impl.HtmlComponentInvokerImpl" />
 
-	<component name="graphicImageFactory"
-		class="org.seasar.teeda.extension.html.factory.GraphicImageFactory" />
-	<component name="linkFactory"
-		class="org.seasar.teeda.extension.html.factory.LinkFactory" />
-	<component name="styleFactory"
-		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="mockFactory"
 		class="org.seasar.teeda.extension.html.factory.MockFactory" />
-	<component name="treeHiddenFactory"
-		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
+	<component name="graphicImageFactory"
+		class="org.seasar.teeda.extension.html.factory.GraphicImageFactory" />
 	<component name="scopeOutputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.ScopeOutputTextFactory" />
 	<component name="scopeTitleFactory"
@@ -90,18 +84,12 @@
 		class="org.seasar.teeda.extension.html.factory.SelectOneMenuFactory" />
 	<component name="selectManyListboxFactory"
 		class="org.seasar.teeda.extension.html.factory.SelectManyListboxFactory" />
-	<component name="conditionFactory"
-		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
-	<component name="titleFactory"
-		class="org.seasar.teeda.extension.html.factory.TitleFactory" />
 	<component name="outputLabelFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputLabelFactory" />
 	<component name="commandButtonFactory"
 		class="org.seasar.teeda.extension.html.factory.CommandButtonFactory" />
-	<component name="forEachFactory"
-		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
-	<component name="formFactory"
-		class="org.seasar.teeda.extension.html.factory.FormFactory" />
+	<component name="treeHiddenFactory"
+		class="org.seasar.teeda.extension.html.factory.TreeHiddenFactory" />
 	<component name="sessionSaveFactory"
 		class="org.seasar.teeda.extension.html.factory.SessionSaveFactory" />
 	<component name="TItemsSaveHiddenFactory"
@@ -150,10 +138,22 @@
 		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
 	<component name="bodyFactory"
 		class="org.seasar.teeda.extension.html.factory.BodyFactory" />
+	<component name="formFactory"
+		class="org.seasar.teeda.extension.html.factory.FormFactory" />
 	<component name="headFactory"
 		class="org.seasar.teeda.extension.html.factory.HeadFactory" />
+	<component name="titleFactory"
+		class="org.seasar.teeda.extension.html.factory.TitleFactory" />
+	<component name="linkFactory"
+		class="org.seasar.teeda.extension.html.factory.LinkFactory" />
+	<component name="styleFactory"
+		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="scriptFactory"
 		class="org.seasar.teeda.extension.html.factory.ScriptFactory" />
+	<component name="forEachFactory"
+		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
+	<component name="conditionFactory"
+		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="genericFactory"
 		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
 	<component name="genericElementFactory"
@@ -222,6 +222,12 @@
 	<component name="teedaGridHelper"
 		class="org.seasar.teeda.extension.helper.impl.GridHelperImpl" instance="session"/>
 
-    <component
+	<component
 		class="org.seasar.teeda.extension.helper.impl.PathHelperImpl"/>
+
+	<component
+		class="org.seasar.teeda.extension.util.SimpleFacesMessageHelperImpl"/>
+
+	<component
+		class="org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl"/>
 </components>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package org.seasar.teeda.extension.html.impl;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import javax.faces.component.ActionSource;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
@@ -24,6 +27,8 @@ import javax.faces.event.ActionEvent;
 import org.seasar.teeda.core.application.ActionListenerImpl;
 import org.seasar.teeda.core.util.MethodBindingUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
+import org.seasar.teeda.extension.component.TForEach;
+import org.seasar.teeda.extension.event.TActionEvent;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 
 /**
@@ -45,6 +50,10 @@ public class HtmlActionListener extends ActionListenerImpl {
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException {
         final FacesContext context = FacesContext.getCurrentInstance();
+        if (actionEvent instanceof TActionEvent) {
+            bindRowIndices(context, (TActionEvent) actionEvent);
+        }
+
         final ActionSource actionSource = (ActionSource) actionEvent
                 .getComponent();
         final MethodBinding mb = actionSource.getAction();
@@ -64,4 +73,15 @@ public class HtmlActionListener extends ActionListenerImpl {
             super.processAction(actionEvent);
         }
     }
+
+    protected void bindRowIndices(final FacesContext context,
+            final TActionEvent event) {
+        for (final Iterator it = event.getIndices(); it.hasNext();) {
+            final Entry entry = (Entry) it.next();
+            final TForEach forEach = (TForEach) entry.getKey();
+            final Integer rowIndex = (Integer) entry.getValue();
+            forEach.bindRowIndex(context, rowIndex);
+        }
+    }
+
 }

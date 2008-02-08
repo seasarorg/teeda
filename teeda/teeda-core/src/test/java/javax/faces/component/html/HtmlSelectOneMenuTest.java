@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -450,13 +450,13 @@ public class HtmlSelectOneMenuTest extends UISelectOneTest {
         assertEquals("bar title", component.getValueBinding("title").getValue(
                 context));
     }
-    
+
     public void testSetGetLabel() throws Exception {
         HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         component.setLabel("label1");
         assertEquals("label1", component.getLabel());
     }
-    
+
     public void testSetGetLabel_ValueBinding() throws Exception {
         HtmlSelectOneMenu component = createHtmlSelectOneMenu();
         MockValueBinding vb = new MockValueBinding();
@@ -464,7 +464,8 @@ public class HtmlSelectOneMenuTest extends UISelectOneTest {
         vb.setValue(context, "bar label");
         component.setValueBinding("label", vb);
         assertEquals("bar label", component.getLabel());
-        assertEquals("bar label", component.getValueBinding("label").getValue(context));
+        assertEquals("bar label", component.getValueBinding("label").getValue(
+                context));
     }
 
     private HtmlSelectOneMenu createHtmlSelectOneMenu() {

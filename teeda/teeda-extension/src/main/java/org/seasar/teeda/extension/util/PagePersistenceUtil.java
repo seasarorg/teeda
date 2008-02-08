@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,12 @@
  */
 package org.seasar.teeda.extension.util;
 
+import java.io.Externalizable;
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+
+import org.seasar.framework.beans.PropertyDesc;
 
 /**
  * @author shot
@@ -23,23 +28,35 @@ import java.io.Serializable;
  */
 public class PagePersistenceUtil {
 
-    public static boolean isPersistenceType(Class clazz) {
+    public static boolean isPersistenceProperty(final PropertyDesc pd) {
+        if (!pd.isReadable()) {
+            return false;
+        }
+        if (!pd.hasReadMethod() &&
+                Modifier.isTransient(pd.getField().getModifiers())) {
+            return false;
+        }
+        return isPersistenceType(pd.getPropertyType());
+    }
+
+    public static boolean isPersistenceType(final Class clazz) {
         if (clazz.isPrimitive()) {
             return true;
         }
-        if (!Serializable.class.isAssignableFrom(clazz)) {
-            return false;
+        if (Serializable.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        if (Externalizable.class.isAssignableFrom(clazz)) {
+            return true;
         }
         if (clazz.isArray()) {
-            Class componentType = clazz.getComponentType();
-            if (componentType.isPrimitive()) {
-                return true;
-            } else if (componentType.isArray()) {
-                return isPersistenceType(componentType);
-            }
-            return Serializable.class.isAssignableFrom(componentType);
+            final Class componentType = clazz.getComponentType();
+            return isPersistenceType(componentType);
         }
-        return true;
+        if (Collection.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        return false;
     }
 
 }

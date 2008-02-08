@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,13 +143,13 @@ public class TViewTag extends UIComponentTag {
         super.setProperties(component);
         final String localeStr = getLocale();
         Locale locale = null;
-        if(localeStr != null) {
+        if (localeStr != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             locale = (Locale) ValueBindingUtil.getValue(context, localeStr);
             if (locale == null) {
                 locale = findLocale(localeStr);
             }
-            if(locale != null) {
+            if (locale != null) {
                 ((UIViewRoot) component).setLocale(locale);
             }
         } else {

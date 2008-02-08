@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,8 +30,8 @@ import org.seasar.teeda.core.ProductInfo;
 public class TeedaConfigureListener extends S2ContainerListener {
 
     private static final String FACES_INIT_DONE = TeedaConfigureListener.class
-            .getName()
-            + ".FACES_INIT_DONE";
+            .getName() +
+            ".FACES_INIT_DONE";
 
     private static Logger logger = Logger
             .getLogger(TeedaConfigureListener.class);
@@ -43,6 +43,9 @@ public class TeedaConfigureListener extends S2ContainerListener {
         try {
             initializeFaces(event.getServletContext());
         } catch (RuntimeException e) {
+            logger.log(e);
+            throw e;
+        } catch (Error e) {
             logger.log(e);
             throw e;
         }

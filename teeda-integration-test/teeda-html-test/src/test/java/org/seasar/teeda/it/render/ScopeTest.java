@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,133 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 		tester.assertTextEqualsById("message", "");
 		tester.assertTextEqualsById("hoge", "foofoo");
+	}
+
+	public void testSubapplicationScope_do() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+	}
+
+	public void testSubapplicationScope_link() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.clickLinkById("goResult-1");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "");
+	}
+
+	public void testRedirectScope_linkNever() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "hogehogehoge");
+		tester.assertTextEqualsById("message2", "mogemogemoge");
+
+		tester.clickLinkById("goResult-2");
+		tester.dumpHtml();
+
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/subapplicationScopeResult.html") > 0);
+		tester.assertTextEqualsById("message1", "");
+		tester.assertTextEqualsById("message2", "");
+
+		tester.executeJavaScript("window.location.reload()", "reload");
+		tester.dumpHtml();
+
+		tester.assertTextEqualsById("message1", "");
+		tester.assertTextEqualsById("message2", "");
+	}
+
+	public void testDoFinish() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/doFinishInput.html");
+		tester.dumpHtml();
+
+		tester.setTextByName("form:message", "hogehoge");
+
+		tester.submitById("doFinishExecute");
+
+		// ## Assert ##
+		tester.dumpHtml();
+		assertTrue(tester.getCurrentUri().indexOf(
+				"view/scope/doFinishResult.html") > 0);
+		tester.assertTextEqualsById("message", "");
+	}
+
+	public void testNoProperty_TEEDA431() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/hasProperty.html");
+		tester.dumpHtml();
+
+		tester.setTextByName("Form:data1", "foo");
+		tester.setTextByName("Form:data2", "bar");
+		tester.submitById("doOtherPage");
+		tester.dumpHtml();
+
+		tester.submitById("doBack");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("data1", "");
+		tester.assertTextEqualsById("data2", "bar");
 	}
 
 }

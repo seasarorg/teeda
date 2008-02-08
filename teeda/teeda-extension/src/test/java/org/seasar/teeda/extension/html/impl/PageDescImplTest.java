@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TakeOverDesc;
 import org.seasar.teeda.extension.html.impl.page.FooPage;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
@@ -136,6 +137,14 @@ public class PageDescImplTest extends TeedaExtensionTestCase {
         assertNotNull(subappScopePropertyNames);
         assertTrue(subappScopePropertyNames.length == 1);
         assertEquals("bbb", subappScopePropertyNames[0]);
+    }
+
+    public void testGetRedirectDesc() throws Exception {
+        PageDesc pd = createPageDesc(FooPage.class, "fooPage");
+        assertTrue(pd.hasRedirectDesc("doBar"));
+        RedirectDesc rd = pd.getRedirectDesc("doBar");
+        assertNotNull(rd);
+        assertEquals(RedirectDesc.HTTPS, rd.getProtocol());
     }
 
 }

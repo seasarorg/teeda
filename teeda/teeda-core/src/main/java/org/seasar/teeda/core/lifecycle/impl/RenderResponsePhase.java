@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import javax.faces.internal.scope.RedirectScope;
 
 import org.seasar.teeda.core.lifecycle.AbstractPhase;
 import org.seasar.teeda.core.util.FacesContextUtil;
+import org.seasar.teeda.core.util.PortletUtil;
 
 /**
  * @author shot
@@ -49,11 +50,17 @@ public class RenderResponsePhase extends AbstractPhase {
             }
         } finally {
             synchronized (this) {
-                if (RedirectScope.isRedirecting(context)
-                        && !context.getResponseComplete()) {
-                    String path = RedirectScope.getRedirectingPath(context);
-                    RedirectScope.clearContext(context);
-                    RedirectScope.setRedirectedPath(context, path);
+                if (RedirectScope.isRedirecting(context)) {
+                    if (!context.getResponseComplete()) {
+                        String path = RedirectScope.getRedirectingPath(context);
+                        RedirectScope.clearContext(context);
+                        RedirectScope.setRedirectedPath(context, path);
+                    }
+                } else {
+                    // PortletSupport
+                    if (!PortletUtil.isPortlet(context)) {
+                        RedirectScope.clearContext(context);
+                    }
                 }
             }
         }

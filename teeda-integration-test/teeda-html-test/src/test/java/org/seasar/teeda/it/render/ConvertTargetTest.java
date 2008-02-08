@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,19 +49,64 @@ public class ConvertTargetTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.assertTextEqualsById("aaa", "2008/12/31");
-		
 
 		tester.setTextById("aaa", "AAA");
 		tester.submitById("doSomething");
 		tester.dumpHtml();
 
 		tester.assertMatchInElementById("aaaMessage", "aaa");
-		
+
 		tester.setTextById("aaa", "hoge");
 		tester.submitById("doBbb");
 		tester.dumpHtml();
-		
+
 		tester.assertElementNotPresentById("aaaMessages");
+	}
+
+	public void testSerasarUser11085() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/converter/current.html");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Current");
+		tester.assertTextEqualsById("zikan", "15:00");
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
+
+		tester.setTextById("zikan", "aaaa");
+		tester.submitById("doCurrentPage");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Current");
+		tester.assertTextEqualsById("zikan", "aaaa"); // TEEDA-352
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
+
+		tester.submitById("doBackPage");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Back");
+		tester.assertTextEqualsById("zikan", ""); // Seasar-user:11085
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
+
+		tester.submitById("doCurrentPage");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Current");
+		tester.assertTextEqualsById("zikan", "15:00");
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
+
+		tester.setTextById("zikan", "aaaa");
+		tester.submitById("doNextPage");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Current");
+		tester.assertTextEqualsById("zikan", "aaaa"); // TEEDA-352
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
+
+		tester.setTextById("zikan", "15:01");
+		tester.submitById("doNextPage");
+		tester.dumpHtml();
+		tester.assertTitleMatch("Next");
+		tester.assertTextEqualsById("zikan", "15:01");
+		tester.assertTextEqualsById("selectDate", "2007/10/19");
 	}
 
 }

@@ -1,0 +1,44 @@
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:te="http://www.seasar.org/teeda/extension">
+<title>Tree</title>
+<body>
+<form id="treeForm">
+	<input type="hidden" id="treeTreeSave" />
+	<te:inputRadio id="aaa" value="#{tree_treeRadioPage.aaa}">
+	<te:tree value="#{tree_treeRadioPage.tree}" id="client-tree" var="node" varNodeToggler="t">
+		<f:facet name="folder-A">
+			<h:panelGroup>
+				<f:facet name="expand">
+					<te:graphicImage style="border: 0px" value="/img/yellow-folder-expand.png" rendered="#{t.nodeExpanded}"/>
+				</f:facet>
+				<f:facet name="collapse">
+				<te:graphicImage style="border: 0px" value="/img/yellow-folder-collapse.png" rendered="#{!t.nodeExpanded}"/>
+				</f:facet>
+				<te:radioItem name="aaa" value="#{node.value}" />
+				<h:outputText value="#{node.description}"/>
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="folder-B">
+			<h:panelGroup>
+				<f:facet name="expand">
+					<te:graphicImage style="border: 0px" value="/img/yellow-folder-expand.png" rendered="#{t.nodeExpanded}"/>
+				</f:facet>
+				<f:facet name="collapse">
+					<te:graphicImage style="border: 0px" value="/img/yellow-folder-collapse.png" rendered="#{!t.nodeExpanded}"/>
+				</f:facet>
+				<te:radioItem name="aaa" value="#{node.value}" />
+				<h:outputText value="#{node.description}" />
+				<h:outputText value=" (#{node.childCount})" rendered="#{!empty node.children}"/>
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="document">
+			<h:panelGroup>
+				<te:radioItem name="aaa" value="#{node.value}" />
+				<h:outputText value="#{node.description}"/>
+			</h:panelGroup>
+		</f:facet>
+	</te:tree>
+	</te:inputRadio>
+	<input type="submit" id="doHoge" />
+</form>
+</body>
+</html>

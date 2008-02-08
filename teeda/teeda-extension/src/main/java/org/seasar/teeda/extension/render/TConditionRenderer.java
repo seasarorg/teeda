@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class TConditionRenderer extends AbstractRenderer {
     {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
         attribute.addAttributeName(ExtensionConstants.SUBMITTED);
-        attribute.addAttributeName(ExtensionConstants.RENDERSPAN_ATTR);
+        attribute.addAttributeName("tagName");
         attribute.addAttributeName("refresh");
     }
 
@@ -52,15 +52,15 @@ public class TConditionRenderer extends AbstractRenderer {
             return;
         }
         TCondition condition = (TCondition) component;
-        final ResponseWriter writer = context.getResponseWriter();
-        if (!condition.isRenderSpan()) {
-            writer.startElement(JsfConstants.DIV_ELEM, condition);
-        } else {
-            writer.startElement(JsfConstants.SPAN_ELEM, condition);
+        final boolean invisible = condition.isInvisible();
+        final boolean omittag = condition.isOmittag();
+        if (!(invisible || omittag)) {
+            final ResponseWriter writer = context.getResponseWriter();
+            writer.startElement(condition.getTagName(), condition);
+            RendererUtil.renderIdAttributeIfNecessary(writer, component,
+                    getIdForRender(context, condition));
+            renderRemainAttributes(condition, writer, attribute);
         }
-        RendererUtil.renderIdAttributeIfNecessary(writer, component,
-                getIdForRender(context, condition));
-        renderRemainAttributes(condition, writer, attribute);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
@@ -69,11 +69,12 @@ public class TConditionRenderer extends AbstractRenderer {
         if (!component.isRendered()) {
             return;
         }
-        final ResponseWriter writer = context.getResponseWriter();
-        if (!((TCondition) component).isRenderSpan()) {
-            writer.endElement(JsfConstants.DIV_ELEM);
-        } else {
-            writer.endElement(JsfConstants.SPAN_ELEM);
+        TCondition condition = (TCondition) component;
+        final boolean invisible = condition.isInvisible();
+        final boolean omittag = condition.isOmittag();
+        if (!(invisible || omittag)) {
+            final ResponseWriter writer = context.getResponseWriter();
+            writer.endElement(condition.getTagName());
         }
     }
 

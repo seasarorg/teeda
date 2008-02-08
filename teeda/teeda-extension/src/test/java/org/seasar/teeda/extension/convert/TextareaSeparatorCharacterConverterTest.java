@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,15 @@ public class TextareaSeparatorCharacterConverterTest extends
         String value = "abc" + "\r\r\n\n\n" + "def";
         Object o = converter.getAsString(context, component, value);
         assertEquals("abc<br/><br/><br/><br/>def", o.toString());
+    }
+
+    public void testGetAsString_convertSuccess5() {
+        Converter converter = createConverter();
+        MockUIComponent component = new MockUIComponent();
+        MockFacesContext context = getFacesContext();
+        String value = "abc<br/>" + "\n" + "def";
+        Object o = converter.getAsString(context, component, value);
+        assertEquals("abc&lt;br/&gt;<br/>def", o.toString());
     }
 
     public void testConvertTargetNotPointed() throws Exception {

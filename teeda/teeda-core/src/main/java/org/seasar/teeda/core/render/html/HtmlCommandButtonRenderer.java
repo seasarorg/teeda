@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             HtmlCommandButton htmlCommandButton) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement(JsfConstants.INPUT_ELEM, htmlCommandButton);
-        final String image = htmlCommandButton.getImage();
+        final String image = getImage(context, htmlCommandButton);
         final boolean isImageType = StringUtil.isNotBlank(image);
         String type;
         if (isImageType) {
@@ -90,6 +90,11 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
         writer.endElement(JsfConstants.INPUT_ELEM);
     }
 
+    protected String getImage(FacesContext context,
+            HtmlCommandButton htmlCommandButton) {
+        return htmlCommandButton.getImage();
+    }
+
     protected void renderValueAttribute(FacesContext context,
             UICommand command, ResponseWriter writer) throws IOException {
         RendererUtil.renderAttribute(writer, JsfConstants.VALUE_ATTR, command
@@ -105,16 +110,19 @@ public class HtmlCommandButtonRenderer extends AbstractRenderer {
             HtmlCommandButton htmlCommandButton) {
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String clientId = htmlCommandButton.getClientId(context);
-        if (paramMap.containsKey(clientId)
-                || paramMap.containsKey(clientId + ".x")
-                || paramMap.containsKey(clientId + ".y")) {
+        if (paramMap.containsKey(clientId) ||
+                paramMap.containsKey(clientId + ".x") ||
+                paramMap.containsKey(clientId + ".y")) {
             if (JsfConstants.RESET_VALUE.equalsIgnoreCase(htmlCommandButton
                     .getType())) {
             } else {
-                htmlCommandButton
-                        .queueEvent(new ActionEvent(htmlCommandButton));
+                enqueueEvent(htmlCommandButton);
             }
         }
+    }
+
+    protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {
+        htmlCommandButton.queueEvent(new ActionEvent(htmlCommandButton));
     }
 
     protected void addIgnoreAttributeName(final String attr) {

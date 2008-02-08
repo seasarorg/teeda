@@ -4,23 +4,38 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
-  <parent>
-    <groupId>org.seasar.teeda</groupId>
-    <artifactId>teeda-project</artifactId>
-    <version>1.0.12-EA1-SNAPSHOT</version>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
   <groupId>org.seasar.teeda.it</groupId>
   <artifactId>teeda-integration-test-project</artifactId>
   <packaging>pom</packaging>
+  <parent>
+    <groupId>org.seasar.teeda</groupId>
+    <artifactId>teeda-project</artifactId>
+    <version>1.0.12</version>
+    <relativePath>../teeda</relativePath>
+  </parent>
+  <modules>
+    <module>teeda-core-test</module>
+    <module>teeda-core-test-client</module>
+    <module>teeda-jsp-test</module>
+    <module>teeda-html-test</module>
+  </modules>
+
+  <!-- More Project Information -->
   <name>Teeda Integration Test Project</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+
+  <!-- Environment Settings -->
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-integration-test/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
   </scm>
+
+  <!-- Build Settings -->
   <build>
     <pluginManagement>
       <plugins>
@@ -42,41 +57,25 @@
       </plugins>
     </pluginManagement>
   </build>
-  <modules>
-    <module>teeda-core-test</module>
-    <module>teeda-core-test-client</module>
-    <module>teeda-jsp-test</module>
-    <module>teeda-html-test</module>
-  </modules>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-    <repository>
-      <id>jwebunit.sourceforge.net</id>
-      <name>jWebUnit Maven2 Repository</name>
-      <url>http://jwebunit.sourceforge.net/m2-repo</url>
-    </repository>
-  </repositories>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-tiger</artifactId>
-      <version>2.4.18-SNAPSHOT</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-extension</artifactId>
-      <version>2.4.18-SNAPSHOT</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.seasar.container</groupId>
       <artifactId>s2-framework</artifactId>
-      <version>2.4.18-SNAPSHOT</version>
+      <version>${seasar2.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>

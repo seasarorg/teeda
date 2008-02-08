@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+<style>
+h3 {
+	color: #000000;
+	font-size: 110%;
+	margin: 0 0 1em 0;
+	padding: 3px 0px 0px 8px;
+	background-color: #FFD082;
+	border-bottom: 2px solid #FC7819;
+}
+
+</style>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="tutorial-list">
+<h2 class="subtitle" id="id1">Teedaチュートリアル</h2>
+<p>このドキュメントでは、Teedaの基本的な使い方をチュートリアルを通じて学んでみましょう．</p>
+<ul class="arabic simple">
+<li><a href="#setting">環境設定</a></li>
+<li><a href="#createproject">プロジェクトの作成</a></li>
+<li><a href="#firststep">はじめの一歩</a></li>
+</ul>
+</div>
+
+<div class="section">
+<h3><b><a id="setting" name="setting">■環境設定</a></b></h3>
+<p>Teedaを始めるために、まずはプロジェクトを作成しましょう．<br />
+環境は下記のようなものを準備します．<br />
+<ul class="arabic simple">
+<li>JDK1.4(or higher)</li>
+<li>Eclipse3.2(or higher)</li>
+<li>Tomcat5.5(or higher)</li>
+</ul>
+ここまで準備できたら、次はChura用プラグイン「Dolteng」を導入します．<br />
+Eclipseのアップデートサイトで下記のように指定して、OKを押します．<br /><br />
+<img src="images/dolteng_url.png"><br /><br />
+
+次にいくつかプラグインが一覧に現れるので、Doltengにチェックを入れてOKを押します．<br /><br />
+<img src="images/check_dolteng.png"><br /><br />
+
+そのままDoltengをインストールして、workspaceを再起動すれば環境設定は完了です．<br />
+では、続けてプロジェクトを新規作成してみましょう．
+</p>
+<br />
+<br />
+
+<h3><b><a id="createproject" name="createproject">■プロジェクトの作成</a></b></h3>
+<p>ではプロジェクトを新規作成してみましょう．<br />
+プロジェクトエクスプローラーで右クリックし、「New」→「Project」を選択します．<br />
+プロジェクトウィザードが表示されるので、そこからChuraプロジェクトを選択し、Nextを押します．<br />
+
+<img src="images/wizard.png"><br /><br />
+
+次にプロジェクト名とルートパッケージ<br />
+
+<img src="images/create_chura_project.png"><br /><br />
+
+</p>
+<p>TODO</p>
+
+<h3><b><a id="firststep" name="firststep">■はじめの一歩</a></b></h3>
+<p>TODO</p>
+
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2006-2007, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,11 +26,23 @@ import org.seasar.teeda.extension.component.TForEach;
  */
 public class TForEachTag extends UIComponentTagBase {
 
+    private String tagName;
+
     private String pageName;
 
     private String itemsName;
 
+    private String omittag;
+
     public TForEachTag() {
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getItemsName() {
@@ -49,6 +61,14 @@ public class TForEachTag extends UIComponentTagBase {
         this.pageName = pageName;
     }
 
+    public String getOmittag() {
+        return omittag;
+    }
+
+    public void setOmittag(String omittag) {
+        this.omittag = omittag;
+    }
+
     public String getComponentType() {
         return TForEach.COMPONENT_TYPE;
     }
@@ -62,9 +82,10 @@ public class TForEachTag extends UIComponentTagBase {
      */
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        TForEach forEach = (TForEach) component;
-        forEach.setPageName(pageName);
-        forEach.setItemsName(itemsName);
+        setComponentProperty(component, "tagName", tagName);
+        setComponentProperty(component, "pageName", pageName);
+        setComponentProperty(component, "itemsName", itemsName);
+        setComponentProperty(component, "omittag", omittag);
     }
 
     /**
@@ -72,7 +93,9 @@ public class TForEachTag extends UIComponentTagBase {
      */
     public void release() {
         super.release();
+        tagName = null;
         pageName = null;
         itemsName = null;
+        omittag = null;
     }
 }

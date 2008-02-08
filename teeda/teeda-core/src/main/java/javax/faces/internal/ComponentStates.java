@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,14 @@ public class ComponentStates {
             final UIComponent child = (UIComponent) it.next();
             NamingContainerUtil.refreshClientId(child);
             if (child instanceof ComponentStatesHolder) {
+                final ComponentStatesHolder holder = (ComponentStatesHolder) child;
+                final String clientId = child.getClientId(context);
+                SavedState state = (SavedState) savedStates.get(clientId);
+                if (state == null) {
+                    state = new SavedState();
+                    savedStates.put(clientId, state);
+                }
+                state.restore(holder);
                 continue;
             }
             if (child instanceof EditableValueHolder) {
@@ -69,6 +77,14 @@ public class ComponentStates {
             UIComponent component) {
         for (final Iterator it = component.getFacetsAndChildren(); it.hasNext();) {
             final UIComponent child = (UIComponent) it.next();
+            if (child instanceof ComponentStatesHolder) {
+                final ComponentStatesHolder holder = (ComponentStatesHolder) child;
+                final SavedState state = new SavedState();
+                final String clientId = child.getClientId(context);
+                state.save(holder);
+                savedStates.put(clientId, state);
+                continue;
+            }
             if (child instanceof EditableValueHolder) {
                 final EditableValueHolder holder = (EditableValueHolder) child;
                 final SavedState state = new SavedState();

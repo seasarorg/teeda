@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -141,10 +141,7 @@ public class TTimestampConverterTest extends TeedaTestCase {
         String dateValue = "2006/06/06 12:45:50";
         Object o = converter.getAsObject(context, new NullUIComponent(),
                 dateValue);
-
-//        assertNotNull(o);
-//        assertTrue(o instanceof Timestamp);
-        assertNull(o);
+        assertEquals(dateValue, o);
     }
 
     public void testConvertTargetNotPointed2() throws Exception {
@@ -162,8 +159,7 @@ public class TTimestampConverterTest extends TeedaTestCase {
         String dateValue = "AAA";
         Object o = converter.getAsObject(context, new MockUIComponent(),
                 dateValue);
-
-        assertNull(o);
+        assertEquals(dateValue, o);
     }
 
     private Timestamp createTimestampTarget(String pattern, Locale locale,

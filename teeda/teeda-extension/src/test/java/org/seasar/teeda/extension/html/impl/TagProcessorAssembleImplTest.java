@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.seasar.teeda.extension.html.ElementProcessorFactory;
 import org.seasar.teeda.extension.html.HtmlDesc;
 import org.seasar.teeda.extension.html.HtmlParser;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.RedirectDesc;
 import org.seasar.teeda.extension.html.TagProcessor;
 import org.seasar.teeda.extension.html.TagProcessorAssembler;
 import org.seasar.teeda.extension.html.TakeOverDesc;
@@ -463,6 +464,14 @@ public class TagProcessorAssembleImplTest extends TeedaExtensionTestCase {
 
         public boolean hasTakeOverDesc(String methodName) {
             return false;
+        }
+
+        public boolean hasRedirectDesc(String methodName) {
+            return false;
+        }
+
+        public RedirectDesc getRedirectDesc(String methodName) {
+            return null;
         }
 
         public boolean isSubapplicationScopeProperty(String name) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -26,6 +26,8 @@ import java.util.Map;
 public class UrlBuilder {
 
     private String base;
+
+    private String parameterDelimiter = "&";
 
     private final Map urlParameters = new LinkedHashMap() {
 
@@ -45,6 +47,10 @@ public class UrlBuilder {
 
     public void setBase(final String base) {
         this.base = base;
+    }
+
+    public void setParameterDelimiter(String delimiter) {
+        this.parameterDelimiter = delimiter;
     }
 
     public String build() {
@@ -82,7 +88,7 @@ public class UrlBuilder {
             for (int i = 0; i < values.length; i++) {
                 final String value = values[i];
                 if (questionAppeared) {
-                    sb.append('&');
+                    sb.append(parameterDelimiter);
                 } else {
                     sb.append('?');
                     questionAppeared = true;

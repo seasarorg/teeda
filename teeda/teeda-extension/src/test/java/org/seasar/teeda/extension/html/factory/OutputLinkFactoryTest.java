@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -83,4 +83,30 @@ public class OutputLinkFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("aaa", paramProcessor.getProperty("name"));
         assertEquals("#{fooPage.aaa}", paramProcessor.getProperty("value"));
     }
+
+    public void testCreateFactory2() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "goHoge");
+        properties.put("href", "hoge.html?aaa=111&amp;bbb=222&amp;fixed_ccc=1");
+        ElementNode elementNode = createElementNode("a", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        ActionDesc actionDesc = createActionDesc(FooAction.class, "fooAction");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, actionDesc);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(TOutputLinkTag.class, processor.getTagClass());
+        assertEquals("hoge.html?bbb=222&ccc=1", processor.getProperty("value"));
+        assertEquals(1, processor.getChildSize());
+
+        ElementProcessor paramProcessor = (ElementProcessor) processor
+                .getChild(0);
+        assertEquals(ParamTag.class, paramProcessor.getTagClass());
+        assertEquals("aaa", paramProcessor.getProperty("name"));
+        assertEquals("#{fooPage.aaa}", paramProcessor.getProperty("value"));
+    }
+
 }

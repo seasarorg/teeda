@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.extension.util.JavaScriptProvider;
 import org.seasar.teeda.extension.util.VirtualResource;
 
 /**
@@ -79,8 +80,13 @@ public class THtmlHeadRenderer extends AbstractRenderer {
         ResponseWriter writer = context.getResponseWriter();
         Collection values = VirtualResource.getInlineJsResourceValues(context);
         for (Iterator i = values.iterator(); i.hasNext();) {
-            String script = (String) i.next();
-            renderJavaScriptElement(writer, script);
+            Object script = i.next();
+            if (script instanceof JavaScriptProvider) {
+                renderJavaScriptElement(writer, ((JavaScriptProvider) script)
+                        .getScript());
+            } else {
+                renderJavaScriptElement(writer, ((String) script));
+            }
             writer.write(JsfConstants.LINE_SP);
         }
     }

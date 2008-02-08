@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -206,8 +206,11 @@ public class TForEachTest extends UIComponentBaseTest {
         item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 hoge = new HogePage1();
-        forEach.processMapItem(beanDesc, hoge, item);
+        hoge.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processMapItem(beanDesc, hoge, item, savedValues);
         assertEquals("111", hoge.aaa);
+        assertEquals("000", savedValues.get("aaa"));
     }
 
     public void testProcessBeanItem() throws Exception {
@@ -217,19 +220,43 @@ public class TForEachTest extends UIComponentBaseTest {
         item.bbb = "112";
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
         HogePage1 page = new HogePage1();
-        forEach.processBeanItem(beanDesc, page, item);
+        page.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processBeanItem(beanDesc, page, item, savedValues);
         assertEquals("111", page.aaa);
+        assertEquals("000", savedValues.get("aaa"));
     }
 
-    public void testProcessItem() throws Exception {
+    public void testProcessBeanItem2() throws Exception {
+        final TForEach forEach = createTForEach();
+        HogeDto item = new HogeDto();
+        item.aaa = "111";
+        BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage3.class);
+        HogePage3 page = new HogePage3();
+        page.aaa = "000";
+        Map savedValues = new HashMap();
+        forEach.processBeanItem(beanDesc, page, item, savedValues);
+        assertEquals("111", page.aaa);
+        assertEquals("000", savedValues.get("aaa"));
+    }
+
+    public void testItemToPage() throws Exception {
         final TForEach forEach = createTForEach();
         Map item = new HashMap();
         item.put("aaa", "111");
         item.put("bbb", "112");
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(HogePage1.class);
-        HogePage1 page = new HogePage1();
+        final HogePage1 page = new HogePage1();
         forEach.setItemsName("fooItems");
-        forEach.processItem(beanDesc, page, item, 1);
+        MockFacesContext context = getFacesContext();
+        context.getApplication().setVariableResolver(new VariableResolver() {
+            public Object resolveVariable(FacesContext context, String name)
+                    throws EvaluationException {
+                return page;
+            }
+        });
+        Integer savedIndex = forEach.bindRowIndex(context, new Integer(1));
+        Map savedValues = forEach.itemToPage(beanDesc, page, item);
         assertEquals("111", page.aaa);
         assertSame(item, page.foo);
         assertEquals(1, page.fooIndex);
@@ -299,6 +326,35 @@ public class TForEachTest extends UIComponentBaseTest {
         public String aaa;
 
         public String bbb;
+    }
+
+    public static class HogePage3 {
+
+        public String aaa;
+
+    }
+
+    public static class HogeDto {
+
+        String aaa;
+
+        String bbb;
+
+        public String getAaa() {
+            return aaa;
+        }
+
+        public void setAaa(String aaa) {
+            this.aaa = aaa;
+        }
+
+        public String getBbb() {
+            throw new RuntimeException();
+        }
+
+        public void setBbb(String bbb) {
+            this.bbb = bbb;
+        }
     }
 
 }

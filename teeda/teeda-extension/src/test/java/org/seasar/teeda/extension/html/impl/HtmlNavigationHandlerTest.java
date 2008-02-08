@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
         assertEquals("/view/add/addResult_i.html", handler.calcPathFromOutcome(
                 getFacesContext(), "/view/add/addInput_i.html", "addResult"));
     }
-    
+
     public void testCalcPathFromOutcome4() throws Exception {
         HtmlNavigationHandler handler = new HtmlNavigationHandler();
         final NamingConventionImpl nc = new NamingConventionImpl();

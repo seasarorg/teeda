@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -37,7 +37,7 @@ public class NavigationResource {
     private static final String DEFAULT_NAVIGATION_CONTEXTS = NavigationResource.class
             .getName()
             + "_DEFAULT_NAVIGATION_CONTEXTS";
-    
+
     private static Map cache = new HashMap();
 
     private NavigationResource() {
@@ -51,19 +51,19 @@ public class NavigationResource {
         if (navigationContext.isWildCardMatch()) {
             //if default match
             if (NavigationContext.WILDCARD.equals(fromViewId)) {
-                storeNavigationContext(fromViewId,
-                        navigationContext, DEFAULT_NAVIGATION_CONTEXTS);
+                storeNavigationContext(fromViewId, navigationContext,
+                        DEFAULT_NAVIGATION_CONTEXTS);
             } else {
-                storeNavigationContext(fromViewId,
-                        navigationContext, WILDCARD_NAVIGATION_CONTEXTS);
+                storeNavigationContext(fromViewId, navigationContext,
+                        WILDCARD_NAVIGATION_CONTEXTS);
             }
 
         } else {
-            storeNavigationContext(fromViewId,
-                    navigationContext, NAVIGATON_CONTEXTS);
+            storeNavigationContext(fromViewId, navigationContext,
+                    NAVIGATON_CONTEXTS);
         }
     }
-    
+
     public static void removeNavigationContext(String fromViewId) {
         if (fromViewId == null) {
             throw new IllegalArgumentException(fromViewId);
@@ -86,14 +86,13 @@ public class NavigationResource {
     public static Map getDefaultMatchNavigationContexts() {
         return (Map) cache.get(DEFAULT_NAVIGATION_CONTEXTS);
     }
-    
+
     public static void removeAll() {
         cache.clear();
     }
 
-    protected static void storeNavigationContext(
-            String fromViewId, NavigationContext navContext,
-            String applicationKey) {
+    protected static void storeNavigationContext(String fromViewId,
+            NavigationContext navContext, String applicationKey) {
         Map navContextsMap = (Map) cache.get(applicationKey);
         if (navContextsMap == null) {
             navContextsMap = Collections.synchronizedMap(new HashMap());

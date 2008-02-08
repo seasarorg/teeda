@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public class WindowIdEncodeUrlCustomizer implements EncodeUrlCustomizer {
 
     private static final long serialVersionUID = 1L;
 
-    public String encodeActionUrl(ExternalContext externalContext, String url) {
+    public String encodeActionUrl(final ExternalContext externalContext,
+            final String url) {
         return encodeResourceUrl(externalContext, url);
     }
 
@@ -37,24 +38,25 @@ public class WindowIdEncodeUrlCustomizer implements EncodeUrlCustomizer {
         AssertionUtil
                 .assertNotNull("externalContext is null.", externalContext);
         final String wid = WindowIdUtil.getWindowId(externalContext);
-        final StringBuffer buf = new StringBuffer(url.length()
-                + WindowIdUtil.WID.length() + 2);
-        buf.append(url);
-        if (!StringUtil.isEmpty(wid)) {
-            if (url.lastIndexOf("?") >= 0) {
-                buf.append("&");
-            } else {
-                buf.append("?");
-            }
-            buf.append(WindowIdUtil.WID);
-            buf.append("=");
-            buf.append(wid);
+        if (StringUtil.isEmpty(wid)) {
+            return url;
         }
+        final StringBuffer buf = new StringBuffer(url.length() +
+                WindowIdUtil.WID.length() + 2);
+        buf.append(url);
+        if (url.lastIndexOf("?") > -1) {
+            buf.append("&");
+        } else {
+            buf.append("?");
+        }
+        buf.append(WindowIdUtil.WID);
+        buf.append("=");
+        buf.append(wid);
         return buf.toString();
     }
 
     //do nothing
-    public String encodeNamespace(String name) {
+    public String encodeNamespace(final String name) {
         return name;
     }
 

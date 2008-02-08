@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,6 +23,8 @@ public class ForeachDtoPage {
 	private String foo;
 
 	private String bar;
+
+	private String baz;
 
 	private FooItem aaa;
 
@@ -50,20 +52,21 @@ public class ForeachDtoPage {
 		System.out.println("<doSubmit>aaa: " + aaa);
 		System.out.println("<doSubmit>foo: " + foo);
 		System.out.println("<doSubmit>bar: " + bar);
+		System.out.println("<doSubmit>baz: " + baz);
 		return null;
 	}
 
 	public FooItem[] getAaaItems() {
 		if (aaaItems == null) {
 			aaaItems = new FooItem[3];
-			aaaItems[0] = createItem("a1", "b1");
-			aaaItems[1] = createItem("a2", "b2");
-			aaaItems[2] = createItem("a3", "b3");
+			aaaItems[0] = createItem("a1", "b1", "c1");
+			aaaItems[1] = createItem("a2", "b2", "c2");
+			aaaItems[2] = createItem("a3", "b3", "c3");
 		}
 		return aaaItems;
 	}
 
-	private FooItem createItem(String foo, String bar) {
+	private FooItem createItem(String foo, String bar, String baz) {
 		final FooItem item = new FooItem();
 		item.setFoo(foo);
 		item.setBar(bar);
@@ -88,6 +91,15 @@ public class ForeachDtoPage {
 		this.aaa = aaa;
 	}
 
+	public String getFoo() {
+		return foo;
+	}
+
+	public void setFoo(String foo) {
+		System.out.println("<setFoo>foo: " + foo);
+		this.foo = foo;
+	}
+
 	public String getBar() {
 		return bar;
 	}
@@ -97,13 +109,13 @@ public class ForeachDtoPage {
 		this.bar = bar;
 	}
 
-	public String getFoo() {
-		return foo;
+	public String getBaz() {
+		return baz;
 	}
 
-	public void setFoo(String foo) {
-		System.out.println("<setFoo>foo: " + foo);
-		this.foo = foo;
+	public void setBaz(String baz) {
+		System.out.println("<setBaz>baz: " + baz);
+		this.baz = baz;
 	}
 
 	public String getFooStyle() {
@@ -118,6 +130,14 @@ public class ForeachDtoPage {
 
 		private String bar;
 
+		public String getFoo() {
+			return foo;
+		}
+
+		public void setFoo(String foo) {
+			this.foo = foo;
+		}
+
 		public String getBar() {
 			return bar;
 		}
@@ -126,12 +146,8 @@ public class ForeachDtoPage {
 			this.bar = bar;
 		}
 
-		public String getFoo() {
-			return foo;
-		}
-
-		public void setFoo(String foo) {
-			this.foo = foo;
+		public String getBaz() {
+			return foo + bar;
 		}
 
 		public String toString() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,28 +25,64 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class InputRadioTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(InputRadioTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(InputRadioTest.class);
+	}
 
-    public void testSelectValueAndSubmit() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testSelectValueAndSubmit() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
+		tester.dumpHtml();
 
-        tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "3");
-        tester.assertTextEqualsById("aaa-display", "3");
+		tester.clickRadioOptionByName("inputRadioForm:aaa", "2");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
 
-        tester.clickRadioOptionByName("inputRadioForm:aaa", "2");
-        tester.submitByName("inputRadioForm:doAction");
-        tester.dumpHtml();
+		// ## Assert ##
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "2");
+		tester.assertTextEqualsById("aaa-display", "2");
+	}
 
-        // ## Assert ##
-        tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "2");
-        tester.assertTextEqualsById("aaa-display", "2");
-    }
+	public void testInputRadio_required() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		// ## Assert ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio.html");
+		tester.dumpHtml();
+
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		tester.assertTextInElementById("allMessages", "aaa");
+
+		tester.clickRadioOptionByName("inputRadioForm:aaa", "1");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		tester.assertElementNotPresentById("allMessages");
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa", "1");
+	}
+
+	public void testSelectWithSuffix_TEEDA429() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/radio/inputRadio2.html");
+		tester.dumpHtml();
+
+		tester.clickRadioOptionByName("inputRadioForm:aaa-hoge", "2");
+		tester.submitByName("inputRadioForm:doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertRadioOptionSelectedByName("inputRadioForm:aaa-hoge", "2");
+		tester.assertTextEqualsById("aaa-display", "2");
+	}
 
 }

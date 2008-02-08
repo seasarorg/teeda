@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<title>Disabled Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script language="JavaScript" type="text/javascript" src="../../js/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/event.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/disabled.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+DisabledConf = {
+  time : 50000,
+  excludeForm : ['test2Form'],
+  submitMessage : function(){
+    alert('submit 送信中です');
+  },
+  excludeAnchor : ['a2'],
+  anchorMessage : function(){
+    alert('link 遷移中です');
+  }
+}
+//]]>
+</script>
+</head>
+<body>
+<h2>Seasar-user:11056確認用</h2>
+<hr/>
+<form id="test1Form">
+<fieldset title="ダブルサブミットチェック">
+  <legend>このformは2重送信チェック有</legend>
+  <input id="doTest" type="submit" value="submit test1"/>  
+</fieldset>
+</form>
+<hr/>
+<form id="test2Form">
+<fieldset title="ダブルサブミットチェック無し">
+  <legend>このformは2重送信チェック無</legend>
+  <input id="doTest2" type="submit" value="submit test2"/>  
+</fieldset>
+<hr/>
+<fieldset title="ダブルサブミットチェック">
+<legend>リンクのテスト</legend>
+<a id="a1" href="seasarUser11056.html">test link1（2重送信防止）</a><br/>
+<a id="a2" href="seasarUser11056.html">test link2（ノーマル）</a>
+</fieldset>
+</form>
+</body>
+</html>

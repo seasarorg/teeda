@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
@@ -214,19 +214,18 @@ formタグは付け忘れて開発時に悩むケースが多いので、
 
 
 <h3>タグの属性値</h3>
-<p>
-属性の値は必ず引用符で囲みます。（属性値が数字であっても囲む）
-<br>
-<b>例：</b><br>
+<p>属性の値は必ず引用符で囲みます。（属性値が数字であっても囲む）</p>
+<b>例：</b>
+<pre class="literal-block">
 　　width="100"
-</p>
+</pre>
 <br>
 
 
 <h3>閉じタグを省略しない</h3>
 <pre class="literal-block">
 &lt;ul&gt;
-   &lt;li&gt;ある項目<font color="red">&lt;/li&gt;</font>
+   &lt;li&gt;ある項目<span style="color: red;">&lt;/li&gt;</span>
 &lt;/ul&gt;
 </pre>
 <p>
@@ -235,18 +234,16 @@ formタグは付け忘れて開発時に悩むケースが多いので、
 <br>
 
 
-<h3>&はあらゆるところで &amp;amp;と記述する</h3>
-<p>
-HTMLの仕様なのでTeedaに限った話ではありませんが、クエリーストリングで使用する & についても、&amp;amp; で記述することを推奨します。
-</p>
+<h3>URL中の&amp;は&amp;amp;と記述する</h3>
+<p>HTMLの仕様なのでTeedaに限った話ではありませんが、クエリーストリングで使用する &amp; については、&amp;amp; で記述することを推奨します。</p>
 <b>良い例</b><br />
 <pre class="literal-block">
-&lt;a href="and.html?aaa=aaa<font color="red">&amp;amp;</font>copy=bbb"&gt;bbbb&lt;/a&gt;
+&lt;a href="and.html?aaa=aaa<span style="color: red;">&amp;amp;</span>copy=bbb"&gt;bbbb&lt;/a&gt;
 </pre>
 
 <b>悪い例</b><br />
 <pre class="literal-block">
-&lt;a href="and.html?aaa=aaa<font color="red">&amp;</font>copy=bbb"&gt;bbbb&lt;/a&gt;
+&lt;a href="and.html?aaa=aaa<span style="color: red;">&amp;</span>copy=bbb"&gt;bbbb&lt;/a&gt;
 </pre>
 <p>
 上記の悪い例は、ブラウザがクエリーストリング内の &amp;copy を © と誤認識してしまいます。<br>
@@ -263,12 +260,28 @@ HTMLの仕様なのでTeedaに限った話ではありませんが、クエリ�
 <h3>属性の省略書式は使わない</h3>
 <b>良い例</b><br />
 <pre class="literal-block">
-&lt;input type="radio" name="bar" <font color="red">checked="checked"</font> /&gt;
+&lt;input type="radio" name="bar" <span style="color: red;">checked="checked"</span> /&gt;
 </pre>
 
 <b>悪い例</b><br />
 <pre class="literal-block">
-&lt;input type="radio" name="bar" <font color="red">checked</font> /&gt;
+&lt;input type="radio" name="bar" <span style="color: red;">checked</span> /&gt;
+</pre>
+
+
+<h3>スクリプトはCDATAセクションを使う</h3>
+<p>スクリプト中の不等号記号('&lt;'等)をエスケープしなくてすむように、スクリプトはCDATAセクションに記述することを推奨します。</p>
+<b>例</b>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+//<span style="color: red;">&lt;![CDATA[</span>
+function hoge() {
+  for(i = 0; i &lt; 10; i++) {
+    alert("hoge");
+  }
+}
+//<span style="color: red;">]]&gt;</span>
+&lt;/script&gt;
 </pre>
 
 <br>
@@ -278,7 +291,7 @@ HTMLの仕様なのでTeedaに限った話ではありませんが、クエリ�
 
 
 
-<h2><a id="optional" name="optional">余力があればやる事項</h2>
+<h2><a id="optional" name="optional">余力があればやる事項</a></h2>
 <p>プロトタイプ作成の目的をお客様との仕様確認と考えると、
 蛇足になってしまうかも知れないが、余力があればやっておいた方が良いという事項を以下に説明します。</p>
 <br>

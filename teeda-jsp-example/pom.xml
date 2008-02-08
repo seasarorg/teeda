@@ -4,31 +4,40 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <artifactId>teeda-jsp-example</artifactId>
+  <packaging>war</packaging>
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
-    <version>1.0.12-EA1-SNAPSHOT</version>
+    <version>1.0.12</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.seasar.teeda</groupId>
-  <artifactId>teeda-jsp-example</artifactId>
-  <packaging>war</packaging>
+
+  <!-- More Project Information -->
   <name>Teeda JSP Example</name>
   <description></description>
   <url>http://teeda.seasar.org/</url>
+
+  <!-- Environment Settings -->
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-jsp-example/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/teeda/trunk/teeda-jsp-example/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=teeda</url>
   </scm>
+
+  <!-- Build Settings -->
   <build>
     <finalName>teeda-jsp-example</finalName>
   </build>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>org.seasar.teeda</groupId>
       <artifactId>teeda-core</artifactId>
-      <version>1.0.11-RC1</version>
+      <version>${project.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>

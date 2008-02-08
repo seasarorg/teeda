@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
 <style>
+<!--
 table.tbline {
   border-collapse: collapse;
   border: 1px solid #999999;
@@ -61,6 +62,7 @@ h3.underline {
 	#margin-right: 20px;
 }
 
+-->
 </style>
 <script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
 </head>
@@ -103,6 +105,7 @@ h3.underline {
       <li><a href="#commandButton">commandButton</a></li>
       <li><a href="#forEach">forEach</a></li>
       <li><a href="#itemsSave">itemsSave</a></li>
+      <li><a href="#itemsSessionSave">itemsSessionSave</a></li>
       <li><a href="#label">label</a></li>
       <li><a href="#title">title</a></li>
       <li><a href="#link">link</a></li>
@@ -159,7 +162,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">form</b>タグ</span><br/>
+            <span>-<b class="boldorange">form</b>要素</span><br/>
             <span>-<b class="boldorange">idはFormで終わる事(例：aaaForm, userForm)</b></span>
         </td>
       </tr>
@@ -168,7 +171,7 @@ h3.underline {
         <td>h:form</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -200,12 +203,16 @@ h3.underline {
       </tr>
       <tr>
         <td>HTML上での使用方法</td>
-        <td><b class="boldorange">&lt;span id="aaa"&gt;bbb&lt;/span&gt;</b><br/>実行時にはbbbは無視される</td>
+        <td>
+        <b class="boldorange">&lt;span id="aaa"&gt;bbb&lt;/span&gt;</b><br/>
+        または<br/>
+        <b class="boldorange">&lt;div id="aaa"&gt;bbb&lt;/div&gt;</b><br/>
+        実行時にはbbbは無視される</td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">span</b>タグ</span><br/>
+            <span>-<b class="boldorange">span</b>要素または<b class="boldorange">div</b>要素</span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
       </tr>
@@ -214,8 +221,12 @@ h3.underline {
         <td>h:outputText</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
-        <td>特になし</td>
+        <td>要素の各属性の使い方</td>
+        <td>
+          <span>-<b class="boldorange">te:omittag</b></span><br/>
+          <p>この属性は、&lt;span&gt;要素または&lt;div&gt;要素の開始タグおよび終了タグを出力しない場合に使います．</p>
+          &lt;span te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -223,7 +234,9 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>なし</td>
+        <td align="left">
+            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -251,7 +264,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
             <span>-<b class="boldorange">typeがtextまたは指定されていない</b></span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
@@ -261,7 +274,7 @@ h3.underline {
         <td>te:inputText</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
@@ -306,7 +319,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
             <span>-<b class="boldorange">typeがhidden</b></span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
@@ -316,7 +329,7 @@ h3.underline {
         <td>h:inputHidden</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -325,7 +338,8 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td><span>Validationフェーズを正常終了すると、すぐにModelを更新する</span></td>
+        <td><span>-Validationフェーズを正常終了すると、すぐにModelを更新する</span><br>
+</td>
       </tr>
     </tbody>
   </table>
@@ -362,9 +376,9 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">spanタグの配下にinputタグのradio項目がある</b></span><br/>
-            <span>-<b class="boldorange">spanタグのidと同一のプロパティ名がPageクラスに存在する</b></span><br/>
-            <span>-<b class="boldorange">spanタグの配下のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+            <span>-<b class="boldorange">span要素またはdiv要素の子孫にinput要素のradio項目がある</b></span><br/>
+            <span>-<b class="boldorange">span要素またはdiv要素のidと同一のプロパティ名がPageクラスに存在する</b></span><br/>
+            <span>-<b class="boldorange">span要素またはdiv要素の子孫のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
         </td>
       </tr>
       <tr>
@@ -372,7 +386,7 @@ h3.underline {
         <td>te:inputRadio</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>なし</td>
       </tr>
       <tr>
@@ -381,7 +395,8 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Teeda 1.0.7から使用できます</td>
+        <td><span>-<b class="boldorange">forEach</b>と組み合わせて使用する場合は，<b class="boldorange">span</b>要素をforEachの外側に，<b class="boldorange">input</b>要素をforEachの内側に記述する</span><br>
+</td>
       </tr>
     </tbody>
   </table>
@@ -409,7 +424,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
             <span>-<b class="boldorange">typeがpassword</b></span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
@@ -419,7 +434,7 @@ h3.underline {
         <td>h:inputSecret</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -456,7 +471,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">textarea</b>タグ</span><br/>
+            <span>-<b class="boldorange">textarea</b>要素</span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
         </td>
       </tr>
@@ -465,7 +480,7 @@ h3.underline {
         <td>te:inputTextarea</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
@@ -515,7 +530,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">select</b>タグ</span><br/>
+            <span>-<b class="boldorange">select</b>要素</span><br/>
             <span>-<b class="boldorange">multiple属性がついていない</b></span><br/>
             <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある<br/>（上記の例だとaaaItems）</b></span>
         </td>
@@ -525,7 +540,7 @@ h3.underline {
         <td>te:selectOneMenu</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
@@ -576,7 +591,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">radio</b>タグ</span><br/>
+            <span>-<b class="boldorange">radio</b>要素</span><br/>
             <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">spanの配下にinputのradio項目がある</b></span><br/>
             <span>-<b class="boldorange">spanの配下のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
@@ -587,11 +602,17 @@ h3.underline {
         <td>h:selectOneRadio</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">style属性</b></span><br/>
           <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．</p>
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;要素が出力されません．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性が指定されなかった場合のみ有効です．</p>
+          <span>-<b class="boldorange">te:col属性</b></span><br/>
+          <p>style属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
         </td>
       </tr>
       <tr>
@@ -600,7 +621,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Templateに書いてある値は実行時には消える</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -624,13 +648,13 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td>
-          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;
+          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;</b>
         </td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
             <span>-<b class="boldorange">type属性がcheckbox</b></span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
@@ -641,7 +665,7 @@ h3.underline {
         <td>h:selectBooleanCheckbox</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">特になし</td>
       </tr>
       <tr>
@@ -684,7 +708,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">span</b>タグと<b class="boldorange">input</b>タグ(typeはcheckbox)の組み合わせで構成</span><br/>
+            <span>-<b class="boldorange">span</b>要素と<b class="boldorange">input</b>要素(typeはcheckbox)の組み合わせで構成</span><br/>
             <span>-<b class="boldorange">spanの配下のinput項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
             <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-Page側に<b class="boldorange">idと同一のプロパティ名（型は配列）</b>がある</span>
@@ -695,11 +719,17 @@ h3.underline {
         <td>h:selectManyCheckbox</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">style属性</b></span><br/>
           <p>style属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;style属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．</p>
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;要素が出力されません．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;style属性が指定されなかった場合のみ有効です．</p>
+          <span>-<b class="boldorange">te:col属性</b> (Teeda 1.0.12以降)</span><br/>
+          <p>style属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
         </td>
       </tr>
       <tr>
@@ -708,7 +738,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Templateに書いてある値は実行時には消える</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -739,11 +772,11 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ<br/>
-            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．<br/>
-            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．<br/>
-            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．<br/>
-            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．<br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．</span><br/>
+            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．</span><br/>
+            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．</span><br/>
+            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．</span><br/>
         </td>
       </tr>
       <tr>
@@ -751,7 +784,7 @@ h3.underline {
         <td>te:commandButton</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">renderJs属性</b></span><br/>
           <p>doOnceで始まるidを持ち、renderJs属性を<b class="boldorange">true</b>にすると、ダブルサブミット防止のJavaScriptが出力される．</p>
@@ -769,8 +802,9 @@ h3.underline {
         <td>
         	<span>-ダブルサブミット防止JavaScriptの設定詳細は<a href="http://teeda.seasar.org/ja/kumu_disabled.html">こちら</a>を参照ください．</span><br />
         	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
-        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされます．値の引継ぎ機能は無効です．</b></span>
-        	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
+        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされません．値の引継ぎ機能は無効です．</b></span>
+        	<br>
+<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
         </td>
       </tr>
     </tbody>
@@ -812,8 +846,10 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">div</b>タグか<b class="boldorange">tbody</b>タグ</span><br/>
-            <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-次の要素のいずれか<br>
+&nbsp;&nbsp;<b class="boldorange">div</b>要素，<b class="boldorange">span</b>要素，<b class="boldorange">table</b>要素，<b class="boldorange">tbody</b>要素，<b class="boldorange">tr</b>要素，<b class="boldorange">ol</b>要素，<b class="boldorange">ul</b>要素，<b class="boldorange">dl</b>要素</span><br/>
+<span>-<b class="boldorange">idの語尾がItemsで終わっている</b></span><br/>
+            <span>-<b class="boldorange">id（xxxItems）と同名のListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
         </td>
       </tr>
@@ -822,8 +858,12 @@ h3.underline {
         <td>te:forEach</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
-        <td align="left">特になし</td>
+        <td>要素の各属性の使い方</td>
+        <td align="left"><span>-<b class="boldorange">te:omittag</b></span><br/>
+          <span>&nbsp;&nbsp;この属性は、要素の開始タグおよび終了タグの出力を制御する場合に使います．</span><br>
+<span>&nbsp;&nbsp;<b class="boldorange">true</b>を指定するとタグが出力されず，<b class="boldorange">false</b>を指定するとタグが出力されます．</span><br>
+<span>&nbsp;&nbsp;デフォルトでは，<b class="boldorange">div</b>要素または<b class="boldorange">span</b>要素の場合はタグが出力されず，それ以外の要素の場合はタグが出力されます．</span><br/>
+</td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -831,11 +871,10 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>
-          <span><b class="boldorange">値を更新する場合には配列</b>、<b class="boldorange">表示のみの場合はList</b>を使う</span><br/>
-          <span>forEachのネストは表示の場合のみ可能．</span><br/>
-          <span><b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
-          <span>ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
+        <td><span>-プロパティが<b class="boldorange">配列</b>の場合は，<b class="boldorange">表示・更新</b>とも可能．</span><br>
+            <span>-プロパティが<b class="boldorange">リスト</b>の場合は，<b class="boldorange">Seasar2.4.18以降+Java5以降</b>との組み合わせで<b class="boldorange">generics</b>を使った場合のみ<b class="boldorange">表示・更新</b>とも可能．それ以外の場合は<b class="boldorange">表示のみ</b>可能．</span><br>
+<span>-<b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
+          <span>-ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
         </td>
       </tr>
     </tbody>
@@ -880,7 +919,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-hiddenタグに状態を維持したいList/配列の<b class="boldorange">プロパティ名+Saveのid</b>を付ける<br/>
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+Saveのid</b>を付ける</span><br/>
             <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
             <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
         </td>
@@ -890,7 +929,7 @@ h3.underline {
         <td>h:inputHidden</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">特になし</td>
       </tr>
       <tr>
@@ -900,8 +939,74 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td>
-          <span>ForEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もForEachの状態復元の為、ItemsSaveが必要です</span><br/>
-          <span>ForEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
+          <span>forEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もforEachの状態復元の為、ItemsSaveが必要です</span><br/>
+          <span>forEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="itemsSessionSave">itemsSessionSave</a></h3>
+<p>itemsSessionSaveは、Page側で持つList/配列をSessionに格納し、画面にList/配列を引き継ぐ機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>List/配列状態維持コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;form id="aaaForm"/&gt;<br/>
+          <b class="boldorange">
+          &lt;input type="hidden" id="aaaItemsSessionSave"&gt;<br/>
+          </b>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          </b>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          &lt;/table&gt;<br/>
+          &lt;/form&gt;
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+SessionSaveのid</b>を付ける</span><br/>
+            <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:sessionSave</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>forEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もforEachの状態復元の為、ItemsSessionSaveが必要です</span><br/>
+          <span>forEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
         </td>
       </tr>
     </tbody>
@@ -930,7 +1035,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">label</b>タグ</span><br/>
+            <span>-<b class="boldorange">label</b>要素</span><br/>
             <span>-<b class="boldorange">id</b>がある</span>
         </td>
       </tr>
@@ -939,7 +1044,7 @@ h3.underline {
         <td>te:outputLabel</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -982,7 +1087,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">title</b>タグ</span><br/>
+            <span>-<b class="boldorange">title</b>要素</span><br/>
             <span>-<b class="boldorange">id</b>がある</span>
         </td>
       </tr>
@@ -991,7 +1096,7 @@ h3.underline {
         <td>te:title</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -1030,7 +1135,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">a</b>タグ</span><br/>
+            <span>-<b class="boldorange">a</b>要素</span><br/>
             <span>-<b class="boldorange">id</b>がgoで始まっている</span>
         </td>
       </tr>
@@ -1039,7 +1144,7 @@ h3.underline {
         <td>te:outputLink</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -1050,9 +1155,8 @@ h3.underline {
         <td>その他</td>
         <td>
           <span>href属性に記述したkey=value形式のvalue部分は、以下のように決定する</span><br/>
-          <span>
-          &nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b><br/>
-          &nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b><br/>
+          <span>&nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b></span><br/>
+          <span>&nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b></span><br/>
         </td>
       </tr>
     </tbody>
@@ -1077,15 +1181,14 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td>
-          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;&lt;またはdiv id="isNotCondition"&gt;&lt;/div&gt;</b>
-        </td>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;</b>または<b class="boldorange">&lt;div id="isNotCondition"&gt;&lt;/div&gt;</b></td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">div</b>タグ</span><br/>
-            <span>-<b class="boldorange">id</b>がisまたはisNotで始まっている</span><br/>
-            <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティとアクセサが定義してある</span>
+            <span>-</span><b class="boldorange">html</b>，<b class="boldorange">head</b>，<b class="boldorange">link，<b class="boldorange">style，<b class="boldorange">script</b></b></b>，<b class="boldorange">body</b>を除く任意の要素<br/>
+            <span>-<b class="boldorange">id</b>が<code>is</code>または<code>isNot</code>で始まっている</span><br/>
+            <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティが定義してある</span>
         </td>
       </tr>
       <tr>
@@ -1093,8 +1196,13 @@ h3.underline {
         <td>te:condition</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
-        <td>特になし</td>
+        <td>要素の各属性の使い方</td>
+        <td>
+          <span>-<b class="boldorange">te:omittag</b> (Teeda 1.0.12以降)</span><br/>
+          <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、 条件が成立した場合でも要素の開始タグおよび終了タグは出力されません (要素の内容は出力されます)．<br/>
+          te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、 条件が成立した場合は要素の開始タグおよび終了タグが出力されます．</p>
+          &lt;span id=&quot;isXxx&quot; te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
       </tr>
       <tr>
         <td>JavaScriptの描画</td>
@@ -1102,11 +1210,12 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>
-          <span>Conditionは条件にマッチしたときにのみ描画される</span><br/>
-          <span>
-          &nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される<br/>
-          &nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される<br/>
+        <td align="left">
+          <span>-Conditionは条件にマッチしたときにのみ描画される</span><br/>
+          <span>&nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;Validationエラーになったときは元の状態に復元される</span><br/>
+          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -1174,7 +1283,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">table</b>タグ</span><br/>
+            <span>-<b class="boldorange">table</b>要素</span><br/>
             <span>-<b class="boldorange">id</b>が存在し、末尾がGrid、GridX、GridY、GridXYとなっている</span><br/>
             <span>-<b class="boldorange">id</b>からGridの文字を取り除きItemsを付加したものがPageに存在する(id=aaaGridならaaaItems)</span><br/>
         </td>
@@ -1184,7 +1293,7 @@ h3.underline {
         <td>te:grid</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">async</b></span><br/>
           <p>この属性は、Gridで非同期通信を行うかどうかをGrid単位で設定するために使う.<br/>&nbsp;&nbsp;aync=trueで非同期、falseで同期.デフォルトは50件以上出力されると非同期になる．</p>
@@ -1236,7 +1345,7 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">input</b>タグ</span><br/>
+            <span>-<b class="boldorange">input</b>要素</span><br/>
             <span>-<b class="boldorange">typeがtextまたは指定されていない</b></span><br/>
             <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
             <span>-<b class="boldorange">class属性に"T_currency"と記述されている</b></span>
@@ -1247,7 +1356,7 @@ h3.underline {
         <td>te:inputCommaText</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td align="left">
           <span>-<b class="boldorange">onTeedaError</b></span><br/>
           <span>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</span><br/>
@@ -1298,12 +1407,12 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td><b class="boldorange">&lt;head&gt;&lt;/head&gt;</b><br/>
-        headタグを記述すると全てheadコンポーネントになります．</td>
+        head要素を記述すると全てheadコンポーネントになります．</td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">head</b>タグ</span><br/>
+            <span>-<b class="boldorange">head</b>要素</span><br/>
         </td>
       </tr>
       <tr>
@@ -1311,7 +1420,7 @@ h3.underline {
         <td>無し</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -1344,12 +1453,12 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td><b class="boldorange">&lt;te:include te:src="/bbb/bbb.html"/&gt;</b>．<br />
-        このように記述することでインクルードされるHTMLのbodyタグの中身が読み込まれます．</td>
+        このように記述することでインクルードされるHTMLのbody要素の中身が読み込まれます．</td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">teを使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+            <span>-<b class="boldorange">te:include</b>要素</span><br/>
         </td>
       </tr>
       <tr>
@@ -1357,7 +1466,7 @@ h3.underline {
         <td>無し</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -1369,7 +1478,8 @@ h3.underline {
         <td align="left">
             <span>-<b class="boldorange">includeページに対応するPageクラスのinitialize()が呼ばれる．</b></span><br/>
             <span>-<b class="boldorange">includeページに対応するPageクラスのprerender()が呼ばれる．</b></span><br/>
-            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span>
+            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span><br/>
+            <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -1394,12 +1504,12 @@ h3.underline {
       <tr>
         <td>HTML上での使用方法</td>
         <td><b class="boldorange">&lt;te:includeChildBody/&gt;</b><br/>
-        このように記述することでインクルードされるHTMLのbodyタグの中身が読み込まれます．</td>
+        このように記述することでインクルードされるHTMLのbody要素の中身が読み込まれます．</td>
       </tr>
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">teを使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</b></span>
+          <b class="boldorange">te:includeChildBody</b>要素
         </td>
       </tr>
       <tr>
@@ -1407,7 +1517,7 @@ h3.underline {
         <td>無し</td>
       </tr>
       <tr>
-        <td>タグの各属性の使い方</td>
+        <td>要素の各属性の使い方</td>
         <td>特になし</td>
       </tr>
       <tr>
@@ -1416,7 +1526,9 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>なし</td>
+        <td align="left">
+            <span>-<b class="boldorange">te</b>名前空間を使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2007 the Seasar Foundation and the Others.
+ * Copyright 2004-2008 the Seasar Foundation and the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@ package org.seasar.teeda.extension.util;
 
 import java.io.IOException;
 import java.security.MessageDigest;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
+import javax.faces.internal.scope.SubApplicationScope;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
@@ -41,12 +40,19 @@ public class TransactionTokenUtil {
 
     public static String TOKEN = null;
 
+    public static String SAVED_TOKEN_SUFFIX = ".SAVED";
+
     public static final String DEFAULT_TOKEN = TransactionTokenUtil.class
             .getName() +
             ".TOKEN";
 
-    private static final String TOKENS = TransactionTokenUtil.class.getName() +
-            ".TOKENS";
+    private static final String CURRENT_TOKEN = TransactionTokenUtil.class
+            .getName() +
+            ".CURRENT_TOKEN";
+
+    public static final String PREVIOUS_TOKEN = TransactionTokenUtil.class
+            .getName() +
+            ".PREVIOUS_TOKEN";
 
     private static final String DO_ONCE = "doOnce";
 
@@ -76,7 +82,10 @@ public class TransactionTokenUtil {
         if (!StringUtil.isEmpty(token)) {
             return;
         }
-        token = generate(context);
+        token = (String) requestMap.remove(TOKEN + SAVED_TOKEN_SUFFIX);
+        if (StringUtil.isEmpty(token)) {
+            token = generate(context);
+        }
         requestMap.put(TOKEN, token);
         RendererUtil.renderHidden(component, context.getResponseWriter(),
                 TOKEN, token);
@@ -88,7 +97,10 @@ public class TransactionTokenUtil {
         }
         final ExternalContext extCtx = context.getExternalContext();
         final Map requestMap = extCtx.getRequestMap();
-        requestMap.remove(TOKEN);
+        String token = (String) requestMap.remove(TOKEN);
+        if (!StringUtil.isEmpty(token)) {
+            requestMap.put(TOKEN + SAVED_TOKEN_SUFFIX, token);
+        }
     }
 
     protected static String generate(FacesContext context) {
@@ -101,13 +113,7 @@ public class TransactionTokenUtil {
             id = (String) pd.getValue(session);
         }
         String token = generate(id);
-        Map sessionMap = extCtx.getSessionMap();
-        Set tokens = getTokens(sessionMap);
-        if (tokens == null) {
-            tokens = new HashSet();
-            setTokens(sessionMap, tokens);
-        }
-        tokens.add(token);
+        setCurrentToken(context, token);
         return token;
 
     }
@@ -126,22 +132,54 @@ public class TransactionTokenUtil {
         return StringUtil.toHex(md.digest());
     }
 
-    protected static Set getTokens(Map sessionMap) {
-        return (Set) sessionMap.get(TOKENS);
+    protected static String getCurrentToken(final FacesContext context) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
+            return null;
+        }
+        return (String) subAppScope.get(CURRENT_TOKEN);
     }
 
-    protected static void setTokens(Map sessionMap, Set tokens) {
-        sessionMap.put(TOKENS, tokens);
+    protected static void setCurrentToken(final FacesContext context,
+            String currentToken) {
+        final Map subAppScope = SubApplicationScope.getOrCreateContext(context);
+        subAppScope.put(CURRENT_TOKEN, currentToken);
     }
 
-    protected static void removeTokens(Map sessionMap) {
-        sessionMap.remove(TOKENS);
+    protected static void removeCurrentTokens(final FacesContext context) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
+            return;
+        }
+        subAppScope.remove(CURRENT_TOKEN);
+    }
+
+    protected static String getPreviousToken(final FacesContext context) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
+            return null;
+        }
+        return (String) subAppScope.get(PREVIOUS_TOKEN);
+    }
+
+    protected static void setPreviousToken(final FacesContext context,
+            String previousToken) {
+        final Map subAppScope = SubApplicationScope.getOrCreateContext(context);
+        subAppScope.put(PREVIOUS_TOKEN, previousToken);
+    }
+
+    protected static void removePreviousToken(final FacesContext context) {
+        final Map subAppScope = SubApplicationScope.getContext(context);
+        if (subAppScope == null) {
+            return;
+        }
+        subAppScope.remove(PREVIOUS_TOKEN);
     }
 
     public static synchronized boolean verify(FacesContext context) {
         initTokenIfNeed();
-        Map paramMap = context.getExternalContext().getRequestParameterMap();
-        String token = (String) paramMap.get(TOKEN);
+        Map requestMap = context.getExternalContext().getRequestParameterMap();
+        String token = getToken(requestMap);
         if (StringUtil.isEmpty(token)) {
             return false;
         }
@@ -149,19 +187,27 @@ public class TransactionTokenUtil {
     }
 
     public static synchronized boolean verify(FacesContext context, String token) {
-        Map sessionMap = context.getExternalContext().getSessionMap();
-        Set tokens = getTokens(sessionMap);
-        if (tokens == null) {
+        final String currentToken = getCurrentToken(context);
+        if (StringUtil.isEmpty(currentToken)) {
             return false;
         }
-        if (tokens.contains(token)) {
-            tokens.remove(token);
-            if (tokens.size() == 0) {
-                removeTokens(sessionMap);
-            }
+        if (currentToken.equals(token)) {
+            removeCurrentTokens(context);
+            setPreviousToken(context, token);
             return true;
         }
         return false;
+    }
+
+    public static boolean isPrevious(final FacesContext context) {
+        final Map paramMap = context.getExternalContext()
+                .getRequestParameterMap();
+        final String token = (String) paramMap.get(TOKEN);
+        final String previous = getPreviousToken(context);
+        if (StringUtil.isEmpty(previous)) {
+            return false;
+        }
+        return previous.equals(token);
     }
 
     private static void initTokenIfNeed() {
