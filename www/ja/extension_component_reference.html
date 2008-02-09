@@ -4,7 +4,7 @@
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Style-Type" content="text/css" />
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
 <style>
@@ -98,6 +98,7 @@ h3.underline {
       <li><a href="#inputRadio">inputRadio</a></li>
       <li><a href="#inputSecret">inputSecret</a></li>
       <li><a href="#inputTextarea">inputTextarea</a></li>
+      <li><a href="#inputFile">inputFile</a></li>
       <li><a href="#selectOneMenu">selectOneMenu</a></li>
       <li><a href="#selectOneRadio">selectOneRadio</a></li>
       <li><a href="#selectBooleanCheckbox">selectBooleanCheckbox</a></li>
@@ -276,7 +277,7 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td align="left">
-          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
           &lt;style&gt;<br/>
           &nbsp;&nbsp;.onTeedaError {<br/>
@@ -291,7 +292,7 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>なし</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
       </tr>
     </tbody>
   </table>
@@ -395,8 +396,7 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td><span>-<b class="boldorange">forEach</b>と組み合わせて使用する場合は，<b class="boldorange">span</b>要素をforEachの外側に，<b class="boldorange">input</b>要素をforEachの内側に記述する</span><br>
-</td>
+        <td><span>-<b class="boldorange">forEach</b>と組み合わせて使用する場合は，<b class="boldorange">span</b>要素をforEachの外側に，<b class="boldorange">input</b>要素をforEachの内側に記述する</span></td>
       </tr>
     </tbody>
   </table>
@@ -482,7 +482,7 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td align="left">
-          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
           &lt;style&gt;<br/>
           &nbsp;&nbsp;.onTeedaError {<br/>
@@ -497,7 +497,67 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>特になし</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h3 class="underline"><a name="inputFile">inputFile</a></h3>
+<p>inputFileはファイルアップロードのコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap">
+<div>項目</div>
+</th>
+        <th nowrap="nowrap">
+<div>説明</div>
+</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ファイルアップロードコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type=&quot;file&quot; id=&quot;aaa&quot; /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがfile</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputFile</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>
+見栄えを変えるのに使います．</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br>
+「<a href="extension_features.html">機能リファレンス</a>」の「<a href="extension_features.html#fileupload">ファイルアップロード</a>」も参照してください．</td>
       </tr>
     </tbody>
   </table>
@@ -542,7 +602,7 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td align="left">
-          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
           <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
           &lt;style&gt;<br/>
           &nbsp;&nbsp;.onTeedaError {<br/>
@@ -557,7 +617,8 @@ h3.underline {
       </tr>
       <tr>
         <td>その他</td>
-        <td>Templateに書いてある値は実行時には消える</td>
+        <td>Templateに書いてある値は実行時には消える<br>
+<span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
       </tr>
     </tbody>
   </table>
@@ -786,9 +847,9 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td align="left">
-          <span>-<b class="boldorange">renderJs属性</b></span><br/>
+          <span>-<b class="boldorange">te:renderJs属性</b></span><br/>
           <p>doOnceで始まるidを持ち、renderJs属性を<b class="boldorange">true</b>にすると、ダブルサブミット防止のJavaScriptが出力される．</p>
-          <span>-<b class="boldorange">time属性</b></span><br/>
+          <span>-<b class="boldorange">te:time属性</b></span><br/>
           <p>上記のrenderJsと連動して、ダブルサブミット防止JavaScriptのタイムアウト値の設定をする（msec）．</p>
         </td>
       </tr>
@@ -804,7 +865,8 @@ h3.underline {
         	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
         	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされません．値の引継ぎ機能は無効です．</b></span>
         	<br>
-<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span>
+        	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span><br>
+        	<span>-<b class="boldorange">te:renderJs</b>属性および<b class="boldorange">te:time</b>属性を使用するには&lt;html&gt;要素にxmlns:te=&quot;http://www.seasar.org/teeda/extension&quot;が必要となります．</span>
         </td>
       </tr>
     </tbody>
@@ -875,7 +937,7 @@ h3.underline {
             <span>-プロパティが<b class="boldorange">リスト</b>の場合は，<b class="boldorange">Seasar2.4.18以降+Java5以降</b>との組み合わせで<b class="boldorange">generics</b>を使った場合のみ<b class="boldorange">表示・更新</b>とも可能．それ以外の場合は<b class="boldorange">表示のみ</b>可能．</span><br>
 <span>-<b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
           <span>-ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
-        </td>
+-<span><b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
       </tr>
     </tbody>
   </table>
@@ -1358,18 +1420,18 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td align="left">
-          <span>-<b class="boldorange">onTeedaError</b></span><br/>
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
           <span>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</span><br/>
           &lt;style&gt;<br/>
           &nbsp;&nbsp;.onTeedaError {<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
           &nbsp;&nbsp;}<br/>
           &lt;/style&gt;<br/>
-          <span>-<b class="boldorange">groupingSeparator</b></span><br/>
+          <span>-<b class="boldorange">te:groupingSeparator</b></span><br/>
           <p>この属性は、3桁ごとの金額区切り文字を何にするか指定します.デフォルトは<b class="boldorange">","</b>.</p>
-          <span>-<b class="boldorange">fractionSeparator</b></span><br/>
+          <span>-<b class="boldorange">te:fractionSeparator</b></span><br/>
           <p>この属性は、3桁ごとの小数点区切り文字を何にするか指定します.デフォルトは<b class="boldorange">"."</b>.</p>
-          <span>-<b class="boldorange">fraction</b></span><br/>
+          <span>-<b class="boldorange">te:fraction</b></span><br/>
           <p>この属性は、小数点以下何桁までを有効範囲とするか指定します.</p>
         </td>
       </tr>
@@ -1383,6 +1445,7 @@ h3.underline {
           <span>-inputCommaTextは<b class="boldorange">自動的にime-mode:disabled;が描画</b>される</span><br/>
           <span>-<b class="boldorange">数値と記号、tmb（t=000, m=000000, b=000000000に変換）のみ</b>しか入力できない</span><br/>
           <span>-focusから抜ける際にフォーマットを整え、再度focusがあたると数値のみのフォーマットになる</span><br/>
+          <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
         </td>
       </tr>
     </tbody>
