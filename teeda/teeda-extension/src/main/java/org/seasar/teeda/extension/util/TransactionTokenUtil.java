@@ -218,4 +218,10 @@ public class TransactionTokenUtil {
                     : DEFAULT_TOKEN;
         }
     }
+
+    public static void resetContext(final FacesContext context) {
+        removeCurrentTokens(context);
+        removePreviousToken(context);
+    }
+
 }

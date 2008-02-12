@@ -32,6 +32,7 @@ import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.exception.AlreadyRedirectingException;
 import org.seasar.teeda.core.util.DIContainerUtil;
 import org.seasar.teeda.core.util.NavigationHandlerUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletErrorPageManagerImpl;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -74,8 +75,10 @@ public class TeedaExtensionErrorPageManagerImpl extends
         }
         final String redirectingPath = RedirectScope
                 .getRedirectingPath(context);
-        if (RedirectScope.isRedirecting(context)
-                && actionURL.equals(redirectingPath)) {
+        if (!PostbackUtil.isPostback(context.getExternalContext()
+                .getRequestMap()) &&
+                RedirectScope.isRedirecting(context) &&
+                actionURL.equals(redirectingPath)) {
             throw new AlreadyRedirectingException();
         }
         NavigationHandlerUtil.redirect(context, actionURL);
