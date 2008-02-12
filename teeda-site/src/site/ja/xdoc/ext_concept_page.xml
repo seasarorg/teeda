@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>TeedaExtension - 概念 - ページモデル</title>
+	</properties>
+	<body>
+		<section name="ページモデル">
+			<ul>
+				<li>
+					<p>
+						<a href="#概要">概要</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#テンプレートHTML">テンプレートHTML</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#ページクラス">ページクラス</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#レンダリング">レンダリング</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#ポストバック">ポストバック</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#サブアプリケーション">サブアプリケーション</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#命名規約">命名規約</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#テンプレートHTMLの命名規約">
+										テンプレートHTMLの命名規約
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#ページクラスの命名規約">
+										ページクラスの命名規約
+									</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section name="概要">
+			<div class="sidebar">ページクラスとアクションクラスを併用することもできます．</div>
+			<p>TeedaExtensionは，ページモデルに基づくプレゼンテーションフレームワークです．</p>
+			<p>
+				ページを構成するのは，静的なテンプレートとなるHTMLと， 動的な情報を持つページクラスです．
+				テンプレートHTMLとページクラスは1対1に対応します．
+			</p>
+			<img src="images/ext_concept_page1.png" width="466"
+				height="183" />
+		</section>
+
+		<section name="テンプレートHTML">
+			<p>TeedaExtensionは，ビューにJSPではなくHTML (正確にはXHTML) を使用します．</p>
+			<p>
+				テンプレートHTMLは， ブラウザに向けてレンダリングされるHTMLのひな形で，
+				主にid属性を使用して実行時に置き換える部分を示します．
+			</p>
+			<h5>テンプレートHTMLの例</h5>
+			<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    こんにちは<span id="name">World!!!</span>
+  </body>
+</html>
+]]></source>
+			<p>
+				上のテンプレートHTMLの例では，
+				<code>&lt;span&gt;</code>
+				要素に
+				<code>"name"</code>
+				というidが付けられています．
+			</p>
+		</section>
+
+		<section name="ページクラス">
+			<p>ページクラスはテンプレートHTMLに対応する情報を保持するクラスです．</p>
+			<p>
+				ページクラスはPOJO(Plain Old Java Object)であり，
+				特定のクラスを継承したり，インタフェースを実装したりする必要はありません．
+			</p>
+			<p>
+				ページクラスは動的な情報をプロパティに保持します．
+				getter/setterメソッドを使うJavaBeans流のプロパティだけでなく，
+				publicフィールドもプロパティとして利用可能です．
+			</p>
+			<h5>ページクラスの例</h5>
+			<source><![CDATA[
+public class HelloPage {
+    public String name ="Teeda!";
+}
+]]></source>
+			<p>
+				上のページクラスの例では，
+				<code>name</code>
+				というプロパティが定義されています．
+			</p>
+		</section>
+
+		<section name="レンダリング">
+			<p>
+				実行時， テンプレートHTMLの動的な部分は対応するページクラスのプロパティで置き換えられて，
+				ブラウザに向けてレンダリングされます．
+			</p>
+			<img src="images/ext_concept_page2.png" width="466"
+				height="391" />
+			<p>
+				上のテンプレートHTMLの例にページクラスの例が適用されると，レンダリングされるHTMLは次のようになります．
+			</p>
+			<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    こんにちは<span id="name">Teeda!</span>
+  </body>
+</html>
+]]></source>
+			<p>
+				テンプレートHTMLのid属性とページクラスのプロパティは規約によって結びつけられるため，
+				明示的に指定をする必要はありません．
+			</p>
+		</section>
+
+		<section name="ポストバック">
+			<p>
+				テンプレートHTMLは
+				<code>&lt;form&gt;</code>
+				を持つことが出来ます． TeedaExtensionでは，
+				<code>&lt;form&gt;</code>
+				をサブミットした場合の宛先 (action) は， 常に表示されているそのページ自身となります．
+			</p>
+			<img src="images/ext_concept_page3.png" width="466"
+				height="429" />
+			<p>
+				このように，
+				<code>&lt;form&gt;</code>
+				がサブミットされてページが呼び戻されることを「
+				<strong>ポストバック</strong>
+				」と呼びます．
+			</p>
+			<div class="caution">
+				<div>注意点</div>
+				<p>
+					TeedaExtensionでは，HTTPプロトコルのPOSTメソッドはポストバックでのみ使用します．
+					また，ポストバックは常にPOSTメソッドを使用します．
+				</p>
+			</div>
+		</section>
+
+		<section name="サブアプリケーション">
+			<p>同じディレクトリ (パッケージ) のページは一つの「サブアプリケーション」を構成します．</p>
+			<p>
+				入力画面・確認画面・完了画面のように，
+				一連のインタラクションを構成する複数のページを同じサブアプリケーションに含めることにより，
+				状態の引継ぎが容易になります． 詳細は「
+				<a href="ext_concept_scope.html">状態とスコープ</a>
+				」を参照してください．
+			</p>
+		</section>
+
+		<section name="命名規約">
+			<p>
+				TeedaExtensionは，
+				<a href="http://s2container.seasar.org/2.4/ja/">
+					Seasar2
+				</a>
+				のSMART deployに準拠しています．
+			</p>
+			<p>
+				テンプレートHTML及びページクラスをSMART deployの規約に従って配置することで，
+				面倒な設定が不要となっています．
+			</p>
+			<p>
+				SMART deployの詳細はSeasar2の「
+				<a
+					href="http://s2container.seasar.org/2.4/ja/DIContainer.html">
+					DIContainer
+				</a>
+				」－「
+				<a
+					href="http://s2container.seasar.org/2.4/ja/DIContainer.html#SMARTdeploy">
+					SAMRT deploy
+				</a>
+				」を参照してください．
+			</p>
+
+			<subsection name="テンプレートHTMLの命名規約">
+				<p>
+					テンプレートHTMLは，
+					<var>ビュールート</var>
+					ディレクトリの下に， サブアプリケーション単位のサブディレクトリを作成して配置します． デフォルトの
+					<var>ビュールート</var>
+					ディレクトリは
+					<code>/view</code>
+					です．
+				</p>
+				<p>
+					テンプレートHTMLは先頭を英小文字とします． デフォルトの拡張子は
+					<code>.html</code>
+					です．
+				</p>
+				<p>以下はテンプレートHTMLのパスの例です．</p>
+				<source><![CDATA[
+/view/hello/hello.html
+]]></source>
+				<p>このページにアクセスするURLは次のようになります．</p>
+				<source><![CDATA[
+http://localhost:8080/teeda-html-example/view/hello/hello.html
+]]></source>
+			</subsection>
+
+			<subsection name="ページクラスの命名規約">
+				<p>
+					ページクラスは，
+					&lt;ルートパッケージ&gt;.&lt;サブアプリケーションルートパッケージ&gt;の下に，
+					サブアプリケーション単位のサブパッケージを作成して配置します． デフォルトの
+					&lt;サブアプリケーションルートパッケージ&gt;は
+					<code>web</code>
+					です．
+				</p>
+				<p>
+					ページクラスの名前は，テンプレートHTMLファイルの名前の先頭を大文字にし，
+					拡張子を取り除いて接尾辞を付加したものにします． デフォルトの接尾辞は
+					<code>Action</code>
+					です．
+				</p>
+				<p>
+					以下は，
+					<code>/view/hello/hello.html</code>
+					に対応するページクラスの例です．
+				</p>
+				<source><![CDATA[
+examples.teeda.web.hello.HelloPage
+]]></source>
+				<p>
+					この例では，
+					<code>examples.teeda</code>
+					がルートパッケージです．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

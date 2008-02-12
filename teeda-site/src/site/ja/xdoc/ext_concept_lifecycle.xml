@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>TeedaExtension - 概念 - ライフサイクル</title>
+	</properties>
+	<body>
+		<section name="ライフサイクル">
+			<ul>
+				<li>
+					<p>
+						<a href="#概要">概要</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#ライフサイクルメソッド">ライフサイクルメソッド</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#initialize()メソッド">
+										initialize()メソッド
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#do～()メソッド">do～()メソッド</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#prerender()メソッド">
+										prerender()メソッド
+									</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#リクエストパターン">リクエストパターン</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#初期表示">初期表示</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#ポストバック (自画面表示)">
+										ポストバック (自画面表示)
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#ポストバック (リダイレクト)">
+										ポストバック (リダイレクト)
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#リダイレクト示">リダイレクト表示</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#画面遷移">画面遷移</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#JSFライフサイクルとの関係">JSFライフサイクルとの関係</a>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section name="概要">
+			<div class="sidebar">
+				ライフサイクルメソッドは，ページクラスに対応するアクションクラスに持たせることも出来ます．
+				詳細は「」を参照してください．
+			</div>
+			<p>
+				TeedaExtensionは， ブラウザからのリクエストに応じてページクラスのメソッドを呼び出します．
+				このメソッドをライフサイクルメソッドと呼びます．
+			</p>
+			<p>ライフサイクルメソッドには次のものがあります．</p>
+			<ul>
+				<li>
+					<p>
+						<code>initialize()</code>
+					</p>
+				</li>
+				<li>
+					<p>
+						<code>do～()</code>
+					</p>
+				</li>
+				<li>
+					<p>
+						<coce>prerender()</coce>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section name="ライフサイクルメソッド">
+			<subsection name="initialize()メソッド">
+				<p>
+					<code>initialize()</code>
+					メソッドは， 画面が最初に表示されるときや， 他の画面から遷移 (REDIRECT)
+					してきたときに呼び出されるメソッドです．
+				</p>
+				<p>
+					<code>initialize</code>
+					メソッドは次の規約に従います．
+				</p>
+				<dl>
+					<dt>可視性</dt>
+					<dd>
+						<code>public</code>
+					</dd>
+					<dt>メソッド名</dt>
+					<dd>
+						<code>initialize</code>
+					</dd>
+					<dt>引数</dt>
+					<dd>なし</dd>
+					<dt>戻り値型</dt>
+					<dd>
+						<code>Class</code>
+						，
+						<code>String</code>
+						または
+						<code>void</code>
+						のいずれか
+					</dd>
+				</dl>
+				<source><![CDATA[
+    public Class initialize() {
+        ...
+    }
+]]></source>
+				<p>
+					<code>initialize()</code>
+					メソッドは，
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					では呼び出されません．
+				</p>
+			</subsection>
+
+			<subsection name="do～()メソッド">
+				<div class="sidebar">
+					<code>do～()</code>
+					メソッドには複数のバリエーションがあります． 詳細は「」を参照してください．
+				</div>
+				<p>
+					<code>do～()</code>
+					メソッドは， フォームがサブミットされた場合 (
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					) に呼び出されるメソッドです．
+				</p>
+				<p>
+					<code>do～()</code>
+					メソッドは次の規約に従います．
+				</p>
+				<dl>
+					<dt>可視性</dt>
+					<dd>
+						<code>public</code>
+					</dd>
+					<dt>メソッド名</dt>
+					<dd>
+						<code>do</code>
+						で始まる
+					</dd>
+					<dt>引数</dt>
+					<dd>なし</dd>
+					<dt>戻り値型</dt>
+					<dd>
+						<code>Class</code>
+						，
+						<code>String</code>
+						または
+						<code>void</code>
+						のいずれか
+					</dd>
+				</dl>
+				<source><![CDATA[
+    public Class doUpdate() {
+        ...
+    }
+]]></source>
+				<p>
+					<code>do～()</code>
+					メソッドは， サブミットボタンに対応付けられ， 対応するボタンが押された場合のみ呼び出されます (
+					<a href="">詳細</a>
+					)．
+				</p>
+				<source><![CDATA[
+    <input type="submit" id="doUpdate" value="更新" />
+]]></source>
+				<p>
+					<code>do～()</code>
+					メソッドは， ポストバックでない場合や， バリデーションでエラーがあった場合は呼び出されません．
+				</p>
+			</subsection>
+
+			<subsection name="prerender()メソッド">
+				<p>
+					<code>prerender()</code>
+					メソッドは， 画面が描画される直前に呼び出されるメソッドです．
+				</p>
+				<p>
+					<code>initialize</code>
+					メソッドは次の規約に従います．
+				</p>
+				<dl>
+					<dt>可視性</dt>
+					<dd>
+						<code>public</code>
+					</dd>
+					<dt>メソッド名</dt>
+					<dd>
+						<code>prerender</code>
+					</dd>
+					<dt>引数</dt>
+					<dd>なし</dd>
+					<dt>戻り値型</dt>
+					<dd>
+						<code>Class</code>
+						，
+						<code>String</code>
+						または
+						<code>void</code>
+						のいずれか
+					</dd>
+				</dl>
+				<source><![CDATA[
+    public Class prerender() {
+        ...
+    }
+]]></source>
+				<p>
+					<code>prerender()</code>
+					メソッドは， 画面遷移 (リダイレクト) する場合は呼び出されません．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="リクエストパターン">
+			<p>TeedaExtensionでは， ブラウザから受け取ったリクエストの基本的な処理パターンが4つあります．</p>
+			<img src="images/ext_concept_lifecycle1.png" width="616"
+				height="637" />
+			<dl>
+				<dt>初期表示</dt>
+				<dd>ブックマークやリンクがクリックされたことによるリクエストです．</dd>
+				<dt>ポストバック (自画面表示)</dt>
+				<dd>
+					表示している画面のフォームがサブミットされたことによるリクエストです．
+					画面遷移せずに同じ画面を表示します．
+				</dd>
+				<dt>ポストバック (リダイレクト)</dt>
+				<dd>
+					表示している画面のフォームがサブミットされたことによるリクエストです．
+					do～()メソッドの戻り値で指定された画面に遷移 (リダイレクト) します．
+				</dd>
+				<dt>リダイレクト表示</dt>
+				<dd>リダイレクトによるリクエストです．</dd>
+			</dl>
+		</section>
+
+		<section name="リクエストパターンとライフサイクルメソッド">
+			<p>
+				<a href="#リクエストパターン">リクエストパターン</a>
+				ごとに， どのライフサイクルメソッドが呼び出されるかを説明します．
+			</p>
+
+			<subsection name="初期表示">
+				<p>
+					初期表示では，
+					<code>initialize()</code>
+					および
+					<code>prerender()</code>
+					メソッドが呼び出されます．
+				</p>
+				<img src="images/ext_concept_lifecycle2.png" width="466"
+					height="278" />
+			</subsection>
+
+			<subsection name="ポストバック (自画面表示)">
+				<p>
+					ポストバック (自画面表示) では，
+					<code>do～()</code>
+					メソッドおよび
+					<code>prerender()</code>
+					メソッドが呼び出されます．
+				</p>
+				<img src="images/ext_concept_lifecycle3.png" width="466"
+					height="259" />
+				<p>
+					バリデーションでエラーがあった場合は
+					<code>prerender()</code>
+					メソッドだけが呼び出されます．
+				</p>
+			</subsection>
+
+			<subsection name="ポストバック (リダイレクト)">
+				<p>
+					ポストバック (リダイレクト) では，
+					<code>do～()</code>
+					メソッドのみが呼び出されます．
+					<code>do～()</code>
+					メソッドの戻り値で指定された画面へリダイレクトします．
+				</p>
+				<img src="images/ext_concept_lifecycle4.png" width="466"
+					height="231" />
+				<p>
+					バリデーションでエラーがあった場合は
+					<a href="#ポストバック (自画面表示)">ポストバック(自画面表示)</a>
+					になります．
+				</p>
+			</subsection>
+
+			<subsection name="リダイレクト表示">
+				<p>
+					リダイレクト表示では，
+					<code>initialize()</code>
+					および
+					<code>prerender()</code>
+					メソッドが呼び出されます．
+				</p>
+				<img src="images/ext_concept_lifecycle5.png" width="466"
+					height="259" />
+			</subsection>
+		</section>
+
+		<section name="画面遷移">
+			<p>
+				ライフサイクルメソッドは，戻り値型を
+				<code>Class</code>
+				または
+				<code>String</code>
+				型にすることができます (間違いにくさやリファクタリングのしやすさから
+				<code>Class</code>
+				型を推奨します)． 次画面のページクラスまたはそのコンポーネント名を戻り値とすることで，その画面に遷移します．
+			</p>
+			<source><![CDATA[
+public class FooPage {
+    ...
+    public Class doSubmit() {
+        ...
+        return NextPage.class;
+    }
+}
+]]></source>
+			<p>
+				戻り値が
+				<code>null</code>
+				だと画面遷移しないで自画面表示となります．
+			</p>
+			<p>
+				画面遷移しない場合は戻り値の型を
+				<code>void</code>
+				にすることもできます．
+			</p>
+			<source><![CDATA[
+public class FooPage {
+    ...
+    public void initialize() {
+        ...
+    }
+}
+]]></source>
+			<p>
+				戻り値をそのページクラス自身 (またはそのコンポーネント名) にすると，
+				リダイレクトして同じページを表示します． この場合は遷移先が現在の画面と同じというだけで，
+				画面遷移として扱われます．
+			</p>
+			<source><![CDATA[
+public class FooPage {
+    ...
+    public Class doSubmit() {
+        ...
+        return FooPage.class;
+    }
+}
+]]></source>
+		</section>
+
+		<section name="JSFライフサイクルとの関係">
+			<p>
+				JSFのライフサイクルと，
+				ページクラスのライフサイクルメソッドおよびsetter/getterメソッド呼び出しの関係は，
+				以下のようになります．
+			</p>
+			<img src="images/ext_concept_lifecycle6.png" width="609"
+				height="530" />
+		</section>
+	</body>
+</document>

@@ -1,0 +1,3516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title></title>
+	</properties>
+	<body>
+		<section name="変更履歴">
+			<ul>
+				<li>
+					<p>
+						<a href="#1.0.12-rc1">1.0.12-rc1</a>&#160;&#160;
+						<a href="#1.0.12-rc2">1.0.12-rc2</a>&#160;&#160;
+						<a href="#1.0.12">1.0.12</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#1.0.11">1.0.11</a>&#160;&#160;
+						<a href="#1.0.11-SP1">1.0.11-SP1</a>&#160;&#160;
+						<a href="#1.0.11-SP2">1.0.11-SP2</a>&#160;&#160;
+						<a href="#1.0.11-SP3">1.0.11-SP3</a>&#160;&#160;
+						<a href="#1.0.11-SP4">1.0.11-SP4</a>
+					</p>
+				</li>
+
+				<li>
+					<p>
+						<a href="#1.0.6">1.0.6</a>&#160;&#160;
+						<a href="#1.0.7">1.0.7</a>&#160;&#160;
+						<a href="#1.0.8">1.0.8</a>&#160;&#160;
+						<a href="#1.0.9">1.0.9</a>&#160;&#160;
+						<a href="#1.0.10">1.0.10</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#1.0">1.0</a>&#160;&#160;
+						<a href="#1.0.1">1.0.1</a>&#160;&#160;
+						<a href="#1.0.2">1.0.2</a>&#160;&#160;
+						<a href="#1.0.3">1.0.3</a>&#160;&#160;
+						<a href="#1.0.4">1.0.4</a>&#160;&#160;
+						<a href="#1.0.5">1.0.5</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#1.0-beta3">1.0-beta3</a>&#160;&#160;
+						<a href="#1.0-beta-4">1.0-beta-4</a>&#160;&#160;
+						<a href="#1.0-beta-5">1.0-beta-5</a>&#160;&#160;
+						<a href="#1.0-beta-6">1.0-beta-6</a>&#160;&#160;
+						<a href="#1.0-rc-1">1.0-rc-1</a>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+
+		<section name="1.0.12">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									[
+									<a
+										href='https://www.seasar.org/issues/browse/TEEDA-432'>
+										TEEDA-432
+									</a>
+									] - condition を &lt;div&gt; や
+									&lt;span&gt;
+									に限らず，任意の要素で指定できるようにしました．[Seasar-user:12708]
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="1.0.12-rc2">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-424'>
+											TEEDA-424
+										</a>
+										] - xxxItems の DTO
+										にあるプロパティがリードオンリーで，Page
+										クラスの同名プロパティがリードライト可の場合に，
+										IllegalStateException
+										が発生する問題を修正しました．[Seasar-user:12480]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-425'>
+											TEEDA-425
+										</a>
+										] - textarea
+										で入力された文字列を表示用に変換するコンバータで改行文字を
+										&quot;&lt;br&gt;&quot;
+										に変換しているが，その前に &quot;&lt;&quot;
+										等をエスケープしていない問題を修正しました．[Seasar-user:12518]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-426'>
+											TEEDA-426
+										</a>
+										] -
+										Kumu.JSONSerializerでstringの型のときにクオートで囲んでいない。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-427'>
+											TEEDA-427
+										</a>
+										] - HOT deploy 時に，Page
+										クラスにアノテーションで指定したコンバータのプロパティを変更しても，その後のリクエストで反映されない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-428'>
+											TEEDA-428
+										</a>
+										] -
+										初期表示でエラーメッセージが設定されると，condition
+										の状態がセッションに保存されないため，ポストバック時に初期表示時の状態で処理されない問題を修正しました．[Seasar-user:12568]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-429'>
+											TEEDA-429
+										</a>
+										] - inputRadio で，&lt;span&gt;
+										要素の id 属性を aaa-hoge のようにすると
+										IllegalArgumentException
+										が発生する問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-430'>
+											TEEDA-430
+										</a>
+										] - ネストした forEach で内側の xxxItems
+										のエントリ数が一定でない場合に正しく動作しない問題を修正しました．
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-431'>
+											TEEDA-431
+										</a>
+										] - @SubapplicationScope
+										等のアノテーションが明示的に指定されたプロパティは，次ページに引き継ぐプロパティが無くてもスコープに追加するようにしました．[Seasar-user:12629]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.12-rc1">
+			<subsection name="移行の注意">
+				<p>
+					テンプレートXHTMLの要素内容に記述した文字参照・実体参照は，そのままレンダリングするようになりました．
+					1.0.11以前と同様にすることも可能です．詳細は「
+					<a href="extension_customize.html#parse-xhtml">
+						(X)HTMLのパーズについて
+					</a>
+					」を参照してください．
+				</p>
+				<p>
+					teedaExtension.diconにリダイレクトURLをカスタマイズするRedirectUrlResolverの実装クラスが定義されました．
+					独自のRedirectUrlResolverを定義している場合は，そのdiconファイルをteedaExtension.diconより先にインクルードしてください．詳細は「
+					<a href="extension_customize.html#redirect">
+						リダイレクトについて
+					</a>
+					」を参照してください．
+				</p>
+			</subsection>
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-380'>
+											TEEDA-380
+										</a>
+										] -
+										HTMLテンプレート中に書いた&amp;lt;などがレンダリング後にデコードされてしまう問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-382'>
+											TEEDA-382
+										</a>
+										] - HTML
+										テンプレートがレイアウトのテンプレートと異なったディレクトリ階層にあると，レイアウトのテンプレート中に記述した
+										&lt;img&gt;，&lt;script&gt;，&lt;link&gt;
+										要素の相対パスが不正になってしまう問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-383'>
+											TEEDA-383
+										</a>
+										] - go～() で移動する際に，Page クラスが無く
+										HTML のみのページに移動すると
+										NullPointerException が発生する．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-384'>
+											TEEDA-384
+										</a>
+										] - TakeOver を指定している場合に，Page
+										クラスにシリアライズ不可能なプロパティがあると例外が発生する問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-385'>
+											TEEDA-385
+										</a>
+										] - Grid の &lt;thead&gt; に
+										&lt;input&gt;
+										があると，行を削除した後のサブミットで
+										ArrayIndexOutOfBoundsException
+										が発生する問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-390'>
+											TEEDA-390
+										</a>
+										] - ErrorPageManager で checked
+										例外を扱えない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-396'>
+											TEEDA-396
+										</a>
+										] -
+										ポートレット環境でPageScopeに含まれる値が正しくない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-397'>
+											TEEDA-397
+										</a>
+										] - ポートレット環境で initialize()
+										が正しく呼ばれていない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-398'>
+											TEEDA-398
+										</a>
+										] - 一つのページの複数の &lt;form&gt; に
+										doOnce～() ボタンがある場合，最後の
+										&lt;form&gt;
+										以外のボタンを押すと常に二重サブミットと判定されてしまう問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-399'>
+											TEEDA-399
+										</a>
+										] - Converter に target
+										属性を指定した場合，対象外のボタンをサブミットしても do～()
+										メソッドが呼び出されず，画面遷移することもできない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-400'>
+											TEEDA-400
+										</a>
+										] - サブミットボタンの id が
+										&quot;xxx-yyy&quot; のようになっていると
+										TakeOver が効かない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-401'>
+											TEEDA-401
+										</a>
+										] -
+										ポートレット環境でErrorPageManagerが機能していない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-404'>
+											TEEDA-404
+										</a>
+										] - Page/Action
+										クラスで例外が発生した場合，エラーページにメッセージが表示されない問題を修正しました．[Seasar-user:11573]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-406'>
+											TEEDA-406
+										</a>
+										] -
+										ポートレット環境でrender処理内でFacesMessageを重複して登録してしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-408'>
+											TEEDA-408
+										</a>
+										] - 特定のコンポーネントにマッピングされない要素で，id
+										にハイフンが含まれているとダイナミックプロパティが使えない問題を修正しました．[Seasar-user:11641]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-410'>
+											TEEDA-410
+										</a>
+										] -
+										InputRadioで必須チェックが効かない問題を修正しました．[Seasar-user:11700]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-412'>
+											TEEDA-412
+										</a>
+										] -
+										レイアウトを使っていない画面にリンクで遷移した場合，最初の一回だけサブアプリケーションスコープのプロパティが引き継がれない問題を修正しました．[Seasar-user:11756]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-418'>
+											TEEDA-418
+										</a>
+										] - outputLink のパラメータの区切りに
+										&amp;amp;
+										を使用すると，amp;がパラメータ名の一部として解釈される問題を修正しました．[Seasar-user:12137]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-420'>
+											TEEDA-420
+										</a>
+										] - forEach の中で condition
+										を使うと正しく機能しない問題を修正しました．[Seasar-user:11043][Seasar-user:11130]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-321'>
+											TEEDA-321
+										</a>
+										] -
+										layout機能で個別のJS/CSSの読み込みをOFFにできるようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-386'>
+											TEEDA-386
+										</a>
+										] - ネストした forEach の更新をサポートしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-387'>
+											TEEDA-387
+										</a>
+										] - forEach を div，tbody 要素に加えて
+										table，tr，ol，ul，dl，span
+										要素でも使えるようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-391'>
+											TEEDA-391
+										</a>
+										] - forEach で items プロパティに
+										List&lt;T&gt; を使った場合の更新をサポートしました
+										(Seasar2.4.18 以降との組み合わせで有効)．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-392'>
+											TEEDA-392
+										</a>
+										] - DateTimeConverter
+										アノテーションでロケールを指定できるようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-402'>
+											TEEDA-402
+										</a>
+										] - Page クラスが無くても id 属性が mock～
+										で始まる要素は表示されないようにしました．[Seasar-user:11514]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-405'>
+											TEEDA-405
+										</a>
+										] - forEach で，xxxItems の要素が Dto
+										(JavaBeans)
+										の場合，ページクラスに更新可能なプロパティがない場合は Dto
+										のプロパティにアクセスしないようにしました．[Seasar-user:11427]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-409'>
+											TEEDA-409
+										</a>
+										] - condition で te:omittag
+										を使えるようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-411'>
+											TEEDA-411
+										</a>
+										] -
+										リダイレクト時のプロトコルをアノテーションで指定できるようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-414'>
+											TEEDA-414
+										</a>
+										] - forEach
+										の中で同じグループのラジオボタンを使えるようにしました．[Seasar-user:11837]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-415'>
+											TEEDA-415
+										</a>
+										] - PRG によるリダイレクト URL
+										がブラウザのキャッシュにヒットしないように，ユニークなパラメータを付加するようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-416'>
+											TEEDA-416
+										</a>
+										] -
+										ウィンドウ単位でリクエストを排他的に処理するようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-417'>
+											TEEDA-417
+										</a>
+										] - forEach の中の commandButton
+										が押された場合，押されたボタンに対応する xxxIndex
+										を設定してから do～() メソッドを呼び出すようにしました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-419'>
+											TEEDA-419
+										</a>
+										] - ダブルサブミット対策の JavaScript が
+										te:renderJs 属性に true
+										が指定されたボタンだけに適用されるようにしました．
+										[Seasar-user:12016]
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-422'>
+											TEEDA-422
+										</a>
+										] - TeedaConfigureListener で
+										Error もログ出力するようにしました．
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-403'>
+											TEEDA-403
+										</a>
+										] - SelectManyCheckbox で，col
+										属性により 1 行に表示する checkbox
+										の数を指定できるようにしました．[Seasar-user:11369]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.11-SP4">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-423'>
+											TEEDA-423
+										</a>
+										] - doFinishXxx ボタンが doFinish
+										として認識されない．[Seasar-user:12422]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.11-SP3">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-413'>
+											TEEDA-413
+										</a>
+										] - HTML テンプレートの &lt;form&gt;
+										要素に action 属性を記述すると，レンダリングされた
+										HTML に action
+										属性が二つ表示されてしまい，画面遷移できない問題を修正しました．[Seasar-user:11813]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.11-SP2">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-404'>
+											TEEDA-404
+										</a>
+										] - Page/Action
+										クラスで例外が発生した場合，エラーページにメッセージが表示されない問題を修正しました．[Seasar-user:11573]
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.11-SP1">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-393'>
+											TEEDA-393
+										</a>
+										] - doOnce～()
+										で二重サブミットされた場合，遷移前の画面に戻って新しいトランザクショントークンが発行されるため，結果的に二重登録が可能となる問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-395'>
+											TEEDA-395
+										</a>
+										] - ForEach で itemsSave
+										を使っていない場合，do～() が呼び出された際に
+										xxxItems が null
+										になってしまう問題を修正しました．
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.11">
+			<subsection name="移行の注意">
+				<strong>
+					org.seasar.teeda.extension.util.ValidatorUtil
+				</strong>
+				クラスは，
+				<strong>
+					org.seasar.teeda.extension.util.TargetCommandUtil
+				</strong>
+				クラスに変更になっていますのでご注意下さい．
+			</subsection>
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-303'>
+											TEEDA-303
+										</a>
+										] -
+										DoltengのScaffoldでGridのJavaScriptがエラーになる問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-324'>
+											TEEDA-324
+										</a>
+										] -
+										ForEachでaaaItemsのaaaプロパティが存在する場合にaaaItemsが更新されない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-326'>
+											TEEDA-326
+										</a>
+										] -
+										エラーページの表示中に，現在のエラーページを表示する条件とマッチする例外が発生すると，無限リダイレクトになる問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-348'>
+											TEEDA-348
+										</a>
+										] -
+										Pageへ付けるTigerアノテーションをsetterにも書けるようにする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-349'>
+											TEEDA-349
+										</a>
+										] - [Seasar-user:9918]
+										Labelが機能しなくなった
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-351'>
+											TEEDA-351
+										</a>
+										] - @PageScopeによる値引継ぎについて
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-352'>
+											TEEDA-352
+										</a>
+										] -
+										target指定されておらずConverterが動作しない場合に、再表示時に入力欄が空になってしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-353'>
+											TEEDA-353
+										</a>
+										] -
+										ConverterアノテーションにメッセージID指定が出来ない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-355'>
+											TEEDA-355
+										</a>
+										] - TInputDate,
+										TInputCommaTextでte:で独自属性を指定できない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-356'>
+											TEEDA-356
+										</a>
+										] - ForEachでpublic fieldに対応していない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-357'>
+											TEEDA-357
+										</a>
+										] - TUISelectItemsが配列に対応していない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-360'>
+											TEEDA-360
+										</a>
+										] - ConditionとValidatorの同時使用
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-361'>
+											TEEDA-361
+										</a>
+										] -
+										Teedaでレイアウト化したそれぞれのPageクラスにdoOnceをおくとdoOnceメソッドが呼ばれない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-364'>
+											TEEDA-364
+										</a>
+										] - SelectOneMenu
+										が一度値を選択された後，ブラウザで戻って未選択にしてサブミットするとラベルだけ直前に選択した値を引き継いでしまう問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-365'>
+											TEEDA-365
+										</a>
+										] - マルチパートのフォームでリクエストパラメータの値が
+										Page クラスにバインドされない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-373'>
+											TEEDA-373
+										</a>
+										] -
+										クッキーを無効にしているブラウザでフォームをサブミットした場合にセッションIDが引き継がれない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-374'>
+											TEEDA-374
+										</a>
+										] - doOnce() メソッドを使った場合など，Teeda
+										が &lt;head&gt; 内の &lt;tiltle&gt;
+										より前に &lt;script&gt; 等を追加するため，IE
+										でタイトルが表示されなくなる問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-376'>
+											TEEDA-376
+										</a>
+										] - Kumu
+										を使用してイベントを登録している画面で，doOnce() ボタン
+										(te:renderJs=&quot;true&quot;)
+										を使用するとイベントハンドラが呼び出されない問題を修正しました．
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-377'>
+											TEEDA-377
+										</a>
+										] -
+										@NumberLengthにてDecimal型のチェックが行われない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-379'>
+											TEEDA-379
+										</a>
+										] -
+										@TextareaSeparatorCharacterConverterを使用するとComponentNotFoundRuntimeExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-381'>
+											TEEDA-381
+										</a>
+										] -
+										doOnceでTokenのベリファイに失敗した場合、ポストバック時の挙動がおかしい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-378'>
+											TEEDA-378
+										</a>
+										] - TNumberLengthValidator
+										の整数部の最少桁数 (integralMin) は初期値
+										1，小数部の最少桁数 (fractionMin) は初期値 0
+										にしました．
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-350'>
+											TEEDA-350
+										</a>
+										] -
+										teeda-html-exampleをTiger前提にする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-358'>
+											TEEDA-358
+										</a>
+										] -
+										Teeda1.0.11-RC1の@PageScope、@SubapplicationScopeの挙動について
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-359'>
+											TEEDA-359
+										</a>
+										] - JSPのcharsetが無視される
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-375'>
+											TEEDA-375
+										</a>
+										] - ダウンロードを IE でキャンセルした際の対応について
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.10">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-346'>
+											TEEDA-346
+										</a>
+										] -
+										ポートレット環境でEDITモードでアクション処理後、VIEWモードに戻ると、正しく表示されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-347'>
+											TEEDA-347
+										</a>
+										] - ページ遷移時のxxxItemsの引き継ぎについて
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-293'>
+											TEEDA-293
+										</a>
+										] - radioへのlabel指定をできるようにして欲しい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.9">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-334'>
+											TEEDA-334
+										</a>
+										] -
+										ポートレット環境でセッション内のものをシリアライズできない場合がある
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-336'>
+											TEEDA-336
+										</a>
+										] -
+										セッションレプリケーションを利用しているときにDTOが初期化されてしまう(Seasar-user:9227)
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-337'>
+											TEEDA-337
+										</a>
+										] - xxxItems が空のときの挙動がおかしい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-343'>
+											TEEDA-343
+										</a>
+										] - Hot
+										Deploy時にServletRequestMapのNotSerializableExceptionが発生してしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-345'>
+											TEEDA-345
+										</a>
+										] -
+										ForEachでDynamicPropertyが1回多く呼ばれる
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-325'>
+											TEEDA-325
+										</a>
+										] -
+										SelectOneMenuのようにSelect系コンポーネントもLabelを引き継ぎたい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-339'>
+											TEEDA-339
+										</a>
+										] -
+										SelectOneMenu/RadioでMapをそのまま扱いたい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-338'>
+											TEEDA-338
+										</a>
+										] -
+										spanタグの出力制御にomittag属性で指定可能とする
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-340'>
+											TEEDA-340
+										</a>
+										] -
+										ForEachのネストの動作が1.0.7と1.0.8で違う
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-341'>
+											TEEDA-341
+										</a>
+										] -
+										SelectOneMenuのItemsが空のときの挙動がおかしい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-342'>
+											TEEDA-342
+										</a>
+										] -
+										SelectManyMenuでItemsが空のときselectタグそのものが表示されない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.8">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-241'>
+											TEEDA-241
+										</a>
+										] - [Seasar-user:5910]
+										Validationエラー後の条件分岐（Condition)
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-299'>
+											TEEDA-299
+										</a>
+										] - Grid内で使用したチェックボックスがOFFにならない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-306'>
+											TEEDA-306
+										</a>
+										] - サブミット連打対策が不十分だったのを修正
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-319'>
+											TEEDA-319
+										</a>
+										] -
+										InputCommaTextでfractionが反映されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-328'>
+											TEEDA-328
+										</a>
+										] -
+										ポートレット環境でaタグ内のspanタグでLabelが使えない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-331'>
+											TEEDA-331
+										</a>
+										] - ポートレット環境で、prerender
+										でページを移動できない場合がある
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-276'>
+											TEEDA-276
+										</a>
+										] - SelectOneMenuでsizeが指定できない。
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-327'>
+											TEEDA-327
+										</a>
+										] -
+										OutputTextにてspanタグをレンダリングしないオプション機能を作成する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-333'>
+											TEEDA-333
+										</a>
+										] -
+										パスワードチェック等で使うようなEqualsValidatorを作成する
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-332'>
+											TEEDA-332
+										</a>
+										] -
+										javax.faces.convert以下のConverterのTigerアノテーションを作成する．
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.7">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-277'>
+											TEEDA-277
+										</a>
+										] - Gridの幅を調整するするスクリプトが出力されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-279'>
+											TEEDA-279
+										</a>
+										] -
+										UIComponentBaseのprocessRestoreStateでisTransientをチェックしていない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-280'>
+											TEEDA-280
+										</a>
+										] -
+										ポートレット環境において、prerenderの戻り値でページが変わらない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-281'>
+											TEEDA-281
+										</a>
+										] - ポートレット環境でfacesContextがDIされない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-283'>
+											TEEDA-283
+										</a>
+										] -
+										ポートレット環境でリダイレクト時にSubApplicationScope内の値が渡されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-289'>
+											TEEDA-289
+										</a>
+										] -
+										ポートレット環境でリンクのパラメータから取得する値がエンコードされたままである
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-213'>
+											TEEDA-213
+										</a>
+										] - SelectOneMenuでのエラー時CSS出力
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-271'>
+											TEEDA-271
+										</a>
+										] -
+										AbstractRendererでgetAllAttributesAndProperties()のパフォーマンスチューニング
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-274'>
+											TEEDA-274
+										</a>
+										] - GET時のHtmlSuffix対応
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-290'>
+											TEEDA-290
+										</a>
+										] -
+										htmlテンプレートへ書いたradioをそのまま出力できるようにする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-292'>
+											TEEDA-292
+										</a>
+										] -
+										ConverterにもValitatorのようなtarget指定機能を追加する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-294'>
+											TEEDA-294
+										</a>
+										] -
+										publicなフィールドをプロパティとして認識できるようにする
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.6">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-272'>
+											TEEDA-272
+										</a>
+										] -
+										Gridで、Itemsのクラス名とHTML上のidでまったく同一のものがあると、IllegalPropertyRuntimeException
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-275'>
+											TEEDA-275
+										</a>
+										] -
+										ポートレット環境でアクション処理後にレンダー処理がされるとコンテンツが表示されない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-268'>
+											TEEDA-268
+										</a>
+										] - forEachでtbodyタグを使えるようにして欲しい。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-269'>
+											TEEDA-269
+										</a>
+										] -
+										FacesMessageUtilで、MessageResourceBundleFactoryを呼び出しているところをAdapter化して、Deployモードによって切り替える。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-270'>
+											TEEDA-270
+										</a>
+										] -
+										FacesMessageUtilで、データの取得先をXMLやDBからも取得できるようにする。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-273'>
+											TEEDA-273
+										</a>
+										] -
+										Redirect先のドメインとプロトコルを指定できるようにしたい。
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.5">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-255'>
+											TEEDA-255
+										</a>
+										] - SelectItem(java.lang.Object
+										value) で label が null になる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-257'>
+											TEEDA-257
+										</a>
+										] - aタグでDateを遷移先に渡すことができない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-258'>
+											TEEDA-258
+										</a>
+										] - 複数Wndowを開いているときに変数が消えることがある
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-260'>
+											TEEDA-260
+										</a>
+										] -
+										ポートレット環境のSessionPagePersistenceでClassCastExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-262'>
+											TEEDA-262
+										</a>
+										] -
+										JSF管理外のjspからリンクつきで遷移してきたばあいに、Lifecycleが誤作動する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-263'>
+											TEEDA-263
+										</a>
+										] -
+										teedaAjaxでadd_addPageのような名前のコンポーネントでメソッドが呼び出せない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-264'>
+											TEEDA-264
+										</a>
+										] -
+										GridをConditionで囲んだ場合に、必要なスクリプト、CSSのincludeが行われない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-265'>
+											TEEDA-265
+										</a>
+										] -
+										java.lang.IllegalArgumentException:
+										The first character is
+										invalidのエラーが出る
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-266'>
+											TEEDA-266
+										</a>
+										] - TimestampConverter が
+										Tigerアノテーションで使えない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-256'>
+											TEEDA-256
+										</a>
+										] -
+										ポートレット用のリスナとサーブレットをサーブレット用のものに合わせる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-261'>
+											TEEDA-261
+										</a>
+										] - FacesPortletの処理を改善する
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.4">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-181'>
+											TEEDA-181
+										</a>
+										] - Treeの末尾で、親の閉じTagが重複して出力される。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-190'>
+											TEEDA-190
+										</a>
+										] -
+										グリッドの一行目を削除すると、タイトルとデータ部の幅がずれる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-216'>
+											TEEDA-216
+										</a>
+										] -
+										ポートレット環境でClassCastExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-225'>
+											TEEDA-225
+										</a>
+										] -
+										FirefoxでGridが適切に幅調節されず、表示がズレてしまう。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-228'>
+											TEEDA-228
+										</a>
+										] - Gridのclass属性が失われる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-240'>
+											TEEDA-240
+										</a>
+										] -
+										webapp/META-INF配下のファイルが閲覧できてしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-242'>
+											TEEDA-242
+										</a>
+										] -
+										interceptorで例外を発生させると、エラーメッセージが表示されない。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-248'>
+											TEEDA-248
+										</a>
+										] - ポートレットでjump〜が機能してない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-174'>
+											TEEDA-174
+										</a>
+										] - TitleもDynamicProperty対応してほしい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-187'>
+											TEEDA-187
+										</a>
+										] - Gridに背景色をつける
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-234'>
+											TEEDA-234
+										</a>
+										] -
+										SelectOneMenuで選択された項目のラベル値を次画面へ引き継ぎたい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-236'>
+											TEEDA-236
+										</a>
+										] - textarea要素でwrap属性を扱えるようにする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-238'>
+											TEEDA-238
+										</a>
+										] -
+										SelectManyCheckboxでレイアウト無しで出力して欲しい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-202'>
+											TEEDA-202
+										</a>
+										] - Teeda
+										ExtensionでSelectManyListbox
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-220'>
+											TEEDA-220
+										</a>
+										] - [Seasar-user:5679][Teeda
+										Ajax]同期通信について
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-231'>
+											TEEDA-231
+										</a>
+										] -
+										teeda-tigerに相関バリデータのアノテーションを作成する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-244'>
+											TEEDA-244
+										</a>
+										] - idがモックで始まっていればmock用のタグとみなす
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-245'>
+											TEEDA-245
+										</a>
+										] -
+										TeedaAjaxにおけるdiconファイルにてContentTypeの設定を可能にする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-247'>
+											TEEDA-247
+										</a>
+										] - Teeda
+										Ajaxでajaxではじまるメソッドは､metaタグ無しでもOKにする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-253'>
+											TEEDA-253
+										</a>
+										] - Gridの非同期処理
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.3">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-170'>
+											TEEDA-170
+										</a>
+										] -
+										DynamicPropertyでbuttonのときに、対応するメソッドが呼ばれない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-172'>
+											TEEDA-172
+										</a>
+										] -
+										Gridの幅調整のJavaScriptが、IEで上手く動かない場合がある
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-173'>
+											TEEDA-173
+										</a>
+										] - [Seasar-user:5355] input
+										type=&quot;image&quot;からのdoメソッド呼出しが効かない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-176'>
+											TEEDA-176
+										</a>
+										] - [Grid]
+										T_LeftFixedでrowspanが効かない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-184'>
+											TEEDA-184
+										</a>
+										] -
+										複数の同一ポートレットを１ページに置いたときにclientIdの値がおかしくなる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-198'>
+											TEEDA-198
+										</a>
+										] -
+										newwindow=trueの際のプロパティのクリアについて
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-210'>
+											TEEDA-210
+										</a>
+										] -
+										gridで一方のcolへwidthを指定すると、もう一方のcolへもwidthが設定されてしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-214'>
+											TEEDA-214
+										</a>
+										] -
+										Gridでtbodyよりtheadの方が行数が多い場合に幅調整されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-215'>
+											TEEDA-215
+										</a>
+										] - [Seasar-user:5624]
+										[S2JSF]入力値のエスケープ処理について
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-151'>
+											TEEDA-151
+										</a>
+										] - Teeda Extension
+										Gridで行が非表示だったら次の行の情報で幅調整をするようにしてほしい。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-161'>
+											TEEDA-161
+										</a>
+										] - Teeda Extension
+										Xerces2.8.1対応
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-171'>
+											TEEDA-171
+										</a>
+										] -
+										buttonのvalue値をlabelから取得できるようにして欲しい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-175'>
+											TEEDA-175
+										</a>
+										] - 任意のタグでDynamic属性を可能にする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-178'>
+											TEEDA-178
+										</a>
+										] -
+										JSF既知の属性で、htmlへ書いても出力されない属性がある
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-179'>
+											TEEDA-179
+										</a>
+										] - htmlタグをエスケープしないで表示したい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-183'>
+											TEEDA-183
+										</a>
+										] - ファイルダウンロード後にsubmitが効かない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-195'>
+											TEEDA-195
+										</a>
+										] - DynamicPropertyの仕様についての変更依頼
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-186'>
+											TEEDA-186
+										</a>
+										] - SessionSave
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-211'>
+											TEEDA-211
+										</a>
+										] -
+										Content-Typeの設定の制御を変更する([Seasar-user:5567][S2JSF]xhmlについて
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.2">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-163'>
+											TEEDA-163
+										</a>
+										] - Teeda Extension
+										TConditionで初期化時ValidationにかかるとNullPointer
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-168'>
+											TEEDA-168
+										</a>
+										] - Gridのtdでrowspanが効かない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-160'>
+											TEEDA-160
+										</a>
+										] - フィルタでログ出力する項目を選択可能に
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-164'>
+											TEEDA-164
+										</a>
+										] - FacesPortletのリファクタリング
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-165'>
+											TEEDA-165
+										</a>
+										] - Teeda Extension でのポートレット対応
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-169'>
+											TEEDA-169
+										</a>
+										] - input
+										type=&quot;password&quot;にて、validationエラー時にclass属性へ値を出力する
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-167'>
+											TEEDA-167
+										</a>
+										] - jarを実行することでバージョン番号がわかるようにする
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0.1">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-158'>
+											TEEDA-158
+										</a>
+										] - Teeda Extension
+										hiddenの値が更新されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-159'>
+											TEEDA-159
+										</a>
+										] - ComponentStatesがfacetをみていない
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-129'>
+											TEEDA-129
+										</a>
+										] -
+										warファイル内のteeda-coreライブラリ名が変化してしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-139'>
+											TEEDA-139
+										</a>
+										] -
+										1画面で同じitemsへのForEachを複数回書くと、decode時に要素の最後の値が全要素にコピーされる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-145'>
+											TEEDA-145
+										</a>
+										] - Teeda Extension initialize,
+										prerenderで例外が発生したときにErrorPageManagerが呼ばれない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-149'>
+											TEEDA-149
+										</a>
+										] - Teeda　Extension
+										Gridでテキストボックス内の値をnullでクリアしてもPageクラスの値が更新されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-150'>
+											TEEDA-150
+										</a>
+										] - Teeda Extension
+										Gridの持つDtoの配列に空のDtoを入れても一つ前の行数が復元される
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-140'>
+											TEEDA-140
+										</a>
+										] -
+										Grid内のinputTextでonblurなどの属性を使いたい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-141'>
+											TEEDA-141
+										</a>
+										] -
+										GridInputTextで、フォーカス状態に関わらずテキスト入力欄を表示する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-143'>
+											TEEDA-143
+										</a>
+										] - teedaLookup.diconの名前の変更
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-44'>
+											TEEDA-44
+										</a>
+										] - ダブルサブミット対策
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0-rc-1">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-117'>
+											TEEDA-117
+										</a>
+										] -
+										リロードでGETした際にもpostbackがtrueになる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-130'>
+											TEEDA-130
+										</a>
+										] - Teeda Extension
+										forEach/Gridでエラー時に項目が消えてしまう。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-133'>
+											TEEDA-133
+										</a>
+										] -
+										previousViewIdに、より前のviewIdがセットされる場合がある
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-56'>
+											TEEDA-56
+										</a>
+										] - Gridコンポーネントのパフォーマンスを改善する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-112'>
+											TEEDA-112
+										</a>
+										] - Teeda Extension
+										hiddenでArray、Listを書き出すようにする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-120'>
+											TEEDA-120
+										</a>
+										] -
+										HtmlInputTextにautocomplete属性の追加
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-125'>
+											TEEDA-125
+										</a>
+										] - Teeda Extension Converter
+										の定数アノテーションで型チェックを追加
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-116'>
+											TEEDA-116
+										</a>
+										] -
+										任意のJSPのタグをJSPのように&lt;プレフィックス:タグ名
+										...&gt;で記述できるようにする
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-90'>
+											TEEDA-90
+										</a>
+										] -
+										javax.faces.Validatorインタフェース規約をテストする共通TestCaseを作成する
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0-beta-6">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-24'>
+											TEEDA-24
+										</a>
+										] -
+										HtmlFormRendererでhidden項目のクリアが足りない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-25'>
+											TEEDA-25
+										</a>
+										] -
+										STATE_SAVING_METHODがclientの場合にNotSerializableExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-26'>
+											TEEDA-26
+										</a>
+										] -
+										STATE_SAVING_METHODがclientの場合にteeda-jsp-exampleのerrorPageがエラー画面に遷移しない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-27'>
+											TEEDA-27
+										</a>
+										] -
+										STATE_SAVING_METHOD=clientの場合にValidatorChainがエラーに
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-28'>
+											TEEDA-28
+										</a>
+										] - exampleにあるdiconのPublic
+										IDが誤っている
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-29'>
+											TEEDA-29
+										</a>
+										] -
+										PortletResponse#encodeURL(String)でIllegalArgumentExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-31'>
+											TEEDA-31
+										</a>
+										] - Teeda Extension
+										同一のidで画面に項目表示できない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-37'>
+											TEEDA-37
+										</a>
+										] - SelectOneRadioが機能していない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-39'>
+											TEEDA-39
+										</a>
+										] - outputLink がポートを間違った位置に表示する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-42'>
+											TEEDA-42
+										</a>
+										] -
+										HtmlResponseWriter#writeURIAttribute(String,
+										Object, String) が javascript:
+										で始まるものもエスケープする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-45'>
+											TEEDA-45
+										</a>
+										] -
+										RenderResponseフェーズでプラットフォームデフォルトロケールがUIViewRootにセットされる
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-46'>
+											TEEDA-46
+										</a>
+										] -
+										UIViewRootのロケールがユーザ(session)毎に個別にならない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-50'>
+											TEEDA-50
+										</a>
+										] -
+										/index.htmlを置くとIllegalArgumentExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-52'>
+											TEEDA-52
+										</a>
+										] - Dummyのonclickが評価されてしまう。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-55'>
+											TEEDA-55
+										</a>
+										] -
+										Grid内にInputCommaTextがある場合にJavaScriptエラー
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-59'>
+											TEEDA-59
+										</a>
+										] - [Seasar-user:4448] [Teeda]
+										&lt;img&gt;タグの、widthが出力されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-63'>
+											TEEDA-63
+										</a>
+										] -
+										web.xmlのurl-patternに*.ajaxを追加したら、ポートレット環境でNullPointerException
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-65'>
+											TEEDA-65
+										</a>
+										] - [Seasar-user:4556]
+										リンクを別画面で開く方法
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-82'>
+											TEEDA-82
+										</a>
+										] -
+										Actionクラス内でのページ遷移指定時にorg.seasar.framework.container.TooManyRegistrationRuntimeException
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-83'>
+											TEEDA-83
+										</a>
+										] - [Seasar-user:4575]
+										[S2JSF1.1.0] ダウンロード後のアクション
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-91'>
+											TEEDA-91
+										</a>
+										] - UrlBuilder が mailto
+										などをサポートしていない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-96'>
+											TEEDA-96
+										</a>
+										] -
+										&quot;_&quot;入りのpropertyに対し定数アノテーションでConverter/Validatorを設定できない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-97'>
+											TEEDA-97
+										</a>
+										] -
+										S2JSF1.1のフォーワード処理時にDispatchScopeFactoryでNullPointerException
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-104'>
+											TEEDA-104
+										</a>
+										] -
+										TimestampConverterで対象の値がないときにぬるぽ
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-110'>
+											TEEDA-110
+										</a>
+										] - textareaタグが&lt;textarea
+										/&gt;のようにレンダリングされる
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-102'>
+											TEEDA-102
+										</a>
+										] -
+										TeedaAjaxにおいて、コンテキスト込みのURL指定を可能にする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-107'>
+											TEEDA-107
+										</a>
+										] - Gridでcolを未指定の際に100pxになってしまう
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-109'>
+											TEEDA-109
+										</a>
+										] -
+										Gridで内側のtableのcellspacingに1を出力しているが、0にして欲しい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-23'>
+											TEEDA-23
+										</a>
+										] - HTMLテンプレートのlabel
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-30'>
+											TEEDA-30
+										</a>
+										] - Teeda Extension 表示制御 isEdit
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-36'>
+											TEEDA-36
+										</a>
+										] - Teeda Extension
+										SelectManyCheckbox
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-41'>
+											TEEDA-41
+										</a>
+										] - Teeda Extension用ViewTag
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-48'>
+											TEEDA-48
+										</a>
+										] -
+										ResourceBundleを扱うManagedBeanを作る
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-49'>
+											TEEDA-49
+										</a>
+										] - BodyTag
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-53'>
+											TEEDA-53
+										</a>
+										] - label対応をheader部分でも使いたい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-95'>
+											TEEDA-95
+										</a>
+										] -
+										TeedaAjaxにおけるAjaxUtilでプリミティブ型の配列も変換可能にする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-100'>
+											TEEDA-100
+										</a>
+										] -
+										初期化時の処理と画面が表示されるたびに必要な処理のメソッドを分ける
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-101'>
+											TEEDA-101
+										</a>
+										] - Multi Windowに対応する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-103'>
+											TEEDA-103
+										</a>
+										] - a要素の href 属性を動的に変更したい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-47'>
+											TEEDA-47
+										</a>
+										] -
+										teeda-html-exampleをMavenizeする
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-54'>
+											TEEDA-54
+										</a>
+										] - codehausのMaven2レポジトリ変更へ追従する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-57'>
+											TEEDA-57
+										</a>
+										] -
+										labelでサブアプリケーション共通のvalueのサポート
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0-beta-5">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Bug
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-2'>
+											TEEDA-2
+										</a>
+										] -
+										javax/faces/Messages_ja.propertiesの重複
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-4'>
+											TEEDA-4
+										</a>
+										] - dataTable内でcommandLinkが効かない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-5'>
+											TEEDA-5
+										</a>
+										] -
+										TeedaTestCaseのFacesContextにてresponseCompleteが未サポート
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-6'>
+											TEEDA-6
+										</a>
+										] - Kumuの$i等のショートカットが効かない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-11'>
+											TEEDA-11
+										</a>
+										] -
+										CommandLinkでverbatimタグ以下が表示されない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-15'>
+											TEEDA-15
+										</a>
+										] -
+										TomahawkのdataScrollerでExceptionが発生する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-16'>
+											TEEDA-16
+										</a>
+										] - [Seasar-user:3935] [S2JSF]
+										1.1.0 Beta1 の m:rendered の動作について
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-17'>
+											TEEDA-17
+										</a>
+										] - ラジオボタンのオン・オフが保持されない（オフのみかも）
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-21'>
+											TEEDA-21
+										</a>
+										] - インターネットへつながっていない環境で例外が出る
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Improvement
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-7'>
+											TEEDA-7
+										</a>
+										] - RendererAutoRegister(仮)を作る
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-12'>
+											TEEDA-12
+										</a>
+										] - [Seasar-user:3959]
+										要素のistyleやformat属性がレンダされない
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-18'>
+											TEEDA-18
+										</a>
+										] -
+										返り値がJSON形式の場合はeval結果を引数にcallbackしてほしい
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-20'>
+											TEEDA-20
+										</a>
+										] - h:message,
+										h:messagesでhtmlタグを出力したい
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							New Feature
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-3'>
+											TEEDA-3
+										</a>
+										] -
+										[Seasar-user:3942][Teeda-Ajax]
+										空の値で呼び出したとき
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Task
+							<ul>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-13'>
+											TEEDA-13
+										</a>
+										] - ValidatorTagでf:paramを処理する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-14'>
+											TEEDA-14
+										</a>
+										] - ConverterTagを作成する
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-19'>
+											TEEDA-19
+										</a>
+										] -
+										TeedaAjaxにおけるAction呼び出し時にAction名にアンダーバー使用を可能とする。
+									</p>
+								</li>
+								<li>
+									<p>
+										[
+										<a
+											href='https://www.seasar.org/issues/browse/TEEDA-51'>
+											TEEDA-51
+										</a>
+										] - Teeda
+										Extensionのintegration-testを作成する
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0-beta-4">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Teeda Core
+							<ul>
+								<li>
+									<p>redirectが効かない点を修正しました。</p>
+								</li>
+								<li>
+									<p>
+										UIComponentBaseでrestoreがうまくいかない点を修正しました。
+									</p>
+								</li>
+								<li>
+									<p>
+										JavaScriptをpathごとにOFFする機能を追加しました。
+									</p>
+								</li>
+								<li>
+									<p>
+										JavaScriptがOFFの場合でもCommandLinkが動作するよう修正しました。
+									</p>
+								</li>
+								<li>
+									<p>
+										FacesServletがJSF1.1仕様準拠でない点（finalクラス）を修正しました
+									</p>
+								</li>
+								<li>
+									<p>
+										PhaseListenerのJSF1.1仕様準拠でない点（beforePhaseが呼ばれたら、afterPhaseを確実に呼ぶ）よう修正しました。
+									</p>
+								</li>
+								<li>
+									<p>Portletで動作での挙動が不安定な点を修正しました。</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Teeda Extension
+							<ul>
+								<li>
+									<p>特になし</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Teeda Ajax
+							<ul>
+								<li>
+									<p>Ajaxからのコンポーネント呼び出し方法を修正しました。</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="1.0-beta3">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						<p>
+							Teeda Core
+							<ul>
+								<li>
+									<p>PortletがTeeda上で動作するよう修正しました。</p>
+								</li>
+								<li>
+									<p>
+										コンポーネントツリーをセッションで管理しないように修正しました。
+									</p>
+								</li>
+								<li>
+									<p>
+										今までのセッション管理を行うTeedaStateManagerImplをTeedaSessionStateManagerImplに名前を変更しました。
+									</p>
+								</li>
+								<li>
+									<p>formのtarget属性が消えるバグを修正しました。</p>
+								</li>
+								<li>
+									<p>
+										java.sql.TimeStamp用のConverter新規作成しました。
+									</p>
+								</li>
+								<li>
+									<p>
+										ByteLength用のConverter新規作成しました。
+									</p>
+								</li>
+								<li>
+									<p>正規表現用のConverter新規作成しました。</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Teeda Extension
+							<ul>
+								<li>
+									<p>HTMLレイアウト機能新規作成しました。</p>
+								</li>
+								<li>
+									<p>
+										定数Validator機能追加しました。（次のバージョンで機能拡張のため、仕様変更します）
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+					<li>
+						<p>
+							Teeda Ajax
+							<ul>
+								<li>
+									<p>Ajax機能新規作成しました。</p>
+								</li>
+								<li>
+									<p>
+										S2管理のコンポーネントがObjectを返してきた場合のみJSON形式に変更するよう修正しました。
+									</p>
+								</li>
+							</ul>
+						</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>

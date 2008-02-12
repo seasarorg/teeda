@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<!--
+ | Copyright 2004-2008 the Seasar Foundation and the Others.
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |		 http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ | either express or implied. See the License for the specific language
+ | governing permissions and limitations under the License.
+ |
+-->
+
+<project name="Seasar2">
+	<skin>
+		<groupId>org.seasar.teeda</groupId>
+		<artifactId>teeda-skin</artifactId>
+		<version>0.0.0</version>
+	</skin>
+	<bannerRight>
+		<src>http://maven.apache.org/images/maven-small.gif</src>
+	</bannerRight>
+	<body>
+		<links>
+			<item name="Seasar" href="http://www.seasar.org/"/>
+			<item name="Maven 2" href="http://maven.apache.org/maven2/"/>
+		</links>
+
+		<menu name="About">
+			<item name="ホーム" href="index.html"/>
+			<item name="ライセンス" href="license.html"/>
+			<item name="ダウンロード" href="downloads.html"/>
+			<item name="変更履歴" href="changelog.html"/>
+			<item name="メーリングリスト" href="https://ml.seasar.org/mailman/listinfo/seasar-user"/>
+			<item name="トラッキング" href="https://www.seasar.org/issues/browse/TEEDA"/>
+			<item name="SVN リポジトリブラウザ" href="http://svn.seasar.org/browse/?root=teeda"/>
+		</menu>
+
+		<menu name="General">
+			<item name="環境" href="env.html"/>
+			<item name="セットアップ" href="setup.html"/>
+		</menu>
+
+		<menu name="TeedaCore">
+			<item name="概要" href="core_about.html"/>
+			<item name="サンプル解説" href="core_example.html"/>
+		</menu>
+
+		<menu name="TeedaExtension">
+			<item name="サンプル解説" href="ext_example.html"/>
+
+			<item name="チュートリアル" href="ext_tutorial.html" collapse="true">
+				<item name="" href=""/>
+				<item name="" href=""/>
+				<item name="" href=""/>
+			</item>
+
+			<item name="概念" href="ext_concept.html" collapse="true">
+				<item name="ページモデル" href="ext_concept_page.html"/>
+				<item name="PRGパターン" href="ext_concept_prg.html"/>
+				<item name="ライフサイクル" href="ext_concept_lifecycle.html"/>
+				<item name="状態とスコープ" href="ext_concept_scope.html"/>
+			</item>
+
+			<item name="逆引きリファレンス" href="ext_rev.html" collapse="true">
+				<item name="表示" href=""/>
+				<item name="入力" href="">
+					<item name="テキストフィールド" href=""/>
+					<item name="テキストエリア" href=""/>
+					<item name="ラジオボタン(静的)" href=""/>
+					<item name="ラジオボタン(動的)" href=""/>
+					<item name="チェックボタン" href=""/>
+					<item name="選択リスト" href=""/>
+					<item name="サブミットボタン" href=""/>
+					<item name="ファイルアップロード" href=""/>
+				</item>
+				<item name="繰り返し" href=""/>
+				<item name="条件分岐" href=""/>
+				<item name="バリデーション" href=""/>
+				<item name="型変換" href=""/>
+				<item name="ページ遷移" href=""/>
+				<item name="プロパティ引継ぎ" href=""/>
+				<item name="レイアウト" href=""/>
+			</item>
+
+			<item name="リファレンス" href="ext_reference.html" collapse="true">
+				<item name="コンポーネント" href=""/>
+				<item name="アノテーション" href=""/>
+				<item name="カスタマイズ" href=""/>
+			</item>
+
+			<item name="TIPS" href="ext_tips.html"/>
+			<item name="FAQ" href="ext_faq.html"/>
+		</menu>
+
+		<menu name="TeedaAjax">
+			<item name="概要" href="ajax_about.html"/>
+			<item name="Kumu" href="ajax_kumu.html"/>
+		</menu>
+	</body>
+</project>

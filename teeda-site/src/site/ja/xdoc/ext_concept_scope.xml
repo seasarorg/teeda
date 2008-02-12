@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>TeedaExtension - 概念 - 状態とスコープ</title>
+	</properties>
+	<body>
+		<section name="状態とスコープ">
+			<ul>
+				<li>
+					<p>
+						<a href="#状態の引継ぎ">状態の引継ぎ</a>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#スコープ">スコープ</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#ページスコープ">ページスコープ</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#リダイレクトスコープ">リダイレクトスコープ</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#サブアプリケーションスコープ">
+										サブアプリケーションスコープ
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#デフォルトスコープ">デフォルトスコープ</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#引継ぎの制御">引継ぎの制御</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#doFinish～()メソッド">
+										doFinish～()メソッド
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#TakeOverアノテーション">
+										TakeOverアノテーション
+									</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section name="プロパティの引継ぎ">
+			<p>
+				TeedaExtensionは
+				<a href="ext_concept_prg.html">PRGパターン</a>
+				で画面遷移します． 通常， 画面遷移の際はページクラスの間で状態 (プロパティの値) を引き継ぐ必要があります．
+			</p>
+			<img src="images/ext_concept_scope1.png" width="492"
+				height="466" />
+			<p>
+				リダイレクト表示のリクエストではURLの長さ制限もあるため，
+				リクエストパラメータを使用するのは現実的ではありません． そこでHTTPセッションを使用することになりますが，
+				HTTPセッション (メモリ) の使用量を抑えるために有効期間に注意する必要があります．
+			</p>
+			<p>
+				TeedaExtensionでは， 多くのアプリケーションで必要になる複数の有効期間 (スコープ)
+				を持つ状態の引継ぎをサポートします． この機能により，
+				アプリケーションがHTTPセッションを直接扱うことなく，
+				簡単かつ安全にページクラス間で状態を引き継げるようにしています．
+			</p>
+		</section>
+
+		<section name="スコープ">
+			<p>TeedaExtensionは次のスコープで状態を管理します．</p>
+			<dl>
+				<dt>
+					<a href="#ページスコープ">ページスコープ</a>
+				</dt>
+				<dd>同じページを表示している間， 状態を維持するスコープです．</dd>
+				<dt>
+					<a href="#リダイレクトスコープ">リダイレクトスコープ</a>
+				</dt>
+				<dd>リダイレクトの間，状態を維持するスコープです．</dd>
+				<dt>
+					<a href="#サブアプリケーションスコープ">サブアプリケーションスコープ</a>
+				</dt>
+				<dd>
+					同じ
+					<a href="ext_concept_page.html#サブアプリケーション">
+						サブアプリケーション
+					</a>
+					内のページを表示している間，状態を維持するスコープです．
+				</dd>
+				<dt>
+					<a href="#デフォルトスコープ">デフォルトスコープ</a>
+				</dt>
+				<dd>
+					正しくは独立したスコープではなく， サブアプリケーションスコープを利用して状態を引き継ぐスコープです．
+				</dd>
+			</dl>
+			<p>
+				次の図は各スコープの有効期間を表しています
+				(デフォルトスコープの有効期間はサブアプリケーションスコープと同じです)．
+			</p>
+			<img src="images/ext_concept_scope2.png" width="586"
+				height="863" />
+
+			<subsection name="ページスコープ">
+				<p>
+					ページスコープは，
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (自画面表示)">
+						ポストバック (自画面表示)
+					</a>
+					で同じページを表示している間維持されるスコープです．
+				</p>
+				<p>
+					ページスコープは，
+					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					や
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					で開始されます．
+					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					や
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					で他のページがリクエストされると破棄されて， 新しいページスコープが開始されます．
+				</p>
+				<p>ページスコープを使用するには， ページクラスのプロパティにアノテーションで明示的に指定します．</p>
+				<source><![CDATA[
+    @PageScope
+    public String name;
+]]></source>
+				<p>
+					<code>@PageScope</code>
+					が指定されたプロパティは， 画面表示の際にページスコープに含められます．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						<a href="ext_concept_lifecycle.html#初期表示">
+							初期表示
+						</a>
+						や
+						<a
+							href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+							ポストバック (リダイレクト)
+						</a>
+						で現在と同じページが表示される場合は， ページスコープは維持されません．
+						新しいページスコープが開始されます．
+					</p>
+				</div>
+			</subsection>
+
+			<subsection name="リダイレクトスコープ">
+				<p>リダイレクトスコープは， リダイレクトの間だけ維持されるスコープです．</p>
+				<p>
+					リダイレクトスコープは，
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						ポストバック (リダイレクト)
+					</a>
+					で開始され，
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					後に破棄されます．
+				</p>
+				<p>
+					リダイレクトスコープを使用するには， ページクラスのプロパティにアノテーションで明示的に指定します．
+				</p>
+				<source><![CDATA[
+    @RedirectScope
+    public String name;
+]]></source>
+				<p>
+					<code>@RedirectScope</code>
+					が指定されたプロパティは，
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						ポストバック (リダイレクト)
+					</a>
+					の際にリダイレクトスコープに含められます．
+				</p>
+			</subsection>
+
+			<subsection name="サブアプリケーションスコープ">
+				<p>
+					サブアプリケーションスコープは， 同じ
+					<a href="ext_concept_page.html#サブアプリケーション">
+						サブアプリケーション
+					</a>
+					のページを表示している間維持されるスコープです．
+				</p>
+				<p>
+					サブアプリケーションスコープは，
+					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					や
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					で開始されます．
+					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					や
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					で他のサブアプリケーションのページが要求されると破棄されて，
+					新しいサブアプリケーションスコープが開始されます．
+				</p>
+				<p>
+					サブアプリケーションスコープを使用するには，
+					ページクラスのプロパティにアノテーションで明示的に指定します．
+				</p>
+				<source><![CDATA[
+    @SubapplicationScope
+    public String name;
+]]></source>
+				<p>
+					<code>@SubapplicationScope</code>
+					が指定されたプロパティは， 画面表示の際にサブアプリケーションスコープに含められます．
+				</p>
+			</subsection>
+
+			<subsection name="デフォルトスコープ">
+				<p>デフォルトスコープは，実際にはスコープではなく，サブアプリケーションスコープの一種です．</p>
+				<p>
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						ポストバック (リダイレクト)
+					</a>
+					の際に，アノテーションが指定されていないプロパティで，
+					<strong>次画面のページクラスと共通のプロパティ</strong>
+					は， 自動的にサブアプリケーションスコープに含められて次画面に引き継がれます．
+					これがデフォルトスコープです．
+				</p>
+				<p>
+					デフォルトスコープを使用するには，
+					ページクラスのプロパティにスコープのアノテーションを指定する必要はありません．
+				</p>
+				<source><![CDATA[
+    public String name;
+]]></source>
+				<p>
+					デフォルトスコープのプロパティは，
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						ポストバック (リダイレクト)
+					</a>
+					の際にサブアプリケーションスコープに含められます．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						デフォルトスコープのプロパティは，
+						<a href="ext_concept_lifecycle.html#初期表示">
+							初期表示
+						</a>
+						や
+						<a
+							href="ext_concept_lifecycle.html#ポストバック (自画面表示)">
+							ポストバック (自画面表示)
+						</a>
+						ではサブアプリケーションスコープに含められません．
+					</p>
+				</div>
+			</subsection>
+		</section>
+
+		<section name="引継ぎの制御">
+			<p>
+				デフォルトでは， 遷移元ページと遷移先ページで共通のプロパティは
+				<strong>全て</strong>
+				引継ぎの対象となりますが， プロパティの一部または全部を引き継がないようにすることも可能です．
+			</p>
+
+			<subsection name="doFinish～()メソッド">
+				<p>
+					サブミットボタンの
+					<code>id</code>
+					属性および対応する
+					<a href="ext_concept_lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッド
+					</a>
+					の名前が
+					<code>doFinish</code>
+					または
+					<code>doOnceFinish</code>
+					で始まっている場合，
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					された際にサブアプリケーションスコープ (デフォルトスコープ含む) の内容はクリアされ，
+					遷移先画面に状態は引き継がれなくなります (リダイレクトスコープは引き継がれます)．
+				</p>
+			</subsection>
+
+			<subsection name="TakeOverアノテーション">
+				<p>
+					<a href="ext_concept_lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッド
+					</a>
+					に
+					<code>@TakeOver</code>
+					アノテーションを指定することで， 遷移先画面に引き継ぐプロパティをきめ細かく指定することができます．
+				</p>
+				<p>
+					<code>@TakeOver</code>
+					アノテーションでは，
+					<code>type</code>
+					属性でプロパティを引き継ぐ方法を次の3種類から指定します．
+				</p>
+				<dl>
+					<dt>
+						<code>INCLUDE</code>
+					</dt>
+					<dd>
+						<code>properties</code>
+						属性で指定したプロパティだけを遷移先画面に引き継ぎます．
+					</dd>
+					<dt>
+						<code>EXCLUDE</code>
+					</dt>
+					<dd>
+						<code>properties</code>
+						属性で指定したプロパティを除いたプロパティだけを遷移先画面に引き継ぎます．
+					</dd>
+					<dt>
+						<code>NEVER</code>
+					</dt>
+					<dd>全てのプロパティを遷移先画面に引き継ぎません．</dd>
+				</dl>
+				<p>次の例では，</p>
+				<ul>
+					<li>
+						<p>
+							<code>doXxx()</code>
+							メソッドは，
+							<code>foo</code>
+							および
+							<code>bar</code>
+							プロパティのみを遷移先画面に引き継ぎます．
+						</p>
+					</li>
+					<li>
+						<p>
+							<code>doYyy()</code>
+							メソッドは，
+							<code>foo</code>
+							および
+							<code>bar</code>
+							を除いたプロパティのみを遷移先画面に引き継ぎます．
+						</p>
+					</li>
+					<li>
+						<p>
+							<code>doZzz()</code>
+							メソッドは，全てのプロパティを遷移先画面に引き継ぎません．
+						</p>
+					</li>
+				</ul>
+				<source><![CDATA[
+    @TakeOver(type = TakeOverType.INCLUDE, properties = "foo, bar")
+    public Class doXxx() {
+        ...
+    }
+
+    @TakeOver(type = TakeOverType.EXCLUDE, properties = "foo, bar")
+    public Class doYyy() {
+        ...
+    }
+
+    @TakeOver(type = TakeOverType.NEVER)
+    public Class doZzz() {
+        ...
+    }
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>

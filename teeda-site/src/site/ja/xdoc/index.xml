@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Teeda</title>
+	</properties>
+	<body>
+		<section name="Teedaとは？">
+			<p>
+				Teedaは，Seasarファウンデーション発のJSF(JavaServer Faces)をベースとしたWebアプリケーションフレームワークです．
+			</p>
+			<p>
+				「JSF meets DI x AOP」というコンセプトの元，JSFの標準機能に加え，
+				DIとAOPの機能をベースとした拡張機能を提供し，より良いWebアプリケーション開発を実現します．
+			</p>
+			<p>
+				Teedaには大きく分けて3つのプロダクトがあります．
+			</p>
+
+			<subsection name="TeedaCore">
+				<p>
+					Teeda Coreは，JSF1.1の実装です．
+					JSFにおけるUIコンポーネントの管理に
+					<a href="http://s2container.seasar.org">Seasar2</a>
+					を利用するのが特徴です．
+				</p>
+			</subsection>
+
+			<subsection name="TeedaExtension">
+				<p>
+					Teeda Extensionは，Teeda Coreをベースに，
+					HTMLテンプレートと規約に基づいた拡張機能を提供します．
+				</p>
+			</subsection>
+
+			<subsection name="TeedaAjax">
+				<p>
+					Teeda Ajaxは，Ajaxに特化したライブラリで，
+					Teeda CoreやTeeda Extensionとは独立して利用することも可能です．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="Teedaの目指すゴール">
+			<p>
+				Teedaは以下をゴールとして日々開発を続けています．
+			</p>
+			<ul>
+				<li><p>Webアプリケーションの開発をもっとシンプルにし，ユーザが本当に開発すべきものに専念できるようにする．</p></li>
+				<li><p>オープンに開発し，オープンな仕組みの中で常に提供し続ける．</p></li>
+				<li><p>自働化されたテストによってよくテストされており，ユーザが安心して使うことが出来る．</p></li>
+				<li><p>POJO(Plain Old Java Object)中心の開発スタイルを提供する．</p></li>
+				<li><p>Webアプリケーションとして必要な機能を一括して提供する．</p></li>
+			</ul>
+		</section>
+
+		<section name="News">
+			<dl>
+				<dt>2008/02/05</dt>
+				<dd>
+					<div>
+						Teeda 1.0.12 をリリースしました．
+						(<a href="downloads.html">ダウンロード</a>)
+						(<a href="changelog.html#1.0.12">Change Log</a>)
+					</div>
+				</dd>
+			</dl>
+			<dl>
+				<dt>2008/01/28</dt>
+				<dd>
+					<div>
+						Teeda 1.0.12-rc2 をリリースしました．
+						(<a href="downloads.html">ダウンロード</a>)
+						(<a href="changelog.html#1.0.12-rc2">Change Log</a>)
+					</div>
+				</dd>
+			</dl>
+		</section>
+	</body>
+</document>
