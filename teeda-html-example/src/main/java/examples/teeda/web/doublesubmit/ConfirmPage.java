@@ -26,4 +26,8 @@ public class ConfirmPage {
 		return CompletePage.class;
 	}
 
+	public Class<?> doComplete() {
+		return CompletePage.class;
+	}
+
 }

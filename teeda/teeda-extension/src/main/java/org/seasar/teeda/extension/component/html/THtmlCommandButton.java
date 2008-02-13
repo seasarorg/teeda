@@ -79,10 +79,11 @@ public class THtmlCommandButton extends HtmlCommandButton implements
     }
 
     protected boolean isDoubleSubmitted() {
+        final FacesContext context = FacesContext.getCurrentInstance();
         if (!TransactionTokenUtil.isDoOnce(getId())) {
+            TransactionTokenUtil.resetContext(context);
             return false;
         }
-        final FacesContext context = FacesContext.getCurrentInstance();
         if (TransactionTokenUtil.verify(context)) {
             return false;
         }
@@ -102,7 +103,6 @@ public class THtmlCommandButton extends HtmlCommandButton implements
             throw new DoubleSubmittedException(context.getViewRoot()
                     .getViewId(), getId());
         }
-        NavigationHandlerUtil.assertNotAlreadyRedirect(context);
         NavigationHandlerUtil.redirect(context, path);
         return true;
     }
