@@ -47,10 +47,6 @@ public class InputPage {
 		return ConfirmPage.class;
 	}
 
-	public Class doFinish() {
-		return ConfirmPage.class;
-	}
-
 	@TakeOver(type = TakeOverType.NEVER)
 	public Class doNever() {
 		return ConfirmPage.class;
@@ -84,6 +80,18 @@ public class InputPage {
 	@TakeOver(type = TakeOverType.EXCLUDE, properties = "subapp2")
 	public Class doExcludeSubapp2NoProperty() {
 		return NoPropertyPage.class;
+	}
+
+	public Class doSelf() {
+		return null;
+	}
+
+	public Class doSelfRedirect() {
+		return InputPage.class;
+	}
+
+	public Class doFinish() {
+		return ConfirmPage.class;
 	}
 
 }
