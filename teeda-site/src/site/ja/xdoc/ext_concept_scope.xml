@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC
+	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
 		<title>TeedaExtension - 概念 - 状態とスコープ</title>
@@ -7,59 +10,39 @@
 		<section name="状態とスコープ">
 			<ul>
 				<li>
-					<p>
-						<a href="#状態の引継ぎ">状態の引継ぎ</a>
-					</p>
+					<a href="#状態の引継ぎ">状態の引継ぎ</a>
 				</li>
 				<li>
-					<p>
-						<a href="#スコープ">スコープ</a>
-						<ul>
-							<li>
-								<p>
-									<a href="#ページスコープ">ページスコープ</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#リダイレクトスコープ">リダイレクトスコープ</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#サブアプリケーションスコープ">
-										サブアプリケーションスコープ
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#デフォルトスコープ">デフォルトスコープ</a>
-								</p>
-							</li>
-						</ul>
-					</p>
+					<a href="#スコープ">スコープ</a>
+					<ul>
+						<li>
+							<a href="#ページスコープ">ページスコープ</a>
+						</li>
+						<li>
+							<a href="#リダイレクトスコープ">リダイレクトスコープ</a>
+						</li>
+						<li>
+							<a href="#サブアプリケーションスコープ">サブアプリケーションスコープ</a>
+						</li>
+						<li>
+							<a href="#デフォルトスコープ">デフォルトスコープ</a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<p>
-						<a href="#引継ぎの制御">引継ぎの制御</a>
-						<ul>
-							<li>
-								<p>
-									<a href="#doFinish～()メソッド">
-										doFinish～()メソッド
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#TakeOverアノテーション">
-										TakeOverアノテーション
-									</a>
-								</p>
-							</li>
-						</ul>
-					</p>
+					<a href="#引継ぎの制御">引継ぎの制御</a>
+					<ul>
+						<li>
+							<a href="#doFinish～()メソッド">
+								doFinish～()メソッド
+							</a>
+						</li>
+						<li>
+							<a href="#TakeOverアノテーション">
+								TakeOverアノテーション
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
@@ -359,30 +342,24 @@ public String name;
 				<p>次の例では，</p>
 				<ul>
 					<li>
-						<p>
-							<code>doXxx()</code>
-							メソッドは，
-							<code>foo</code>
-							および
-							<code>bar</code>
-							プロパティのみを遷移先画面に引き継ぎます．
-						</p>
+						<code>doXxx()</code>
+						メソッドは，
+						<code>foo</code>
+						および
+						<code>bar</code>
+						プロパティのみを遷移先画面に引き継ぎます．
 					</li>
 					<li>
-						<p>
-							<code>doYyy()</code>
-							メソッドは，
-							<code>foo</code>
-							および
-							<code>bar</code>
-							を除いたプロパティのみを遷移先画面に引き継ぎます．
-						</p>
+						<code>doYyy()</code>
+						メソッドは，
+						<code>foo</code>
+						および
+						<code>bar</code>
+						を除いたプロパティのみを遷移先画面に引き継ぎます．
 					</li>
 					<li>
-						<p>
-							<code>doZzz()</code>
-							メソッドは，全てのプロパティを遷移先画面に引き継ぎません．
-						</p>
+						<code>doZzz()</code>
+						メソッドは，全てのプロパティを遷移先画面に引き継ぎません．
 					</li>
 				</ul>
 				<source><![CDATA[

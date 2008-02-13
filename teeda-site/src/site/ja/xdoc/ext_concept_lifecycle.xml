@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC
+	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
 		<title>TeedaExtension - 概念 - ライフサイクル</title>
@@ -7,83 +10,55 @@
 		<section name="ライフサイクル">
 			<ul>
 				<li>
-					<p>
-						<a href="#概要">概要</a>
-					</p>
+					<a href="#概要">概要</a>
 				</li>
 				<li>
-					<p>
-						<a href="#ライフサイクルメソッド">ライフサイクルメソッド</a>
-						<ul>
-							<li>
-								<p>
-									<a href="#initialize()メソッド">
-										initialize()メソッド
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#do～()メソッド">do～()メソッド</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#prerender()メソッド">
-										prerender()メソッド
-									</a>
-								</p>
-							</li>
-						</ul>
-					</p>
+					<a href="#ライフサイクルメソッド">ライフサイクルメソッド</a>
+					<ul>
+						<li>
+							<a href="#initialize()メソッド">
+								initialize()メソッド
+							</a>
+						</li>
+						<li>
+							<a href="#do～()メソッド">do～()メソッド</a>
+						</li>
+						<li>
+							<a href="#prerender()メソッド">
+								prerender()メソッド
+							</a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<p>
-						<a href="#リクエストパターン">リクエストパターン</a>
-					</p>
+					<a href="#リクエストパターン">リクエストパターン</a>
 				</li>
 				<li>
-					<p>
-						<a href="#リクエストパターンとライフサイクルメソッド">
-							リクエストパターンとライフサイクルメソッド
-						</a>
-						<ul>
-							<li>
-								<p>
-									<a href="#初期表示">初期表示</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#ポストバック (自画面表示)">
-										ポストバック (自画面表示)
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#ポストバック (リダイレクト)">
-										ポストバック (リダイレクト)
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#リダイレクト示">リダイレクト表示</a>
-								</p>
-							</li>
-						</ul>
-					</p>
+					<a href="#リクエストパターンとライフサイクルメソッド">
+						リクエストパターンとライフサイクルメソッド
+					</a>
+					<ul>
+						<li>
+							<a href="#初期表示">初期表示</a>
+						</li>
+						<li>
+							<a href="#ポストバック (自画面表示)">ポストバック (自画面表示)</a>
+						</li>
+						<li>
+							<a href="#ポストバック (リダイレクト)">
+								ポストバック (リダイレクト)
+							</a>
+						</li>
+						<li>
+							<a href="#リダイレクト示">リダイレクト表示</a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<p>
-						<a href="#画面遷移">画面遷移</a>
-					</p>
+					<a href="#画面遷移">画面遷移</a>
 				</li>
 				<li>
-					<p>
-						<a href="#JSFライフサイクルとの関係">JSFライフサイクルとの関係</a>
-					</p>
+					<a href="#JSFライフサイクルとの関係">JSFライフサイクルとの関係</a>
 				</li>
 			</ul>
 		</section>
@@ -100,19 +75,13 @@
 			<p>ライフサイクルメソッドには次のものがあります．</p>
 			<ul>
 				<li>
-					<p>
-						<code>initialize()</code>
-					</p>
+					<code>initialize()</code>
 				</li>
 				<li>
-					<p>
-						<code>do～()</code>
-					</p>
+					<code>do～()</code>
 				</li>
 				<li>
-					<p>
-						<coce>prerender()</coce>
-					</p>
+					<code>prerender()</code>
 				</li>
 			</ul>
 		</section>
@@ -264,7 +233,7 @@ public Class prerender() {
 		<section name="リクエストパターン">
 			<p>TeedaExtensionでは， ブラウザから受け取ったリクエストの基本的な処理パターンが4つあります．</p>
 			<img src="images/ext_concept_lifecycle1.png" width="616"
-				height="637" />
+				height="637" alt="リクエストパターン" />
 			<dl>
 				<dt>初期表示</dt>
 				<dd>ブックマークやリンクがクリックされたことによるリクエストです．</dd>
@@ -298,7 +267,7 @@ public Class prerender() {
 					メソッドが呼び出されます．
 				</p>
 				<img src="images/ext_concept_lifecycle2.png" width="466"
-					height="278" />
+					height="278" alt="初期表示" />
 			</subsection>
 
 			<subsection name="ポストバック (自画面表示)">
@@ -310,7 +279,7 @@ public Class prerender() {
 					メソッドが呼び出されます．
 				</p>
 				<img src="images/ext_concept_lifecycle3.png" width="466"
-					height="259" />
+					height="259" alt="ポストバック (自画面表示)" />
 				<p>
 					バリデーションでエラーがあった場合は
 					<code>prerender()</code>
@@ -327,7 +296,7 @@ public Class prerender() {
 					メソッドの戻り値で指定された画面へリダイレクトします．
 				</p>
 				<img src="images/ext_concept_lifecycle4.png" width="466"
-					height="231" />
+					height="231" alt="ポストバック (リダイレクト)" />
 				<p>
 					バリデーションでエラーがあった場合は
 					<a href="#ポストバック (自画面表示)">ポストバック(自画面表示)</a>
@@ -344,7 +313,7 @@ public Class prerender() {
 					メソッドが呼び出されます．
 				</p>
 				<img src="images/ext_concept_lifecycle5.png" width="466"
-					height="259" />
+					height="259" alt="リダイレクト表示" />
 			</subsection>
 		</section>
 
@@ -408,7 +377,7 @@ public class FooPage {
 				以下のようになります．
 			</p>
 			<img src="images/ext_concept_lifecycle6.png" width="609"
-				height="530" />
+				height="530" alt="JSFライフサイクルとの関係" />
 		</section>
 	</body>
 </document>

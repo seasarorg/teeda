@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC
+	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
 		<title>TeedaExtension - 概念</title>
 	</properties>
 	<body>
 		<section name="概念">
-			<p>
-				このドキュメントでは，TeedaExtensionを理解する上で重要な概念について説明します．
-			</p>
+			<p>このドキュメントでは，TeedaExtensionを理解する上で重要な概念について説明します．</p>
 			<ul>
-				<li><p><a href="ext_concept_page.html">ページモデル</a></p></li>
-				<li><p><a href="ext_concept_prg.html">PRGパターン</a></p></li>
-				<li><p><a href="ext_concept_lifecycle.html">ライフサイクル</a></p></li>
-				<li><p><a href="ext_concept_scope.html">状態とスコープ</a></p></li>
+				<li>
+					<a href="ext_concept_page.html">ページモデル</a>
+				</li>
+				<li>
+					<a href="ext_concept_prg.html">PRGパターン</a>
+				</li>
+				<li>
+					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+				</li>
+				<li>
+					<a href="ext_concept_scope.html">状態とスコープ</a>
+				</li>
 			</ul>
 		</section>
 	</body>

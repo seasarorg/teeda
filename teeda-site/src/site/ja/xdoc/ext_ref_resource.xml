@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC
+	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
 		<title>リファレンス - リソース</title>
@@ -6,35 +9,41 @@
 	<body>
 		<section name="リソース">
 			<ul>
-				<li><p><a href="#"></a></p></li>
-				<li><p><a href="#"></a></p></li>
-				<li><p><a href="#"></a></p></li>
-				<li><p><a href="#"></a></p></li>
-				<li><p><a href="#"></a></p></li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
 			</ul>
 		</section>
 
 		<section name="メッセージリソース">
 			<subsection name="">
-				<p>
-				</p>
+				<p></p>
 			</subsection>
 
 			<subsection name="">
-				<p>
-				</p>
+				<p></p>
 			</subsection>
 		</section>
 
 		<section name="ラベルリソース">
 			<subsection name="">
-				<p>
-				</p>
+				<p></p>
 			</subsection>
 
 			<subsection name="">
-				<p>
-				</p>
+				<p></p>
 			</subsection>
 		</section>
 	</body>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC
+	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
 		<title>TeedaExtension - 概念 - ページモデル</title>
@@ -7,55 +10,35 @@
 		<section name="ページモデル">
 			<ul>
 				<li>
-					<p>
-						<a href="#概要">概要</a>
-					</p>
+					<a href="#概要">概要</a>
 				</li>
 				<li>
-					<p>
-						<a href="#テンプレートHTML">テンプレートHTML</a>
-					</p>
+					<a href="#テンプレートHTML">テンプレートHTML</a>
 				</li>
 				<li>
-					<p>
-						<a href="#ページクラス">ページクラス</a>
-					</p>
+					<a href="#ページクラス">ページクラス</a>
 				</li>
 				<li>
-					<p>
-						<a href="#レンダリング">レンダリング</a>
-					</p>
+					<a href="#レンダリング">レンダリング</a>
 				</li>
 				<li>
-					<p>
-						<a href="#ポストバック">ポストバック</a>
-					</p>
+					<a href="#ポストバック">ポストバック</a>
 				</li>
 				<li>
-					<p>
-						<a href="#サブアプリケーション">サブアプリケーション</a>
-					</p>
+					<a href="#サブアプリケーション">サブアプリケーション</a>
 				</li>
 				<li>
-					<p>
-						<a href="#命名規約">命名規約</a>
-						<ul>
-							<li>
-								<p>
-									<a href="#テンプレートHTMLの命名規約">
-										テンプレートHTMLの命名規約
-									</a>
-								</p>
-							</li>
-							<li>
-								<p>
-									<a href="#ページクラスの命名規約">
-										ページクラスの命名規約
-									</a>
-								</p>
-							</li>
-						</ul>
-					</p>
+					<a href="#命名規約">命名規約</a>
+					<ul>
+						<li>
+							<a href="#テンプレートHTMLの命名規約">
+								テンプレートHTMLの命名規約
+							</a>
+						</li>
+						<li>
+							<a href="#ページクラスの命名規約">ページクラスの命名規約</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
@@ -68,7 +51,7 @@
 				テンプレートHTMLとページクラスは1対1に対応します．
 			</p>
 			<img src="images/ext_concept_page1.png" width="466"
-				height="183" />
+				height="183" alt="ページモデル" />
 		</section>
 
 		<section name="テンプレートHTML">
@@ -130,7 +113,7 @@ public class HelloPage {
 				ブラウザに向けてレンダリングされます．
 			</p>
 			<img src="images/ext_concept_page2.png" width="466"
-				height="391" />
+				height="391" alt="レンダリング" />
 			<p>
 				上のテンプレートHTMLの例にページクラスの例が適用されると，レンダリングされるHTMLは次のようになります．
 			</p>
@@ -162,7 +145,7 @@ public class HelloPage {
 				をサブミットした場合の宛先 (action) は， 常に表示されているそのページ自身となります．
 			</p>
 			<img src="images/ext_concept_page3.png" width="466"
-				height="429" />
+				height="429" alt="ポストバック" />
 			<p>
 				このように，
 				<code>&lt;form&gt;</code>
@@ -184,9 +167,9 @@ public class HelloPage {
 			<p>
 				入力画面・確認画面・完了画面のように，
 				一連のインタラクションを構成する複数のページを同じサブアプリケーションに含めることにより，
-				状態の引継ぎが容易になります． 詳細は「
-				<a href="ext_concept_scope.html">状態とスコープ</a>
-				」を参照してください．
+				状態の引継ぎが容易になります． 詳細は
+				<a href="ext_concept_scope.html">「状態とスコープ」</a>
+				を参照してください．
 			</p>
 		</section>
 
@@ -203,17 +186,17 @@ public class HelloPage {
 				面倒な設定が不要となっています．
 			</p>
 			<p>
-				SMART deployの詳細はSeasar2の「
+				SMART deployの詳細はSeasar2の
 				<a
 					href="http://s2container.seasar.org/2.4/ja/DIContainer.html">
-					DIContainer
+					「DIContainer」
 				</a>
-				」－「
+				－
 				<a
 					href="http://s2container.seasar.org/2.4/ja/DIContainer.html#SMARTdeploy">
-					SAMRT deploy
+					「SAMRT deploy」
 				</a>
-				」を参照してください．
+				を参照してください．
 			</p>
 
 			<subsection name="テンプレートHTMLの命名規約">
