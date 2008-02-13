@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>リファレンス - リソース</title>
+	</properties>
+	<body>
+		<section name="リソース">
+			<ul>
+				<li><p><a href="#"></a></p></li>
+				<li><p><a href="#"></a></p></li>
+				<li><p><a href="#"></a></p></li>
+				<li><p><a href="#"></a></p></li>
+				<li><p><a href="#"></a></p></li>
+			</ul>
+		</section>
+
+		<section name="メッセージリソース">
+			<subsection name="">
+				<p>
+				</p>
+			</subsection>
+
+			<subsection name="">
+				<p>
+				</p>
+			</subsection>
+		</section>
+
+		<section name="ラベルリソース">
+			<subsection name="">
+				<p>
+				</p>
+			</subsection>
+
+			<subsection name="">
+				<p>
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

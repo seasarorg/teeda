@@ -150,9 +150,9 @@
 					</dd>
 				</dl>
 				<source><![CDATA[
-    public Class initialize() {
-        ...
-    }
+public Class initialize() {
+    ...
+}
 ]]></source>
 				<p>
 					<code>initialize()</code>
@@ -200,9 +200,9 @@
 					</dd>
 				</dl>
 				<source><![CDATA[
-    public Class doUpdate() {
-        ...
-    }
+public Class doUpdate() {
+    ...
+}
 ]]></source>
 				<p>
 					<code>do～()</code>
@@ -211,7 +211,7 @@
 					)．
 				</p>
 				<source><![CDATA[
-    <input type="submit" id="doUpdate" value="更新" />
+<input type="submit" id="doUpdate" value="更新" />
 ]]></source>
 				<p>
 					<code>do～()</code>
@@ -250,9 +250,9 @@
 					</dd>
 				</dl>
 				<source><![CDATA[
-    public Class prerender() {
-        ...
-    }
+public Class prerender() {
+    ...
+}
 ]]></source>
 				<p>
 					<code>prerender()</code>

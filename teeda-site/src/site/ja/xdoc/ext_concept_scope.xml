@@ -79,8 +79,7 @@
 			</p>
 			<p>
 				TeedaExtensionでは， 多くのアプリケーションで必要になる複数の有効期間 (スコープ)
-				を持つ状態の引継ぎをサポートします． この機能により，
-				アプリケーションがHTTPセッションを直接扱うことなく，
+				を持つ状態の引継ぎをサポートします． この機能により， アプリケーションがHTTPセッションを直接扱うことなく，
 				簡単かつ安全にページクラス間で状態を引き継げるようにしています．
 			</p>
 		</section>
@@ -127,6 +126,15 @@
 						href="ext_concept_lifecycle.html#ポストバック (自画面表示)">
 						ポストバック (自画面表示)
 					</a>
+					や
+					<a
+						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						ポストバック (リダイレクト)
+					</a>
+					～
+					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
 					で同じページを表示している間維持されるスコープです．
 				</p>
 				<p>
@@ -146,8 +154,8 @@
 				</p>
 				<p>ページスコープを使用するには， ページクラスのプロパティにアノテーションで明示的に指定します．</p>
 				<source><![CDATA[
-    @PageScope
-    public String name;
+@PageScope
+public String name;
 ]]></source>
 				<p>
 					<code>@PageScope</code>
@@ -159,13 +167,13 @@
 						<a href="ext_concept_lifecycle.html#初期表示">
 							初期表示
 						</a>
-						や
+						で現在と同じページが表示される場合は， ページスコープは維持されません．
+						新しいページスコープが開始されます．
 						<a
 							href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
 							ポストバック (リダイレクト)
 						</a>
-						で現在と同じページが表示される場合は， ページスコープは維持されません．
-						新しいページスコープが開始されます．
+						で現在と同じページが表示される場合は， ページスコープは維持されます．
 					</p>
 				</div>
 			</subsection>
@@ -188,8 +196,8 @@
 					リダイレクトスコープを使用するには， ページクラスのプロパティにアノテーションで明示的に指定します．
 				</p>
 				<source><![CDATA[
-    @RedirectScope
-    public String name;
+@RedirectScope
+public String name;
 ]]></source>
 				<p>
 					<code>@RedirectScope</code>
@@ -231,8 +239,8 @@
 					ページクラスのプロパティにアノテーションで明示的に指定します．
 				</p>
 				<source><![CDATA[
-    @SubapplicationScope
-    public String name;
+@SubapplicationScope
+public String name;
 ]]></source>
 				<p>
 					<code>@SubapplicationScope</code>
@@ -257,7 +265,7 @@
 					ページクラスのプロパティにスコープのアノテーションを指定する必要はありません．
 				</p>
 				<source><![CDATA[
-    public String name;
+public String name;
 ]]></source>
 				<p>
 					デフォルトスコープのプロパティは，
@@ -280,6 +288,8 @@
 							ポストバック (自画面表示)
 						</a>
 						ではサブアプリケーションスコープに含められません．
+						次画面のページクラスにないプロパティもサブアプリケーションスコープに含められません．
+						これらの点がサブアプリケーションスコープと異なる点です．
 					</p>
 				</div>
 			</subsection>
@@ -376,20 +386,20 @@
 					</li>
 				</ul>
 				<source><![CDATA[
-    @TakeOver(type = TakeOverType.INCLUDE, properties = "foo, bar")
-    public Class doXxx() {
-        ...
-    }
+@TakeOver(type = TakeOverType.INCLUDE, properties = "foo, bar")
+public Class doXxx() {
+    ...
+}
 
-    @TakeOver(type = TakeOverType.EXCLUDE, properties = "foo, bar")
-    public Class doYyy() {
-        ...
-    }
+@TakeOver(type = TakeOverType.EXCLUDE, properties = "foo, bar")
+public Class doYyy() {
+    ...
+}
 
-    @TakeOver(type = TakeOverType.NEVER)
-    public Class doZzz() {
-        ...
-    }
+@TakeOver(type = TakeOverType.NEVER)
+public Class doZzz() {
+    ...
+}
 ]]></source>
 			</subsection>
 		</section>

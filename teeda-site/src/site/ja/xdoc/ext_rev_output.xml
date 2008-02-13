@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>TeedaExtension - 逆引きリファレンス - 出力</title>
+	</properties>
+	<body>
+		<section name="出力">
+			<ul>
+				<li>
+					<p>
+						<a href="#本文">本文</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#テキストを動的に出力するには">
+										テキストを動的に出力するには
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#タグを出力したくない場合には">
+										タグを出力したくない場合には
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#プロパティファイルの内容を本文に出力するには">
+										プロパティファイルの内容を本文に出力するには
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a href="#属性値を動的に出力するには">
+										属性値を動的に出力するには
+									</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="#ヘッダ">ヘッダ</a>
+						<ul>
+							<li>
+								<p>
+									<a href="#タイトルを動的に出力するには">
+										タイトルを動的に出力するには
+									</a>
+								</p>
+							</li>
+							<li>
+								<p>
+									<a
+										href="#プロパティファイルの内容をタイトルに出力するには">
+										プロパティファイルの内容をタイトルに出力するには
+									</a>
+								</p>
+							</li>
+						</ul>
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section name="本文">
+			<subsection name="テキストを動的に出力するには">
+				<div class="sidebar">
+					<code>&lt;span&gt;</code>
+					要素の他，
+					<code>&lt;div&gt;</code>
+					要素を使うこともできます．
+				</div>
+				<p>
+					テキストを出力したい位置に
+					<code>&lt;span&gt;</code>
+					要素を記述して
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;span&gt;</code>
+					要素の内容はプロパティの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="name">dummy</span>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"Hello"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="name">Hello</span>
+]]></source>
+			</subsection>
+
+			<subsection name="タグを出力したくない場合には">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素の
+					<code>te:omittag</code>
+					属性に
+					<code>true</code>
+					を指定します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;span&gt;</code>
+					要素の開始タグおよび終了タグはレンダリングされません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="name" te:omittag="true">dummy</span>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"Hello"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+Hello
+]]></source>
+			</subsection>
+
+			<subsection name="プロパティファイルの内容を本文に出力するには">
+				<p>
+					<code>&lt;label&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け，
+					<var>pagename.id</var>
+					または
+					<var>id</var>
+					という名前のプロパティを持つ
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルを用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;label&gt;</code>
+					要素の内容は
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<label id="productName">dummy</label>
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+foo.productName=Teeda
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<label id="productName">Teeda</label>
+]]></source>
+			</subsection>
+
+			<subsection name="属性値を動的に出力するには">
+				<p>
+					動的に値を出力したい属性を持つ要素に
+					<code>id</code>
+					属性を付け，
+					<var>id</var>
+					+
+					<var>attribute</var>
+					という名前のプロパティをページクラスに用意します． ただし，
+					<var>attribute</var>
+					は値を動的に出力したい属性名の先頭を大文字にした名前です．
+				</p>
+				<p>レンダリング時， 属性の値はプロパティの値に置き換えられます．</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="foo" style="dummy">dummy</span>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String fooStyle;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>fooStyle</code>
+					プロパティの値が
+					<code>"display: none;"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="foo" style="display: none;">dummy</span>
+]]></source>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						<code>class</code>
+						属性の値を動的に出力する場合は，
+						<var>id</var>
+						+
+						<code>StyleClass</code>
+						という名前のプロパティをページクラスに用意します．
+					</p>
+				</div>
+			</subsection>
+		</section>
+
+		<section name="ヘッダ">
+			<subsection name="タイトルを動的に出力するには">
+				<p>
+					<code>&lt;title&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， その値に
+					<code>Value</code>
+					を付加した名前のプロパティをページクラスに用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;title&gt;</code>
+					要素の内容はプロパティの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<title id="title">dummy</span>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String titleValue;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>titleValue</code>
+					プロパティの値が
+					<code>"Hello"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="title">Hello</span>
+]]></source>
+			</subsection>
+
+			<subsection name="プロパティファイルの内容をタイトルに出力するには">
+				<p>
+					<code>&lt;title&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け，
+					<var>pagename.id</var>
+					または
+					<var>id</var>
+					という名前のプロパティを持つ
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルを用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;title&gt;</code>
+					要素の内容は
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<title id="title">dummy</span>
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+foo.title=タイトル
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<span id="title">タイトル</span>
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>
