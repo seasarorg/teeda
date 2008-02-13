@@ -47,6 +47,10 @@ public class InputPage {
 		return ConfirmPage.class;
 	}
 
+	public Class doFinish() {
+		return ConfirmPage.class;
+	}
+
 	@TakeOver(type = TakeOverType.NEVER)
 	public Class doNever() {
 		return ConfirmPage.class;
