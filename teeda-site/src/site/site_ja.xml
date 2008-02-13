@@ -21,7 +21,7 @@
 	<skin>
 		<groupId>org.seasar.teeda</groupId>
 		<artifactId>teeda-skin</artifactId>
-		<version>0.0.0</version>
+		<version>0.0.1</version>
 	</skin>
 	<bannerRight>
 		<src>http://maven.apache.org/images/maven-small.gif</src>

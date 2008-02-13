@@ -282,9 +282,11 @@
 <link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/print.css" media="print" />
 <link href="$relativePath/css/maven-base.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="$relativePath/css/maven-theme.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="$relativePath/css/prettify.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="$relativePath/js/prettify.js"></script>
 </head>
 
-<body>
+<body onload="prettyPrint()">
 
 <div id="wrapper">
 
