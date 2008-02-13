@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC
-	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
@@ -10,7 +10,7 @@
 		<section name="出力">
 			<ul>
 				<li>
-					<a href="#本文">本文</a>
+					<a href="#ボディ">ボディ</a>
 					<ul>
 						<li>
 							<a href="#テキストを動的に出力するには">テキストを動的に出力するには</a>
@@ -44,7 +44,7 @@
 			</ul>
 		</section>
 
-		<section name="本文">
+		<section name="ボディ">
 			<subsection name="テキストを動的に出力するには">
 				<div class="sidebar">
 					<code>&lt;span&gt;</code>
@@ -53,7 +53,7 @@
 					要素を使うこともできます．
 				</div>
 				<p>
-					テキストを出力したい位置に
+					ボディ内のテキストを出力したい位置に
 					<code>&lt;span&gt;</code>
 					要素を記述して
 					<code>id</code>
@@ -121,17 +121,29 @@ Hello
 			</subsection>
 
 			<subsection name="プロパティファイルの内容を本文に出力するには">
-				<p>
+				<div class="sidebar">
+					この
 					<code>&lt;label&gt;</code>
-					要素に
+					要素は， XHTML標準の
+					<code>&lt;label&gt;</code>
+					とは異なります． XHTML標準の
+					<code>&lt;label&gt;</code>
+					要素を使用する場合は
+					<code>id</code>
+					属性を付けないようにしてください．
+				</div>
+				<p>
+					ボディ内のテキストを出力したい位置に
+					<code>&lt;label&gt;</code>
+					要素を記述して
 					<code>id</code>
 					属性を付け，
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
 					<var>pagename.id</var>
 					または
 					<var>id</var>
-					という名前のプロパティを持つ
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
-					ファイルを用意します．
+					という名前のプロパティを定義します．
 				</p>
 				<p>
 					レンダリング時，
@@ -196,6 +208,14 @@ public String fooStyle;
 						<code>StyleClass</code>
 						という名前のプロパティをページクラスに用意します．
 					</p>
+					<p>
+						<var>id</var>
+						属性の値が
+						<code>foo</code>
+						であれば，
+						<code>fooStyleClass</code>
+						という名前のプロパティをページクラスに用意します．
+					</p>
 				</div>
 			</subsection>
 		</section>
@@ -241,12 +261,12 @@ public String titleValue;
 					要素に
 					<code>id</code>
 					属性を付け，
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
 					<var>pagename.id</var>
 					または
 					<var>id</var>
-					という名前のプロパティを持つ
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
-					ファイルを用意します．
+					という名前のプロパティを定義します．
 				</p>
 				<p>
 					レンダリング時，

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE document PUBLIC
-	"-//Apache Software Foundation//DTD XDOC 1.0//EN"
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
@@ -18,7 +18,7 @@
 			</p>
 			<p>Teedaには大きく分けて3つのプロダクトがあります．</p>
 
-			<subsection name="TeedaCore">
+			<subsection name="Teeda Core">
 				<p>
 					Teeda Coreは，JSF1.1の実装です． JSFにおけるUIコンポーネントの管理に
 					<a href="http://s2container.seasar.org">Seasar2</a>
@@ -26,14 +26,14 @@
 				</p>
 			</subsection>
 
-			<subsection name="TeedaExtension">
+			<subsection name="Teeda Extension">
 				<p>
 					Teeda Extensionは，Teeda Coreをベースに，
 					HTMLテンプレートと規約に基づいた拡張機能を提供します．
 				</p>
 			</subsection>
 
-			<subsection name="TeedaAjax">
+			<subsection name="Teeda Ajax">
 				<p>
 					Teeda Ajaxは，Ajaxに特化したライブラリで， Teeda CoreやTeeda
 					Extensionとは独立して利用することも可能です．

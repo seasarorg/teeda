@@ -53,12 +53,12 @@
 			</item>
 		</menu>
 
-		<menu name="TeedaCore">
+		<menu name="Teeda Core">
 			<item name="概要" href="core_about.html" />
 			<item name="サンプル解説" href="core_example.html" />
 		</menu>
 
-		<menu name="TeedaExtension">
+		<menu name="Teeda Extension">
 			<item name="サンプル解説" href="ext_example.html" />
 
 			<item name="チュートリアル" href="ext_tutorial.html"
@@ -79,8 +79,8 @@
 				collapse="true">
 				<item name="出力" href="ext_rev_output.html"
 					collapse="true">
-					<item name="本文" href="ext_rev_output.html#本文" />
-					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
+					<item name="本文" href="ext_rev_output.html#body" />
+					<item name="ヘッダ" href="ext_rev_output.html#head" />
 				</item>
 				<item name="入力" href="ext_rev_input.html"
 					collapse="true">
@@ -117,7 +117,7 @@
 			<item name="FAQ" href="ext_faq.html" />
 		</menu>
 
-		<menu name="TeedaAjax">
+		<menu name="Teeda Ajax">
 			<item name="概要" href="ajax_about.html" />
 			<item name="Kumu" href="ajax_kumu.html" />
 		</menu>
