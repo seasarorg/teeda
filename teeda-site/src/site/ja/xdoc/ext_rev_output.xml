@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 逆引きリファレンス - 出力</title>
+		<title>Extension - 逆引きリファレンス - 出力</title>
 	</properties>
 	<body>
 		<section name="出力">
@@ -14,6 +14,11 @@
 					<ul>
 						<li>
 							<a href="#テキストを動的に出力するには">テキストを動的に出力するには</a>
+						</li>
+						<li>
+							<a href="#&lt;や&amp;をエスケープしないで出力するには">
+								&lt;や&amp;をエスケープしないで出力するには
+							</a>
 						</li>
 						<li>
 							<a href="#タグを出力したくない場合には">タグを出力したくない場合には</a>
@@ -46,12 +51,6 @@
 
 		<section name="ボディ">
 			<subsection name="テキストを動的に出力するには">
-				<div class="sidebar">
-					<code>&lt;span&gt;</code>
-					要素の他，
-					<code>&lt;div&gt;</code>
-					要素を使うこともできます．
-				</div>
 				<p>
 					ボディ内のテキストを出力したい位置に
 					<code>&lt;span&gt;</code>
@@ -81,6 +80,51 @@ public String name;
 				</p>
 				<source><![CDATA[
 <span id="name">Hello</span>
+]]></source>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"&lt;b&gt;Hello&lt;/b&gt;"</code>
+					の場合，
+					<code>'&lt;'</code>
+					や
+					<code>'&gt;'</code>
+					はエスケープされ， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="name">&lt;b&gt;Hello&lt;/b&gt;</span>
+]]></source>
+			</subsection>
+
+			<subsection name="&lt;や&amp;をエスケープしないで出力するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素の
+					<code>te:escape</code>
+					属性に
+					<code>false</code>
+					を指定します．
+				</p>
+				<p>レンダリング時， プロパティの内容はエスケープされません．</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="name" te:escape="false">dummy</span>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"&lt;b&gt;Hello&lt;/b&gt;"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="name"><b>Hello</b></span>
 ]]></source>
 			</subsection>
 

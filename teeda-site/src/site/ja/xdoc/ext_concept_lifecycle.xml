@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 概念 - ライフサイクル</title>
+		<title>Extension - 概念 - ライフサイクル</title>
 	</properties>
 	<body>
 		<section name="ライフサイクル">
@@ -69,7 +69,7 @@
 				詳細は「」を参照してください．
 			</div>
 			<p>
-				TeedaExtensionは， ブラウザからのリクエストに応じてページクラスのメソッドを呼び出します．
+				Teeda Extensionは， ブラウザからのリクエストに応じてページクラスのメソッドを呼び出します．
 				このメソッドをライフサイクルメソッドと呼びます．
 			</p>
 			<p>ライフサイクルメソッドには次のものがあります．</p>
@@ -94,7 +94,7 @@
 					してきたときに呼び出されるメソッドです．
 				</p>
 				<p>
-					<code>initialize</code>
+					<code>initialize()</code>
 					メソッドは次の規約に従います．
 				</p>
 				<dl>
@@ -194,7 +194,7 @@ public Class doUpdate() {
 					メソッドは， 画面が描画される直前に呼び出されるメソッドです．
 				</p>
 				<p>
-					<code>initialize</code>
+					<code>prerender()</code>
 					メソッドは次の規約に従います．
 				</p>
 				<dl>
@@ -231,7 +231,9 @@ public Class prerender() {
 		</section>
 
 		<section name="リクエストパターン">
-			<p>TeedaExtensionでは， ブラウザから受け取ったリクエストの基本的な処理パターンが4つあります．</p>
+			<p>
+				Teeda Extensionでは， ブラウザから受け取ったリクエストの基本的な処理パターンが4つあります．
+			</p>
 			<img src="images/ext_concept_lifecycle1.png" width="616"
 				height="637" alt="リクエストパターン" />
 			<dl>
@@ -325,7 +327,7 @@ public Class prerender() {
 				<code>String</code>
 				型にすることができます (間違いにくさやリファクタリングのしやすさから
 				<code>Class</code>
-				型を推奨します)． 次画面のページクラスまたはそのコンポーネント名を戻り値とすることで，その画面に遷移します．
+				型を推奨します)．
 			</p>
 			<source><![CDATA[
 public class FooPage {
@@ -337,23 +339,13 @@ public class FooPage {
 }
 ]]></source>
 			<p>
-				戻り値が
-				<code>null</code>
-				だと画面遷移しないで自画面表示となります．
+				次画面のページクラスまたはそのコンポーネント名を戻り値とすることで， その画面に遷移 (リダイレクト) します．
 			</p>
 			<p>
-				画面遷移しない場合は戻り値の型を
-				<code>void</code>
-				にすることもできます．
+				戻り値が
+				<code>null</code>
+				だと画面遷移 (リダイレクト) しないで直接自画面を表示します．
 			</p>
-			<source><![CDATA[
-public class FooPage {
-    ...
-    public void initialize() {
-        ...
-    }
-}
-]]></source>
 			<p>
 				戻り値をそのページクラス自身 (またはそのコンポーネント名) にすると，
 				リダイレクトして同じページを表示します． この場合は遷移先が現在の画面と同じというだけで，
@@ -365,6 +357,19 @@ public class FooPage {
     public Class doSubmit() {
         ...
         return FooPage.class;
+    }
+}
+]]></source>
+			<p>
+				画面遷移 (リダイレクト) しない場合は戻り値の型を
+				<code>void</code>
+				にすることもできます．
+			</p>
+			<source><![CDATA[
+public class FooPage {
+    ...
+    public void initialize() {
+        ...
     }
 }
 ]]></source>

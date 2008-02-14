@@ -4,10 +4,10 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>Teeda</title>
+		<title>Welcome</title>
 	</properties>
 	<body>
-		<section name="Teedaとは？">
+		<section name="Welcome">
 			<p>
 				Teedaは，Seasarファウンデーション発のJSF(JavaServer
 				Faces)をベースとしたWebアプリケーションフレームワークです．

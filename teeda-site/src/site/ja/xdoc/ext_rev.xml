@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 逆引きリファレンス</title>
+		<title>Extension - 逆引きリファレンス</title>
 	</properties>
 	<body>
 		<section name="逆引きリファレンス">

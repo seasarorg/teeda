@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 概念 - ページモデル</title>
+		<title>Extension - 概念 - ページモデル</title>
 	</properties>
 	<body>
 		<section name="ページモデル">
@@ -45,7 +45,7 @@
 
 		<section name="概要">
 			<div class="sidebar">ページクラスとアクションクラスを併用することもできます．</div>
-			<p>TeedaExtensionは，ページモデルに基づくプレゼンテーションフレームワークです．</p>
+			<p>Teeda Extensionは，ページモデルに基づくプレゼンテーションフレームワークです．</p>
 			<p>
 				ページを構成するのは，静的なテンプレートとなるHTMLと， 動的な情報を持つページクラスです．
 				テンプレートHTMLとページクラスは1対1に対応します．
@@ -55,7 +55,7 @@
 		</section>
 
 		<section name="テンプレートHTML">
-			<p>TeedaExtensionは，ビューにJSPではなくHTML (正確にはXHTML) を使用します．</p>
+			<p>Teeda Extensionは，ビューにJSPではなくHTML (正確にはXHTML) を使用します．</p>
 			<p>
 				テンプレートHTMLは， ブラウザに向けてレンダリングされるHTMLのひな形で，
 				主にid属性を使用して実行時に置き換える部分を示します．
@@ -70,7 +70,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body>
-    こんにちは<span id="name">World!!!</span>
+    name <span id="name">dummy</span>
   </body>
 </html>
 ]]></source>
@@ -97,7 +97,7 @@
 			<h5>ページクラスの例</h5>
 			<source><![CDATA[
 public class HelloPage {
-    public String name ="Teeda!";
+    public String name ="ABC";
 }
 ]]></source>
 			<p>
@@ -126,7 +126,7 @@ public class HelloPage {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body>
-    こんにちは<span id="name">Teeda!</span>
+    name <span id="name">ABC</span>
   </body>
 </html>
 ]]></source>
@@ -156,7 +156,7 @@ public class HelloPage {
 			<div class="caution">
 				<div>注意点</div>
 				<p>
-					TeedaExtensionでは，HTTPプロトコルのPOSTメソッドはポストバックでのみ使用します．
+					Teeda Extensionでは，HTTPプロトコルのPOSTメソッドはポストバックでのみ使用します．
 					また，ポストバックは常にPOSTメソッドを使用します．
 				</p>
 			</div>
@@ -175,7 +175,7 @@ public class HelloPage {
 
 		<section name="命名規約">
 			<p>
-				TeedaExtensionは，
+				Teeda Extensionは，
 				<a href="http://s2container.seasar.org/2.4/ja/">
 					Seasar2
 				</a>

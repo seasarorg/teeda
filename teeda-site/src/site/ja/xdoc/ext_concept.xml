@@ -4,11 +4,11 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 概念</title>
+		<title>Extension - 概念</title>
 	</properties>
 	<body>
 		<section name="概念">
-			<p>このドキュメントでは，TeedaExtensionを理解する上で重要な概念について説明します．</p>
+			<p>このドキュメントでは，Teeda Extensionを理解する上で重要な概念について説明します．</p>
 			<ul>
 				<li>
 					<a href="ext_concept_page.html">ページモデル</a>

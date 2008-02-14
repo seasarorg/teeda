@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 概念 - 状態とスコープ</title>
+		<title>Extension - 概念 - 状態とスコープ</title>
 	</properties>
 	<body>
 		<section name="状態とスコープ">
@@ -47,28 +47,28 @@
 			</ul>
 		</section>
 
-		<section name="プロパティの引継ぎ">
+		<section name="状態の引継ぎ">
 			<p>
-				TeedaExtensionは
+				Teeda Extensionは
 				<a href="ext_concept_prg.html">PRGパターン</a>
 				で画面遷移します． 通常， 画面遷移の際はページクラスの間で状態 (プロパティの値) を引き継ぐ必要があります．
 			</p>
 			<img src="images/ext_concept_scope1.png" width="492"
-				height="466" />
+				height="466" alt="状態の引継ぎ" />
 			<p>
 				リダイレクト表示のリクエストではURLの長さ制限もあるため，
 				リクエストパラメータを使用するのは現実的ではありません． そこでHTTPセッションを使用することになりますが，
 				HTTPセッション (メモリ) の使用量を抑えるために有効期間に注意する必要があります．
 			</p>
 			<p>
-				TeedaExtensionでは， 多くのアプリケーションで必要になる複数の有効期間 (スコープ)
+				Teeda Extensionでは， 多くのアプリケーションで必要になる複数の有効期間 (スコープ)
 				を持つ状態の引継ぎをサポートします． この機能により， アプリケーションがHTTPセッションを直接扱うことなく，
 				簡単かつ安全にページクラス間で状態を引き継げるようにしています．
 			</p>
 		</section>
 
 		<section name="スコープ">
-			<p>TeedaExtensionは次のスコープで状態を管理します．</p>
+			<p>Teeda Extensionは次のスコープで状態を管理します．</p>
 			<dl>
 				<dt>
 					<a href="#ページスコープ">ページスコープ</a>
@@ -100,7 +100,7 @@
 				(デフォルトスコープの有効期間はサブアプリケーションスコープと同じです)．
 			</p>
 			<img src="images/ext_concept_scope2.png" width="586"
-				height="863" />
+				height="863" alt="スコープの有効期間" />
 
 			<subsection name="ページスコープ">
 				<p>
@@ -162,7 +162,10 @@ public String name;
 			</subsection>
 
 			<subsection name="リダイレクトスコープ">
-				<p>リダイレクトスコープは， リダイレクトの間だけ維持されるスコープです．</p>
+				<p>
+					リダイレクトスコープは， リダイレクトの間だけ維持されるスコープです．
+					入力画面から確認画面に値を引き継ぐ場合などに使うことができます．
+				</p>
 				<p>
 					リダイレクトスコープは，
 					<a

@@ -4,7 +4,7 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>TeedaExtension - 概念 - PRGパターン</title>
+		<title>Extension - 概念 - PRGパターン</title>
 	</properties>
 	<body>
 		<section name="PRGパターン">
@@ -26,7 +26,7 @@
 
 		<section name="概要">
 			<p>
-				TeedaExtensionは， 画面遷移にPRG (POST-REDIRECT-GET)
+				Teeda Extensionは， 画面遷移にPRG (POST-REDIRECT-GET)
 				パターンを採用しています．
 			</p>
 			<p>
@@ -64,6 +64,11 @@
 				aaa.htmlに対応するAaaPageは， bbb.htmlへのリダイレクトをレスポンスとして返します．
 				そのため，ブラウザはbbb.htmlをGETメソッドで要求し，その結果としてbbb.htmlが表示されます．
 				ブラウザのアドレスバーはリダイレクト先であるbbb.htmlとなるため， 表示内容とのズレが発生しません．
+			</p>
+			<p>
+				また，PRGパターンで表示される画面はGETリクエストの結果であるため，
+				通常ブラウザは画面をキャッシュすることが可能です． このため， 「戻る」「進む」ボタンが有効であり，
+				意図しない二重サブミットを防ぐことができます．
 			</p>
 		</section>
 
