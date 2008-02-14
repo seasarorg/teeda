@@ -134,6 +134,10 @@
 		class="org.seasar.teeda.extension.html.factory.InputRadioFactory" />
 	<component name="radioItemFactory"
 		class="org.seasar.teeda.extension.html.factory.RadioItemFactory" />
+	<component name="forEachFactory"
+		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
+	<component name="conditionFactory"
+		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="outputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.OutputTextFactory" />
 	<component name="bodyFactory"
@@ -150,10 +154,6 @@
 		class="org.seasar.teeda.extension.html.factory.StyleFactory" />
 	<component name="scriptFactory"
 		class="org.seasar.teeda.extension.html.factory.ScriptFactory" />
-	<component name="forEachFactory"
-		class="org.seasar.teeda.extension.html.factory.ForEachFactory" />
-	<component name="conditionFactory"
-		class="org.seasar.teeda.extension.html.factory.ConditionFactory" />
 	<component name="genericFactory"
 		class="org.seasar.teeda.extension.html.factory.GenericFactory" />
 	<component name="genericElementFactory"
