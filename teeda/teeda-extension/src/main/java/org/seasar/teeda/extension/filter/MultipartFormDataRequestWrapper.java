@@ -38,12 +38,12 @@ import org.seasar.teeda.extension.ExtensionConstants;
 /**
  * @author koichik
  */
-public class MultpartFormDataRequestWrapper extends HttpServletRequestWrapper {
+public class MultipartFormDataRequestWrapper extends HttpServletRequestWrapper {
 
     public static final String WWW_FORM_URLENCODED_TYPE = "application/x-www-form-urlencoded";
 
     private static final Logger logger = Logger
-            .getLogger(MultpartFormDataRequestWrapper.class);
+            .getLogger(MultipartFormDataRequestWrapper.class);
 
     protected ServletFileUpload fileUpload;
 
@@ -57,7 +57,7 @@ public class MultpartFormDataRequestWrapper extends HttpServletRequestWrapper {
      * @param thresholdSize 
      * @param repositoryPath 
      */
-    public MultpartFormDataRequestWrapper(final HttpServletRequest request,
+    public MultipartFormDataRequestWrapper(final HttpServletRequest request,
             final int maxFileSize, final int thresholdSize,
             final String repositoryPath) {
         super(request);

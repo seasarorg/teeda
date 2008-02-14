@@ -78,7 +78,7 @@ public class MultipartFormDataFilter implements Filter {
             return;
         }
 
-        final HttpServletRequest multipartRequest = new MultpartFormDataRequestWrapper(
+        final HttpServletRequest multipartRequest = new MultipartFormDataRequestWrapper(
                 httpRequest, maxFileSize, thresholdSize, repositoryPath);
         chain.doFilter(multipartRequest, response);
     }
