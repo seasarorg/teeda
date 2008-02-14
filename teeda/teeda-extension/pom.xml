@@ -111,5 +111,12 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.portals.bridges</groupId>
+      <artifactId>portals-bridges-portletfilter</artifactId>
+      <version>1.0.4</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 </project>
