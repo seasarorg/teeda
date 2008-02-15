@@ -64,15 +64,15 @@ public class TeedaStateManagerImpl extends TeedaStateManager implements
         if (isSavingStateInClient(context)) {
             return createSerializedView(context);
         }
-        saveViewToServer(context, context.getViewRoot());
+        if (!hasSerializedViewInServer(context.getViewRoot().getViewId())) {
+            saveViewToServer(context, context.getViewRoot());
+        }
         return null;
     }
 
     protected synchronized void saveSerializedViewToServer(
             FacesContext context, String viewId, SerializedView serializedView) {
-        if (!hasSerializedViewInServer(viewId)) {
-            saveSerializedViewToServer(viewId, serializedView);
-        }
+        saveSerializedViewToServer(viewId, serializedView);
     }
 
     public synchronized void removeSerializedView(final String viewId) {
