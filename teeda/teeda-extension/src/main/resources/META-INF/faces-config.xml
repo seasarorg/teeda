@@ -368,4 +368,10 @@
 			org.seasar.teeda.extension.component.html.THtmlGraphicImage
 		</component-class>
 	</component>
+
+	<lifecycle>
+		<phase-listener>
+			org.seasar.teeda.extension.event.MessageAddingPhaseListener
+		</phase-listener>
+	</lifecycle>
 </faces-config>

@@ -189,4 +189,10 @@ public interface ExtensionConstants {
 
     String REQUEST_ATTRIBUTE_UPLOADED_FILES = "org.seasar.teeda.core.filter.MultipartFormData.itemFiles";
 
+    String FILE_UPLOAD_ERROR_MESSAGE = "org.seasar.teeda.extension.component.THtmlFileUpload.ERROR";
+
+    String FILE_UPLOAD_SIZE_ERROR_MESSAGE = "org.seasar.teeda.extension.component.THtmlFileUpload.SIZE_ERROR";
+
+    String FILE_UPLOAD_FILE_SIZE_ERROR_MESSAGE = "org.seasar.teeda.extension.component.THtmlFileUpload.FILE_SIZE_ERROR";
+
 }

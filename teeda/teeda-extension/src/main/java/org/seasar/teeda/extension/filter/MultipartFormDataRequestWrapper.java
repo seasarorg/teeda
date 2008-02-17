@@ -28,12 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.util.ArrayUtil;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.teeda.extension.util.ExternalMessageUtil;
 
 /**
  * @author koichik
@@ -58,7 +61,7 @@ public class MultipartFormDataRequestWrapper extends HttpServletRequestWrapper {
      * @param repositoryPath 
      */
     public MultipartFormDataRequestWrapper(final HttpServletRequest request,
-            final int maxFileSize, final int thresholdSize,
+            final int maxSize, final int maxFileSize, final int thresholdSize,
             final String repositoryPath) {
         super(request);
         final DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -67,6 +70,7 @@ public class MultipartFormDataRequestWrapper extends HttpServletRequestWrapper {
             factory.setRepository(new File(repositoryPath));
         }
         fileUpload = new ServletFileUpload(factory);
+        fileUpload.setSizeMax(maxSize);
         fileUpload.setFileSizeMax(maxFileSize);
         parseRequest(request);
     }
@@ -85,16 +89,30 @@ public class MultipartFormDataRequestWrapper extends HttpServletRequestWrapper {
                     fileItems.put(fileItem.getFieldName(), fileItem);
                 }
             }
-
-            for (final Iterator it = request.getParameterMap().entrySet()
-                    .iterator(); it.hasNext();) {
-                final Entry entry = (Entry) it.next();
-                final String name = (String) entry.getKey();
-                final String[] values = (String[]) entry.getValue();
-                addParameters(name, values);
-            }
+        } catch (final SizeLimitExceededException e) {
+            logger.log("ETDA0110", new Object[0], e);
+            ExternalMessageUtil.addMessage(request,
+                    ExtensionConstants.FILE_UPLOAD_SIZE_ERROR_MESSAGE,
+                    new Object[] { new Long(e.getPermittedSize()),
+                            new Long(e.getActualSize()) });
+        } catch (final FileSizeLimitExceededException e) {
+            logger.log("ETDA0110", new Object[0], e);
+            ExternalMessageUtil.addMessage(request,
+                    ExtensionConstants.FILE_UPLOAD_FILE_SIZE_ERROR_MESSAGE,
+                    new Object[] { new Long(e.getPermittedSize()),
+                            new Long(e.getActualSize()) });
         } catch (final Exception e) {
             logger.log("ETDA0110", new Object[0], e);
+            ExternalMessageUtil.addMessage(request,
+                    ExtensionConstants.FILE_UPLOAD_ERROR_MESSAGE);
+        }
+
+        for (final Iterator it = request.getParameterMap().entrySet()
+                .iterator(); it.hasNext();) {
+            final Entry entry = (Entry) it.next();
+            final String name = (String) entry.getKey();
+            final String[] values = (String[]) entry.getValue();
+            addParameters(name, values);
         }
     }
 

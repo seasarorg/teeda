@@ -37,9 +37,13 @@ public class MultipartFormDataFilter implements Filter {
 
     public static final String DOFILTER_CALLED = "org.seasar.teeda.extension.filter.MultipartFormDataFilter.doFilterCalled";
 
+    public static final int DEFAULT_MAX_SIZE = 100 * 1024 * 1024;
+
     public static final int DEFAULT_MAX_FILE_SIZE = 100 * 1024 * 1024;
 
     public static final int DEFAULT_THREASHOLD_SIZe = 100 * 1024;
+
+    protected int maxSize;
 
     protected int maxFileSize;
 
@@ -50,6 +54,8 @@ public class MultipartFormDataFilter implements Filter {
     protected ServletContext servletContext;
 
     public void init(final FilterConfig filterConfig) throws ServletException {
+        maxSize = getSizeParameter(filterConfig, "uploadMaxSize",
+                DEFAULT_MAX_SIZE);
         maxFileSize = getSizeParameter(filterConfig, "uploadMaxFileSize",
                 DEFAULT_MAX_FILE_SIZE);
         thresholdSize = getSizeParameter(filterConfig, "uploadThresholdSize",
@@ -79,7 +85,8 @@ public class MultipartFormDataFilter implements Filter {
         }
 
         final HttpServletRequest multipartRequest = new MultipartFormDataRequestWrapper(
-                httpRequest, maxFileSize, thresholdSize, repositoryPath);
+                httpRequest, maxSize, maxFileSize, thresholdSize,
+                repositoryPath);
         chain.doFilter(multipartRequest, response);
     }
 

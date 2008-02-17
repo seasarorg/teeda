@@ -83,12 +83,16 @@
         org.seasar.teeda.extension.filter.MultipartFormDataFilter
       </filter-class>
       <init-param>
+        <param-name>uploadMaxSize</param-name>
+        <param-value>2k</param-value>
+      </init-param>
+      <init-param>
         <param-name>uploadMaxFileSize</param-name>
-        <param-value>100m</param-value>
+        <param-value>2k</param-value>
       </init-param>
       <init-param>
         <param-name>uploadThresholdSize</param-name>
-        <param-value>100k</param-value>
+        <param-value>1k</param-value>
       </init-param>
       <!-- OS固有の設定 -->
       <init-param>
