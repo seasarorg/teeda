@@ -102,21 +102,6 @@ public class SimpleForeachPage {
 		}
 	}
 
-	/**
-	 * @return the aaaIndex
-	 */
-	public int getAaaIndex() {
-		return aaaIndex;
-	}
-
-	/**
-	 * @param aaaIndex
-	 *            the aaaIndex to set
-	 */
-	public void setAaaIndex(int aaaIndex) {
-		this.aaaIndex = aaaIndex;
-	}
-
 	public int getNum() {
 		return num;
 	}
