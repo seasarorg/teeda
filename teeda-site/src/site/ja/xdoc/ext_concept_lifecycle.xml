@@ -16,17 +16,15 @@
 					<a href="#ライフサイクルメソッド">ライフサイクルメソッド</a>
 					<ul>
 						<li>
-							<a href="#initialize()メソッド">
+							<a href="#initializeメソッド">
 								initialize()メソッド
 							</a>
 						</li>
 						<li>
-							<a href="#do～()メソッド">do～()メソッド</a>
+							<a href="#doメソッド">do～()メソッド</a>
 						</li>
 						<li>
-							<a href="#prerender()メソッド">
-								prerender()メソッド
-							</a>
+							<a href="#prerenderメソッド">prerender()メソッド</a>
 						</li>
 					</ul>
 				</li>
@@ -42,15 +40,13 @@
 							<a href="#初期表示">初期表示</a>
 						</li>
 						<li>
-							<a href="#ポストバック (自画面表示)">ポストバック (自画面表示)</a>
+							<a href="#ポストバック_自画面表示">ポストバック (自画面表示)</a>
 						</li>
 						<li>
-							<a href="#ポストバック (リダイレクト)">
-								ポストバック (リダイレクト)
-							</a>
+							<a href="#ポストバック_リダイレクト">ポストバック (リダイレクト)</a>
 						</li>
 						<li>
-							<a href="#リダイレクト示">リダイレクト表示</a>
+							<a href="#リダイレクト表示">リダイレクト表示</a>
 						</li>
 					</ul>
 				</li>
@@ -87,7 +83,7 @@
 		</section>
 
 		<section name="ライフサイクルメソッド">
-			<subsection name="initialize()メソッド">
+			<subsection name="initializeメソッド">
 				<p>
 					<code>initialize()</code>
 					メソッドは， 画面が最初に表示されるときや， 他の画面から遷移 (REDIRECT)
@@ -301,7 +297,7 @@ public Class prerender() {
 					height="231" alt="ポストバック (リダイレクト)" />
 				<p>
 					バリデーションでエラーがあった場合は
-					<a href="#ポストバック (自画面表示)">ポストバック(自画面表示)</a>
+					<a href="#ポストバック_自画面表示">ポストバック(自画面表示)</a>
 					になります．
 				</p>
 			</subsection>

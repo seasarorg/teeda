@@ -21,7 +21,7 @@
 	<skin>
 		<groupId>org.seasar.teeda</groupId>
 		<artifactId>teeda-skin</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2</version>
 	</skin>
 	<bannerRight>
 		<src>http://maven.apache.org/images/maven-small.gif</src>
@@ -79,20 +79,35 @@
 				collapse="true">
 				<item name="出力" href="ext_rev_output.html"
 					collapse="true">
-					<item name="本文" href="ext_rev_output.html#body" />
-					<item name="ヘッダ" href="ext_rev_output.html#head" />
+					<item name="ボディ" href="ext_rev_output.html#ボディ" />
+					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
 				</item>
+
 				<item name="入力" href="ext_rev_input.html"
 					collapse="true">
-					<item name="テキストフィールド" href="" />
-					<item name="テキストエリア" href="" />
-					<item name="ラジオボタン(静的)" href="" />
-					<item name="ラジオボタン(動的)" href="" />
-					<item name="チェックボックス" href="" />
-					<item name="選択リスト" href="" />
-					<item name="サブミットボタン" href="" />
-					<item name="ファイルアップロード" href="" />
+					<item name="フォーム" href="ext_rev_input.html#フォーム" />
+					<item name="テキストフィールド"
+						href="ext_rev_input.html#テキストフィールド" />
+					<item name="テキストエリア"
+						href="ext_rev_input.html#テキストエリア" />
+					<item name="ラジオボタン(静的)"
+						href="ext_rev_input.html#ラジオボタン静的" />
+					<item name="ラジオボタン(動的)"
+						href="ext_rev_input.html#ラジオボタン動的" />
+					<item name="チェックボックス"
+						href="ext_rev_input.html#チェックボックス" />
+					<item name="選択リスト(単一選択)"
+						href="ext_rev_input.html#選択リスト単一選択" />
+					<item name="選択リスト(複数選択)"
+						href="ext_rev_input.html#選択リスト複数選択" />
+					<item name="隠しフィールド"
+						href="ext_rev_input.html#隠しフィールド" />
+					<item name="サブミットボタン"
+						href="ext_rev_input.html#サブミットボタン" />
+					<item name="ファイルアップロード"
+						href="ext_rev_input.html#ファイルアップロード" />
 				</item>
+
 				<item name="バリデーション" href="" />
 				<item name="コンバート" href="" />
 				<item name="繰り返し" href="" />
@@ -106,12 +121,14 @@
 				<item name="コンポーネント" href="ext_ref_component.html" />
 				<item name="規約" href="ext_ref_convention.html" />
 				<item name="アノテーション" href="ext_ref_annotation.html" />
+				<item name="dicon" href="ext_ref_dicon.html" />
 				<item name="リソース" href="ext_ref_resource.html" />
 				<item name="カスタマイズ" href="ext_ref_customize.html" />
-				<item name="テンプレートXHTMLガイドライン" href="ext_ref_xhtml.html" />
 			</item>
 
 			<item name="TIPS" href="ext_tips.html" collapse="true">
+				<item name="テンプレートXHTMLガイドライン"
+					href="ext_ref_xhtml.html" />
 			</item>
 
 			<item name="FAQ" href="ext_faq.html" />

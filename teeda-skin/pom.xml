@@ -10,7 +10,7 @@
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-skin</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 
   <!-- More Project Information -->
   <name>Teeda Site Skin</name>

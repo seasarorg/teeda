@@ -16,16 +16,21 @@
 							<a href="#テキストを動的に出力するには">テキストを動的に出力するには</a>
 						</li>
 						<li>
-							<a href="#&lt;や&amp;をエスケープしないで出力するには">
-								&lt;や&amp;をエスケープしないで出力するには
+							<a href="#特殊文字をエスケープしないで出力するには">
+								特殊文字をエスケープしないで出力するには
 							</a>
 						</li>
 						<li>
 							<a href="#タグを出力したくない場合には">タグを出力したくない場合には</a>
 						</li>
 						<li>
-							<a href="#プロパティファイルの内容を本文に出力するには">
-								プロパティファイルの内容を本文に出力するには
+							<a href="#リクエストやセッションの属性値をボディに出力するには">
+								リクエストやセッションの属性値をボディに出力するには
+							</a>
+						</li>
+						<li>
+							<a href="#プロパティファイルの内容をボディに出力するには">
+								プロパティファイルの内容をボディに出力するには
 							</a>
 						</li>
 						<li>
@@ -38,6 +43,11 @@
 					<ul>
 						<li>
 							<a href="#タイトルを動的に出力するには">タイトルを動的に出力するには</a>
+						</li>
+						<li>
+							<a href="#リクエストやセッションの属性値をタイトルに出力するには">
+								リクエストやセッションの属性値をボディに出力するには
+							</a>
 						</li>
 						<li>
 							<a href="#プロパティファイルの内容をタイトルに出力するには">
@@ -75,16 +85,16 @@ public String name;
 				<p>
 					<code>name</code>
 					プロパティの値が
-					<code>"Hello"</code>
+					<code>"Teeda"</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<span id="name">Hello</span>
+<span id="name">Teeda</span>
 ]]></source>
 				<p>
 					<code>name</code>
 					プロパティの値が
-					<code>"&lt;b&gt;Hello&lt;/b&gt;"</code>
+					<code>"&lt;b&gt;Teeda&lt;/b&gt;"</code>
 					の場合，
 					<code>'&lt;'</code>
 					や
@@ -92,11 +102,11 @@ public String name;
 					はエスケープされ， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<span id="name">&lt;b&gt;Hello&lt;/b&gt;</span>
+<span id="name">&lt;b&gt;Teeda&lt;/b&gt;</span>
 ]]></source>
 			</subsection>
 
-			<subsection name="&lt;や&amp;をエスケープしないで出力するには">
+			<subsection name="特殊文字をエスケープしないで出力するには">
 				<div class="sidebar">
 					<a href="">te名前空間</a>
 					を使用するには
@@ -120,11 +130,11 @@ public String name;
 				<p>
 					<code>name</code>
 					プロパティの値が
-					<code>"&lt;b&gt;Hello&lt;/b&gt;"</code>
+					<code>"&lt;b&gt;Teeda&lt;/b&gt;"</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<span id="name"><b>Hello</b></span>
+<span id="name"><b>Teeda</b></span>
 ]]></source>
 			</subsection>
 
@@ -156,15 +166,67 @@ public String name;
 				<p>
 					<code>name</code>
 					プロパティの値が
-					<code>"Hello"</code>
+					<code>"Teeda"</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-Hello
+Teeda
 ]]></source>
 			</subsection>
 
-			<subsection name="プロパティファイルの内容を本文に出力するには">
+			<subsection name="リクエストやセッションの属性値をボディに出力するには">
+				<p>
+					<code>&lt;span&gt;</code>
+					要素の
+					<code>id</code>
+					属性を次のように指定します．
+				</p>
+				<dl>
+					<dt>リクエストの属性を出力する場合</dt>
+					<dd>
+						<code>
+							requestScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+					<dt>セッションの属性を出力する場合</dt>
+					<dd>
+						<code>
+							sessionScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+					<dt>アプリケーションコンテキストの属性を出力する場合</dt>
+					<dd>
+						<code>
+							applicationScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+				</dl>
+				<p>
+					レンダリング時，
+					<code>&lt;span&gt;</code>
+					要素の内容はリクエストやセッション，アプリケーションスコープの属性値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="sessionScope_name">dummy</span>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					セッションの
+					<code>name</code>
+					属性の値が
+					<code>"Teeda"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="sessionScope_userName">Teeda</span>
+]]></source>
+			</subsection>
+
+			<subsection name="プロパティファイルの内容をボディに出力するには">
 				<div class="sidebar">
 					この
 					<code>&lt;label&gt;</code>
@@ -198,16 +260,16 @@ Hello
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<label id="productName">dummy</label>
+<label id="name">dummy</label>
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
 				<source><![CDATA[
-foo.productName=Teeda
+foo.name=Teeda
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>レンダリング結果は次のようになります．</p>
 				<source><![CDATA[
-<label id="productName">Teeda</label>
+<label id="name">Teeda</label>
 ]]></source>
 			</subsection>
 
@@ -253,6 +315,7 @@ public String fooStyle;
 						という名前のプロパティをページクラスに用意します．
 					</p>
 					<p>
+						例えば，
 						<var>id</var>
 						属性の値が
 						<code>foo</code>
@@ -291,11 +354,63 @@ public String titleValue;
 				<p>
 					<code>titleValue</code>
 					プロパティの値が
-					<code>"Hello"</code>
+					<code>"Teeda"</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<span id="title">Hello</span>
+<title id="title">Teeda</title>
+]]></source>
+			</subsection>
+
+			<subsection name="リクエストやセッションの属性値をタイトルに出力するには">
+				<p>
+					<code>&lt;title&gt;</code>
+					要素の
+					<code>id</code>
+					属性を次のように指定します．
+				</p>
+				<dl>
+					<dt>リクエストの属性を出力する場合</dt>
+					<dd>
+						<code>
+							requestScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+					<dt>セッションの属性を出力する場合</dt>
+					<dd>
+						<code>
+							sessionScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+					<dt>アプリケーションコンテキストの属性を出力する場合</dt>
+					<dd>
+						<code>
+							applicationScope_ +
+							<var>attributeName</var>
+						</code>
+					</dd>
+				</dl>
+				<p>
+					レンダリング時，
+					<code>&lt;title&gt;</code>
+					要素の内容はリクエストやセッション，アプリケーションスコープの属性値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<title id="sessionScope_name">dummy</title>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					セッションの
+					<code>name</code>
+					属性の値が
+					<code>"Teeda"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<title id="sessionScope_userName">Teeda</title>
 ]]></source>
 			</subsection>
 
@@ -325,12 +440,12 @@ public String titleValue;
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
 				<source><![CDATA[
-foo.title=タイトル
+foo.title=Teeda
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>レンダリング結果は次のようになります．</p>
 				<source><![CDATA[
-<span id="title">タイトル</span>
+<span id="title">Teeda</span>
 ]]></source>
 			</subsection>
 		</section>

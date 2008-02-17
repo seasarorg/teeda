@@ -33,9 +33,7 @@
 					<a href="#引継ぎの制御">引継ぎの制御</a>
 					<ul>
 						<li>
-							<a href="#doFinish～()メソッド">
-								doFinish～()メソッド
-							</a>
+							<a href="#doFinishメソッド">doFinish～()メソッド</a>
 						</li>
 						<li>
 							<a href="#TakeOverアノテーション">
@@ -105,13 +103,12 @@
 			<subsection name="ページスコープ">
 				<p>
 					ページスコープは，
-					<a
-						href="ext_concept_lifecycle.html#ポストバック (自画面表示)">
+					<a href="ext_concept_lifecycle.html#ポストバック_自画面表示">
 						ポストバック (自画面表示)
 					</a>
 					や
 					<a
-						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					～
@@ -153,7 +150,7 @@ public String name;
 						で現在と同じページが表示される場合は， ページスコープは維持されません．
 						新しいページスコープが開始されます．
 						<a
-							href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+							href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 							ポストバック (リダイレクト)
 						</a>
 						で現在と同じページが表示される場合は， ページスコープは維持されます．
@@ -169,7 +166,7 @@ public String name;
 				<p>
 					リダイレクトスコープは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					で開始され，
@@ -189,7 +186,7 @@ public String name;
 					<code>@RedirectScope</code>
 					が指定されたプロパティは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際にリダイレクトスコープに含められます．
@@ -211,7 +208,11 @@ public String name;
 					<a href="ext_concept_lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
-					で開始されます．
+					で 他の
+					<a href="ext_concept_page.html#サブアプリケーション">
+						サブアプリケーション
+					</a>
+					から遷移した際に開始されます．
 					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
 					や
 					<a href="ext_concept_lifecycle.html#リダイレクト表示">
@@ -238,7 +239,7 @@ public String name;
 				<p>デフォルトスコープは，実際にはスコープではなく，サブアプリケーションスコープの一種です．</p>
 				<p>
 					<a
-						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際に，アノテーションが指定されていないプロパティで，
@@ -256,7 +257,7 @@ public String name;
 				<p>
 					デフォルトスコープのプロパティは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック (リダイレクト)">
+						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際にサブアプリケーションスコープに含められます．
@@ -270,7 +271,7 @@ public String name;
 						</a>
 						や
 						<a
-							href="ext_concept_lifecycle.html#ポストバック (自画面表示)">
+							href="ext_concept_lifecycle.html#ポストバック_自画面表示">
 							ポストバック (自画面表示)
 						</a>
 						ではサブアプリケーションスコープに含められません．

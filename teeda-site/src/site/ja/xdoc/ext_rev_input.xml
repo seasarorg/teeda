@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - 入力</title>
+	</properties>
+	<body>
+		<section name="入力">
+			<ul>
+				<li>
+					<a href="#フォーム">フォーム</a>
+					<ul>
+						<li>
+							<a href="#フォームを使うには">フォームを使うには</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#テキストフィールド">テキストフィールド</a>
+					<ul>
+						<li>
+							<a href="#テキストフィールドを使うには">テキストフィールドを使うには</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+
+		<section name="フォーム">
+			<subsection name="フォームを使うには">
+				<p>
+					<code>&lt;form&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， 値を
+					<code>form</code>
+					または
+					<code>Form</code>
+					で終わるようにします．
+				</p>
+				<p>
+					<code>action</code>
+					属性や
+					<code>method</code>
+					属性はレンダリング時に付加されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<form id="form">
+  ...
+</form>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<form id="form" name="form" method="post" action="/context/view/subapp/foo.html">
+  ...
+</form>
+]]></source>
+			</subsection>
+		</section>
+
+		<section name="テキストフィールド">
+			<subsection name="テキストフィールドを使うには">
+				<div class="sidebar">
+					<code>type</code>
+					属性は省略することもできます．
+				</div>
+				<p>
+					<code>type</code>
+					属性が
+					<code>text</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素を記述して
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>value</code>
+					属性にプロパティの値が設定されます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，サブミットされた値はプロパティに設定されます． ただし， バリデーションでエラーが発生した場合はサブミットされた値はプロパティに設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="text" id="name" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"Teeda"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="text" id="name" name="form:name" value="Teeda" />
+]]></source>
+				<p>
+					テキストフィールドに
+					<code>"Seasar"</code>
+					と入力してサブミットすると， ページクラスの
+					<code>name</code>
+					プロパティには
+					<code>"Seasar"</code>
+					が設定されます．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

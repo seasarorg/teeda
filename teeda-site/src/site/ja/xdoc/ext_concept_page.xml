@@ -174,18 +174,7 @@ public class HelloPage {
 		</section>
 
 		<section name="命名規約">
-			<p>
-				Teeda Extensionは，
-				<a href="http://s2container.seasar.org/2.4/ja/">
-					Seasar2
-				</a>
-				のSMART deployに準拠しています．
-			</p>
-			<p>
-				テンプレートHTML及びページクラスをSMART deployの規約に従って配置することで，
-				面倒な設定が不要となっています．
-			</p>
-			<p>
+			<div class="sidebar">
 				SMART deployの詳細はSeasar2の
 				<a
 					href="http://s2container.seasar.org/2.4/ja/DIContainer.html">
@@ -197,6 +186,17 @@ public class HelloPage {
 					「SAMRT deploy」
 				</a>
 				を参照してください．
+			</div>
+			<p>
+				Teeda Extensionは，
+				<a href="http://s2container.seasar.org/2.4/ja/">
+					Seasar2
+				</a>
+				のSMART deployに準拠しています．
+			</p>
+			<p>
+				テンプレートHTML及びページクラスをSMART deployの規約に従って配置することで，
+				面倒な設定が不要となっています．
 			</p>
 
 			<subsection name="テンプレートHTMLの命名規約">
