@@ -9,7 +9,7 @@
   <!-- The Basics -->
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-project</artifactId>
-  <version>1.0.12-sp1-SNAPSHOT</version>
+  <version>1.0.12-sp1</version>
   <packaging>pom</packaging>
   <modules>
     <module>teeda-core</module>
