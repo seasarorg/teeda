@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.render;
 
+import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
@@ -29,7 +30,11 @@ public class TConditionRendererTest extends RendererTest {
 
     public void testEncode1() throws Exception {
         Renderer r = createRenderer();
-        TCondition c = new TCondition();
+        TCondition c = new TCondition() {
+            public String getClientId(FacesContext context) {
+                return "isAaa";
+            }
+        };
         c.setTagName("div");
         c.setId("isAaa");
         c.setRendered(true);
@@ -39,7 +44,11 @@ public class TConditionRendererTest extends RendererTest {
 
     public void testEncode2() throws Exception {
         Renderer r = createRenderer();
-        TCondition c = new TCondition();
+        TCondition c = new TCondition() {
+            public String getClientId(FacesContext context) {
+                return "isAaa";
+            }
+        };
         c.setTagName("div");
         c.setId("isAaa");
         c.setRendered(true);
@@ -56,7 +65,11 @@ public class TConditionRendererTest extends RendererTest {
 
     public void testEncode1_span() throws Exception {
         Renderer r = createRenderer();
-        TCondition c = new TCondition();
+        TCondition c = new TCondition() {
+            public String getClientId(FacesContext context) {
+                return "isAaa";
+            }
+        };
         c.setTagName("span");
         c.setId("isAaa");
         c.setRendered(true);
@@ -66,7 +79,11 @@ public class TConditionRendererTest extends RendererTest {
 
     public void testEncode2_span() throws Exception {
         Renderer r = createRenderer();
-        TCondition c = new TCondition();
+        TCondition c = new TCondition() {
+            public String getClientId(FacesContext context) {
+                return "isAaa";
+            }
+        };
         MockHtmlOutputText child = new MockHtmlOutputText();
         c.setTagName("span");
         child.setId("bbb");

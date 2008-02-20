@@ -60,6 +60,30 @@
     </filter>
 
     <filter>
+      <filter-name>multipartFilter</filter-name>
+      <filter-class>
+        org.seasar.teeda.extension.filter.MultipartFormDataFilter
+      </filter-class>
+      <init-param>
+        <param-name>uploadMaxSize</param-name>
+        <param-value>100m</param-value>
+      </init-param>
+      <init-param>
+        <param-name>uploadMaxFileSize</param-name>
+        <param-value>100m</param-value>
+      </init-param>
+      <init-param>
+        <param-name>uploadThresholdSize</param-name>
+        <param-value>100k</param-value>
+      </init-param>
+      <!-- OS固有の設定 -->
+      <init-param>
+        <param-name>uploadRepositoryPath</param-name>
+        <param-value>C:/temp/</param-value>
+      </init-param>
+    </filter>
+
+    <filter>
         <filter-name>s2filter</filter-name>
         <filter-class>org.seasar.framework.container.filter.S2ContainerFilter</filter-class>
     </filter>
@@ -82,6 +106,11 @@
     <filter-mapping>
         <filter-name>encodingfilter</filter-name>
         <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+      <filter-name>multipartFilter</filter-name>
+      <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
     <filter-mapping>

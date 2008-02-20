@@ -15,39 +15,34 @@
  */
 package org.seasar.teeda.extension.event;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.faces.internal.FacesMessageUtil;
 
-import org.seasar.teeda.extension.util.ExternalMessageUtil;
+import org.seasar.teeda.core.util.PostbackUtil;
+import org.seasar.teeda.extension.util.ConditionUtil;
 
 /**
  * @author koichik
  */
-public class MessageAddingPhaseListener implements PhaseListener {
+public class ResetConditionPhaseListener implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
 
     public PhaseId getPhaseId() {
-        return PhaseId.RESTORE_VIEW;
+        return PhaseId.RENDER_RESPONSE;
     }
 
     public void beforePhase(final PhaseEvent event) {
-        final Map messages = ExternalMessageUtil.getMessages(event
-                .getFacesContext());
-        if (messages != null) {
-            for (final Iterator it = messages.entrySet().iterator(); it
-                    .hasNext();) {
-                final Entry entry = (Entry) it.next();
-                final String key = (String) entry.getKey();
-                final Object[] value = (Object[]) entry.getValue();
-                FacesMessageUtil.addErrorMessage(key, value);
-            }
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final boolean postback = PostbackUtil.isPostback(context
+                .getExternalContext().getRequestMap());
+        final boolean noError = !FacesMessageUtil
+                .hasErrorOrFatalMessage(context);
+        if (postback && noError) {
+            ConditionUtil.removeConditions(context);
         }
     }
 

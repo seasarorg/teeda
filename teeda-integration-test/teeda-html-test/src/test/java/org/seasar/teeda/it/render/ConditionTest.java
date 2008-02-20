@@ -15,10 +15,14 @@
  */
 package org.seasar.teeda.it.render;
 
+import java.lang.reflect.Method;
+
 import junit.framework.Test;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
+
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
 
 /**
  * @author shot
@@ -335,6 +339,53 @@ public class ConditionTest extends TeedaWebTestCase {
 		table = new String[][] { { "0", "x" }, { "1", "" }, { "2", "y" },
 				{ "3", "" }, { "4", "z" }, { "5", "" } };
 		tester.assertTableEqualsById("aaaItems", table);
+	}
+
+	public void testCondition_TEEDA437() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		Method getElementById = TeedaWebTester.class.getDeclaredMethod(
+				"getElementById", new Class[] { String.class });
+		getElementById.setAccessible(true);
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition6.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("submitted", "");
+		tester.assertCheckboxNotSelectedByName("form:disp");
+		tester.assertElementNotPresentById("bar");
+
+		// ## Act ##
+		tester.checkCheckboxByName("form:disp");
+		tester.submitById("doFoo");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("submitted", "foo");
+		tester.assertCheckboxSelectedByName("form:disp");
+		tester.assertElementPresentById("doBar");
+
+		HtmlInput checkbox = (HtmlInput) getElementById.invoke(tester,
+				new Object[] { "disp" });
+		HtmlInput doBarButton = (HtmlInput) getElementById.invoke(tester,
+				new Object[] { "doBar" });
+
+		// ## Act ##
+		tester.submitById("jumpHello_hello");
+		tester.dumpHtml();
+
+		// back to confirm6.html
+		// ## Act ##
+		checkbox.setChecked(false);
+		doBarButton.click();
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("submitted", "bar");
+		tester.assertCheckboxNotSelectedByName("form:disp");
+		tester.assertElementNotPresentById("doBar");
 	}
 
 }

@@ -370,8 +370,24 @@
 	</component>
 
 	<lifecycle>
+		<!-- before RESTORE_VIEW -->
 		<phase-listener>
-			org.seasar.teeda.extension.event.MessageAddingPhaseListener
+			org.seasar.teeda.extension.event.AddMessagePhaseListener
+		</phase-listener>
+
+		<!-- after RESTORE_VIEW -->
+		<phase-listener>
+			org.seasar.teeda.extension.event.ComposeLayoutPhaseListener
+		</phase-listener>
+
+		<!-- after RESTORE_VIEW -->
+		<phase-listener>
+			org.seasar.teeda.extension.event.RestoreConditionPhaseListener
+		</phase-listener>
+
+		<!-- before RENDER_RESPONSE -->
+		<phase-listener>
+			org.seasar.teeda.extension.event.ResetConditionPhaseListener
 		</phase-listener>
 	</lifecycle>
 </faces-config>

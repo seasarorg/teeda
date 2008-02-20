@@ -122,7 +122,6 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        layout(context, (TViewRoot) component);
         for (Iterator i = component.getChildren().iterator(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();
             child.processDecodes(context);
@@ -132,11 +131,8 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        TViewRoot viewRoot = (TViewRoot) component;
-        if (viewRoot.getRootViewId() == null) {
-            layout(context, viewRoot);
-        }
         invokeAll(context);
+        TViewRoot viewRoot = (TViewRoot) component;
         invoke(context, viewRoot.getRootViewId());
         if (!context.getResponseComplete()) {
             RendererUtil.renderChildren(context, component);
@@ -235,8 +231,8 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
         if (parentViewId == null) {
             return null;
         }
-        if (HotdeployUtil.isHotdeploy()
-                || htmlDescCache.getHtmlDesc(parentViewId) == null) {
+        if (HotdeployUtil.isHotdeploy() ||
+                htmlDescCache.getHtmlDesc(parentViewId) == null) {
             InputStream is = ServletContextUtil.getResourceAsStream(
                     servletContext, parentViewId);
             if (is != null) {
@@ -266,8 +262,8 @@ public class TViewRootRenderer extends AbstractRenderer implements Invokable,
             parentPath = null;
         }
         PageDesc pageDesc = pageDescCache.getPageDesc(component.getViewId());
-        if (pageDesc != null
-                && pageDesc.hasProperty(ExtensionConstants.LAYOUT_ATTR)) {
+        if (pageDesc != null &&
+                pageDesc.hasProperty(ExtensionConstants.LAYOUT_ATTR)) {
             Object page = DIContainerUtil.getComponent(pageDesc.getPageName());
             BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
             PropertyDesc propDesc = beanDesc

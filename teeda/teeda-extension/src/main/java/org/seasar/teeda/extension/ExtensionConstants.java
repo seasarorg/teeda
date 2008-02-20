@@ -187,6 +187,8 @@ public interface ExtensionConstants {
 
     String REDIRECT_UNIQUE_KEY_PARAMETER = "te-uniquekey";
 
+    String CONDITIONS_PARAMETER = "te-conditions";
+
     String REQUEST_ATTRIBUTE_UPLOADED_FILES = "org.seasar.teeda.core.filter.MultipartFormData.itemFiles";
 
     String FILE_UPLOAD_ERROR_MESSAGE = "org.seasar.teeda.extension.component.THtmlFileUpload.ERROR";

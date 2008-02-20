@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.render.html.HtmlFormRenderer;
 import org.seasar.teeda.extension.component.html.THtmlForm;
+import org.seasar.teeda.extension.util.ConditionUtil;
 import org.seasar.teeda.extension.util.TransactionTokenUtil;
 
 /**
@@ -37,6 +38,7 @@ public class THtmlFormRenderer extends HtmlFormRenderer {
             final HtmlForm htmlForm) throws IOException {
         super.encodeHtmlFormEnd(context, htmlForm);
         TransactionTokenUtil.resetToken(context);
+        ConditionUtil.addForm(context, htmlForm);
     }
 
 }

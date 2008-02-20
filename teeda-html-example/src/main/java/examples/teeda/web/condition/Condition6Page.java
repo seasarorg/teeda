@@ -13,24 +13,22 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.teeda.extension.component;
-
-import javax.faces.application.FacesMessage;
-
-import org.seasar.teeda.core.mock.MockFacesContext;
-import org.seasar.teeda.core.unit.TeedaTestCase;
+package examples.teeda.web.condition;
 
 /**
  * @author shot
  */
-public class TConditionTest extends TeedaTestCase {
+public class Condition6Page {
 
-    public void testIsRendered() throws Exception {
-        MockFacesContext context = getFacesContext();
-        context.addMessage(null, new FacesMessage());
-        TCondition c = new TCondition();
-        c.setRendered(true);
-        assertTrue(c.isRendered());
-    }
+	public String submitted;
 
+	public boolean disp;
+
+	public void doFoo() {
+		submitted = "foo";
+	}
+
+	public void doBar() {
+		submitted = "bar";
+	}
 }
