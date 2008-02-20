@@ -54,9 +54,9 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
     private DoubleSubmitProtectionLoader loader = new KumuDisabledScriptLoader();
 
     public THtmlCommandButtonRenderer() {
-        super();
         addIgnoreAttributeName(ExtensionConstants.RENDERJS_ATTR);
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.BASEVIEWID_ATTR);
     }
 
     protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {

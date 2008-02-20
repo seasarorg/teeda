@@ -97,6 +97,8 @@ public interface ExtensionConstants {
 
     String OMITTAG_ATTR = "omittag";
 
+    String BASEVIEWID_ATTR = "baseViewId";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 
