@@ -41,8 +41,10 @@ public class TConditionRenderer extends AbstractRenderer {
     {
         attribute.addAttributeName(JsfConstants.ID_ATTR);
         attribute.addAttributeName(ExtensionConstants.SUBMITTED);
-        attribute.addAttributeName("tagName");
-        attribute.addAttributeName("refresh");
+        attribute.addAttributeName(ExtensionConstants.TAGNAME_ATTR);
+        attribute.addAttributeName(ExtensionConstants.REFRESH_ATTR);
+        attribute.addAttributeName(ExtensionConstants.OMITTAG_ATTR);
+        attribute.addAttributeName(ExtensionConstants.INVISIBLE_ATTR);
     }
 
     public void encodeBegin(FacesContext context, UIComponent component)

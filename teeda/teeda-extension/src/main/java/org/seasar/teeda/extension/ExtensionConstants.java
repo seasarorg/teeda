@@ -99,6 +99,10 @@ public interface ExtensionConstants {
 
     String BASEVIEWID_ATTR = "baseViewId";
 
+    String TAGNAME_ATTR = "tagName";
+
+    String REFRESH_ATTR = "refresh";
+
     //Suffix and prefix
     String GO_PREFIX = "go";
 

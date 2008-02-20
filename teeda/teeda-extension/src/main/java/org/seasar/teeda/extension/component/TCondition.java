@@ -23,6 +23,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.PhaseId;
+import javax.faces.internal.PhaseUtil;
 
 import org.seasar.framework.util.AssertionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
@@ -60,11 +61,12 @@ public class TCondition extends UIComponentBase {
     public boolean isRendered() {
         final FacesContext context = FacesContext.getCurrentInstance();
         final String clientId = getClientId(context);
+        final PhaseId phaseId = PhaseUtil.getCurrentPhase();
         final boolean isRefresh = (refresh != null) ? refresh.booleanValue()
                 : false;
-        if (!isRefresh) {
-            final Boolean condition = ConditionUtil.getCondition(
-                    context, clientId);
+        if (!PhaseId.RENDER_RESPONSE.equals(phaseId) || !isRefresh) {
+            final Boolean condition = ConditionUtil.getCondition(context,
+                    clientId);
             if (condition != null) {
                 return condition.booleanValue();
             }
