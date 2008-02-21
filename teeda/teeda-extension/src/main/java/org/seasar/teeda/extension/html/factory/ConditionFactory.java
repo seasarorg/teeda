@@ -90,6 +90,22 @@ public class ConditionFactory extends AbstractElementProcessorFactory {
         properties.put("rendered", expression);
     }
 
+    protected void customizeDynamicProperties(String base, Map properties,
+            ElementNode elementNode, PageDesc pageDesc, ActionDesc actionDesc) {
+        if (base == null) {
+            return;
+        }
+        if (StringUtil.startsWithIgnoreCase(base, ISNOT_PARAM_PREFIX)) {
+            base = base.substring(ISNOT_PARAM_PREFIX.length());
+            base = StringUtil.decapitalize(base);
+        } else if (StringUtil.startsWithIgnoreCase(base, IS_PARAM_PREFIX)) {
+            base = base.substring(IS_PARAM_PREFIX.length());
+            base = StringUtil.decapitalize(base);
+        }
+        super.customizeDynamicProperties(base, properties, elementNode,
+                pageDesc, actionDesc);
+    }
+
     protected String getTagName() {
         return TAG_NAME;
     }

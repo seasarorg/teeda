@@ -16,16 +16,16 @@
 package org.seasar.teeda.extension.render;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.IgnoreAttribute;
 
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
@@ -36,16 +36,6 @@ public class TConditionRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.Condition";
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.Condition";
-
-    private final IgnoreAttribute attribute = new IgnoreAttribute();
-    {
-        attribute.addAttributeName(JsfConstants.ID_ATTR);
-        attribute.addAttributeName(ExtensionConstants.SUBMITTED);
-        attribute.addAttributeName(ExtensionConstants.TAGNAME_ATTR);
-        attribute.addAttributeName(ExtensionConstants.REFRESH_ATTR);
-        attribute.addAttributeName(ExtensionConstants.OMITTAG_ATTR);
-        attribute.addAttributeName(ExtensionConstants.INVISIBLE_ATTR);
-    }
 
     public void encodeBegin(FacesContext context, UIComponent component)
             throws IOException {
@@ -61,7 +51,7 @@ public class TConditionRenderer extends AbstractRenderer {
             writer.startElement(condition.getTagName(), condition);
             RendererUtil.renderIdAttributeIfNecessary(writer, component,
                     getIdForRender(context, condition));
-            renderRemainAttributes(condition, writer, attribute);
+            renderAttributes(writer, condition);
         }
     }
 
@@ -82,6 +72,25 @@ public class TConditionRenderer extends AbstractRenderer {
 
     public boolean getRendersChildren() {
         return true;
+    }
+
+    protected void renderAttributes(ResponseWriter writer, TCondition component)
+            throws IOException {
+        Map attrs = component.getAttributes();
+        for (Iterator i = attrs.keySet().iterator(); i.hasNext();) {
+            String attrName = (String) i.next();
+            if (attrName.indexOf('.') > 0) {
+                continue;
+            }
+            Object value = component.getAttributes().get(attrName);
+            RendererUtil.renderAttribute(writer, attrName, value, attrName);
+        }
+        String[] bindingPropertyNames = component.getBindingPropertyNames();
+        for (int i = 0; i < bindingPropertyNames.length; ++i) {
+            String name = bindingPropertyNames[i];
+            Object value = BindingUtil.getBindingValue(component, name);
+            RendererUtil.renderAttribute(writer, name, value, name);
+        }
     }
 
 }

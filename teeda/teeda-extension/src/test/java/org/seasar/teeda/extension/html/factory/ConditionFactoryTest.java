@@ -26,6 +26,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.Aaa2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.AaaPage;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TConditionTag;
 
 /**
@@ -175,6 +176,23 @@ public class ConditionFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("2", TConditionTag.class, processor.getTagClass());
         assertEquals("3", "#{aaaPage.bbb == false}", processor
                 .getProperty("rendered"));
+    }
+
+    public void testCreateProcessor() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "isHoge");
+        properties.put("no", "dummy");
+        ElementNode elementNode = createElementNode("tr", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, null);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(TConditionTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.hogeNo}", processor.getProperty("no"));
     }
 
 }

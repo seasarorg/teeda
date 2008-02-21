@@ -15,9 +15,15 @@
  */
 package org.seasar.teeda.extension.taglib;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.faces.component.UIComponent;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.taglib.UIComponentTagBase;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
@@ -32,6 +38,8 @@ public class TConditionTag extends UIComponentTagBase {
     private String invisible;
 
     private String omittag;
+
+    private Map attributes = new HashMap();
 
     public TConditionTag() {
     }
@@ -50,6 +58,17 @@ public class TConditionTag extends UIComponentTagBase {
         setComponentProperty(component, "refresh", refresh);
         setComponentProperty(component, "invisible", invisible);
         setComponentProperty(component, "omittag", omittag);
+
+        TCondition condition = (TCondition) component;
+        for (Iterator i = attributes.keySet().iterator(); i.hasNext();) {
+            String name = (String) i.next();
+            String strValue = (String) attributes.get(name);
+            if (BindingUtil.isValueReference(strValue)) {
+                condition.setValueBindingAttribute(name, strValue);
+            } else {
+                condition.getAttributes().put(name, strValue);
+            }
+        }
     }
 
     public String getTagName() {
@@ -84,11 +103,20 @@ public class TConditionTag extends UIComponentTagBase {
         this.omittag = omittag;
     }
 
+    public void addAttribute(String name, String value) {
+        if (JsfConstants.ID_ATTR.equalsIgnoreCase(name)) {
+            setId(value);
+        } else {
+            attributes.put(name, value);
+        }
+    }
+
     public void release() {
         super.release();
         refresh = null;
         invisible = null;
         omittag = null;
+        attributes = null;
     }
 
 }

@@ -33,4 +33,16 @@ public class TConditionTest extends TeedaTestCase {
         assertTrue(c.isRendered());
     }
 
+    public void testDynamicProperty() throws Exception {
+        TCondition c = new TCondition();
+        c.setTagName("aaa");
+        c.setValueBindingAttribute("bbb", "BBB");
+        MockFacesContext context = getFacesContext();
+        Object saveState = c.saveState(context);
+        TCondition c2 = new TCondition();
+        c2.restoreState(context, saveState);
+        assertEquals("aaa", c2.getTagName());
+        assertEquals("bbb", c2.getBindingPropertyNames()[0]);
+    }
+
 }

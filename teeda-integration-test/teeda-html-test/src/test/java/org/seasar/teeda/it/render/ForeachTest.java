@@ -16,6 +16,8 @@
 package org.seasar.teeda.it.render;
 
 import junit.framework.Test;
+import net.sourceforge.jwebunit.html.Cell;
+import net.sourceforge.jwebunit.html.Table;
 
 import org.seasar.teeda.unit.web.TeedaWebTestCase;
 import org.seasar.teeda.unit.web.TeedaWebTester;
@@ -645,6 +647,21 @@ public class ForeachTest extends TeedaWebTestCase {
 		// ## Assert ##
 		tableExpected = new String[][] { { "1", "2", "10", "3" }, { "1" } };
 		tester.assertTableEqualsById("foreachTable", tableExpected);
+	}
+
+	public void testForeach_TEEDA438() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreachRowspan.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		Table tableExpected = new Table(new Object[][] {
+				{ new Cell("A", 1, 3), "A1" }, { "A2" }, { "A3" },
+				{ "B", "B1" }, { new Cell("C", 1, 2), "C1" }, { "C2" } });
+		tester.assertTableEqualsById("productItems", tableExpected);
 	}
 
 }

@@ -15,7 +15,9 @@
  */
 package org.seasar.teeda.extension.component;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.component.ComponentUtil_;
 import javax.faces.component.UIComponent;
@@ -26,6 +28,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.internal.PhaseUtil;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.util.ConditionUtil;
 
@@ -49,6 +52,8 @@ public class TCondition extends UIComponentBase {
     private Boolean invisible;
 
     private Boolean omittag;
+
+    private List bindingPropertyNames = new ArrayList();
 
     public TCondition() {
         super.setRendererType(DEFAULT_RENDERER_TYPE);
@@ -153,20 +158,32 @@ public class TCondition extends UIComponentBase {
         this.omittag = new Boolean(omittag);
     }
 
+    public void setValueBindingAttribute(String name, String value) {
+        BindingUtil.setValueBinding(this, name, value);
+        bindingPropertyNames.add(name);
+    }
+
+    public String[] getBindingPropertyNames() {
+        return (String[]) bindingPropertyNames
+                .toArray(new String[bindingPropertyNames.size()]);
+    }
+
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         tagName = (String) values[1];
         refresh = (Boolean) values[2];
         omittag = (Boolean) values[3];
+        bindingPropertyNames = (List) values[4];
     }
 
     public Object saveState(FacesContext context) {
-        Object[] values = new Object[4];
+        Object[] values = new Object[5];
         values[0] = super.saveState(context);
         values[1] = tagName;
         values[2] = refresh;
         values[3] = omittag;
+        values[4] = bindingPropertyNames;
         return values;
     }
 
