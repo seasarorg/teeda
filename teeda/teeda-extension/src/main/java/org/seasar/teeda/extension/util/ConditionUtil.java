@@ -164,7 +164,7 @@ public class ConditionUtil {
             writer.write("];");
             writer.write(JsfConstants.LINE_SP);
 
-            writer.write("for (var i = 0; i < forms.length; ++i) {");
+            writer.write("for (var i = 0, len = forms.length; i < len; ++i) {");
             writer.write(JsfConstants.LINE_SP);
 
             writer.write("  var hidden = document.createElement('input');");
