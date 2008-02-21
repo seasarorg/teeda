@@ -43,12 +43,13 @@ public class ComposeLayoutPhaseListener implements PhaseListener {
     public void afterPhase(final PhaseEvent event) {
         final FacesContext context = event.getFacesContext();
         final UIViewRoot viewRoot = context.getViewRoot();
-        final Renderer renderer = UIComponentUtil
-                .getRenderer(context, viewRoot);
-        if (viewRoot instanceof TViewRoot &&
-                renderer instanceof TViewRootRenderer) {
-            final TViewRootRenderer viewRootRenderer = (TViewRootRenderer) renderer;
-            viewRootRenderer.layout(context, (TViewRoot) viewRoot);
+        if (viewRoot instanceof TViewRoot) {
+            final Renderer renderer = UIComponentUtil.getRenderer(context,
+                    viewRoot);
+            if (renderer instanceof TViewRootRenderer) {
+                final TViewRootRenderer viewRootRenderer = (TViewRootRenderer) renderer;
+                viewRootRenderer.layout(context, (TViewRoot) viewRoot);
+            }
         }
     }
 
