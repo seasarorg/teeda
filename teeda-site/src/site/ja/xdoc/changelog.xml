@@ -10,11 +10,15 @@
 		<section name="変更履歴">
 			<ul>
 				<li>
+					<a href="#1.0.13-rc1">1.0.13-rc1</a>
+				</li>
+				<li>
 					<a href="#1.0.12-rc1">1.0.12-rc1</a>
 					&#160;&#160;
 					<a href="#1.0.12-rc2">1.0.12-rc2</a>
 					&#160;&#160;
 					<a href="#1.0.12">1.0.12</a>
+					<a href="#1.0.12-sp1">1.0.12-sp1</a>
 				</li>
 				<li>
 					<a href="#1.0.11">1.0.11</a>
@@ -66,6 +70,96 @@
 			</ul>
 		</section>
 
+		<section name="1.0.13-rc1">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-433'>
+									TEEDA-433
+								</a>
+								] - doOnce～ ボタンを素早く連打すると
+								AlreadyRedirectingException
+								が発生する問題を修正しました．[Seasar-user:12784]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-435'>
+									TEEDA-435
+								</a>
+								] - forEach を span 要素で使おうとして id に
+								xxxItems を指定しても outputText
+								になってしまう問題を修正しました．[Seasar-user:12859]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-436'>
+									TEEDA-436
+								</a>
+								] -
+								StateManagerでSerializedViewをキャッシュ済みの場合は作成しないようにしました
+							</li>
+						</ul>
+					</li>
+					<li>
+						New Feature
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-209'>
+									TEEDA-209
+								</a>
+								] - FileUpload コンポーネントを追加しました．
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="1.0.12-sp1">
+			<subsection name="変更内容">
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-433'>
+									TEEDA-433
+								</a>
+								] - doOnce～ ボタンを素早く連打すると
+								AlreadyRedirectingException
+								が発生する問題を修正しました．[Seasar-user:12784]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-435'>
+									TEEDA-435
+								</a>
+								] - forEach を span 要素で使おうとして id に
+								xxxItems を指定しても outputText
+								になってしまう問題を修正しました．[Seasar-user:12859]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
 
 		<section name="1.0.12">
 			<subsection name="変更内容">

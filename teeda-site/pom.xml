@@ -8,7 +8,7 @@
 
   <!-- The Basics -->
   <artifactId>teeda-site</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <parent>
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>

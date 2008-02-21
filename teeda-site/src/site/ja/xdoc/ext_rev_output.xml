@@ -33,8 +33,18 @@
 								プロパティファイルの内容をボディに出力するには
 							</a>
 						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#属性">属性</a>
+					<ul>
 						<li>
 							<a href="#属性値を動的に出力するには">属性値を動的に出力するには</a>
+						</li>
+						<li>
+							<a href="#プロパティファイルの内容を属性に出力するには">
+								プロパティファイルの内容を属性に出力するには
+							</a>
 						</li>
 					</ul>
 				</li>
@@ -272,7 +282,9 @@ foo.name=Teeda
 <label id="name">Teeda</label>
 ]]></source>
 			</subsection>
+		</section>
 
+		<section name="属性">
 			<subsection name="属性値を動的に出力するには">
 				<p>
 					動的に値を出力したい属性を持つ要素に
@@ -324,6 +336,54 @@ public String fooStyle;
 						という名前のプロパティをページクラスに用意します．
 					</p>
 				</div>
+			</subsection>
+
+			<subsection name="プロパティファイルの内容を属性に出力するには">
+				<p>
+					プロパティファイルの内容を出力できるのは， コマンドボタン(
+					<code>&lt;input type="submit"&gt;</code>
+					等)の
+					<code>value</code>
+					属性だけです．
+				</p>
+				<div class="sidebar">
+					<code>value</code>
+					属性の値は"do～"，"go～"，"jump～"で始まり，
+					"do～"の場合は同名のメソッドがページクラスに必要です．
+				</div>
+				<p>
+					動的に値を出力したい
+					<code>&lt;input&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け，
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
+					<var>pagename.id</var>
+					または
+					<var>id</var>
+					という名前のプロパティを定義します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;input&gt;</code>
+					属性の値は
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="submit" id="doSubmit" value="dummy" />
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+foo.doSubmit=送信
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<input type="submit" id="doSubmit" value="送信" />
+]]></source>
 			</subsection>
 		</section>
 

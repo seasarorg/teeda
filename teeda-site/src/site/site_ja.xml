@@ -77,13 +77,16 @@
 
 			<item name="逆引きリファレンス" href="ext_rev.html"
 				collapse="true">
+
 				<item name="出力" href="ext_rev_output.html"
 					collapse="true">
 					<item name="ボディ" href="ext_rev_output.html#ボディ" />
 					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
 				</item>
 
-				<item name="入力" href="ext_rev_input.html"
+				<item name="リンク" href="ext_rev_link.html"/>
+
+				<item name="入力フォーム" href="ext_rev_input.html"
 					collapse="true">
 					<item name="フォーム" href="ext_rev_input.html#フォーム" />
 					<item name="テキストフィールド"

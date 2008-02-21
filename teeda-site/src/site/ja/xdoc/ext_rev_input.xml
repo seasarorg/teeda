@@ -4,10 +4,10 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>Extension - 逆引きリファレンス - 入力</title>
+		<title>Extension - 逆引きリファレンス - 入力フォーム</title>
 	</properties>
 	<body>
-		<section name="入力">
+		<section name="入力フォーム">
 			<ul>
 				<li>
 					<a href="#フォーム">フォーム</a>
