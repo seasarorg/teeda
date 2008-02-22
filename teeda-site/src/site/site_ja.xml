@@ -81,6 +81,7 @@
 				<item name="出力" href="ext_rev_output.html"
 					collapse="true">
 					<item name="ボディ" href="ext_rev_output.html#ボディ" />
+					<item name="属性" href="ext_rev_output.html#属性" />
 					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
 				</item>
 
