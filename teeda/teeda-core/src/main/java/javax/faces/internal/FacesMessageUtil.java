@@ -126,12 +126,12 @@ public class FacesMessageUtil {
 
     public static void addWarnMessage(String messageId) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addWarnComponentMessage(context, null, messageId);
+        addWarnComponentMessage(context, (UIComponent) null, messageId);
     }
 
     public static void addWarnMessage(String messageId, Object[] args) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addWarnComponentMessage(context, null, messageId, args);
+        addWarnComponentMessage(context, (UIComponent) null, messageId, args);
     }
 
     public static void addWarnComponentMessage(FacesContext context,
@@ -145,14 +145,25 @@ public class FacesMessageUtil {
                 FacesMessage.SEVERITY_WARN);
     }
 
+    public static void addWarnComponentMessage(FacesContext context,
+            String clientId, String messageId) {
+        addWarnComponentMessage(context, clientId, messageId, null);
+    }
+
+    public static void addWarnComponentMessage(FacesContext context,
+            String clientId, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, clientId, messageId, args,
+                FacesMessage.SEVERITY_WARN);
+    }
+
     public static void addInfoMessage(String messageId) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addInfoComponentMessage(context, null, messageId);
+        addInfoComponentMessage(context, (UIComponent) null, messageId);
     }
 
     public static void addInfoMessage(String messageId, Object[] args) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addInfoComponentMessage(context, null, messageId, args);
+        addInfoComponentMessage(context, (UIComponent) null, messageId, args);
     }
 
     public static void addInfoComponentMessage(FacesContext context,
@@ -166,14 +177,25 @@ public class FacesMessageUtil {
                 FacesMessage.SEVERITY_INFO);
     }
 
+    public static void addInfoComponentMessage(FacesContext context,
+            String clientId, String messageId) {
+        addInfoComponentMessage(context, clientId, messageId, null);
+    }
+
+    public static void addInfoComponentMessage(FacesContext context,
+            String clientId, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, clientId, messageId, args,
+                FacesMessage.SEVERITY_INFO);
+    }
+
     public static void addErrorMessage(String messageId) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addErrorComponentMessage(context, null, messageId);
+        addErrorComponentMessage(context, (UIComponent) null, messageId);
     }
 
     public static void addErrorMessage(String messageId, Object[] args) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addErrorComponentMessage(context, null, messageId, args);
+        addErrorComponentMessage(context, (UIComponent) null, messageId, args);
     }
 
     public static void addErrorComponentMessage(FacesContext context,
@@ -187,14 +209,25 @@ public class FacesMessageUtil {
                 FacesMessage.SEVERITY_ERROR);
     }
 
+    public static void addErrorComponentMessage(FacesContext context,
+            String clientId, String messageId) {
+        addErrorComponentMessage(context, clientId, messageId, null);
+    }
+
+    public static void addErrorComponentMessage(FacesContext context,
+            String clientId, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, clientId, messageId, args,
+                FacesMessage.SEVERITY_ERROR);
+    }
+
     public static void addFatalMessage(String messageId) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addFatalComponentMessage(context, null, messageId);
+        addFatalComponentMessage(context, (UIComponent) null, messageId);
     }
 
     public static void addFatalMessage(String messageId, Object[] args) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        addFatalComponentMessage(context, null, messageId, args);
+        addFatalComponentMessage(context, (UIComponent) null, messageId, args);
     }
 
     public static void addFatalComponentMessage(FacesContext context,
@@ -208,11 +241,27 @@ public class FacesMessageUtil {
                 FacesMessage.SEVERITY_FATAL);
     }
 
+    public static void addFatalComponentMessage(FacesContext context,
+            String clientId, String messageId) {
+        addFatalComponentMessage(context, clientId, messageId, null);
+    }
+
+    public static void addFatalComponentMessage(FacesContext context,
+            String clientId, String messageId, Object[] args) {
+        addTargetSeverityMessage(context, clientId, messageId, args,
+                FacesMessage.SEVERITY_FATAL);
+    }
+
     private static void addTargetSeverityMessage(FacesContext context,
             UIComponent component, String messageId, Object[] args,
             Severity severity) {
         final String clientId = (component != null) ? component
                 .getClientId(context) : null;
+        addTargetSeverityMessage(context, clientId, messageId, args, severity);
+    }
+
+    private static void addTargetSeverityMessage(FacesContext context,
+            String clientId, String messageId, Object[] args, Severity severity) {
         final Locale locale = ComponentUtil_.getLocale(context);
         final FacesMessage message = getMessage(context, locale, severity,
                 messageId, args);
@@ -358,8 +407,8 @@ public class FacesMessageUtil {
         for (int i = 0; i < allMessages.length; i++) {
             final FacesMessage fm = allMessages[i];
             final Severity severity = fm.getSeverity();
-            if (severity.equals(FacesMessage.SEVERITY_ERROR)
-                    || severity.equals(FacesMessage.SEVERITY_FATAL)) {
+            if (severity.equals(FacesMessage.SEVERITY_ERROR) ||
+                    severity.equals(FacesMessage.SEVERITY_FATAL)) {
                 return true;
             }
         }

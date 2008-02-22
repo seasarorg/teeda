@@ -32,6 +32,10 @@ public interface FacesMessageHelper {
 
     public void addWarnMessage(String messageId, Object[] args);
 
+    public void addWarnMessage(String clientId, String messageId);
+
+    public void addWarnMessage(String clientId, String messageId, Object[] args);
+
     /**
      * INFOレベルのメッセージを追加する.画面への通知メッセージ用途に使う.
      * @param messageId
@@ -39,6 +43,10 @@ public interface FacesMessageHelper {
     public void addInfoMessage(String messageId);
 
     public void addInfoMessage(String messageId, Object[] args);
+
+    public void addInfoMessage(String clientId, String messageId);
+
+    public void addInfoMessage(String clientId, String messageId, Object[] args);
 
     /**
      * ERRORレベルのメッセージを追加する.画面へのバリデーションメッセージ用途に使う.
@@ -48,6 +56,10 @@ public interface FacesMessageHelper {
 
     public void addErrorMessage(String messageId, Object[] args);
 
+    public void addErrorMessage(String clientId, String messageId);
+
+    public void addErrorMessage(String clientId, String messageId, Object[] args);
+
     /**
      * FATALレベルのメッセージを追加する.
      * @param messageId
@@ -55,6 +67,10 @@ public interface FacesMessageHelper {
     public void addFatalMessage(String messageId);
 
     public void addFatalMessage(String messageId, Object[] args);
+
+    public void addFatalMessage(String clientId, String messageId);
+
+    public void addFatalMessage(String clientId, String messageId, Object[] args);
 
     /**
      * 既にFacesContextにmessageIdに紐づくFacesMessageがあれば、そのサマリを返す.

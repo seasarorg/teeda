@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.util;
 
+import javax.faces.context.FacesContext;
 import javax.faces.internal.FacesMessageUtil;
 
 /**
@@ -30,12 +31,34 @@ public class SimpleFacesMessageHelperImpl implements FacesMessageHelper {
         FacesMessageUtil.addErrorMessage(messageId, args);
     }
 
+    public void addErrorMessage(String clientId, String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addErrorComponentMessage(context, clientId, messageId);
+    }
+
+    public void addErrorMessage(String clientId, String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addErrorComponentMessage(context, clientId, messageId,
+                args);
+    }
+
     public void addFatalMessage(String messageId) {
         FacesMessageUtil.addFatalMessage(messageId);
     }
 
     public void addFatalMessage(String messageId, Object[] args) {
         FacesMessageUtil.addFatalMessage(messageId, args);
+    }
+
+    public void addFatalMessage(String clientId, String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addFatalComponentMessage(context, clientId, messageId);
+    }
+
+    public void addFatalMessage(String clientId, String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addFatalComponentMessage(context, clientId, messageId,
+                args);
     }
 
     public void addInfoMessage(String messageId) {
@@ -46,12 +69,34 @@ public class SimpleFacesMessageHelperImpl implements FacesMessageHelper {
         FacesMessageUtil.addInfoMessage(messageId, args);
     }
 
+    public void addInfoMessage(String clientId, String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addInfoComponentMessage(context, clientId, messageId);
+    }
+
+    public void addInfoMessage(String clientId, String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addInfoComponentMessage(context, clientId, messageId,
+                args);
+    }
+
     public void addWarnMessage(String messageId) {
         FacesMessageUtil.addWarnMessage(messageId);
     }
 
     public void addWarnMessage(String messageId, Object[] args) {
         FacesMessageUtil.addWarnMessage(messageId, args);
+    }
+
+    public void addWarnMessage(String clientId, String messageId) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addWarnComponentMessage(context, clientId, messageId);
+    }
+
+    public void addWarnMessage(String clientId, String messageId, Object[] args) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessageUtil.addWarnComponentMessage(context, clientId, messageId,
+                args);
     }
 
     public String getDetail(String messageId, Object[] args) {
