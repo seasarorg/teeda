@@ -153,11 +153,11 @@
          -->
     </filter-mapping>
 
+    <!--
     <filter-mapping>
         <filter-name>requestDumpFilter</filter-name>
         <url-pattern>/view/*</url-pattern>
     </filter-mapping>
-    <!--
     -->
 
 	<!--

@@ -53,8 +53,8 @@ public class ConvertIntegerTest extends TeedaWebTestCase {
 
 		tester.assertMatchInElementById("aaaMessage", "aaa");
 		tester.assertMatchInElementById("bbbMessage", "bbbTitle");
-		tester.assertMatchInElementById("cccMessage", "cccLabel");
-		tester.assertMatchInElementById("dddMessage", "dddLabel");
+		tester.assertMatchInElementById("cccMessage", "CCC");
+		tester.assertMatchInElementById("dddMessage", "\\?\\?dddLabel\\?\\?");
 		tester.assertNoMatchInElementById("dddMessage", "dddTitle");
 	}
 

@@ -57,6 +57,11 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
             if (pageDesc.hasDynamicProperty(propName)) {
                 return true;
             }
+            String value = elementNode.getProperty(key);
+            if (value != null &&
+                    value.endsWith(ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX)) {
+                return true;
+            }
         }
         return false;
     }

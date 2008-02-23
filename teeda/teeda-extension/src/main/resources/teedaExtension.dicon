@@ -232,4 +232,7 @@
 
 	<component
 		class="org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl"/>
+
+	<component name="labelProvider"
+		class="org.seasar.teeda.extension.util.LabelProviderMap"/>
 </components>

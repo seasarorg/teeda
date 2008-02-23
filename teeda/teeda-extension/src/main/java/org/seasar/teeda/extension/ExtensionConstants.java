@@ -203,4 +203,6 @@ public interface ExtensionConstants {
 
     String FILE_UPLOAD_FILE_SIZE_ERROR_MESSAGE = "org.seasar.teeda.extension.component.THtmlFileUpload.FILE_SIZE_ERROR";
 
+    String LABEL_ATTRIBUTE_SUFFIX = "Label";
+
 }

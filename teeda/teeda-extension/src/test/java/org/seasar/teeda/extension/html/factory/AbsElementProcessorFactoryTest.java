@@ -28,6 +28,7 @@ import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.mock.MockTaglibManager;
 import org.seasar.teeda.extension.taglib.TInputTextTag;
+import org.seasar.teeda.extension.taglib.TOutputLinkTag;
 import org.seasar.teeda.extension.unit.TeedaExtensionTestCase;
 
 /**
@@ -77,6 +78,27 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
         ElementProcessor processor = factory.createProcessor(elementNode,
                 pageDesc, actionDesc);
         assertEquals("#{fooPage.cccClass}", processor.getProperty("styleClass"));
+
+        factory.createProcessor(elementNode, null, null);
+    }
+
+    public void testCustomizeLabelProperties() throws Exception {
+        // ## Arrange ##
+        registerTagElement(ExtensionConstants.TEEDA_EXTENSION_URI,
+                "outputLink", TOutputLinkTag.class);
+        MockTaglibManager taglibManager = getTaglibManager();
+        OutputLinkFactory factory = new OutputLinkFactory();
+        factory.setTaglibManager(taglibManager);
+        Map properties = new HashMap();
+        properties.put("id", "goFoo");
+        properties.put("href", "foo.html");
+        properties.put("title", "fooTitleLabel");
+        ElementNode elementNode = createElementNode("a", properties);
+
+        ElementProcessor processor = factory.createProcessor(elementNode, null,
+                null);
+        assertEquals("#{labelProvider.fooTitle}", processor
+                .getProperty("title"));
 
         factory.createProcessor(elementNode, null, null);
     }

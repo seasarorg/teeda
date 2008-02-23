@@ -30,4 +30,9 @@ public class LabelPage {
 	public String getDddValue() {
 		return "DynamicPropertyで取得するラベル";
 	}
+
+	public String getGoLabel3Title() {
+		return "DynamicPropertyで取得するラベル(リンク)";
+	}
+
 }

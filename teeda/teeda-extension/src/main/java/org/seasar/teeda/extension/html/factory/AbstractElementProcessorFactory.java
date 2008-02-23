@@ -21,6 +21,7 @@ import java.util.Map;
 import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.util.BindingUtil;
+import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.config.taglib.TaglibManager;
 import org.seasar.teeda.extension.config.taglib.element.TagElement;
 import org.seasar.teeda.extension.config.taglib.element.TaglibElement;
@@ -117,8 +118,8 @@ public abstract class AbstractElementProcessorFactory implements
         }
         final int pos = s.indexOf('-');
         if (-1 < pos) {
-            id = s.substring(0, pos)
-                    + StringUtil.capitalize(s.substring(pos + 1));
+            id = s.substring(0, pos) +
+                    StringUtil.capitalize(s.substring(pos + 1));
         } else {
             id = s;
         }
@@ -145,11 +146,12 @@ public abstract class AbstractElementProcessorFactory implements
             Map properties, ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (pageDesc == null) {
+            customizeLabelProperty(name, properties);
             return;
         }
         final String pageName = pageDesc.getPageName();
-        if (name.equals(JsfConstants.STYLE_CLASS_ATTR)
-                && !StringUtil.isEmpty(base)) {
+        if (name.equals(JsfConstants.STYLE_CLASS_ATTR) &&
+                !StringUtil.isEmpty(base)) {
             String s = base + StringUtil.capitalize(JsfConstants.CLASS_ATTR);
             if (pageDesc.hasDynamicProperty(s)) {
                 properties.put(name, getBindingExpression(pageName, s));
@@ -159,7 +161,9 @@ public abstract class AbstractElementProcessorFactory implements
         String propName = base + StringUtil.capitalize(name);
         if (pageDesc.hasDynamicProperty(propName)) {
             properties.put(name, getBindingExpression(pageName, propName));
+            return;
         }
+        customizeLabelProperty(name, properties);
     }
 
     protected void customizeDynamicPropertyIfNotExists(String base,
@@ -172,6 +176,16 @@ public abstract class AbstractElementProcessorFactory implements
         }
     }
 
+    protected void customizeLabelProperty(final String name,
+            final Map properties) {
+        final String value = (String) properties.get(name);
+        if (value == null ||
+                !value.endsWith(ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX)) {
+            return;
+        }
+        properties.put(name, getLabelExpression(value));
+    }
+
     protected void renameProperty(Map properties, String from, String to) {
         if (properties.containsKey(from)) {
             Object value = properties.remove(from);
@@ -182,6 +196,13 @@ public abstract class AbstractElementProcessorFactory implements
     protected String getBindingExpression(String componentName,
             String targetName) {
         return BindingUtil.getExpression(componentName, targetName);
+    }
+
+    protected String getLabelExpression(final String attributeValue) {
+        final String labelName = attributeValue.substring(0, attributeValue
+                .length() -
+                ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX.length());
+        return "#{labelProvider." + labelName + "}";
     }
 
     protected abstract String getUri();

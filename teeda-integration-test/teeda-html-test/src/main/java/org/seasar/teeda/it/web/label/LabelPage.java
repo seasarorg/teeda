@@ -27,4 +27,8 @@ public class LabelPage {
 		this.name = name;
 	}
 
+	public String getGoLabel3Title() {
+		return "LINK(dynamic)";
+	}
+
 }

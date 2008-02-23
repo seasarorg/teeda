@@ -25,27 +25,36 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class LabelTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(LabelTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(LabelTest.class);
+	}
 
-    public void testRender() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testRender() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/label/label.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/label/label.html");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertTextEqualsById("aaa", "AAA");
-        tester.assertTextEqualsById("bbb", "BBB");
-        tester.assertTextEqualsById("ccc", "CCC");
+		// ## Assert ##
+		tester.assertTextEqualsById("aaa", "AAA");
+		tester.assertTextEqualsById("bbb", "BBB");
+		tester.assertTextEqualsById("ccc", "CCC");
 
-        // labelのボディ部分はレンダされないこと
-        tester.assertTextNotPresent("cccBody");
-        // 対応するpropertyやPage属性がない場合はbody値がそのまま出力されること
-        tester.assertTextPresent("dddBody");
-    }
+		// labelのボディ部分はレンダされないこと
+		tester.assertTextNotPresent("cccBody");
+		// 対応するpropertyやPage属性がない場合はbody値がそのまま出力されること
+		tester.assertTextPresent("dddBody");
+
+		// TEEDA-440
+		tester.assertAttributeEqualsById("table", "title", "TABLE");
+		tester.assertAttributeEqualsById("goLabel-2", "title", "LINK");
+		tester.assertAttributeEqualsById("goLabel-3", "title", "LINK(dynamic)");
+		tester.assertAttributeEqualsById("img", "alt", "IMG");
+		tester.assertAttributeEqualsById("goLabel-4", "value", "SUBMIT(id)");
+		tester.assertAttributeEqualsById("goLabelspan", "value",
+				"SUBMIT(label)");
+	}
 
 }

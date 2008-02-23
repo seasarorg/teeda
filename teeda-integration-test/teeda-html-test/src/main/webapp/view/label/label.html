@@ -6,9 +6,31 @@
 <title>label example</title>
 </head>
 <body>
+<form id="form">
+	<h3>要素にラベル</h3>
 	<label id="aaa"/><br/>
 	<label id="bbb"/><br/>
 	<label id="ccc">cccBody</label><br/>
 	<label id="ddd">dddBody</label><br/>
+	
+	<h3>属性にラベル</h3>
+	<table id="table" border="1" title="tableLabel">
+	<tr>
+	<td><a id="goLabel-2" href="label.html" title="linkLabel">リンク</a></td>
+	</tr>
+	<tr>
+	<td><a id="goLabel-3" href="label.html" title="dynamicProperyLabel">ダイナミックプロパティから</a></td>
+	</tr>
+	<tr>
+	<td><img id="img" src="../../img/seasar_banner.gif" alt="imgLabel" /></td>
+	</tr>
+	<tr>
+	<td><input type="submit" id="goLabel-4" value="buttonLabel" /></td>
+	</tr>
+	<tr>
+	<td><input type="submit" id="goLabelspan" value="buttonLabel" /></td>
+	</tr>
+	</table>
+</form>
 </body>
 </html>
