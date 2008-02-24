@@ -10,9 +10,6 @@
 		<section name="リンク">
 			<ul>
 				<li>
-					<a href="#リンクを使うには">リンクを使うには</a>
-				</li>
-				<li>
 					<a href="#リンクのパラメータを動的に変えるには">リンクのパラメータを動的に変えるには</a>
 				</li>
 				<li>
@@ -24,106 +21,91 @@
 		</section>
 
 		<section name="リンク">
-			<subsection name="リンクを使うには">
-				<div class="sidebar">
-					<code>href</code>
-					属性はテンプレートXHTMLを直接ブラウザでプレビューする際のモックとして使うことができます．
-				</div>
-				<p>
-					<code>&lt;a&gt;</code>
-					要素に
-					<code>id</code>
-					属性を付け， 値を
-					<code>go</code>
-					+
-					<var>ページ名</var>
-					で始めます．
-				</p>
-				<p>
-					レンダリング時，
-					<code>&lt;href&gt;</code>
-					属性はページ名に対応するURLに置き換えられます．
-				</p>
-				<h5>例：テンプレートHTML (foo.html)</h5>
-				<source><![CDATA[
-<a id="goNext" href="dummy.html">次ページへ</a>
-]]></source>
-				<h5>例：レンダリング結果</h5>
-				<p>レンダリング結果は次のようになります．</p>
-				<source><![CDATA[
-<a id="goNext" href="context/view/subapp/next.html">次ページへ</a>
-]]></source>
-			</subsection>
-
 			<subsection name="リンクのパラメータを動的に変えるには">
 				<p>
 					<code>&lt;a&gt;</code>
 					要素に
 					<code>id</code>
-					属性を付け， 値を
+					属性を付け，
 					<code>go</code>
-					+
-					<var>ページ名</var>
-					で始めます．
+					で始まる値とします．
 				</p>
 				<p>
 					<code>href</code>
 					属性にパラメータを含むURLを指定し，
-					動的に値を変えたいパラメータ名と同じ名前のプロパティをページクラスに用意します．
+					動的に値を変えたいパラメータ名と同じ名前のプロパティをページクラスに用意します． レンダリング時，
+					<code>href</code>
+					属性のパラメータ値は， 同じ名前のプロパティ値に置き換えられます．
 				</p>
 				<p>
-					レンダリング時，
-					<code>&lt;href&gt;</code>
-					属性のパラメータ値はプロパティの値に置き換えられます．
-					パラメータと同じ名前のプロパティがページクラスにない場合は， 属性の値がそのままレンダリングされます．
-
+					パラメータと同じ名前のプロパティがページクラスにない場合は，
+					<code>href</code>
+					属性の値がそのままレンダリングされます．
+				</p>
+				<p>
+					パラメータと同じ名前のプロパティがある場合でも， パラメータ値をプロパティ値に置き換えたくない場合は，
+					パラメータ名に接頭辞
+					<code>fixid_</code>
+					を付加します． レンダリング時，
+					<code>fixed_</code>
+					は取り除かれ， パラメータ値は
+					<code>href</code>
+					属性の値がそのままレンダリングされます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<a id="goNext" href="next.html?name=dummy&amp;version=2">次ページへ</a>
+<a id="goNext" href="next.html?foo=xxx&amp;bar=yyy&amp;fixed_baz=zzz">次ページへ</a>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
-public String name;
+public String foo = "aaa";
+public String baz = "ccc";
 ]]></source>
 				<h5>例：レンダリング結果</h5>
-				<p>
-					<code>name</code>
-					プロパティの値が
-					<code>"Teeda"</code>
-					で，
-					<code>version</code>
-					プロパティが存在しない場合， レンダリング結果は次のようになります．
-				</p>
+				<p>レンダリング結果は次のようになります．</p>
 				<source><![CDATA[
-<a id="goNext" href="context/view/subapp/next.html?name=Teeda&amp;version=2">次ページへ</a>
+<a id="goNext" href="next.html?foo=aaa&amp;bar=yyy&amp;baz=zzz">次ページへ</a>
 ]]></source>
+				<p>
+					パラメータ
+					<code>foo</code>
+					の値は対応するプロパティの値に置き換えられます． パラメータ
+					<code>bar</code>
+					には対応するプロパティがないため， テンプレートの値がそのままレンダリングされます． パラメータ
+					<code>fixed_baz</code>
+					は接頭辞
+					<code>fixed_</code>
+					が取り除かれ， テンプレートの値がそのままレンダリングされます．
+				</p>
 			</subsection>
 
 			<subsection name="プロパティファイルの内容をリンクの文字列にするには">
+				<div class="sidebar">
+					<code>&lt;a&gt;</code>
+					要素の属性にプロパティファイルの内容を出力する場合は「
+					<a
+						href="ext_rev_output.html#プロパティファイルの内容を属性に出力するには">
+						プロパティファイルの内容を属性に出力するには
+					</a>
+					」を参照してください．
+				</div>
 				<p>
 					<code>&lt;a&gt;</code>
 					要素の内容に
 					<code>&lt;span&gt;</code>
-					要素を記述して
+					要素を記述して，
 					<code>id</code>
-					属性に
+					属性の値を
+					<var>key</var>
+					+
 					<code>Label</code>
-					で終了する値を指定します．
+					とします．
 					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルに
 					<var>pagename.key</var>
 					または
 					<var>key</var>
-					という名前のプロパティを定義します． ただし，
-					<var>key</var>
-					は
-					<code>&lt;span&gt;</code>
-					要素の
-					<code>id</code>
-					属性に指定した値から末尾の
-					<code>Label</code>
-					を除いた値です．
+					という名前のプロパティを定義します．
 				</p>
 				<div class="sidebar">
 					デフォルトでは
@@ -143,7 +125,7 @@ public String name;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<a id="goNext" href="dummy.html"><span id="linkLabel">dummy</a></span>
+<a id="goNext" href="next.html"><span id="linkLabel">dummy</a></span>
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
 				<source><![CDATA[
@@ -152,7 +134,7 @@ foo.link=次ページへ
 				<h5>例：レンダリング結果</h5>
 				<p>レンダリング結果は次のようになります．</p>
 				<source><![CDATA[
-<a id="goNext" href="context/view/subapp/next.html"><span id="linkLabel">次ページへ</span></a>
+<a id="goNext" href="next.html"><span id="linkLabel">次ページへ</span></a>
 ]]></source>
 			</subsection>
 		</section>

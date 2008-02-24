@@ -41,6 +41,7 @@ table.bodyTable tr.b {
 
 div.caution {
   border: solid thin red;
+  margin: 0px 0px 5px;
 }
 
 div.caution div {
@@ -49,7 +50,7 @@ div.caution div {
   font-weight: bold;
   font-size: larger;
   padding: 5px;
-  margin: 0px;
+  margin: 0px 0px 5px;
 }
 
 .sidebar {

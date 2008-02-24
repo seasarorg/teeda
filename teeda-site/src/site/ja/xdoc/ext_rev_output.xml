@@ -29,6 +29,12 @@
 							</a>
 						</li>
 						<li>
+							<a
+								href="#同じプロパティやリクエストセッションの属性値を複数の場所に出力するには">
+								同じプロパティやリクエスト／セッションの属性値を複数の場所に出力するには
+							</a>
+						</li>
+						<li>
 							<a href="#プロパティファイルの内容をボディに出力するには">
 								プロパティファイルの内容をボディに出力するには
 							</a>
@@ -194,24 +200,21 @@ Teeda
 				<dl>
 					<dt>リクエストの属性を出力する場合</dt>
 					<dd>
-						<code>
-							requestScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'requestScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 					<dt>セッションの属性を出力する場合</dt>
 					<dd>
-						<code>
-							sessionScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'sessionScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 					<dt>アプリケーションコンテキストの属性を出力する場合</dt>
 					<dd>
-						<code>
-							applicationScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'applicationScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 				</dl>
 				<p>
@@ -233,6 +236,46 @@ Teeda
 				</p>
 				<source><![CDATA[
 <span id="sessionScope_userName">Teeda</span>
+]]></source>
+			</subsection>
+
+			<subsection name="同じプロパティやリクエスト／セッションの属性値を複数の場所に出力するには">
+				<div class="sidebar">
+					HTMLの仕様で
+					<code>id</code>
+					属性の値はページ内でユニークでなくてはなりません．
+				</div>
+				<p>
+					<code>id</code>
+					属性の値に
+					<code>'-'</code>
+					+
+					<var>suffix</var>
+					を付加します． 要素の内容は
+					<code>'-'</code>
+					から後ろを取り除いたプロパティ名やリクエスト／セッション等の属性値に対応付けられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="name-1">dummy</span>
+・・・
+<span id="name-2">dummy</span>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"Teeda"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<span id="name-1">Teeda</span>
+・・・
+<span id="name-2">Teeda</span>
 ]]></source>
 			</subsection>
 
@@ -286,6 +329,7 @@ foo.name=Teeda
 
 		<section name="属性">
 			<subsection name="属性値を動的に出力するには">
+				<div class="sidebar">この機能は「ダイナミックプロパティ」と呼ばれます．</div>
 				<p>
 					動的に値を出力したい属性を持つ要素に
 					<code>id</code>
@@ -297,7 +341,42 @@ foo.name=Teeda
 					<var>attribute</var>
 					は値を動的に出力したい属性名の先頭を大文字にした名前です．
 				</p>
-				<p>レンダリング時， 属性の値はプロパティの値に置き換えられます．</p>
+				<p>
+					<code>id</code>
+					属性にハイフン ('-') が含まれている場合は， ハイフンを取り除いた
+					<var>id</var>
+					+
+					<var>attribute</var>
+					というプロパティに対応付けられます． 例えば
+					<code>id</code>
+					属性が
+					<code>foo-1</code>
+					で， 属性が
+					<code>title</code>
+					の場合は，
+					<code>foo1Title</code>
+					というプロパティに対応付けられます．
+				</p>
+				<p>
+					ただし，属性が
+					<code>value</code>
+					の場合は， ハイフン
+					<strong>以降</strong>
+					を取り除いた
+					<code>id</code>
+					+
+					<var>attribute</var>
+					というプロパティに対応付けられます． 例えば
+					<code>id</code>
+					属性が
+					<code>foo-1</code>
+					で， 属性が
+					<code>value</code>
+					の場合は，
+					<code>fooTitle</code>
+					というプロパティに対応付けられます．
+				</p>
+				<p>レンダリング時， 属性の値は対応するプロパティの値に置き換えられます．</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <span id="foo" style="dummy">dummy</span>
@@ -339,45 +418,74 @@ public String fooStyle;
 			</subsection>
 
 			<subsection name="プロパティファイルの内容を属性に出力するには">
-				<p>
-					プロパティファイルの内容を出力できるのは， コマンドボタン(
-					<code>&lt;input type="submit"&gt;</code>
-					等)の
-					<code>value</code>
-					属性だけです．
-				</p>
 				<div class="sidebar">
-					<code>value</code>
-					属性の値は"do～"，"go～"，"jump～"で始まり，
-					"do～"の場合は同名のメソッドがページクラスに必要です．
+					ページクラスに
+					<var>id</var>
+					+
+					<var>attribute</var>
+					というプロパティがある場合はダイナミックプロパティが優先されます． 「
+					<a href="#属性値を動的に出力するには">属性値を動的に出力するには</a>
+					」を参照してください．
 				</div>
 				<p>
-					動的に値を出力したい
-					<code>&lt;input&gt;</code>
 					要素に
 					<code>id</code>
-					属性を付け，
+					属性を付け，プロパティファイルの内容を出力したい属性の値を
+					<var>key</var>
+					+
+					<code>Label</code>
+					とします．
 					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルに
-					<var>pagename.id</var>
+					<var>pagename.key</var>
 					または
-					<var>id</var>
+					<var>key</var>
 					という名前のプロパティを定義します．
 				</p>
 				<p>
-					レンダリング時，
-					<code>&lt;input&gt;</code>
-					属性の値は
+					レンダリング時， 属性の値は
 					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルの値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<input type="submit" id="doSubmit" value="dummy" />
+<img id="barImg" src="../image/bar.png" alt="barImgLabel" />
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+foo.barImg=概念図
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<img id="barImg" src="../image/bar.png" alt="概念図" />
+]]></source>
+				<p>
+					<a href="ext_rev_input.html#サブミットボタン ">サブミットボタン</a>
+					の
+					<code>value</code>
+					属性の場合は，
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
+					<var>pagename.id</var>
+					または
+					<var>id</var>
+					という名前のプロパティがあれば， それが属性値として使われます． このルールは，
+					<code>value</code>
+					属性の値が
+					<var>key</var>
+					+
+					<code>Label</code>
+					の場合でも， 優先的に適用されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="submit" id="doSubmit" value="dummyLabel" />
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
 				<source><![CDATA[
 foo.doSubmit=送信
+foo.dummy=ダミー
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>レンダリング結果は次のようになります．</p>
@@ -432,24 +540,21 @@ public String titleValue;
 				<dl>
 					<dt>リクエストの属性を出力する場合</dt>
 					<dd>
-						<code>
-							requestScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'requestScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 					<dt>セッションの属性を出力する場合</dt>
 					<dd>
-						<code>
-							sessionScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'sessionScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 					<dt>アプリケーションコンテキストの属性を出力する場合</dt>
 					<dd>
-						<code>
-							applicationScope_ +
-							<var>attributeName</var>
-						</code>
+						<code>'applicationScope_'</code>
+						+
+						<var>attributeName</var>
 					</dd>
 				</dl>
 				<p>
