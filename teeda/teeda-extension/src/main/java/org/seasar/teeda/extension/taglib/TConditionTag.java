@@ -20,16 +20,16 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
+import javax.faces.webapp.UIComponentTag;
 
 import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
 import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.component.TCondition;
 
 /**
  * @author shot
  */
-public class TConditionTag extends UIComponentTagBase {
+public class TConditionTag extends UIComponentTag {
 
     private String tagName;
 

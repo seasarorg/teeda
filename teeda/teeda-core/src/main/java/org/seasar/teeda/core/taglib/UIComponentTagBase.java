@@ -946,12 +946,6 @@ public abstract class UIComponentTagBase extends UIComponentTag {
         converter = null;
     }
 
-    protected void setComponentProperty(UIComponent component,
-            String propertyName, String value) {
-        UIComponentTagPropertyUtil.setComponentProperty(component,
-                propertyName, value);
-    }
-
     protected void setConverterProperty(UIComponent component, String value) {
         if (value == null) {
             return;

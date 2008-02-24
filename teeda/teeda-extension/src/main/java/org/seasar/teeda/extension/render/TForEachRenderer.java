@@ -23,12 +23,13 @@ import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
 import org.seasar.teeda.core.render.AbstractRenderer;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.core.util.ForEachContext;
+import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
 
@@ -41,18 +42,6 @@ public class TForEachRenderer extends AbstractRenderer {
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.ForEach";
 
     public static final String RENDERER_TYPE = "org.seasar.teeda.extension.ForEach";
-
-    private final static IgnoreAttribute attribute = new IgnoreAttribute();
-    static {
-        attribute.addAttributeName("tagName");
-        attribute.addAttributeName("pageName");
-        attribute.addAttributeName("itemsName");
-        attribute.addAttributeName("itemName");
-        attribute.addAttributeName("indexName");
-        attribute.addAttributeName("rowIndex");
-        attribute.addAttributeName("rowSize");
-        attribute.addAttributeName("omittag");
-    }
 
     public void encodeBegin(final FacesContext context,
             final UIComponent component) throws IOException {
@@ -67,7 +56,9 @@ public class TForEachRenderer extends AbstractRenderer {
         final String tagName = forEach.getTagName();
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement(tagName, component);
-        renderRemainAttributes(forEach, writer, attribute);
+        RendererUtil.renderIdAttributeIfNecessary(writer, component,
+                getIdForRender(context, forEach));
+        renderAttributes(writer, forEach);
     }
 
     public void encodeChildren(final FacesContext context,
@@ -127,6 +118,25 @@ public class TForEachRenderer extends AbstractRenderer {
             forEach.pageToItem(page, pageBeanDesc, item, BeanDescFactory
                     .getBeanDesc(item.getClass()), savedValues);
             forEach.bindRowIndex(context, savedIndex);
+        }
+    }
+
+    protected void renderAttributes(ResponseWriter writer, TForEach component)
+            throws IOException {
+        Map attrs = component.getAttributes();
+        for (Iterator i = attrs.keySet().iterator(); i.hasNext();) {
+            String attrName = (String) i.next();
+            if (attrName.indexOf('.') > 0) {
+                continue;
+            }
+            Object value = component.getAttributes().get(attrName);
+            RendererUtil.renderAttribute(writer, attrName, value, attrName);
+        }
+        String[] bindingPropertyNames = component.getBindingPropertyNames();
+        for (int i = 0; i < bindingPropertyNames.length; ++i) {
+            String name = bindingPropertyNames[i];
+            Object value = BindingUtil.getBindingValue(component, name);
+            RendererUtil.renderAttribute(writer, name, value, name);
         }
     }
 

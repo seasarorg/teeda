@@ -662,6 +662,7 @@ public class ForeachTest extends TeedaWebTestCase {
 				{ new Cell("A", 1, 3), "A1" }, { "A2" }, { "A3" },
 				{ "B", "B1" }, { new Cell("C", 1, 2), "C1" }, { "C2" } });
 		tester.assertTableEqualsById("productItems", tableExpected);
+		tester.assertAttributeEqualsById("productItems", "border", "2");
 	}
 
 }

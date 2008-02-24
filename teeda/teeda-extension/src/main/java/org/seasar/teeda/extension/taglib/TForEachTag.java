@@ -15,16 +15,22 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.UIComponent;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import org.seasar.teeda.core.taglib.UIComponentTagBase;
+import javax.faces.component.UIComponent;
+import javax.faces.webapp.UIComponentTag;
+
+import org.seasar.teeda.core.JsfConstants;
+import org.seasar.teeda.core.util.BindingUtil;
 import org.seasar.teeda.extension.component.TForEach;
 
 /**
  * @author higa
  *  
  */
-public class TForEachTag extends UIComponentTagBase {
+public class TForEachTag extends UIComponentTag {
 
     private String tagName;
 
@@ -34,7 +40,17 @@ public class TForEachTag extends UIComponentTagBase {
 
     private String omittag;
 
+    private Map attributes = new HashMap();
+
     public TForEachTag() {
+    }
+
+    public String getComponentType() {
+        return TForEach.COMPONENT_TYPE;
+    }
+
+    public String getRendererType() {
+        return "org.seasar.teeda.extension.ForEach";
     }
 
     public String getTagName() {
@@ -69,12 +85,12 @@ public class TForEachTag extends UIComponentTagBase {
         this.omittag = omittag;
     }
 
-    public String getComponentType() {
-        return TForEach.COMPONENT_TYPE;
-    }
-
-    public String getRendererType() {
-        return "org.seasar.teeda.extension.ForEach";
+    public void addAttribute(String name, String value) {
+        if (JsfConstants.ID_ATTR.equalsIgnoreCase(name)) {
+            setId(value);
+        } else {
+            attributes.put(name, value);
+        }
     }
 
     /**
@@ -86,6 +102,17 @@ public class TForEachTag extends UIComponentTagBase {
         setComponentProperty(component, "pageName", pageName);
         setComponentProperty(component, "itemsName", itemsName);
         setComponentProperty(component, "omittag", omittag);
+
+        TForEach forEach = (TForEach) component;
+        for (Iterator i = attributes.keySet().iterator(); i.hasNext();) {
+            String name = (String) i.next();
+            String strValue = (String) attributes.get(name);
+            if (BindingUtil.isValueReference(strValue)) {
+                forEach.setValueBindingAttribute(name, strValue);
+            } else {
+                forEach.getAttributes().put(name, strValue);
+            }
+        }
     }
 
     /**
@@ -97,5 +124,6 @@ public class TForEachTag extends UIComponentTagBase {
         pageName = null;
         itemsName = null;
         omittag = null;
+        attributes = null;
     }
 }

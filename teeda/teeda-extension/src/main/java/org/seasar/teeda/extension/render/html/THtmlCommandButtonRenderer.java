@@ -56,7 +56,7 @@ public class THtmlCommandButtonRenderer extends HtmlCommandButtonRenderer
     public THtmlCommandButtonRenderer() {
         addIgnoreAttributeName(ExtensionConstants.RENDERJS_ATTR);
         addIgnoreAttributeName(ExtensionConstants.TIME_ATTR);
-        addIgnoreAttributeName(ExtensionConstants.BASEVIEWID_ATTR);
+        addIgnoreAttributeName("baseViewId");
     }
 
     protected void enqueueEvent(final HtmlCommandButton htmlCommandButton) {

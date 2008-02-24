@@ -262,6 +262,18 @@ public class TForEachTest extends UIComponentBaseTest {
         assertEquals(1, page.fooIndex);
     }
 
+    public void testDynamicProperty() throws Exception {
+        final TForEach forEach = createTForEach();
+        forEach.setTagName("aaa");
+        forEach.setValueBindingAttribute("bbb", "BBB");
+        MockFacesContext context = getFacesContext();
+        Object saveState = forEach.saveState(context);
+        TForEach forEach2 = createTForEach();
+        forEach2.restoreState(context, saveState);
+        assertEquals("aaa", forEach2.getTagName());
+        assertEquals("bbb", forEach2.getBindingPropertyNames()[0]);
+    }
+
     private TForEach createTForEach() {
         return (TForEach) createUIComponent();
     }

@@ -15,11 +15,14 @@
  */
 package org.seasar.teeda.extension.html.processor;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.jsp.tagext.Tag;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.taglib.TForEachTag;
 
 /**
@@ -45,7 +48,16 @@ public class ForEachElementProcessor extends ElementProcessorImpl {
     protected Map setupProperties(Tag tag) {
         TForEachTag forEachTag = (TForEachTag) tag;
         forEachTag.setTagName(tagName);
-        return super.setupProperties(tag);
+        Map unboundProperties = super.setupProperties(tag);
+        for (Iterator i = unboundProperties.keySet().iterator(); i.hasNext();) {
+            String propertyName = (String) i.next();
+            String value = getProperty(propertyName);
+            if (StringUtil.isEmpty(value)) {
+                continue;
+            }
+            forEachTag.addAttribute(propertyName, value);
+        }
+        return Collections.EMPTY_MAP;
     }
 
 }

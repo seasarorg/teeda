@@ -23,6 +23,7 @@ public class ForeachRowspanPage {
 	public int productIndex;
 	public String category;
 	public String name;
+	public int productItemsBorder = 2;
 
 	public boolean isCategoryColumn() {
 		if (productIndex == 0) {

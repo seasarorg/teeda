@@ -41,7 +41,6 @@ import org.seasar.teeda.core.render.RenderPreparableRenderer;
 import org.seasar.teeda.core.scope.impl.DispatchScope;
 import org.seasar.teeda.core.scope.impl.DispatchScopeFactory;
 import org.seasar.teeda.core.util.RendererUtil;
-import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 import org.seasar.teeda.extension.component.html.THtmlGridBody;
@@ -110,28 +109,6 @@ public class THtmlGridRenderer extends TForEachRenderer implements
             ".GRID_ATTRIBUTE";
 
     private int firstRenderRowCount = 50;
-
-    private final IgnoreAttribute gridIgnoreAttribute = new IgnoreAttribute();
-    {
-        gridIgnoreAttribute.addAttributeName(JsfConstants.ID_ATTR);
-        gridIgnoreAttribute.addAttributeName(JsfConstants.BORDER_ATTR);
-        gridIgnoreAttribute.addAttributeName(JsfConstants.CELLSPACING_ATTR);
-        gridIgnoreAttribute.addAttributeName(JsfConstants.CELLPADDING_ATTR);
-        gridIgnoreAttribute.addAttributeName(JsfConstants.WIDTH_ATTR);
-        gridIgnoreAttribute.addAttributeName(JsfConstants.HEIGHT_ATTR);
-        gridIgnoreAttribute.addAttributeName("scrollHorizontal");
-        gridIgnoreAttribute.addAttributeName("scrollVertical");
-        // forEach
-        gridIgnoreAttribute.addAttributeName("tagName");
-        gridIgnoreAttribute.addAttributeName("pageName");
-        gridIgnoreAttribute.addAttributeName("itemsName");
-        gridIgnoreAttribute.addAttributeName("itemName");
-        gridIgnoreAttribute.addAttributeName("indexName");
-        gridIgnoreAttribute.addAttributeName("rowIndex");
-        gridIgnoreAttribute.addAttributeName("rowSize");
-        gridIgnoreAttribute.addAttributeName("omittag");
-        gridIgnoreAttribute.addAttributeName(ExtensionConstants.ASYNC);
-    }
 
     private final IgnoreAttribute thIgnoreAttribute = new IgnoreAttribute();
     {
@@ -203,7 +180,11 @@ public class THtmlGridRenderer extends TForEachRenderer implements
                 .renderAttribute(writer, JsfConstants.CELLSPACING_ATTR, "0");
         RendererUtil
                 .renderAttribute(writer, JsfConstants.CELLPADDING_ATTR, "0");
-        renderRemainAttributes(htmlGrid, writer, gridIgnoreAttribute);
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_CLASS_ATTR,
+                htmlGrid.getStyleClass());
+        RendererUtil.renderAttribute(writer, JsfConstants.STYLE_ATTR, htmlGrid
+                .getStyle());
+        renderAttributes(writer, htmlGrid);
     }
 
     public void encodeChildren(final FacesContext context,

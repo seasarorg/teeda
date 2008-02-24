@@ -35,6 +35,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.seasar.framework.util.AssertionUtil;
+import org.seasar.teeda.core.taglib.UIComponentTagPropertyUtil;
 
 /**
  * @author shot
@@ -80,6 +81,12 @@ public abstract class UIComponentTag implements Tag {
         this.rendered = rendered;
     }
 
+    protected void setComponentProperty(UIComponent component,
+            String propertyName, String value) {
+        UIComponentTagPropertyUtil.setComponentProperty(component,
+                propertyName, value);
+    }
+
     public abstract String getComponentType();
 
     public UIComponent getComponentInstance() {
@@ -109,8 +116,8 @@ public abstract class UIComponentTag implements Tag {
 
     public static boolean isValueReference(final String value) {
         AssertionUtil.assertNotNull("value", value);
-        if ((value.indexOf("#{") != -1)
-                && (value.indexOf("#{") < value.indexOf('}'))) {
+        if ((value.indexOf("#{") != -1) &&
+                (value.indexOf("#{") < value.indexOf('}'))) {
             return true;
         }
         return false;
@@ -155,10 +162,10 @@ public abstract class UIComponentTag implements Tag {
                     componentIds.put(clientId, this);
                 } else {
                     throw new JspException(new IllegalStateException(
-                            "Duplicate component id: '"
-                                    + clientId
-                                    + "', first used in tag: '"
-                                    + componentIds.get(clientId).getClass()
+                            "Duplicate component id: '" +
+                                    clientId +
+                                    "', first used in tag: '" +
+                                    componentIds.get(clientId).getClass()
                                             .getName() + "'"));
                 }
             }

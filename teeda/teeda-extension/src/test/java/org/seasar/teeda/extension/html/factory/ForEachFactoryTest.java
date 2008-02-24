@@ -22,6 +22,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.ElementProcessor;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.html.factory.sub.web.foo.Foo2Page;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TForEachTag;
 
@@ -29,6 +30,14 @@ import org.seasar.teeda.extension.taglib.TForEachTag;
  * @author higa
  */
 public class ForEachFactoryTest extends ElementProcessorFactoryTestCase {
+
+    /**
+     * 
+     */
+    public ForEachFactoryTest() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
     protected AbstractElementProcessorFactory createFactory() {
         return new ForEachFactory();
@@ -124,4 +133,23 @@ public class ForEachFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals("hogeItems", processor
                 .getProperty(ExtensionConstants.ITEMS_NAME_ATTR));
     }
+
+    public void testCreateProcessor() throws Exception {
+        // ## Arrange ##
+        Map properties = new HashMap();
+        properties.put("id", "hogeItems");
+        properties.put("title", "dummy");
+        ElementNode elementNode = createElementNode("tr", properties);
+        PageDesc pageDesc = createPageDesc(Foo2Page.class, "fooPage");
+
+        // ## Act ##
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, null);
+        // ## Assert ##
+        assertNotNull(processor);
+        assertEquals(TForEachTag.class, processor.getTagClass());
+        assertEquals("#{fooPage.hogeItemsTitle}", processor
+                .getProperty("title"));
+    }
+
 }

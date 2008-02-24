@@ -23,6 +23,11 @@ public class ForeachRowspanPage {
 	public int productIndex;
 	public String category;
 	public String name;
+	public String productItemsTitle = "プロダクト一覧";
+
+	public String getCategoryColumnTitle() {
+		return category;
+	}
 
 	public boolean isCategoryColumn() {
 		if (productIndex == 0) {
@@ -46,6 +51,7 @@ public class ForeachRowspanPage {
 
 	public void initialize() {
 		productItems = new ArrayList();
+		productItems.add(new ProductDto("プレゼンテーション", "Cubby"));
 		productItems.add(new ProductDto("プレゼンテーション", "Mayaa"));
 		productItems.add(new ProductDto("プレゼンテーション", "S2Flex"));
 		productItems.add(new ProductDto("プレゼンテーション", "S2JSF"));

@@ -93,6 +93,8 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     private Boolean omittag;
 
+    private List bindingPropertyNames = new ArrayList();
+
     private int rowIndex = INITIAL_ROW_INDEX;
 
     private int rowSize;
@@ -183,6 +185,16 @@ public class TForEach extends UIComponentBase implements NamingContainer,
 
     public void setOmittag(boolean omittag) {
         this.omittag = new Boolean(omittag);
+    }
+
+    public String[] getBindingPropertyNames() {
+        return (String[]) bindingPropertyNames
+                .toArray(new String[bindingPropertyNames.size()]);
+    }
+
+    public void setValueBindingAttribute(String name, String value) {
+        BindingUtil.setValueBinding(this, name, value);
+        bindingPropertyNames.add(name);
     }
 
     public int getRowIndex() {
@@ -505,12 +517,13 @@ public class TForEach extends UIComponentBase implements NamingContainer,
     }
 
     public Object saveState(final FacesContext context) {
-        final Object[] values = new Object[5];
+        final Object[] values = new Object[6];
         values[0] = super.saveState(context);
         values[1] = tagName;
         values[2] = pageName;
         values[3] = itemsName;
         values[4] = omittag;
+        values[5] = bindingPropertyNames;
         return values;
     }
 
@@ -521,6 +534,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         pageName = (String) values[2];
         itemsName = (String) values[3];
         omittag = (Boolean) values[4];
+        bindingPropertyNames = (List) values[5];
     }
 
     public void save(final SavedState state) {

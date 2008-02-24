@@ -17,8 +17,7 @@ package org.seasar.teeda.extension.taglib;
 
 import javax.faces.component.UIComponent;
 
-import org.seasar.teeda.core.JsfConstants;
-import org.seasar.teeda.extension.ExtensionConstants;
+import org.seasar.framework.util.BooleanConversionUtil;
 import org.seasar.teeda.extension.component.html.THtmlGrid;
 
 /**
@@ -28,6 +27,10 @@ public class TGridTag extends TForEachTag {
 
     public TGridTag() {
     }
+
+    private String width;
+
+    private String height;
 
     private String scrollVertical;
 
@@ -55,15 +58,15 @@ public class TGridTag extends TForEachTag {
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, JsfConstants.WIDTH_ATTR, getWidth());
-        setComponentProperty(component, JsfConstants.HEIGHT_ATTR, getHeight());
-        setComponentProperty(component, ExtensionConstants.SCROLL_HORIZONTAL,
-                getScrollHorizontal());
-        setComponentProperty(component, ExtensionConstants.SCROLL_VERTICAL,
-                getScrollVertical());
-        setComponentProperty(component, ExtensionConstants.ASYNC, getAsync());
-        setComponentProperty(component, ExtensionConstants.CALLBACK,
-                getCallback());
+        THtmlGrid grid = (THtmlGrid) component;
+        grid.setWidth(width);
+        grid.setHeight(height);
+        grid.setScrollHorizontal(BooleanConversionUtil
+                .toPrimitiveBoolean(scrollHorizontal));
+        grid.setScrollVertical(BooleanConversionUtil
+                .toPrimitiveBoolean(scrollVertical));
+        grid.setAsync(BooleanConversionUtil.toPrimitiveBoolean(async));
+        grid.setCallback(callback);
     }
 
     public String getScrollHorizontal() {

@@ -97,10 +97,6 @@ public interface ExtensionConstants {
 
     String OMITTAG_ATTR = "omittag";
 
-    String BASEVIEWID_ATTR = "baseViewId";
-
-    String TAGNAME_ATTR = "tagName";
-
     String REFRESH_ATTR = "refresh";
 
     //Suffix and prefix

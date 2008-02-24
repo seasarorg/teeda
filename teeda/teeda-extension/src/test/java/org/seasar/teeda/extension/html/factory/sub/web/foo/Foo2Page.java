@@ -25,6 +25,8 @@ public class Foo2Page {
 
     private List hogeItems;
 
+    private String hogeItemsTitle;
+
     private String ccc;
 
     public String getCccClass() {
@@ -77,6 +79,14 @@ public class Foo2Page {
 
     public void setHogeItems(List hogeItems) {
         this.hogeItems = hogeItems;
+    }
+
+    public String getHogeItemsTitle() {
+        return hogeItemsTitle;
+    }
+
+    public void setHogeItemsTitle(String hogeItemsTitle) {
+        this.hogeItemsTitle = hogeItemsTitle;
     }
 
     public String getHogeRowStyleClass() {
