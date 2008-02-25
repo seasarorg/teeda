@@ -38,6 +38,7 @@
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
 <li><a href="#parse-xhtml">(X)HTMLのパーズについて</a></li>
 <li><a href="#redirect">リダイレクトについて</a></li>
+<li><a href="#outputText">outputTextについて</a></li>
 <li><a href="#label">ラベルについて</a></li>
 </ul>
 </div>
@@ -318,11 +319,19 @@ public class HogePage {
 <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
   &lt;property name=&quot;uniqueKeyParameterName&quot;&gt;&quot;requestId&quot;&lt;/property&gt;
 &lt;/component&gt;</pre>
-            <h2><a name="label">ラベルについて</a></h2>
-            <p>Teeda 1.0.13以降では，id属性の値が&quot;～Label&quot;となっている&lt;span&gt;要素の内容は&quot;～&quot;をキーとするラベルの値に置き換えられます．Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定されていました．</p>
+<h2><a name="outputText">outputTextについて</a></h2>
+<p>Teeda 1.0.13以降では，&lt;span&gt;要素の他，&lt;div&gt;および&lt;caption&gt;要素もidが付けられていて対応するプロパティがページクラスにあるか，&quot;xxxLabel&quot;であればoutputTextにマッピングされます．
+Teeda 1.0.12以前では，outputTextへのマッピングは&lt;span&gt;要素に限定されていました．</p>
+            <p>Teeda 1.0.13以降で，1.0.12以前と同じように，&lt;span&gt;要素の場合のみoutputTextにマッピングされるようにするには<code>teedaCustomize.dicon</code>に次の設定を記述します．</p>
+            <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
+    &lt;property name=&quot;outputTextSpanOnly&quot;&gt;true&lt;/property&gt;
+&lt;/component&gt;</pre>
+<h2><a name="label">ラベルについて</a></h2>
+            <p>Teeda 1.0.13以降では，id属性の値が&quot;xxxLabel&quot;となっている&lt;span&gt;要素の内容は&quot;xxx&quot;をキーとするラベルの値に置き換えられます．
+Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定されていました．</p>
             <p>Teeda 1.0.13以降で，1.0.12以前と同じように，&lt;a&gt;要素の子要素の場合のみラベルに置き換えるようにするには<code>teedaCustomize.dicon</code>に次の設定を記述します．</p>
             <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
-    &lt;property name=&quot;enableOutputTextLabelUnderAnchorOnly&quot;&gt;true&lt;/property&gt;
+    &lt;property name=&quot;outputTextLabelUnderAnchorOnly&quot;&gt;true&lt;/property&gt;
 &lt;/component&gt;</pre>
             <!-- document end -->
 <!-- don't edit start -->

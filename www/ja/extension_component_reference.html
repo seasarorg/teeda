@@ -3,8 +3,8 @@
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
 <style>
@@ -211,8 +211,9 @@ h3.underline {
       <tr>
         <td>規約</td>
         <td align="left">
-            <span>-<b class="boldorange">span</b>要素<br/>
-            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+            <span>-<b class="boldorange">span</b>要素または<b class="boldorange">div</b>要素または<b class="boldorange">caption</b>要素</span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b>または
+            <b class="boldorange">idの値が"～Label"</b></span>
         </td>
       </tr>
       <tr>
@@ -222,6 +223,9 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td>
+          <span>-<b class="boldorange">id</b></span><br/>
+          <p>idと同一のプロパティがPageクラスに存在する場合は，要素の内容はプロパティの値に置き換えられます．</p>
+          <p>idが"xxxLabel"の場合は，要素の内容は"xxx"をキーとする値に置き換えられます．</p>
           <span>-<b class="boldorange">te:omittag</b></span><br/>
           <p>この属性は、&lt;span&gt;要素または&lt;div&gt;要素の開始タグおよび終了タグを出力しない場合に使います．</p>
           &lt;span te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
