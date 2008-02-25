@@ -20,10 +20,7 @@ import java.io.IOException;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.internal.LabelUtil;
 
-import org.seasar.framework.util.StringUtil;
-import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlOutputTextRenderer;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.core.util.ValueHolderUtil;
@@ -41,11 +38,9 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
     public static final String RENDERER_TYPE = THtmlOutputText.DEFAULT_RENDERER_TYPE;
 
     public THtmlOutputTextRenderer() {
-        addIgnoreAttributeName(ExtensionConstants.KEY_ATTR);
-        addIgnoreAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
-        //addIgnoreAttributeName(ExtensionConstants.PROPERTIES_NAME_ATTR);
-        addIgnoreAttributeName(ExtensionConstants.DEFAULT_KEY);
-        addIgnoreAttributeName(ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
+        addIgnoreAttributeName("tagName");
+        addIgnoreAttributeName(ExtensionConstants.INVISIBLE_ATTR);
+        addIgnoreAttributeName(ExtensionConstants.OMITTAG_ATTR);
     }
 
     protected void encodeHtmlOutputTextEnd(FacesContext context,
@@ -53,42 +48,28 @@ public class THtmlOutputTextRenderer extends HtmlOutputTextRenderer {
         final THtmlOutputText text = (THtmlOutputText) htmlOutputText;
         final ResponseWriter writer = context.getResponseWriter();
         final String id = getIdForRender(context, htmlOutputText);
-        // PortletSupport: id for render has a namespace.
-        final boolean isLabel = (id != null && id.endsWith(context
-                .getExternalContext().encodeNamespace("Label")));
-        boolean startSpan = false;
+        boolean renderTag = false;
         final boolean invisible = text.isInvisible();
         final boolean omittag = text.isOmittag();
         if (containsAttributeForRender(htmlOutputText, getIgnoreAttribute())) {
             if (!(invisible || omittag)) {
-                writer.startElement(JsfConstants.SPAN_ELEM, htmlOutputText);
-                startSpan = true;
+                writer.startElement(text.getTagName(), htmlOutputText);
+                renderTag = true;
                 RendererUtil.renderIdAttributeIfNecessary(writer,
                         htmlOutputText, id);
                 renderRemainAttributes(htmlOutputText, writer,
                         getIgnoreAttribute());
             }
         }
-        String value = null;
-        if (isLabel) {
-            final String key = text.getKey();
-            final String propertiesName = text.getPropertiesName();
-            final String defaultKey = text.getDefaultKey();
-            final String defaultPropertiesName = text
-                    .getDefaultPropertiesName();
-            value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
-                    defaultPropertiesName);
-        }
-        if (StringUtil.isEmpty(value)) {
-            value = ValueHolderUtil.getValueForRender(context, htmlOutputText);
-        }
+        final String value = ValueHolderUtil.getValueForRender(context,
+                htmlOutputText);
         if (htmlOutputText.isEscape()) {
             writer.writeText(value, null);
         } else {
             writer.write(value);
         }
-        if (startSpan) {
-            writer.endElement(JsfConstants.SPAN_ELEM);
+        if (renderTag) {
+            writer.endElement(text.getTagName());
         }
     }
 

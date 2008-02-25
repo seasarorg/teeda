@@ -29,14 +29,13 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#同じプロパティやリクエストセッションの属性値を複数の場所に出力するには">
-								同じプロパティやリクエスト／セッションの属性値を複数の場所に出力するには
+							<a href="#プロパティファイルの内容をボディに出力するには">
+								プロパティファイルの内容をボディに出力するには
 							</a>
 						</li>
 						<li>
-							<a href="#プロパティファイルの内容をボディに出力するには">
-								プロパティファイルの内容をボディに出力するには
+							<a href="#同じ情報を複数の場所に出力するには">
+								同じ情報を複数の場所に出力するには
 							</a>
 						</li>
 					</ul>
@@ -239,7 +238,55 @@ Teeda
 ]]></source>
 			</subsection>
 
-			<subsection name="同じプロパティやリクエスト／セッションの属性値を複数の場所に出力するには">
+			<subsection name="プロパティファイルの内容をボディに出力するには">
+				<div class="sidebar">
+					ページクラスに
+					<var>id</var>
+					と同じ名前のプロパティがある場合はそちらが優先されます． 「
+					<a href="#テキストを動的に出力するには">テキストを動的に出力するには</a>
+					」を参照してください．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素または
+					<code>&lt;caption&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， その値を
+					<var>key</var>
+					+
+					<code>Label</code>
+					とします．
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
+					<var>pagename.key</var>
+					または
+					<var>key</var>
+					という名前のプロパティを定義します．
+				</p>
+				<p>
+					レンダリング時， 要素の内容は
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルの値に置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="nameLabel">dummy</span>
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+foo.name=Teeda
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<span id="nameLabel">Teeda</span>
+]]></source>
+			</subsection>
+
+			<subsection name="同じ情報を複数の場所に出力するには">
 				<div class="sidebar">
 					HTMLの仕様で
 					<code>id</code>
@@ -253,7 +300,7 @@ Teeda
 					<var>suffix</var>
 					を付加します． 要素の内容は
 					<code>'-'</code>
-					から後ろを取り除いたプロパティ名やリクエスト／セッション等の属性値に対応付けられます．
+					から後ろを取り除いたプロパティ名やリクエスト／セッション等の属性，あるいはラベルに対応付けられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -276,53 +323,6 @@ public String name;
 <span id="name-1">Teeda</span>
 ・・・
 <span id="name-2">Teeda</span>
-]]></source>
-			</subsection>
-
-			<subsection name="プロパティファイルの内容をボディに出力するには">
-				<div class="sidebar">
-					この
-					<code>&lt;label&gt;</code>
-					要素は， XHTML標準の
-					<code>&lt;label&gt;</code>
-					とは異なります． XHTML標準の
-					<code>&lt;label&gt;</code>
-					要素を使用する場合は
-					<code>id</code>
-					属性を付けないようにしてください．
-				</div>
-				<p>
-					ボディ内のテキストを出力したい位置に
-					<code>&lt;label&gt;</code>
-					要素を記述して
-					<code>id</code>
-					属性を付け，
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
-					ファイルに
-					<var>pagename.id</var>
-					または
-					<var>id</var>
-					という名前のプロパティを定義します．
-				</p>
-				<p>
-					レンダリング時，
-					<code>&lt;label&gt;</code>
-					要素の内容は
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
-					ファイルの値に置き換えられます．
-				</p>
-				<h5>例：テンプレートHTML (foo.html)</h5>
-				<source><![CDATA[
-<label id="name">dummy</label>
-]]></source>
-				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
-				<source><![CDATA[
-foo.name=Teeda
-]]></source>
-				<h5>例：レンダリング結果</h5>
-				<p>レンダリング結果は次のようになります．</p>
-				<source><![CDATA[
-<label id="name">Teeda</label>
 ]]></source>
 			</subsection>
 		</section>

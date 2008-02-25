@@ -26,13 +26,7 @@ import org.seasar.teeda.extension.component.html.THtmlOutputText;
  */
 public class TOutputTextTag extends OutputTextTag {
 
-    private String key;
-
-    private String defaultKey;
-
-    private String propertiesName;
-
-    private String defaultPropertiesName;
+    private String tagName;
 
     private String invisible;
 
@@ -46,71 +40,40 @@ public class TOutputTextTag extends OutputTextTag {
         return THtmlOutputText.DEFAULT_RENDERER_TYPE;
     }
 
-    public String getKey() {
-        return key;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getPropertiesName() {
-        return propertiesName;
-    }
-
-    public void setPropertiesName(String propertiesName) {
-        this.propertiesName = propertiesName;
-    }
-
-    public String getDefaultPropertiesName() {
-        return defaultPropertiesName;
-    }
-
-    public void setDefaultPropertiesName(String defaultPropertiesName) {
-        this.defaultPropertiesName = defaultPropertiesName;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getInvisible() {
         return invisible;
     }
 
-    public String getOmittag() {
-        return omittag;
-    }
-
-    public void release() {
-        super.release();
-        key = null;
-        propertiesName = null;
-        defaultPropertiesName = null;
-        defaultKey = null;
-        invisible = null;
-        omittag = null;
-    }
-
-    public String getDefaultKey() {
-        return defaultKey;
-    }
-
-    public void setDefaultKey(String defaultKey) {
-        this.defaultKey = defaultKey;
-    }
-
     public void setInvisible(String invisible) {
         this.invisible = invisible;
+    }
+
+    public String getOmittag() {
+        return omittag;
     }
 
     public void setOmittag(String omittag) {
         this.omittag = omittag;
     }
 
+    public void release() {
+        super.release();
+        tagName = null;
+        invisible = null;
+        omittag = null;
+    }
+
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, "key", key);
-        setComponentProperty(component, "defaultKey", defaultKey);
-        setComponentProperty(component, "propertiesName", propertiesName);
-        setComponentProperty(component, "defaultPropertiesName",
-                defaultPropertiesName);
+        setComponentProperty(component, "tagName", tagName);
         setComponentProperty(component, "invisible", invisible);
         setComponentProperty(component, "omittag", omittag);
     }

@@ -46,18 +46,29 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         properties.put("id", "aaa");
         ElementNode elementNode = createElementNode("span", properties);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
-        assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
 
-        ElementNode elementNode2 = createElementNode("foo", properties);
-        assertFalse("2", factory.isMatch(elementNode2, pageDesc, null));
+        elementNode = createElementNode("div", properties);
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+
+        elementNode = createElementNode("caption", properties);
+        assertTrue(factory.isMatch(elementNode, pageDesc, null));
+
+        elementNode = createElementNode("foo", properties);
+        assertFalse(factory.isMatch(elementNode, pageDesc, null));
 
         Map properties2 = new HashMap();
         properties2.put("href", "bbb");
-        ElementNode elementNode3 = createElementNode("span", properties2);
-        assertFalse("3", factory.isMatch(elementNode3, pageDesc, null));
+        elementNode = createElementNode("span", properties2);
+        assertFalse(factory.isMatch(elementNode, pageDesc, null));
     }
 
-    public void testIsMatch2() throws Exception {
+    public void testIsMatch_Legacy() throws Exception {
+        factory = new OutputTextFactory() {
+            protected boolean isEnableLabelUnderAnchorOnly() {
+                return true;
+            }
+        };
         Map properties = new HashMap();
         properties.put("id", "aaaLabel");
         ElementNode parentNode = createElementNode("a", new HashMap());
@@ -65,6 +76,31 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         elementNode.setParent(parentNode);
         PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
         assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_Legacy_NotMatch() throws Exception {
+        factory = new OutputTextFactory() {
+            protected boolean isEnableLabelUnderAnchorOnly() {
+                return true;
+            }
+        };
+        Map properties = new HashMap();
+        properties.put("id", "aaaLabel");
+        ElementNode parentNode = createElementNode("table", new HashMap());
+        ElementNode elementNode = createElementNode("span", properties);
+        elementNode.setParent(parentNode);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertFalse("1", factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testCustomizeProperties() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "aaaLabel");
+        ElementNode elementNode = createElementNode("span", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        Map props = new HashMap();
+        factory.customizeProperties(props, elementNode, pageDesc, null);
+        assertEquals("#{labelProvider.aaa}", props.get("value"));
     }
 
     public void testCreateProcessor() throws Exception {

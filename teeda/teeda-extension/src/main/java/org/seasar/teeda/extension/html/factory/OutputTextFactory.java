@@ -15,15 +15,18 @@
  */
 package org.seasar.teeda.extension.html.factory;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.container.S2Container;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.TextNode;
+import org.seasar.teeda.extension.util.TeedaExtensionConfiguration;
 
 /**
  * @author shot
@@ -33,14 +36,22 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
 
     private static final String TAG_NAME = "outputText";
 
-    private NamingConvention nc;
+    private static final Set acceptableElements = new HashSet();
+    static {
+        acceptableElements.add(JsfConstants.SPAN_ELEM);
+        acceptableElements.add(JsfConstants.DIV_ELEM);
+        acceptableElements.add(JsfConstants.CAPTION_ELEM);
+    }
+
+    private S2Container container;
 
     public OutputTextFactory() {
     }
 
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
-        if (!JsfConstants.SPAN_ELEM.equalsIgnoreCase(elementNode.getTagName())) {
+        final String tagName = elementNode.getTagName();
+        if (!acceptableElements.contains(tagName.toLowerCase())) {
             return false;
         }
         if (pageDesc == null) {
@@ -50,7 +61,7 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         if (id == null) {
             return false;
         }
-        if (isLabelSpan(id, elementNode)) {
+        if (isLabel(id, elementNode)) {
             return true;
         }
         return pageDesc.hasProperty(id);
@@ -65,46 +76,61 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         super
                 .customizeProperties(properties, elementNode, pageDesc,
                         actionDesc);
+        properties.put("tagName", elementNode.getTagName());
+
         if (pageDesc == null) {
             return;
         }
         final String id = elementNode.getId();
-        final boolean isLabel = isLabelSpan(id, elementNode);
-        if (isLabel) {
-            TextNode firstTextNode = elementNode.getFirstTextNode();
-            properties.put(JsfConstants.VALUE_ATTR, firstTextNode.getValue());
-        } else {
+        if (pageDesc.hasProperty(id)) {
             properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(
                     pageDesc.getPageName(), id));
-        }
-        final ElementNode parent = elementNode.getParent();
-        if (parent != null) {
-            final String tagName = parent.getTagName();
-            if (id.endsWith("Label")
-                    && tagName.equalsIgnoreCase(JsfConstants.ANCHOR_ELEM)) {
-                LabelFactoryUtil.storeLabelAttributesTo(properties,
-                        elementNode, pageDesc, nc);
-            }
+        } else {
+            final String key = toNormalizeId(id);
+            TextNode firstTextNode = elementNode.getFirstTextNode();
+            properties.put(JsfConstants.VALUE_ATTR, getLabelExpression(key));
         }
     }
 
-    protected static boolean isLabelSpan(final String id,
-            final ElementNode elementNode) {
+    protected boolean isLabel(final String id, final ElementNode elementNode) {
+        final String key = toNormalizeId(id);
+        if (!isEnableLabelUnderAnchorOnly()) {
+            return key.endsWith("Label");
+        }
+
         final ElementNode parent = elementNode.getParent();
         if (parent == null) {
             return false;
         }
         final String tagName = parent.getTagName();
-        if (id.endsWith("Label")
-                && tagName.equalsIgnoreCase(JsfConstants.ANCHOR_ELEM)) {
+        if (key.endsWith("Label") &&
+                tagName.equalsIgnoreCase(JsfConstants.ANCHOR_ELEM)) {
             return true;
         } else {
             return false;
         }
     }
 
-    public void setNamingConvention(NamingConvention namingConvention) {
-        this.nc = namingConvention;
+    protected String toNormalizeId(String id) {
+        final int pos = id.lastIndexOf('-');
+        if (pos >= 0) {
+            return id.substring(0, pos);
+        }
+        return id;
+    }
+
+    protected boolean isEnableLabelUnderAnchorOnly() {
+        if (container == null ||
+                !container.hasComponentDef(TeedaExtensionConfiguration.class)) {
+            return false;
+        }
+        TeedaExtensionConfiguration config = (TeedaExtensionConfiguration) container
+                .getComponent(TeedaExtensionConfiguration.class);
+        return config.enableOutputTextLabelUnderAnchorOnly;
+    }
+
+    public void setContainer(S2Container container) {
+        this.container = container.getRoot();
     }
 
     protected String getTagName() {

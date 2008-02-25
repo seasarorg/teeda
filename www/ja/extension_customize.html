@@ -3,7 +3,7 @@
 <!-- don't edit start -->
 <head>
 <title>Teeda - JSF meets DI and AOP - </title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
 <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
@@ -38,6 +38,7 @@
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
 <li><a href="#parse-xhtml">(X)HTMLのパーズについて</a></li>
 <li><a href="#redirect">リダイレクトについて</a></li>
+<li><a href="#label">ラベルについて</a></li>
 </ul>
 </div>
 
@@ -285,7 +286,7 @@ public class HogePage {
 </tbody>
 </table>
 <h3>カスタマイズの方法</h3>
-<p>(X)HTMLをパーズする方法をカスタマイズするには，app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
+<p>(X)HTMLをパーズする方法をカスタマイズするには，<code>teedaCustomizer.dicon</code>に<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
 <pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
 <h2><a name="redirect">リダイレクトについて</a></h2>
 <p>Teeda Extensionは，画面遷移にPRG (Post-Redirect-Get) パターンを使用します．<br>
@@ -299,7 +300,7 @@ public class HogePage {
 <li><code>org.seasar.teeda.core.util.DefaultRedirectUrlResolverImpl</code>
 <li><code>org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl</code>
 </ul>
-<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．app.diconから直接または間接的にインクルードされる任意のdiconファイルに<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
+<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．<code>teedaCustomizer.dicon</code>に<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
 <h3>ベースURL</h3>
 <p><code>DefaultRedirectUrlResolverImpl</code>および<code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクトURLのベース部分をカスタマイズすることが出来ます．<br>
 ベースURLは，web.xmlの<code>&lt;context-param&gt;</code>で定義することが出来ます．</p>
@@ -317,7 +318,13 @@ public class HogePage {
 <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
   &lt;property name=&quot;uniqueKeyParameterName&quot;&gt;&quot;requestId&quot;&lt;/property&gt;
 &lt;/component&gt;</pre>
-<!-- document end -->
+            <h2><a name="label">ラベルについて</a></h2>
+            <p>Teeda 1.0.13以降では，id属性の値が&quot;～Label&quot;となっている&lt;span&gt;要素の内容は&quot;～&quot;をキーとするラベルの値に置き換えられます．Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定されていました．</p>
+            <p>Teeda 1.0.13以降で，1.0.12以前と同じように，&lt;a&gt;要素の子要素の場合のみラベルに置き換えるようにするには<code>teedaCustomizer.dicon</code>に次の設定を記述します．</p>
+            <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
+    &lt;property name=&quot;enableOutputTextLabelUnderAnchorOnly&quot;&gt;true&lt;/property&gt;
+&lt;/component&gt;</pre>
+            <!-- document end -->
 <!-- don't edit start -->
 </td>
 <td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>

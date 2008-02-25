@@ -18,4 +18,9 @@
 			<arg>@java.net.SocketException@class</arg>
 		</initMethod>
 	</component>
+
+	<component class="org.seasar.teeda.extension.util.TeedaExtensionConfiguration">
+		<!-- <span id="～Label"> が <a> の子要素の場合のみラベルに関連づけるには以下のプロパティを true に設定 -->
+		<property name="enableOutputTextLabelUnderAnchorOnly">false</property>
+	</component>
 </components>

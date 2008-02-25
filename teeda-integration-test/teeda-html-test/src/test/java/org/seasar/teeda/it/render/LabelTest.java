@@ -55,6 +55,11 @@ public class LabelTest extends TeedaWebTestCase {
 		tester.assertAttributeEqualsById("goLabel-4", "value", "SUBMIT(id)");
 		tester.assertAttributeEqualsById("goLabelspan", "value",
 				"SUBMIT(label)");
+
+		// TEEDA-441
+		tester.assertTextEqualsById("aaaLabel", "AAA");
+		tester.assertTextEqualsById("aaaLabel-2", "AAA");
+		tester.assertTextEqualsById("bbbLabel", "BBB");
 	}
 
 }

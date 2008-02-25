@@ -15,11 +15,11 @@
  */
 package org.seasar.teeda.extension.component.html;
 
-import javax.faces.component.ComponentUtil_;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.extension.ExtensionConstants;
 
 /**
@@ -36,13 +36,7 @@ public class THtmlOutputText extends HtmlOutputText {
 
     private static final boolean DEFAULT_OMITTAG = false;
 
-    private String key;
-
-    private String defaultKey;
-
-    private String propertiesName;
-
-    private String defaultPropertiesName;
+    private String tagName = JsfConstants.SPAN_ELEM;
 
     // spanタグを出力するかどうか
     private Boolean invisible = null;
@@ -53,52 +47,12 @@ public class THtmlOutputText extends HtmlOutputText {
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
-    public String getDefaultKey() {
-        if (defaultKey != null) {
-            return defaultKey;
-        }
-        return ComponentUtil_.getValueBindingValueAsString(this,
-                ExtensionConstants.DEFAULT_KEY_ATTR);
+    public String getTagName() {
+        return tagName;
     }
 
-    public String getDefaultPropertiesName() {
-        if (defaultPropertiesName != null) {
-            return defaultPropertiesName;
-        }
-        return ComponentUtil_.getValueBindingValueAsString(this,
-                ExtensionConstants.DEFAULT_PROPERTIES_NAME_ATTR);
-    }
-
-    public String getKey() {
-        if (key != null) {
-            return key;
-        }
-        return ComponentUtil_.getValueBindingValueAsString(this,
-                ExtensionConstants.KEY_ATTR);
-    }
-
-    public String getPropertiesName() {
-        if (propertiesName != null) {
-            return propertiesName;
-        }
-        return ComponentUtil_.getValueBindingValueAsString(this,
-                ExtensionConstants.PROPERTIES_NAME_ATTR);
-    }
-
-    public void setDefaultKey(String defaultKey) {
-        this.defaultKey = defaultKey;
-    }
-
-    public void setDefaultPropertiesName(String defaultPropertiesName) {
-        this.defaultPropertiesName = defaultPropertiesName;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public void setPropertiesName(String propertiesName) {
-        this.propertiesName = propertiesName;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public boolean isInvisible() {
@@ -130,26 +84,20 @@ public class THtmlOutputText extends HtmlOutputText {
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[7];
+        Object values[] = new Object[4];
         values[0] = super.saveState(context);
-        values[1] = key;
-        values[2] = defaultKey;
-        values[3] = propertiesName;
-        values[4] = defaultPropertiesName;
-        values[5] = invisible;
-        values[6] = omittag;
+        values[1] = tagName;
+        values[2] = invisible;
+        values[3] = omittag;
         return values;
     }
 
     public void restoreState(FacesContext context, Object state) {
         Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
-        key = (String) values[1];
-        defaultKey = (String) values[2];
-        propertiesName = (String) values[3];
-        defaultPropertiesName = (String) values[4];
-        invisible = (Boolean) values[5];
-        omittag = (Boolean) values[6];
+        tagName = (String) values[1];
+        invisible = (Boolean) values[2];
+        omittag = (Boolean) values[3];
     }
 
 }

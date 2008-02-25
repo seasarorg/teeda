@@ -135,6 +135,8 @@ public interface JsfConstants {
 
     String BR_ELEM = "br";
 
+    String CAPTION_ELEM = "caption";
+
     String COL_ELEM = "col";
 
     String COLGROUP_ELEM = "colgroup";

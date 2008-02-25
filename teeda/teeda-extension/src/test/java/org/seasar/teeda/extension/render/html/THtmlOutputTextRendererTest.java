@@ -27,8 +27,6 @@ import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 
 import org.custommonkey.xmlunit.Diff;
-import org.seasar.framework.container.hotdeploy.HotdeployUtil;
-import org.seasar.framework.util.ClassUtil;
 import org.seasar.teeda.core.el.ELParser;
 import org.seasar.teeda.core.el.impl.ValueBindingImpl;
 import org.seasar.teeda.core.el.impl.commons.CommonsELParser;
@@ -36,6 +34,7 @@ import org.seasar.teeda.core.el.impl.commons.CommonsExpressionProcessorImpl;
 import org.seasar.teeda.core.mock.MockConverter;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlOutputText;
+import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.mock.MockViewHandler;
 import org.seasar.teeda.core.mock.MockViewHandlerImpl;
 import org.seasar.teeda.extension.component.html.THtmlOutputText;
@@ -273,70 +272,13 @@ public class THtmlOutputTextRendererTest extends RendererTest {
         assertEquals("123", getResponseText());
     }
 
-    public void testEncode_propertiesNameAndKeyExist() throws Exception {
+    public void testEncode_label() throws Exception {
         htmlOutputText.setId("aaaLabel");
-        htmlOutputText.setKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
-        htmlOutputText.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
-        handler.setLocale(Locale.JAPANESE);
-        getApplication().setViewHandler(handler);
-        encodeByRenderer(renderer, htmlOutputText);
-        assertEquals("<span id=\"aaaLabel\">CCC</span>", getResponseText());
-    }
-
-    public void testEncode_propertiesNameAndDefaultKeyExist() throws Exception {
-        htmlOutputText.setId("aaaLabel");
-        htmlOutputText.setKey("no_such_key");
-        htmlOutputText.setDefaultKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
-        htmlOutputText.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
-        handler.setLocale(Locale.JAPANESE);
-        getApplication().setViewHandler(handler);
-        encodeByRenderer(renderer, htmlOutputText);
-        assertEquals("<span id=\"aaaLabel\">CCC</span>", getResponseText());
-    }
-
-    public void testEncode_keyNotFoundAtLocaleJapanese() throws Exception {
-        htmlOutputText.setId("aaaLabel");
-        htmlOutputText.setKey("eee");
-        String packageName = ClassUtil.getPackageName(this.getClass());
-        htmlOutputText.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
-        handler.setLocale(Locale.JAPANESE);
-        getApplication().setViewHandler(handler);
-        encodeByRenderer(renderer, htmlOutputText);
-        assertEquals("<span id=\"aaaLabel\">EEE</span>", getResponseText());
-    }
-
-    public void testEncode_keyDuplicateWithMultipleProperties()
-            throws Exception {
-        HotdeployUtil.setHotdeploy(true);
-        htmlOutputText.setId("aaaLabel");
-        htmlOutputText.setKey("fff");
-        String packageName = ClassUtil.getPackageName(this.getClass());
-        htmlOutputText.setPropertiesName(packageName + ".ddd");
-        MockViewHandler handler = new MockViewHandlerImpl();
-        handler.setLocale(Locale.JAPANESE);
-        getApplication().setViewHandler(handler);
-        encodeByRenderer(renderer, htmlOutputText);
-        assertEquals("<span id=\"aaaLabel\">FFF</span>", getResponseText());
-
-        handler.setLocale(Locale.ENGLISH);
-        getApplication().setViewHandler(handler);
-        encodeByRenderer(renderer, htmlOutputText);
-        assertEquals(
-                "<span id=\"aaaLabel\">FFF</span><span id=\"aaaLabel\">F_DEFAULT</span>",
-                getResponseText());
-        HotdeployUtil.clearHotdeploy();
-    }
-
-    public void testEncode_defaultPropertiesNameExist() throws Exception {
-        htmlOutputText.setId("aaaLabel");
-        htmlOutputText.setDefaultKey("ccc");
-        String packageName = ClassUtil.getPackageName(this.getClass());
-        htmlOutputText.setDefaultPropertiesName(packageName + ".ddd");
+        htmlOutputText.setTagName("span");
+        MockValueBinding vb = new MockValueBinding();
+        FacesContext context = getFacesContext();
+        vb.setValue(context, "CCC");
+        htmlOutputText.setValueBinding("value", vb);
         MockViewHandler handler = new MockViewHandlerImpl();
         handler.setLocale(Locale.JAPANESE);
         getApplication().setViewHandler(handler);
