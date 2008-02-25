@@ -25,6 +25,14 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="#テキストエリア">テキストエリア</a>
+					<ul>
+						<li>
+							<a href="#テキストエリアを使うには">テキストエリアを使うには</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</section>
 
@@ -80,12 +88,26 @@
 					<code>id</code>
 					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
 				</p>
+				<div class="sidebar">
+					<code>id</code>
+					属性と
+					<code>value</code>
+					属性を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="ext_rev_output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
+				</div>
 				<p>
 					レンダリング時，
 					<code>&lt;input&gt;</code>
 					要素の
 					<code>value</code>
-					属性にプロパティの値が設定されます．
+					属性にプロパティの値が設定されます． プロパティの値が
+					<code>'&lt;'</code>
+					や
+					<code>'&gt;'</code>
+					等を含む場合はエスケープされます．
 				</p>
 				<p>
 					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
@@ -113,6 +135,69 @@ public String name;
 ]]></source>
 				<p>
 					テキストフィールドに
+					<code>"Seasar"</code>
+					と入力してサブミットすると， ページクラスの
+					<code>name</code>
+					プロパティには
+					<code>"Seasar"</code>
+					が設定されます．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="テキストエリア">
+			<subsection name="テキストエリアを使うには">
+				<div class="sidebar">
+					<code>id</code>
+					属性と
+					<code>value</code>
+					属性を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="ext_rev_output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
+				</div>
+				<p>
+					<code>&lt;textarea&gt;</code>
+					要素を記述して
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;textarea&gt;</code>
+					要素の内容にはプロパティの値が設定されます． プロパティの値が
+					<code>'&lt;'</code>
+					や
+					<code>'&gt;'</code>
+					等を含む場合はエスケープされます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，サブミットされた値がプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合はサブミットされた値はプロパティに設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<textarea id="name">dummy</textarea>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>name</code>
+					プロパティの値が
+					<code>"Teeda"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<textarea id="name" name="form:name">Teeda</textarea>
+]]></source>
+				<p>
+					テキストエリアに
 					<code>"Seasar"</code>
 					と入力してサブミットすると， ページクラスの
 					<code>name</code>

@@ -82,7 +82,9 @@ public String baz = "ccc";
 			<subsection name="プロパティファイルの内容をリンクの文字列にするには">
 				<div class="sidebar">
 					<code>&lt;a&gt;</code>
-					要素の属性にプロパティファイルの内容を出力する場合は「
+					要素の
+					<code>title</code>
+					属性にプロパティファイルの内容を出力する場合は「
 					<a
 						href="ext_rev_output.html#プロパティファイルの内容を属性に出力するには">
 						プロパティファイルの内容を属性に出力するには
@@ -107,15 +109,6 @@ public String baz = "ccc";
 					<var>key</var>
 					という名前のプロパティを定義します．
 				</p>
-				<div class="sidebar">
-					デフォルトでは
-					<code>&lt;span&gt;</code>
-					要素の開始タグ及び終了タグはそのままレンダリングされます． タグの出力を抑止するには「
-					<a href="ext_rev_output.html#タグを出力したくない場合には">
-						タグを出力したくない場合には
-					</a>
-					」を参照してください．
-				</div>
 				<p>
 					レンダリング時，
 					<code>&lt;span&gt;</code>
@@ -123,6 +116,7 @@ public String baz = "ccc";
 					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルの値に置き換えられます．
 				</p>
+				<div style="clear: both;" />
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <a id="goNext" href="next.html"><span id="linkLabel">dummy</a></span>
