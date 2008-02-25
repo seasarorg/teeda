@@ -51,7 +51,10 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
     public boolean isMatch(ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         final String tagName = elementNode.getTagName();
-        if (!acceptableElements.contains(tagName.toLowerCase())) {
+        if (TeedaExtensionConfiguration.getInstance().outputTextSpanOnly &&
+                !tagName.equals(JsfConstants.SPAN_ELEM)) {
+            return false;
+        } else if (!acceptableElements.contains(tagName.toLowerCase())) {
             return false;
         }
         if (pageDesc == null) {
@@ -94,7 +97,7 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
 
     protected boolean isLabel(final String id, final ElementNode elementNode) {
         final String key = toNormalizeId(id);
-        if (!isEnableLabelUnderAnchorOnly()) {
+        if (!TeedaExtensionConfiguration.getInstance().outputTextLabelUnderAnchorOnly) {
             return key.endsWith("Label");
         }
 
@@ -117,16 +120,6 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
             return id.substring(0, pos);
         }
         return id;
-    }
-
-    protected boolean isEnableLabelUnderAnchorOnly() {
-        if (container == null ||
-                !container.hasComponentDef(TeedaExtensionConfiguration.class)) {
-            return false;
-        }
-        TeedaExtensionConfiguration config = (TeedaExtensionConfiguration) container
-                .getComponent(TeedaExtensionConfiguration.class);
-        return config.enableOutputTextLabelUnderAnchorOnly;
     }
 
     public void setContainer(S2Container container) {

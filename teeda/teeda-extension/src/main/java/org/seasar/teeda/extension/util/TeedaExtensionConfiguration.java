@@ -15,11 +15,34 @@
  */
 package org.seasar.teeda.extension.util;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+
 /**
  * @author koichik
  */
 public class TeedaExtensionConfiguration {
 
-    public boolean enableOutputTextLabelUnderAnchorOnly;
+    private static final TeedaExtensionConfiguration DEFAULT_INSTANCE = new TeedaExtensionConfiguration();
+
+    /**
+     * outputTextを&lt;span&gt;要素にのみマッピングする場合 (Teeda 1.0.12 以前と互換) は<code>true</code>を設定します。
+     */
+    public boolean outputTextSpanOnly;
+
+    /**
+     * id属性が"～Label"のoutputTextをラベルにマッピングするのは&lt;a&gt;要素の直下の&lt;span&gt;要素に限定する場合 (Teeda 1.0.12 以前と互換) は<code>true</code>を設定します。
+     */
+    public boolean outputTextLabelUnderAnchorOnly;
+
+    public static TeedaExtensionConfiguration getInstance() {
+        final S2Container container = SingletonS2ContainerFactory
+                .getContainer();
+        if (!container.hasComponentDef(TeedaExtensionConfiguration.class)) {
+            return DEFAULT_INSTANCE;
+        }
+        return (TeedaExtensionConfiguration) container
+                .getComponent(TeedaExtensionConfiguration.class);
+    }
 
 }

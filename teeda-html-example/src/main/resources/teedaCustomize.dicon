@@ -20,7 +20,10 @@
 	</component>
 
 	<component class="org.seasar.teeda.extension.util.TeedaExtensionConfiguration">
-		<!-- <span id="～Label"> が <a> の子要素の場合のみラベルに関連づけるには以下のプロパティを true に設定 -->
-		<property name="enableOutputTextLabelUnderAnchorOnly">false</property>
+		<!-- outputText を <span> 要素の場合のみ関連づける(1.0.12互換)には以下のプロパティを true に設定 -->
+		<property name="outputTextSpanOnly">false</property>
+
+		<!-- <span id="～Label"> が <a> の子要素の場合のみラベルに関連づける(1.0.12互換)には以下のプロパティを true に設定 -->
+		<property name="outputTextLabelUnderAnchorOnly">false</property>
 	</component>
 </components>

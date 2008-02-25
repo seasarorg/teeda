@@ -26,6 +26,7 @@ import org.seasar.teeda.extension.html.PageDesc;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooAction;
 import org.seasar.teeda.extension.html.factory.sub.web.foo.FooPage;
 import org.seasar.teeda.extension.taglib.TOutputTextTag;
+import org.seasar.teeda.extension.util.TeedaExtensionConfiguration;
 
 /**
  * @author shot
@@ -64,11 +65,9 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
     }
 
     public void testIsMatch_Legacy() throws Exception {
-        factory = new OutputTextFactory() {
-            protected boolean isEnableLabelUnderAnchorOnly() {
-                return true;
-            }
-        };
+        TeedaExtensionConfiguration config = new TeedaExtensionConfiguration();
+        config.outputTextLabelUnderAnchorOnly = true;
+        register(config);
         Map properties = new HashMap();
         properties.put("id", "aaaLabel");
         ElementNode parentNode = createElementNode("a", new HashMap());
@@ -78,12 +77,21 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         assertTrue("1", factory.isMatch(elementNode, pageDesc, null));
     }
 
-    public void testIsMatch_Legacy_NotMatch() throws Exception {
-        factory = new OutputTextFactory() {
-            protected boolean isEnableLabelUnderAnchorOnly() {
-                return true;
-            }
-        };
+    public void testIsMatch_Legacy_NotMatch1() throws Exception {
+        TeedaExtensionConfiguration config = new TeedaExtensionConfiguration();
+        config.outputTextSpanOnly = true;
+        register(config);
+        Map properties = new HashMap();
+        properties.put("id", "aaa");
+        ElementNode elementNode = createElementNode("div", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertFalse(factory.isMatch(elementNode, pageDesc, null));
+    }
+
+    public void testIsMatch_Legacy_NotMatch2() throws Exception {
+        TeedaExtensionConfiguration config = new TeedaExtensionConfiguration();
+        config.outputTextLabelUnderAnchorOnly = true;
+        register(config);
         Map properties = new HashMap();
         properties.put("id", "aaaLabel");
         ElementNode parentNode = createElementNode("table", new HashMap());
