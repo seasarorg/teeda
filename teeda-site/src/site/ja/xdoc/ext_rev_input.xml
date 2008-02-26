@@ -33,6 +33,24 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="#ラジオボタン">ラジオボタン</a>
+					<ul>
+						<li>
+							<a href="#ラジオボタンを使うには">ラジオボタンを使うには</a>
+						</li>
+						<li>
+							<a href="#ラジオボタンをチェックされた状態で表示するには">
+								ラジオボタンをチェックされた状態で表示するには
+							</a>
+						</li>
+						<li>
+							<a href="#ラジオボタンの項目を動的に変えるには">
+								ラジオボタンの項目を動的に変えるには
+							</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</section>
 
@@ -86,7 +104,11 @@
 					<code>&lt;input&gt;</code>
 					要素を記述して
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
 				</p>
 				<div class="sidebar">
 					<code>id</code>
@@ -111,9 +133,9 @@
 				</p>
 				<p>
 					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
-					時，サブミットされた値がプロパティに設定されます． ただし， 「
+					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
 					<a href="ext_rev_validation.html">バリデーション</a>
-					」でエラーが発生した場合はサブミットされた値はプロパティに設定されません．
+					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -161,7 +183,11 @@ public String name;
 					<code>&lt;textarea&gt;</code>
 					要素を記述して
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
 				</p>
 				<p>
 					レンダリング時，
@@ -174,9 +200,9 @@ public String name;
 				</p>
 				<p>
 					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
-					時，サブミットされた値がプロパティに設定されます． ただし， 「
+					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
 					<a href="ext_rev_validation.html">バリデーション</a>
-					」でエラーが発生した場合はサブミットされた値はプロパティに設定されません．
+					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -203,6 +229,251 @@ public String name;
 					<code>name</code>
 					プロパティには
 					<code>"Seasar"</code>
+					が設定されます．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="ラジオボタン">
+			<subsection name="ラジオボタンを使うには">
+				<div class="sidebar">
+					ここで使われるコンポーネントは「inputRadio」と呼ばれます．
+					ラジオボタンを実現するコンポーネントには他に「selectOneRadio」があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					このプロパティは選択された項目の値を保持します． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
+				</p>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の内容に
+					<code>type</code>
+					属性が
+					<code>radio</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素を記述して，その
+					<code>name</code>
+					属性に
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ値を指定します． 同じ
+					<code>name</code>
+					属性を持つ
+					<code>&lt;input type="radio"&gt;</code>
+					要素を複数記述することができます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択されたラジオボタンの
+					<code>value</code>
+					属性の値がプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合はプロパティは設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="selectedProduct">
+    <input type="radio" name="selectedProduct" value="A" />A
+    <input type="radio" name="selectedProduct" value="B" />B
+    <input type="radio" name="selectedProduct" value="C" />C
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String selectedProduct;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<div id="product">
+    <input type="radio" name="form:selectedProduct" value="A" />A
+    <input type="radio" name="form:selectedProduct" value="B" />B
+    <input type="radio" name="form:selectedProduct" value="C" />C
+</div>
+]]></source>
+				<p>
+					2番目のラジオボタン(B)を選択してサブミットすると， ページクラスの
+					<code>selectedProduct</code>
+					プロパティには
+					<code>"B"</code>
+					が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="ラジオボタンをチェックされた状態で表示するには">
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のプロパティに，チェックされた状態で表示したい
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>value</code>
+					属性と同じ値を設定します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>input</code>
+					要素の
+					<code>value</code>
+					属性の値が，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のプロパティの値と一致する
+					<code>&lt;input&gt;</code>
+					要素には，
+					<code>checked</code>
+					属性が付け加えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="selectedProduct">
+    <input type="radio" name="selectedProduct" value="A" />A
+    <input type="radio" name="selectedProduct" value="B" />B
+    <input type="radio" name="selectedProduct" value="C" />C
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String selectedProduct;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectedProduct</code>
+					プロパティの値が
+					<code>"A"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<div id="selectedProduct">
+    <input type="radio" name="form:selectedProduct" value="A" checked="checked" />A
+    <input type="radio" name="form:selectedProduct" value="B" />B
+    <input type="radio" name="form:selectedProduct" value="C" />C
+</div>
+]]></source>
+			</subsection>
+
+			<subsection name="ラジオボタンの項目を動的に変えるには">
+				<p>
+					<a href="ext_rev_foreach.html">forEach</a>
+					と組み合わせます．
+				</p>
+				<div class="sidebar">
+					サブミットされた値を受け取るには「
+					<a href="">ItemsSave</a>
+					」も必要です． 詳細は「」を参照してください．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の内容に，forEach にマッピングされる (
+					<code>id</code>
+					属性が
+					<code>Items</code>
+					で終わる) 要素を記述します． その
+					<code>id</code>
+					属性と同じ値を持つプロパティをページクラスに用意します． このプロパティの型は配列または
+					<code>java.util.List</code>
+					に，その要素の型はDtoまたは
+					<code>java.util.Map</code>
+					にします． Dtoのプロパティまたは
+					<code>Map</code>
+					のキーと同じ名前のプロパティをページクラスにも持たせます．
+				</p>
+				<p>
+					<code>type</code>
+					属性が
+					<code>radio</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， Dtoのプロパティまたは
+					<code>Map</code>
+					のキーと同じ名前を付けます．
+				</p>
+				<p>
+					レンダリング時，
+					<code>input</code>
+					要素の
+					<code>value</code>
+					属性の値は
+					<code>id</code>
+					属性の値と同じ名前のプロパティに置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="hidden" id="productItemsSave" />
+<div id="selectedProduct">
+    <div id="productItems">
+        <label>
+            <input type="radio" id="productCode" name="selectedProduct" value="dummy" />
+            <span id="productName" te:omittag="true">dummy</span>
+        </label>
+    </div>
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String selectedProduct;
+public List<ProductDto> productItems;
+public String productCode;
+public String productName;
+]]></source>
+				<h5>例：Dtoのプロパティ (ProductDto.java)</h5>
+				<source><![CDATA[
+public String productCode;
+public String productName;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>productItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="hidden" id="form:productItemsSave" value="..." />
+<div id="selectedProduct">
+    
+        <label>
+            <input type="radio" id="productCode" name="form:selectedProduct" value="t" />
+            Teeda
+        </label>
+        <label>
+            <input type="radio" id="productCode" name="form:selectedProduct" value="s" />
+            SAStruts
+        </label>
+        <label>
+            <input type="radio" id="productCode" name="form:selectedProduct" value="c" />
+            Cubby
+        </label>
+    
+</div>
+]]></source>
+				<p>
+					1番目のラジオボタン(Teeda)を選択してサブミットすると， ページクラスの
+					<code>selectedProduct</code>
+					プロパティには
+					<code>"t"</code>
 					が設定されます．
 				</p>
 			</subsection>

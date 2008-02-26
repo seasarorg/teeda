@@ -81,7 +81,11 @@
 					<code>&lt;span&gt;</code>
 					要素を記述して
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
 				</p>
 				<p>
 					レンダリング時，
@@ -339,7 +343,11 @@ public String name;
 					<var>attribute</var>
 					という名前のプロパティをページクラスに用意します． ただし，
 					<var>attribute</var>
-					は値を動的に出力したい属性名の先頭を大文字にした名前です．
+					は値を動的に出力したい属性名の先頭を大文字にした名前です． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
 				</p>
 				<p>
 					<code>id</code>
@@ -503,7 +511,11 @@ foo.dummy=ダミー
 					<code>id</code>
 					属性を付け， その値に
 					<code>Value</code>
-					を付加した名前のプロパティをページクラスに用意します．
+					を付加した名前のプロパティをページクラスに用意します． プロパティの型を
+					<code>String</code>
+					以外にする場合は
+					<a href="ext_rev_convert.html">コンバータ</a>
+					を指定します．
 				</p>
 				<p>
 					レンダリング時，
