@@ -56,29 +56,45 @@
 
 		<section name="News">
 			<dl>
+				<dt>2008/02/26</dt>
+				<dd>
+					Teeda 1.0.13-rc2 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#1.0.13-rc2">Change Log</a>
+					)
+				</dd>
+				<dt>2008/02/18</dt>
+				<dd>
+					Teeda 1.0.13-rc1 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#1.0.13-rc1">Change Log</a>
+					)
+				</dd>
+				<dt>2008/02/18</dt>
+				<dd>
+					Teeda 1.0.12-sp1 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#1.0.12-sp1">Change Log</a>
+					)
+				</dd>
 				<dt>2008/02/05</dt>
 				<dd>
-					<div>
-						Teeda 1.0.12 をリリースしました． (
-						<a href="downloads.html">ダウンロード</a>
-						) (
-						<a href="changelog.html#1.0.12">Change Log</a>
-						)
-					</div>
+					Teeda 1.0.12 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#1.0.12">Change Log</a>
+					)
 				</dd>
-			</dl>
-			<dl>
 				<dt>2008/01/28</dt>
 				<dd>
-					<div>
-						Teeda 1.0.12-rc2 をリリースしました． (
-						<a href="downloads.html">ダウンロード</a>
-						) (
-						<a href="changelog.html#1.0.12-rc2">
-							Change Log
-						</a>
-						)
-					</div>
+					Teeda 1.0.12-rc2 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#1.0.12-rc2">Change Log</a>
+					)
 				</dd>
 			</dl>
 		</section>

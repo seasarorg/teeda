@@ -8,114 +8,244 @@
 	</properties>
 	<body>
 		<section name="Latest Release">
-			<!-- 
-				<subsection name="開発版">
-			-->
-			<dl>
-				<dt>
-					<a href="../download/2008-02-05/teeda-1.0.12.zip">
-						Teeda 1.0.12
-					</a>
-				</dt>
-				<dd>
-					Teeda
-					core(JSF実装)/extension(Htmlテンプレート等を含む拡張機能)/ajax(Ajax実現機能)を含む本体
-				</dd>
-				<dt>
-					<a
-						href="../download/2008-02-05/teeda-tiger-1.0.12.zip">
-						Teeda Tiger 1.0.12
-					</a>
-				</dt>
-				<dd>Tiger(Java5)アノテーションを使用するためのアドオン機能(必須ではありません)</dd>
-				<dt>
-					<a
-						href="../download/2008-02-05/teeda-html-example-1.0.12.zip">
-						Teeda HTML Example 1.0.12
-					</a>
-				</dt>
-				<dd>Teedaの機能をHTMLテンプレートベースで記述したexample</dd>
-				<dt>
-					<a
-						href="../download/2008-02-05/teeda-jsp-example-1.0.12.zip">
-						Teeda JSP Example 1.0.12
-					</a>
-				</dt>
-				<dd>JSF実装部分の機能紹介をJSPベースで記述したexample</dd>
-				<dt>
-					<a
-						href="../download/2008-02-05/teeda-jars-1.0.12.zip">
-						Teeda 1.0.12 jars
-					</a>
-				</dt>
-				<dd>Teeda本体を含むjarだけの圧縮ファイル</dd>
-				<dt>
-					<a
-						href="../download/2008-02-05/teeda-tiger-jars-1.0.12.zip">
-						Teeda 1.0.12 tiger jars
-					</a>
-				</dt>
-				<dd>Teeda本体とTeeda-tigerを含むjarだけの圧縮ファイル</dd>
-			</dl>
-			<!-- 
-				</subsection>
-			-->
-			<!-- 
-				<subsection name="安定版">
+			<subsection name="開発版">
 				<dl>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-1.0.11-SP4.zip">
-				Teeda 1.0.11-SP4
-				</a>
-				</dt>
-				<dd>
-				Teeda
-				core(JSF実装)/extension(Htmlテンプレート等を含む拡張機能)/ajax(Ajax実現機能)を含む本体
-				</dd>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-tiger-1.0.11-SP4.zip">
-				Teeda Tiger 1.0.11-SP4
-				</a>
-				</dt>
-				<dd>
-				Tiger(Java5)アノテーションを使用するためのアドオン機能(必須ではありません)
-				</dd>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-html-example-1.0.11-SP4.zip">
-				Teeda HTML Example 1.0.11-SP4
-				</a>
-				</dt>
-				<dd>Teedaの機能をHTMLテンプレートベースで記述したexample</dd>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-jsp-example-1.0.11-SP4.zip">
-				Teeda JSP Example 1.0.11-SP4
-				</a>
-				</dt>
-				<dd>JSF実装部分の機能紹介をJSPベースで記述したexample</dd>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-jars-1.0.11-SP4.zip">
-				Teeda 1.0.11-SP4 jars
-				</a>
-				</dt>
-				<dd>Teeda本体を含むjarだけの圧縮ファイル</dd>
-				<dt>
-				<a
-				href="../download/2008-01-09/teeda-tiger-jars-1.0.11-SP4.zip">
-				Teeda 1.0.11-SP4 tiger jars
-				</a>
-				</dt>
-				<dd>Teeda本体とTeeda-tigerを含むjarだけの圧縮ファイル</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-1.0.13-rc2.zip">
+							Teeda 1.0.13-rc2
+						</a>
+					</dt>
+					<dd>
+						Teeda
+						core(JSF実装)/extension(Htmlテンプレート等を含む拡張機能)/ajax(Ajax実現機能)を含む本体
+					</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-tiger-1.0.13-rc2.zip">
+							Teeda Tiger 1.0.13-rc2
+						</a>
+					</dt>
+					<dd>
+						Tiger(Java5)アノテーションを使用するためのアドオン機能(必須ではありません)
+					</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-html-example-1.0.13-rc2.zip">
+							Teeda HTML Example 1.0.13-rc2
+						</a>
+					</dt>
+					<dd>Teedaの機能をHTMLテンプレートベースで記述したexample</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-jsp-example-1.0.13-rc2.zip">
+							Teeda JSP Example 1.0.13-rc2
+						</a>
+					</dt>
+					<dd>JSF実装部分の機能紹介をJSPベースで記述したexample</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-jars-1.0.13-rc2.zip">
+							Teeda 1.0.13-rc2 jars
+						</a>
+					</dt>
+					<dd>Teeda本体を含むjarだけの圧縮ファイル</dd>
+					<dt>
+						<a
+							href="../download/2008-02-26/teeda-tiger-jars-1.0.13-rc2.zip">
+							Teeda 1.0.13-rc2 tiger jars
+						</a>
+					</dt>
+					<dd>Teeda本体とTeeda-tigerを含むjarだけの圧縮ファイル</dd>
 				</dl>
-				</subsection>
-			-->
+			</subsection>
+
+			<subsection name="メンテナンス版">
+				<dl>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-1.0.12-sp1.zip">
+							Teeda 1.0.12-sp1
+						</a>
+					</dt>
+					<dd>
+						Teeda
+						core(JSF実装)/extension(Htmlテンプレート等を含む拡張機能)/ajax(Ajax実現機能)を含む本体
+					</dd>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-tiger-1.0.12-sp1.zip">
+							Teeda Tiger 1.0.12-sp1
+						</a>
+					</dt>
+					<dd>
+						Tiger(Java5)アノテーションを使用するためのアドオン機能(必須ではありません)
+					</dd>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-html-example-1.0.12-sp1.zip">
+							Teeda HTML Example 1.0.12-sp1
+						</a>
+					</dt>
+					<dd>Teedaの機能をHTMLテンプレートベースで記述したexample</dd>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-jsp-example-1.0.12-sp1.zip">
+							Teeda JSP Example 1.0.12-sp1
+						</a>
+					</dt>
+					<dd>JSF実装部分の機能紹介をJSPベースで記述したexample</dd>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-jars-1.0.12-sp1.zip">
+							Teeda 1.0.12-sp1 jars
+						</a>
+					</dt>
+					<dd>Teeda本体を含むjarだけの圧縮ファイル</dd>
+					<dt>
+						<a
+							href="../download/2008-02-18/teeda-tiger-jars-1.0.12-sp1.zip">
+							Teeda 1.0.12-sp1 tiger jars
+						</a>
+					</dt>
+					<dd>Teeda本体とTeeda-tigerを含むjarだけの圧縮ファイル</dd>
+				</dl>
+			</subsection>
 		</section>
 
 		<section name="All Releases">
+			<subsection name="1.0.13-rc2">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-1.0.13-rc2.zip">
+								Teeda 1.0.13-rc2
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-html-example-1.0.13-rc2.zip">
+								Teeda HTML Example 1.0.13-rc2
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-jars-1.0.13-rc2.zip">
+								Teeda 1.0.13-rc2 jars
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-tiger-1.0.13-rc2.zip">
+								Teeda Tiger 1.0.13-rc2
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-jsp-example-1.0.13-rc2.zip">
+								Teeda JSP Example 1.0.13-rc2
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-26/teeda-tiger-jars-1.0.13-rc2.zip">
+								Teeda 1.0.13-rc2 tiger jars
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+			<subsection name="1.0.13-rc1">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-1.0.13-rc1.zip">
+								Teeda 1.0.13-rc1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-html-example-1.0.13-rc1.zip">
+								Teeda HTML Example 1.0.13-rc1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-jars-1.0.13-rc1.zip">
+								Teeda 1.0.13-rc1 jars
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-tiger-1.0.13-rc1.zip">
+								Teeda Tiger 1.0.13-rc1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-jsp-example-1.0.13-rc1.zip">
+								Teeda JSP Example 1.0.13-rc1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-tiger-jars-1.0.13-rc1.zip">
+								Teeda 1.0.13-rc1 tiger jars
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+			<subsection name="1.0.12-sp1">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-1.0.12-sp1.zip">
+								Teeda 1.0.12-sp1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-html-example-1.0.12-sp1.zip">
+								Teeda HTML Example 1.0.12-sp1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-jars-1.0.12-sp1.zip">
+								Teeda 1.0.12-sp1 jars
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-tiger-1.0.12-sp1.zip">
+								Teeda Tiger 1.0.12-sp1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-jsp-example-1.0.12-sp1.zip">
+								Teeda JSP Example 1.0.12-sp1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2008-02-18/teeda-tiger-jars-1.0.12-sp1.zip">
+								Teeda 1.0.12-sp1 tiger jars
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
 			<subsection name="1.0.12">
 				<table>
 					<tr>

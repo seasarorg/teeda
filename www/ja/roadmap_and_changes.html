@@ -70,12 +70,34 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.13-rc2">Teeda&nbsp;1.0.13-rc2&nbsp;変更点</a></h2>
+Teeda 1.0.13-rc1からの変更点は次のとおりです．
+<pre style="background-color:white">
+* Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-437'>TEEDA-437</a>] - 画面遷移した後にブラウザの「戻る」で前のページに戻って condition の中の
+                       サブミットボタンを押しても do～() メソッドが呼ばれない場合がある問題を
+                       修正しました．[Seasar-user:12866][Seasar-user:12921]
+* Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-438'>TEEDA-438</a>] - condition および forEach でダイナミックプロパティをサポートしました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-439'>TEEDA-439</a>] - FacesMessageHelper でコンポーネントのクライアント Id を指定してメッセージを
+                       追加できるようにしました．[Seasar-user:13004]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-440'>TEEDA-440</a>] - 属性 (id を除く) の値に &quot;～Label&quot; を指定すると ～ をキーとする
+                       ラベルの値を出力するようにしました．[Seasar-user:12989]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-441'>TEEDA-441</a>] - outputText を &lt;span&gt; だけでなく &lt;div&gt; と &lt;caption&gt; にも対応し，
+                       id が &quot;～Label&quot; だったら ～ をキーとしてラベルを参照するようにしました．
+* Task
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-442'>TEEDA-442</a>] - Teeda HTML Example で ResourceSynchronizer プラグインに対応したリッチな
+                       デバッグページを使うようにしました．
+</pre>
+
 <h2><a name="1.0.13-rc1">Teeda&nbsp;1.0.13-rc1&nbsp;変更点</a></h2>
 Teeda 1.0.12からの変更点は次のとおりです．
 <pre style="background-color:white">
 ** Bug
-    * [<a href='https://www.seasar.org/issues/browse/TEEDA-433'>TEEDA-433</a>] - doOnce～ ボタンを素早く連打すると AlreadyRedirectingException が発生する問題を修正しました．[Seasar-user:12784]
-    * [<a href='https://www.seasar.org/issues/browse/TEEDA-435'>TEEDA-435</a>] - forEach を span 要素で使おうとして id に xxxItems を指定しても outputText になってしまう問題を修正しました．[Seasar-user:12859]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-433'>TEEDA-433</a>] - doOnce～ ボタンを素早く連打すると AlreadyRedirectingException が発生する
+                       問題を修正しました．[Seasar-user:12784]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-435'>TEEDA-435</a>] - forEach を span 要素で使おうとして id に xxxItems を指定しても outputText に
+                       なってしまう問題を修正しました．[Seasar-user:12859]
 
 ** Improvement
     * [<a href='https://www.seasar.org/issues/browse/TEEDA-436'>TEEDA-436</a>] - StateManagerでSerializedViewをキャッシュ済みの場合は作成しないようにしました
@@ -88,8 +110,10 @@ Teeda 1.0.12からの変更点は次のとおりです．
 Teeda 1.0.12からの変更点は次のとおりです．
 <pre style="background-color:white">
 ** Bug
-    * [<a href='https://www.seasar.org/issues/browse/TEEDA-433'>TEEDA-433</a>] - doOnce～ ボタンを素早く連打すると AlreadyRedirectingException が発生する問題を修正しました．[Seasar-user:12784]
-    * [<a href='https://www.seasar.org/issues/browse/TEEDA-435'>TEEDA-435</a>] - forEach を span 要素で使おうとして id に xxxItems を指定しても outputText になってしまう問題を修正しました．[Seasar-user:12859]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-433'>TEEDA-433</a>] - doOnce～ ボタンを素早く連打すると AlreadyRedirectingException が発生する問題を
+                       修正しました．[Seasar-user:12784]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-435'>TEEDA-435</a>] - forEach を span 要素で使おうとして id に xxxItems を指定しても outputText に
+                       なってしまう問題を修正しました．[Seasar-user:12859]
 </pre>
 
 <h2><a name="1.0.12">Teeda&nbsp;1.0.12&nbsp;変更点</a></h2>

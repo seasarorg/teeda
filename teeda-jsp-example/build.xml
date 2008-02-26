@@ -1,6 +1,6 @@
 <project name="teeda-jsp-example" default="dist" basedir=".">
 
-	<property name="ver" value="1.0.13-rc2-SNAPSHOT"/>
+	<property name="ver" value="1.0.13-rc2"/>
 
 	<target name="dist" depends="copy-jar">
 		<mkdir dir="target"/>
