@@ -1279,7 +1279,9 @@ h3.underline {
           <span>&nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される</span><br/>
           <span>&nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される</span><br/>
           <span>&nbsp;&nbsp;Validationエラーになったときは元の状態に復元される</span><br/>
-          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br />
+          <span>-属性にダイナミックプロパティを使うにはid属性から先頭のisまたはisNotを取り除いた名前に属性名を付け加える</span><br />
+          <span>&nbsp;&nbsp;-isXxxのstyle属性であれば、<b class="boldorange">xxxStyle</b>となる</span>
         </td>
       </tr>
     </tbody>
