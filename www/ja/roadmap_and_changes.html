@@ -73,6 +73,15 @@
 <h2><a name="1.0.13-rc2">Teeda&nbsp;1.0.13-rc2&nbsp;変更点</a></h2>
 Teeda 1.0.13-rc1からの変更点は次のとおりです．
 <pre style="background-color:white">
+ <font color="red">
+ &lt;span&gt;要素に限らず，&lt;div&gt;要素及び&lt;caption&gt;要素もoutputeTextにマッピングされるようになりました．
+1.0.12以前と同様にすることも可能です．詳細は「<a href="extension_customize.html#outputText">outputTextについて</a>」を参照してください．
+
+ outputTextのid属性が"xxxLabel"となっている場合は，&lt;a&gt;要素の直下でなくても
+outputTextにマッピングされるようになりました．
+1.0.12以前と同様にすることも可能です．詳細は「<a href="extension_customize.html#label">ラベルについて</a>」を参照してください．
+ </font>
+
 * Bug
     * [<a href='https://www.seasar.org/issues/browse/TEEDA-437'>TEEDA-437</a>] - 画面遷移した後にブラウザの「戻る」で前のページに戻って condition の中の
                        サブミットボタンを押しても do～() メソッドが呼ばれない場合がある問題を
