@@ -51,6 +51,36 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="#チェックボックス">チェックボックス</a>
+					<ul>
+						<li>
+							<a href="#単一項目のチェックボックスを使うには">
+								単一項目のチェックボックスを使うには
+							</a>
+						</li>
+						<li>
+							<a href="#複数項目のチェックボックスを使うには">
+								複数項目のチェックボックスを使うには
+							</a>
+						</li>
+						<li>
+							<a href="#複数項目のチェックボックスで1行に描画される数を指定するには">
+								複数項目のチェックボックスで1行に描画される数を指定するには
+							</a>
+						</li>
+						<li>
+							<a href="#複数項目のチェックボックスを縦に並べるには">
+								複数項目のチェックボックスを縦に並べるには
+							</a>
+						</li>
+						<li>
+							<a href="#複数項目のチェックボックスでテーブルを使わずに描画するには">
+								複数項目のチェックボックスでテーブルを使わずに描画するには
+							</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</section>
 
@@ -104,11 +134,7 @@
 					<code>&lt;input&gt;</code>
 					要素を記述して
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します． プロパティの型を
-					<code>String</code>
-					以外にする場合は
-					<a href="ext_rev_convert.html">コンバータ</a>
-					を指定します．
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
 				</p>
 				<div class="sidebar">
 					<code>id</code>
@@ -183,11 +209,7 @@ public String name;
 					<code>&lt;textarea&gt;</code>
 					要素を記述して
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します． プロパティの型を
-					<code>String</code>
-					以外にする場合は
-					<a href="ext_rev_convert.html">コンバータ</a>
-					を指定します．
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
 				</p>
 				<p>
 					レンダリング時，
@@ -247,11 +269,7 @@ public String name;
 					要素に
 					<code>id</code>
 					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
-					このプロパティは選択された項目の値を保持します． プロパティの型を
-					<code>String</code>
-					以外にする場合は
-					<a href="ext_rev_convert.html">コンバータ</a>
-					を指定します．
+					このプロパティは選択された項目の値を保持します．
 				</p>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -476,6 +494,342 @@ public String productName;
 					<code>"t"</code>
 					が設定されます．
 				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="">forEach</a>
+					</li>
+					<li>
+						<a href="">itemsSave</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="チェックボックス">
+			<subsection name="単一項目のチェックボックスを使うには">
+				<div class="sidebar">
+					ここで使われるコンポーネントは「selectBooleanCheckbox」と呼ばれます．
+				</div>
+				<p>
+					<code>type</code>
+					属性が
+					<code>checkbox</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素を記述して
+					<code>id</code>
+					属性を付け， その値と同じ名前で型が
+					<code>boolean</code>
+					のプロパティをページクラスに用意します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>value</code>
+					属性にプロパティの値が設定されます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択された状態がプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="checkbox" id="option" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public boolean option;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>option</code>
+					プロパティの値が
+					<code>true</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="checkbox" id="option" name="form:option" value="true" checked="checked" />
+]]></source>
+				<p>
+					チェックボタンの選択を解除してサブミットすると， ページクラスの
+					<code>option</code>
+					プロパティには
+					<code>false</code>
+					が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="複数項目のチェックボックスを使うには">
+				<div class="sidebar">
+					ここで使われるコンポーネントは「selectManyCheckbox」と呼ばれます．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付けます． 要素の内容には，
+					<code>type</code>
+					属性が
+					<code>checkbox</code>
+					で，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ
+					<code>name</code>
+					属性を持つ
+					<code>&lt;input&gt;</code>
+					要素を記述します． この
+					<code>&lt;input&gt;</code>
+					要素は実行時には捨てられます (ブラウザで直接プレビューする際のモックとして活用してください)．
+				</p>
+				<p>
+					ページクラスに2つのプロパティを用意します． 一つめは
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前で， 配列型のプロパティです． このプロパティは選択された項目の値を保持します．
+				</p>
+				<p>
+					二つめは
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					の
+					<code>id</code>
+					属性の値に
+					<code>Items</code>
+					を加えた名前で， 配列または
+					<code>java.util.List</code>
+					型のプロパティです． 要素型はDtoまたは
+					<code>java.util.Map</code>
+					で，
+					<code>label</code>
+					および
+					<code>value</code>
+					というプロパティ (
+					<code>Map</code>
+					の場合はキー) でチェックボックスのラベルと値を保持します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の内容は
+					<code>Items</code>
+					プロパティの要素の数分の
+					<code>&lt;input&gt;</code>
+					要素に置き換えられます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択された項目の値が
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="option">
+    <input type="checkbox" name="option" /> Option1
+    <input type="checkbox" name="option" /> Option2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] option;
+public List<Map> optionItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="aaa">
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="A" />AAAA</label>
+        </td>
+        <td>
+            <label><input type="checkbox" name="form:option" value="B" />BBBB</label>
+        </td>
+        <td>
+            <label><input type="checkbox" name="form:option" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+				<p>
+					全てのチェックボタンを選択してサブミットすると， ページクラスの
+					<code>option</code>
+					プロパティには，
+					<code>"A"</code>
+					，
+					<code>"B"</code>
+					，
+					<code>"C"</code>
+					を要素とする配列が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="複数項目のチェックボックスで1行に描画される数を指定するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>te:col</code>
+					属性に 1 行あたりのチェックボタンの数を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="option" te:col="2">
+    <input type="checkbox" name="option" /> Option1
+    <input type="checkbox" name="option" /> Option2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] option;
+public List<Map> optionItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="aaa">
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="A" />AAAA</label>
+        </td>
+        <td>
+            <label><input type="checkbox" name="form:option" value="B" />BBBB</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="複数項目のチェックボックスを縦に並べるには">
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>style</code>
+					属性に
+					<code>pageDirection</code>
+					を指定します (デフォルトは
+					<code>lineDirection</code>
+					です)．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="option" style="pageDirection">
+    <input type="checkbox" name="option" /> Option1
+    <input type="checkbox" name="option" /> Option2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] option;
+public List<Map> optionItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="aaa">
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="A" />AAAA</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="B" />BBBB</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="checkbox" name="form:option" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="複数項目のチェックボックスでテーブルを使わずに描画するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>te:layout</code>
+					属性に
+					<code>none</code>
+					を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="option" te:layout="none">
+    <input type="checkbox" name="option1" /> Option1
+    <input type="checkbox" name="option2" /> Option2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] option;
+public List<Map> optionItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<label><input type="checkbox" name="form:option" value="A" />AAAA</label>
+<label><input type="checkbox" name="form:option" value="B" />BBBB</label>
+<label><input type="checkbox" name="form:option" value="C" />CCCC</label>
+]]></source>
 			</subsection>
 		</section>
 	</body>

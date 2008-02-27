@@ -130,6 +130,27 @@ foo.link=次ページへ
 				<source><![CDATA[
 <a id="goNext" href="next.html"><span id="linkLabel">次ページへ</span></a>
 ]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						「
+						<a href="ext_rev_output.html">出力</a>
+						」－「
+						<a href="ext_rev_output.html#ボディ">ボディ</a>
+						」－「
+						<a href="ext_rev_output.html#タグを出力したくない場合には">
+							タグを出力したくない場合には
+						</a>
+						」
+					</li>
+					<li>
+						「
+						<a href="ext_rev_output.html">出力</a>
+						」－「
+						<a href="ext_rev_output.html#属性">属性</a>
+						」
+					</li>
+				</ul>
 			</subsection>
 		</section>
 	</body>
