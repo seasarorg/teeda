@@ -24,7 +24,7 @@ public class ConditionPage {
 
 	private int hoge;
 
-	private Boolean aaa = null;
+	private Boolean aaa = Boolean.TRUE;
 
 	private Boolean bbb = null;
 
@@ -37,7 +37,6 @@ public class ConditionPage {
 	}
 
 	public String initialize() {
-		aaa = Boolean.TRUE;
 		return null;
 	}
 

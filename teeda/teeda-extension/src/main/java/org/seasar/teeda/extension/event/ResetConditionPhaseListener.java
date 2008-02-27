@@ -41,7 +41,7 @@ public class ResetConditionPhaseListener implements PhaseListener {
                 .getExternalContext().getRequestMap());
         final boolean noError = !FacesMessageUtil
                 .hasErrorOrFatalMessage(context);
-        if (postback && noError) {
+        if (!postback || noError) {
             ConditionUtil.removeConditions(context);
         }
     }

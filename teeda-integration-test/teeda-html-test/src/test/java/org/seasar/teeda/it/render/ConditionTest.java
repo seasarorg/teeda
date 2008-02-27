@@ -388,4 +388,33 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.assertElementNotPresentById("doBar");
 	}
 
+	public void testCondition_TEEDA443() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/condition/condition.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementNotPresentById("isNotAaa");
+
+		// ## Act ##
+		tester.clickLinkById("goFalse");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementNotPresentById("isAaa");
+		tester.assertElementPresentById("isNotAaa");
+
+		// ## Act ##
+		tester.clickLinkById("goTrue");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementPresentById("isAaa");
+		tester.assertElementNotPresentById("isNotAaa");
+	}
+
 }
