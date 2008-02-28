@@ -454,17 +454,18 @@
 		<section name="1.0.12-rc1">
 			<subsection name="移行の注意">
 				<ul>
-					<div>
-						テンプレートXHTMLの要素内容に記述した文字参照・実体参照は，そのままレンダリングするようになりました．
-					</div>
-					<div>
-						1.0.11以前と同様にすることも可能です．詳細は「
-						<a
-							href="extension_customize.html#parse-xhtml">
-							(X)HTMLのパーズについて
-						</a>
-						」を参照してください．
-					</div>
+					<li>
+						<div>
+							テンプレートXHTMLの要素内容に記述した文字参照・実体参照は，そのままレンダリングするようになりました．
+						</div>
+						<div>
+							1.0.11以前と同様にすることも可能です．詳細は「
+							<a
+								href="extension_customize.html#parse-xhtml">
+								(X)HTMLのパーズについて
+							</a>
+							」を参照してください．
+						</div>
 					</li>
 					<li>
 						<div>

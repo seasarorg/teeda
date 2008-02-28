@@ -9,14 +9,14 @@
 	<body>
 		<section name="Welcome">
 			<p>
-				Teedaは，Seasarファウンデーション発のJSF(JavaServer
-				Faces)をベースとしたWebアプリケーションフレームワークです．
+				Teedaは，Seasarプロジェクト発のJSF (JavaServer Faces)
+				をベースとしたWebアプリケーションフレームワークです．
 			</p>
 			<p>
 				「JSF meets DI x AOP」というコンセプトの元，JSFの標準機能に加え，
 				DIとAOPの機能をベースとした拡張機能を提供し，より良いWebアプリケーション開発を実現します．
 			</p>
-			<p>Teedaには大きく分けて3つのプロダクトがあります．</p>
+			<p>Teedaは大きく分けて3つのモジュールから構成されています．</p>
 
 			<subsection name="Teeda Core">
 				<p>

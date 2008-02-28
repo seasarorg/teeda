@@ -23,6 +23,22 @@
 						<li>
 							<a href="#テキストフィールドを使うには">テキストフィールドを使うには</a>
 						</li>
+						<li>
+							<a href="#数値の入力を支援するには">数値の入力を支援するには</a>
+						</li>
+						<li>
+							<a href="#日付の入力を支援するには">日付の入力を支援するには</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#パスワードフィールド">パスワードフィールド</a>
+					<ul>
+						<li>
+							<a href="#パスワードフィールドを使うには">
+								パスワードフィールドを使うには
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li>
@@ -34,31 +50,74 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#ラジオボタン">ラジオボタン</a>
+					<a href="#ラジオボタン_静的">ラジオボタン (静的)</a>
 					<ul>
 						<li>
-							<a href="#ラジオボタンを使うには">ラジオボタンを使うには</a>
+							<a href="#静的なラジオボタンを使うには">静的なラジオボタンを使うには</a>
 						</li>
 						<li>
-							<a href="#ラジオボタンをチェックされた状態で表示するには">
-								ラジオボタンをチェックされた状態で表示するには
+							<a href="#静的なラジオボタンをチェックされた状態で表示するには">
+								静的なラジオボタンをチェックされた状態で表示するには
 							</a>
 						</li>
 						<li>
-							<a href="#ラジオボタンの項目を動的に変えるには">
-								ラジオボタンの項目を動的に変えるには
+							<a href="#静的なラジオボタンの値を動的に変えるには">
+								静的なラジオボタンの値を動的に変えるには
+							</a>
+						</li>
+						<li>
+							<a href="#静的なラジオボタンの数を動的に変えるには">
+								静的なラジオボタンの数を動的に変えるには
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href="#チェックボックス">チェックボックス</a>
+					<a href="#ラジオボタン_動的">ラジオボタン (動的)</a>
+					<ul>
+						<li>
+							<a href="#動的なラジオボタンを使うには">動的なラジオボタンを使うには</a>
+						</li>
+						<li>
+							<a href="#動的なラジオボタンで1行に描画される数を指定するには">
+								動的なラジオボタンで1行に描画される数を指定するには
+							</a>
+						</li>
+						<li>
+							<a href="#動的なラジオボタンを縦に並べるには">
+								動的なラジオボタンを縦に並べるには
+							</a>
+						</li>
+						<li>
+							<a href="#動的なラジオボタンでテーブルを使わずに描画するには">
+								動的なラジオボタンでテーブルを使わずに描画するには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#チェックボックス_単一項目">チェックボックス (単一項目)</a>
 					<ul>
 						<li>
 							<a href="#単一項目のチェックボックスを使うには">
 								単一項目のチェックボックスを使うには
 							</a>
 						</li>
+						<li>
+							<a href="#単一項目のチェックボックスをチェックされた状態で表示するには">
+								単一項目のチェックボックスをチェックされた状態で表示するには
+							</a>
+						</li>
+						<li>
+							<a href="#単一項目のチェックボックスを複数使うには">
+								単一項目のチェックボックスを複数使うには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#チェックボックス_複数項目">チェックボックス (複数項目)</a>
+					<ul>
 						<li>
 							<a href="#複数項目のチェックボックスを使うには">
 								複数項目のチェックボックスを使うには
@@ -138,9 +197,9 @@
 				</p>
 				<div class="sidebar">
 					<code>id</code>
-					属性と
+					と
 					<code>value</code>
-					属性を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
 					<a href="ext_rev_output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
@@ -191,15 +250,152 @@ public String name;
 					が設定されます．
 				</p>
 			</subsection>
+
+			<subsection name="数値の入力を支援するには">
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>class</code>
+					属性に
+					<code>"T_currency"</code>
+					を含めます．
+				</p>
+				<p>
+					テキストフィールドに入力できるのは数字と符号 (
+					<code>'-'</code>
+					)，小数点 (
+					<code>'.'</code>
+					)，カンマ (
+					<code>','</code>
+					) に限定されます． 数字の後に
+					<code>'t'</code>
+					，
+					<code>'m'</code>
+					，
+					<code>'b'</code>
+					キーを押すと，入力済みの数がそれぞれ 1,000 倍，1,000,000 倍，
+					1,000,000,000 倍されます．
+				</p>
+				<p>不正なキーが押されるとテキストフィールドはクリアされます．</p>
+				<p>フォーカスが外れると入力した数はカンマ区切りになります．</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="text" id="saraly" class="T_currency" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public BigDecimal saraly;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<input type="text" id="salary" name="form:salary" class="T_currency" 
+    onfocus="..." onblur="..." onkeydown="..." style="ime-mode:disabled;" />
+]]></source>
+			</subsection>
+
+			<subsection name="日付の入力を支援するには">
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>class</code>
+					属性に
+					<code>"T_date"</code>
+					を含めます．
+				</p>
+				<p>
+					テキストフィールドに入力できるのは数字とスラッシュ (
+					<code>'/'</code>
+					) に限定されます．
+				</p>
+				<p>
+					年は二桁で入力することができます． フォーカスが外れると年は4桁に変換され，
+					スラッシュ区切りになります．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="text" id="date" class="T_date" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+@DateTimeConverter(pattern = "yyyy/MM")
+public Date date;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<input type="text" id="date" name="form:date" class="T_currency" 
+    onfocus="..." onblur="..." onkeydown="..." style="ime-mode:disabled;" />
+]]></source>
+			</subsection>
+		</section>
+
+		<section name="パスワードフィールド">
+			<subsection name="パスワードフィールドを使うには">
+				<p>
+					<code>type</code>
+					属性が
+					<code>password</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素を記述して
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+				</p>
+				<div class="sidebar">
+					<code>id</code>
+					と
+					<code>value</code>
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="ext_rev_output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
+				</div>
+				<p>
+					レンダリング時，
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>value</code>
+					属性にプロパティの値が設定されます． プロパティの値が
+					<code>'&lt;'</code>
+					や
+					<code>'&gt;'</code>
+					等を含む場合はエスケープされます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="password" id="pwd" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String pwd;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<input type="password" id="pwd" name="form:pwd" />
+]]></source>
+				<p>
+					パスワードフィールドに
+					<code>"1234"</code>
+					と入力してサブミットすると， ページクラスの
+					<code>pwd</code>
+					プロパティには
+					<code>"1234"</code>
+					が設定されます．
+				</p>
+			</subsection>
 		</section>
 
 		<section name="テキストエリア">
 			<subsection name="テキストエリアを使うには">
 				<div class="sidebar">
 					<code>id</code>
-					属性と
-					<code>value</code>
-					属性を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
 					<a href="ext_rev_output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
@@ -256,11 +452,28 @@ public String name;
 			</subsection>
 		</section>
 
-		<section name="ラジオボタン">
-			<subsection name="ラジオボタンを使うには">
+		<section name="ラジオボタン (静的)">
+			<div class="sidebar">
+				ここで使われるコンポーネントは「inputRadio」と呼ばれます．
+			</div>
+			<p>
+				静的なラジオボタンは，テンプレートHTMLに記述された
+				<code>&lt;input&gt;</code>
+				をそのままレンダリングでも使用するタイプのラジオボタンです．
+			</p>
+
+			<subsection name="静的なラジオボタンを使うには">
 				<div class="sidebar">
-					ここで使われるコンポーネントは「inputRadio」と呼ばれます．
-					ラジオボタンを実現するコンポーネントには他に「selectOneRadio」があります．
+					<code>id</code>
+					，
+					<code>name</code>
+					，
+					<code>value</code>
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="ext_rev_output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -305,34 +518,34 @@ public String name;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="selectedProduct">
-    <input type="radio" name="selectedProduct" value="A" />A
-    <input type="radio" name="selectedProduct" value="B" />B
-    <input type="radio" name="selectedProduct" value="C" />C
+<div id="selected">
+    <label><input type="radio" name="selected" value="A" />A</label>
+    <label><input type="radio" name="selected" value="B" />B</label>
+    <label><input type="radio" name="selected" value="C" />C</label>
 </div>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
-public String selectedProduct;
+public String selected;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<div id="product">
-    <input type="radio" name="form:selectedProduct" value="A" />A
-    <input type="radio" name="form:selectedProduct" value="B" />B
-    <input type="radio" name="form:selectedProduct" value="C" />C
+<div id="selected">
+    <label><input type="radio" name="form:selected" value="A" />A</label>
+    <label><input type="radio" name="form:selected" value="B" />B</label>
+    <label><input type="radio" name="form:selected" value="C" />C</label>
 </div>
 ]]></source>
 				<p>
 					2番目のラジオボタン(B)を選択してサブミットすると， ページクラスの
-					<code>selectedProduct</code>
+					<code>selected</code>
 					プロパティには
 					<code>"B"</code>
 					が設定されます．
 				</p>
 			</subsection>
 
-			<subsection name="ラジオボタンをチェックされた状態で表示するには">
+			<subsection name="静的なラジオボタンをチェックされた状態で表示するには">
 				<p>
 					<code>&lt;span&gt;</code>
 					要素または
@@ -364,33 +577,120 @@ public String selectedProduct;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="selectedProduct">
-    <input type="radio" name="selectedProduct" value="A" />A
-    <input type="radio" name="selectedProduct" value="B" />B
-    <input type="radio" name="selectedProduct" value="C" />C
+<div id="selected">
+    <label><input type="radio" name="selected" value="A" />A</label>
+    <label><input type="radio" name="selected" value="B" />B</label>
+    <label><input type="radio" name="selected" value="C" />C</label>
 </div>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
-public String selectedProduct;
+public String selected;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<code>selectedProduct</code>
+					<code>selected</code>
 					プロパティの値が
 					<code>"A"</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<div id="selectedProduct">
-    <input type="radio" name="form:selectedProduct" value="A" checked="checked" />A
-    <input type="radio" name="form:selectedProduct" value="B" />B
-    <input type="radio" name="form:selectedProduct" value="C" />C
+<div id="selected">
+    <label><input type="radio" name="form:selected" value="A" checked="checked" />A</label>
+    <label><input type="radio" name="form:selected" value="B" />B</label>
+    <label><input type="radio" name="form:selected" value="C" />C</label>
 </div>
 ]]></source>
 			</subsection>
 
-			<subsection name="ラジオボタンの項目を動的に変えるには">
+			<subsection name="静的なラジオボタンの値を動的に変えるには">
+				<p>
+					「
+					<a href="">ダイナミックプロパティ</a>
+					」と組み合わせます．
+				</p>
+				<p>
+					<code>type</code>
+					属性が
+					<code>radio</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					このプロパティは項目の値を保持します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>input</code>
+					要素の
+					<code>value</code>
+					属性の値は
+					<code>id</code>
+					属性の値と同じ名前のプロパティに置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="selected">
+    <label>
+        <input type="radio" id="code1" name="selected" value="dummy" />
+        <span id="name1" te:omittag="true">dummy</span>
+    </label>
+    <label>
+        <input type="radio" id="code2" name="selected" value="dummy" />
+        <span id="name2" te:omittag="true">dummy</span>
+    </label>
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String selected;
+public String code1;
+public String name1;
+public String code2;
+public String name2;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>code1</code>
+					が
+					<code>"t"</code>
+					，
+					<code>name1</code>
+					が
+					<code>"Teeda"</code>
+					で，
+					<code>code2</code>
+					が
+					<code>"s"</code>
+					，
+					<code>name2</code>
+					が
+					<code>"SAStruts"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<div id="selected">
+    <label>
+        <input type="radio" id="code1" name="form:selected" value="t" />
+        Teeda
+    </label>
+    <label>
+        <input type="radio" id="code2" name="form:selected" value="s" />
+        SAStruts
+    </label>
+</div>
+]]></source>
+				<p>
+					1番目のラジオボタン(Teeda)を選択してサブミットすると， ページクラスの
+					<code>selected</code>
+					プロパティには
+					<code>"t"</code>
+					が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="静的なラジオボタンの数を動的に変えるには">
 				<p>
 					<a href="ext_rev_foreach.html">forEach</a>
 					と組み合わせます．
@@ -442,26 +742,26 @@ public String selectedProduct;
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <input type="hidden" id="productItemsSave" />
-<div id="selectedProduct">
+<div id="selected">
     <div id="productItems">
         <label>
-            <input type="radio" id="productCode" name="selectedProduct" value="dummy" />
-            <span id="productName" te:omittag="true">dummy</span>
+            <input type="radio" id="code" name="selected" value="dummy" />
+            <span id="name" te:omittag="true">dummy</span>
         </label>
     </div>
 </div>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
-public String selectedProduct;
+public String selected;
 public List<ProductDto> productItems;
-public String productCode;
-public String productName;
+public String code;
+public String name;
 ]]></source>
 				<h5>例：Dtoのプロパティ (ProductDto.java)</h5>
 				<source><![CDATA[
-public String productCode;
-public String productName;
+public String code;
+public String name;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
@@ -470,18 +770,18 @@ public String productName;
 				</p>
 				<source><![CDATA[
 <input type="hidden" id="form:productItemsSave" value="..." />
-<div id="selectedProduct">
+<div id="selected">
     
         <label>
-            <input type="radio" id="productCode" name="form:selectedProduct" value="t" />
+            <input type="radio" id="code" name="form:selected" value="t" />
             Teeda
         </label>
         <label>
-            <input type="radio" id="productCode" name="form:selectedProduct" value="s" />
+            <input type="radio" id="code" name="form:selected" value="s" />
             SAStruts
         </label>
         <label>
-            <input type="radio" id="productCode" name="form:selectedProduct" value="c" />
+            <input type="radio" id="code" name="form:selected" value="c" />
             Cubby
         </label>
     
@@ -489,7 +789,7 @@ public String productName;
 ]]></source>
 				<p>
 					1番目のラジオボタン(Teeda)を選択してサブミットすると， ページクラスの
-					<code>selectedProduct</code>
+					<code>selected</code>
 					プロパティには
 					<code>"t"</code>
 					が設定されます．
@@ -506,10 +806,325 @@ public String productName;
 			</subsection>
 		</section>
 
-		<section name="チェックボックス">
+		<section name="ラジオボタン (動的)">
+			<div class="sidebar">
+				ここで使われるコンポーネントは「selectOneRadio」と呼ばれます．
+			</div>
+			<p>
+				動的なラジオボタンは，テンプレートHTMLに記述された
+				<code>&lt;input&gt;</code>
+				要素をレンダリングで使用しないタイプのラジオボタンです．
+				<code>&lt;input&gt;</code>
+				要素はTeedaによって動的に生成されます．
+			</p>
+
+			<subsection name="動的なラジオボタンを使うには">
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付けます． 要素の内容には，
+					<code>type</code>
+					属性が
+					<code>radio</code>
+					で，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ
+					<code>name</code>
+					属性を持つ
+					<code>&lt;input&gt;</code>
+					要素を記述します． この
+					<code>&lt;input&gt;</code>
+					要素は実行時には捨てられます (ブラウザで直接プレビューする際のモックとして活用してください)．
+				</p>
+				<p>
+					ページクラスに2つのプロパティを用意します． 一つめは
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前で， 配列型のプロパティです． このプロパティは選択された項目の値を保持します．
+				</p>
+				<p>
+					二つめは
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					の
+					<code>id</code>
+					属性の値に
+					<code>Items</code>
+					を加えた名前で， 型は次のいずれかです．
+				</p>
+				<ul>
+					<li>
+						配列または
+						<code>java.util.List</code>
+					</li>
+					<li>
+						<code>java.util.Map</code>
+					</li>
+				</ul>
+				<p>
+					配列または
+					<code>List</code>
+					型の場合は， その要素型はDtoまたは
+					<code>java.util.Map</code>
+					で，
+					<code>label</code>
+					および
+					<code>value</code>
+					というプロパティ (
+					<code>Map</code>
+					の場合はキー) でラジオボタンのラベルと値を保持します．
+					<code>Map</code>
+					の場合は，
+					<var>label</var>
+					=
+					<var>value</var>
+					というマッピングでラベルと値を保持します (順序を維持するには
+					<code>java.util.LinkedHashMap</code>
+					を使うことを推奨します)．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の内容は
+					<code>Items</code>
+					プロパティの要素の数分の
+					<code>&lt;input&gt;</code>
+					要素に置き換えられます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択された項目の値が
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のプロパティに設定されます． ただし， 「
+					<a href="ext_rev_validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="select">
+    <input type="radio" name="select" /> Item1
+    <input type="radio" name="select" /> Item2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="select">
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="A" />AAAA</label>
+        </td>
+        <td>
+            <label><input type="radio" name="form:select" value="B" />BBBB</label>
+        </td>
+        <td>
+            <label><input type="radio" name="form:select" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+				<p>
+					最初のラジオボタンを選択してサブミットすると， ページクラスの
+					<code>select</code>
+					プロパティには，
+					<code>"A"</code>
+					が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="動的なラジオボタンで1行に描画される数を指定するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>te:col</code>
+					属性に 1 行あたりのチェックボックスの数を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="select" te:col="2">
+    <input type="radio" name="select" />Item1
+    <input type="radio" name="select" />Item2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="select">
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="A" />AAAA</label>
+        </td>
+        <td>
+            <label><input type="radio" name="form:select" value="B" />BBBB</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="動的なラジオボタンを縦に並べるには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>te:layout</code>
+					属性に
+					<code>pageDirection</code>
+					を指定します (デフォルトは
+					<code>lineDirection</code>
+					です)．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="select" te:layout="pageDirection">
+    <input type="radio" name="select" />Item1
+    <input type="radio" name="select" />Item2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table id="select">
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="A" />AAAA</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="B" />BBBB</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="動的なラジオボタンでテーブルを使わずに描画するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>te:layout</code>
+					属性に
+					<code>none</code>
+					を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div id="select" te:layout="none">
+    <input type="radio" name="select" />Option1
+    <input type="radio" name="select" />Option2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<label><input type="radio" name="form:select" value="A" />AAAA</label>
+<label><input type="radio" name="form:select" value="B" />BBBB</label>
+<label><input type="radio" name="form:select" value="C" />CCCC</label>
+]]></source>
+			</subsection>
+		</section>
+
+		<section name="チェックボックス (単一項目)">
+			<div class="sidebar">
+				ここで使われるコンポーネントは「selectBooleanCheckbox」と呼ばれます．
+			</div>
+			<p>単一項目のチェックボックスは，一つの選択肢で完結したチェックボックスです．</p>
+
 			<subsection name="単一項目のチェックボックスを使うには">
 				<div class="sidebar">
-					ここで使われるコンポーネントは「selectBooleanCheckbox」と呼ばれます．
+					<code>id</code>
+					，
+					<code>name</code>
+					，
+					<code>value</code>
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="ext_rev_output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
 				</div>
 				<p>
 					<code>type</code>
@@ -545,6 +1160,36 @@ public String productName;
 public boolean option;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<input type="checkbox" id="option" name="form:option" value="true" />
+]]></source>
+				<p>
+					チェックボックスを選択してサブミットすると， ページクラスの
+					<code>option</code>
+					プロパティには
+					<code>true</code>
+					が設定されます．
+				</p>
+			</subsection>
+
+			<subsection name="単一項目のチェックボックスをチェックされた状態で表示するには">
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のプロパティを
+					<code>true</code>
+					に設定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="checkbox" id="option" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public boolean option;
+]]></source>
+				<h5>例：レンダリング結果</h5>
 				<p>
 					<code>option</code>
 					プロパティの値が
@@ -555,7 +1200,7 @@ public boolean option;
 <input type="checkbox" id="option" name="form:option" value="true" checked="checked" />
 ]]></source>
 				<p>
-					チェックボタンの選択を解除してサブミットすると， ページクラスの
+					チェックボックスの選択を解除してサブミットすると， ページクラスの
 					<code>option</code>
 					プロパティには
 					<code>false</code>
@@ -563,10 +1208,123 @@ public boolean option;
 				</p>
 			</subsection>
 
-			<subsection name="複数項目のチェックボックスを使うには">
+			<subsection name="単一項目のチェックボックスを複数使うには">
+				<p>
+					<a href="ext_rev_foreach.html">forEach</a>
+					と組み合わせます．
+				</p>
 				<div class="sidebar">
-					ここで使われるコンポーネントは「selectManyCheckbox」と呼ばれます．
+					サブミットされた値を受け取るには「
+					<a href="">ItemsSave</a>
+					」も必要です． 詳細は「」を参照してください．
 				</div>
+				<p>
+					forEach にマッピングされる (
+					<code>id</code>
+					属性が
+					<code>Items</code>
+					で終わる) 要素を記述します． その
+					<code>id</code>
+					属性と同じ値を持つプロパティをページクラスに用意します． このプロパティの型は配列または
+					<code>java.util.List</code>
+					に，その要素の型はDtoまたは
+					<code>java.util.Map</code>
+					にします． Dtoのプロパティまたは
+					<code>Map</code>
+					のキーと同じ名前のプロパティをページクラスにも持たせます．
+				</p>
+				<p>
+					<code>type</code>
+					属性が
+					<code>checkbox</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け， Dtoのプロパティまたは
+					<code>Map</code>
+					のキーと同じ名前を付けます．
+				</p>
+				<p>
+					レンダリング時，
+					<code>input</code>
+					要素の
+					<code>value</code>
+					属性の値は
+					<code>id</code>
+					属性の値と同じ名前のプロパティに置き換えられます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="hidden" id="optionItemsSave" />
+<div id="optionItems">
+    <label>
+        <input type="checkbox" id="checked" value="dummy" />
+        <span id="name" te:omittag="true">dummy</span>
+    </label>
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public List<OptionDto> optionItems;
+public boolean checked;
+public String name;
+]]></source>
+				<h5>例：Dtoのプロパティ (OptionDto.java)</h5>
+				<source><![CDATA[
+public boolean checked;
+public String name;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>optionItems</code>
+					が2つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="hidden" id="form:optionItemsSave" value="..." />
+    
+    <label>
+        <input type="checkbox" id="checked" name="form:optionItems:0:checked" value="true" />
+        Teeda
+    </label>
+    <label>
+        <input type="checkbox" id="checked" name="form:optionItems:1:checked" value="true" />
+        SAStruts
+    </label>
+    
+]]></source>
+				<p>
+					1番目のチェックボックス(Teeda)を選択してサブミットすると， ページクラスの
+					<code>optionItems</code>
+					の最初の要素の
+					<code>option</code>
+					プロパティには
+					<code>true</code>
+					が，2番目の要素の
+					<code>option</code>
+					プロパティには
+					<code>false</code>
+					が設定されます．
+				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="">forEach</a>
+					</li>
+					<li>
+						<a href="">itemsSave</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="チェックボックス (複数項目)">
+			<div class="sidebar">
+				ここで使われるコンポーネントは「selectManyCheckbox」と呼ばれます．
+			</div>
+			<p>複数項目のチェックボックスは， 複数の選択肢が一つのグループを構成するチェックボックスです．</p>
+
+			<subsection name="複数項目のチェックボックスを使うには">
 				<p>
 					<code>&lt;span&gt;</code>
 					要素または
@@ -609,9 +1367,21 @@ public boolean option;
 					<code>id</code>
 					属性の値に
 					<code>Items</code>
-					を加えた名前で， 配列または
-					<code>java.util.List</code>
-					型のプロパティです． 要素型はDtoまたは
+					を加えた名前で， 型は次のいずれかです．
+				</p>
+				<ul>
+					<li>
+						配列または
+						<code>java.util.List</code>
+					</li>
+					<li>
+						<code>java.util.Map</code>
+					</li>
+				</ul>
+				<p>
+					配列または
+					<code>List</code>
+					型の場合は， その要素型はDtoまたは
 					<code>java.util.Map</code>
 					で，
 					<code>label</code>
@@ -619,7 +1389,15 @@ public boolean option;
 					<code>value</code>
 					というプロパティ (
 					<code>Map</code>
-					の場合はキー) でチェックボックスのラベルと値を保持します．
+					の場合はキー) でラジオボタンのラベルと値を保持します．
+					<code>Map</code>
+					の場合は，
+					<var>label</var>
+					=
+					<var>value</var>
+					というマッピングでラベルと値を保持します (順序を維持するには
+					<code>java.util.LinkedHashMap</code>
+					を使うことを推奨します)．
 				</p>
 				<p>
 					レンダリング時，
@@ -662,7 +1440,7 @@ public List<Map> optionItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<table id="aaa">
+<table id="option">
     <tr>
         <td>
             <label><input type="checkbox" name="form:option" value="A" />AAAA</label>
@@ -677,7 +1455,7 @@ public List<Map> optionItems;
 </table>
 ]]></source>
 				<p>
-					全てのチェックボタンを選択してサブミットすると， ページクラスの
+					全てのチェックボックスを選択してサブミットすると， ページクラスの
 					<code>option</code>
 					プロパティには，
 					<code>"A"</code>
@@ -702,7 +1480,7 @@ public List<Map> optionItems;
 					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:col</code>
-					属性に 1 行あたりのチェックボタンの数を指定します．
+					属性に 1 行あたりのチェックボックスの数を指定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -722,7 +1500,7 @@ public List<Map> optionItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<table id="aaa">
+<table id="option">
     <tr>
         <td>
             <label><input type="checkbox" name="form:option" value="A" />AAAA</label>
@@ -741,12 +1519,18 @@ public List<Map> optionItems;
 			</subsection>
 
 			<subsection name="複数項目のチェックボックスを縦に並べるには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
 				<p>
 					<code>&lt;span&gt;</code>
 					要素または
 					<code>&lt;div&gt;</code>
 					要素の
-					<code>style</code>
+					<code>te:layout</code>
 					属性に
 					<code>pageDirection</code>
 					を指定します (デフォルトは
@@ -755,7 +1539,7 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option" style="pageDirection">
+<div id="option" te:layout="pageDirection">
     <input type="checkbox" name="option" /> Option1
     <input type="checkbox" name="option" /> Option2
 </div>
@@ -771,7 +1555,7 @@ public List<Map> optionItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<table id="aaa">
+<table id="option">
     <tr>
         <td>
             <label><input type="checkbox" name="form:option" value="A" />AAAA</label>

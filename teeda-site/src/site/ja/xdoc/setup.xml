@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>General - セットアップ</title>
+	</properties>
+	<body>
+		<section name="セットアップ">
+			<ul>
+				<li>
+					<a href="#開発環境へのインストール">開発環境へのインストール</a>
+					<ul>
+						<li>
+							<a href="#Eclipse">Eclipse</a>
+						</li>
+						<li>
+							<a href="#Maven2">Maven2</a>
+						</li>
+						<li>
+							<a href="#JDK">JDK</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#実行環境へのデプロイ">実行環境へのデプロイ</a>
+					<ul>
+						<li>
+							<a href="#Tomcat">Tomcat</a>
+						</li>
+						<li>
+							<a href="#WebSphere">WebSphere</a>
+						</li>
+						<li>
+							<a href="#GlassFish">GlassFish</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+
+		<section name="開発環境へのインストール">
+			<subsection name="Eclipse">
+				<p></p>
+			</subsection>
+
+			<subsection name="Maven2">
+				<p></p>
+			</subsection>
+
+			<subsection name="JDK">
+				<p></p>
+			</subsection>
+		</section>
+
+		<section name="実行環境へのデプロイ">
+			<subsection name="Tomcat">
+				<p></p>
+			</subsection>
+
+			<subsection name="WebSphere">
+				<p></p>
+			</subsection>
+
+			<subsection name="GlassFish">
+				<p></p>
+			</subsection>
+		</section>
+	</body>
+</document>

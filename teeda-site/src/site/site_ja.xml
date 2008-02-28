@@ -48,9 +48,11 @@
 		<menu name="General">
 			<item name="環境" href="env.html" />
 			<item name="セットアップ" href="setup.html" collapse="true">
-				<item name="開発環境へのインストール" href="setup_develop.html" />
-				<item name="実行環境へのデプロイ" href="setup_deploy.html" />
+				<item name="開発環境へのインストール"
+					href="setup.html#開発環境へのインストール" />
+				<item name="実行環境へのデプロイ" href="setup.html#実行環境へのデプロイ" />
 			</item>
+			<item name="FAQ" href="faq.html" />
 		</menu>
 
 		<menu name="Teeda Core">
@@ -59,7 +61,7 @@
 		</menu>
 
 		<menu name="Teeda Extension">
-			<item name="サンプル解説" href="ext_example.html" />
+			<item name="概要" href="ext_about.html" />
 
 			<item name="チュートリアル" href="ext_tutorial.html"
 				collapse="true">
@@ -67,6 +69,8 @@
 				<item name="" href="" />
 				<item name="" href="" />
 			</item>
+
+			<item name="サンプル解説" href="ext_example.html" />
 
 			<item name="概念" href="ext_concept.html" collapse="true">
 				<item name="ページモデル" href="ext_concept_page.html" />
@@ -85,19 +89,25 @@
 					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
 				</item>
 
-				<item name="リンク" href="ext_rev_link.html"/>
+				<item name="リンク" href="ext_rev_link.html" />
 
 				<item name="入力フォーム" href="ext_rev_input.html"
 					collapse="true">
 					<item name="フォーム" href="ext_rev_input.html#フォーム" />
 					<item name="テキストフィールド"
 						href="ext_rev_input.html#テキストフィールド" />
+					<item name="パスワードフィールド"
+						href="ext_rev_input.html#パスワードフィールド" />
 					<item name="テキストエリア"
 						href="ext_rev_input.html#テキストエリア" />
-					<item name="ラジオボタン"
-						href="ext_rev_input.html#ラジオボタン静的" />
-					<item name="チェックボックス"
-						href="ext_rev_input.html#チェックボックス" />
+					<item name="ラジオボタン (静的)"
+						href="ext_rev_input.html#ラジオボタン_静的" />
+					<item name="ラジオボタン (動的)"
+						href="ext_rev_input.html#ラジオボタン_動的" />
+					<item name="チェックボックス (単一項目)"
+						href="ext_rev_input.html#チェックボックス_単一項目" />
+					<item name="チェックボックス (複数項目)"
+						href="ext_rev_input.html#チェックボックス_複数項目" />
 					<item name="選択リスト (単一選択)"
 						href="ext_rev_input.html#選択リスト単一選択" />
 					<item name="選択リスト (複数選択)"
@@ -114,9 +124,8 @@
 				<item name="コンバート" href="" />
 				<item name="繰り返し" href="" />
 				<item name="条件分岐" href="" />
-				<item name="画面遷移" href="" />
-				<item name="プロパティ引継ぎ" href="" />
 				<item name="レイアウト" href="" />
+				<item name="画面遷移" href="" />
 			</item>
 
 			<item name="リファレンス" href="ext_ref.html" collapse="true">
@@ -130,10 +139,8 @@
 
 			<item name="TIPS" href="ext_tips.html" collapse="true">
 				<item name="テンプレートXHTMLガイドライン"
-					href="ext_ref_xhtml.html" />
+					href="ext_tips_xhtml.html" />
 			</item>
-
-			<item name="FAQ" href="ext_faq.html" />
 		</menu>
 
 		<menu name="Teeda Ajax">
