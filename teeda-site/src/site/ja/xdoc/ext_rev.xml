@@ -8,6 +8,7 @@
 	</properties>
 	<body>
 		<section name="逆引きリファレンス">
+			<p>Teeda Extensionの使い方を「～をするには」という目的から逆引き形式で探せるドキュメントです．</p>
 			<ul>
 				<li>
 					<a href="ext_rev_output.html">出力</a>

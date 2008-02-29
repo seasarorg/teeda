@@ -114,6 +114,117 @@
 		</section>
 
 		<section name="All Releases">
+			<table>
+				<tr>
+					<td>
+						<a href="#a1.0.13-rc3">1.0.13-rc3</a>
+					</td>
+					<td>
+						<a href="#a1.0.13-rc2">1.0.13-rc2</a>
+					</td>
+					<td>
+						<a href="#a1.0.13-rc1">1.0.13-rc1</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0.12-sp1">1.0.12-sp1</a>
+					</td>
+					<td>
+						<a href="#a1.0.12">1.0.12</a>
+					</td>
+					<td>
+						<a href="#a1.0.12-rc2">1.0.12-rc2</a>
+					</td>
+					<td>
+						<a href="#a1.0.12-rc1">1.0.12-rc1</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0.11-SP4">1.0.11-SP4</a>
+					</td>
+					<td>
+						<a href="#a1.0.11-SP3">1.0.11-SP3</a>
+					</td>
+					<td>
+						<a href="#a1.0.11-SP2">1.0.11-SP2</a>
+					</td>
+					<td>
+						<a href="#a1.0.11-SP1">1.0.11-SP1</a>
+					</td>
+					<td>
+						<a href="#a1.0.11">1.0.11</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0.10">1.0.10</a>
+					</td>
+					<td>
+						<a href="#a1.0.9">1.0.9</a>
+					</td>
+					<td>
+						<a href="#a1.0.8">1.0.8</a>
+					</td>
+					<td>
+						<a href="#a1.0.7">1.0.7</a>
+					</td>
+					<td>
+						<a href="#a1.0.6">1.0.6</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0.5">1.0.5</a>
+					</td>
+					<td>
+						<a href="#a1.0.4">1.0.4</a>
+					</td>
+					<td>
+						<a href="#a1.0.3">1.0.3</a>
+					</td>
+					<td>
+						<a href="#a1.0.2">1.0.2</a>
+					</td>
+					<td>
+						<a href="#a1.0.1">1.0.1</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0">1.0</a>
+					</td>
+					<td>
+						<a href="#a1.0-rc-1">1.0-rc-1</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#a1.0-beta-6">1.0-beta-6</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-5">1.0-beta-5</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-4">1.0-beta-4</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-3">1.0-beta-3</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-2">1.0-beta-2</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-1">1.0-beta-1</a>
+					</td>
+				</tr>
+			</table>
+			<ul>
+				<li>sp : service pack</li>
+				<li>rc : release candidate</li>
+			</ul>
+
 			<subsection name="1.0.13-rc3">
 				<table>
 					<tr>
@@ -158,6 +269,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.13-rc2">
 				<table>
 					<tr>
@@ -202,6 +314,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.13-rc1">
 				<table>
 					<tr>
@@ -246,6 +359,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.12-sp1">
 				<table>
 					<tr>
@@ -290,6 +404,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.12">
 				<table>
 					<tr>
@@ -334,6 +449,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.12-rc2">
 				<table>
 					<tr>
@@ -378,6 +494,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.12-rc1">
 				<table>
 					<tr>
@@ -422,6 +539,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-SP4">
 				<table>
 					<tr>
@@ -466,6 +584,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-SP3">
 				<table>
 					<tr>
@@ -510,6 +629,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-SP2">
 				<table>
 					<tr>
@@ -554,6 +674,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-SP1">
 				<table>
 					<tr>
@@ -593,6 +714,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11">
 				<table>
 					<tr>
@@ -625,6 +747,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-RC2">
 				<table>
 					<tr>
@@ -657,6 +780,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.11-RC1">
 				<table>
 					<tr>
@@ -689,6 +813,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.10">
 				<table>
 					<tr>
@@ -733,6 +858,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.9">
 				<table>
 					<tr>
@@ -777,6 +903,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.8">
 				<table>
 					<tr>
@@ -821,6 +948,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.7">
 				<table>
 					<tr>
@@ -865,6 +993,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.6">
 				<table>
 					<tr>
@@ -897,6 +1026,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.5">
 				<table>
 					<tr>
@@ -929,6 +1059,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.4">
 				<table>
 					<tr>
@@ -961,6 +1092,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.3">
 				<table>
 					<tr>
@@ -993,6 +1125,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.2">
 				<table>
 					<tr>
@@ -1020,6 +1153,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0.1">
 				<table>
 					<tr>
@@ -1047,6 +1181,7 @@
 					</tr>
 				</table>
 			</subsection>
+
 			<subsection name="1.0">
 				<table>
 					<tr>
@@ -1068,7 +1203,149 @@
 						<td>
 							<a
 								href="../download/2006-11-11/teeda-jsp-example-1.0.zip">
-								Teeda Tiger 1.0.1
+								Teeda JSP Example 1.0
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-rc-1">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-10-14/teeda-1.0-rc-1.zip">
+								Teeda 1.0-rc-1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-10-14/teeda-html-example-1.0-rc-1.zip">
+								Teeda HTML Example 1.0-rc-1
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-6">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-09-22/teeda-1.0-beta-6.zip">
+								Teeda 1.0-beta-6
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-09-22/teeda-html-example-1.0-beta-6.zip">
+								Teeda HTML Example 1.0-beta-6
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<a
+								href="../download/2006-09-22/teeda-jsp-example-1.0-beta-6.zip">
+								Teeda JSP Example 1.0-beta-6
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-5">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-07-13/teeda-1.0-beta-5.zip">
+								Teeda 1.0-beta-5
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-07-14/teeda-example-1.0-beta-5.zip">
+								Teeda Example 1.0-beta-5
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-4">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-06-21/teeda-1.0-beta-4.zip">
+								Teeda 1.0-beta-4
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-06-21/teeda-example-1.0-beta-4.zip">
+								Teeda Example 1.0-beta-4
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-3">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-06-16/teeda-1.0-beta-3.zip">
+								Teeda 1.0-beta-3
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-06-16/teeda-example-1.0-beta-3.zip">
+								Teeda Example 1.0-beta-3
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-2">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-04-11/teeda-1.0-beta-2.zip">
+								Teeda 1.0-beta-2
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-04-11/teeda-example-1.0-beta-2.zip">
+								Teeda Example 1.0-beta-2
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="1.0-beta-1">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2006-03-09/teeda-1.0-beta-1.zip">
+								Teeda 1.0-beta-1
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2006-03-09/teeda-example-1.0-beta-1.zip">
+								Teeda Example 1.0-beta-1
 							</a>
 						</td>
 					</tr>

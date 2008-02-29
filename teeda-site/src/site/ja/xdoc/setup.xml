@@ -4,89 +4,173 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>General - セットアップ</title>
+		<title>General - 開発環境のセットアップ</title>
 	</properties>
 	<body>
-		<section name="セットアップ">
+		<section name="開発環境のセットアップ">
 			<ul>
 				<li>
-					<a href="#開発環境へのインストール">開発環境へのインストール</a>
-					<ul>
-						<li>
-							<a href="#Eclipse">Eclipse</a>
-						</li>
-						<li>
-							<a href="#Maven2">Maven2</a>
-						</li>
-					</ul>
+					<a href="#Eclipseでの利用">Eclipseでの利用</a>
 				</li>
 				<li>
-					<a href="#実行環境へのデプロイ">実行環境へのデプロイ</a>
-					<ul>
-						<li>
-							<a href="#Tomcat">Tomcat</a>
-						</li>
-						<li>
-							<a href="#WebSphere">WebSphere</a>
-						</li>
-						<li>
-							<a href="#GlassFish">GlassFish</a>
-						</li>
-					</ul>
+					<a href="#Maven2での利用">Maven2での利用</a>
 				</li>
 			</ul>
 		</section>
 
-		<section name="開発環境へのインストール">
-			<subsection name="Eclipse">
-				<p></p>
+		<section name="Eclipseでの利用">
+			<p>
+				Teedaの配布ファイルは，他のSeasar2関連プロダクトの多くと同様，
+				Eclipseプロジェクトをアーカイブしたものになっています．
+			</p>
+
+			<subsection name="事前条件">
+				<p>事前に以下のプロダクトをワークスペースにインポートしてください．</p>
+				<ul>
+					<li>
+						<a href="http://s2container.seasar.org">
+							Seasar2
+						</a>
+					</li>
+					<li>
+						<a href="http://s2container.seasar.org">
+							S2-Tiger
+						</a>
+						(Teeda-Tigerを使う場合)
+					</li>
+				</ul>
 			</subsection>
 
-			<subsection name="Maven2">
-				<p></p>
+			<subsection name="インポート">
+				<p>以下の手順でTeedaをEclipseワークスペースにインポートしてください．</p>
+				<ul>
+					<li>
+						<p>
+							ダウンロードしたTeedaおよびTeeda-Tigerの配布ファイルをEclipseのワークスペースまたは適当なディレクトリに解凍してください．
+						</p>
+					</li>
+					<li>
+						<p>
+							Eclipseの「File」－「Import」メニューで「Import
+							Wizard」を開きます．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Select a import source」で「General」－「Existing
+							Project into Workspace」を選択し，
+							「Next」ボタンを押下します．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Select a root
+							directory」でTeedaおよびTeeda-Tigerの配布ファイルを解凍したディレクトリを指定します．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Projects」で "teeda"，"teeda-tiger"が
+							チェックされていることを確認して「Finish」ボタンを押下します．
+						</p>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="Teedaプロジェクトの参照">
+				<p>以下の手順でTeedaを利用するJavaプロジェクトからTeedaを参照してください．</p>
+				<ul>
+					<li>
+						<p>
+							Teedaを利用するJavaプロジェクトを右クリックして「Properties」メニューを選択します．
+						</p>
+					</li>
+					<li>
+						<p>
+							左のペインで「Java Build
+							Path」を，右のペインで「Projects」を選択します．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Add」ボタンを押下し，「Select projects to add:」から
+							"teeda"および"teeda-tiger"をチェックして「OK」ボタンを押下します．
+						</p>
+					</li>
+					<li>
+						<p>「OK」ボタンを押下します．</p>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 
-		<section name="実行環境へのデプロイ">
-			<subsection name="Tomcat">
-				<p></p>
-			</subsection>
+		<section name="Maven2での利用">
+			<p>
+				TeedaはMaven2に対応しており，SeasarプロジェクトのMaven2リポジトリにデプロイされています．
+			</p>
 
-			<subsection name="WebSphere">
+			<subsection name="Maven2リポジトリ">
 				<p>
-					「
+					SeasarプロジェクトのMaven2リポジトリの利用方法については 「
 					<a
-						href="http://www.ibm.com/developerworks/jp/offers/seasar2/">
-						IBM developerWorks Japan : Seasar2 シリーズ
+						href="http://www.seasar.org/wiki/index.php?Maven2RepoRemote">
+						Maven2RepoRemote
 					</a>
-					」の「
-					<a
-						href="http://www.ibm.com/developerworks/jp/java/library/j_j-seasar01/">
-						Seasar2: 第 1 回 WebSphere Application Server へ
-						Web アプリケーションをデプロイする
-					</a>
-					」を参照してください．
+					」を 参照してください．
 				</p>
 			</subsection>
 
-			<subsection name="GlassFish">
-				<p>
-					<code>WEB-INF</code>
-					に
-					<code>sun-web.xml</code>
-					ファイルを作成してください．
-				</p>
-				<h5>WEB-INF/sun-web.xml</h5>
-				<source><![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sun-web-app 
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Servlet 2.5//EN" 
-    "http://www.sun.com/software/appserver/dtds/sun-web-app_2_5-0.dtd">
-<sun-web-app error-url="">
-    <class-loader delegate="false" />
-    <property name="useMyFaces" value="true" />
-</sun-web-app>
-]]></source>
+			<subsection name="グループID・成果物ID">
+				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
+				<ul>
+					<li>
+						<a href="teeda-core/project-summary.html">
+							Teeda Core
+						</a>
+					</li>
+					<li>
+						<a
+							href="teeda-extension/project-summary.html">
+							Teeda Extension
+						</a>
+					</li>
+					<li>
+						<a href="teeda-ajax/project-summary.html">
+							Teeda Ajax
+						</a>
+					</li>
+					<li>
+						<a href="teeda-tiger/project-summary.html">
+							Teeda Tiger
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="依存関係">
+				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
+				<ul>
+					<li>
+						<a href="teeda-core/dependencies.html">
+							Teeda Core
+						</a>
+					</li>
+					<li>
+						<a href="teeda-extension/dependencies.html">
+							Teeda Extension
+						</a>
+					</li>
+					<li>
+						<a href="teeda-ajax/dependencies.html">
+							Teeda Ajax
+						</a>
+					</li>
+					<li>
+						<a href="teeda-tiger/dependencies.html">
+							Teeda Tiger
+						</a>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 	</body>

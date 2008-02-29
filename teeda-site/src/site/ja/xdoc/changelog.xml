@@ -87,11 +87,13 @@
 				</tr>
 				<tr>
 					<td>
-						<a href="#1.0">1.0</a>
+						<a href="#a1.0">1.0</a>
 					</td>
 					<td>
 						<a href="#a1.0-rc-1">1.0-rc-1</a>
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<a href="#a1.0-beta-6">1.0-beta-6</a>
 					</td>
@@ -102,14 +104,28 @@
 						<a href="#a1.0-beta-4">1.0-beta-4</a>
 					</td>
 					<td>
-						<a href="#a1.0-beta3">1.0-beta3</a>
+						<a href="#a1.0-beta-3">1.0-beta-3</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-2">1.0-beta-2</a>
+					</td>
+					<td>
+						<a href="#a1.0-beta-1">1.0-beta-1</a>
 					</td>
 				</tr>
 			</table>
+			<ul>
+				<li>sp : service pack</li>
+				<li>rc : release candidate</li>
+			</ul>
 		</section>
 
 		<section name="1.0.13-rc3">
 			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-rc2">1.0.13-rc2</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -162,6 +178,10 @@
 				</ul>
 			</subsection>
 			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-rc1">1.0.13-rc1</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -244,6 +264,10 @@
 
 		<section name="1.0.13-rc1">
 			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.12">1.0.12</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -303,6 +327,10 @@
 
 		<section name="1.0.12-sp1">
 			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.12">1.0.12</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -335,6 +363,10 @@
 
 		<section name="1.0.12">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.12-rc2">1.0.12-rc2</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Improvement
@@ -357,6 +389,10 @@
 
 		<section name="1.0.12-rc2">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.12-rc1">1.0.12-rc1</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -481,6 +517,10 @@
 				</ul>
 			</subsection>
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.11">1.0.11</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -823,6 +863,10 @@
 
 		<section name="1.0.11-SP4">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.11-SP3">1.0.11-SP3</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -841,8 +885,13 @@
 				</ul>
 			</subsection>
 		</section>
+
 		<section name="1.0.11-SP3">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.11-SP2">1.0.11-SP2</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -865,6 +914,10 @@
 
 		<section name="1.0.11-SP2">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.11-SP1">1.0.11-SP1</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -886,6 +939,10 @@
 
 		<section name="1.0.11-SP1">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.11">1.0.11</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -931,6 +988,10 @@
 				</ul>
 			</subsection>
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.10">1.0.10</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1181,6 +1242,10 @@
 
 		<section name="1.0.10">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.9">1.0.9</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1223,6 +1288,10 @@
 
 		<section name="1.0.9">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.8">1.0.8</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1342,6 +1411,10 @@
 
 		<section name="1.0.8">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.7">1.0.7</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1452,6 +1525,10 @@
 
 		<section name="1.0.7">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.6">1.0.6</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1575,6 +1652,10 @@
 
 		<section name="1.0.6">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.5">1.0.5</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1644,6 +1725,10 @@
 
 		<section name="1.0.5">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.4">1.0.4</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1756,6 +1841,10 @@
 
 		<section name="1.0.4">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.3">1.0.3</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -1943,6 +2032,10 @@
 
 		<section name="1.0.3">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.2">1.0.2</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2124,6 +2217,10 @@
 
 		<section name="1.0.2">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0.1">1.0.1</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2204,6 +2301,10 @@
 
 		<section name="1.0.1">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0">1.0</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2232,6 +2333,10 @@
 
 		<section name="1.0">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-rc-1">1.0-rc-1</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2331,6 +2436,10 @@
 
 		<section name="1.0-rc-1">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-6">1.0-beta-6</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2436,6 +2545,10 @@
 
 		<section name="1.0-beta-6">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-5">1.0-beta-5</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2819,6 +2932,10 @@
 
 		<section name="1.0-beta-5">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-4">1.0-beta-4</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Bug
@@ -2998,6 +3115,10 @@
 
 		<section name="1.0-beta-4">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-3">1.0-beta-3</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Teeda Core
@@ -3035,8 +3156,12 @@
 			</subsection>
 		</section>
 
-		<section name="1.0-beta3">
+		<section name="1.0-beta-3">
 			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-2">1.0-beta-2</a>
+					からの変更点は以下の通りです．
+				</p>
 				<ul>
 					<li>
 						Teeda Core
@@ -3072,6 +3197,39 @@
 							</li>
 						</ul>
 					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="1.0-beta-2">
+			<subsection name="変更内容">
+				<p>
+					<a href="a1.0-beta-1">1.0-beta-1</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Teeda Core
+						<ul>
+							<li>S2JSFがTeeda上で動くようになりました。</li>
+							<li>ラベル対応（エラーメッセージをわかりやすく）</li>
+							<li>
+								Converter/Validator/UIComponentのDI対応（ApplicationImplのDI対応）
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="1.0-beta-1">
+			<subsection name="リリース内容">
+				<ul>
+					<li>
+						JSF1.1の標準機能（UIComponent、Validator、Converterなど）
+					</li>
+					<li>DIとの連携機能</li>
+					<li>TeedaUnitの大枠。Mock類。</li>
 				</ul>
 			</subsection>
 		</section>

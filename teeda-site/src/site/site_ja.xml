@@ -47,11 +47,8 @@
 
 		<menu name="General">
 			<item name="環境" href="env.html" />
-			<item name="セットアップ" href="setup.html" collapse="true">
-				<item name="開発環境へのインストール"
-					href="setup.html#開発環境へのインストール" />
-				<item name="実行環境へのデプロイ" href="setup.html#実行環境へのデプロイ" />
-			</item>
+			<item name="開発環境のセットアップ" href="setup.html" />
+			<item name="実行環境へのデプロイ" href="deploy.html" />
 			<item name="FAQ" href="faq.html" />
 		</menu>
 
