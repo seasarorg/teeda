@@ -38,6 +38,9 @@
 						<li>
 							<a href="#ページクラスの命名規約">ページクラスの命名規約</a>
 						</li>
+						<li>
+							<a href="#ページ名の命名規約">ページ名の命名規約</a>
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -252,6 +255,27 @@ examples.teeda.web.hello.HelloPage
 					<code>examples.teeda</code>
 					がルートパッケージです．
 				</p>
+			</subsection>
+
+			<subsection name="ページ名の命名規約">
+				<p>
+					ページを表す名前は，
+					<var>ビュールート</var>
+					ディレクトリを基点として，
+					サブアプリケーション単位のサブディレクトリとページクラスの名前をアンダースコア
+					<code>'_'</code>
+					でつなげたものです．
+					ただし，サブディレクトリおよびページクラスはJavaBeansにおけるプロパティの規約に従い，
+					先頭を小文字にします (先頭の文字と2文字目がともに大文字の場合はそのまま)．
+				</p>
+				<p>
+					以下は，
+					<code>/view/hello/hello.html</code>
+					に対応するページ名の例です．
+				</p>
+				<source><![CDATA[
+hello_helloPage
+]]></source>
 			</subsection>
 		</section>
 	</body>

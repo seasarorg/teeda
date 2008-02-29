@@ -18,9 +18,6 @@
 						<li>
 							<a href="#Maven2">Maven2</a>
 						</li>
-						<li>
-							<a href="#JDK">JDK</a>
-						</li>
 					</ul>
 				</li>
 				<li>
@@ -48,10 +45,6 @@
 			<subsection name="Maven2">
 				<p></p>
 			</subsection>
-
-			<subsection name="JDK">
-				<p></p>
-			</subsection>
 		</section>
 
 		<section name="実行環境へのデプロイ">
@@ -60,11 +53,40 @@
 			</subsection>
 
 			<subsection name="WebSphere">
-				<p></p>
+				<p>
+					「
+					<a
+						href="http://www.ibm.com/developerworks/jp/offers/seasar2/">
+						IBM developerWorks Japan : Seasar2 シリーズ
+					</a>
+					」の「
+					<a
+						href="http://www.ibm.com/developerworks/jp/java/library/j_j-seasar01/">
+						Seasar2: 第 1 回 WebSphere Application Server へ
+						Web アプリケーションをデプロイする
+					</a>
+					」を参照してください．
+				</p>
 			</subsection>
 
 			<subsection name="GlassFish">
-				<p></p>
+				<p>
+					<code>WEB-INF</code>
+					に
+					<code>sun-web.xml</code>
+					ファイルを作成してください．
+				</p>
+				<h5>WEB-INF/sun-web.xml</h5>
+				<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sun-web-app 
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Servlet 2.5//EN" 
+    "http://www.sun.com/software/appserver/dtds/sun-web-app_2_5-0.dtd">
+<sun-web-app error-url="">
+    <class-loader delegate="false" />
+    <property name="useMyFaces" value="true" />
+</sun-web-app>
+]]></source>
 			</subsection>
 		</section>
 	</body>

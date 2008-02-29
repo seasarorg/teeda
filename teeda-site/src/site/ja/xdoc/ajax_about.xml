@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Ajax</title>
+	</properties>
+	<body>
+		<section name="Teeda Ajax">
+				<p>
+					Teeda Ajaxは，Ajaxに特化したライブラリで， Teeda CoreやTeeda
+					Extensionとは独立して利用することも可能です．
+				</p>
+		</section>
+	</body>
+</document>

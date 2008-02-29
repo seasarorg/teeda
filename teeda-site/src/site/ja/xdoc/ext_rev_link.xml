@@ -10,6 +10,9 @@
 		<section name="リンク">
 			<ul>
 				<li>
+					<a href="#リンクを使うには">リンクを使うには</a>
+				</li>
+				<li>
 					<a href="#リンクのパラメータを動的に変えるには">リンクのパラメータを動的に変えるには</a>
 				</li>
 				<li>
@@ -21,15 +24,47 @@
 		</section>
 
 		<section name="リンク">
-			<subsection name="リンクのパラメータを動的に変えるには">
+			<subsection name="リンクを使うには">
 				<p>
 					<code>&lt;a&gt;</code>
 					要素に
 					<code>id</code>
-					属性を付け，
+					属性を付けて
 					<code>go</code>
-					で始まる値とします．
+					で始まる値を指定し，
+					<code>href</code>
+					属性で遷移先のURLを指定します．
 				</p>
+				<p>
+					実行時， クッキーが無効のブラウザに対しては
+					<code>href</code>
+					属性にURLリライティングでセッションIDが埋め込まれます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<a id="goNext" href="next.html">次ページへ</a>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>クッキーが有効なブラウザからアクセスされた場合， レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<a id="goNext" href="next.html>次ページへ</a>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>クッキーが無効なブラウザからアクセスされた場合， レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<a id="goNext" href="next.html;jsessionid=DCFD14BF14B9F71050A3FC36E8D465EF">次ページへ</a>
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="ext_rev_output.html#テンプレートHTMLの命名規約">
+							テンプレートHTMLの命名規約
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="リンクのパラメータを動的に変えるには">
 				<p>
 					<code>href</code>
 					属性にパラメータを含むURLを指定し，
@@ -48,7 +83,7 @@
 					<code>fixid_</code>
 					を付加します． レンダリング時，
 					<code>fixed_</code>
-					は取り除かれ， パラメータ値は
+					は取り除かれ， パラメータ値はテンプレートHTMLの
 					<code>href</code>
 					属性の値がそのままレンダリングされます．
 				</p>
@@ -133,22 +168,9 @@ foo.link=次ページへ
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						「
-						<a href="ext_rev_output.html">出力</a>
-						」－「
-						<a href="ext_rev_output.html#ボディ">ボディ</a>
-						」－「
 						<a href="ext_rev_output.html#タグを出力したくない場合には">
 							タグを出力したくない場合には
 						</a>
-						」
-					</li>
-					<li>
-						「
-						<a href="ext_rev_output.html">出力</a>
-						」－「
-						<a href="ext_rev_output.html#属性">属性</a>
-						」
 					</li>
 				</ul>
 			</subsection>
