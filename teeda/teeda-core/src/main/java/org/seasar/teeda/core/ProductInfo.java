@@ -15,27 +15,43 @@
  */
 package org.seasar.teeda.core;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
+
 /**
  * @author shot
  * @author manhole
  */
 public class ProductInfo {
 
-    private static final String MAJOR_VERSION = "1";
+    private static final String POM_PROPERTIES_NAME = "META-INF/maven/org.seasar.teeda/teeda-core/pom.properties";
 
-    private static final String MINOR_VERSION = "0";
-
-    private static final String LOCAL_VERSION = "12";
-
-    private static boolean isSnapshot = false;
+    private static final String UNKNOWN_VERSION = "unknown";
 
     public static String getProductName() {
         return "Teeda";
     }
 
     public static String getVersion() {
-        return MAJOR_VERSION + "." + MINOR_VERSION + "." + LOCAL_VERSION +
-                ((isSnapshot) ? "-SNAPSHOT" : "");
+        try {
+            final URL url = Thread.currentThread().getContextClassLoader()
+                    .getResource(POM_PROPERTIES_NAME);
+            if (url == null) {
+                return UNKNOWN_VERSION;
+            }
+            final InputStream is = url.openStream();
+            try {
+                Properties props = new Properties();
+                props.load(is);
+                return props.getProperty("version");
+            } finally {
+                is.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return UNKNOWN_VERSION;
+        }
     }
 
     /*
