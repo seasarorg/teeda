@@ -1,5 +1,5 @@
 <project name="teeda-tiger" default="dist" basedir=".">
-	<property name="ver" value="1.0.13-rc3"/>
+	<property name="ver" value="1.0.13-rc4-SNAPSHOT"/>
 
 	<target name="dist">
 		<zip zipfile="target/teeda-tiger-${ver}.zip">
