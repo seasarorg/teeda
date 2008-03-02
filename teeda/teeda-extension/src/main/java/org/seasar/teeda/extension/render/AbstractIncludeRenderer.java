@@ -18,15 +18,12 @@ package org.seasar.teeda.extension.render;
 import java.io.IOException;
 import java.util.Iterator;
 
-import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.RenderPreparable;
 
 import org.seasar.teeda.core.render.AbstractRenderer;
-import org.seasar.teeda.extension.component.AbstractInclude;
-import org.seasar.teeda.extension.helper.PathHelper;
 import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 
 /**
@@ -35,39 +32,7 @@ import org.seasar.teeda.extension.html.HtmlComponentInvoker;
 public abstract class AbstractIncludeRenderer extends AbstractRenderer
         implements RenderPreparable {
 
-    private ViewHandler viewHandler;
-
-    private PathHelper pathHelper;
-
     private HtmlComponentInvoker htmlComponentInvoker;
-
-    /**
-     * @return Returns the viewHandler.
-     */
-    public ViewHandler getViewHandler() {
-        return viewHandler;
-    }
-
-    /**
-     * @param viewHandler The viewHandler to set.
-     */
-    public void setViewHandler(ViewHandler viewHandler) {
-        this.viewHandler = viewHandler;
-    }
-
-    /**
-     * @return Returns the pathHelper.
-     */
-    public PathHelper getPathHelper() {
-        return pathHelper;
-    }
-
-    /**
-     * @param pathHelper The pathHelper to set.
-     */
-    public void setPathHelper(PathHelper pathHelper) {
-        this.pathHelper = pathHelper;
-    }
 
     /**
      * @return Returns the htmlComponentInvoker.
@@ -86,7 +51,6 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        include(context, (AbstractInclude) component);
         for (Iterator i = component.getChildren().iterator(); i.hasNext();) {
             UIComponent child = (UIComponent) i.next();
             child.processDecodes(context);
@@ -101,18 +65,6 @@ public abstract class AbstractIncludeRenderer extends AbstractRenderer
             throws IOException {
         super.encodeEnd(context, component);
     }
-
-    protected void include(FacesContext context, AbstractInclude component) {
-        IncludedBody includedBody = getIncludedBody(context, component);
-        if (includedBody == null) {
-            return;
-        }
-        component.getChildren().addAll(includedBody.getComponentList());
-        component.setIncludedViewId(includedBody.getViewId());
-    }
-
-    protected abstract IncludedBody getIncludedBody(FacesContext context,
-            AbstractInclude component);
 
     protected void invoke(FacesContext context, String includedViewId) {
         String componentName = htmlComponentInvoker.getComponentName(

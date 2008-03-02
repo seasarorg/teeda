@@ -235,4 +235,7 @@
 
 	<component name="labelProvider"
 		class="org.seasar.teeda.extension.util.LabelProviderMap"/>
+
+	<component name="layoutBuilder"
+		class="org.seasar.teeda.extension.util.LayoutBuilder"/>
 </components>

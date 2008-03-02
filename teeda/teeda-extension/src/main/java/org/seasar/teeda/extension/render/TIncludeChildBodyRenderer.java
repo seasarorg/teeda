@@ -15,12 +15,6 @@
  */
 package org.seasar.teeda.extension.render;
 
-import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-
-import org.seasar.teeda.extension.component.AbstractInclude;
 import org.seasar.teeda.extension.component.TIncludeChildBody;
 
 /**
@@ -32,18 +26,4 @@ public class TIncludeChildBodyRenderer extends AbstractIncludeRenderer {
 
     public static final String RENDERER_TYPE = TIncludeChildBody.DEFAULT_RENDERER_TYPE;
 
-    public void encodeBegin(FacesContext context, UIComponent component)
-            throws IOException {
-        super.encodeBegin(context, component);
-        AbstractInclude inc = (AbstractInclude) component;
-        if (!inc.isIncluded()) {
-            include(context, inc);
-        }
-    }
-
-    protected IncludedBody getIncludedBody(FacesContext context,
-            AbstractInclude component) {
-
-        return TViewRootRenderer.popIncludedBody(context);
-    }
 }

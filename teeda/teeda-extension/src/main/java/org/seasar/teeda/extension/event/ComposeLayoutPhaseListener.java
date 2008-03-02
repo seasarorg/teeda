@@ -20,11 +20,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-import javax.faces.internal.UIComponentUtil;
-import javax.faces.render.Renderer;
 
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.teeda.extension.component.TViewRoot;
-import org.seasar.teeda.extension.render.TViewRootRenderer;
+import org.seasar.teeda.extension.util.LayoutBuilder;
 
 /**
  * @author koichik
@@ -41,15 +41,16 @@ public class ComposeLayoutPhaseListener implements PhaseListener {
     }
 
     public void afterPhase(final PhaseEvent event) {
+        final S2Container container = SingletonS2ContainerFactory
+                .getContainer();
         final FacesContext context = event.getFacesContext();
         final UIViewRoot viewRoot = context.getViewRoot();
-        if (viewRoot instanceof TViewRoot) {
-            final Renderer renderer = UIComponentUtil.getRenderer(context,
-                    viewRoot);
-            if (renderer instanceof TViewRootRenderer) {
-                final TViewRootRenderer viewRootRenderer = (TViewRootRenderer) renderer;
-                viewRootRenderer.layout(context, (TViewRoot) viewRoot);
-            }
+        if (viewRoot instanceof TViewRoot &&
+                container.hasComponentDef(LayoutBuilder.class)) {
+            final LayoutBuilder layoutBuilder = (LayoutBuilder) container
+                    .getComponent(LayoutBuilder.class);
+            layoutBuilder.layout(context, (TViewRoot) viewRoot);
+            layoutBuilder.processInclude(context, viewRoot);
         }
     }
 

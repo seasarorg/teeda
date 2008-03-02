@@ -18,15 +18,11 @@ package org.seasar.teeda.extension.render;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.internal.UIComponentUtil;
 
 import org.seasar.framework.log.Logger;
-import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.extension.component.AbstractInclude;
 import org.seasar.teeda.extension.component.TInclude;
-import org.seasar.teeda.extension.component.UIBody;
 
 /**
  * @author higa
@@ -45,35 +41,9 @@ public class TIncludeRenderer extends AbstractIncludeRenderer {
         super.encodeBegin(context, component);
         AbstractInclude inc = (AbstractInclude) component;
         if (!inc.isIncluded()) {
-            include(context, inc);
-        }
-        if (!inc.isIncluded()) {
             return;
         }
         invoke(context, inc.getIncludedViewId());
     }
 
-    protected IncludedBody getIncludedBody(FacesContext context,
-            AbstractInclude component) {
-
-        String src = ((TInclude) component).getSrc();
-        if (StringUtil.isEmpty(src)) {
-            return null;
-        }
-        String srcViewId = getPathHelper()
-                .fromViewRootRelativePathToViewId(src);
-        UIViewRoot viewRoot = getViewHandler().restoreView(context, srcViewId);
-        if (viewRoot == null) {
-            viewRoot = getViewHandler().createView(context, srcViewId);
-        }
-        if (viewRoot == null) {
-            return null;
-        }
-        UIComponent body = UIComponentUtil.findDescendant(viewRoot,
-                UIBody.class);
-        if (body == null) {
-            logger.log("WTDA0202", new Object[] { viewRoot.getViewId() });
-        }
-        return new IncludedBody(viewRoot.getViewId(), body.getChildren());
-    }
 }

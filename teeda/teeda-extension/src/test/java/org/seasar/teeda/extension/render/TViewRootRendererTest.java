@@ -15,9 +15,6 @@
  */
 package org.seasar.teeda.extension.render;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import javax.faces.context.FacesContext;
 
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -29,31 +26,6 @@ import org.seasar.teeda.extension.html.HtmlComponentInvoker;
  * @author shot
  */
 public class TViewRootRendererTest extends TeedaTestCase {
-
-    public void testPopIncludedBody_listNull() throws Exception {
-        Map requestMap = getFacesContext().getExternalContext().getRequestMap();
-        requestMap.put(TViewRootRenderer.LIST_KEY, null);
-        assertNull(TViewRootRenderer.popIncludedBody(getFacesContext()));
-    }
-
-    public void testPopIncludedBody_indexNull() throws Exception {
-        Map requestMap = getFacesContext().getExternalContext().getRequestMap();
-        requestMap.put(TViewRootRenderer.LIST_KEY, new ArrayList());
-        requestMap.put(TViewRootRenderer.POP_INDEX_KEY, null);
-        assertNull(TViewRootRenderer.popIncludedBody(getFacesContext()));
-    }
-
-    public void testPopIncludedBody() throws Exception {
-        Map requestMap = getFacesContext().getExternalContext().getRequestMap();
-        ArrayList list = new ArrayList();
-        list.add(new IncludedBody("aaa", new ArrayList()));
-        requestMap.put(TViewRootRenderer.LIST_KEY, list);
-        requestMap.put(TViewRootRenderer.POP_INDEX_KEY, new Integer(0));
-        IncludedBody popIncludedBody = TViewRootRenderer
-                .popIncludedBody(getFacesContext());
-        assertNotNull(popIncludedBody);
-        assertEquals("aaa", popIncludedBody.getViewId());
-    }
 
     public void testInvoke1() throws Exception {
         final boolean[] calls = { false, false };
