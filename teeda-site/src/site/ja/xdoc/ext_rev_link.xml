@@ -54,14 +54,6 @@
 				<source><![CDATA[
 <a id="goNext" href="next.html;jsessionid=DCFD14BF14B9F71050A3FC36E8D465EF">次ページへ</a>
 ]]></source>
-				<h4>関連項目</h4>
-				<ul>
-					<li>
-						<a href="ext_rev_output.html#テンプレートHTMLの命名規約">
-							テンプレートHTMLの命名規約
-						</a>
-					</li>
-				</ul>
 			</subsection>
 
 			<subsection name="リンクのパラメータを動的に変えるには">

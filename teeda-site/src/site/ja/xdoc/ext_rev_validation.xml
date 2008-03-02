@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - バリデーション</title>
+	</properties>
+	<body>
+		<section name="バリデーション">
+			<ul>
+				<li>
+					<a href="#ベーシック">ベーシック</a>
+					<ul>
+						<li>
+							<a href="#必須項目が入力されたかチェックするには">
+								必須項目が入力されたかチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#特定のサブミットボタンが押されたときだけチェックするには">
+								特定のサブミットボタンが押されたときだけチェックするには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#文字列のバリデーション">文字列のバリデーション</a>
+					<ul>
+						<li>
+							<a href="#文字列の長さを文字数でチェックするには">
+								文字列の長さを文字数でチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#文字列の長さをバイト数でチェックするには">
+								文字列の長さをバイト数でチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#文字列が正規表現にマッチするかチェックするには">
+								文字列が正規表現にマッチするかチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#文字列がメールアドレスかチェックするには">
+								文字列がメールアドレスかチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#文字列がURLかチェックするには">
+								文字列がURLかチェックするには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#数値のバリデーション">数値のバリデーション</a>
+					<ul>
+						<li>
+							<a href="#数値の桁数をチェックするには">数値の桁数をチェックするには</a>
+						</li>
+						<li>
+							<a href="#数値が範囲内かチェックするには">
+								数値が範囲内かチェックするには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#複数の項目に跨ったバリデーション">複数の項目に跨ったバリデーション</a>
+					<ul>
+						<li>
+							<a href="#a2つの入力項目が等しいかチェックするには">
+								2つの入力項目が等しいかチェックするには
+							</a>
+						</li>
+						<li>
+							<a href="#a2つの入力項目の大小関係をチェックするには">
+								2つの入力項目の大小関係をチェックするには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">動的なバリデーション</a>
+					<ul>
+						<li>
+							<a href="#"></a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#メッセージ">メッセージ</a>
+					<ul>
+						<li>
+							<a href="#エラーメッセージを表示するには">
+								エラーメッセージを表示するには
+							</a>
+						</li>
+						<li>
+							<a href="#グローバルなメッセージを表示するには">
+								グローバルなメッセージを表示するには
+							</a>
+						</li>
+						<li>
+							<a href="#全てのメッセージを一カ所にまとめて表示するには">
+								全てのメッセージを一カ所にまとめて表示するには
+							</a>
+						</li>
+						<li>
+							<a href="#エラーとなった項目が目立つようにするには">
+								エラーとなった項目が目立つようにするには
+							</a>
+						</li>
+						<li>
+							<a href="#項目名を日本語で表示するには">項目名を日本語で表示するには</a>
+						</li>
+						<li>
+							<a href="#項目名をプロパティファイルから表示するには">
+								項目名をプロパティファイルから表示するには
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+
+		<section name="ベーシック">
+			<subsection name="必須項目が入力されたかチェックするには">
+				<p>
+					必須項目であるページクラスのプロパティにアノテーションで
+					<code>TRequiredValidator</code>
+					を指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Required
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TRequiredValidator = "";
+public String name;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，ブラウザで値が入力されないとバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="特定のサブミットボタンが押されたときだけチェックするには">
+				<div class="sidebar">
+					本ドキュメントで紹介する全てのバリデータに
+					<code>target</code>
+					属性があります．
+				</div>
+				<p>
+					アノテーションの
+					<code>target</code>
+					属性でチェック対象となるサブミットボタンの
+					<code>id</code>
+					属性の値を指定します．複数の値をカンマ (
+					<code>','</code>
+					) 区切りで列挙することができます．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Required(target = "doNext")
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TRequiredValidator = "target='doNext'";
+public String name;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>doNext</code>
+					ボタンが押されたときだけ
+					<code>name</code>
+					フィールドが入力されているかチェックが行われます．
+				</p>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+		</section>
+
+		<section name="文字列のバリデーション">
+			<subsection name="文字列の長さを文字数でチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>TLengthValidator</code>
+					を指定します．
+					<code>minimum</code>
+					属性で最低の長さを，
+					<code>maximum</code>
+					属性で最大の長さを設定します． どちらかの指定を省略することもできます．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Length(minimum = 3, maximum = 5)
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TLengthValidator = "minimum=3, maximun=5";
+public String name;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列が3～5文字でなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="文字列の長さをバイト数でチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>TByteLengthValidator</code>
+					を指定します．
+					<code>minimum</code>
+					属性で最低のバイト数を，
+					<code>maximum</code>
+					属性で最大のバイト数を設定します． どちらかの指定を省略することもできます．
+				</p>
+				<div class="sidebar">
+					1.0.13以前はTigerアノテーションでの指定はできません．
+				</div>
+				<p>
+					<code>charSet</code>
+					属性で文字列からバイト列に変換するエンコーディングを設定することもできます．
+					省略するとプラットフォームデフォルトのエンコーディングが使われます．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@ByteLength(minimum = 5, maximum = 10)
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TByteLengthValidator = "minimum=5, maximun=10";
+public String name;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時， 入力された文字列をプラットフォームデフォルトのエンコーディングで変換したバイト列の長さが，
+					5～10バイトでなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="文字列が正規表現にマッチするかチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>TRegularExpressionValidator</code>
+					を指定し，
+					<code>pattern</code>
+					属性で正規表現を設定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@RegularExpression(pattern = "\\w{6,10}")
+public String password;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String password_TRegularExpressionValidator = "pattern='\\w{6,10}'";
+public String password;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列が正規表現にマッチしなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="文字列がメールアドレスかチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>EmailValidator</code>
+					を指定します．
+					<code>pattern</code>
+					属性でメールアドレスとして受け入れる正規表現を設定することができます． 省略した場合のデフォルトは
+					<code><![CDATA[^\p{ASCII}+@(([-a-z0-9]+\.)*[a-z]+|\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])]]></code>
+					です．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Email
+public String mailAddress;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_EmailValidator = "";
+public String mailAddress;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列がメールアドレスにマッチしなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="文字列がURLかチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>UrlValidator</code>
+					を指定します．
+					<code>pattern</code>
+					属性でメールアドレスとして受け入れる正規表現を設定することができます． 省略した場合のデフォルトは
+					<code><![CDATA[https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+]]></code>
+					です．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Url
+public String url;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String url_UrlValidator = "";
+public String url;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列がURLにマッチしなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="数値のバリデーション">
+			<subsection name="数値の桁数をチェックするには">
+				<div class="sidebar">このバリデータは入力値を文字列のままチェックします．</div>
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>TNumberLengthValidator</code>
+					を指定します．
+					<code>integralMin</code>
+					属性で整数部の最低の長さを，
+					<code>integralMax</code>
+					属性で整数部の最大の長さを設定します．
+					<code>fractionMin</code>
+					属性で小数部の最低の長さを，
+					<code>fractionMax</code>
+					属性で小数部の最大の長さを設定します． いずれかの指定を省略することもできます．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@NumberLength(fractionMin = 2, fractionMax = 2)
+public BigDecimal exchangeRate;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TNumberLengthValidator = "fractionMin=2, fractionMax=2";
+public BigDecimal exchangeRate;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された数値の小数部が2桁でなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="数値が範囲内かチェックするには">
+				<p>
+					ページクラスのプロパティにアノテーションで
+					<code>TLongRangeValidator</code>
+					(整数の場合) または
+					<code>TDoubleRangeValidator</code>
+					(実数の場合) を指定します．
+					<code>minimum</code>
+					属性で最低の値を，
+					<code>maximum</code>
+					属性で最大の値を設定します． いずれかの指定を省略することもできます．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@LongRange(minimum = 0, maximum = 100)
+public int score;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TLongRangeValidator = "minimum=0, maximum=100";
+public int score;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された数値が0～100の範囲内でなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="複数の項目に跨ったバリデーション">
+			<subsection name="2つの入力項目が等しいかチェックするには">
+				<p>
+					テンプレートHTML上で
+					<strong>後から出てくる入力項目</strong>
+					に対応するページクラスのプロパティに， アノテーションで
+					<code>TEqualValidator</code>
+					を指定します．
+					<code>targetId</code>
+					属性で， 比較対象となる入力項目のプロパティ名を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+パスワード
+<input type="password" id="pwd1" /><br />
+パスワード
+(再確認)<input type="password" id="pwd2" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+public String pwd1;
+
+@Equal(targetId = "pwd1")
+public String pwd2;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String pwd2_TEqualValidator = "targetId='pwd1'";
+public String pwd1;
+public String pwd2;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>pwd1</code>
+					と
+					<code>pwd2</code>
+					に入力された値が異なると，バリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="2つの入力項目の大小関係をチェックするには">
+				<div class="sidebar">
+					大小関係をチェックできるのは，プロパティの型が
+					<code>java.lang.Comparable</code>
+					インタフェースを実装している場合だけです．
+				</div>
+				<p>
+					テンプレートHTML上で
+					<strong>後から出てくる入力項目</strong>
+					に対応するページクラスのプロパティに， 以下のアノテーションのいずれかを指定します
+					(括弧内はTigerアノテーションの名前)．
+				</p>
+				<dl>
+					<dt>
+						<code>TGreaterValidator</code>
+						(
+						<code>@Greater</code>
+						)
+					</dt>
+					<dd>アノテーションの付けられた項目が比較対象より大きいことをチェックします．</dd>
+					<dt>
+						<code>TGreaterEqualValidator</code>
+						(
+						<code>@GreaterEqual</code>
+						)
+					</dt>
+					<dd>
+						アノテーションの付けられた項目が比較対象より大きいか， または等しいことをチェックします．
+					</dd>
+					<dt>
+						<code>TLessValidator</code>
+						(
+						<code>@Less</code>
+						)
+					</dt>
+					<dd>アノテーションの付けられた項目が比較対象より小さいことをチェックします．</dd>
+					<dt>
+						<code>TLessEqualValidator</code>
+						(
+						<code>@LessEqual</code>
+						)
+					</dt>
+					<dd>
+						アノテーションの付けられた項目が比較対象より小さいか， または等しいことをチェックします．
+					</dd>
+				</dl>
+				<p>
+					<code>targetId</code>
+					属性で， 比較対象となる入力項目のプロパティ名を指定します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+開始 <input type="text" id="from" /><br />
+終了 <input type="text" id="to" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+public Integer from;
+
+@GreaterEqual(targetId = "from")
+public Integer to;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String to_TGreaterEqualValidator = "targetId='from'";
+public Integer from;
+public Integer to;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>to</code>
+					に入力された値が
+					<code>from</code>
+					に入力された値より小さいと，バリデーションでエラーとなります．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="動的なバリデーション"></section>
+
+		<section name="メッセージ">
+			<subsection name="エラーメッセージを表示するには">
+				<p>
+					属性を付け， その値をバリデーション対象の
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値 +
+					<code>"Message"</code>
+					を
+					<code>id</code>
+					属性とする
+					<code>&lt;span&gt;</code>
+					要素を記述します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<intpu type="text" id="name" />
+<span id="nameMessage">dummy</span>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，バリデーションでエラーになると次のように表示されます．
+				</p>
+				<source><![CDATA[
+<intpu type="text" id="name" name="form:name" class="onTeedaError" />
+<span id="nameMessage">値を入力してください(name)</span>
+]]></source>
+			</subsection>
+
+			<subsection name="グローバルなメッセージを表示するには">
+				<p>
+					相関チェックによるエラーメッセージなど， 特定の入力項目に属さないメッセージを表示するには，
+					<code>id</code>
+					属性が
+					<code>"messages"</code>
+					の
+					<code>&lt;span&gt;</code>
+					要素を記述します．
+				</p>
+				<p>
+					グローバルなメッセージがある場合，
+					<code>&lt;span&gt;</code>
+					要素は
+					<code>&lt;ul&gt;</code>
+					要素に置き換えられ，個々のメッセージが
+					<code>&lt;li&gt;</code>
+					要素として出力されます．
+				</p>
+				<p>
+					グローバルなメッセージがない場合，
+					<code>&lt;span&gt;</code>
+					要素も
+					<code>&lt;ul&gt;</code>
+					要素も出力されません． このため，
+					<code>&lt;span&gt;</code>
+					要素の外側に
+					<code>&lt;div&gt;</code>
+					要素を記述することを推奨します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div>
+    <span id="messages" />
+</div>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，バリデーションでエラーになると次のように表示されます．
+				</p>
+				<source><![CDATA[
+<div>
+    <ul id="messages">
+        <li>"to"の値は"form"よりも大きくなくてはいけません。</li>
+    </ul>
+</div>
+]]></source>
+			</subsection>
+
+			<subsection name="全てのメッセージを一カ所にまとめて表示するには">
+				<p>
+					<code>id</code>
+					属性が
+					<code>"allMessages"</code>
+					の
+					<code>&lt;span&gt;</code>
+					要素を記述します．
+				</p>
+				<p>
+					メッセージがある場合，
+					<code>&lt;span&gt;</code>
+					要素は
+					<code>&lt;ul&gt;</code>
+					要素に置き換えられ，個々のメッセージが
+					<code>&lt;li&gt;</code>
+					要素として出力されます．
+				</p>
+				<p>
+					表示するメッセージがない場合，
+					<code>&lt;span&gt;</code>
+					要素も
+					<code>&lt;ul&gt;</code>
+					要素も出力されません． このため，
+					<code>&lt;span&gt;</code>
+					要素の外側に
+					<code>&lt;div&gt;</code>
+					要素を記述することを推奨します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<div>
+    <span id="allMessages" />
+</div>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，バリデーションでエラーになると次のように表示されます．
+				</p>
+				<source><![CDATA[
+<div>
+    <ul id="allMessages">
+        <li>値を入力してください(name)</li>
+        <li>"to"の値は"form"よりも大きくなくてはいけません。</li>
+    </ul>
+</div>
+]]></source>
+			</subsection>
+
+			<subsection name="エラーとなった項目が目立つようにするには">
+				<p>
+					エラーとなった要素は
+					<code>class</code>
+					属性に
+					<code>onTeedaError</code>
+					が追加されるので，CSSで背景を変えるなどして目立たせることができます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<style>
+    .onTeedaError {
+        background-color: #FFCCCC;
+    }
+</style>
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時， バリデーションでエラーになると，
+					テキストフィールドやテキストエリアの背景が設定した色で表示されます．
+				</p>
+			</subsection>
+
+			<subsection name="メッセージを変更するには">
+				<p>
+					アノテーションにメッセージIdを指定し，
+					<a href="ext_ref_resource.html#メッセージリソース">
+						メッセージリソース
+					</a>
+					ファイルに メッセージIdをキーとするプロパティを定義します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Required(messageId = "foo.name.required")
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TRequiredValidator = "messageId='foo.name.required'";
+public String name;
+]]></source>
+				<h5>例：メッセージリソースファイル (appMessage_ja.properties)</h5>
+				<source><![CDATA[
+foo.name.required=名前は絶対入れてね
+]]></source>
+			</subsection>
+
+			<subsection name="項目名を日本語で表示するには">
+				<p>
+					バリデーション対象となる
+					<code>&lt;input&gt;</code>
+					要素等に
+					<code>label</code>
+					属性で項目名を指定します．
+				</p>
+				<h5>例：テンプレートHTML (label_ja.properties)</h5>
+				<source><![CDATA[
+<intpu type="text" id="name" label="名前" />
+<span id="nameMessage">dummy</span>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，バリデーションでエラーになると次のように表示されます．
+				</p>
+				<source><![CDATA[
+<intpu type="text" id="name" name="form:name" class="onTeedaError" />
+<span id="nameMessage">値を入力してください(名前)</span>
+]]></source>
+			</subsection>
+
+			<subsection name="項目名をプロパティファイルから表示するには">
+				<p>
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
+					<var>pagename.id</var>
+					または
+					<var>id</var>
+					という名前のプロパティを定義します．
+					<var>id</var>
+					は， バリデーション対象となる
+					<code>&lt;input&gt;</code>
+					要素等の
+					<code>id</code>
+					属性の値です．
+				</p>
+				<p>
+					あるいは，バリデーション対象となる
+					<code>&lt;input&gt;</code>
+					要素等に
+					<code>label</code>
+					属性を付け， その値を
+					<var>key</var>
+					+
+					<code>Label</code>
+					とします．
+					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					ファイルに
+					<var>pagename.key</var>
+					または
+					<var>key</var>
+					という名前のプロパティを定義します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<intpu type="text" id="name" />
+<span id="nameMessage">dummy</span>
+]]></source>
+				<p>あるいは，</p>
+				<source><![CDATA[
+<intpu type="text" id="name" label="nameLabel" />
+<span id="nameMessage">dummy</span>
+]]></source>
+				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
+				<source><![CDATA[
+name=名前
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，バリデーションでエラーになると次のように表示されます．
+				</p>
+				<source><![CDATA[
+<intpu type="text" id="name" name="form:name" class="onTeedaError" />
+<span id="nameMessage">値を入力してください(名前)</span>
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>

@@ -73,7 +73,9 @@
 				<item name="ページモデル" href="ext_concept_page.html" />
 				<item name="PRGパターン" href="ext_concept_prg.html" />
 				<item name="ライフサイクル" href="ext_concept_lifecycle.html" />
+				<item name="バインディング" href="ext_concept_binding.html" />
 				<item name="状態とスコープ" href="ext_concept_scope.html" />
+				<item name="レイアウト" href="ext_concept_layout.html" />
 			</item>
 
 			<item name="逆引きリファレンス" href="ext_rev.html"
@@ -117,7 +119,7 @@
 						href="ext_rev_input.html#サブミットボタン" />
 				</item>
 
-				<item name="バリデーション" href="" />
+				<item name="バリデーション" href="ext_rev_validation.html" />
 				<item name="コンバート" href="" />
 				<item name="繰り返し" href="" />
 				<item name="条件分岐" href="" />

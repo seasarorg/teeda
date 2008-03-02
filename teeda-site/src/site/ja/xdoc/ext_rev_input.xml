@@ -218,6 +218,14 @@
 							<a href="#サブミットボタンを使うには">サブミットボタンを使うには</a>
 						</li>
 						<li>
+							<a href="#二重サブミットを防止するには">二重サブミットを防止するには</a>
+						</li>
+						<li>
+							<a href="#二重サブミットをクライアント側で防止するには">
+								二重サブミットをクライアント側で防止するには
+							</a>
+						</li>
+						<li>
 							<a href="#サブミットボタンで画面遷移だけするには">
 								サブミットボタンで画面遷移だけするには
 							</a>
@@ -2547,7 +2555,7 @@ public Map map;
 				<source><![CDATA[
 <input type="submit" id="doSend" value="送信" />
 ]]></source>
-				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h5>例：ページクラスのメソッド (FooPage.java)</h5>
 				<source><![CDATA[
 public Class doSend() {
     ...
@@ -2581,6 +2589,68 @@ public Class doSend() {
 						</a>
 					</li>
 				</ul>
+			</subsection>
+
+			<subsection name="二重サブミットを防止するには">
+				<div class="sidebar">二重サブミット対策の詳細は「」を参照してください．</div>
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>id</code>
+					属性およびページクラスのメソッドを
+					<code>doOnce</code>
+					で始めます．
+				</p>
+				<p>
+					<code>id</code>
+					属性が
+					<code>doOnce</code>
+					で始まるサブミットボタンを含むフォームにはトランザクショントークンが埋め込まれます．
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					トランザクショントークンがチェックされ，二重サブミットを検出すると最初のサブミットに対する応答画面へリダイレクトするか，
+					エラー画面が表示されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="submit" id="doOnceSend" value="送信" />
+]]></source>
+				<h5>例：ページクラスのメソッド (FooPage.java)</h5>
+				<source><![CDATA[
+public Class doOnceSend() {
+    ...
+}
+]]></source>
+			</subsection>
+
+			<subsection name="二重サブミットをクライアント側で防止するには">
+				<div class="sidebar">
+					<a href="">te名前空間</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で名前空間宣言を指定する必要があります．
+				</div>
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>id</code>
+					属性を
+					<code>doOnce</code>
+					で始め，
+					<code>te:renderJs</code>
+					属性に
+					<code>true</code>
+					を指定します．
+				</p>
+				<p>
+					レンダリング時，二重サブミットを防止するJavaScriptを記述した
+					<code>&lt;script&gt;</code>
+					要素等が出力されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="submit" id="doOnceSend" value="送信" te:renderJs="true" />
+]]></source>
 			</subsection>
 
 			<subsection name="サブミットボタンで画面遷移だけするには">
