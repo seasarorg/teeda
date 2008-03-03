@@ -243,9 +243,6 @@ public String name;
 					<code>maximum</code>
 					属性で最大のバイト数を設定します． どちらかの指定を省略することもできます．
 				</p>
-				<div class="sidebar">
-					1.0.13以前はTigerアノテーションでの指定はできません．
-				</div>
 				<p>
 					<code>charSet</code>
 					属性で文字列からバイト列に変換するエンコーディングを設定することもできます．
@@ -373,7 +370,7 @@ public BigDecimal exchangeRate;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String name_TNumberLengthValidator = "fractionMin=2, fractionMax=2";
+public static final String exchangeRate_TNumberLengthValidator = "fractionMin=2, fractionMax=2";
 public BigDecimal exchangeRate;
 ]]></source>
 				<p>
@@ -402,7 +399,7 @@ public int score;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String name_TLongRangeValidator = "minimum=0, maximum=100";
+public static final String score_TLongRangeValidator = "minimum=0, maximum=100";
 public int score;
 ]]></source>
 				<p>

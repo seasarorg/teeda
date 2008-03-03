@@ -1094,10 +1094,11 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンで1行に描画される数を指定するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1145,10 +1146,11 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンを縦に並べるには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1202,10 +1204,11 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンでテーブルを使わずに描画するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1700,10 +1703,11 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスで1行に描画される数を指定するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1751,10 +1755,11 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスを縦に並べるには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1808,10 +1813,11 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスでテーブルを使わずに描画するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -2625,10 +2631,11 @@ public Class doOnceSend() {
 
 			<subsection name="二重サブミットをクライアント側で防止するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;input&gt;</code>

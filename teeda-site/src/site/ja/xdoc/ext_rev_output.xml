@@ -123,10 +123,11 @@ public String name;
 
 			<subsection name="特殊文字をエスケープしないで出力するには">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -155,10 +156,11 @@ public String name;
 
 			<subsection name="タグを出力したくない場合には">
 				<div class="sidebar">
-					<a href="">te名前空間</a>
-					を使用するには
+					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
-					要素で名前空間宣言を指定する必要があります．
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>

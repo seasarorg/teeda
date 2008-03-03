@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - コンバート</title>
+	</properties>
+	<body>
+		<section name="コンバート">
+			<ul>
+				<li>
+					<a href="#フォーマットを指定して文字列と数値を相互変換するには">
+						フォーマットを指定して文字列と数値を相互変換するには
+					</a>
+				</li>
+				<li>
+					<a href="#フォーマットを指定して文字列と日時を相互変換するには">
+						フォーマットを指定して文字列と日時を相互変換するには
+					</a>
+				</li>
+				<li>
+					<a href="#改行文字を_br_要素に変換してテキストエリアに表示するには">
+						改行文字を
+						<code>&lt;br&gt;</code>
+						要素に変換してテキストエリアに表示するには
+					</a>
+				</li>
+				<li>
+					<a href="#特定のサブミットボタンが押されたときだけコンバートするには">
+						特定のサブミットボタンが押されたときだけコンバートするには
+					</a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="コンバート">
+			<subsection name="フォーマットを指定して文字列と数値を相互変換するには">
+				<div class="sidebar">
+					フォーマットを指定しないで数値を変換する場合はコンバータを使用する必要はありません．
+				</div>
+				<p>
+					ページクラスのプロパティに以下のコンバータ (括弧内はTigerアノテーションの名前)
+					のいずれかを指定し，
+					<code>pattern</code>
+					プロパティでフォーマットを指定します．
+				</p>
+				<dl>
+					<dt>
+						<code>TNumberConverter (@NumberConverter)</code>
+					</dt>
+					<dd>文字列型と，プリミティブ型またはラッパー型の数値型を相互に変換します．</dd>
+					<dt>
+						<code>
+							TBigDecimalConverter (@BigDecimalConverter)
+						</code>
+					</dt>
+					<dd>
+						<div>
+							文字列型と
+							<code>java.math.BigDecimal</code>
+							を相互に変換します．
+						</div>
+						<div>
+							フォーマットの他，
+							<code>scale</code>
+							プロパティで精度を，
+							<code>roundingMode</code>
+							プロパティで丸めモードを指定することもできます．
+						</div>
+					</dd>
+				</dl>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@BigDecimalConverter(pattern = "#,##0.00")
+public BigDecimal exchangeRate;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String exchangeRate_TBigDecimalConverter = "pattern='#,##0.00'";
+public BigDecimal exchangeRate;
+]]></source>
+				<p>
+					レンダリング時，
+					<code>exchangeRate</code>
+					はカンマ区切り・小数点以下2桁で表示されます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列がパターンにマッチしなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="フォーマットを指定して文字列と日時を相互変換するには">
+				<div class="sidebar">
+					フォーマットを指定しないで日時に変換する場合はコンバータを使用する必要はありません．
+				</div>
+				<p>
+					ページクラスのプロパティに以下のコンバータ (括弧内はTigerアノテーションの名前)
+					のいずれかを指定し，
+					<code>pattern</code>
+					プロパティでフォーマットを指定します．
+				</p>
+				<dl>
+					<dt>
+						<code>
+							TDateTimeConverter (@DateTimeConverter)
+						</code>
+					</dt>
+					<dd>
+						文字列型と
+						<code>java.util.Date</code>
+						を相互に変換します． 変換結果の
+						<code>java.util.Date</code>
+						を
+						<code>java.util.Calendar</code>
+						や
+						<code>
+							java.sql.Date，java.sql.Time，java.sql.Timestamp
+						</code>
+						型のプロパティに設定する事ができます．
+					</dd>
+					<dt>
+						<code>
+							TTimestampConverter (@TimestampConverter)
+						</code>
+					</dt>
+					<dd>
+						文字列型と
+						<code>java.sql.Timestamp</code>
+						を相互に変換します．
+					</dd>
+				</dl>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@DateTimeConverter(pattern = "yyyy/MM/dd")
+public Date date;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String date_TDateTimeConverter = "pattern='yyyy/MM/dd'";
+public BigDecimal date;
+]]></source>
+				<p>
+					レンダリング時，
+					<code>date</code>
+					はスラッシュ区切りで表示されます．
+				</p>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，入力された文字列がパターンにマッチしなければバリデーションでエラーとなります．
+				</p>
+			</subsection>
+
+			<subsection name="改行文字を &lt;br&gt; 要素に変換してテキストエリアに表示するには">
+				<div class="sidebar">
+					テキストエリアに改行文字を出力しても，空白として扱われてしまいます．
+				</div>
+				<p>
+					<code>&lt;textare&gt;</code>
+					要素の
+					<code>id</code>
+					と同じ名前のプロパティに，
+					<code>
+						textareaSeparatorCharacterConverter
+						(@TextareaSeparatorCharacterConverter)
+					</code>
+					コンバータを指定します (括弧内はTigerアノテーションの名前)．
+				</p>
+				<div class="sidebar">
+					te名前空間を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
+				</div>
+				<p>
+					<code>textareaSeparatorCharacterConverter</code>
+					コンバータは，改行文字を
+					<code>&lt;br&gt;</code>
+					要素に置換する前に
+					<code><![CDATA['<'，'>'，'&']]></code>
+					等をエスケープするため， テンプレートHTMLでは
+					<code>&lt;textare&gt;</code>
+					要素の
+					<code>te:escape</code>
+					属性に
+					<code>false</code>
+					を指定する必要があります．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<textarea id="comments" te:escape="false">dummy</textarea>
+]]></source>
+
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@TextareaSeparatorCharacterConverter
+public String comments;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String comments_textareaSeparatorCharacterConverter = "";
+public String comments;
+]]></source>
+				<p>
+					レンダリング時，
+					<code>comments</code>
+					プロパティの値に含まれる改行文字 (
+					<code>"\r\n"，"\r"，"\n"</code>
+					) は
+					<code>&lt;br&gt;</code>
+					要素に置換されてレンダリングされます．
+				</p>
+			</subsection>
+
+			<subsection name="特定のサブミットボタンが押されたときだけコンバートするには">
+				<div class="sidebar">
+					本ドキュメントで紹介する全てのコンバータには
+					<code>target</code>
+					属性があります．
+				</div>
+				<p>
+					アノテーションの
+					<code>target</code>
+					属性でチェック対象となるサブミットボタンの
+					<code>id</code>
+					属性の値を指定します．複数の値をカンマ (
+					<code>','</code>
+					) 区切りで列挙することができます．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						<code>target</code>
+						で指定されなかったサブミットボタンが押された場合，
+						画面で入力された値はページクラスのプロパティに設定されません．
+					</p>
+				</div>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@TBigDecimalConverter(pattern = "#,##0.00", target="doExchange")
+public BigDecimal exchangeRate;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String exchangeRate_TBigDecimalConverter = 
+    "pattern='#,##0.00', target='doExchange'";
+public BigDecimal exchangeRate;
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>doExchange</code>
+					ボタンが押されたときだけ入力値が
+					<code>BigDecimal</code>
+					に変換され，
+					<code>exchangeRate</code>
+					プロパティに設定されます．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

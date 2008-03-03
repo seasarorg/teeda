@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title></title>
+	</properties>
+	<body>
+		<section name="">
+			<ul>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="宣言">
+			<subsection name="XML宣言">
+				<p></p>
+			</subsection>
+
+			<subsection name="文書型宣言">
+				<p></p>
+			</subsection>
+
+			<subsection name="名前空間宣言">
+				<p></p>
+				<h4>デフォルト名前空間</h4>
+				<p></p>
+				<h4>te名前空間</h4>
+				<p></p>
+			</subsection>
+		</section>
+
+		<section name="">
+			<subsection name="">
+				<p></p>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+		</section>
+	</body>
+</document>

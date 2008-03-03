@@ -134,11 +134,11 @@
 					<item name="メッセージ"
 						href="ext_rev_validation.html#メッセージ" />
 				</item>
-				<item name="コンバート" href="" />
-				<item name="繰り返し" href="" />
-				<item name="条件分岐" href="" />
-				<item name="レイアウト" href="" />
-				<item name="画面遷移" href="" />
+				<item name="コンバート" href="ext_rev_convert.html" />
+				<item name="繰り返し" href="ext_rev_foreach.html" />
+				<item name="条件分岐" href="ext_rev_condition.html" />
+				<item name="レイアウト" href="ext_rev_layout.html" />
+				<item name="画面遷移" href="ext_rev_transition.html" />
 			</item>
 
 			<item name="リファレンス" href="ext_ref.html" collapse="true">
