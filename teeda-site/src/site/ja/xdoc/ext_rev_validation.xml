@@ -83,16 +83,28 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#">動的なバリデーション</a>
+					<a href="#動的なバリデーション">動的なバリデーション</a>
 					<ul>
 						<li>
-							<a href="#"></a>
+							<a href="#ダイナミックバリデータを使用するには">
+								ダイナミックバリデータを使用するには
+							</a>
 						</li>
 						<li>
-							<a href="#"></a>
+							<a href="#複数のバリデータを使用するには">
+								複数のバリデータを使用するには
+							</a>
 						</li>
 						<li>
-							<a href="#"></a>
+							<a
+								href="#getValidatorメソッドの中でリクエストパラメータを参照するには">
+								get～Validator()メソッドの中でリクエストパラメータを参照するには
+							</a>
+						</li>
+						<li>
+							<a href="#doメソッドでバリデーションするには">
+								do～()メソッドでバリデーションするには
+							</a>
 						</li>
 					</ul>
 				</li>
@@ -100,9 +112,7 @@
 					<a href="#メッセージ">メッセージ</a>
 					<ul>
 						<li>
-							<a href="#エラーメッセージを表示するには">
-								エラーメッセージを表示するには
-							</a>
+							<a href="#メッセージを表示するには">メッセージを表示するには</a>
 						</li>
 						<li>
 							<a href="#グローバルなメッセージを表示するには">
@@ -158,9 +168,11 @@ public String name;
 
 			<subsection name="特定のサブミットボタンが押されたときだけチェックするには">
 				<div class="sidebar">
-					本ドキュメントで紹介する全てのバリデータに
+					本ドキュメントで紹介する多くのバリデータには
 					<code>target</code>
-					属性があります．
+					属性があります (
+					<a href="#複数のバリデータを使用するには">ValidatorChain</a>
+					を除きます)．
 				</div>
 				<p>
 					アノテーションの
@@ -190,10 +202,6 @@ public String name;
 					<code>name</code>
 					フィールドが入力されているかチェックが行われます．
 				</p>
-			</subsection>
-
-			<subsection name="">
-				<p></p>
 			</subsection>
 		</section>
 
@@ -526,14 +534,414 @@ public Integer to;
 			</subsection>
 		</section>
 
-		<section name="動的なバリデーション"></section>
+		<section name="動的なバリデーション">
+			<p>
+				実行時に動的に作成したバリデータを適用するすることができます．
+				この機能は「ダイナミックバリデータ」と呼ばれます．
+			</p>
+
+			<subsection name="ダイナミックバリデータを使用するには">
+				<p>
+					ダイナミックバリデータを適用するプロパティに対応する
+					<code>get</code>
+					+
+					<var>プロパティ名</var>
+					+
+					<code>Validator()</code>
+					という名前の
+					<code>public</code>
+					メソッドを作成します． 引数はなく，戻り値の型は
+					<code>javax.faces.validator.Validator</code>
+					とします．
+				</p>
+				<p>
+					<code>get～Validator()</code>
+					メソッドでは，リクエストパラメータやセッションの状態を参照して
+					<code>Validator</code>
+					を作成して返すことができます．
+				</p>
+				<div class="caution">
+					<div>注意事項</div>
+					<p>
+						<code>get～Validator()</code>
+						は PROCESS_VALIDATION フェーズで呼び出されるため，
+						ページクラスのプロパティにはリクエストパラメータの値が反映されていません． JSF
+						とページクラスのライフサイクルについては「
+						<a
+							href="ext_concept_lifecycle.html#JSFライフサイクルとの関係">
+							JSFライフサイクルとの関係
+						</a>
+						」を参照してください．
+					</p>
+				</div>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>get～Validator()</code>
+					メソッドが返した
+					<code>Validator</code>
+					によってバリデーションが行われます．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+
+public Validator getNameValidator() {
+    Validator validator = new TLengthValidator();
+    validator.setMinimum(...);
+    validator.setMaximum(...);
+    return validator;
+}
+]]></source>
+				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					時，
+					<code>name</code>
+					プロパティのバリデーションは
+					<code>getNameValidator()</code>
+					メソッドが返した
+					<code>TLengthValidator</code>
+					によって行われます．
+				</p>
+			</subsection>
+
+			<subsection name="複数のバリデータを使用するには">
+				<code>javax.faces.internal.ValidatorChain</code>
+				を使います．
+				<code>ValidatorChain</code>
+				の
+				<code>add(Validator validator)</code>
+				メソッドで適用したいバリデータを追加します． バリデータは追加された順に適用されます．
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+
+public Validator getNameValidator() {
+    ValidatorChain validatorChain = new ValidatorChain();
+    validatorChain.add(...);
+    validatorChain.add(...);
+    ...
+    return validatorChain;
+}
+]]></source>
+			</subsection>
+
+			<subsection
+				name="get～Validator()メソッドの中でリクエストパラメータを参照するには">
+				<p>
+					ページクラスに名前が
+					<code>param</code>
+					で型が
+					<code>java.util.Map</code>
+					のプロパティを用意します． Seasar2によってこのプロパティにリクエストパラメータを含む
+					<code>Map</code>
+					が設定されます．
+				</p>
+				<p>
+					<code>get～Validator()</code>
+					メソッドの中で，
+					<code>param</code>
+					プロパティからパラメータ名をキーとしてパラメータ値を取得することができます．
+				</p>
+				<p>リクエストパラメータの名前は基本的に</p>
+				<ul>
+					<li>
+						<var>&lt;form&gt;要素のid</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>&lt;input&gt;要素等のid</var>
+					</li>
+				</ul>
+				<p>という形になります．</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<form id="form">
+    <input type="text" id="name"/>
+    ...
+</form>
+]]></source>
+				<h5>例：パラメータ名</h5>
+				<source><![CDATA[
+form:name
+]]></source>
+				<p>
+					<a href="ext_rev_layout.html">レイアウト</a>
+					を使っている場合は
+					<code>&lt;includeChildBody&gt;</code>
+					要素や
+					<code>&lt;include&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値が前に付加され，
+				</p>
+				<ul>
+					<li>
+						<var>&lt;includeChildBody&gt;要素等のid</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>&lt;form&gt;要素のid</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>&lt;input&gt;要素等のid</var>
+					</li>
+				</ul>
+				<p>となります．</p>
+				<h5>例：テンプレートHTML (layout.html)</h5>
+				<source><![CDATA[
+    <te:includeChildBody id="layoutChildBody"/>
+]]></source>
+				<h5>例：パラメータ名</h5>
+				<source><![CDATA[
+layoutChildBody:form:name
+]]></source>
+				<p>
+					<a href="ext_rev_foreach.html">forEach</a>
+					を使っている場合は，
+					<code>&lt;tbody&gt;</code>
+					要素等の
+					<code>id</code>
+					属性の値と繰り返しのインデックスが付加され，
+				</p>
+				<ul>
+					<li>
+						[
+						<var>&lt;includeChildBody&gt;要素等のid</var>
+						&#160;+
+						<code>':'</code>
+						+ ]
+						<var>&lt;form&gt;要素のid</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>forEachのid</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>forEachのインデックス</var>
+						&#160;+
+						<code>':'</code>
+						+
+						<var>&lt;input&gt;要素等のid</var>
+					</li>
+				</ul>
+				<p>となります．</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<form id="form">
+    <table id="employeeItems">
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" id="name"/>
+                </td>
+                ...
+            </tr>
+        </tbody>
+    </table>
+</form>
+]]></source>
+				<h5>例：パラメータ名</h5>
+				<source><![CDATA[
+layoutChildBody:form:employeeItems:0:name
+]]></source>
+				<p>
+					forEachがネストすると， そのたびにforEachの
+					<code>id</code>
+					属性の値と繰り返しのインデックスが付加されます．
+				</p>
+			</subsection>
+
+			<subsection name="do～()メソッドでバリデーションするには">
+				<p>
+					より複雑な相関チェックや， DBアクセスが必要な場合など，
+					<code>Validator</code>
+					によるバリデーションでは不十分な場合は
+					<a href="ext_concept_lifecycle.html#doメソッド">
+						<code>do～()</code>
+						メソッド
+					</a>
+					でバリデーションを行うことができます．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						画面の入力項目に対応付けられたページクラスのプロパティの値を変更すると，
+						表示される画面の内容は変更後のプロパティの値になってしまいます．
+						バリデーションが完了するまでは，
+						画面に対応付けられたプロパティを変更しないようにする必要があります．
+					</p>
+				</div>
+				<p>
+					<code>do～()</code>
+					メソッドでバリデーション違反を検出した場合に メッセージを設定するには， ページクラスに
+					<code>
+						org.seasar.teeda.extension.util.FacesMessageHelper
+					</code>
+					型のプロパティを用意します．
+				</p>
+				<p>
+					<code>FacesMessageHelper</code>
+					には以下のメソッドがあります．
+				</p>
+				<ul>
+					<li>
+						FATALレベル
+						<ul>
+							<li>
+								<code>
+									void addFatalMessage(String
+									messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addFatalMessage(String
+									messageId, Object[] args)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addFatalMessage(String
+									clientId, String messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addFatalMessage(String
+									clientId, String messageId, Object[]
+									args)
+								</code>
+							</li>
+						</ul>
+					</li>
+					<li>
+						ERRORレベル
+						<ul>
+							<li>
+								<code>
+									void addErrorMessage(String
+									messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addErrorMessage(String
+									messageId, Object[] args)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addErrorMessage(String
+									clientId, String messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addErrorMessage(String
+									clientId, String messageId, Object[]
+									args)
+								</code>
+							</li>
+						</ul>
+					</li>
+					<li>
+						WARNレベル
+						<ul>
+							<li>
+								<code>
+									void addWarnMessage(String
+									messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addWarnMessage(String
+									messageId, Object[] args)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addWarnMessage(String clientId,
+									String messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addWarnMessage(String clientId,
+									String messageId, Object[] args)
+								</code>
+							</li>
+						</ul>
+					</li>
+					<li>
+						INFOレベル
+						<ul>
+							<li>
+								<code>
+									void addInfoMessage(String
+									messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addInfoMessage(String
+									messageId, Object[] args)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addInfoMessage(String clientId,
+									String messageId)
+								</code>
+							</li>
+							<li>
+								<code>
+									void addInfoMessage(String clientId,
+									String messageId, Object[] args)
+								</code>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p>
+					<code>messageId</code>
+					には，
+					<a href="ext_ref_resource.html#メッセージリソース">
+						メッセージリソース
+					</a>
+					ファイルに定義したキーを指定します．
+				</p>
+				<p>
+					特定の入力項目 (プロパティ) に関連付けられたメッセージを設定するには，
+					<code>clientId</code>
+					を指定します． 指定する値は
+					<a href="getValidatorメソッドの中でリクエストパラメータを参照するには">
+						get～Validator()メソッドの中でリクエストパラメータを参照するには
+					</a>
+					のリクエストパラメータ名と同じです．
+				</p>
+				<p>
+					<code>clientId</code>
+					を指定したメッセージは
+					<a href="メッセージを表示するには">メッセージを表示するには</a>
+					で設定したエリアに出力されます．
+					<code>clientId</code>
+					を指定しなかったメッセージは
+					<a href="グローバルなメッセージを表示するには">グローバルなメッセージを表示するには</a>
+					で設定したエリアに出力されます．
+				</p>
+			</subsection>
+		</section>
 
 		<section name="メッセージ">
-			<subsection name="エラーメッセージを表示するには">
+			<subsection name="メッセージを表示するには">
 				<p>
-					属性を付け， その値をバリデーション対象の
+					バリデーション対象の
 					<code>&lt;input&gt;</code>
-					要素の
+					要素等の
 					<code>id</code>
 					属性の値 +
 					<code>"Message"</code>
@@ -712,12 +1120,12 @@ foo.name.required=名前は絶対入れてね
 					バリデーション対象となる
 					<code>&lt;input&gt;</code>
 					要素等に
-					<code>label</code>
+					<code>title</code>
 					属性で項目名を指定します．
 				</p>
 				<h5>例：テンプレートHTML (label_ja.properties)</h5>
 				<source><![CDATA[
-<intpu type="text" id="name" label="名前" />
+<intpu type="text" id="name" title="名前" />
 <span id="nameMessage">dummy</span>
 ]]></source>
 				<h5>例：レンダリング結果</h5>
@@ -726,7 +1134,7 @@ foo.name.required=名前は絶対入れてね
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[
-<intpu type="text" id="name" name="form:name" class="onTeedaError" />
+<intpu type="text" id="name" name="form:name" title="名前" class="onTeedaError" />
 <span id="nameMessage">値を入力してください(名前)</span>
 ]]></source>
 			</subsection>
@@ -750,7 +1158,7 @@ foo.name.required=名前は絶対入れてね
 					あるいは，バリデーション対象となる
 					<code>&lt;input&gt;</code>
 					要素等に
-					<code>label</code>
+					<code>title</code>
 					属性を付け， その値を
 					<var>key</var>
 					+
@@ -770,7 +1178,7 @@ foo.name.required=名前は絶対入れてね
 ]]></source>
 				<p>あるいは，</p>
 				<source><![CDATA[
-<intpu type="text" id="name" label="nameLabel" />
+<intpu type="text" id="name" title="nameLabel" />
 <span id="nameMessage">dummy</span>
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>

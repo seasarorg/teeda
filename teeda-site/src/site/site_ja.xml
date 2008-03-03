@@ -119,7 +119,21 @@
 						href="ext_rev_input.html#サブミットボタン" />
 				</item>
 
-				<item name="バリデーション" href="ext_rev_validation.html" />
+				<item name="バリデーション" href="ext_rev_validation.html"
+					collapse="true">
+					<item name="ベーシック"
+						href="ext_rev_validation.html#ベーシック" />
+					<item name="文字列のバリデーション"
+						href="ext_rev_validation.html#文字列のバリデーション" />
+					<item name="数値のバリデーション"
+						href="ext_rev_validation.html#数値のバリデーション" />
+					<item name="複数の項目に跨ったバリデーション"
+						href="ext_rev_validation.html#複数の項目に跨ったバリデーション" />
+					<item name="動的なバリデーション"
+						href="ext_rev_validation.html#動的なバリデーション" />
+					<item name="メッセージ"
+						href="ext_rev_validation.html#メッセージ" />
+				</item>
 				<item name="コンバート" href="" />
 				<item name="繰り返し" href="" />
 				<item name="条件分岐" href="" />
