@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>プレゼンテーション資料</title>
+	</properties>
+	<body>
+		<section name="プレゼンテーション資料">
+			<ul>
+				<li>
+					<a
+						href="https://www.seasar.org/svn/sandbox/learnings/trunk/donbiki/donbiki-view/1st/InsideOfTeeda.ppt">
+						Inside of Teeda
+					</a>
+					(ppt)
+				</li>
+				<li>
+					Seasar Conference 2007 Spring 「
+					<a
+						href="http://event.seasarfoundation.org/sc2007spring/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007spring_S4_Teeda.pdf">
+						今から役立つTeeda入門
+					</a>
+					」 (pdf)
+				</li>
+				<li>
+					Seasar Conference 2007 Spring 「
+					<a
+						href="http://event.seasarfoundation.org/sc2007spring/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007spring_Aa5_TeedaPractice.pdf">
+						現場で役立つ実践Teeda
+					</a>
+					」 (pdf)
+				</li>
+				<li>
+					Seasar Conference 2007 Autumn 「
+					<a
+						href="http://event.seasarfoundation.org/sc2007autumn/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007a-b2-teeda.pdf">
+						これであなたもTeedaが好きになる
+					</a>
+					」 (pdf)
+				</li>
+			</ul>
+		</section>
+	</body>
+</document>

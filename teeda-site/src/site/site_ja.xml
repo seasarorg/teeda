@@ -49,12 +49,14 @@
 			<item name="環境" href="env.html" />
 			<item name="開発環境のセットアップ" href="setup.html" />
 			<item name="実行環境へのデプロイ" href="deploy.html" />
-			<item name="FAQ" href="faq.html" />
+			<item name="FAQ"
+				href="http://www.seasar.org/wiki/index.php?FAQ%2FTeeda" />
+			<item name="プレゼンテーション資料" href="presentations.html" />
 		</menu>
 
 		<menu name="Teeda Core">
-			<item name="概要" href="core/index.html" />
-			<item name="サンプル解説" href="core/example.html" />
+			<item name="概要" href="teeda_core.html" />
+			<item name="サンプル解説" href="example.html" />
 		</menu>
 
 		<menu name="Teeda Extension">
@@ -67,15 +69,25 @@
 				<item name="" href="" />
 			</item>
 
-			<item name="サンプル解説" href="extension/example.html" />
+			<!--
+				<item name="サンプル解説" href="extension/example.html" />
+			-->
 
-			<item name="概念" href="extension/concept/index.html" collapse="true">
+			<item name="概念" href="extension/concept/index.html"
+				collapse="true">
 				<item name="ページモデル" href="extension/concept/page.html" />
 				<item name="PRGパターン" href="extension/concept/prg.html" />
-				<item name="ライフサイクル" href="extension/concept/lifecycle.html" />
-				<item name="バインディング" href="extension/concept/binding.html" />
-				<item name="状態とスコープ" href="extension/concept/scope.html" />
-				<item name="レイアウト" href="extension/concept/layout.html" />
+				<item name="ライフサイクル"
+					href="extension/concept/lifecycle.html" />
+				<!--
+					<item name="バインディング"
+					href="extension/concept/binding.html" />
+				-->
+				<item name="状態とスコープ"
+					href="extension/concept/scope.html" />
+				<!--
+					<item name="レイアウト" href="extension/concept/layout.html" />
+				-->
 			</item>
 
 			<item name="逆引きリファレンス" href="extension/reverse/index.html"
@@ -83,16 +95,20 @@
 
 				<item name="出力" href="extension/reverse/output.html"
 					collapse="true">
-					<item name="ボディ" href="extension/reverse/output.html#ボディ" />
-					<item name="属性" href="extension/reverse/output.html#属性" />
-					<item name="ヘッダ" href="extension/reverse/output.html#ヘッダ" />
+					<item name="ボディ"
+						href="extension/reverse/output.html#ボディ" />
+					<item name="属性"
+						href="extension/reverse/output.html#属性" />
+					<item name="ヘッダ"
+						href="extension/reverse/output.html#ヘッダ" />
 				</item>
 
 				<item name="リンク" href="extension/reverse/link.html" />
 
 				<item name="入力フォーム" href="extension/reverse/input.html"
 					collapse="true">
-					<item name="フォーム" href="extension/reverse/input.html#フォーム" />
+					<item name="フォーム"
+						href="extension/reverse/input.html#フォーム" />
 					<item name="テキストフィールド"
 						href="extension/reverse/input.html#テキストフィールド" />
 					<item name="パスワードフィールド"
@@ -119,8 +135,8 @@
 						href="extension/reverse/input.html#サブミットボタン" />
 				</item>
 
-				<item name="バリデーション" href="extension/reverse/validation.html"
-					collapse="true">
+				<item name="バリデーション"
+					href="extension/reverse/validation.html" collapse="true">
 					<item name="ベーシック"
 						href="extension/reverse/validation.html#ベーシック" />
 					<item name="文字列のバリデーション"
@@ -134,32 +150,49 @@
 					<item name="メッセージ"
 						href="extension/reverse/validation.html#メッセージ" />
 				</item>
-				<item name="コンバート" href="extension/reverse/convert.html" />
+				<item name="コンバート"
+					href="extension/reverse/convert.html" />
 				<item name="繰り返し" href="extension/reverse/foreach.html" />
-				<item name="条件分岐" href="extension/reverse/condition.html" />
+				<item name="条件分岐"
+					href="extension/reverse/condition.html" />
 				<item name="レイアウト" href="extension/reverse/layout.html" />
-				<item name="画面遷移" href="extension/reverse/transition.html" />
+				<item name="画面遷移"
+					href="extension/reverse/transition.html" />
 			</item>
 
-			<item name="リファレンス" href="extension/reference/index.html" collapse="true">
-				<item name="機能" href="extension/reference/features.html" />
-				<item name="コンポーネント" href="extension/reference/component.html" />
-				<item name="規約" href="extension/reference/convention.html" />
-				<item name="アノテーション" href="extension/reference/annotation.html" />
-				<item name="dicon" href="extension/reference/dicon.html" />
-				<item name="リソース" href="extension/reference/resource.html" />
-				<item name="カスタマイズ" href="extension/reference/customize.html" />
-			</item>
+			<item name="リファレンス" href="extension/reference/index.html"
+				collapse="true">
+				<item name="機能リファレンス" href="extensions_features.html" />
+				<item name="コンポーネント一覧"
+					href="extension_component_reference.html" />
+				<item name="カスタマイズについて" href="extension_customize.html" />
+				<item name="HTMLプロトタイプを作成する際のガイドライン"
+					href="html_for_prototype.html" />
 
-			<item name="TIPS" href="extension/tips/index.html" collapse="true">
-				<item name="テンプレートXHTMLガイドライン"
+				<!--
+					<item name="機能"
+					href="extension/reference/features.html" />
+					<item name="テンプレートXHTML"
 					href="extension/tips/xhtml.html" />
+					<item name="コンポーネント"
+					href="extension/reference/component.html" />
+					<item name="規約"
+					href="extension/reference/convention.html" />
+					<item name="アノテーション"
+					href="extension/reference/annotation.html" />
+					<item name="dicon"
+					href="extension/reference/dicon.html" />
+					<item name="リソース"
+					href="extension/reference/resource.html" />
+					<item name="カスタマイズ"
+					href="extension/reference/customize.html" />
+				-->
 			</item>
 		</menu>
 
 		<menu name="Teeda Ajax">
-			<item name="概要" href="ajax/index.html" />
-			<item name="Kumu" href="ajax/kumu.html" collapse="true">
+			<item name="概要" href="teeda_ajax.html" />
+			<item name="Kumu" href="kumu.html" collapse="true">
 				<item name="event" href="ajax/kumu/event.html" />
 				<item name="event" href="ajax/kumu/ajax.html" />
 				<item name="event" href="ajax/kumu/disabled.html" />
