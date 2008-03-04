@@ -25,33 +25,63 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class SelectManyListboxTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(SelectManyListboxTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(SelectManyListboxTest.class);
+	}
 
-    public void testSelectValueAndSubmit() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
+	public void testSelectValueAndSubmit() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/select/selectManyListbox.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/select/selectManyListbox.html");
+		tester.dumpHtml();
 
-        tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[0]);
-        tester.selectOptionValueByName("form:aaaItems", "2");
-        tester.submitById("doAction");
-        tester.dumpHtml();
+		tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[0]);
+		tester.selectOptionValueByName("form:aaaItems", "2");
+		tester.submitById("doAction");
+		tester.dumpHtml();
 
-        // ## Assert ##
-        tester.assertSelectedOptionValuesEqualsById("aaaItems",
-            new String[] { "2" });
+		// ## Assert ##
+		tester.assertSelectedOptionValuesEqualsById("aaaItems",
+				new String[] { "2" });
 
-        tester.selectOptionValueByName("form:aaaItems", "0");
-        tester.submitById("doAction");
+		tester.selectOptionValueByName("form:aaaItems", "0");
+		tester.submitById("doAction");
 
-        tester.dumpHtml();
-        tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[] {
-            "0", "2" });
-    }
+		tester.dumpHtml();
+		tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[] {
+				"0", "2" });
+	}
+
+	public void testMapItems_TEEDA446() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(),
+				"view/select/selectManyListboxMapItems.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[0]);
+
+		// ## Act ##
+		tester.selectOptionValueByName("form:aaaItems", "2");
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertSelectedOptionValuesEqualsById("aaaItems",
+				new String[] { "2" });
+
+		// ## Act ##
+		tester.selectOptionValueByName("form:aaaItems", "0");
+		tester.submitById("doAction");
+
+		tester.dumpHtml();
+		tester.assertSelectedOptionValuesEqualsById("aaaItems", new String[] {
+				"0", "2" });
+	}
 
 }

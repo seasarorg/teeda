@@ -49,7 +49,7 @@ public class SelectManyListboxFactory extends AbstractElementProcessorFactory {
         if (id.lastIndexOf(ExtensionConstants.ITEMS_SUFFIX) < 0) {
             id = id + ExtensionConstants.ITEMS_SUFFIX;
         }
-        if (pageDesc.hasItemsProperty(id)) {
+        if (pageDesc.hasItemsProperty(id) || pageDesc.hasMapItemsProperty(id)) {
             return (elementNode.getProperty(JsfConstants.MULTIPLE_ATTR) != null);
         }
         return false;
@@ -72,8 +72,8 @@ public class SelectManyListboxFactory extends AbstractElementProcessorFactory {
         } else {
             items = id + ExtensionConstants.ITEMS_SUFFIX;
         }
-        final String target = items.substring(0, items.length()
-                - ExtensionConstants.ITEMS_SUFFIX.length());
+        final String target = items.substring(0, items.length() -
+                ExtensionConstants.ITEMS_SUFFIX.length());
         properties.put(JsfConstants.VALUE_ATTR, getBindingExpression(pageName,
                 target));
         properties.put(ExtensionConstants.ITEMS_ATTR, getBindingExpression(

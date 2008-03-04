@@ -71,4 +71,39 @@ public class SelectManyCheckboxTest extends TeedaWebTestCase {
 		tester.assertTableEqualsById("aaa", table);
 	}
 
+	public void testMapItems_TEEDA446() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(),
+				"view/checkbox/selectManyCheckboxMapItems.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		String[][] table = new String[][] { { "unchecked AAAA" },
+				{ "unchecked BBBB" }, { "checked CCCC" } };
+		tester.assertTableEqualsById("aaa", table);
+
+		// ## Act ##
+		tester.checkCheckboxByName("selectManyCheckboxForm:aaa", "0");
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "checked AAAA" }, { "unchecked BBBB" },
+				{ "checked CCCC" } };
+		tester.assertTableEqualsById("aaa", table);
+
+		// ## Act ##
+		tester.checkCheckboxByName("selectManyCheckboxForm:aaa", "1");
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		table = new String[][] { { "checked AAAA" }, { "checked BBBB", },
+				{ "checked CCCC" } };
+		tester.assertTableEqualsById("aaa", table);
+	}
+
 }
