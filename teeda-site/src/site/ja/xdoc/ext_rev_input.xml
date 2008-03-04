@@ -13,7 +13,9 @@
 					<a href="#フォーム">フォーム</a>
 					<ul>
 						<li>
-							<a href="#フォームを使うには">フォームを使うには</a>
+							<a href="#ポストバック用のフォームを使うには">
+								ポストバック用のフォームを使うには
+							</a>
 						</li>
 					</ul>
 				</li>
@@ -241,8 +243,23 @@
 		</section>
 
 		<section name="フォーム">
-			<subsection name="フォームを使うには">
+			<subsection name="ポストバック用のフォームを使うには">
+				<div class="sidebar">
+					外部サイトへサブミットするなど，
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					用でないフォームは
+					<code>&lt;form&gt;</code>
+					要素に
+					<code>id</code>
+					を付けないか，
+					<code>form</code>
+					または
+					<code>Form</code>
+					で終わらないようにします．
+				</div>
 				<p>
+					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					用のフォームは，
 					<code>&lt;form&gt;</code>
 					要素に
 					<code>id</code>
@@ -423,7 +440,7 @@ public Date date;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<input type="text" id="date" name="form:date" class="T_currency" 
+<input type="text" id="date" name="form:date" class="T_date" 
     onfocus="..." onblur="..." onkeydown="..." style="ime-mode:disabled;" />
 ]]></source>
 			</subsection>
