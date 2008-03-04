@@ -126,7 +126,7 @@ public String name;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -159,7 +159,7 @@ public String name;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -261,7 +261,9 @@ Teeda
 					+
 					<code>Label</code>
 					とします．
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルに
 					<var>pagename.key</var>
 					または
@@ -270,7 +272,9 @@ Teeda
 				</p>
 				<p>
 					レンダリング時， 要素の内容は
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルの値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -437,7 +441,9 @@ public String fooStyle;
 					+
 					<code>Label</code>
 					とします．
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルに
 					<var>pagename.key</var>
 					または
@@ -446,7 +452,9 @@ public String fooStyle;
 				</p>
 				<p>
 					レンダリング時， 属性の値は
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルの値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -463,11 +471,13 @@ foo.barImg=概念図
 <img id="barImg" src="../image/bar.png" alt="概念図" />
 ]]></source>
 				<p>
-					<a href="ext_rev_input.html#サブミットボタン ">サブミットボタン</a>
+					<a href="input.html#サブミットボタン">サブミットボタン</a>
 					の
 					<code>value</code>
 					属性の場合は，
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルに
 					<var>pagename.id</var>
 					または
@@ -587,7 +597,9 @@ public String titleValue;
 					要素に
 					<code>id</code>
 					属性を付け，
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルに
 					<var>pagename.id</var>
 					または
@@ -598,7 +610,9 @@ public String titleValue;
 					レンダリング時，
 					<code>&lt;title&gt;</code>
 					要素の内容は
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルの値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>

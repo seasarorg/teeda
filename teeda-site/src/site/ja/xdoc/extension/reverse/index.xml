@@ -11,45 +11,45 @@
 			<p>Teeda Extensionの使い方を「～をするには」という目的から逆引き形式で探せるドキュメントです．</p>
 			<dl>
 				<dt>
-					<a href="ext_rev_output.html">出力</a>
+					<a href="output.html">出力</a>
 				</dt>
 				<dd>
 					HTMLのボディにテキストを出力する方法や， 要素の属性，
 					ヘッダのタイトルを動的に変更する方法を紹介します．
 				</dd>
 				<dt>
-					<a href="ext_rev_link.html">リンク</a>
+					<a href="link.html">リンク</a>
 				</dt>
 				<dd>リンクを作成する方法や， パラメータを動的に変更する方法を紹介します．</dd>
 				<dt>
-					<a href="ext_rev_input.html">入力フォーム</a>
+					<a href="input.html">入力フォーム</a>
 				</dt>
 				<dd>テキストフィールやラジオボタン， チェックボックス等， 入力フォームの使い方を説明します．</dd>
 				<dt>
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 				</dt>
 				<dd>フォームから入力されたリクエストパラメータをチェックする方法を説明します．</dd>
 				<dt>
-					<a href="ext_rev_convert.html">コンバート</a>
+					<a href="convert.html">コンバート</a>
 				</dt>
 				<dd>
 					ページクラスが持つ値と， HTMLにレンダリングされたりフォームから入力されたりする値を，
 					相互変換する方法を説明します．
 				</dd>
 				<dt>
-					<a href="ext_rev_foreach.html">繰り返し</a>
+					<a href="foreach.html">繰り返し</a>
 				</dt>
 				<dd>リストの項目やテーブルの行を繰り返し表示する方法や， その中で入力項目を扱う方法を説明します．</dd>
 				<dt>
-					<a href="ext_rev_condition.html">条件分岐</a>
+					<a href="condition.html">条件分岐</a>
 				</dt>
 				<dd>実行時の条件によって画面の一部を表示したり非表示にしたりする方法を説明します．</dd>
 				<dt>
-					<a href="ext_rev_layout.html">レイアウト</a>
+					<a href="layout.html">レイアウト</a>
 				</dt>
 				<dd>レイアウトを使う方法を説明します．</dd>
 				<dt>
-					<a href="ext_rev_transition.html">画面遷移</a>
+					<a href="transition.html">画面遷移</a>
 				</dt>
 				<dd>画面遷移する方法を説明します．</dd>
 			</dl>

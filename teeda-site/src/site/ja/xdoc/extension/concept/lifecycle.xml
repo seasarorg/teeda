@@ -122,7 +122,7 @@ public Class initialize() {
 				<p>
 					<code>initialize()</code>
 					メソッドは，
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="page.html#ポストバック">ポストバック</a>
 					では呼び出されません．
 				</p>
 			</subsection>
@@ -135,7 +135,7 @@ public Class initialize() {
 				<p>
 					<code>do～()</code>
 					メソッドは， フォームがサブミットされた場合 (
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="page.html#ポストバック">ポストバック</a>
 					) に呼び出されるメソッドです．
 				</p>
 				<p>
@@ -230,8 +230,8 @@ public Class prerender() {
 			<p>
 				Teeda Extensionでは， ブラウザから受け取ったリクエストの基本的な処理パターンが4つあります．
 			</p>
-			<img src="images/ext_concept_lifecycle1.png" width="616"
-				height="637" alt="リクエストパターン" />
+			<img src="../../images/extension/concept/lifecycle1.png"
+				width="616" height="637" alt="リクエストパターン" />
 			<dl>
 				<dt>初期表示</dt>
 				<dd>ブックマークやリンクがクリックされたことによるリクエストです．</dd>
@@ -264,8 +264,8 @@ public Class prerender() {
 					<code>prerender()</code>
 					メソッドが呼び出されます．
 				</p>
-				<img src="images/ext_concept_lifecycle2.png" width="466"
-					height="278" alt="初期表示" />
+				<img src="../../images/extension/concept/lifecycle2.png"
+					width="466" height="278" alt="初期表示" />
 			</subsection>
 
 			<subsection name="ポストバック (自画面表示)">
@@ -276,8 +276,8 @@ public Class prerender() {
 					<code>prerender()</code>
 					メソッドが呼び出されます．
 				</p>
-				<img src="images/ext_concept_lifecycle3.png" width="466"
-					height="259" alt="ポストバック (自画面表示)" />
+				<img src="../../images/extension/concept/lifecycle3.png"
+					width="466" height="259" alt="ポストバック (自画面表示)" />
 				<p>
 					バリデーションでエラーがあった場合は
 					<code>prerender()</code>
@@ -293,8 +293,8 @@ public Class prerender() {
 					<code>do～()</code>
 					メソッドの戻り値で指定された画面へリダイレクトします．
 				</p>
-				<img src="images/ext_concept_lifecycle4.png" width="466"
-					height="231" alt="ポストバック (リダイレクト)" />
+				<img src="../../images/extension/concept/lifecycle4.png"
+					width="466" height="231" alt="ポストバック (リダイレクト)" />
 				<p>
 					バリデーションでエラーがあった場合は
 					<a href="#ポストバック_自画面表示">ポストバック(自画面表示)</a>
@@ -310,8 +310,8 @@ public Class prerender() {
 					<code>prerender()</code>
 					メソッドが呼び出されます．
 				</p>
-				<img src="images/ext_concept_lifecycle5.png" width="466"
-					height="259" alt="リダイレクト表示" />
+				<img src="../../images/extension/concept/lifecycle5.png"
+					width="466" height="259" alt="リダイレクト表示" />
 			</subsection>
 		</section>
 
@@ -377,8 +377,8 @@ public class FooPage {
 				ページクラスのライフサイクルメソッドおよびsetter/getterメソッド呼び出しの関係は，
 				以下のようになります．
 			</p>
-			<img src="images/ext_concept_lifecycle6.png" width="609"
-				height="530" alt="JSFライフサイクルとの関係" />
+			<img src="../../images/extension/concept/lifecycle6.png"
+				width="609" height="530" alt="JSFライフサイクルとの関係" />
 		</section>
 	</body>
 </document>

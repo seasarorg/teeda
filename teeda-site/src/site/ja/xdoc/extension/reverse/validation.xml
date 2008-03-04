@@ -161,7 +161,7 @@ public static final String name_TRequiredValidator = "";
 public String name;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで値が入力されないとバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -195,7 +195,7 @@ public static final String name_TRequiredValidator = "target='doNext'";
 public String name;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>doNext</code>
 					ボタンが押されたときだけ
@@ -228,7 +228,7 @@ public static final String name_TLengthValidator = "minimum=3, maximun=5";
 public String name;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列が3～5文字でなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -260,7 +260,7 @@ public static final String name_TByteLengthValidator = "minimum=5, maximun=10";
 public String name;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， 入力された文字列をプラットフォームデフォルトのエンコーディングで変換したバイト列の長さが，
 					5～10バイトでなければバリデーションでエラーとなります．
 				</p>
@@ -286,7 +286,7 @@ public static final String password_TRegularExpressionValidator = "pattern='\\w{
 public String password;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列が正規表現にマッチしなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -313,7 +313,7 @@ public static final String name_EmailValidator = "";
 public String mailAddress;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列がメールアドレスにマッチしなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -340,7 +340,7 @@ public static final String url_UrlValidator = "";
 public String url;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列がURLにマッチしなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -374,7 +374,7 @@ public static final String exchangeRate_TNumberLengthValidator = "fractionMin=2,
 public BigDecimal exchangeRate;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された数値の小数部が2桁でなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -403,7 +403,7 @@ public static final String score_TLongRangeValidator = "minimum=0, maximum=100";
 public int score;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された数値が0～100の範囲内でなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -442,7 +442,7 @@ public String pwd1;
 public String pwd2;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>pwd1</code>
 					と
@@ -521,7 +521,7 @@ public Integer from;
 public Integer to;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>to</code>
 					に入力された値が
@@ -565,14 +565,14 @@ public Integer to;
 						ページクラスのプロパティにはリクエストパラメータの値が反映されていません． JSF
 						とページクラスのライフサイクルについては「
 						<a
-							href="ext_concept_lifecycle.html#JSFライフサイクルとの関係">
+							href="../concept/lifecycle.html#JSFライフサイクルとの関係">
 							JSFライフサイクルとの関係
 						</a>
 						」を参照してください．
 					</p>
 				</div>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>get～Validator()</code>
 					メソッドが返した
@@ -591,7 +591,7 @@ public Validator getNameValidator() {
 }
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>name</code>
 					プロパティのバリデーションは
@@ -663,7 +663,7 @@ public Validator getNameValidator() {
 form:name
 ]]></source>
 				<p>
-					<a href="ext_rev_layout.html">レイアウト</a>
+					<a href="layout.html">レイアウト</a>
 					を使っている場合は
 					<code>&lt;includeChildBody&gt;</code>
 					要素や
@@ -695,7 +695,7 @@ form:name
 layoutChildBody:form:name
 ]]></source>
 				<p>
-					<a href="ext_rev_foreach.html">forEach</a>
+					<a href="foreach.html">forEach</a>
 					を使っている場合は，
 					<code>&lt;tbody&gt;</code>
 					要素等の
@@ -756,7 +756,7 @@ layoutChildBody:form:employeeItems:0:name
 					より複雑な相関チェックや， DBアクセスが必要な場合など，
 					<code>Validator</code>
 					によるバリデーションでは不十分な場合は
-					<a href="ext_concept_lifecycle.html#doメソッド">
+					<a href="../concept/lifecycle.html#doメソッド">
 						<code>do～()</code>
 						メソッド
 					</a>
@@ -906,7 +906,7 @@ layoutChildBody:form:employeeItems:0:name
 				<p>
 					<code>messageId</code>
 					には，
-					<a href="ext_ref_resource.html#メッセージリソース">
+					<a href="../reference/resource.html#メッセージリソース">
 						メッセージリソース
 					</a>
 					ファイルに定義したキーを指定します．
@@ -955,7 +955,7 @@ layoutChildBody:form:employeeItems:0:name
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[
@@ -1002,7 +1002,7 @@ layoutChildBody:form:employeeItems:0:name
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[
@@ -1051,7 +1051,7 @@ layoutChildBody:form:employeeItems:0:name
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[
@@ -1081,7 +1081,7 @@ layoutChildBody:form:employeeItems:0:name
 </style>
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， バリデーションでエラーになると，
 					テキストフィールドやテキストエリアの背景が設定した色で表示されます．
 				</p>
@@ -1090,7 +1090,7 @@ layoutChildBody:form:employeeItems:0:name
 			<subsection name="メッセージを変更するには">
 				<p>
 					アノテーションにメッセージIdを指定し，
-					<a href="ext_ref_resource.html#メッセージリソース">
+					<a href="../reference/resource.html#メッセージリソース">
 						メッセージリソース
 					</a>
 					ファイルに メッセージIdをキーとするプロパティを定義します．
@@ -1127,7 +1127,7 @@ foo.name.required=名前は絶対入れてね
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[
@@ -1138,7 +1138,7 @@ foo.name.required=名前は絶対入れてね
 
 			<subsection name="項目名をプロパティファイルから表示するには">
 				<p>
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルに
 					<var>pagename.id</var>
 					または
@@ -1161,7 +1161,7 @@ foo.name.required=名前は絶対入れてね
 					+
 					<code>Label</code>
 					とします．
-					<a href="ext_ref_resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">ラベルリソース</a>
 					ファイルに
 					<var>pagename.key</var>
 					または
@@ -1184,7 +1184,7 @@ name=名前
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，バリデーションでエラーになると次のように表示されます．
 				</p>
 				<source><![CDATA[

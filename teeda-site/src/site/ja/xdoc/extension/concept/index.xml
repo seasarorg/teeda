@@ -11,16 +11,16 @@
 			<p>このドキュメントでは，Teeda Extensionを理解する上で重要な概念について説明します．</p>
 			<ul>
 				<li>
-					<a href="ext_concept_page.html">ページモデル</a>
+					<a href="page.html">ページモデル</a>
 				</li>
 				<li>
-					<a href="ext_concept_prg.html">PRGパターン</a>
+					<a href="prg.html">PRGパターン</a>
 				</li>
 				<li>
-					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+					<a href="lifecycle.html">ライフサイクル</a>
 				</li>
 				<li>
-					<a href="ext_concept_scope.html">状態とスコープ</a>
+					<a href="scope.html">状態とスコープ</a>
 				</li>
 			</ul>
 		</section>

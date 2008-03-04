@@ -53,117 +53,117 @@
 		</menu>
 
 		<menu name="Teeda Core">
-			<item name="概要" href="core_about.html" />
-			<item name="サンプル解説" href="core_example.html" />
+			<item name="概要" href="core/index.html" />
+			<item name="サンプル解説" href="core/example.html" />
 		</menu>
 
 		<menu name="Teeda Extension">
-			<item name="概要" href="ext_about.html" />
+			<item name="概要" href="extension/index.html" />
 
-			<item name="チュートリアル" href="ext_tutorial.html"
+			<item name="チュートリアル" href="extension/tutorial/index.html"
 				collapse="true">
 				<item name="" href="" />
 				<item name="" href="" />
 				<item name="" href="" />
 			</item>
 
-			<item name="サンプル解説" href="ext_example.html" />
+			<item name="サンプル解説" href="extension/example.html" />
 
-			<item name="概念" href="ext_concept.html" collapse="true">
-				<item name="ページモデル" href="ext_concept_page.html" />
-				<item name="PRGパターン" href="ext_concept_prg.html" />
-				<item name="ライフサイクル" href="ext_concept_lifecycle.html" />
-				<item name="バインディング" href="ext_concept_binding.html" />
-				<item name="状態とスコープ" href="ext_concept_scope.html" />
-				<item name="レイアウト" href="ext_concept_layout.html" />
+			<item name="概念" href="extension/concept/index.html" collapse="true">
+				<item name="ページモデル" href="extension/concept/page.html" />
+				<item name="PRGパターン" href="extension/concept/prg.html" />
+				<item name="ライフサイクル" href="extension/concept/lifecycle.html" />
+				<item name="バインディング" href="extension/concept/binding.html" />
+				<item name="状態とスコープ" href="extension/concept/scope.html" />
+				<item name="レイアウト" href="extension/concept/layout.html" />
 			</item>
 
-			<item name="逆引きリファレンス" href="ext_rev.html"
+			<item name="逆引きリファレンス" href="extension/reverse/index.html"
 				collapse="true">
 
-				<item name="出力" href="ext_rev_output.html"
+				<item name="出力" href="extension/reverse/output.html"
 					collapse="true">
-					<item name="ボディ" href="ext_rev_output.html#ボディ" />
-					<item name="属性" href="ext_rev_output.html#属性" />
-					<item name="ヘッダ" href="ext_rev_output.html#ヘッダ" />
+					<item name="ボディ" href="extension/reverse/output.html#ボディ" />
+					<item name="属性" href="extension/reverse/output.html#属性" />
+					<item name="ヘッダ" href="extension/reverse/output.html#ヘッダ" />
 				</item>
 
-				<item name="リンク" href="ext_rev_link.html" />
+				<item name="リンク" href="extension/reverse/link.html" />
 
-				<item name="入力フォーム" href="ext_rev_input.html"
+				<item name="入力フォーム" href="extension/reverse/input.html"
 					collapse="true">
-					<item name="フォーム" href="ext_rev_input.html#フォーム" />
+					<item name="フォーム" href="extension/reverse/input.html#フォーム" />
 					<item name="テキストフィールド"
-						href="ext_rev_input.html#テキストフィールド" />
+						href="extension/reverse/input.html#テキストフィールド" />
 					<item name="パスワードフィールド"
-						href="ext_rev_input.html#パスワードフィールド" />
+						href="extension/reverse/input.html#パスワードフィールド" />
 					<item name="テキストエリア"
-						href="ext_rev_input.html#テキストエリア" />
+						href="extension/reverse/input.html#テキストエリア" />
 					<item name="ラジオボタン (静的)"
-						href="ext_rev_input.html#ラジオボタン_静的" />
+						href="extension/reverse/input.html#ラジオボタン_静的" />
 					<item name="ラジオボタン (動的)"
-						href="ext_rev_input.html#ラジオボタン_動的" />
+						href="extension/reverse/input.html#ラジオボタン_動的" />
 					<item name="チェックボックス (単一項目)"
-						href="ext_rev_input.html#チェックボックス_単一項目" />
+						href="extension/reverse/input.html#チェックボックス_単一項目" />
 					<item name="チェックボックス (複数項目)"
-						href="ext_rev_input.html#チェックボックス_複数項目" />
+						href="extension/reverse/input.html#チェックボックス_複数項目" />
 					<item name="選択リスト (単一選択)"
-						href="ext_rev_input.html#選択リスト単一選択" />
+						href="extension/reverse/input.html#選択リスト単一選択" />
 					<item name="選択リスト (複数選択)"
-						href="ext_rev_input.html#選択リスト複数選択" />
+						href="extension/reverse/input.html#選択リスト複数選択" />
 					<item name="ファイルアップロード"
-						href="ext_rev_input.html#ファイルアップロード" />
+						href="extension/reverse/input.html#ファイルアップロード" />
 					<item name="隠しフィールド"
-						href="ext_rev_input.html#隠しフィールド" />
+						href="extension/reverse/input.html#隠しフィールド" />
 					<item name="サブミットボタン"
-						href="ext_rev_input.html#サブミットボタン" />
+						href="extension/reverse/input.html#サブミットボタン" />
 				</item>
 
-				<item name="バリデーション" href="ext_rev_validation.html"
+				<item name="バリデーション" href="extension/reverse/validation.html"
 					collapse="true">
 					<item name="ベーシック"
-						href="ext_rev_validation.html#ベーシック" />
+						href="extension/reverse/validation.html#ベーシック" />
 					<item name="文字列のバリデーション"
-						href="ext_rev_validation.html#文字列のバリデーション" />
+						href="extension/reverse/validation.html#文字列のバリデーション" />
 					<item name="数値のバリデーション"
-						href="ext_rev_validation.html#数値のバリデーション" />
+						href="extension/reverse/validation.html#数値のバリデーション" />
 					<item name="複数の項目に跨ったバリデーション"
-						href="ext_rev_validation.html#複数の項目に跨ったバリデーション" />
+						href="extension/reverse/validation.html#複数の項目に跨ったバリデーション" />
 					<item name="動的なバリデーション"
-						href="ext_rev_validation.html#動的なバリデーション" />
+						href="extension/reverse/validation.html#動的なバリデーション" />
 					<item name="メッセージ"
-						href="ext_rev_validation.html#メッセージ" />
+						href="extension/reverse/validation.html#メッセージ" />
 				</item>
-				<item name="コンバート" href="ext_rev_convert.html" />
-				<item name="繰り返し" href="ext_rev_foreach.html" />
-				<item name="条件分岐" href="ext_rev_condition.html" />
-				<item name="レイアウト" href="ext_rev_layout.html" />
-				<item name="画面遷移" href="ext_rev_transition.html" />
+				<item name="コンバート" href="extension/reverse/convert.html" />
+				<item name="繰り返し" href="extension/reverse/foreach.html" />
+				<item name="条件分岐" href="extension/reverse/condition.html" />
+				<item name="レイアウト" href="extension/reverse/layout.html" />
+				<item name="画面遷移" href="extension/reverse/transition.html" />
 			</item>
 
-			<item name="リファレンス" href="ext_ref.html" collapse="true">
-				<item name="機能" href="ext_ref_features.html" />
-				<item name="コンポーネント" href="ext_ref_component.html" />
-				<item name="規約" href="ext_ref_convention.html" />
-				<item name="アノテーション" href="ext_ref_annotation.html" />
-				<item name="dicon" href="ext_ref_dicon.html" />
-				<item name="リソース" href="ext_ref_resource.html" />
-				<item name="カスタマイズ" href="ext_ref_customize.html" />
+			<item name="リファレンス" href="extension/reference/index.html" collapse="true">
+				<item name="機能" href="extension/reference/features.html" />
+				<item name="コンポーネント" href="extension/reference/component.html" />
+				<item name="規約" href="extension/reference/convention.html" />
+				<item name="アノテーション" href="extension/reference/annotation.html" />
+				<item name="dicon" href="extension/reference/dicon.html" />
+				<item name="リソース" href="extension/reference/resource.html" />
+				<item name="カスタマイズ" href="extension/reference/customize.html" />
 			</item>
 
-			<item name="TIPS" href="ext_tips.html" collapse="true">
+			<item name="TIPS" href="extension/tips/index.html" collapse="true">
 				<item name="テンプレートXHTMLガイドライン"
-					href="ext_tips_xhtml.html" />
+					href="extension/tips/xhtml.html" />
 			</item>
 		</menu>
 
 		<menu name="Teeda Ajax">
-			<item name="概要" href="ajax_about.html" />
-			<item name="Kumu" href="ajax_kumu.html" collapse="true">
-				<item name="event" href="ajax_kumu_event.html" />
-				<item name="event" href="ajax_kumu_ajax.html" />
-				<item name="event" href="ajax_kumu_disabled.html" />
-				<item name="event" href="ajax_kumu_validate.html" />
+			<item name="概要" href="ajax/index.html" />
+			<item name="Kumu" href="ajax/kumu.html" collapse="true">
+				<item name="event" href="ajax/kumu/event.html" />
+				<item name="event" href="ajax/kumu/ajax.html" />
+				<item name="event" href="ajax/kumu/disabled.html" />
+				<item name="event" href="ajax/kumu/validate.html" />
 			</item>
 		</menu>
 	</body>

@@ -87,7 +87,7 @@ public BigDecimal exchangeRate;
 					はカンマ区切り・小数点以下2桁で表示されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列がパターンにマッチしなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -149,7 +149,7 @@ public BigDecimal date;
 					はスラッシュ区切りで表示されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，入力された文字列がパターンにマッチしなければバリデーションでエラーとなります．
 				</p>
 			</subsection>
@@ -173,7 +173,7 @@ public BigDecimal date;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -253,7 +253,7 @@ public static final String exchangeRate_TBigDecimalConverter =
 public BigDecimal exchangeRate;
 ]]></source>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					<code>doExchange</code>
 					ボタンが押されたときだけ入力値が

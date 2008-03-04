@@ -316,7 +316,7 @@
 </div>
 
 <div id="navi">
-<p><a href="../en/">English</a> | <a href="../ja/">Japanese</a></p>
+<p><a href="$relativePath/../en/">English</a> | <a href="$relativePath/../ja/">Japanese</a></p>
 </div>
 
 </div><!-- header -->

@@ -41,7 +41,7 @@
 				実際に表示されている内容がずれる場合があります．
 			</p>
 			<p>以下の例では，aaa.htmlのフォームをサブミットしてbbb.htmlに画面遷移します．</p>
-			<img src="images/ext_concept_prg1.png" width="466"
+			<img src="../../images/extension/concept/prg1.png" width="466"
 				height="373" alt="URLのズレ" />
 			<p>
 				aaa.htmlに対応するAaaPageから， bbb.htmlに対応するBbbPageに (Servlet
@@ -58,7 +58,7 @@
 				実際に表示されている内容がずれないようにしています．
 			</p>
 			<p>以下の例では，aaa.htmlのフォームをサブミットしてbbb.htmlに画面遷移します．</p>
-			<img src="images/ext_concept_prg2.png" width="466"
+			<img src="../../images/extension/concept/prg2.png" width="466"
 				height="448" alt="PRGパターンの場合" />
 			<p>
 				aaa.htmlに対応するAaaPageは， bbb.htmlへのリダイレクトをレスポンスとして返します．
@@ -77,7 +77,7 @@
 				PRGパターンが使われるのは， 他の画面に遷移する場合だけです．
 				ポストバックされた画面がもう一度同じ画面を表示する場合はPRGパターンを使わず， 直接レスポンスを返します．
 			</p>
-			<img src="images/ext_concept_prg3.png" width="466"
+			<img src="../../images/extension/concept/prg3.png" width="466"
 				height="380" alt="次画面表示の場合" />
 		</section>
 	</body>

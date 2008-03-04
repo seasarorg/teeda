@@ -246,7 +246,7 @@
 			<subsection name="ポストバック用のフォームを使うには">
 				<div class="sidebar">
 					外部サイトへサブミットするなど，
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					用でないフォームは
 					<code>&lt;form&gt;</code>
 					要素に
@@ -258,7 +258,7 @@
 					で終わらないようにします．
 				</div>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					用のフォームは，
 					<code>&lt;form&gt;</code>
 					要素に
@@ -318,7 +318,7 @@
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -335,9 +335,9 @@
 					等を含む場合はエスケープされます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -467,7 +467,7 @@ public Date date;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -484,9 +484,9 @@ public Date date;
 					等を含む場合はエスケープされます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -518,7 +518,7 @@ public String pwd;
 				<div class="sidebar">
 					<code>id</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -539,9 +539,9 @@ public String pwd;
 					等を含む場合はエスケープされます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -598,7 +598,7 @@ public String name;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -637,11 +637,11 @@ public String name;
 					要素を複数記述することができます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択されたラジオボタンの
 					<code>value</code>
 					属性の値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合はプロパティは設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -820,7 +820,7 @@ public String name2;
 
 			<subsection name="静的なラジオボタンの数を動的に変えるには">
 				<p>
-					<a href="ext_rev_foreach.html">forEach</a>
+					<a href="foreach.html">forEach</a>
 					と組み合わせます．
 				</p>
 				<div class="sidebar">
@@ -966,7 +966,7 @@ public String name;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -1057,7 +1057,7 @@ public String name;
 					要素に置き換えられます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された項目の値が
 					<code>&lt;span&gt;</code>
 					要素または
@@ -1065,7 +1065,7 @@ public String name;
 					要素の
 					<code>id</code>
 					属性と同じ名前のプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -1114,7 +1114,7 @@ public List<Map> selectItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1166,7 +1166,7 @@ public List<Map> selectItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1224,7 +1224,7 @@ public List<Map> selectItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1278,7 +1278,7 @@ public List<Map> selectItems;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -1303,9 +1303,9 @@ public List<Map> selectItems;
 					属性にプロパティの値が設定されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された状態がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -1367,7 +1367,7 @@ public boolean option;
 
 			<subsection name="単一項目のチェックボックスを複数使うには">
 				<p>
-					<a href="ext_rev_foreach.html">forEach</a>
+					<a href="foreach.html">forEach</a>
 					と組み合わせます．
 				</p>
 				<div class="sidebar">
@@ -1508,7 +1508,7 @@ public String name;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -1599,7 +1599,7 @@ public String name;
 					要素に置き換えられます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された項目の値が
 					<code>&lt;span&gt;</code>
 					要素または
@@ -1607,7 +1607,7 @@ public String name;
 					要素の
 					<code>id</code>
 					属性と同じ名前のプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -1723,7 +1723,7 @@ public List<Map> optionItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1775,7 +1775,7 @@ public List<Map> optionItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1833,7 +1833,7 @@ public List<Map> optionItems;
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -1891,7 +1891,7 @@ public List<Map> optionItems;
 					を除いた
 					<code>&lt;select&gt;</code>
 					要素の属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -1972,13 +1972,13 @@ public List<Map> optionItems;
 					の値が設定されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された
 					<code>&lt;option&gt;</code>
 					要素の
 					<code>value</code>
 					属性の値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -2054,7 +2054,7 @@ public List<Map> selecteItems;
 			<subsection name="単一選択の選択リストで「選択してください」を出さないようにするには">
 				<div class="sidebar">
 					「選択してください」というメッセージは， 「
-					<a href="ext_ref_resource.html#メッセージ">メッセージリソース</a>
+					<a href="../reference/resource.html#メッセージ">メッセージリソース</a>
 					」で変更することができます．
 				</div>
 				<p>
@@ -2113,7 +2113,7 @@ public List<Map> selecteItems;
 					を除いた
 					<code>&lt;select&gt;</code>
 					要素の属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -2194,13 +2194,13 @@ public List<Map> selecteItems;
 					の値が設定されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された
 					<code>&lt;option&gt;</code>
 					要素の
 					<code>value</code>
 					属性の値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -2282,7 +2282,7 @@ public List<Map> selecteItems;
 			<subsection name="複数選択の選択リストで「選択してください」を出さないようにするには">
 				<div class="sidebar">
 					「選択してください」というメッセージは， 「
-					<a href="ext_ref_resource.html#メッセージ">メッセージリソース</a>
+					<a href="../reference/resource.html#メッセージ">メッセージリソース</a>
 					」で変更することができます．
 				</div>
 				<p>
@@ -2334,7 +2334,7 @@ public List<Map> selecteItems;
 					を除いた
 					<code>&lt;select&gt;</code>
 					要素の属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -2364,9 +2364,9 @@ public List<Map> selecteItems;
 					」を参照してください．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザからアップロードされたファイルがプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -2410,7 +2410,7 @@ public UploadedFile textFile;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -2437,9 +2437,9 @@ public UploadedFile textFile;
 					等を含む場合はエスケープされます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，隠しフィールドの値がプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -2495,9 +2495,9 @@ public String name;
 					属性に設定されます．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，隠しフィールドの値がデコードおよびデシリアライズされてプロパティに設定されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
@@ -2526,7 +2526,7 @@ public Map map;
 					，
 					<code>value</code>
 					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="ext_rev_output.html#属性値を動的に出力するには">
+					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
 					」を参照してください．
@@ -2552,24 +2552,24 @@ public Map map;
 					で始めて， ページクラスに同じ名前のメソッドを用意します．
 					<code>do～()</code>
 					メソッドの詳細は 「
-					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+					<a href="../concept/lifecycle.html">ライフサイクル</a>
 					」－「
-					<a href="ext_concept_lifecycle.html#doメソッド">
+					<a href="../concept/lifecycle.html#doメソッド">
 						do～()メソッド
 					</a>
 					」を参照してください．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， INVOKE_APPLICATIONフェーズで
 					<code>do～()</code>
 					メソッドが呼び出されます． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は呼び出されません． INVOKE_APPLICATIONフェーズについては，「
-					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+					<a href="../concept/lifecycle.html">ライフサイクル</a>
 					」－「
 					<a
-						href="ext_concept_lifecycle.html#JSFライフサイクルとの関係">
+						href="../concept/lifecycle.html#JSFライフサイクルとの関係">
 						JSFライフサイクルとの関係
 					</a>
 					」を参照してください．
@@ -2596,18 +2596,18 @@ public Class doSend() {
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						<a href="ext_rev_output.html#属性値を動的に出力するには">
+						<a href="output.html#属性値を動的に出力するには">
 							属性値を動的に出力するには
 						</a>
 					</li>
 					<li>
 						<a
-							href="ext_rev_output.html#プロパティファイルの内容を属性に出力するには">
+							href="output.html#プロパティファイルの内容を属性に出力するには">
 							プロパティファイルの内容を属性に出力するには
 						</a>
 					</li>
 					<li>
-						<a href="ext_concept_page.html#ページ名の命名規約">
+						<a href="../concept/page.html#ページ名の命名規約">
 							ページ名の命名規約
 						</a>
 					</li>
@@ -2629,7 +2629,7 @@ public Class doSend() {
 					属性が
 					<code>doOnce</code>
 					で始まるサブミットボタンを含むフォームにはトランザクショントークンが埋め込まれます．
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，
 					トランザクショントークンがチェックされ，二重サブミットを検出すると最初のサブミットに対する応答画面へリダイレクトするか，
 					エラー画面が表示されます．
@@ -2651,7 +2651,7 @@ public Class doOnceSend() {
 					te名前空間を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="ext_ref_xhtml.html#名前空間宣言">名前空間宣言</a>
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
 					を指定する必要があります．
 				</div>
 				<p>
@@ -2689,14 +2689,14 @@ public Class doOnceSend() {
 					とします．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， UPDATE_MODEL_VALUESフェーズの後に指定された画面に遷移します． ただし， 「
-					<a href="ext_rev_validation.html">バリデーション</a>
+					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は遷移しません． UPDATE_MODEL_VALUESフェーズについては，「
-					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+					<a href="../concept/lifecycle.html">ライフサイクル</a>
 					」－「
 					<a
-						href="ext_concept_lifecycle.html#JSFライフサイクルとの関係">
+						href="../concept/lifecycle.html#JSFライフサイクルとの関係">
 						JSFライフサイクルとの関係
 					</a>
 					」を参照してください．
@@ -2728,13 +2728,13 @@ public Class doOnceSend() {
 					とします．
 				</p>
 				<p>
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， APPLY_REQUEST_VALUESフェーズの後に指定された画面へ遷移します．
 					バリデーションは行われません． APPLY_REQUEST_VALUESフェーズについては，「
-					<a href="ext_concept_lifecycle.html">ライフサイクル</a>
+					<a href="../concept/lifecycle.html">ライフサイクル</a>
 					」－「
 					<a
-						href="ext_concept_lifecycle.html#JSFライフサイクルとの関係">
+						href="../concept/lifecycle.html#JSFライフサイクルとの関係">
 						JSFライフサイクルとの関係
 					</a>
 					」を参照してください．

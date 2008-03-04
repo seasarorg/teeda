@@ -48,10 +48,10 @@
 		<section name="状態の引継ぎ">
 			<p>
 				Teeda Extensionは
-				<a href="ext_concept_prg.html">PRGパターン</a>
+				<a href="prg.html">PRGパターン</a>
 				で画面遷移します． 通常， 画面遷移の際はページクラスの間で状態 (プロパティの値) を引き継ぐ必要があります．
 			</p>
-			<img src="images/ext_concept_scope1.png" width="492"
+			<img src="../../images/extension/concept/scope1.png" width="492"
 				height="466" alt="状態の引継ぎ" />
 			<p>
 				リダイレクト表示のリクエストではURLの長さ制限もあるため，
@@ -81,7 +81,7 @@
 				</dt>
 				<dd>
 					同じ
-					<a href="ext_concept_page.html#サブアプリケーション">
+					<a href="page.html#サブアプリケーション">
 						サブアプリケーション
 					</a>
 					内のページを表示している間，状態を維持するスコープです．
@@ -97,37 +97,37 @@
 				次の図は各スコープの有効期間を表しています
 				(デフォルトスコープの有効期間はサブアプリケーションスコープと同じです)．
 			</p>
-			<img src="images/ext_concept_scope2.png" width="586"
+			<img src="../../images/extension/concept/scope2.png" width="586"
 				height="863" alt="スコープの有効期間" />
 
 			<subsection name="ページスコープ">
 				<p>
 					ページスコープは，
-					<a href="ext_concept_lifecycle.html#ポストバック_自画面表示">
+					<a href="lifecycle.html#ポストバック_自画面表示">
 						ポストバック (自画面表示)
 					</a>
 					や
 					<a
-						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+						href="lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					～
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					で同じページを表示している間維持されるスコープです．
 				</p>
 				<p>
 					ページスコープは，
-					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					<a href="lifecycle.html#初期表示">初期表示</a>
 					や
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					で開始されます．
-					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					<a href="lifecycle.html#初期表示">初期表示</a>
 					や
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					で他のページがリクエストされると破棄されて， 新しいページスコープが開始されます．
@@ -144,13 +144,13 @@ public String name;
 				<div class="caution">
 					<div>注意点</div>
 					<p>
-						<a href="ext_concept_lifecycle.html#初期表示">
+						<a href="lifecycle.html#初期表示">
 							初期表示
 						</a>
 						で現在と同じページが表示される場合は， ページスコープは維持されません．
 						新しいページスコープが開始されます．
 						<a
-							href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+							href="lifecycle.html#ポストバック_リダイレクト">
 							ポストバック (リダイレクト)
 						</a>
 						で現在と同じページが表示される場合は， ページスコープは維持されます．
@@ -166,11 +166,11 @@ public String name;
 				<p>
 					リダイレクトスコープは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+						href="lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					で開始され，
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					後に破棄されます．
@@ -186,7 +186,7 @@ public String name;
 					<code>@RedirectScope</code>
 					が指定されたプロパティは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+						href="lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際にリダイレクトスコープに含められます．
@@ -196,26 +196,26 @@ public String name;
 			<subsection name="サブアプリケーションスコープ">
 				<p>
 					サブアプリケーションスコープは， 同じ
-					<a href="ext_concept_page.html#サブアプリケーション">
+					<a href="page.html#サブアプリケーション">
 						サブアプリケーション
 					</a>
 					のページを表示している間維持されるスコープです．
 				</p>
 				<p>
 					サブアプリケーションスコープは，
-					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					<a href="lifecycle.html#初期表示">初期表示</a>
 					や
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					で 他の
-					<a href="ext_concept_page.html#サブアプリケーション">
+					<a href="page.html#サブアプリケーション">
 						サブアプリケーション
 					</a>
 					から遷移した際に開始されます．
-					<a href="ext_concept_lifecycle.html#初期表示">初期表示</a>
+					<a href="lifecycle.html#初期表示">初期表示</a>
 					や
-					<a href="ext_concept_lifecycle.html#リダイレクト表示">
+					<a href="lifecycle.html#リダイレクト表示">
 						リダイレクト表示
 					</a>
 					で他のサブアプリケーションのページが要求されると破棄されて，
@@ -239,7 +239,7 @@ public String name;
 				<p>デフォルトスコープは，実際にはスコープではなく，サブアプリケーションスコープの一種です．</p>
 				<p>
 					<a
-						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+						href="lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際に，アノテーションが指定されていないプロパティで，
@@ -257,7 +257,7 @@ public String name;
 				<p>
 					デフォルトスコープのプロパティは，
 					<a
-						href="ext_concept_lifecycle.html#ポストバック_リダイレクト">
+						href="lifecycle.html#ポストバック_リダイレクト">
 						ポストバック (リダイレクト)
 					</a>
 					の際にサブアプリケーションスコープに含められます．
@@ -266,12 +266,12 @@ public String name;
 					<div>注意点</div>
 					<p>
 						デフォルトスコープのプロパティは，
-						<a href="ext_concept_lifecycle.html#初期表示">
+						<a href="lifecycle.html#初期表示">
 							初期表示
 						</a>
 						や
 						<a
-							href="ext_concept_lifecycle.html#ポストバック_自画面表示">
+							href="lifecycle.html#ポストバック_自画面表示">
 							ポストバック (自画面表示)
 						</a>
 						ではサブアプリケーションスコープに含められません．
@@ -294,7 +294,7 @@ public String name;
 					サブミットボタンの
 					<code>id</code>
 					属性および対応する
-					<a href="ext_concept_lifecycle.html#ライフサイクルメソッド">
+					<a href="lifecycle.html#ライフサイクルメソッド">
 						ライフサイクルメソッド
 					</a>
 					の名前が
@@ -302,7 +302,7 @@ public String name;
 					または
 					<code>doOnceFinish</code>
 					で始まっている場合，
-					<a href="ext_concept_page.html#ポストバック">ポストバック</a>
+					<a href="page.html#ポストバック">ポストバック</a>
 					された際にサブアプリケーションスコープ (デフォルトスコープ含む) の内容はクリアされ，
 					遷移先画面に状態は引き継がれなくなります (リダイレクトスコープは引き継がれます)．
 				</p>
@@ -310,7 +310,7 @@ public String name;
 
 			<subsection name="TakeOverアノテーション">
 				<p>
-					<a href="ext_concept_lifecycle.html#ライフサイクルメソッド">
+					<a href="lifecycle.html#ライフサイクルメソッド">
 						ライフサイクルメソッド
 					</a>
 					に
