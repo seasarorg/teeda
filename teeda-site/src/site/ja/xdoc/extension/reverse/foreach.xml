@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - 繰り返し</title>
+	</properties>
+	<body>
+		<section name="繰り返し">
+			<ul>
+				<li>
+					<a href="#出力">出力</a>
+					<ul>
+						<li>
+							<a href="#リスト項目を繰り返し出力するには">
+								リスト項目を繰り返し出力するには
+							</a>
+						</li>
+						<li>
+							<a href="#テーブルの行を繰り返し出力するには">
+								テーブルの行を繰り返し出力するには
+							</a>
+						</li>
+						<li>
+							<a href="#テーブルの列を繰り返し出力するには">
+								テーブルの列を繰り返し出力するには
+							</a>
+						</li>
+						<li>
+							<a href="#テーブルの行と列を繰り返し出力するには">
+								テーブルの行と列を繰り返し出力するには
+							</a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="出力">
+			<subsection name="リスト項目を繰り返し出力するには">
+				<p>
+					<code>&lt;ul&gt;</code>
+					，
+					<code>&lt;ol&gt;</code>
+					，
+					<code>&lt;dl&gt;</code>
+					要素のいずれかに
+					<code>id</code>
+					属性を付け，
+					<code>Items</code>
+					で終わる値とします． その内容に
+					<code>&lt;li&gt;</code>
+					，
+					<code>&lt;dt&gt;</code>
+					，
+					<code>&lt;dd&gt;</code>
+					要素を記述します．
+				</p>
+				<p>
+					<code>&lt;li&gt;</code>
+					，
+					<code>&lt;dt&gt;</code>
+					，
+					<code>&lt;dd&gt;</code>
+					要素の内側には，
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素を使ってテキストを動的に出力することができます．
+				</p>
+				<p>
+					ページクラスに
+					<code>&lt;ul&gt;</code>
+					要素等の
+					<code>id</code>
+					属性と同じ名前で， 型が配列または
+					<code>java.util.List</code>
+					のプロパティ (
+					<code>xxxItems</code>
+					) を用意し，表示する情報を設定します．
+				</p>
+				<div class="sidebar">
+					これらのプロパティはTeedaが繰り返し中に値を設定します．
+				</div>
+				<p>
+					<code>xxxItems</code>
+					プロパティの要素と同じ型で，末尾の
+					<code>Items</code>
+					を取り除いた名前のプロパティ (
+					<code>xxx</code>
+					) を用意します．
+					<code>xxx</code>
+					プロパティがDtoまたは
+					<code>java.util.Map</code>
+					の場合は，Dtoのプロパティと同じ名前と型 (
+					<code>Map</code>
+					の場合はキーと同じ名前で値と同じ型) のプロパティをページクラスにも持たせます．
+				</p>
+				<p>
+					レンダリング時，
+					<code>Items</code>
+					プロパティの要素数分，リスト項目が繰り返し表示されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<ul id="nameItems">
+    <li><span id="name">dummy</span></li>
+</ul>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] nameItems;
+public String name; //Teedaが設定
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>nameItems</code>
+					プロパティが
+					<code>"Teeda"</code>
+					，
+					<code>"SAStruts"</code>
+					，
+					<code>"Cubby"</code>
+					， を要素とする配列の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<ul id="nameItems">
+    <li><span id="name">Teeda</span></li>
+    <li><span id="name">SAStruts</span></li>
+    <li><span id="name">Cubby</span></li>
+</ul>
+]]></source>
+			</subsection>
+
+			<subsection name="テーブルの行を繰り返し出力するには">
+				<p>
+					<code>&lt;table&gt;</code>
+					要素または
+					<code>&lt;tbody&gt;</code>
+					要素のいずれかに
+					<code>id</code>
+					属性を付け，
+					<code>Items</code>
+					で終わる値とします． その内容に
+					<code>&lt;tr&gt;</code>
+					要素を記述します．
+				</p>
+				<p>
+					<code>&lt;tr&gt;</code>
+					要素の内側には，
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素を使ってテキストを動的に出力することができます．
+				</p>
+				<p>
+					ページクラスに
+					<code>&lt;tbody&gt;</code>
+					要素等の
+					<code>id</code>
+					属性と同じ名前で， 型が配列または
+					<code>java.util.List</code>
+					のプロパティ (
+					<code>xxxItems</code>
+					) を用意し，表示する情報を設定します．
+				</p>
+				<div class="sidebar">
+					これらのプロパティはTeedaが繰り返し中に値を設定します．
+				</div>
+				<p>
+					<code>xxxItems</code>
+					プロパティの要素と同じ型で，末尾の
+					<code>Items</code>
+					を取り除いた名前のプロパティ (
+					<code>xxx</code>
+					) を用意します．
+					<code>xxx</code>
+					プロパティがDtoまたは
+					<code>java.util.Map</code>
+					の場合は，Dtoのプロパティと同じ名前と型 (
+					<code>Map</code>
+					の場合はキーと同じ名前で値と同じ型) のプロパティをページクラスにも持たせます．
+				</p>
+				<p>
+					レンダリング時，
+					<code>Items</code>
+					プロパティの要素数分，行が繰り返し表示されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<table>
+    <tbody id="specItems">
+        <tr>
+            <td><span id="shortName">dummy</span></td>
+            <td><span id="fullName">dummy</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public List<SpecDto> specItems;
+public SpecDto spec;     //Teedaが設定
+public String shortName; //Teedaが設定
+public String fullName;  //Teedaが設定
+]]></source>
+				<h5>例：Dtoのプロパティ (SpecDto.java)</h5>
+				<source><![CDATA[
+public String shortName;
+public String fullName;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>specItems</code>
+					プロパティが 3つの
+					<code>SpecDto</code>
+					を要素とする
+					<code>List</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table>
+    <tbody id="specItems">
+        <tr>
+            <td><span id="shortName">JSF</span></td>
+            <td><span id="fullName">JavaServer Faces</span></td>
+        </tr>
+        <tr>
+            <td><span id="shortName">EJB</span></td>
+            <td><span id="fullName">Enterprise JavaBeans</span></td>
+        </tr>
+        <tr>
+            <td><span id="shortName">JPA</span></td>
+            <td><span id="fullName">Java Persistence API</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="テーブルの列を繰り返し出力するには">
+				<p>
+					<code>&lt;tr&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け，
+					<code>Items</code>
+					で終わる値とします． その内容に
+					<code>&lt;td&gt;</code>
+					要素または
+					<code>&lt;th&gt;</code>
+					要素を記述します．
+				</p>
+				<p>
+					<code>&lt;td&gt;</code>
+					要素または
+					<code>&lt;th&gt;</code>
+					要素の内側には，
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素を使ってテキストを動的に出力することができます．
+				</p>
+				<p>
+					ページクラスに
+					<code>&lt;tr&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前で， 型が配列または
+					<code>java.util.List</code>
+					のプロパティ (
+					<code>xxxItems</code>
+					) を用意し，表示する情報を設定します．
+				</p>
+				<div class="sidebar">
+					これらのプロパティはTeedaが繰り返し中に値を設定します．
+				</div>
+				<p>
+					<code>xxxItems</code>
+					プロパティの要素と同じ型で，末尾の
+					<code>Items</code>
+					を取り除いた名前のプロパティ (
+					<code>xxx</code>
+					) を用意します．
+					<code>xxx</code>
+					プロパティがDtoまたは
+					<code>java.util.Map</code>
+					の場合は，Dtoのプロパティと同じ名前と型 (
+					<code>Map</code>
+					の場合はキーと同じ名前で値と同じ型) のプロパティをページクラスにも持たせます．
+				</p>
+				<p>
+					レンダリング時，
+					<code>Items</code>
+					プロパティの要素数分，列が繰り返し表示されます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<table>
+    <tbody>
+        <tr id="productItems">
+            <td><span id="name"></span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public List<Map> productItems;
+public Map product; //Teedaが設定
+public String name; //Teedaが設定
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>productItems</code>
+					プロパティが 3つの
+					<code>Map</code>
+					を要素とする
+					<code>List</code>
+					で，要素の
+					<code>Map</code>
+					は
+					<code>"name"</code>
+					をキーとするマッピングを含む場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table>
+    <tbody>
+        <tr id="productItems">
+            <td><span id="name">Teeda</span></td>
+            <td><span id="name">SAStruts</span></td>
+            <td><span id="name">Cubby</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="テーブルの行と列を繰り返し出力するには">
+				<p>
+					<code>&lt;tr&gt;</code>
+					要素に
+					<code>id</code>
+					属性を付け，
+					<code>Items</code>
+					で終わる値 (
+					<code>xxxItems</code>
+					) とします．
+					<code>&lt;table&gt;</code>
+					要素または
+					<code>&lt;tbody&gt;</code>
+					要素のいずれかに
+					<code>id</code>
+					属性を付け，
+					<code>&lt;tr&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値に
+					<code>Items</code>
+					を付加した値 (
+					<code>xxxItemsItems</code>
+					) とします．
+				</p>
+				<p>
+					ページクラスに
+					<code>&lt;tbody&gt;</code>
+					要素等の
+					<code>id</code>
+					属性と同じ名前 (
+					<code>xxxItemsItems</code>
+					) で， 型が配列の配列または
+					<code>java.util.List</code>
+					の
+					<code>List</code>
+					のプロパティを用意し，表示する情報を設定します．
+				</p>
+				<div class="sidebar">
+					これらのプロパティはTeedaが繰り返し中に値を設定します．
+				</div>
+				<p>
+					<code>xxxItemsItems</code>
+					プロパティの要素と同じ型 (配列または
+					<code>List</code>
+					) で，末尾の
+					<code>Items</code>
+					を取り除いたプロパティ (
+					<code>xxxItems</code>
+					) と，その要素と同じ型で 末尾の
+					<code>Items</code>
+					を取り除いたプロパティ (
+					<code>xxx</code>
+					) を用意します．
+					<code>xxx</code>
+					プロパティがDtoまたは
+					<code>java.util.Map</code>
+					の場合は，Dtoのプロパティと同じ名前と型 (
+					<code>Map</code>
+					の場合はキーと同じ名前で値と同じ型) のプロパティをページクラスにも持たせます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<table>
+    <tbody id="nameItemsItems">
+        <tr id="nameItems">
+            <td><span id="name">dummy</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[][] nameItemsItems;
+public String[] nameItems; //Teedaが設定
+public String name;        //Teedaが設定
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>nameItemsItems</code>
+					プロパティの値が
+				</p>
+				<source><![CDATA[
+{ { "A1", "A2"}, { "B1", "B2"} }
+]]></source>
+				<p>の場合，レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<table>
+    <tbody id="nameItemsItems">
+        <tr id="nameItems>
+            <td><span id="name">A1</span></td>
+            <td><span id="name">A2</span></td>
+        </tr>
+        <tr id="nameItems>
+            <td><span id="name">B1</span></td>
+            <td><span id="name">B2</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+		</section>
+	</body>
+</document>
