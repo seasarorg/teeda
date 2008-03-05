@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.scope;
+package org.seasar.teeda.it.web.scope;
 
 import org.seasar.teeda.extension.annotation.scope.PageScope;
 import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;

@@ -202,4 +202,38 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("data2", "bar");
 	}
 
+	public void testPageScope_TEEDA448() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/scope/pageScope.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("message1", "init1");
+		tester.assertAttributeEqualsById("message2", "value", "init2");
+		tester.assertAttributeEqualsById("message3", "value", "init3");
+
+		// ## Act ##
+		tester.setTextByName("form:message2", "a");
+		tester.setTextByName("form:message3", "b");
+		tester.submitById("doPageScopeExecute");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("message1", "init1");
+		tester.assertAttributeEqualsById("message2", "value", "a");
+		tester.assertAttributeEqualsById("message3", "value", "b");
+
+		// ## Act ##
+		tester.submitById("doPageScopeClear");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("message1", "");
+		tester.assertAttributeEqualsById("message2", "value", "");
+		tester.assertAttributeEqualsById("message3", "value", "");
+	}
+
 }
