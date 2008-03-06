@@ -429,6 +429,48 @@ public Validator getAaaValidator() {
 </tr>
 </tbody>
 </table>
+<h4>portlet.xml(ポートレットを利用する場合のみ)</h4>
+<p>ポートレット環境で利用する場合には，<code>portlet.xml</code>のポートレットの定義ににポートレット用の<code>MultipartFormDataFilter</code>を設定します．</p>
+<pre>&lt;portlet-app id="teeda-html-example" version="1.0"&gt;
+  &lt;portlet id="TeedaHtmlExample"&gt;
+    &lt;portlet-name&gt;TeedaHtmlExample&lt;/portlet-name&gt;
+    &lt;display-name&gt;Teeda HTML Example&lt;/display-name&gt;
+    &lt;description&gt;This is an example portlet for Teeda.&lt;/description&gt;
+    &lt;portlet-class&gt;org.apache.portals.bridges.portletfilter.FilterPortlet&lt;/portlet-class&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;portlet-class&lt;/name&gt;
+      &lt;value&gt;org.seasar.teeda.core.portlet.FacesPortlet&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;portlet-filters&lt;/name&gt;
+      &lt;value&gt;
+        org.seasar.portlet.filter.S2PortletFilter,
+        org.seasar.portlet.filter.HotdeployPortletFilter,
+        org.seasar.teeda.extension.portlet.MultipartFormDataFilter
+      &lt;/value&gt;&lt;!-- 実際には空白や改行を入れずに記述する --&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:encoding&lt;/name&gt;
+      &lt;value&gt;UTF-8&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadMaxSize&lt;/name&gt;
+      &lt;value&gt;100m&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadMaxFileSize&lt;/name&gt;
+      &lt;value&gt;100m&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadThresholdSize&lt;/name&gt;
+      &lt;value&gt;100k&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;!-- OS固有の設定 --&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadRepositoryPath&lt;/name&gt;
+      &lt;value&gt;C:/temp/&lt;/value&gt;
+    &lt;/init-param&gt;</pre>
+<p>ポートレット環境では，<code>web.xml</code>で指定した値ではなく，<code>portlet.xml</code>で指定した値が有効になります．</p>
 <h4>テンプレートHTML</h4>
 <p>テンプレートHTMLには，通常のHTMLとして<code>&lt;input type=&quot;file&quot;&gt;</code>要素を記述し，id属性を付与します．</p>
 <pre>&lt;input type=&quot;file&quot; id=&quot;uploadedFile&quot; /&gt;</pre>
