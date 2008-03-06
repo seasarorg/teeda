@@ -32,6 +32,10 @@ public class THtmlGraphicImageRenderer extends HtmlGraphicImageRenderer {
 
     public static final String RENDERER_TYPE = THtmlGraphicImage.DEFAULT_RENDERER_TYPE;
 
+    public THtmlGraphicImageRenderer() {
+        addIgnoreAttributeName("baseViewId");
+    }
+
     protected String getUrl(FacesContext context, UIGraphic htmlGraphicImage) {
         String url = htmlGraphicImage.getUrl();
         if (StringUtil.isEmpty(url)) {

@@ -76,4 +76,8 @@ public class HtmlGraphicImageRenderer extends AbstractRenderer {
         return url;
     }
 
+    protected void addIgnoreAttributeName(final String attr) {
+        ignoreComponent.addAttributeName(attr);
+    }
+
 }
