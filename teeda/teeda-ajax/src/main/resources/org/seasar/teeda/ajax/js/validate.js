@@ -229,7 +229,7 @@ Kumu.Validator.RegularExpressionValidator.prototype =  new Kumu.Validator.Valida
    
 Kumu.Validator.IntegerValidator = function(){
   this.validate = function(v){
-    var re = /^[-]?\d*$/;
+    var re = /^[-]?([1-9]\d*)?\d$/;
     var v = v.toString();
     if(!v.match(re)){
       return false;      
@@ -268,7 +268,7 @@ Kumu.Validator.MaxRangeValidator.prototype = new Kumu.Validator.ValidatorBase();
 
 Kumu.Validator.DoubleValidator = function(){
   this.validate = function(v){
-    var re = /^[-]?\d*.?\d$/;
+    var re = /^[-]?([1-9]\d*)?\d(\.\d*)?$/;
     var v = v.toString();
     if(!v.match(re)){
       return false;      
