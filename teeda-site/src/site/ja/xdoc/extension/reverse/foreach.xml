@@ -50,10 +50,33 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#"></a>
+					<a href="#インデックス">インデックス</a>
+					<ul>
+						<li>
+							<a href="#繰り返しの中でインデックスを使うには">
+								繰り返しの中でインデックスを使うには
+							</a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<a href="#"></a>
+					<a href="#入力フォーム">入力フォーム</a>
+					<ul>
+						<li>
+							<a href="#繰り返しの中で入力項目を使うには">
+								繰り返しの中で入力項目を使うには
+							</a>
+						</li>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="#"></a>
@@ -88,7 +111,7 @@
 					<code>&lt;dt&gt;</code>
 					，
 					<code>&lt;dd&gt;</code>
-					要素の内側には，
+					要素の内容 (子孫) には，
 					<code>&lt;span&gt;</code>
 					要素や
 					<code>&lt;div&gt;</code>
@@ -157,6 +180,7 @@ public String name; //Teedaが設定
 </ul>
 ]]></source>
 			</subsection>
+
 			<subsection name="テーブルの行を繰り返し出力するには">
 				<p>
 					<code>&lt;table&gt;</code>
@@ -172,7 +196,7 @@ public String name; //Teedaが設定
 				</p>
 				<p>
 					<code>&lt;tr&gt;</code>
-					要素の内側には，
+					要素の内容 (子孫) には，
 					<code>&lt;span&gt;</code>
 					要素や
 					<code>&lt;div&gt;</code>
@@ -280,7 +304,7 @@ public String fullName;
 					<code>&lt;td&gt;</code>
 					要素または
 					<code>&lt;th&gt;</code>
-					要素の内側には，
+					要素の内容 (子孫) には，
 					<code>&lt;span&gt;</code>
 					要素や
 					<code>&lt;div&gt;</code>
@@ -376,7 +400,7 @@ public String name; //Teedaが設定
 					<code>&lt;span&gt;</code>
 					要素または
 					<code>&lt;div&gt;</code>
-					要素の内側には，
+					要素の内容 (子孫) には，
 					<code>&lt;span&gt;</code>
 					要素や
 					<code>&lt;div&gt;</code>
@@ -684,6 +708,105 @@ public String name;
     </tbody>
 </table>
 ]]></source>
+			</subsection>
+		</section>
+
+		<section name="インデックス">
+			<subsection name="繰り返しの中でインデックスを使うには">
+				<div class="sidebar">このプロパティはTeedaが繰り返し中に値を設定します．</div>
+				<p>
+					ページクラスに，
+					<code>id</code>
+					属性の名前 (
+					<code>xxxItems</code>
+					) の末尾の
+					<code>Items</code>
+					を
+					<code>Index</code>
+					に置き換えた名前 (
+					<code>xxxIndex</code>
+					) で， 型が
+					<code>int</code>
+					のプロパティを用意します．
+				</p>
+				<div class="sidebar">インデックスは0から始まります．</div>
+				<p>
+					レンダリング時，繰り返しの中で参照されるプロパティのgetterメソッドの中で
+					<code>xxxIndex</code>
+					を参照することにより，現在のインデックスを得ることができます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<table>
+    <tbody id="nameItems">
+        <tr id="row" class="dummy">
+            <td><span id="name" /></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String[] nameItems;
+public String name;   //Teedaが設定
+public int nameIndex; //Teedaが設定
+
+public String getRowStyleClass() {
+    return (nameIndex + 1) % 2 == 0 ? "even" : "odd";
+}
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>nameItems</code>
+					プロパティが
+					<code>"Teeda"</code>
+					，
+					<code>"SAStruts"</code>
+					，
+					<code>"Cubby"</code>
+					， を要素とする配列の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<table>
+    <tbody id="nameItems">
+        <tr id="row" class="odd">
+            <td><span id="name" /></td>
+        </tr>
+        <tr id="row" class="even">
+            <td><span id="name" /></td>
+        </tr>
+        <tr id="row" class="odd">
+            <td><span id="name" /></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<div class="sidebar">
+					<a href="output.html#属性値を動的に出力するには">ダイナミックプロパティ</a>
+					で
+					<code>class</code>
+					属性を扱う場合は
+					<var>id</var>
+					+
+					<code>StyleClass</code>
+					というプロパティ名になります．
+				</div>
+				<p>
+					<code>&lt;tr&gt;</code>
+					要素の
+					<code>class</code>
+					属性には，
+					<code>getRowStyleClass()</code>
+					メソッドの戻り値がレンダリングされます．
+					<code>getRowStyleClass()</code>
+					メソッドは
+					<code>nameIndex</code>
+					を参照して， 奇数行なら
+					<code>"odd"</code>
+					，偶数行なら
+					<code>"even"</code>
+					を返します．
+				</p>
 			</subsection>
 		</section>
 	</body>
