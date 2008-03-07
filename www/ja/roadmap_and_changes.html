@@ -70,6 +70,23 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.13-rc4">Teeda&nbsp;1.0.13-rc4&nbsp;変更点</a></h2>
+Teeda 1.0.13-rc3からの変更点は次のとおりです．
+<pre style="background-color:white">
+* Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-444'>TEEDA-444</a>] - レイアウトを使った画面で doOnce～ ボタンに te:renderJs=&quot;true&quot; を指定しても，
+                       最初の表示では JavaScript が効かない問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-447'>TEEDA-447</a>] - [Kumu.Validator] DoubleValidator / IntegerValidatorの正規表現パターンの
+                       不具合を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-448'>TEEDA-448</a>] - ポストバック時，do～() メソッドが呼び出された後にページクラスのプロパティが 
+                       Page スコープの状態で上書きされてしまう問題を修正しました．
+                       [Seasar-user:13156]
+
+* Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-446'>TEEDA-446</a>] - selectMany(Checkbox|Listbox) で，Map 型の ～Items プロパティを
+                       サポートしました．
+</pre>
+
 <h2><a name="1.0.13-rc3">Teeda&nbsp;1.0.13-rc3&nbsp;変更点</a></h2>
 Teeda 1.0.13-rc2からの変更点は次のとおりです．
 <pre style="background-color:white">

@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-rc4">1.0.13-rc4</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-rc3">1.0.13-rc3</a>
 					</td>
 					<td>
@@ -116,6 +119,66 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-rc4">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-rc3">1.0.13-rc3</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-444'>
+									TEEDA-444
+								</a>
+								] - レイアウトを使った画面で doOnce～ ボタンに
+								te:renderJs=&quot;true&quot;
+								を指定しても，最初の表示では JavaScript
+								が効かない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-447'>
+									TEEDA-447
+								</a>
+								] - [Kumu.Validator] DoubleValidator /
+								IntegerValidatorの正規表現パターンの不具合を修正しました．
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-448'>
+									TEEDA-448
+								</a>
+								] - ポストバック時，do～()
+								メソッドが呼び出された後にページクラスのプロパティが Page
+								スコープの状態で上書きされてしまう問題を修正しました．[Seasar-user:13156]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-446'>
+									TEEDA-446
+								</a>
+								] - selectMany(Checkbox|Listbox) で，Map
+								型の ～Items プロパティをサポートしました．
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-rc3">
