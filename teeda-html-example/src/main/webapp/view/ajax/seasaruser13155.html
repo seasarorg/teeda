@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="../../js/kumu.js"></script>
+<script type="text/javascript" src="../../js/ajax.js"></script>
+<title>Seasar-user:13155</title>
+<script type="text/javascript">
+//<![CDATA[
+function ajax_hogePage_ajaxGetAAAOptions(res){
+  //alert(res[0].label);
+  var select = $i('aaa');
+  for(var i=0; i<res.length; i++) {
+    //alert(res[i].label);
+    select.options[i+1] = new Option(res[i].label,res[i].value);
+  }
+}
+
+function ajax_hogePage_ajaxGetBBBOptions(res){
+  //alert(res[0].label);
+  var select = $i('bbb');
+  for(var i=0; i<res.length; i++) {
+    //alert(res[i].label);
+    select.options[i+1] = new Option(res[i].label,res[i].value);
+  }
+}
+
+function doajax() {
+  var p = {ccc:'1'};
+  Kumu.Ajax.executeTeedaAjax(ajax_hogePage_ajaxGetAAAOptions, p);
+  //Kumu.Ajax.executeTeedaAjax(ajax_hogePage_ajaxGetAAAOptions, {ccc:'1'});
+  Kumu.Ajax.executeTeedaAjax(ajax_hogePage_ajaxGetBBBOptions, p);
+  //Kumu.Ajax.executeTeedaAjax(ajax_hogePage_ajaxGetBBBOptions, {ccc:'1'});
+}
+//]]>  
+</script>
+</head>
+<body>
+<span id="fuga">ふが</span>
+<form id="hogeForm">
+<input type="submit" id="doAction"/>
+<input type="button" value="ajax" onclick="doajax();"/>
+<select id="aaa">
+<option>選択してください</option>
+</select>
+<select id="bbb">
+<option>選択してください</option>
+</select>
+</form>
+</body>
+</html>

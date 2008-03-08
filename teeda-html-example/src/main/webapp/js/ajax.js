@@ -354,7 +354,7 @@ Kumu.Ajax = {
     var componentName = ret.substring(0, idx);
     var actionName = ret.substring(idx + 1);
     var arr = new Array(componentName, actionName);
-
+//alert('ああ['+componentName+'] いい['+actionName+']');
     return arr;
   },
 
@@ -394,19 +394,17 @@ Kumu.Ajax = {
       ajax.onTimeout = param['onTimeout'];
       delete param['onTimeout'];
     }
-
-    ajax.params = param;
     if(param instanceof Array){
       for(var i = 0; i < param.length; i++){
         ajax.params["AjaxParam" + new String(i)] = param[i];
       }
     }
+    ajax.params = self._clone(param);
     if(!("component" in param) && !("action" in param) && (components.length == 2) ){
       //callback name bind
       ajax.params["component"] = components[0];
       ajax.params["action"] = components[1];
     }
-
     ajax.doAction = callback;
     if (!responseType) {
       responseType = self.RESPONSE_TYPE_JSON;
@@ -414,7 +412,13 @@ Kumu.Ajax = {
     ajax.responseType = responseType;
     return self.executeAjax(ajax);
   },
-
+  
+  _clone : function(o){
+    var f = function(){};
+    f.prototype = o;
+    return new f;
+  },
+   
   _setJSONData : function(node, data){
     if(node.style.display == 'none'){
       node.style.display = '';
