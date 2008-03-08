@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - 条件分岐</title>
+	</properties>
+	<body>
+		<section name="条件分岐">
+			<ul>
+				<li>
+					<a href="#条件が成立した場合だけ要素を出力するには">
+						条件が成立した場合だけ要素を出力するには
+					</a>
+				</li>
+				<li>
+					<a href="#条件が成立しなかった場合だけ要素を出力するには">
+						条件が成立しなかった場合だけ要素を出力するには
+					</a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="条件分岐">
+			<subsection name="条件が成立した場合だけ要素を出力するには">
+				<div class="sidebar">
+					他の機能に割り当てられている要素と併用することはできません．
+					そのような場合は他の機能に割り当てられている要素の外側に
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素を記述し， その
+					<code>id</code>
+					属性を
+					<code>is～</code>
+					にします．
+				</div>
+				<p>
+					任意の要素に
+					<code>id</code>
+					属性を付け，
+					<code>is</code>
+					で始まる値とします．
+				</p>
+				<p>
+					ページクラスに，要素の
+					<code>id</code>
+					属性から先頭の
+					<code>is</code>
+					を除いた名前で， 型が
+					<code>boolean</code>
+					のプロパティを用意します．
+					<br clear="all" />
+				</p>
+				<p style="clear: both">&#160;</p>
+				<div class="sidebar">
+					te名前空間を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
+				</div>
+				<p>
+					レンダリング時， プロパティが
+					<code>true</code>
+					の場合のみ要素の開始タグ及び終了タグとその内容が出力されます．
+					<a href="output.html#タグを出力したくない場合には">
+						タグを出力したくない場合
+					</a>
+					には
+					<code>te:omittag</code>
+					属性に
+					<code>true</code>
+					を設定します．
+				</p>
+				<p>
+					プロパティが
+					<code>false</code>
+					の場合，要素 (開始タグ及び終了タグと内容) は出力されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+aaa<span id="isDisplay">bbb</span>ccc
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public boolean display;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>display</code>
+					プロパティが
+					<code>true</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+aaa<span id="isDisplay">bbb</span>ccc
+]]></source>
+				<p>
+					<code>display</code>
+					プロパティが
+					<code>false</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+aaaccc
+]]></source>
+			</subsection>
+
+			<subsection name="条件が成立しなかった場合だけ要素を出力するには">
+				<div class="sidebar">
+					他の機能に割り当てられている要素と併用することはできません．
+					そのような場合は他の機能に割り当てられている要素の外側に
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素を記述し， その
+					<code>id</code>
+					属性を
+					<code>isNot～</code>
+					にします．
+				</div>
+				<p>
+					任意の要素に
+					<code>id</code>
+					属性を付け，
+					<code>isNot</code>
+					で始まる値とします．
+				</p>
+				<p>
+					ページクラスに，要素の
+					<code>id</code>
+					属性から先頭の
+					<code>isNot</code>
+					を除いた名前で， 型が
+					<code>boolean</code>
+					のプロパティを用意します．
+					<br clear="all" />
+				</p>
+				<p style="clear: both">&#160;</p>
+				<div class="sidebar">
+					te名前空間を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
+				</div>
+				<p>
+					レンダリング時， プロパティが
+					<code>false</code>
+					の場合のみ要素の開始タグ及び終了タグとその内容が出力されます．
+					<a href="output.html#タグを出力したくない場合には">
+						タグを出力したくない場合
+					</a>
+					には
+					<code>te:omittag</code>
+					属性に
+					<code>true</code>
+					を設定します．
+				</p>
+				<p>
+					プロパティが
+					<code>true</code>
+					の場合，要素 (開始タグ及び終了タグと内容) は出力されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+aaa<span id="isNotOmit">bbb</span>ccc
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public boolean omit;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>omit</code>
+					プロパティが
+					<code>false</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+aaa<span id="isNotOmit">bbb</span>ccc
+]]></source>
+				<p>
+					<code>omit</code>
+					プロパティが
+					<code>true</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+aaaccc
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>

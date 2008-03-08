@@ -50,22 +50,6 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#インデックス">インデックス</a>
-					<ul>
-						<li>
-							<a href="#繰り返しの中でインデックスを使うには">
-								繰り返しの中でインデックスを使うには
-							</a>
-						</li>
-						<li>
-							<a href="#"></a>
-						</li>
-						<li>
-							<a href="#"></a>
-						</li>
-					</ul>
-				</li>
-				<li>
 					<a href="#入力フォーム">入力フォーム</a>
 					<ul>
 						<li>
@@ -79,13 +63,19 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#"></a>
+					<a href="#インデックス">インデックス</a>
+					<ul>
+						<li>
+							<a href="#繰り返しの中でインデックスを使うには">
+								繰り返しの中でインデックスを使うには
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
 
 		<section name="繰り返し出力">
-
 			<subsection name="リスト項目を繰り返し出力するには">
 				<p>
 					<code>&lt;ul&gt;</code>
@@ -496,24 +486,18 @@ public String name; //Teedaが設定
 		</section>
 
 		<section name="ネストした繰り返し">
-			<subsection name="テーブルの行と列を繰り返すには (その1)">
+			<subsection name="ネストした繰り返しを使うには (その1)">
+				<div class="sidebar">同様の方法で何重にでも繰り返しをネストすることができます．</div>
 				<p>
-					<code>&lt;table&gt;</code>
-					要素または
-					<code>&lt;tbody&gt;</code>
-					要素のいずれかに
+					外側の繰り返しの要素に
 					<code>id</code>
 					属性を付け，
 					<code>ItemsItems</code>
 					で終わる値 (
 					<code>xxxItemsItems</code>
-					) とします．
-					<code>&lt;tr&gt;</code>
-					要素に
+					) とします． 内側の繰り返しの要素に
 					<code>id</code>
-					属性を付け，
-					<code>&lt;tbody&gt;</code>
-					要素の
+					属性を付け， 外側の繰り返し要素の
 					<code>id</code>
 					属性の値から最後の
 					<code>Items</code>
@@ -522,9 +506,7 @@ public String name; //Teedaが設定
 					) とします．
 				</p>
 				<p>
-					ページクラスに
-					<code>&lt;tbody&gt;</code>
-					要素等の
+					ページクラスに外側の繰り返し要素の
 					<code>id</code>
 					属性と同じ名前 (
 					<code>xxxItemsItems</code>
@@ -598,20 +580,16 @@ public String name;        //Teedaが設定
 ]]></source>
 			</subsection>
 
-			<subsection name="テーブルの行と列を繰り返すには (その2)">
+			<subsection name="ネストした繰り返しを使うには (その2)">
+				<div class="sidebar">同様の方法で何重にでも繰り返しをネストすることができます．</div>
 				<p>
-					<code>&lt;table&gt;</code>
-					要素または
-					<code>&lt;tbody&gt;</code>
-					要素のいずれかに
+					外側の繰り返しの要素に
 					<code>id</code>
 					属性を付け，
 					<code>Items</code>
 					で終わる値 (
 					<code>xxxItems</code>
-					) とします．
-					<code>&lt;tr&gt;</code>
-					要素に
+					) とします． 内側の繰り返しの要素にも
 					<code>id</code>
 					属性を付け，
 					<code>Items</code>
@@ -620,9 +598,7 @@ public String name;        //Teedaが設定
 					) とします．
 				</p>
 				<p>
-					ページクラスに
-					<code>&lt;tbody&gt;</code>
-					要素等の
+					ページクラスに外側の繰り返し要素の
 					<code>id</code>
 					属性と同じ名前 (
 					<code>xxxItems</code>
@@ -630,9 +606,7 @@ public String name;        //Teedaが設定
 					<code>java.util.List</code>
 					のプロパティを用意します． 要素型はDtoまたは
 					<code>java.util.Map</code>
-					とし，
-					<code>&lt;tr&gt;</code>
-					要素の
+					とし，内側の繰り返し要素の
 					<code>id</code>
 					属性と同じ名前 (
 					<code>yyyItems</code>
@@ -711,13 +685,119 @@ public String name;
 			</subsection>
 		</section>
 
+		<section name="入力フォーム">
+			<subsection name="繰り返しの中で入力項目を使うには">
+				<div class="sidebar">
+					ネストした繰り返しの場合，内側の繰り返し要素に対応する隠しフィールドは必要ありません．
+				</div>
+				<p>
+					テンプレートHTMLに，繰り返しの要素に付けた
+					<code>id</code>
+					属性の名前 (
+					<code>xxxItems</code>
+					) の末尾に
+					<code>Save</code>
+					を付けた
+					<a
+						href="input.html#隠しフィールドにシリアライズしたオブジェクトを保存するには">
+						隠しフィールド
+					</a>
+					を用意します． このフィールドは， 繰り返しの要素より前に記述する必要があります．
+				</p>
+				<p>
+					繰り返しの中で
+					<code>&lt;input&gt;</code>
+					要素や
+					<code>&lt;textarea&gt;</code>
+					等を使うことができます．
+				</p>
+				<p>
+					ページクラスの繰り返し用のプロパティ (
+					<code>xxxItems</code>
+					) の要素型はDtoとします．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<form id="form">
+    <input type="hidden" id="nameItemsSave" />
+    <table>
+        <tbody id="productItems">
+            <tr>
+                <td>名前</td>
+                <td><input type="text" id="name" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" id="doSubmit" value="Submit" />
+</form>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public List<ProductDto> productItems;
+public NameDto product; //Teedaが設定
+public String name;     //Teedaが設定
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>productItems</code>
+					プロパティが3つの要素を持つ
+					<code>List</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<form id="form" name="form" method="post" action="...">
+    <input type="hidden" id="productItemsSave" name="form:nameItemsSave" value="..." />
+    <table>
+        <tbody id="productItems">
+            <tr>
+                <td>名前</td>
+                <td><input type="text" id="name" name="form:nameItems:0:name" value="" /></td>
+            </tr>
+            <tr>
+                <td>名前</td>
+                <td><input type="text" id="name" name="form:nameItems:1:name" value="" /></td>
+            </tr>
+            <tr>
+                <td>名前</td>
+                <td><input type="text" id="name" name="form:nameItems:2:name" value="" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" id="doSubmit" name="form:doSubmit" value="Submit" />
+</form>
+]]></source>
+				<p>
+					テキストフィールドに入力してフォームをサブミットすると，
+					<code>productItems</code>
+					の対応する要素 (
+					<code>ProductDto</code>
+					の
+					<code>name</code>
+					プロパティ) に入力した値が設定された状態で
+					<code>doSubmit()</code>
+					メソッドが呼び出されます．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						繰り返しの中に入力項目がチェックボックス一つだけの場合，
+						未選択の項目がリクエストパラメータに含まれないため，
+						<code>xxxItems</code>
+						の要素数が正しく復元されない場合があります． そのような場合は繰り返しの中に
+						<a href="input.html#隠しフィールドを使うには">隠しフィールド</a>
+						を含めるようにしてください．
+					</p>
+				</div>
+			</subsection>
+		</section>
+
 		<section name="インデックス">
 			<subsection name="繰り返しの中でインデックスを使うには">
 				<div class="sidebar">このプロパティはTeedaが繰り返し中に値を設定します．</div>
 				<p>
-					ページクラスに，
+					ページクラスに，繰り返しの要素に付けた
 					<code>id</code>
-					属性の名前 (
+					属性の値 (
 					<code>xxxItems</code>
 					) の末尾の
 					<code>Items</code>

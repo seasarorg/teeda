@@ -51,9 +51,9 @@
 				</dt>
 				<dd>レイアウトを使う方法を説明します．</dd>
 				<dt>
-					<a href="transition.html">画面遷移</a>
+					<a href="transition.html">画面遷移と状態</a>
 				</dt>
-				<dd>画面遷移する方法を説明します．</dd>
+				<dd>画面遷移する方法と状態の引き継ぎを制御する方法を説明します．</dd>
 			</dl>
 		</section>
 	</body>
