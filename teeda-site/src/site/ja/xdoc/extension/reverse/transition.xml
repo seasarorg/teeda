@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - 画面遷移と状態</title>
+	</properties>
+	<body>
+		<section name="画面遷移と状態">
+			<ul>
+				<li>
+					<a href="#画面遷移">画面遷移</a>
+					<ul>
+						<li>
+							<a href="#初期表示で別画面へ遷移するには">
+								初期表示で別画面へ遷移するには
+							</a>
+						</li>
+						<li>
+							<a href="#ポストバックで別画面へ遷移するには">
+								ポストバックで別画面へ遷移するには
+							</a>
+						</li>
+						<li>
+							<a href="#外部サイトにリダイレクトするには">
+								外部サイトにリダイレクトするには
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="画面遷移">
+			<subsection name="初期表示で別画面へ遷移するには">
+				<p>
+					<a
+						href="../concept/lifecycle.html#initializeメソッド">
+						<code>initialize()</code>
+					</a>
+					メソッドの戻り値で次画面のページクラスまたは
+					<a href="../concept/page.html#ページ名の命名規約">ページ名</a>
+					を指定します．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public Class initialize() {
+    return NextPage.class;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#initializeメソッド">
+									initializeメソッド
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#初期表示">
+									初期表示
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="ポストバックで別画面へ遷移するには">
+				<p>
+					<a href="../concept/lifecycle.html#doメソッド">
+						<code>do～()</code>
+					</a>
+					メソッドの戻り値で次画面のページクラスまたは
+					<a href="../concept/page.html#ページ名の命名規約">ページ名</a>
+					を指定します．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public Class doNext() {
+    return NextPage.class;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#doメソッド">
+									do～()メソッド
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#ポストバック_自画面表示">
+									ポストバック (自画面表示)
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="外部サイトにリダイレクトするには">
+				<p>
+					ページクラスに
+					<code>javax.servlet.http.HttpServletResponse</code>
+					型および
+					<code>javax.faces.context.FacesContext</code>
+					型のプロパティを用意します．
+					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッドの中で
+					</a>
+					<code>HttpServletResponse</code>
+					の
+					<code>sendRedirect(String location)</code>
+					メソッドを呼び出してリダイレクト先を指定します． その後，
+					<code>FacesContext</code>
+					の
+					<code>responseComplete()</code>
+					メソッドを呼び出します．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public HttpServletResponse response;
+public FacesContext facesContext;
+
+public Class doRedirect() {
+    String url = "...";
+    response.sendRedirect(url);
+    facesContext.responseComplete();
+    return null;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="ページスコープ">
+			<subsection name="ポストバックで状態を引き継ぐには">
+				<p></p>
+			</subsection>
+
+			<subsection name="">
+				<p></p>
+			</subsection>
+		</section>
+	</body>
+</document>

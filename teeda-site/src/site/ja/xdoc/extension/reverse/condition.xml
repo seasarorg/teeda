@@ -166,24 +166,24 @@ aaaccc
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-aaa<span id="isNotOmit">bbb</span>ccc
+aaa<span id="isNotHide">bbb</span>ccc
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
-public boolean omit;
+public boolean hide;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<code>omit</code>
+					<code>hide</code>
 					プロパティが
 					<code>false</code>
 					の場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-aaa<span id="isNotOmit">bbb</span>ccc
+aaa<span id="isNotHide">bbb</span>ccc
 ]]></source>
 				<p>
-					<code>omit</code>
+					<code>hide</code>
 					プロパティが
 					<code>true</code>
 					の場合， レンダリング結果は次のようになります．

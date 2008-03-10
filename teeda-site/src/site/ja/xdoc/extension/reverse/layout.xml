@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - レイアウト</title>
+	</properties>
+	<body>
+		<section name="レイアウト">
+			<ul>
+				<li>
+					<a href="#レイアウトを使うには">レイアウトを使うには</a>
+				</li>
+				<li>
+					<a href="#特定の画面だけ異なったレイアウトを使うには">
+						特定の画面だけ異なったレイアウトを使うには
+					</a>
+				</li>
+				<li>
+					<a href="#特定の画面だけレイアウトを使わないようにするには">
+						特定の画面だけレイアウトを使わないようにするには
+					</a>
+				</li>
+				<li>
+					<a href="#デフォルトで使用するレイアウトを変更するには">
+						デフォルトで使用するレイアウトを変更するには
+					</a>
+				</li>
+			</ul>
+
+			<subsection name="レイアウトを使うには">
+				<p>
+					<code>
+						<var>ビュールート</var>
+						/layout/layout.html
+					</code>
+					に画面全体の構造を定義します．
+				</p>
+				<div class="sidebar">
+					te名前空間を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
+					を指定する必要があります．
+				</div>
+				<p>
+					<code>layout.html</code>
+					の
+					<code>&lt;body&gt;</code>
+					要素内では，実際にリクエストされたページを表示する位置を
+					<code>&lt;te:includeChildBody&gt;</code>
+					要素で， その他の部品化されたHTMLを表示する位置を
+					<code>&lt;te:include&gt;</code>
+					要素で指定します．
+				</p>
+				<p>
+					<code>&lt;te:includeChildBody&gt;</code>
+					要素及び
+					<code>&lt;te:include&gt;</code>
+					要素には
+					<code>id</code>
+					属性を付け，任意の名前を指定します．
+					<code>&lt;te:include&gt;</code>
+					要素には
+					<code>te:src</code>
+					属性でインクルードする部品化されたHTMLのパスを指定します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;te:includeChildBody&gt;</code>
+					要素は実際にリクエストされたページの
+					<code>&lt;body&gt;</code>
+					要素の内容で，
+					<code>&lt;te:include&gt;</code>
+					要素は
+					<code>te:src</code>
+					属性で指定されたHTMLの
+					<code>&lt;body&gt;</code>
+					要素の内容で， それぞれ置き換えられます． また，
+					<code>&lt;title&gt;</code>
+					要素の内容は実際にリクエストされたページの
+					<code>&lt;title&gt;</code>
+					要素の内容に置き換えられます．
+				</p>
+				<h5>例：レイアウトHTML (layout.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>レイアウトのタイトル</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <te:include id="layoutHeader" te:src="/layout/header.html" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <te:includeChildBody id="layoutChildBody"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <te:include id="layoutFooter" te:src="/layout/footer.html" />
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+]]></source>
+				<h5>例：リクエストされた本体のHTML (foo.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <title>本体のタイトル</title>
+    </head>
+    <body>
+        <span id="name">本体</span>
+    </body>
+</html>
+]]></source>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <title>本体のタイトル</title>
+    </head>
+    <body>
+        <p>本体</p>
+    </body>
+</html>
+]]></source>
+				<h5>例：ヘッダHTML (header.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <title>ヘッダのタイトル</title>
+    </head>
+    <body>
+        <p>ヘッダ</p>
+    </body>
+</html>
+]]></source>
+				<h5>例：フッタHTML (footer.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <title>フッタのタイトル</title>
+    </head>
+    <body>
+        <p>フッタ</p>
+    </body>
+</html>
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:te="http://www.seasar.org/teeda/extension" 
+    xml:lang="ja" lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>本体のタイトル</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <p>ヘッダ</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>本体</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>フッタ</p>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+]]></source>
+			</subsection>
+
+			<subsection name="特定の画面だけ異なったレイアウトを使うには">
+				<p>
+					異なったレイアウトを使う画面のページクラスに
+					<code>getLayout()</code>
+					メソッドを用意して， 戻り値で使用するレイアウトのページクラスまたは
+					<a href="../concept/page.html#ページ名の命名規約">ページ名</a>
+					を指定します． このメソッドは
+					<code>public</code>
+					で引数はなく，戻り値の型は
+					<code>Class</code>
+					または
+					<code>String</code>
+					です．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public Class getLayout() {
+    return OtherLayoutPage.class;
+}
+]]></source>
+			</subsection>
+
+			<subsection name="特定の画面だけレイアウトを使わないようにするには">
+				<p>
+					レイアウトを使わない画面のページクラスに
+					<code>getLayout()</code>
+					メソッドを用意して，戻り値として
+					<code>null</code>
+					を返します． このメソッドは
+					<code>public</code>
+					で引数はなく，戻り値の型は
+					<code>Class</code>
+					または
+					<code>String</code>
+					です．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public Class getLayout() {
+    return null;
+}
+]]></source>
+			</subsection>
+
+			<subsection name="デフォルトで使用するレイアウトを変更するには">
+				<p>
+					<code>web.xml</code>
+					のコンテキストパラメータでデフォルトで使用するレイアウトを指定します． パラメータ名は
+					<code>teeda.DEFAULT_LAYOUT_PATH</code>
+					で，値はビュールート (デフォルトは
+					<code>/view</code>
+					) からのパスです．
+				</p>
+				<h5>例：web.xml</h5>
+				<source><![CDATA[
+<context-param>
+    <param-name>teeda.DEFAULT_LAYOUT_PATH</param-name>
+    <param-value>/layout/myLayout.html</param-value>
+</context-param>
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>

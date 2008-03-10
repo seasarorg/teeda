@@ -21,9 +21,7 @@
 					</a>
 				</li>
 			</ul>
-		</section>
 
-		<section name="リンク">
 			<p>次のような場合はリンクを動的に作成する必要があります．</p>
 			<ul>
 				<li>
@@ -155,7 +153,9 @@ public String baz = "ccc";
 					+
 					<code>Label</code>
 					とします．
-					<a href="../reference/resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルに
 					<var>pagename.key</var>
 					または
@@ -166,7 +166,9 @@ public String baz = "ccc";
 					レンダリング時，
 					<code>&lt;span&gt;</code>
 					要素の内容は
-					<a href="../reference/resource.html#ラベルリソース">ラベルリソース</a>
+					<a href="../reference/resource.html#ラベルリソース">
+						ラベルリソース
+					</a>
 					ファイルの値に置き換えられます．
 				</p>
 				<div style="clear: both;" />

@@ -32,9 +32,7 @@
 					</a>
 				</li>
 			</ul>
-		</section>
 
-		<section name="コンバート">
 			<subsection name="フォーマットを指定して文字列と数値を相互変換するには">
 				<div class="sidebar">
 					フォーマットを指定しないで数値を変換する場合はコンバータを使用する必要はありません．
