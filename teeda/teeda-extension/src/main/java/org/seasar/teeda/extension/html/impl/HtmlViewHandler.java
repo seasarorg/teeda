@@ -40,7 +40,6 @@ import org.seasar.teeda.core.application.ViewHandlerImpl;
 import org.seasar.teeda.core.util.ExternalContextUtil;
 import org.seasar.teeda.core.util.PortletExternalContextUtil;
 import org.seasar.teeda.core.util.PortletUtil;
-import org.seasar.teeda.core.util.PostbackUtil;
 import org.seasar.teeda.core.util.ServletExternalContextUtil;
 import org.seasar.teeda.extension.exception.JspRuntimeException;
 import org.seasar.teeda.extension.html.HtmlSuffix;
@@ -153,10 +152,9 @@ public class HtmlViewHandler extends ViewHandlerImpl {
         final PageContext pageContext = createPageContext(request, response);
         final TagProcessor tagProcessor = tagProcessorCache
                 .getTagProcessor(path);
-        final boolean postback = PostbackUtil.isPostback(context
-                .getExternalContext().getRequestMap());
         final PageDesc pageDesc = pageDescCache.getPageDesc(path);
 
+        RedirectScope.clearRedirectingPath(context);
         try {
             tagProcessor.process(pageContext, null);
         } catch (JspException ex) {

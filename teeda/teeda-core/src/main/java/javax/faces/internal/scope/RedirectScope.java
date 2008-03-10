@@ -28,8 +28,8 @@ public abstract class RedirectScope {
 
     private static final String REDIRECTING_KEY = RedirectScope.class.getName();
 
-    private static final String REDIRECTED_KEY = RedirectScope.class.getName()
-            + ".REDIRECTED";
+    private static final String REDIRECTED_KEY = RedirectScope.class.getName() +
+            ".REDIRECTED";
 
     private static final VariableScope scope = new VariableScope(
             REDIRECTING_KEY);
@@ -68,6 +68,12 @@ public abstract class RedirectScope {
             throws FacesException {
         Map ctx = getOrCreateContext(context);
         ctx.put(REDIRECTING_KEY, path);
+    }
+
+    public static void clearRedirectingPath(FacesContext context)
+            throws FacesException {
+        Map ctx = getOrCreateContext(context);
+        ctx.remove(REDIRECTING_KEY);
     }
 
     public static String getRedirectingPath(FacesContext context)

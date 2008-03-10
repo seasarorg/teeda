@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.it.web.scope;
 
+import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;
+
 /**
  * @author shot
  */
@@ -23,6 +25,9 @@ public class SubapplicationScopeResultPage {
 	private String message1;
 
 	private String message2;
+
+	@SubapplicationScope
+	private String message3;
 
 	/**
 	 * @return the message1
@@ -55,9 +60,25 @@ public class SubapplicationScopeResultPage {
 	}
 
 	/**
+	 * @return Returns the message3.
+	 */
+	public String getMessage3() {
+		return message3;
+	}
+
+	/**
+	 * @param message3
+	 *            The message3 to set.
+	 */
+	public void setMessage3(String message3) {
+		this.message3 = message3;
+	}
+
+	/**
 	 * @return
 	 */
 	public Class initialize() {
+		message3 = "init";
 		return null;
 	}
 
@@ -67,6 +88,11 @@ public class SubapplicationScopeResultPage {
 	public Class prerender() {
 		System.out.println(message1);
 		System.out.println(message2);
+		System.out.println(message3);
+		return null;
+	}
+
+	public Class doSubmit() {
 		return null;
 	}
 

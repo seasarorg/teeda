@@ -236,4 +236,31 @@ public class ScopeTest extends TeedaWebTestCase {
 		tester.assertAttributeEqualsById("message3", "value", "");
 	}
 
+	public void testSubapplicationScope_TEEDA450() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester
+				.beginAt(getBaseUrl(),
+						"view/scope/subapplicationScopeInput.html");
+		tester.dumpHtml();
+
+		// ## Act ##
+		// to subapplicationScopeResult.html
+		tester.submitById("doAction");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("message3", "init");
+
+		// ## Act ##
+		// postback ~ self
+		tester.submitById("doSubmit");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextEqualsById("message3", "init");
+	}
+
 }
