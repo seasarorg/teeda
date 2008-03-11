@@ -70,12 +70,6 @@ public abstract class RedirectScope {
         ctx.put(REDIRECTING_KEY, path);
     }
 
-    public static void clearRedirectingPath(FacesContext context)
-            throws FacesException {
-        Map ctx = getOrCreateContext(context);
-        ctx.remove(REDIRECTING_KEY);
-    }
-
     public static String getRedirectingPath(FacesContext context)
             throws FacesException {
         Map ctx = scope.getContext(context);

@@ -23,7 +23,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.internal.PageContextUtil;
 import javax.faces.internal.RenderPreparableUtil;
-import javax.faces.internal.scope.RedirectScope;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -154,13 +153,12 @@ public class HtmlViewHandler extends ViewHandlerImpl {
                 .getTagProcessor(path);
         final PageDesc pageDesc = pageDescCache.getPageDesc(path);
 
-        RedirectScope.clearRedirectingPath(context);
         try {
             tagProcessor.process(pageContext, null);
         } catch (JspException ex) {
             throw new JspRuntimeException(ex);
         }
-        if (!RedirectScope.isRedirecting(context)) {
+        if (!context.getResponseComplete()) {
             subApplicationScopeHandler.toScope(pageDesc, context);
             pageScopeHandler.toScope(pageDesc, context);
         }
