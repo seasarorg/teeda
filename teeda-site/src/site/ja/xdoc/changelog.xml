@@ -122,6 +122,25 @@
 		</section>
 
 		<section name="1.0.13-rc4">
+			<subsection name="移行の注意">
+				<ul>
+					<li>
+						<code>teedaExtension.dicon</code>
+						に
+						<code>LayoutBuilder</code>
+						コンポーネントの定義を追加しました．
+						<code>teedaExtension.dicon</code>
+						をカスタマイズして使っている場合は
+						<code>LayoutBuilder</code>
+						の定義を追加してください．
+						<source><![CDATA[
+<component name="layoutBuilder"
+    class="org.seasar.teeda.extension.util.LayoutBuilder"/>
+]]></source>
+					</li>
+				</ul>
+			</subsection>
+
 			<subsection name="変更内容">
 				<p>
 					<a href="#a1.0.13-rc3">1.0.13-rc3</a>
@@ -235,6 +254,20 @@
 							</a>
 							」を参照してください．
 						</div>
+					</li>
+					<li>
+						<code>teedaExtension.dicon</code>
+						に
+						<code>LabelProvider</code>
+						コンポーネントの定義を追加しました．
+						<code>teedaExtension.dicon</code>
+						をカスタマイズして使っている場合は
+						<code>LabelProvider</code>
+						の定義を追加してください．
+						<source><![CDATA[
+<component name="labelProvider"
+    class="org.seasar.teeda.extension.util.LabelProviderMap"/>
+]]></source>
 					</li>
 				</ul>
 			</subsection>
