@@ -13,38 +13,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.captcha;
+package javax.faces.internal;
 
-import org.seasar.teeda.extension.annotation.validator.Required;
+import javax.faces.internal.EnumUtil.EnumSupport;
 
-import examples.teeda.validator.Captcha;
-import examples.teeda.validator.CapthaType;
-import examples.teeda.web.hello.HelloPage;
+/**
+ * @author koichik
+ */
+@SuppressWarnings("unchecked")
+public class EnumSupportImpl implements EnumSupport {
 
-public class CaptchaPage {
-
-	@Required
-	@Captcha(capthaType = CapthaType.TRANSIENT)
-	public String captcha;
-
-	public String getCaptcha() {
-		return captcha;
+	public boolean isEnum(Class clazz) {
+		return clazz.isEnum();
 	}
 
-	public void setCaptcha(String captcha) {
-		this.captcha = captcha;
+	public String toName(Object enumObject) {
+		return Enum.class.cast(enumObject).name();
 	}
 
-	public Class doFinish() {
-		return HelloPage.class;
-	}
-
-	public String initialize() {
-		return null;
-	}
-
-	public String prerender() {
-		return null;
+	public Object toEnum(Class enumType, String name) {
+		return Enum.valueOf(enumType, name);
 	}
 
 }

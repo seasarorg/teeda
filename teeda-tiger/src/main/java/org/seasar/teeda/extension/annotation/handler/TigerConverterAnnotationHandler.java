@@ -20,8 +20,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import javax.faces.internal.EnumUtil;
+
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.MethodUtil;
@@ -73,7 +76,10 @@ public class TigerConverterAnnotationHandler extends
 			return;
 		}
 		final String converterName = getConverterName(metaAnnotation);
-		final Map props = AnnotationUtil.getProperties(annotation);
+		Map<String, Object> props = AnnotationUtil.getProperties(annotation);
+		if (HotdeployUtil.isHotdeploy()) {
+			props = EnumUtil.convertEnumToName(props);
+		}
 		registerConverter(componentName, propertyName, converterName, props);
 	}
 

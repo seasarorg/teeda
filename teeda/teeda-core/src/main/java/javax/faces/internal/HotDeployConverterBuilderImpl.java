@@ -15,6 +15,8 @@
  */
 package javax.faces.internal;
 
+import java.util.Map;
+
 import javax.faces.convert.Converter;
 import javax.faces.internal.ConverterResource.ConverterPair;
 
@@ -22,6 +24,7 @@ import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 
 /**
  * @author shot
@@ -52,8 +55,12 @@ public class HotDeployConverterBuilderImpl implements ConverterBuilder {
         if (!Converter.class.isAssignableFrom(cd.getComponentClass())) {
             return null;
         }
+        Map properties = pair.properties;
+        if (HotdeployUtil.isHotdeploy()) {
+            properties = EnumUtil.convertNameToEnum(properties);
+        }
         final Converter converter = (Converter) cd.getComponent();
-        BeanUtil.copyProperties(pair.properties, converter);
+        BeanUtil.copyProperties(properties, converter);
         return converter;
     }
 

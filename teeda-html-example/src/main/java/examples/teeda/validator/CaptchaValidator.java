@@ -37,13 +37,18 @@ import examples.teeda.util.CaptchaUtil;
  * 
  */
 public class CaptchaValidator implements StateHolder, Validator {
-	private static final String MESSAGE_ID = "teeda.captcha.CAPTCHA_UNMATCH";
+
+	static {
+		System.out.println("validator loaded");
+	}
+
+	public static final String MESSAGE_ID = "teeda.captcha.CAPTCHA_UNMATCH";
 
 	private String id;
 
 	private String messageId;
 
-	private boolean transientValue = false;
+	private CapthaType capthaType;
 
 	public String getId() {
 		return id;
@@ -53,13 +58,28 @@ public class CaptchaValidator implements StateHolder, Validator {
 		return messageId;
 	}
 
+	/**
+	 * @return Returns the capthaType.
+	 */
+	public CapthaType getCapthaType() {
+		return capthaType;
+	}
+
+	/**
+	 * @param capthaType
+	 *            The capthaType to set.
+	 */
+	public void setCapthaType(CapthaType capthaType) {
+		this.capthaType = capthaType;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.faces.component.StateHolder#isTransient()
 	 */
 	public boolean isTransient() {
-		return transientValue;
+		return capthaType == CapthaType.TRANSIENT;
 	}
 
 	/*
@@ -99,7 +119,8 @@ public class CaptchaValidator implements StateHolder, Validator {
 	 * @see javax.faces.component.StateHolder#setTransient(boolean)
 	 */
 	public void setTransient(boolean transientValue) {
-		this.transientValue = transientValue;
+		this.capthaType = transientValue ? capthaType.TRANSIENT
+				: capthaType.PERSISTENT;
 	}
 
 	/*

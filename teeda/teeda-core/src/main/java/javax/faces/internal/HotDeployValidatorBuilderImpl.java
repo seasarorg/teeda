@@ -15,12 +15,15 @@
  */
 package javax.faces.internal;
 
+import java.util.Map;
+
 import javax.faces.internal.ValidatorResource.ValidatorPair;
 import javax.faces.validator.Validator;
 
 import org.seasar.framework.beans.util.BeanUtil;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 
 /**
  * @author shot
@@ -53,9 +56,13 @@ public class HotDeployValidatorBuilderImpl implements ValidatorBuilder {
     }
 
     protected Validator getSingleValidator(ValidatorPair pair) {
+        Map properties = pair.properties;
+        if (HotdeployUtil.isHotdeploy()) {
+            properties = EnumUtil.convertNameToEnum(properties);
+        }
         final Validator validator = (Validator) container
                 .getComponent(pair.validatorName);
-        BeanUtil.copyProperties(pair.properties, validator);
+        BeanUtil.copyProperties(properties, validator);
         return validator;
     }
 
