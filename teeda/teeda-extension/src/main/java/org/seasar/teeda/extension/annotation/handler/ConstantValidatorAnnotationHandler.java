@@ -42,61 +42,41 @@ public class ConstantValidatorAnnotationHandler extends
         ComponentDef componentDef = container.getComponentDef(componentName);
         Class componentClass = componentDef.getComponentClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
-        processFields(container, componentClass, componentName,
-                namingConvention, beanDesc);
-        processSetterMethods(container, componentClass, componentName,
-                namingConvention, beanDesc);
-    }
-
-    protected void processFields(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc) {
-        Field[] fields = componentClass.getDeclaredFields();
-        for (int i = 0; i < fields.length; ++i) {
-            processField(container, componentClass, componentName,
-                    namingConvention, beanDesc, fields[i]);
-        }
-    }
-
-    protected void processField(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc, Field field) {
-
-        boolean isConstantAnnotation = ConstantAnnotationUtil
-                .isConstantAnnotation(field);
-        if (!isConstantAnnotation
-                || !field.getName().endsWith(
-                        namingConvention.getValidatorSuffix())) {
-            return;
-        }
-        final String fieldString = field.getName();
-        final int index = fieldString.lastIndexOf("_");
-        final String fieldName = fieldString.substring(0, index);
-        final String validatorName = fieldString.substring(index + 1);
-        if (!beanDesc.hasPropertyDesc(fieldName)
-                || !container.hasComponentDef(validatorName)) {
-            return;
-        }
-        final String s = FieldUtil.getString(field, null);
-        final Map properties = ConstantAnnotationUtil.convertExpressionToMap(s);
-        registerValidator(componentName, fieldName, validatorName, properties);
-    }
-
-    protected void processSetterMethods(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc) {
+        Field[] fields = componentClass.getFields();
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.hasWriteMethod()) {
-                processSetterMethod(container, componentClass, componentName,
-                        namingConvention, beanDesc, pd);
-            }
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+            processProperty(container, componentClass, componentName,
+                    namingConvention, propertyDesc, fields);
         }
     }
 
-    protected void processSetterMethod(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc,
-            PropertyDesc propertyDesc) {
+    protected void processProperty(S2Container container, Class componentClass,
+            String componentName, NamingConvention namingConvention,
+            PropertyDesc propertyDesc, Field[] fields) {
+        final String propertyName = propertyDesc.getPropertyName();
+        final String annotationPrefix = propertyName + "_";
+        for (int i = 0; i < fields.length; ++i) {
+            final Field annotation = fields[i];
+            final String annotationName = annotation.getName();
+            boolean isConstantAnnotation = ConstantAnnotationUtil
+                    .isConstantAnnotation(annotation);
+            if (!isConstantAnnotation ||
+                    !annotationName.startsWith(annotationPrefix) ||
+                    !annotationName.endsWith(namingConvention
+                            .getValidatorSuffix())) {
+                continue;
+            }
+            final String validatorName = annotationName
+                    .substring(annotationPrefix.length());
+            if (!container.hasComponentDef(validatorName)) {
+                continue;
+            }
+            final String s = FieldUtil.getString(annotation, null);
+            final Map properties = ConstantAnnotationUtil
+                    .convertExpressionToMap(s);
+            registerValidator(componentName, propertyName, validatorName,
+                    properties);
+        }
     }
+
 }

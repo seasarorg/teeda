@@ -81,6 +81,20 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
         assertEquals(8, validator.getMaximum());
     }
 
+    public void testRegisterValidator_inherit() throws Exception {
+        ComponentDef cd = new ComponentDefImpl(LengthValidator.class,
+                "lengthValidator");
+        cd.setInstanceDef(InstanceDefFactory.PROTOTYPE);
+        getContainer().register(cd);
+        ConstantValidatorAnnotationHandler handler = new ConstantValidatorAnnotationHandler();
+        getContainer().register(HogeHogeBean.class, "hogeHogeBean");
+        handler.registerValidators("hogeHogeBean");
+        LengthValidator validator = (LengthValidator) ValidatorResource
+                .getValidator("#{hogeHogeBean.name}");
+        assertEquals(2, validator.getMinimum());
+        assertEquals(5, validator.getMaximum());
+    }
+
     public static class HogeBean {
         private String name = null;
 
@@ -120,4 +134,8 @@ public class ConstantValidatorAnnotationHandlerTest extends TeedaTestCase {
             this.bbb_ccc = bbb_ccc;
         }
     }
+
+    public static class HogeHogeBean extends HogeBean {
+    }
+
 }

@@ -28,10 +28,12 @@ import org.seasar.teeda.extension.validator.TRequiredValidator;
 
 public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 
+	@Override
 	protected void setUp() {
 		register(TLengthValidator.class, "TLengthValidator");
 		register(TRequiredValidator.class, "TRequiredValidator");
 		register(HogeBean.class, "hogeBean");
+		register(HogeHogeBean.class, "hogeHogeBean");
 	}
 
 	public void testRegisterValidator_single() throws Exception {
@@ -60,8 +62,7 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 	public void testRegisterValidator_constantAnnotation() throws Exception {
 		TigerValidatorAnnotationHandler handler = new TigerValidatorAnnotationHandler();
 		handler.registerValidators("hogeBean");
-		Validator validator = (Validator) ValidatorResource
-				.getValidator("#{hogeBean.bbb}");
+		Validator validator = ValidatorResource.getValidator("#{hogeBean.bbb}");
 		assertNotNull(validator);
 		assertEquals(TRequiredValidator.class, validator.getClass());
 	}
@@ -72,6 +73,16 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 		TRequiredValidator validator = (TRequiredValidator) ValidatorResource
 				.getValidator("#{hogeBean.ccc}");
 		assertNotNull(validator);
+	}
+
+	public void testRegisterValidator_inherit() throws Exception {
+		TigerValidatorAnnotationHandler handler = new TigerValidatorAnnotationHandler();
+		handler.registerValidators("hogeHogeBean");
+		TLengthValidator validator = (TLengthValidator) ValidatorResource
+				.getValidator("#{hogeHogeBean.name}");
+		assertNotNull(validator);
+		assertEquals(2, validator.getMinimum());
+		assertEquals(5, validator.getMaximum());
 	}
 
 	public static class HogeBean {
@@ -137,4 +148,8 @@ public class TigerValidatorAnnotationHandlerTest extends TeedaTestCase {
 		}
 
 	}
+
+	public static class HogeHogeBean extends HogeBean {
+	}
+
 }

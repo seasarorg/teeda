@@ -20,7 +20,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.convention.NamingConvention;
@@ -37,15 +36,31 @@ public class TigerConverterAnnotationHandler extends
 
 	protected Class<? extends Annotation> metaAnnotationType = org.seasar.teeda.extension.annotation.convert.Converter.class;
 
-	protected void processField(S2Container container, Class componentClass,
+	@Override
+	protected void processProperty(S2Container container, Class componentClass,
 			String componentName, NamingConvention namingConvention,
-			BeanDesc beanDesc, Field field) {
+			PropertyDesc propertyDesc, Field[] fields) {
+		Field field = propertyDesc.getField();
+		if (field != null) {
+			processField(container, componentClass, componentName,
+					namingConvention, field);
+		}
+		if (propertyDesc.hasReadMethod()) {
+			processGetterMethod(container, componentName, propertyDesc);
+		}
+		if (propertyDesc.hasWriteMethod()) {
+			processSetterMethod(container, componentName, propertyDesc);
+		}
+		super.processProperty(container, componentClass, componentName,
+				namingConvention, propertyDesc, fields);
+	}
+
+	protected void processField(S2Container container, Class componentClass,
+			String componentName, NamingConvention namingConvention, Field field) {
 		for (Annotation annotation : field.getDeclaredAnnotations()) {
 			processAnnotation(container, componentName, field.getName(),
 					annotation);
 		}
-		super.processField(container, componentClass, componentName,
-				namingConvention, beanDesc, field);
 	}
 
 	protected void processAnnotation(S2Container container,
@@ -72,19 +87,14 @@ public class TigerConverterAnnotationHandler extends
 	}
 
 	protected void processGetterMethod(S2Container container,
-			Class componentClass, String componentName,
-			NamingConvention namingConvention, BeanDesc beanDesc,
-			PropertyDesc propertyDesc) {
+			String componentName, PropertyDesc propertyDesc) {
 		Annotation[] annotations = propertyDesc.getReadMethod()
 				.getDeclaredAnnotations();
 		processAnnotaions(container, componentName, propertyDesc, annotations);
 	}
 
-	@Override
 	protected void processSetterMethod(S2Container container,
-			Class componentClass, String componentName,
-			NamingConvention namingConvention, BeanDesc beanDesc,
-			PropertyDesc propertyDesc) {
+			String componentName, PropertyDesc propertyDesc) {
 		Annotation[] annotations = propertyDesc.getWriteMethod()
 				.getDeclaredAnnotations();
 		processAnnotaions(container, componentName, propertyDesc, annotations);
@@ -95,4 +105,5 @@ public class TigerConverterAnnotationHandler extends
 		Method m = ClassUtil.getMethod(annoType, "value", null);
 		return (String) MethodUtil.invoke(m, annotation, null);
 	}
+
 }

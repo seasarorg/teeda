@@ -17,18 +17,14 @@ package examples.teeda.web.converter;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
-import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
 import org.seasar.teeda.extension.annotation.convert.TimestampConverter;
 import org.seasar.teeda.extension.annotation.scope.SubapplicationScope;
 
-public class CurrentPage {
+public class CurrentPage extends AbstractPage {
 
 	@SubapplicationScope
 	private String hoge;
-
-	private Date selectDate;
 
 	private Timestamp zikan;
 
@@ -38,15 +34,6 @@ public class CurrentPage {
 
 	public void setHoge(String hoge) {
 		this.hoge = hoge;
-	}
-
-	@DateTimeConverter(pattern = "yyyy/MM/dd")
-	public Date getSelectDate() {
-		return this.selectDate;
-	}
-
-	public void setSelectDate(Date selectDate) {
-		this.selectDate = selectDate;
 	}
 
 	@TimestampConverter(pattern = "HH:mm", target = "doNextPage")

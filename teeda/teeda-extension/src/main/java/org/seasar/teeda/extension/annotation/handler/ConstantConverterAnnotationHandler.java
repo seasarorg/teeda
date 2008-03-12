@@ -42,82 +42,41 @@ public class ConstantConverterAnnotationHandler extends
         ComponentDef componentDef = container.getComponentDef(componentName);
         Class componentClass = componentDef.getComponentClass();
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(componentClass);
-        processFields(container, componentClass, componentName,
-                namingConvention, beanDesc);
-        processGetterMethods(container, componentClass, componentName,
-                namingConvention, beanDesc);
-        processSetterMethods(container, componentClass, componentName,
-                namingConvention, beanDesc);
+        Field[] fields = componentClass.getFields();
+        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
+            PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+            processProperty(container, componentClass, componentName,
+                    namingConvention, propertyDesc, fields);
+        }
     }
 
-    protected void processFields(S2Container container, Class componentClass,
+    protected void processProperty(S2Container container, Class componentClass,
             String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc) {
-        Field[] fields = componentClass.getDeclaredFields();
+            PropertyDesc propertyDesc, Field[] fields) {
+        final String propertyName = propertyDesc.getPropertyName();
+        final String annotationPrefix = propertyName + "_";
         for (int i = 0; i < fields.length; ++i) {
-            processField(container, componentClass, componentName,
-                    namingConvention, beanDesc, fields[i]);
-        }
-    }
-
-    protected void processField(S2Container container, Class componentClass,
-            String componentName, NamingConvention namingConvention,
-            BeanDesc beanDesc, Field field) {
-
-        boolean isConstantAnnotation = ConstantAnnotationUtil
-                .isConstantAnnotation(field);
-        if (!isConstantAnnotation ||
-                !field.getName()
-                        .endsWith(namingConvention.getConverterSuffix())) {
-            return;
-        }
-        final String fieldString = field.getName();
-        final int index = fieldString.lastIndexOf("_");
-        final String fieldName = fieldString.substring(0, index);
-        final String converterName = fieldString.substring(index + 1);
-        if (!beanDesc.hasPropertyDesc(fieldName) ||
-                !container.hasComponentDef(converterName)) {
-            return;
-        }
-        final String s = (String) FieldUtil.get(field, null);
-        final Map properties = ConstantAnnotationUtil.convertExpressionToMap(s);
-        registerConverter(componentName, fieldName, converterName, properties);
-    }
-
-    protected void processGetterMethods(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc) {
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.hasReadMethod()) {
-                processGetterMethod(container, componentClass, componentName,
-                        namingConvention, beanDesc, pd);
+            final Field annotation = fields[i];
+            final String annotationName = annotation.getName();
+            boolean isConstantAnnotation = ConstantAnnotationUtil
+                    .isConstantAnnotation(annotation);
+            if (!isConstantAnnotation ||
+                    !annotationName.startsWith(annotationPrefix) ||
+                    !annotationName.endsWith(namingConvention
+                            .getConverterSuffix())) {
+                continue;
             }
-        }
-    }
-
-    protected void processGetterMethod(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc,
-            PropertyDesc propertyDesc) {
-    }
-
-    protected void processSetterMethods(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc) {
-        for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
-            PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.hasWriteMethod()) {
-                processSetterMethod(container, componentClass, componentName,
-                        namingConvention, beanDesc, pd);
+            final String converterName = annotationName
+                    .substring(annotationPrefix.length());
+            if (!container.hasComponentDef(converterName)) {
+                continue;
             }
+            final String s = (String) FieldUtil.get(annotation, null);
+            final Map properties = ConstantAnnotationUtil
+                    .convertExpressionToMap(s);
+            registerConverter(componentName, propertyName, converterName,
+                    properties);
         }
-    }
-
-    protected void processSetterMethod(S2Container container,
-            Class componentClass, String componentName,
-            NamingConvention namingConvention, BeanDesc beanDesc,
-            PropertyDesc propertyDesc) {
     }
 
 }

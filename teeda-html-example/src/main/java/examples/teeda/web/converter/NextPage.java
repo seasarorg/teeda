@@ -16,25 +16,12 @@
 package examples.teeda.web.converter;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
-import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
 import org.seasar.teeda.extension.annotation.convert.TimestampConverter;
 
-public class NextPage {
-
-	private Date selectDate;
+public class NextPage extends AbstractPage {
 
 	private Timestamp zikan;
-
-	@DateTimeConverter(pattern = "yyyy/MM/dd")
-	public Date getSelectDate() {
-		return this.selectDate;
-	}
-
-	public void setSelectDate(Date selectDate) {
-		this.selectDate = selectDate;
-	}
 
 	@TimestampConverter(pattern = "HH:mm", target = "doNextPage")
 	public Timestamp getZikan() {

@@ -31,6 +31,7 @@ import org.seasar.teeda.extension.convert.TTimestampConverter;
 
 public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 
+	@Override
 	protected void setUp() {
 		ComponentDef cd = new ComponentDefImpl(TDateTimeConverter.class,
 				"TDateTimeConverter");
@@ -41,6 +42,7 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		cd2.setInstanceDef(InstanceDefFactory.PROTOTYPE);
 		register(cd2);
 		register(HogeBean.class, "hogeBean");
+		register(HogeHogeBean.class, "hogeHogeBean");
 	}
 
 	public void testTigerAnnotation() throws Exception {
@@ -82,6 +84,20 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 				.getConverter("#{hogeBean.eee}");
 		assertNotNull(converter);
 		assertEquals("time", converter.getType());
+	}
+
+	public void testTigerAnnotation_inherit() throws Exception {
+		TigerConverterAnnotationHandler handler = new TigerConverterAnnotationHandler();
+		handler.registerConverters("hogeHogeBean");
+		TDateTimeConverter converter = (TDateTimeConverter) ConverterResource
+				.getConverter("#{hogeHogeBean.aaa}");
+		assertNotNull(converter);
+		assertEquals("time", converter.getType());
+
+		TTimestampConverter timestampConverter = (TTimestampConverter) ConverterResource
+				.getConverter("#{hogeHogeBean.ddd}");
+		assertNotNull(timestampConverter);
+		assertEquals("yyyy/MM/dd HH:mm:ss.SSS", timestampConverter.getPattern());
 	}
 
 	public static class HogeBean {
@@ -164,4 +180,8 @@ public class TigerConverterAnnotationHandlerTest extends TeedaTestCase {
 		}
 
 	}
+
+	public static class HogeHogeBean extends HogeBean {
+	}
+
 }
