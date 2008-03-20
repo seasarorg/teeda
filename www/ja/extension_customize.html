@@ -36,7 +36,7 @@
 <li><a href="#validator">Validatorのカスタマイズについて</a></li>
 <li><a href="#converter">Convererのカスタマイズについて</a></li>
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
-<li><a href="#parse-xhtml">(X)HTMLのパーズについて</a></li>
+<li><a href="#parse-xhtml">XHTMLのパーズについて</a></li>
 <li><a href="#redirect">リダイレクトについて</a></li>
 <li><a href="#outputText">outputTextについて</a></li>
 <li><a href="#label">ラベルについて</a></li>
@@ -192,8 +192,8 @@ public class HogePage {
 
 
 </div>
-<h2><a name="parse-xhtml">(X)HTMLのパーズについて</a></h2>
-<p>Teeda 1.0.12以降では，(X)HTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．カスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
+<h2><a name="parse-xhtml">XHTMLのパーズについて</a></h2>
+<p>Teeda 1.0.12以降では，XHTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．カスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
 <ul>
 <li><code>org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory</code>
 </ul>
@@ -202,7 +202,9 @@ public class HogePage {
 <li>DEFAULT (デフォルト)
 <li>CLASSIC
 <li>STRICT
+<!--
 <li>HTML
+-->
 </ul>
 <p>カスタマイズしない場合はDEFAULTが使用されます．</p>
 <h3>DEFAULT</h3>
@@ -229,6 +231,7 @@ public class HogePage {
 <li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．<code>&amp;</code>を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
 <li>XNI (Xerces Native Interface) をサポートした任意のバージョンのXercesでXHTMLをパーズします．Xerces2.6.2を使用することが出来ない環境でも利用することが出来ます．</li>
 </ul>
+<!--
 <h3>HTML</h3>
 <p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
 <ul>
@@ -240,6 +243,7 @@ public class HogePage {
 <li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
 </ul>Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
 </ul>
+-->
 <h3>各モードの要約</h3>
 <table border="1">
 <tbody>
@@ -276,6 +280,7 @@ public class HogePage {
 <td>XNIをサポートした任意の<br>
 バージョンのXerces</td>
 </tr>
+<!--
 <tr>
 <td>HTML</td>
 <td><strong><code>&lt;br&gt;</code></strong></td>
@@ -284,10 +289,11 @@ public class HogePage {
 <td><code>&amp;</code></td>
 <td>Xerces2.6.2<strong>+NekoHTML</strong></td>
 </tr>
+-->
 </tbody>
 </table>
 <h3>カスタマイズの方法</h3>
-<p>(X)HTMLをパーズする方法をカスタマイズするには，<code>teedaCustomize.dicon</code>に<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
+<p>XHTMLをパーズする方法をカスタマイズするには，<code>teedaCustomize.dicon</code>に<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
 <pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
 <h2><a name="redirect">リダイレクトについて</a></h2>
 <p>Teeda Extensionは，画面遷移にPRG (Post-Redirect-Get) パターンを使用します．<br>
