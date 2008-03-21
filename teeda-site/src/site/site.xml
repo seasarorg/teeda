@@ -37,7 +37,6 @@
 			<item name="Downloads" href="downloads.html"/>
 		</menu>
 		<menu name="Documentation">
-			<item name="Setup" href="setup.html"/>
 		</menu>
 	</body>
 </project>

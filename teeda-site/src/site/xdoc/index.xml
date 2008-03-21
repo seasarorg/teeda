@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Welcome</title>
+	</properties>
+	<body>
+		<section name="Welcome">
+			<p>
+				Teeda is a JSF implementation from the Seasar project.
+			</p>
+			<p>
+				The main concept of Teeda is "JSF meets DI x AOP". Teeda
+				has some highly useful and maintainable features of DI
+				and AOP based on JSF implementation. These features
+				makes web application easy.
+			</p>
+			<p>
+				Teeda has two parts : JSF core part, and some extended
+				feature part.
+			</p>
+			<ul>
+				<li>Teeda Core</li>
+				<li>Teeda Extension</li>
+			</ul>
+		</section>
+	</body>
+</document>
