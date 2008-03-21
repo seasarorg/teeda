@@ -70,6 +70,22 @@
 <div id="teedaChanges">
 <h2><i>Teeda Changes</i></h2>
 
+<h2><a name="1.0.13-rc5">Teeda&nbsp;1.0.13-rc5&nbsp;変更点</a></h2>
+Teeda 1.0.13-rc4からの変更点は次のとおりです．
+<pre style="background-color:white">
+* Bug
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-449'>TEEDA-449</a>] - Kumu.Ajax.executeTeedaAjax を複数回呼び出す際、同一オブジェクトを
+                       引数に渡すと最初のメソッドが繰り返し呼ばれる問題を修正しました．
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-450'>TEEDA-450</a>] - リダイレクト先のページクラスにある @PageScope や @SubapplicationScope の
+                       プロパティがスコープに保存されない問題を修正しました．[Seasar-user:13218]
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-452'>TEEDA-452</a>] - Validator/Converter を指定する Tiger アノテーションに enum 型の
+                       要素があると例外が発生する問題を修正しました．
+
+* Improvement
+    * [<a href='https://www.seasar.org/issues/browse/TEEDA-451'>TEEDA-451</a>] - スーパークラスのフィールドに対しても Validator/Converter の
+                       アノテーションを指定できるようにしました．
+</pre>
+
 <h2><a name="1.0.13-rc4">Teeda&nbsp;1.0.13-rc4&nbsp;変更点</a></h2>
 Teeda 1.0.13-rc3からの変更点は次のとおりです．
 <pre style="background-color:white">

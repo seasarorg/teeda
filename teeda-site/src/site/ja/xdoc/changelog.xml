@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-rc5">1.0.13-rc5</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-rc4">1.0.13-rc4</a>
 					</td>
 					<td>
@@ -119,6 +122,66 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-rc5">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-rc4">1.0.13-rc4</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-449'>
+									TEEDA-449
+								</a>
+								] - Kumu.Ajax.executeTeedaAjax
+								を複数回呼び出す際、同一オブジェクトを引数に渡すと最初のメソッドが繰り返し呼ばれる問題を修正しました．
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-450'>
+									TEEDA-450
+								</a>
+								] - リダイレクト先のページクラスにある @PageScope や
+								@SubapplicationScope
+								のプロパティがスコープに保存されない問題を修正しました．[Seasar-user:13218]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-452'>
+									TEEDA-452
+								</a>
+								] - Validator/Converter を指定する Tiger
+								アノテーションに enum 型の要素があると例外が発生する問題を修正しました．
+							</li>
+						</ul>
+					</li>
+
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-451'>
+									TEEDA-451
+								</a>
+								] - スーパークラスのフィールドに対しても
+								Validator/Converter
+								のアノテーションを指定できるようにしました．
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-rc4">
