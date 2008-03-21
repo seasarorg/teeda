@@ -1,6 +1,6 @@
 <project name="teeda" default="dist" basedir=".">
 
-	<property name="ver" value="1.0.13-rc5-SNAPSHOT"/>
+	<property name="ver" value="1.0.13-rc5"/>
 
 	<!-- TODO : choice including contents -->
 	<target name="dist">
