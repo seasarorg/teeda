@@ -33,13 +33,11 @@ public class ForeachRowspanPage {
 		if (productIndex == 0) {
 			return true;
 		}
-		return !productItems.get(productIndex).category.equals(productItems
-				.get(productIndex - 1).category);
+		return !category.equals(productItems.get(productIndex - 1).category);
 	}
 
 	public int getCategoryColumnRowspan() {
 		int rowspan = 1;
-		String category = productItems.get(productIndex).category;
 		for (int i = productIndex + 1; i < productItems.size(); ++i) {
 			if (!category.equals(productItems.get(i).category)) {
 				break;

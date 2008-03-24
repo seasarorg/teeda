@@ -66,8 +66,13 @@
 					<a href="#インデックス">インデックス</a>
 					<ul>
 						<li>
-							<a href="#繰り返しの中でインデックスを使うには">
-								繰り返しの中でインデックスを使うには
+							<a href="#テーブルの偶数行と奇数行で背景色を変えるには">
+								テーブルの偶数行と奇数行で背景色を変えるには
+							</a>
+						</li>
+						<li>
+							<a href="#テーブルでrowspanを使うには">
+								テーブルでrowspanを使うには
 							</a>
 						</li>
 					</ul>
@@ -792,8 +797,12 @@ public String name;     //Teedaが設定
 		</section>
 
 		<section name="インデックス">
-			<subsection name="繰り返しの中でインデックスを使うには">
+			<subsection name="テーブルの偶数行と奇数行で背景色を変えるには">
 				<div class="sidebar">このプロパティはTeedaが繰り返し中に値を設定します．</div>
+				<p>
+					<a href="output.html#属性値を動的に出力するには">ダイナミックプロパティ</a>
+					の中でインデックスを参照します．
+				</p>
 				<p>
 					ページクラスに，繰り返しの要素に付けた
 					<code>id</code>
@@ -811,7 +820,7 @@ public String name;     //Teedaが設定
 				</p>
 				<div class="sidebar">インデックスは0から始まります．</div>
 				<p>
-					レンダリング時，繰り返しの中で参照されるプロパティのgetterメソッドの中で
+					レンダリング時，繰り返しの中で参照されるダイナミックプロパティのgetterメソッドの中で
 					<code>xxxIndex</code>
 					を参照することにより，現在のインデックスを得ることができます．
 				</p>
@@ -850,13 +859,13 @@ public String getRowStyleClass() {
 <table>
     <tbody id="nameItems">
         <tr id="row" class="odd">
-            <td><span id="name" /></td>
+            <td><span id="name">Teeda</span></td>
         </tr>
         <tr id="row" class="even">
-            <td><span id="name" /></td>
+            <td><span id="name">SAStruts</span></td>
         </tr>
         <tr id="row" class="odd">
-            <td><span id="name" /></td>
+            <td><span id="name">Cubby</span></td>
         </tr>
     </tbody>
 </table>
@@ -886,6 +895,204 @@ public String getRowStyleClass() {
 					，偶数行なら
 					<code>"even"</code>
 					を返します．
+				</p>
+			</subsection>
+
+			<subsection name="テーブルでrowspanを使うには">
+				<div class="sidebar">
+					<code>id</code>
+					属性が
+					<code>is</code>
+					で始まる要素の詳細は「
+					<a href="condition.html">条件分岐</a>
+					」を参照してください．
+				</div>
+				<p>
+					<code>&lt;td&gt;</code>
+					要素の表示／非表示を制御するために，
+					<code>id</code>
+					属性を
+					<code>is</code>
+					で始まる値を指定し，
+					<code>rowspan</code>
+					属性を指定します．
+				</p>
+				<p>
+					ページクラスに，繰り返しの要素に付けた
+					<code>id</code>
+					属性の値 (
+					<code>xxxItems</code>
+					) の末尾の
+					<code>Items</code>
+					を
+					<code>Index</code>
+					に置き換えた名前 (
+					<code>xxxIndex</code>
+					) で， 型が
+					<code>int</code>
+					のプロパティを用意します．
+				</p>
+				<div class="sidebar">インデックスは0から始まります．</div>
+				<p>
+					<code>&lt;td&gt;</code>
+					要素の
+					<code>id</code>
+					属性と同じ名前のメソッド
+					<code>isXxx()</code>
+					の中でインデックスを参照して，
+					<code>&lt;td&gt;</code>
+					要素を表示する場合は
+					<code>true</code>
+					，表示しない場合は
+					<code>false</code>
+					を返します．
+				</p>
+				<div class="sidebar">
+					<code>id</code>
+					属性が
+					<code>is</code>
+					で始まる場合，ダイナミックプロパティは
+					<code>id</code>
+					属性から先頭の
+					<code>is</code>
+					を除いた値に属性名を加えた名前の プロパティ名となります．
+				</div>
+				<p>
+					<code>&lt;td&gt;</code>
+					要素の
+					<code>rowspan</code>
+					属性に対応するダイナミックプロパティのgetterメソッド
+					<code>getXxxRowspan()</code>
+					メソッドを用意します． メソッドの中でインデックスを参照して，
+					<code>&lt;td&gt;</code>
+					要素を表示する場合の
+					<code>rowspan</code>
+					属性の値を返します． このgetterメソッドは，
+					<code>isXxx()</code>
+					メソッドが
+					<code>true</code>
+					を返した場合のみ呼び出されます．
+				</p>
+				<div class="sidebar">テーブルの2行目はモックでレンダリングされません．</div>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<table>
+    <tbody id="productItems">
+        <tr>
+            <td id="isCategory" rowspan="2">
+                <span id="categoryName">dummy</span>
+            </td>
+            <td><span id="productName">dummy</span></td>
+        </tr>
+        <tr id="mockRow">
+            <td>dummy</td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public productDto[] productItems;
+public String categoryName; //Teedaが設定
+public String productName;  //Teedaが設定
+public int productIndex;    //Teedaが設定
+
+public boolean isCategory() {
+    //最初の行なら<td>を表示する
+    if (productIndex == 0) {
+        return true;
+    }
+    //現在のカテゴリ名が直前の行と異なる場合は<td>を表示する
+    return !categoryName.equals(productItems[productIndex - 1].categoryName);
+}
+
+public String getCategoryRowspan() {
+    //現在のカテゴリ名と同じカテゴリ名が連続する行数を返す
+    int rowspan = 1;
+    for (int i = productIndex + 1; i < productItems.length; ++i) {
+        if (!categoryName.equals(productItems[i].categoryName)) {
+            break;
+        }
+        ++rowspan;
+    }
+    return rowspan;
+}
+]]></source>
+				<h5>例：Dtoのプロパティ (ProductDto.java)</h5>
+				<source><![CDATA[
+public String categoryName;
+public String productName;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>productItems</code>
+					が以下の要素を持っている場合，
+				</p>
+				<table>
+					<tr>
+						<th>categoryName</th>
+						<th>productName</th>
+					</tr>
+					<tr>
+						<td>プレゼンテーション</td>
+						<td>Teeda</td>
+					</tr>
+					<tr>
+						<td>プレゼンテーション</td>
+						<td>SAStruts</td>
+					</tr>
+					<tr>
+						<td>プレゼンテーション</td>
+						<td>Cubby</td>
+					</tr>
+					<tr>
+						<td>パーシステンス</td>
+						<td>Kuina-Dao</td>
+					</tr>
+					<tr>
+						<td>パーシステンス</td>
+						<td>S2Dao</td>
+					</tr>
+				</table>
+				<p>レンダリング結果は次のようになります．</p>
+				<source><![CDATA[
+<table>
+    <tbody id="productItems">
+        <tr>
+            <td id="isCategory" rowspan="3">
+                <span id="categoryName">プレゼンテーション</span>
+            </td>
+            <td><span id="productName">Teeda</span></td>
+        </tr>
+        <tr>
+            <td><span id="productName">SAStruts</span></td>
+        </tr>
+        <tr>
+            <td><span id="productName">Cubby</span></td>
+        </tr>
+        <tr>
+            <td id="isCategory" rowspan="2">
+                <span id="categoryName">パーシステンス</span>
+            </td>
+            <td><span id="productName">Kuina-Dao</span></td>
+        </tr>
+        <tr>
+            <td><span id="productName">S2Dao</span></td>
+        </tr>
+    </tbody>
+</table>
+]]></source>
+				<p>
+					<code>id</code>
+					属性が
+					<code>isCategory</code>
+					の
+					<code>&lt;td&gt;</code>
+					要素は， 最初の行または， カテゴリ名が直前の行のカテゴリ名と異なる場合のみ表示されます．
+					<code>&lt;td&gt;</code>
+					要素が表示される場合は， 同じカテゴリ名の行数が
+					<code>rowspan</code>
+					属性の値となります．
 				</p>
 			</subsection>
 		</section>

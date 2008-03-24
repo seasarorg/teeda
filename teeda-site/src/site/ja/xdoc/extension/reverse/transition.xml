@@ -13,8 +13,8 @@
 					<a href="#画面遷移">画面遷移</a>
 					<ul>
 						<li>
-							<a href="#初期表示で別画面へ遷移するには">
-								初期表示で別画面へ遷移するには
+							<a href="#初期表示やリダイレクト表示で別画面へ遷移するには">
+								初期表示やリダイレクト表示で別画面へ遷移するには
 							</a>
 						</li>
 						<li>
@@ -30,22 +30,48 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#"></a>
-				</li>
-				<li>
-					<a href="#"></a>
-				</li>
-				<li>
-					<a href="#"></a>
-				</li>
-				<li>
-					<a href="#"></a>
+					<a href="#状態の引き継ぎ">状態の引き継ぎ</a>
+					<ul>
+						<li>
+							<a
+								href="#画面を表示したときの状態をサブミットされたときまで引き継ぐには">
+								画面を表示したときの状態をサブミットされたときまで引き継ぐには
+							</a>
+						</li>
+						<li>
+							<a href="#画面遷移の前後で状態を引き継ぐには">
+								画面遷移の前後で状態を引き継ぐには
+							</a>
+						</li>
+						<li>
+							<a href="#画面遷移の前後だけ状態を引き継ぐには">
+								画面遷移の前後だけ状態を引き継ぐには
+							</a>
+						</li>
+						<li>
+							<a href="#サブアプリケーション内の複数の画面に跨って状態を引き継ぐには">
+								サブアプリケーション内の複数の画面に跨って状態を引き継ぐには
+							</a>
+						</li>
+						<li>
+							<a
+								href="#特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには">
+								特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには
+							</a>
+						</li>
+						<li>
+							<a
+								href="#サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには">
+								サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</section>
 
 		<section name="画面遷移">
-			<subsection name="初期表示で別画面へ遷移するには">
+			<subsection name="初期表示やリダイレクト表示で別画面へ遷移するには">
 				<p>
 					<a
 						href="../concept/lifecycle.html#initializeメソッド">
@@ -92,6 +118,12 @@ public Class initialize() {
 								<a
 									href="../concept/lifecycle.html#初期表示">
 									初期表示
+								</a>
+							</li>
+							<li>
+								<a
+									href="../concept/lifecycle.html#リダイレクト表示">
+									リダイレクト表示
 								</a>
 							</li>
 						</ul>
@@ -195,13 +227,402 @@ public Class doRedirect() {
 			</subsection>
 		</section>
 
-		<section name="ページスコープ">
-			<subsection name="ポストバックで状態を引き継ぐには">
-				<p></p>
+		<section name="状態の引き継ぎ">
+			<subsection name="画面を表示したときの状態をサブミットされたときまで引き継ぐには">
+				<p>
+					<a href="../concept/lifecycle.html#初期表示">初期表示</a>
+					や
+					<a href="../concept/lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					，
+					<a href="../concept/lifecycle.html#ポストバック_自画面表示">
+						ポストバック (自画面表示)
+					</a>
+					等で画面を表示したときのページクラスの状態 (HTMLの
+					<code>&lt;input&gt;</code>
+					等にマッピングされていないプロパティの値) を， 画面がサブミットされたとき (
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					) まで引き継ぐには，
+					<a href="../concept/scope.html#ページスコープ">ページスコープ</a>
+					を使用します．
+				</p>
+				<p>
+					<a href="../concept/scope.html#ページスコープ">ページスコープ</a>
+					を使用するには，引き継ぎたいプロパティに
+					<code>PageScope</code>
+					アノテーションを指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@PageScope
+public String name;
+]]></source>
+				<div class="sidebar">複数のプロパティをカンマ区切りで指定することができます．</div>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String PAGE_SCOPE = "name";
+public String name;
+]]></source>
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時，
+					<code>name</code>
+					プロパティは
+					<a href="../concept/scope.html#ページスコープ">ページスコープ</a>
+					に追加されます．
+				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/page.html#ポストバック">ポストバック</a>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+					</li>
+					<li>
+						<a href="../concept/scope.html#ページスコープ">
+							ページスコープ
+						</a>
+					</li>
+				</ul>
 			</subsection>
 
-			<subsection name="">
-				<p></p>
+			<subsection name="画面遷移の前後で状態を引き継ぐには">
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時のページクラスの状態 (プロパティの値) を，
+					<a href="../concept/lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					まで引き継ぐには， 引き継ぎたいプロパティを，
+					画面遷移元のページクラスと画面遷移先のページクラスの両方に，
+					<strong>同じ名前と型</strong>
+					で用意します．
+				</p>
+				<h5>例：画面遷移元ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<h5>例：画面遷移先ページクラスのプロパティ (BarPage.java)</h5>
+				<source><![CDATA[
+public String name;
+]]></source>
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時， 画面遷移元と 画面遷移先のページクラスに共通のプロパティは
+					<a href="../concept/scope.html#デフォルトスコープ">
+						デフォルトスコープ
+					</a>
+					に追加されます．
+				</p>
+				<div class="caution">
+					<div>注意事項</div>
+					<p>
+						<a href="../concept/scope.html#デフォルトスコープ">
+							デフォルトスコープ
+						</a>
+						は実質
+						<a
+							href="../concept/scope.html#サブアプリケーションスコープ">
+							サブアプリケーションスコープ
+						</a>
+						であるため， リダイレクト時に引き継いだ状態は，
+						同じサブアプリケーションの画面を表示している間引き継がれ続けます． この動作が不都合な場合は「
+						<a href="#画面遷移の前後だけ状態を引き継ぐには">
+							画面遷移の前後だけ状態を引き継ぐには
+						</a>
+						」を参照してください．
+					</p>
+				</div>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/page.html#ポストバック">ポストバック</a>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#ポストバック_リダイレクト">
+									ポストバック (リダイレクト)
+								</a>
+							</li>
+							<li>
+								<a
+									href="../concept/lifecycle.html#リダイレクト表示">
+									リダイレクト表示
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../concept/scope.html#デフォルトスコープ">
+							デフォルトスコープ
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="画面遷移の前後だけ状態を引き継ぐには">
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時のページクラスの状態 (プロパティの値) を，
+					<a href="../concept/lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					まで引き継ぐが， その後は同じサブアプリケーション内の画面でも引き継がないようにするには， 画面遷移
+					<strong>元</strong>
+					ページクラスのプロパティに
+					<code>RedirectScope</code>
+					アノテーションを指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@RedirectScope
+public String name;
+]]></source>
+				<div class="sidebar">複数のプロパティをカンマ区切りで指定することができます．</div>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String REDIRECT_SCOPE = "name";
+public String name;
+]]></source>
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時，
+					<code>name</code>
+					プロパティは
+					<a href="../concept/scope.html#リダイレクトスコープ">
+						リダイレクトスコープ
+					</a>
+					に追加されます．
+				</p>
+				<div class="caution">
+					<div>注意事項</div>
+					<p>
+						<a href="../concept/scope.html#リダイレクトスコープ">
+							リダイレクトスコープ
+						</a>
+						は
+						<a href="../concept/lifecycle.html#リダイレクト表示">
+							リダイレクト表示
+						</a>
+						後に破棄されるため， 再読込を行うと状態は失われます． 再読込で状態を維持する必要がある場合は，
+						画面遷移
+						<strong>先</strong>
+						ページクラスのプロパティに
+						<a href="../concept/scope.html#ページスコープ">
+							ページスコープ
+						</a>
+						を指定してください．
+					</p>
+				</div>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/page.html#ポストバック">ポストバック</a>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#ポストバック_リダイレクト">
+									ポストバック (リダイレクト)
+								</a>
+							</li>
+							<li>
+								<a
+									href="../concept/lifecycle.html#リダイレクト表示">
+									リダイレクト表示
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../concept/scope.html#リダイレクトスコープ">
+							リダイレクトスコープ
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="サブアプリケーション内の複数の画面に跨って状態を引き継ぐには">
+				<p>
+					画面遷移の前後だけでなく，同一のサブアプリケーション内の画面を表示している間，
+					継続して状態を引き継ぐには， 画面遷移
+					<strong>元</strong>
+					ページクラスのプロパティに
+					<code>SubapplicationScope</code>
+					アノテーションを指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@SubapplicationScope
+public String name;
+]]></source>
+				<div class="sidebar">複数のプロパティをカンマ区切りで指定することができます．</div>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String SUBAPPLICATION_SCOPE = "name";
+public String name;
+]]></source>
+				<p>
+					画面表示時，
+					<code>name</code>
+					プロパティは
+					<a href="../concept/scope.html#サブアプリケーションスコープ">
+						サブアプリケーションスコープ
+					</a>
+					に追加されます．
+				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/scope.html#サブアプリケーションスコープ">
+							サブアプリケーションスコープ
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection
+				name="特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには">
+				<p>
+					画面遷移
+					<strong>元</strong>
+					のサブミットボタンに
+					<code>TakeOver</code>
+					アノテーションを指定して， 引き継ぎたいプロパティや引き継ぎたくないプロパティを指定します．
+				</p>
+				<h5>例：遷移元ページクラス (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+public String foo;
+public String bar;
+public String baz;
+
+@TakeOver(type = TakeOverType.INCLUDE, properties = "foo")
+public Class doSend() {
+    ...
+    return BarPage.class;
+}
+]]></source>
+				<div class="sidebar">複数のプロパティをカンマ区切りで指定することができます．</div>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public String foo;
+public String bar;
+public String baz;
+
+public static final String doSend_TAKE_OVER = "type='include', properties='foo'");
+public Class doSend() {
+    ...
+    return BarPage.class;
+}
+]]></source>
+				<h5>例：遷移先ページクラス (BarPage.java)</h5>
+				<source><![CDATA[
+public String foo;
+public String bar;
+public String baz;
+]]></source>
+				<p>
+					<code>FooPage</code>
+					の
+					<code>doSend()</code>
+					から
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					で
+					<code>BarPage</code>
+					に画面遷移する場合，
+					<code>foo</code>
+					プロパティのみ引き継がれ，
+					<code>bar</code>
+					および
+					<code>baz</code>
+					プロパティは引き継がれません．
+				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/scope.html#TakeOverアノテーション">
+							TakeOverアノテーション
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection
+				name="サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには">
+				<p>
+					サブミットボタンの
+					<code>id</code>
+					属性を
+					<code>doFinish</code>
+					または
+					<code>doOnceFinish</code>
+					で始まるようにします．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="submit" id="doFinishCancel" value="キャンセル" />
+]]></source>
+				<h5>例：ページクラスのメソッド (FooPage.java)</h5>
+				<source><![CDATA[
+public Class doFinishCancel() {
+    ...
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/scope.html#doFinishメソッド">
+							doFinish～()メソッド
+						</a>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 	</body>

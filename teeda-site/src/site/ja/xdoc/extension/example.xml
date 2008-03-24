@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - サンプル解説</title>
+	</properties>
+	<body>
+		<section name="サンプル解説">
+			<ul>
+				<li>
+					<a href="#セットアップ">セットアップ</a>
+					<ul>
+						<li>
+							<a href="#事前条件">事前条件</a>
+						</li>
+						<li>
+							<a href="#ダウンロード">ダウンロード</a>
+						</li>
+						<li>
+							<a href="#インポート">インポート</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#サンプル実行">サンプル実行</a>
+					<ul>
+						<li>
+							<a href="#Tomcatの起動">Tomcatの起動</a>
+						</li>
+						<li>
+							<a href="#画面の表示">画面の表示</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+
+		<section name="セットアップ">
+			<subsection name="事前条件">
+				<p>
+					Teeda HTML Exampleの配布ファイルは，
+					EclipseのTomcsatプロジェクトをアーカイブしたものになっています．
+				</p>
+				<p>
+					事前にEclipseを用意して， Sysdeo/SQL Tomcat
+					Launcherプラグインをセットアップしてください． 手順は
+					<a href="../setup.html#Eclipseでの利用">こちら</a>
+					．
+				</p>
+			</subsection>
+
+			<subsection name="ダウンロード">
+				<p>
+					<a href="../downloads.html">こちら</a>
+					からTeeda HTML Exampleをダウンロードしてください．
+				</p>
+			</subsection>
+
+			<subsection name="インポート">
+				<p>
+					以下の手順でTeeda HTML ExampleをEclipseワークスペースにインポートしてください．
+				</p>
+				<ul>
+					<li>
+						ダウンロードしたTeeda HTML
+						Exampleの配布ファイルをEclipseのワークスペースまたは適当なディレクトリに解凍してください．
+					</li>
+					<li>
+						Eclipseの「File」－「Import」メニューで「Import
+						Wizard」を開きます．
+					</li>
+					<li>
+						「Select a import source」で「General」－「Existing
+						Project into Workspace」を選択し， 「Next」ボタンを押下します．
+					</li>
+					<li>
+						「Select a root directory」でTeeda HTML
+						Exampleの配布ファイルを解凍したディレクトリを指定します．
+					</li>
+					<li>
+						「Projects」で "teeda-html-example"が
+						チェックされていることを確認して「Finish」ボタンを押下します．
+					</li>
+					<li>
+						インポートされたteeda-html-exampleプロジェクトを右クリックして，
+						「Tomcat」－「コンテキスト定義の更新」を選択します．
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
+		<section name="サンプル実行">
+			<subsection name="Tomcatの起動">
+				<p>
+					メニューの「Tomcat」－「Tomcat起動」を選択またはツールバーの「Tomcat起動」ボタンを押下して，
+					Tomcatを起動します
+				</p>
+			</subsection>
+
+			<subsection name="画面の表示">
+				<p>
+					Tomcatがローカルホストのポート番号8080で動作している場合，
+					ブラウザで以下のURLにアクセスすると Teeda HTML Exampleの開始画面が表示されます．
+				</p>
+				<ul>
+					<li>
+						<a
+							href="http://localhost:8080/teeda-html-example/">
+							http://localhost:8080/teeda-html-example/
+						</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>

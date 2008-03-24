@@ -69,9 +69,7 @@
 				<item name="" href="" />
 			</item>
 
-			<!--
-				<item name="サンプル解説" href="extension/example.html" />
-			-->
+			<item name="サンプル解説" href="extension/example.html" />
 
 			<item name="概念" href="extension/concept/index.html"
 				collapse="true">
@@ -85,9 +83,7 @@
 				-->
 				<item name="状態とスコープ"
 					href="extension/concept/scope.html" />
-				<!--
-					<item name="レイアウト" href="extension/concept/layout.html" />
-				-->
+				<item name="レイアウト" href="extension/concept/layout.html" />
 			</item>
 
 			<item name="逆引きリファレンス" href="extension/reverse/index.html"
@@ -150,19 +146,39 @@
 					<item name="メッセージ"
 						href="extension/reverse/validation.html#メッセージ" />
 				</item>
+
 				<item name="コンバート"
 					href="extension/reverse/convert.html" />
-				<item name="繰り返し" href="extension/reverse/foreach.html" />
+
+				<item name="繰り返し" href="extension/reverse/foreach.html"
+					collapse="true">
+					<item name="繰り返し出力"
+						href="extension/reverse/foreach.html#繰り返し出力" />
+					<item name="ネストした繰り返し"
+						href="extension/reverse/foreach.html#ネストした繰り返し" />
+					<item name="入力フォーム"
+						href="extension/reverse/foreach.html#入力フォーム" />
+					<item name="インデックス"
+						href="extension/reverse/foreach.html#インデックス" />
+				</item>
+
 				<item name="条件分岐"
 					href="extension/reverse/condition.html" />
+
 				<item name="レイアウト" href="extension/reverse/layout.html" />
+
 				<item name="画面遷移と状態"
-					href="extension/reverse/transition.html" />
+					href="extension/reverse/transition.html" collapse="true">
+					<item name="画面遷移"
+						href="extension/reverse/transition.html#画面遷移" />
+					<item name="状態の引き継ぎ"
+						href="extension/reverse/transition.html#状態の引き継ぎ" />
+				</item>
 			</item>
 
 			<item name="リファレンス" href="extension/reference/index.html"
 				collapse="true">
-				<item name="機能リファレンス" href="extensions_features.html" />
+				<item name="機能リファレンス" href="extension_features.html" />
 				<item name="コンポーネント一覧"
 					href="extension_component_reference.html" />
 				<item name="カスタマイズについて" href="extension_customize.html" />
@@ -198,6 +214,17 @@
 				<item name="event" href="ajax/kumu/disabled.html" />
 				<item name="event" href="ajax/kumu/validate.html" />
 			</item>
+		</menu>
+
+		${reports}
+		<menu name="モジュール">
+			<item name="Teeda" href="index.html" />
+			<item name="Teeda Core" href="../teeda-core/ja/index.html" />
+			<item name="Teeda Extension"
+				href="../teeda-extension/ja/index.html" />
+			<item name="Teeda Ajax" href="../teeda-ajax/ja/index.html" />
+			<item name="Teeda Tiger"
+				href="../teeda-tiger/ja/index.html" />
 		</menu>
 	</body>
 </project>

@@ -20,9 +20,7 @@
 					</a>
 				</li>
 			</ul>
-		</section>
 
-		<section name="条件分岐">
 			<subsection name="条件が成立した場合だけ要素を出力するには">
 				<div class="sidebar">
 					他の機能に割り当てられている要素と併用することはできません．

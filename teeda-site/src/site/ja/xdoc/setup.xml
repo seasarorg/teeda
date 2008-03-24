@@ -11,95 +11,135 @@
 			<ul>
 				<li>
 					<a href="#Eclipseでの利用">Eclipseでの利用</a>
+					<ul>
+						<li>
+							<a href="#Eclipseプラグインのインストール">
+								Eclipseプラグインのインストール
+							</a>
+						</li>
+						<li>
+							<a href="#Tomcat_Launcerプラグインの設定">
+								Tomcat Launcerプラグインの設定
+							</a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="#Maven2での利用">Maven2での利用</a>
+					<ul>
+						<li><a href="#Maven2リポジトリ">Maven2リポジトリ</a></li>
+						<li><a href="#グループID成果物ID">グループID・成果物ID</a></li>
+						<li><a href="#依存関係">依存関係</a></li>
+					</ul>
 				</li>
 			</ul>
 		</section>
 
 		<section name="Eclipseでの利用">
 			<p>
-				Teedaの配布ファイルは，他のSeasar2関連プロダクトの多くと同様，
-				Eclipseプロジェクトをアーカイブしたものになっています．
+				EclipseでTeedaを利用するには，Eclipseプラグイン「Dolteng」「DbLauncher」「Sysdeo/SQLI
+				Tomcat Launcher」を使用するのが便利です．
 			</p>
 
-			<subsection name="事前条件">
-				<p>事前に以下のプロダクトをワークスペースにインポートしてください．</p>
+			<subsection name="Eclipseプラグインのインストール">
+				<p>以下の手順でEclipseプラグインをインストールしてください．</p>
 				<ul>
 					<li>
-						<a href="http://s2container.seasar.org">
-							Seasar2
-						</a>
+						Eclipseのメニューから「Help」－「Software Updates」－「Find
+						and Install」を選択してください．
+					</li>
+					<li>「Install/Updates」ウィザードが開きます．</li>
+					<li>
+						「Search for new features to install」を選択してください．
+					</li>
+					<li>「Next」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Install」ページが開きます．</li>
+					<li>「New Remote Site」ボタンを押下してください．</li>
+					<li>「New Update Site」ダイアログが開きます．</li>
+					<li>
+						「Name」に"
+						<code>Seasar Project Updates 3.2</code>
+						"と入力してください．
 					</li>
 					<li>
-						<a href="http://s2container.seasar.org">
-							S2-Tiger
-						</a>
-						(Teeda-Tigerを使う場合)
+						「URL」に"
+						<code>
+							<a
+								href="http://eclipse.seasar.org/updates/3.2/">
+								http://eclipse.seasar.org/updates/3.2/
+							</a>
+						</code>
+						"と入力してください．
 					</li>
+					<li>「OK」ボタンを押下してください．</li>
 				</ul>
+				<ul>
+					<li>「Install」ページに戻ります．</li>
+					<li>
+						追加されたSeasarプロジェクトのアップデートサイトがチェック状態になっていることを確認してください．
+					</li>
+					<li>「Finish」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Updates」ページが開きます．</li>
+					<li>
+						「Seasar Project Updates
+						3.2」の下の以下のフィーチャーをチェックしてください．
+						<ul>
+							<li>DbLauncher (任意)</li>
+							<li>Dolteng</li>
+							<li>Sysdeo/SQLI Tomcat Launcher (任意)</li>
+						</ul>
+					</li>
+					<li>「Next」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Install」ページが開きます．</li>
+					<li>
+						ライセンスを確認して「I accept the terms in the license
+						agreement」を選択してください．
+					</li>
+					<li>「Next」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Install」ページが開きます．</li>
+					<li>「Finish」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Verification」ページが開きます．</li>
+					<li>「Install All」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Install/Update」ダイアログが開きます．</li>
+					<li>「Yes」ボタンを押下してください．</li>
+				</ul>
+				<p>Eclipseが再起動するとインストールは終了です．</p>
 			</subsection>
 
-			<subsection name="インポート">
-				<p>以下の手順でTeedaをEclipseワークスペースにインポートしてください．</p>
+			<subsection name="Tomcat Launcerプラグインの設定">
+				<p>
+					Sysdeo/SQLI Tomcat Launcherプラグインをインストールした場合は，
+					以下の手順で設定を行います． なお，事前にTomcatのインストールが必要です．Tomcatは
+					<a href="http://tomcat.apache.org/">こちら</a>
+					からダウンロードしてください．
+				</p>
 				<ul>
 					<li>
-						<p>
-							ダウンロードしたTeedaおよびTeeda-Tigerの配布ファイルをEclipseのワークスペースまたは適当なディレクトリに解凍してください．
-						</p>
+						Eclipseのメニューから「Window」－「Preferences」を選択してください．
 					</li>
-					<li>
-						<p>
-							Eclipseの「File」－「Import」メニューで「Import
-							Wizard」を開きます．
-						</p>
-					</li>
-					<li>
-						<p>
-							「Select a import source」で「General」－「Existing
-							Project into Workspace」を選択し，
-							「Next」ボタンを押下します．
-						</p>
-					</li>
-					<li>
-						<p>
-							「Select a root
-							directory」でTeedaおよびTeeda-Tigerの配布ファイルを解凍したディレクトリを指定します．
-						</p>
-					</li>
-					<li>
-						<p>
-							「Projects」で "teeda"，"teeda-tiger"が
-							チェックされていることを確認して「Finish」ボタンを押下します．
-						</p>
-					</li>
+					<li>「Preferences」ダイアログが開きます．</li>
+					<li>左のペインで「Tomcat」を選択してください．</li>
+					<li>「Tomcatバージョン」で使用するTomcatのバージョンを選択してください．</li>
+					<li>「Tomcatホーム」にTomcatをインストールしたディレクトリを指定してください．</li>
 				</ul>
-			</subsection>
-
-			<subsection name="Teedaプロジェクトの参照">
-				<p>以下の手順でTeedaを利用するJavaプロジェクトからTeedaを参照してください．</p>
 				<ul>
-					<li>
-						<p>
-							Teedaを利用するJavaプロジェクトを右クリックして「Properties」メニューを選択します．
-						</p>
-					</li>
-					<li>
-						<p>
-							左のペインで「Java Build
-							Path」を，右のペインで「Projects」を選択します．
-						</p>
-					</li>
-					<li>
-						<p>
-							「Add」ボタンを押下し，「Select projects to add:」から
-							"teeda"および"teeda-tiger"をチェックして「OK」ボタンを押下します．
-						</p>
-					</li>
-					<li>
-						<p>「OK」ボタンを押下します．</p>
-					</li>
+					<li>左のペインで「Tomcat」－「JVMの設定」を選択してください．</li>
+					<li>「JRE]でTomcatの実行に使用するJREを選択してください．</li>
+				</ul>
+				<ul>
+					<li>「OK」ボタンを押下してください．</li>
 				</ul>
 			</subsection>
 		</section>
@@ -124,23 +164,23 @@
 				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
 				<ul>
 					<li>
-						<a href="teeda-core/project-summary.html">
+						<a href="teeda-core/ja/project-summary.html">
 							Teeda Core
 						</a>
 					</li>
 					<li>
 						<a
-							href="teeda-extension/project-summary.html">
+							href="teeda-extension/ja/project-summary.html">
 							Teeda Extension
 						</a>
 					</li>
 					<li>
-						<a href="teeda-ajax/project-summary.html">
+						<a href="teeda-ajax/ja/project-summary.html">
 							Teeda Ajax
 						</a>
 					</li>
 					<li>
-						<a href="teeda-tiger/project-summary.html">
+						<a href="teeda-tiger/ja/project-summary.html">
 							Teeda Tiger
 						</a>
 					</li>
@@ -151,22 +191,23 @@
 				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
 				<ul>
 					<li>
-						<a href="teeda-core/dependencies.html">
+						<a href="teeda-core/ja/dependencies.html">
 							Teeda Core
 						</a>
 					</li>
 					<li>
-						<a href="teeda-extension/dependencies.html">
+						<a
+							href="teeda-extension/ja/dependencies.html">
 							Teeda Extension
 						</a>
 					</li>
 					<li>
-						<a href="teeda-ajax/dependencies.html">
+						<a href="teeda-ajax/ja/dependencies.html">
 							Teeda Ajax
 						</a>
 					</li>
 					<li>
-						<a href="teeda-tiger/dependencies.html">
+						<a href="teeda-tiger/ja/dependencies.html">
 							Teeda Tiger
 						</a>
 					</li>

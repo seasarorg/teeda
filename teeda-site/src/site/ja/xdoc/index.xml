@@ -17,28 +17,27 @@
 				DIとAOPの機能をベースとした拡張機能を提供し，より良いWebアプリケーション開発を実現します．
 			</p>
 			<p>Teedaは大きく分けて3つのモジュールから構成されています．</p>
-
-			<subsection name="Teeda Core">
-				<p>
+			<div style="float: right; margin-left: 20px;">
+				<img src="images/modules.png" alt="モジュール構成" />
+			</div>
+			<dl>
+				<dt>Teeda Core</dt>
+				<dd>
 					Teeda Coreは，JSF1.1の実装です． JSFにおけるUIコンポーネントの管理に
 					<a href="http://s2container.seasar.org">Seasar2</a>
 					を利用するのが特徴です．
-				</p>
-			</subsection>
-
-			<subsection name="Teeda Extension">
-				<p>
+				</dd>
+				<dt>Teeda Extension</dt>
+				<dd>
 					Teeda Extensionは，Teeda Coreをベースに，
 					HTMLテンプレートと規約に基づいた拡張機能を提供します．
-				</p>
-			</subsection>
-
-			<subsection name="Teeda Ajax">
-				<p>
+				</dd>
+				<dt>Teeda Ajax</dt>
+				<dd>
 					Teeda Ajaxは，Ajaxに特化したライブラリで， Teeda CoreやTeeda
 					Extensionとは独立して利用することも可能です．
-				</p>
-			</subsection>
+				</dd>
+			</dl>
 		</section>
 
 		<section name="Teedaの目指すゴール">

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 概念 - レイアウト</title>
+	</properties>
+	<body>
+		<section name="レイアウト">
+			<ul>
+				<li>
+					<a href="#概要">概要</a>
+				</li>
+				<li>
+					<a href="#適用されるレイアウト">適用されるレイアウト</a>
+				</li>
+				<li>
+					<a href="#レイアウトHTML">レイアウトHTML</a>
+					<ul>
+						<li>
+							<a href="#ヘッダ">ヘッダ</a>
+						</li>
+						<li>
+							<a href="#ボディ">ボディ</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+
+		<section name="概要">
+			<p>
+				レイアウト機能を使うと，アプリケーション全体でレイアウトを共有したり，
+				ヘッダやフッタ，メニューなど，画面の一部を部品化することができます．
+			</p>
+			<p>
+				ブラウザからリクエストされたページにレイアウトが適用されると，
+				レンダリング結果の全体的な配置はレイアウトによって決まります．
+			</p>
+			<p>
+				レイアウト中の
+				<code>&lt;te:includeChildBody&gt;</code>
+				要素がリクエストされたページの
+				<code>&lt;body&gt;</code>
+				要素の内容に置き換えられます． また，
+				<code>&lt;te:include&gt;</code>
+				要素は
+				<code>te:src</code>
+				属性で指定されたページの
+				<code>&lt;body&gt;</code>
+				要素の内容に置き換えられます．
+			</p>
+			<img src="../../images/extension/concept/layout1.png"
+				width="547" height="303" alt="レイアウトの適用" />
+			<p>上の例のレンダリング結果は次のようになります．</p>
+			<img src="../../images/extension/concept/layout2.png"
+				width="208" height="303" alt="レンダリング結果" />
+		</section>
+
+		<section name="適用されるレイアウト">
+			<p>
+				デフォルトのレイアウトHTMLは，
+				<code>
+					<var>ビュールート</var>
+					/layout/layout.html
+				</code>
+				になります．
+			</p>
+			<p>
+				デフォルトのレイアウトHTMLを変更するには，
+				<code>web.xml</code>
+				のコンテキストパラメータでデフォルトで使用するレイアウトを指定します． パラメータ名は
+				<code>teeda.DEFAULT_LAYOUT_PATH</code>
+				で，値はビュールート (デフォルトは
+				<code>/view</code>
+				) からのパスです．
+			</p>
+			<h5>例：web.xml</h5>
+			<source><![CDATA[
+<context-param>
+    <param-name>teeda.DEFAULT_LAYOUT_PATH</param-name>
+    <param-value>/layout/myLayout.html</param-value>
+</context-param>
+]]></source>
+			<p>
+				特定のページだけ異なったレイアウトを使うには， デフォルト以外のレイアウトを使いたい画面のページクラスに
+				<code>getLayout()</code>
+				メソッドを用意して， 戻り値で使用するレイアウトのページクラスまたは
+				<a href="page.html#ページ名の命名規約">ページ名</a>
+				を指定します． このメソッドは
+				<code>public</code>
+				で引数はなく，戻り値の型は
+				<code>Class</code>
+				または
+				<code>String</code>
+				です．
+			</p>
+			<h5>例：ページクラス</h5>
+			<source><![CDATA[
+public Class getLayout() {
+    return OtherLayoutPage.class;
+}
+]]></source>
+		</section>
+
+		<section name="レイアウトHTML">
+			<subsection name="ヘッダ">
+				<p>
+					レンダリング結果の
+					<code>&lt;head&gt;</code>
+					要素の内容は，レイアウトHTMLの
+					<code>&lt;head&gt;</code>
+					要素の内容がベースになります．
+				</p>
+				<p>
+					ただし，
+					<code>&lt;title&gt;</code>
+					要素はリクエストされたページの
+					<code>&lt;title&gt;</code>
+					要素が使われます． また，レイアウトHTMLの
+					<code>&lt;head&gt;</code>
+					要素にリクエストされたページの次の要素が加えられてレンダリング結果となります．
+				</p>
+				<ul>
+					<li>
+						<code>&lt;link&gt;</code>
+						要素
+					</li>
+					<li>
+						<code>&lt;script&gt;</code>
+						要素
+					</li>
+					<li>
+						<code>&lt;style&gt;</code>
+						要素
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="ボディ">
+				<h4>te:includeChildBody要素</h4>
+				<p>
+					レイアウトHTMLの中の
+					<code>&lt;te:layoutChildBody&gt;</code>
+					要素は，リクエストされたページの
+					<code>&lt;body&gt;</code>
+					要素の内容に置き換えられます．
+				</p>
+				<p>
+					<code>&lt;te:layoutChildBody&gt;</code>
+					要素は，レイアウトHTMLの中で厳密に1つだけ記述しなくてはなりません． 複数の
+					<code>&lt;te:layoutChildBody&gt;</code>
+					を記述することも，省略することも許されません．
+				</p>
+
+				<h4>te:include要素</h4>
+				<p>
+					レイアウトHTMLの中の
+					<code>&lt;te:include&gt;</code>
+					要素は，
+					<code>te:src</code>
+					属性で指定されたページの
+					<code>&lt;body&gt;</code>
+					要素の内容に置き換えられます．
+				</p>
+				<p>
+					<code>&lt;te:include&gt;</code>
+					要素はレイアウトHTMLの中にいくつでも記述することができます． また，省略することもできます．
+				</p>
+			</subsection>
+		</section>
+
+		<section name="ページクラス">
+			<p>
+				レイアウトHTMLや
+				<code>&lt;te:include&gt;</code>
+				要素でインクルードされるHTMLも対応するページクラスを持つことができます．
+			</p>
+			<p>
+				リクエストされたHTMLに対応するページクラスに，
+				レイアウトやインクルードされるHTMLに対応するページクラスのプロパティを用意すると，
+				それらのページクラスがDIされます．
+			</p>
+			<img src="../../images/extension/concept/layout3.png"
+				width="321" height="208" alt="レイアウトとDI" />
+		</section>
+	</body>
+</document>
