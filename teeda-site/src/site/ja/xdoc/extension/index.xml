@@ -4,14 +4,45 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>Extension</title>
+		<title>Extension - 概要</title>
 	</properties>
 	<body>
-		<section name="Teeda Extension">
+		<section name="Teeda Extension 概要">
 			<p>
-				Teeda Extensionは，Teeda Coreをベースに，
-				HTMLテンプレートと規約に基づいた拡張機能を提供します．
+				Teeda Extensionは， JSF実装であるTeeda
+				Coreの上位に構築されたプレゼンテーションフレームワークで， 以下の特徴を持っています．
 			</p>
+			<dl>
+				<dt>HTMLテンプレート</dt>
+				<dd>
+					JSPではなく，HTMLをテンプレートとして使用します．
+					このため，IDEに依存することなく任意のツールで画面を編集することや，
+					ブラウザによるプレビューが可能です．(
+					<a href="concept/page.html#テンプレートHTML">詳細</a>
+					)
+				</dd>
+				<dt>ページモデル</dt>
+				<dd>
+					テンプレートHTMLと対応するページクラスに，表示する内容やロジックを持ちます．
+					HTMLとクラスが1対1に対応するため非常にシンプルです． (
+					<a href="concept/page.html">詳細</a>
+					)
+				</dd>
+				<dt>PRGパターン</dt>
+				<dd>
+					画面遷移にPRG (POST-REDIRECT-GET)
+					パターンを採用しているため，URLがずれることがありません． (
+					<a href="concept/prg.html">詳細</a>
+					)
+				</dd>
+				<dt>規約重視</dt>
+				<dd>テンプレートHTMLとページクラスは規約によって関連づけられるため，設定ファイルは不要です．</dd>
+				<dt>HOT deploy対応</dt>
+				<dd>
+					Seasra2.4のHOT deployに対応しているため，
+					Tomcat等のWebコンテナを起動したまま画面の追加や変更を行い， 即座に確認をすることができます．
+				</dd>
+			</dl>
 		</section>
 
 		<section name="ドキュメント">
@@ -20,12 +51,16 @@
 					<a href="tutorial/index.html">チュートリアル</a>
 				</li>
 				<li>
+					<a href="example.html">サンプル解説</a>
+				</li>
+				<li>
 					<a href="concept/index.html">概念</a>
 				</li>
 				<li>
 					<a href="reverse/index.html">逆引きリファレンス</a>
 				</li>
-				<li><a href="reference.html">リファレンス</a>
+				<li>
+					<a href="reference.html">リファレンス</a>
 					<ul>
 						<li>
 							<a href="../extensions_features.html">

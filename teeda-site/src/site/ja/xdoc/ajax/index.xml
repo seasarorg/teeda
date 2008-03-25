@@ -7,7 +7,7 @@
 		<title>Ajax</title>
 	</properties>
 	<body>
-		<section name="Teeda Ajax">
+		<section name="Teeda Ajax 概要">
 				<p>
 					Teeda Ajaxは，Ajaxに特化したライブラリで， Teeda CoreやTeeda
 					Extensionとは独立して利用することも可能です．
