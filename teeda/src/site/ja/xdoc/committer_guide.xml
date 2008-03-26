@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿﻿<?xml version="1.0" encoding="UTF-8"?>
 <document>
 	<properties>
 		<title>コミッタガイド</title>
@@ -48,6 +48,15 @@
 						<kbd>mvn clean test</kbd>
 					</source>
 				</dd>
+				<dt>Teedaのサイト作成 (J2SE1.4)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda</kbd>
+						<kbd>mvn site</kbd>
+					</source>
+				</dd>
+				<dt>ドキュメント確認</dt>
+				<dd>teeda/target/site以下のドキュメントを確認．</dd>
 			</dl>
 		</section>
 
