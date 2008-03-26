@@ -164,23 +164,23 @@
 				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
 				<ul>
 					<li>
-						<a href="teeda-core/ja/project-summary.html">
+						<a href="../teeda-core/ja/project-summary.html">
 							Teeda Core
 						</a>
 					</li>
 					<li>
 						<a
-							href="teeda-extension/ja/project-summary.html">
+							href="../teeda-extension/ja/project-summary.html">
 							Teeda Extension
 						</a>
 					</li>
 					<li>
-						<a href="teeda-ajax/ja/project-summary.html">
+						<a href="../teeda-ajax/ja/project-summary.html">
 							Teeda Ajax
 						</a>
 					</li>
 					<li>
-						<a href="teeda-tiger/ja/project-summary.html">
+						<a href="../teeda-tiger/ja/project-summary.html">
 							Teeda Tiger
 						</a>
 					</li>
@@ -191,23 +191,23 @@
 				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
 				<ul>
 					<li>
-						<a href="teeda-core/ja/dependencies.html">
+						<a href="../teeda-core/ja/dependencies.html">
 							Teeda Core
 						</a>
 					</li>
 					<li>
 						<a
-							href="teeda-extension/ja/dependencies.html">
+							href="../teeda-extension/ja/dependencies.html">
 							Teeda Extension
 						</a>
 					</li>
 					<li>
-						<a href="teeda-ajax/ja/dependencies.html">
+						<a href="../teeda-ajax/ja/dependencies.html">
 							Teeda Ajax
 						</a>
 					</li>
 					<li>
-						<a href="teeda-tiger/ja/dependencies.html">
+						<a href="../teeda-tiger/ja/dependencies.html">
 							Teeda Tiger
 						</a>
 					</li>

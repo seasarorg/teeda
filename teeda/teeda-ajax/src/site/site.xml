@@ -40,7 +40,7 @@
 
 		<menu ref="reports" />
 		<menu name="Modules">
-			<item name="Teeda" href="../../index.html" />
+			<item name="Teeda" href="../../en/index.html" />
 			<item name="Teeda Core" href="../../teeda-core/en/index.html" />
 			<item name="Teeda Extension"
 				href="../../teeda-extension/en/index.html" />

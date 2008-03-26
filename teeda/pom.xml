@@ -179,7 +179,7 @@
       <!--
       <url>scp://www.seasar.org/home/groups/teeda/public_html/1.0</url>
       -->
-      <url>file:d:/temp/teeda</url>
+      <url>file:c:/temp/teeda</url>
     </site>
   </distributionManagement>
   <profiles>

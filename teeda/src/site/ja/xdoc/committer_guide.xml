@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>コミッタガイド</title>
+	</properties>
+	<body>
+		<section name="概要">
+			<p>コミッタ向けの覚え書きです．</p>
+		</section>
+
+		<section name="リリース準備">
+			<dl>
+				<dt>pom.xmlの修正・コミット</dt>
+				<dd>
+					<ul>
+						<li>teeda/build.xmlのnewVersionプロパティを修正．</li>
+						<li>teeda/build.xmlのupdate-pomターゲットを実行．</li>
+					</ul>
+				</dd>
+				<dt>ドキュメントの修正・コミット</dt>
+				<dd>
+					<ul>
+						<li>teeda/src/site/xdoc/index.html</li>
+						<li>teeda/src/site/xdoc/downloads.xml</li>
+						<li>teeda/src/site/ja/xdoc/index.xml</li>
+						<li>teeda/src/site/ja/xdoc/changelog.xml</li>
+						<li>teeda/src/site/ja/xdoc/downloads.xml</li>
+					</ul>
+				</dd>
+				<dt>Teedaのビルド (J2SE1.4)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda</kbd>
+						<kbd>mvn clean install</kbd>
+					</source>
+				</dd>
+				<dt>Teeda-Tigerのビルド (Java5)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda-tiger</kbd>
+						<kbd>mvn clean install</kbd>
+					</source>
+				</dd>
+				<dt>結合テスト (Java5)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda-integration-test</kbd>
+						<kbd>mvn clean test</kbd>
+					</source>
+				</dd>
+			</dl>
+		</section>
+
+		<section name="リリース手順">
+			<dl>
+				<dt>Teedaのビルド～デプロイ (J2SE1.4)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda</kbd>
+						<kbd>mvn clean install deploy</kbd>
+					</source>
+				</dd>
+				<dt>Teeda-Tigerのビルド～デプロイ (Java5)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda-tiger</kbd>
+						<kbd>mvn clean install deploy</kbd>
+					</source>
+				</dd>
+				<dt>Teedaのサイトデプロイ (J2SE1.4)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda</kbd>
+						<kbd>mvn site-deploy</kbd>
+					</source>
+				</dd>
+				<dt>Teeda-Tigerのサイトデプロイ (Java5)</dt>
+				<dd>
+					<source>
+						<kbd>cd teeda-tiger</kbd>
+						<kbd>mvn site-deploy</kbd>
+					</source>
+				</dd>
+			</dl>
+		</section>
+	</body>
+</document>

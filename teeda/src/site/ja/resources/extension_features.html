@@ -1,0 +1,563 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="function-list">
+<h2 class="subtitle" id="id1">Teeda&nbsp;Extensionの機能について</h2>
+<p>このドキュメントではTeeda&nbsp;Extensionの機能について説明します．</p>
+<ul class="arabic simple">
+<li><a href="#initialize">初期化(initialize)メソッド</a></li>
+<li><a href="#prerender">描画前(prerender)メソッド</a></li>
+<li><a href="#do">doメソッド</a></li>
+<li><a href="#previousViewId">previousViewId</a></li>
+<li><a href="#postback">ポストバック</a></li>
+<li><a href="#redirect">リダイレクト</a></li>
+<li><a href="#dynamicproperty">DynamicProperty</a></li>
+<li><a href="#newwindow">WindowIdとnewwindowクエリストリング</a></li>
+<li><a href="#layout">レイアウト</a></li>
+<li><a href="#dynamicValidation">動的なバリデーション</a></li>
+<li><a href="#fileupload">ファイルアップロード</a></li>
+</ul>
+</div>
+
+<h3><b><a id="initialize" name="initialize">■初期化(initialize)メソッド</a></b></h3>
+<p>初期化(initialize)メソッドとは、他のページから遷移されたタイミングで<b><font color="red">1度だけ</font></b>呼び出されるライフサイクルメソッドです．同じページから<a href="#postback">ポストバック</a>された場合には呼び出されません．<br />
+Pageクラスに<b>[initialize]</b>というメソッドを定義しておくと，他のページから遷移されたタイミングでTeedaが呼び出してくれます．<br />
+<code>initialize()</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br>
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，<code><a href="#prerender">prerender()</a></code>メソッドが呼び出されることなく，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は，(もしあれば) 続けてprerender()メソッドが呼び出されます．<br />
+戻り値の型の選択は<code>initialize()</code>メソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+
+<table border="1">
+<caption><font size="3">[ initializeメソッドの戻り値型一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>戻り値の型</div></th>
+		<th nowrap="nowrap"><div>説明</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+<br />
+<br />
+
+
+<h3><b><a id="prerender" name="prerender">■描画前(prerender)メソッド</a></b></h3>
+<p>描画前(prerender)メソッドとは、あるPageが描画される直前で<b><font color="red">毎回</font></b>呼び出されるライフサイクルメソッドです．<br />
+Pageクラスに<b>[prerender]</b>というメソッドを定義しておくと描画される直前にTeedaが呼び出してくれます．<br />
+<code>prerender()</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br />
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は自画面が表示されます．<br />
+戻り値の型の選択は<code>prerender()</code>メソッドで遷移先がある場合はClass型、無い場合はvoidをお奨めします．</p>
+
+<table border="1">
+<caption><font size="3">[ prerenderメソッドの戻り値型一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>戻り値の型</div></th>
+		<th nowrap="nowrap"><div>説明</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+<br />
+<br />
+<h3><a name="do">■doメソッド</a></h3>
+<p>doメソッドとは，あるPageのフォームがサブミットされると呼び出されるライフサイクルメソッドです．<br>
+Pageクラスに<b>[do]</b>で始まるメソッドを定義しておくと，フォームがサブミットされた際にTeedaが呼び出してくれます．<br>
+<code>do</code>メソッドの名前はフォームのsubmitボタンのidと一致させます．<br>
+<code>do</code>メソッドの戻り値の型としては<code>Class/String/void</code>のどれかを選ぶことが出来ます．<br />
+戻り値の型がClass/String型で，戻り値がnull以外を返した場合は，指定されたページに画面遷移 (<a href="#redirect">リダイレクト</a>) します．戻り値型がvoidまたはClass/String型でnullを返した場合は，(もしあれば) 続けて<code><a href="#prerender">prerender()</a></code>メソッドが呼び出されます．</p>
+<table border="1">
+<caption><font size="3">[ doメソッドの戻り値型一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap">
+<div>戻り値の型</div>
+</th>
+		<th nowrap="nowrap">
+<div>説明</div>
+</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;Class型</td>
+		<td>&nbsp;遷移先Pageクラスを記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;String型</td>
+		<td>&nbsp;遷移先HTML名を記述する．</td>
+	</tr>
+	<tr>
+		<td>&nbsp;void型</td>
+		<td>&nbsp;遷移する可能性が無い場合に使用する．</td>
+	</tr>
+</tbody>
+</table>
+<br>
+<br>
+<h3><b><a id="previousViewId" name="previousViewId">■previousViewId</a></b></h3>
+<p>previousViewId(プレビアスビューアイディ)とは、あるPageが以前にどこのPageから遷移してきたかを判別する機能です．<br />
+Pageクラスに<b>[previousViewId]</b>というString型のプロパティを定義しておくと、Teedaが自動的に設定してくれます．<br />
+previousViewIdには、/view/hoge/foo.htmlのような形式のHTMLまでのパスが設定されます．</p>
+
+<pre>
+public class NextPage {
+    <b style="color: red;">private String previousViewId;</b>
+
+    public String prerender() {
+        System.out.println(previousViewId);
+        return null;
+    }
+
+    public String getPreviousViewId() {
+        return previousViewId;
+    }
+
+    public void setPreviousViewId(String previousViewId) {
+        this.previousViewId = previousViewId;
+    }
+}
+</pre>
+<br />
+<br />
+
+
+<h3><b><a id="postback" name="postback">■ポストバック</a></b></h3>
+<p>postback(ポストバック)とは、ある画面でフォームがサブミットされたときに、そのPOSTリクエストの送り先が同一のページである事を指します．<br />
+Pageクラスに<b>[postback]</b>というboolean/Boolean型のプロパティを定義しておくと、そのPageへのアクセスが初回起動時なのか postbackされてきたものかを判定することが出来ます．</p>
+
+<pre>
+public class HogePage {
+    <b style="color: red;">private boolean postback;</b>
+
+    public boolean isPostback() {
+        return postback;
+    }
+    public void setPostback(boolean postback) {
+        this.postback = postback;
+    }
+    public String prerender() {
+        if(isPostback()) {
+            //postback時のロジックを記述
+        } else {
+            //初回起動時のロジックを記述
+        }
+    }
+}
+</pre>
+<br />
+<br />
+<h3><a name="redirect">■リダイレクト</a></h3>
+<p>ポストバックの後，別画面へ遷移する場合はリダイレクトが使われます．これはPRG (Post-Redirect-Get) パターンと呼ばれます．</p>
+<p>リダイレクトする際のURLは，ポストバックされたURLに基づいて同じプロトコル・同じホスト・同じポート番号で組み立てられます (「<a href="extension_customize.html#redirect">リダイレクトについて</a>」も参照してください)．<br>
+異なるプロトコルまたはポート番号でリダイレクト (画面遷移) したい場合は，アノテーションで指定することが出来ます．</p>
+<h4>Tigerアノテーション</h4>
+<pre><b style="color: red;">@Redirect(protocol=ProtocolType.HTTPS)</b>
+public Class doSomething() {
+    ...
+}</pre>
+<h4>定数アノテーション</h4>
+<pre><b style="color: red;">public static final String doSomething_REDIRECT = &quot;protocol=https&quot;;</b>
+
+public Class doSomething() {
+    ...
+}</pre>
+<h4>Redirectアノテーションで指定可能な属性</h4>
+<table border="1">
+<col span="1">
+<col span="1" align="center">
+<caption><font size="3">[ Redirectアノテーションの属性一覧 ]</font></caption>
+<tbody>
+<tr>
+<th>属性</th>
+<th>デフォルト</th>
+<th>説明</th>
+</tr>
+<tr>
+<td>protocol</td>
+<td>NA (必須)</td>
+<td>リダイレクトするURLのプロトコルです．<br>
+httpまたはhttpsを指定することが出来ます．</td>
+</tr>
+<tr>
+<td>port</td>
+<td>-1</td>
+<td>リダイレクトするURLのポート番号です．<br>
+-1の場合，リダイレクトURLにポート番号は含まれません．</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<h3><b><a id="dynamicproperty" name="dynamicproperty">■DynamicProperty(ダイナミックプロパティ)</a></b></h3>
+<p>DynamicProperty(ダイナミックプロパティ)とは、Pageクラス側で動的にHTMLの属性値を変更できる機能です．<br />
+この機能は、例えば動的にCSSなどを切り替えたりする場合に有効な機能です．</p>
+<p>
+DynamicPropertyで指定するメソッドは，<b><font color="red">get＋id＋属性名</font></b>という名称でPageクラスに定義されます．<br />
+idがハイフンつきの場合は、<b><font color="red">ハイフンを取り除いて先頭大文字にした形式</font></b>で記述されます．<br />
+例えばidがarg1の入力項目のstyle属性を動的に変更する場合を考えてみましょう．<br />
+その場合には、PageクラスにgetArg1Style()というメソッドを定義しておくと実行時に呼ばれます．<br />
+下記にDynamicPropertyの規約をまとめます．</p>
+
+<table border="1">
+<caption><font size="3">[ DynamicPropertyの規約一覧 ]</font></caption>
+<thead>
+	<tr>
+		<th nowrap="nowrap"><div>HTMLのid</div></th>
+		<th nowrap="nowrap"><div>属性</div></th>
+		<th nowrap="nowrap"><div>PageクラスのDynamicPropertyメソッド名</div></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;hoge</td>
+		<td>&nbsp;style</td>
+		<td>&nbsp;<b><font color="red">getHogeStyle()</font></b></td>
+	</tr>
+	<tr>
+		<td>&nbsp;hoge-foo</td>
+		<td>&nbsp;onclick</td>
+		<td>&nbsp;<b><font color="red">getHogeFooOnclick()</font></b></td>
+	</tr>
+</tbody>
+</table>
+<br />
+<br />
+
+<h3><b><a id="newwindow" name="newwindow">■windowIdとnewwindowクエリストリング</a></b></h3>
+<p>Teeda内部で管理しているスコープとviewIdは全てwindowId別に管理されています．<br />
+windowIdはTeedaによって各画面ごとに割り振られるidです．
+ただしリンクでの新規WindowオープンやJavaScriptによる<br />
+Windowオープンの場合はこの限りではありません．このような場合に明示的にTeedaに新規windowIdを割り当ててもらう機能が<br />
+newwindowクエリストリングです．newwindow=trueのようなクエリストリングをURLにくっつけると、<br />
+Teeda側でwindowIdを新たに採番し、スコープも別管理になります．<br />
+
+通常の場合は、
+</p>
+<pre>
+&lt;a id="goAddInput" href="../add/addInput.html" target="_blank"&gt;足し算による入力サンプル(新規Windowが開く)&lt;/a&gt;
+</pre>
+<p>
+のようにtargetを_blank指定すると、newwindowクエリストリングは自動的に割り当てられます．<br />
+この機能はFormタグ、Aタグにて使用することができます．
+</p>
+<br />
+<br />
+<br />
+
+
+<h3><b><a id="layout" name="layout">■レイアウト</a></b></h3>
+<p>Teedaでは簡単に使えるレイアウト機能を提供しています．<br/>
+view/layout/layout.htmlにファイルを置いておくと自動的に個々のページに適用されます．
+layout.htmlでheader.htmlなどの他のレイアウトのパーツを読み込む場合は、
+<pre>
+&lt;te:include te:src="/layout/header.html"/&gt;
+</pre>
+のように記述します．詳しくは、<a href="extension_component_reference.html#include">includeタグ</a>を参照してください．<br />
+レイアウトを適用するHTMLの中身を読み込むには、
+<pre>
+&lt;te:includeChildBody/&gt;
+</pre>
+のように記述します．詳しくは、<a href="extension_component_reference.html#includeChildBody">includeChildBodyタグ</a>を参照してください．<br />
+各Pageでpublic String getLayout() {...}を定義し、戻り値で/aaa/bbb.htmlのように指定するとbbb.htmlをレイアウトにすることもできます．<br />
+getLayout()の値は動的に変えることもできます．layout.htmlのボディのサンプルは次のようになります．
+<pre>
+&lt;table border="0" cellspacing="5"&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;&lt;te:include te:src="/layout/header.html"/&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td width="140" valign="top"&gt;
+    &lt;te:include te:src="/layout/menu.html"/&gt;
+  &lt;/td&gt;
+  &lt;td valign="top" align="left"&gt;
+    &lt;te:includeChildBody/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;
+    &lt;hr/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td colspan="2"&gt;
+    &lt;te:include te:src="/layout/footer.html"/&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+<br />
+<br />
+
+
+<h3><b><a id="dynamicValidation" name="dynamicValidation">■動的なバリデーション</a></b></h3>
+<p>バリデーションを動的に変化させるには、get + id + Validatorという名前のメソッドを定義します．<br/>
+例えば、aaaというidのタグのバリデーションを動的に変える場合は次のようなメソッドを用意します．</p>
+<pre>
+public Validator getAaaValidator() {
+    TLengthValidator validator = new TLengthValidator();
+    if (...) {
+        validator.setMinimum(3);
+    } else {
+        validator.setMinimum(5);
+    }
+    return validator;
+}
+</pre>
+複数のValidatorを返す場合には、ValidatorChainを使います．
+<pre>
+public Validator getAaaValidator() {
+    ValidatorChain chain = new ValidatorChain();
+    chain.add(new TRequiredValidator());
+    TLengthValidator validator = new TLengthValidator();
+    if (...) {
+        validator.setMinimum(3);
+    } else {
+        validator.setMinimum(5);
+    }
+    chain.add(validator);
+    return chain;
+}
+</pre>
+<h3><b><a name="fileupload">ファイルアップロード</a></b></h3>
+<h4>web.xml</h4>
+<p>ファイルアップロードを利用するには，<code>web.xml</code>に<code>MultipartFormDataFilter</code>を設定します．<code>MultipartFormDataFilter</code>の設定は，Seasar2の<code>EncodingFilter</code>と<code>S2ContainerFilter</code>の間に記述してください．</p>
+<pre>&lt;filter&gt;
+  &lt;filter-name&gt;multipartFilter&lt;/filter-name&gt;
+  &lt;filter-class&gt;
+    org.seasar.teeda.extension.filter.MultipartFormDataFilter
+  &lt;/filter-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadMaxSize&lt;/param-name&gt;
+    &lt;param-value&gt;100m&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadMaxFileSize&lt;/param-name&gt;
+    &lt;param-value&gt;100m&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadThresholdSize&lt;/param-name&gt;
+    &lt;param-value&gt;100k&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;!-- OS固有の設定 --&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;uploadRepositoryPath&lt;/param-name&gt;
+    &lt;param-value&gt;C:/temp/&lt;/param-value&gt;
+  &lt;/init-param&gt;
+&lt;/filter&gt;</pre>
+<pre>&lt;filter-mapping&gt;
+  &lt;filter-name&gt;multipartFilter&lt;/filter-name&gt;
+  &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</pre>
+<p><code>&lt;filter&gt;</code>要素では以下の初期化パラメータを設定します．</p>
+<table border="1">
+<tbody>
+<tr>
+<th>パラメータ</th>
+<th>説明</th>
+</tr>
+<tr>
+<td><code>uploadMaxSize</code></td>
+<td>アップロードすることのできるリクエスト全体の最大サイズです．<br>
+数値の後にk(キロ)，m(メガ)，g（ギガ）を指定することができます．</td>
+</tr>
+<tr>
+<td><code>uploadMaxFileSize</code></td>
+<td>アップロードすることのできるファイルの最大サイズです．<br>
+数値の後にk(キロ)，m(メガ)，g（ギガ）を指定することができます．</td>
+</tr>
+<tr>
+<td><code>uploadThresholdSize</code></td>
+<td>アップロードされたファイルをサーバ側のファイルシステムに保存するかしないかの閾値です．指定されたサイズより大きなファイルはサーバ側のファイルシステム上に保存されます．<br>数値の後にk(キロ)，m(メガ)，g（ギガ）を指定することができます．</td>
+</tr>
+<tr>
+<td><code>uploadRepositoryPath</code></td>
+<td>アップロードされたファイルを保存するディレクトリです．</td>
+</tr>
+</tbody>
+</table>
+<h4>portlet.xml(ポートレットを利用する場合のみ)</h4>
+<p>ポートレット環境で利用する場合には，<code>portlet.xml</code>のポートレットの定義ににポートレット用の<code>MultipartFormDataFilter</code>を設定します．</p>
+<pre>&lt;portlet-app id="teeda-html-example" version="1.0"&gt;
+  &lt;portlet id="TeedaHtmlExample"&gt;
+    &lt;portlet-name&gt;TeedaHtmlExample&lt;/portlet-name&gt;
+    &lt;display-name&gt;Teeda HTML Example&lt;/display-name&gt;
+    &lt;description&gt;This is an example portlet for Teeda.&lt;/description&gt;
+    &lt;portlet-class&gt;org.apache.portals.bridges.portletfilter.FilterPortlet&lt;/portlet-class&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;portlet-class&lt;/name&gt;
+      &lt;value&gt;org.seasar.teeda.core.portlet.FacesPortlet&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;portlet-filters&lt;/name&gt;
+      &lt;value&gt;
+        org.seasar.portlet.filter.S2PortletFilter,
+        org.seasar.portlet.filter.HotdeployPortletFilter,
+        org.seasar.teeda.extension.portlet.MultipartFormDataFilter
+      &lt;/value&gt;&lt;!-- 実際には空白や改行を入れずに記述する --&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:encoding&lt;/name&gt;
+      &lt;value&gt;UTF-8&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadMaxSize&lt;/name&gt;
+      &lt;value&gt;100m&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadMaxFileSize&lt;/name&gt;
+      &lt;value&gt;100m&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadThresholdSize&lt;/name&gt;
+      &lt;value&gt;100k&lt;/value&gt;
+    &lt;/init-param&gt;
+    &lt;!-- OS固有の設定 --&gt;
+    &lt;init-param&gt;
+      &lt;name&gt;org.seasar.teeda.extension.portlet.MultipartFormDataFilter:uploadRepositoryPath&lt;/name&gt;
+      &lt;value&gt;C:/temp/&lt;/value&gt;
+    &lt;/init-param&gt;</pre>
+<p>ポートレット環境では，<code>web.xml</code>で指定した値ではなく，<code>portlet.xml</code>で指定した値が有効になります．</p>
+<h4>テンプレートHTML</h4>
+<p>テンプレートHTMLには，通常のHTMLとして<code>&lt;input type=&quot;file&quot;&gt;</code>要素を記述し，id属性を付与します．</p>
+<pre>&lt;input type=&quot;file&quot; id=&quot;uploadedFile&quot; /&gt;</pre>
+<h4>ページクラス</h4>
+<p>ページクラスには，次の型のプロパティを定義します．プロパティ名はテンプレートHTMLのid属性値と一致させます．</p>
+<ul>
+<li><code>org.seasar.teeda.extension.util.UploadedFile</code>
+</ul>
+<pre>public UploadedFile uploadedFile;</pre>
+<h4><code>UploadedFile</code></h4>
+<p>UploadedFileクラスには以下のメソッドがあります．</p>
+<dl>
+<dt><code>String getName()</code>
+<dd>アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のベースファイル名を返します．<br>
+返されるベースファイル名にパスは含まれません．
+<dt><code>String getOriginalName()</code>
+<dd>アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のファイル名を返します．<br>
+ブラウザによっては，返されるファイル名にはパスが含まれる場合があります．
+<dt><code>String getContentType()</code>
+<dd>アップロードされたファイルのコンテントタイプを返します．
+<dt><code>long getSize()</code>
+<dd>アップロードされたファイルのサイズを返します．
+<dt><code>boolean isInMemory()</code>
+<dd>アップロードされたファイルがメモリ上にある場合は<code>true</code>を返します．
+<dt><code>byte[] get()</code>
+<dd>アップロードされたファイルの内容を含むバイト配列を返します．
+<dt><code>String getString()</code>
+<dd>アップロードされたファイルの内容を文字列として返します．<br>
+アップロードされたファイルのコンテントタイプにエンコーディングが含まれていればそれが使われます．コンテントタイプにエンコーディングが含まれていない場合はISO-8859-1が使われます．
+<dt><code>String getString(String encoding) throws UnsupportedEncodingException</code>
+<dd>アップロードされたファイルの内容を指定のエンコーディングによる文字列として返します．
+<dt><code>InputStream getInputStream() throws IOException</code>
+<dd>アップロードされたファイルの内容を読み込むための入力ストリームを返します．<br>
+返された入力ストリームは呼び出し側でクローズする必要があります．
+<dt><code>void write(File file) throws Exception</code>
+<dd>アップロードされたファイルの内容を指定のファイルに書き込みます．
+<dt><code>File getStoreLocation()</code>
+<dd>アップロードされたファイルを保存した<strong>サーバ側</strong>ファイルシステム上の<code>File</code>を返します．<br>
+<code>isInMemory()</code>が<code>true</code>の場合， このメソッドは<code>null</code>を返します．
+<dt><code>void delete()</code>
+<dd>アップロードされたファイルがサーバ側のファイルシステムに保存されている場合、それを削除します．
+</dl>
+<h4>コンバータ</h4>
+<p>コンバータを使用するとプロパティの型を<code>UploadedFile</code>以外の型にすることができます．</p>
+<table border="1">
+
+<tr>
+<th>コンバータ</th>
+<th>プロパティの型</th>
+<th>説明</th>
+</tr>
+<tr><td><code>TUploadedFileBytesConverter</code></td>
+<td><code>byte[]</code></td>
+<td>アップロードされたファイルの内容をバイト列に変換します．</td>
+</tr>
+<tr><td><code>TUploadedFileStringConverter</code></td>
+<td><code>String</code></td>
+<td>アップロードされたファイルの内容を文字列に変換します．<br>
+encoding属性でエンコーディングを指定することもできます．省略するとアップロードされたファイルのコンテントタイプにエンコーディングが含まれていればそれが使われます．コンテントタイプにエンコーディングが含まれていない場合はISO-8859-1が使われます．</td>
+</tr>
+<tr><td><code>TUploadedFileInputStreamConverter</code></td>
+<td><code>java.io.InputStream</code></td>
+<td>アップロードされたファイルの内容を読み込むための入力ストリームに変換します．<br>
+返された入力ストリームは呼び出し側でクローズする必要があります．</td>
+</tr>
+<tr><td><code>TUploadedFileFileConverter</code></td>
+<td><code>java.io.File</code></td>
+<td>アップロードされたファイルを保存したサーバ側ファイルシステム上の<code>File</code>に変換します．<br>
+アップロードされたファイルがサーバ側ファイルシステム上に保存されていない場合、プロパティは<code>null</code>に設定されます．</td>
+</tr>
+</table>
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

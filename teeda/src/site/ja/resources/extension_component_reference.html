@@ -1,0 +1,1618 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<style>
+<!--
+table.tbline {
+  border-collapse: collapse;
+  border: 1px solid #999999;
+}
+table.tbline td {
+  padding-top    : 2px;
+  padding-bottom : 2px;
+  padding-left   : 5px;
+  padding-right  : 5px;
+  line-height    : 130%;
+  border-width   : 0 1px 1px 0;
+  border-style   : solid;
+  border-color   : #C0C0C0;
+  font-size      : 12px;
+  color          : #666666;
+}
+
+table.tbline th {
+  text-align: left;
+  background-color: #FFD082;
+  font-weight: bold;
+  font-size: 12px;
+  color: #FC7819;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C0C0C0;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: #C0C0C0;
+}
+
+table.tbline th div {
+	text-align: center;
+}
+
+.boldorange {
+  font-weight : bold;
+  color: #FC7819;
+}
+
+h3.underline {
+	font-size: 18px;
+	font-weight: normal;
+	color: #FC7819;
+	#margin-top: 2em;
+	#margin-left: 1em;
+	margin-bottom: 10px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	#border-bottom-color: #FC7819;
+	#margin-right: 20px;
+}
+
+-->
+</style>
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<h1><i>Teeda&nbsp;Extension&nbsp;コンポーネントリファレンス</i></h1>
+<h3><a name="index">目次</a></h3>
+<ul>
+  <li><a href="#components">コンポーネント仕様一覧</a>
+    <ul>
+      <li><a href="#form">form</a></li>
+      <li><a href="#outputText">outputText</a></li>
+      <li><a href="#inputText">inputText</a></li>
+      <li><a href="#inputHidden">inputHidden</a></li>
+      <li><a href="#inputRadio">inputRadio</a></li>
+      <li><a href="#inputSecret">inputSecret</a></li>
+      <li><a href="#inputTextarea">inputTextarea</a></li>
+      <li><a href="#inputFile">inputFile</a></li>
+      <li><a href="#selectOneMenu">selectOneMenu</a></li>
+      <li><a href="#selectOneRadio">selectOneRadio</a></li>
+      <li><a href="#selectBooleanCheckbox">selectBooleanCheckbox</a></li>
+      <li><a href="#selectManyCheckbox">selectManyCheckbox</a></li>
+      <li><a href="#commandButton">commandButton</a></li>
+      <li><a href="#forEach">forEach</a></li>
+      <li><a href="#itemsSave">itemsSave</a></li>
+      <li><a href="#itemsSessionSave">itemsSessionSave</a></li>
+      <li><a href="#label">label</a></li>
+      <li><a href="#title">title</a></li>
+      <li><a href="#link">link</a></li>
+      <li><a href="#condition">condition</a></li>
+      <li><a href="#grid">grid</a></li>
+      <li><a href="#inputCommaText">inputCommaText</a></li>
+      <li><a href="#head">head</a></li>
+      <li><a href="#include">include</a></li>
+      <li><a href="#includeBody">includeChildBody</a></li>
+      <!--
+      <li><a href="#inputDateText">inputDateText</a></li>
+      -->
+      <!--
+      <li><a href="#layout">layout</a></li>
+      -->
+      <!--
+      <li><a href="#itemsSessionSave">itemsSessionSave</a></li>
+      -->
+      <!--
+      <li><a href="#mock">mock</a></li>
+      -->
+      <!--
+      <li><a href="#script">script</a></li>
+      -->
+      <!--
+      <li><a href="#body">body</a></li>
+      -->
+      <!--
+      <li><a href="#tree">tree</a></li>
+      -->
+    </ul>
+  </li>
+</ul>
+
+<h3 class="underline"><a name="form">form</a></h3>
+<p>formを表すコンポーネントです．input系コンポーネントを使う場合、Formコンポーネントは必須です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>Formコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;form id="aaaForm"&gt;</b><br/>実行時にはmethod属性やaction属性が自動で設定されます．</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">form</b>要素</span><br/>
+            <span>-<b class="boldorange">idはFormで終わる事(例：aaaForm, userForm)</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:form</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>なし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="outputText">outputText</a></h3>
+<p>outputTextは文字列を出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>テキスト出力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+        <b class="boldorange">&lt;span id="aaa"&gt;bbb&lt;/span&gt;</b><br/>
+        実行時にはbbbは無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">span</b>要素または<b class="boldorange">div</b>要素または<b class="boldorange">caption</b>要素</span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b>または
+            <b class="boldorange">idの値が"～Label"</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:outputText</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>
+          <span>-<b class="boldorange">id</b></span><br/>
+          <p>idと同一のプロパティがPageクラスに存在する場合は，要素の内容はプロパティの値に置き換えられます．</p>
+          <p>idが"xxxLabel"の場合は，要素の内容は"xxx"をキーとする値に置き換えられます．</p>
+          <span>-<b class="boldorange">te:omittag</b></span><br/>
+          <p>この属性は、&lt;span&gt;要素または&lt;div&gt;要素の開始タグおよび終了タグを出力しない場合に使います．</p>
+          &lt;span te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputText">inputText</a></h3>
+<p>inputTextはテキスト入力のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>テキスト入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="text" id="aaa" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがtextまたは指定されていない</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputText</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputHidden">inputHidden</a></h3>
+<p>inputTextはhidden入力のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>hidden入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="hidden" id="aaa" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがhidden</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:inputHidden</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-Validationフェーズを正常終了すると、すぐにModelを更新する</span><br>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputRadio">inputRadio</a></h3>
+<p>inputRadioはラジオ入力項目のコンポーネントです．HTMLへ記述したradio項目をそのまま使用します．</p>
+<p>ラジオ入力項目コンポーネントには他にも<a href="#selectOneRadio">selectOneRadio</a>がありますが、<br/>
+こちらは項目が動的に変わる場合に使用するもの、という違いがあります．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ラジオ入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="1" /&gt;One<br />
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="2" /&gt;Two<br />
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="3" /&gt;Three<br />
+          &lt;/span&gt;
+          </b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">span要素またはdiv要素の子孫にinput要素のradio項目がある</b></span><br/>
+            <span>-<b class="boldorange">span要素またはdiv要素のidと同一のプロパティ名がPageクラスに存在する</b></span><br/>
+            <span>-<b class="boldorange">span要素またはdiv要素の子孫のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputRadio</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-<b class="boldorange">forEach</b>と組み合わせて使用する場合は，<b class="boldorange">span</b>要素をforEachの外側に，<b class="boldorange">input</b>要素をforEachの内側に記述する</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputSecret">inputSecret</a></h3>
+<p>inputSecretはpassword入力のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>password入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="password" id="aaa" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがpassword</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:inputSecret</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>特になし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputTextarea">inputTextarea</a></h3>
+<p>inputTextareaはテキストエリア入力のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>テキストエリア入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;textarea id="aaa" &gt;bbb&lt;/textarea&gt;</b><br/>実行時にはbbbは無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">textarea</b>要素</span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputTextarea</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h3 class="underline"><a name="inputFile">inputFile</a></h3>
+<p>inputFileはファイルアップロードのコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap">
+<div>項目</div>
+</th>
+        <th nowrap="nowrap">
+<div>説明</div>
+</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ファイルアップロードコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type=&quot;file&quot; id=&quot;aaa&quot; /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがfile</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputFile</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>
+見栄えを変えるのに使います．</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br>
+「<a href="extension_features.html">機能リファレンス</a>」の「<a href="extension_features.html#fileupload">ファイルアップロード</a>」も参照してください．</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="selectOneMenu">selectOneMenu</a></h3>
+<p>selectOneMenuはプルダウン入力項目のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>プルダウン入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;select id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;option value="bbb"&gt;hoge&lt;/option&gt;<br/>
+          &lt;/select&gt;
+          </b><br/>実行時にはbbb,&nbsp;hogeは無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">select</b>要素</span><br/>
+            <span>-<b class="boldorange">multiple属性がついていない</b></span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある<br/>（上記の例だとaaaItems）</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:selectOneMenu</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <p>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</p>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>Templateに書いてある値は実行時には消える<br>
+<span>-<b class="boldorange">te:onTeedaError</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="selectOneRadio">selectOneRadio</a></h3>
+<p>selectOneRadioはラジオ入力項目のコンポーネントです．項目を動的に変更することができます．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>ラジオ入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="0" checked="checked"/&gt;aaa<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="1"/&gt;bbb<br/>
+          &nbsp;&nbsp;&lt;input type="radio" name="aaa" value="2"/&gt;ccc<br/>
+          &lt;/span&gt;</b><br/>実行時にはvalue属性,&nbsp;値は無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">radio</b>要素</span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">spanの配下にinputのradio項目がある</b></span><br/>
+            <span>-<b class="boldorange">spanの配下のradio項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectOneRadio</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;te:layout属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;要素が出力されません．</p>
+          <span>-<b class="boldorange">te:col属性</b></span><br/>
+          <p>te:layout属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="selectBooleanCheckbox">selectBooleanCheckbox</a></h3>
+<p>selectBooleanCheckboxは単一のチェックボックス入力項目コンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>単一チェックボックス入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;input type="checkbox" id="aaa" /&gt;</b>
+        </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">type属性がcheckbox</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectBooleanCheckbox</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>特になし</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="selectManyCheckbox">selectManyCheckbox</a></h3>
+<p>selectManyCheckboxは複数チェックボックスの入力項目コンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>複数チェックボックス入力項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+          &lt;span id="aaa"&gt;<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="0" checked="checked"/&gt;aaa<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="1"/&gt;bbb<br/>
+          &nbsp;&nbsp;&lt;input type="checkbox" name="aaa" value="2"/&gt;ccc<br/>
+          &lt;/span&gt;</b><br/>実行時にはvalue属性,&nbsp;値は無視される</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">span</b>要素と<b class="boldorange">input</b>要素(typeはcheckbox)の組み合わせで構成</span><br/>
+            <span>-<b class="boldorange">spanの配下のinput項目のname属性が親のid（上記の例だとaaa）と同じ</b></span><br/>
+            <span>-<b class="boldorange">id+ItemsというListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-Page側に<b class="boldorange">idと同一のプロパティ名（型は配列）</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:selectManyCheckbox</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:layout属性</b></span><br/>
+          <p>te:layout属性に、<b class="boldorange">pageDirection</b>と記述すると、Radio項目を縦配置します．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;te:layout属性に、<b class="boldorange">lineDirection</b>と記述すると、横配置します（デフォルト）．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;te:layout属性に、<b class="boldorange">none</b>と記述すると、Radio項目を配置するための&lt;table&gt;要素が出力されません．</p>
+          <span>-<b class="boldorange">te:col属性</b> (Teeda 1.0.12以降)</span><br/>
+          <p>te:layout属性が<b class="boldorange">lineDirection</b>(またはデフォルト)の場合に、Radio項目を横に並べる数を指定します．<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;Radio項目の数がcol属性で指定された数より多い場合は、折り返して表示されます．</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-Templateに書いてある値は実行時には消える</span><br/>
+            <span>-<b class="boldorange">te:layout</b>属性および<b class="boldorange">te:col</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="commandButton">commandButton</a></h3>
+<p>commandButtonはサブミットコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>サブミットコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;input type="submit" value="submit" id="doHoge"/&gt;</b>または<br />
+          <b class="boldorange">&lt;input type="submit" value="submit" id="goHoge"/&gt;</b>または<br />
+          <b class="boldorange">&lt;input type="submit" value="submit" id="jumpHoge"/&gt;</b>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-typeは<b class="boldorange">submit、button、image</b>のどれか．</span><br/>
+            <span>-idが<b class="boldorange">go、do、jump</b>のどれかで始まる．</span><br/>
+            <span>-idが<b class="boldorange">do</b>で始まる場合、idと同一のメソッドがPage/Actionクラスのどちらかに存在する．</span><br/>
+            <span>-idが<b class="boldorange">doOnce</b>で始まる場合、TransactionTokenが発行される．</span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:commandButton</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:renderJs属性</b></span><br/>
+          <p>doOnceで始まるidを持ち、renderJs属性を<b class="boldorange">true</b>にすると、ダブルサブミット防止のJavaScriptが出力される．</p>
+          <span>-<b class="boldorange">te:time属性</b></span><br/>
+          <p>上記のrenderJsと連動して、ダブルサブミット防止JavaScriptのタイムアウト値の設定をする（msec）．</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>doOnceでrenderJs属性をtrueにした場合のみ、あり．</td>
+      </tr>
+      <!-- TODO CommandButtonの挙動はここだけでは書ききれないので、詳細に別ページで記述する． -->
+      <tr>
+        <td>その他</td>
+        <td>
+        	<span>-ダブルサブミット防止JavaScriptの設定詳細は<a href="http://teeda.seasar.org/ja/kumu_disabled.html">こちら</a>を参照ください．</span><br />
+        	<span>-<b class="boldorange">idがgoで始まる場合、Pageクラスのメソッドは呼ばれず、Validationはされます．値の引継ぎ機能は有効です．</b></span><br />
+        	<span>-<b class="boldorange">idがjumpで始まる場合、Pageクラスのメソッドは呼ばれず、Validationもされません．値の引継ぎ機能は無効です．</b></span>
+        	<br>
+        	<span>-<b class="boldorange">onclick属性でlocation.hrefまたはhistory.back()がある場合Teeda側で除去します．</b></span><br>
+        	<span>-<b class="boldorange">te:renderJs</b>属性および<b class="boldorange">te:time</b>属性を使用するには&lt;html&gt;要素にxmlns:te=&quot;http://www.seasar.org/teeda/extension&quot;が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<h3 class="underline"><a name="forEach">forEach</a></h3>
+<p>forEachは繰り返し項目コンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>繰り返し項目コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo" style="background-color:red"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          </b>
+          &lt;/table&gt;<br/>
+                    実行時には動的に置き換わる部分のdummy値(上の例のhoge)は無視される．<br/>
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-次の要素のいずれか<br>
+&nbsp;&nbsp;<b class="boldorange">div</b>要素，<b class="boldorange">span</b>要素，<b class="boldorange">table</b>要素，<b class="boldorange">tbody</b>要素，<b class="boldorange">tr</b>要素，<b class="boldorange">ol</b>要素，<b class="boldorange">ul</b>要素，<b class="boldorange">dl</b>要素</span><br/>
+<span>-<b class="boldorange">idの語尾がItemsで終わっている</b></span><br/>
+            <span>-<b class="boldorange">id（xxxItems）と同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:forEach</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left"><span>-<b class="boldorange">te:omittag</b></span><br/>
+          <span>&nbsp;&nbsp;この属性は、要素の開始タグおよび終了タグの出力を制御する場合に使います．</span><br>
+<span>&nbsp;&nbsp;<b class="boldorange">true</b>を指定するとタグが出力されず，<b class="boldorange">false</b>を指定するとタグが出力されます．</span><br>
+<span>&nbsp;&nbsp;デフォルトでは，<b class="boldorange">div</b>要素または<b class="boldorange">span</b>要素の場合はタグが出力されず，それ以外の要素の場合はタグが出力されます．</span><br/>
+</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><span>-プロパティが<b class="boldorange">配列</b>の場合は，<b class="boldorange">表示・更新</b>とも可能．</span><br>
+            <span>-プロパティが<b class="boldorange">リスト</b>の場合は，<b class="boldorange">Seasar2.4.18以降+Java5以降</b>との組み合わせで<b class="boldorange">generics</b>を使った場合のみ<b class="boldorange">表示・更新</b>とも可能．それ以外の場合は<b class="boldorange">表示のみ</b>可能．</span><br>
+<span>-<b class="boldorange">Itemsの中身はDtoまたはMap</b>とする</span><br/>
+          <span>-ItemsSaveと併用する際の注意点は<a href="#itemsSave"><b>itemsSave</b></a>の使い方をご覧下さい．</span><br/>
+-<span><b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="itemsSave">itemsSave</a></h3>
+<p>itemsSaveは、Page側で持つList/配列をBase64エンコードしhiddenに出力し、画面にList/配列を引き継ぐ機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>List/配列状態維持コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;form id="aaaForm"/&gt;<br/>
+          <b class="boldorange">
+          &lt;input type="hidden" id="aaaItemsSave"&gt;<br/>
+          </b>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          </b>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          &lt;/table&gt;<br/>
+          &lt;/form&gt;
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+Saveのid</b>を付ける</span><br/>
+            <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>h:inputHidden</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>forEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もforEachの状態復元の為、ItemsSaveが必要です</span><br/>
+          <span>forEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="itemsSessionSave">itemsSessionSave</a></h3>
+<p>itemsSessionSaveは、Page側で持つList/配列をSessionに格納し、画面にList/配列を引き継ぐ機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>List/配列状態維持コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          &lt;form id="aaaForm"/&gt;<br/>
+          <b class="boldorange">
+          &lt;input type="hidden" id="aaaItemsSessionSave"&gt;<br/>
+          </b>
+          &lt;table border="1"&gt;<br/>
+          <b class="boldorange">
+          &nbsp;&nbsp;&lt;tbody id="aaaItems"&gt;<br/>
+          </b>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="foo"&gt;hoge&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span id="bar"&gt;huga&lt;/span&gt;&lt;/td&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+          &nbsp;&nbsp;&lt;/tbody&gt;<br/>
+          &lt;/table&gt;<br/>
+          &lt;/form&gt;
+          </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-hidden要素に状態を維持したいList/配列の<b class="boldorange">プロパティ名+SessionSaveのid</b>を付ける</span><br/>
+            <span>-<b class="boldorange">idと同名のListまたは配列のプロパティがPageにある</b></span><br/>
+            <span>-<b class="boldorange">List/配列の中身のidとHTMLテンプレート上の繰り返し項目のidをあわせる</b></span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:sessionSave</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>forEachが含まれるページでのValidationエラが発生するような<b class="boldorange">画面を再描画する場合</b>もforEachの状態復元の為、ItemsSessionSaveが必要です</span><br/>
+          <span>forEachでDtoを使用する場合は、Dtoは<b class="boldorange">java.io.Serializableインタフェースを実装</b>する必要があります</span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="label">label</a></h3>
+<p>labelは外部ファイルから文字列を出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>外部ファイル(label.properties)からテキスト出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;label id="aaa"&gt;&lt;/label&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">label</b>要素</span><br/>
+            <span>-<b class="boldorange">id</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:outputLabel</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>labelは、HTML名とidの組み合わせを使い、下記の順番で文字列を探索する．<br/>ただし<b class="boldorange">DynamicPropertyがあればそちらが優先</b>される．</span><br/>
+          <span>
+          &nbsp;&nbsp;-<b class="boldorange">HTML名.idがPageクラスと同一パッケージ上のlabel.properties</b>にあるか<br/>
+          &nbsp;&nbsp;-<b class="boldorange">idのみでPageクラスと同一パッケージ上のlabel.properties</b>にあるか<br/>
+          &nbsp;&nbsp;-idのみでルートパッケージのlabel.propertiesにあるか</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="title">title</a></h3>
+<p>titleを出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>外部ファイル(label.properties)からタイトルを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;title id="title"&gt;dummy&lt;/title&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">title</b>要素</span><br/>
+            <span>-<b class="boldorange">id</b>がある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:title</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>titleもlabelと同様の規約で文字列を取得する．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="link">link</a></h3>
+<p>linkを出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>リンクを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;a id="goLinkResult" href="linkResult.html?arg1=123&amp;arg2=223&amp;<br/>arg3=345&amp;date=123"gt;Linkで画面遷移&lt;/a&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">a</b>要素</span><br/>
+            <span>-<b class="boldorange">id</b>がgoで始まっている</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:outputLink</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>href属性に記述したkey=value形式のvalue部分は、以下のように決定する</span><br/>
+          <span>&nbsp;&nbsp;-Pageに<b class="boldorange">keyと同一のプロパティがある場合、Pageのプロパティの値が適用される</b></span><br/>
+          <span>&nbsp;&nbsp;-<b class="boldorange">keyの先頭にfixed_とついていると、上記の置き換えは発生しない</b></span><br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="condition">condition</a></h3>
+<p>簡単な条件分岐を出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>condition(条件分岐)を出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">&lt;div id="isCondition"&gt;&lt;/div&gt;</b>または<b class="boldorange">&lt;div id="isNotCondition"&gt;&lt;/div&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-</span><b class="boldorange">html</b>，<b class="boldorange">head</b>，<b class="boldorange">link，<b class="boldorange">style，<b class="boldorange">script</b></b></b>，<b class="boldorange">body</b>を除く任意の要素<br/>
+            <span>-<b class="boldorange">id</b>が<code>is</code>または<code>isNot</code>で始まっている</span><br/>
+            <span>-Pageクラスに<b class="boldorange">boolean</b>型のプロパティが定義してある</span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:condition</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>
+          <span>-<b class="boldorange">te:omittag</b> (Teeda 1.0.12以降)</span><br/>
+          <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、 条件が成立した場合でも要素の開始タグおよび終了タグは出力されません (要素の内容は出力されます)．<br/>
+          te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、 条件が成立した場合は要素の開始タグおよび終了タグが出力されます．</p>
+          &lt;span id=&quot;isXxx&quot; te:omittag=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+          <span>-Conditionは条件にマッチしたときにのみ描画される</span><br/>
+          <span>&nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される</span><br/>
+          <span>&nbsp;&nbsp;Validationエラーになったときは元の状態に復元される</span><br/>
+          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br />
+          <span>-属性にダイナミックプロパティを使うにはid属性から先頭のisまたはisNotを取り除いた名前に属性名を付け加える</span><br />
+          <span>&nbsp;&nbsp;-isXxxのstyle属性であれば、<b class="boldorange">xxxStyle</b>となる</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="grid">grid</a></h3>
+<p>Tableを出力するコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>Tableを出力するコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td>
+          <b class="boldorange">
+&lt;table&nbsp;id="fooGrid"&gt;<br/>
+&nbsp;&nbsp;&lt;tbody&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="aaa"&gt;aaa&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="bbb"&gt;bbb&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+&nbsp;&nbsp;&lt;/tbody&gt;<br/>
+&lt;/table&gt;<br/>
+<br/><br/>
+&lt;table&nbsp;id="fooGridX"&gt;<br/>
+&nbsp;&nbsp;&lt;tbody&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="aaa"&gt;aaa&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="bbb"&gt;bbb&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+&nbsp;&nbsp;&lt;/tbody&gt;<br/>
+&lt;/table&gt;<br/>
+<br/>
+<br/>
+&lt;table&nbsp;id="fooGridY"&gt;<br/>
+&nbsp;&nbsp;&lt;tbody&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="aaa"&gt;aaa&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="bbb"&gt;bbb&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+&nbsp;&nbsp;&lt;/tbody&gt;<br/>
+&lt;/table&gt;<br/>
+<br/><br/>
+&lt;table&nbsp;id="fooGridXY"&gt;<br/>
+&nbsp;&nbsp;&lt;tbody&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="aaa"&gt;aaa&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;&lt;span&nbsp;id="bbb"&gt;bbb&lt;/span&gt;&lt;/td&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>
+&nbsp;&nbsp;&lt;/tbody&gt;<br/>
+&lt;/table&gt;<br/>
+          </b>
+        </td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">table</b>要素</span><br/>
+            <span>-<b class="boldorange">id</b>が存在し、末尾がGrid、GridX、GridY、GridXYとなっている</span><br/>
+            <span>-<b class="boldorange">id</b>からGridの文字を取り除きItemsを付加したものがPageに存在する(id=aaaGridならaaaItems)</span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:grid</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">async</b></span><br/>
+          <p>この属性は、Gridで非同期通信を行うかどうかをGrid単位で設定するために使う.<br/>&nbsp;&nbsp;aync=trueで非同期、falseで同期.デフォルトは50件以上出力されると非同期になる．</p>
+          <span>-<b class="boldorange">callback</b></span><br/>
+          <p>この属性は、非同期通信の度に毎回呼び出されるcallback関数を定義しておける．<br/>&nbsp;&nbsp;
+          <b class="boldorange">callback関数は、<br/>&nbsp;&nbsp;function_name(tableのid、非同期呼出の固まりの最初のindex、最後のindex、DOMノードツリー自身)</b><br/>という引数で描画されます．</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>あり.同期出力の場合と、非同期出力の場合でScriptも違うものが出力される.(TODO 詳細)</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>-同期の場合のGridは50件まず描画され、残りはbodyの最後に全て描画される．</span><br/>
+          <span>-非同期の場合は50件ずつ非同期に描画される．</span><br/>
+          <span>-アプリケーション全体でのGridの同期/非同期の挙動は、web.xmlにteeda.DEFAULT_GRID_ASYNCというキーで<br/>
+                   以下のように定義する．(trueで非同期、falseで非同期)</span><br/>
+          &nbsp;&nbsp;&lt;context-param&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;<b class="boldorange">teeda.DEFAULT_GRID_ASYNC</b>&lt;/param-name&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;<b class="boldorange">false</b>&lt;/param-value&gt;<br/>
+          &nbsp;&nbsp;&lt;/context-param&gt;<br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="inputCommaText">inputCommaText</a></h3>
+<p>inputCommaTextは金額入力のコンポーネントです．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>金額入力コンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;input type="text" id="aaa" class="T_currency" /&gt;</b></td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">input</b>要素</span><br/>
+            <span>-<b class="boldorange">typeがtextまたは指定されていない</b></span><br/>
+            <span>-<b class="boldorange">idと同一のプロパティ名がPageクラスに存在する</b></span>
+            <span>-<b class="boldorange">class属性に"T_currency"と記述されている</b></span>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>te:inputCommaText</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td align="left">
+          <span>-<b class="boldorange">te:onTeedaError</b></span><br/>
+          <span>この属性は、エラー時に出力されるCSSを指定して、エラーになったコンポーネントの<br/>見栄えを変えるのに使います．</span><br/>
+          &lt;style&gt;<br/>
+          &nbsp;&nbsp;.onTeedaError {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFCCCC;<br/>
+          &nbsp;&nbsp;}<br/>
+          &lt;/style&gt;<br/>
+          <span>-<b class="boldorange">te:groupingSeparator</b></span><br/>
+          <p>この属性は、3桁ごとの金額区切り文字を何にするか指定します.デフォルトは<b class="boldorange">","</b>.</p>
+          <span>-<b class="boldorange">te:fractionSeparator</b></span><br/>
+          <p>この属性は、3桁ごとの小数点区切り文字を何にするか指定します.デフォルトは<b class="boldorange">"."</b>.</p>
+          <span>-<b class="boldorange">te:fraction</b></span><br/>
+          <p>この属性は、小数点以下何桁までを有効範囲とするか指定します.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>あり</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>
+          <span>-inputCommaTextは<b class="boldorange">自動的にime-mode:disabled;が描画</b>される</span><br/>
+          <span>-<b class="boldorange">数値と記号、tmb（t=000, m=000000, b=000000000に変換）のみ</b>しか入力できない</span><br/>
+          <span>-focusから抜ける際にフォーマットを整え、再度focusがあたると数値のみのフォーマットになる</span><br/>
+          <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="head">head</a></h3>
+<p>headはheadコンポーネントを記述する機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>headコンポーネント</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;head&gt;&lt;/head&gt;</b><br/>
+        head要素を記述すると全てheadコンポーネントになります．</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">head</b>要素</span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>無し</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>レイアウト使用時に子画面のhead内部に記述されたJavaScriptやCSSは、<br />親画面のheadにマージされます．</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="include">include</a></h3>
+<p>includeは別のｈｔｍｌをincludeする機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>インクルード機能</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;te:include te:src="/bbb/bbb.html"/&gt;</b>．<br />
+        このように記述することでインクルードされるHTMLのbody要素の中身が読み込まれます．</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+            <span>-<b class="boldorange">te:include</b>要素</span><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>無し</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-<b class="boldorange">includeページに対応するPageクラスのinitialize()が呼ばれる．</b></span><br/>
+            <span>-<b class="boldorange">includeページに対応するPageクラスのprerender()が呼ばれる．</b></span><br/>
+            <span>-<b class="boldorange">src属性は，DynamicPropertyで設定可能．</b></span><br/>
+            <span>-<b class="boldorange">te</b>名前空間を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="underline"><a name="includeChildBody">includeChildBody</a></h3>
+<p>includeChildBodyは子供のボディ部をincludeする機能です．</p>
+<div>
+  <table cellspacing="2" class="tbline">
+    <thead>
+      <tr>
+        <th nowrap="nowrap"><div>項目</div></th>
+        <th nowrap="nowrap"><div>説明</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>コンポーネント説明</td>
+        <td>子供のボディをインクルードする機能</td>
+      </tr>
+      <tr>
+        <td>HTML上での使用方法</td>
+        <td><b class="boldorange">&lt;te:includeChildBody/&gt;</b><br/>
+        このように記述することでインクルードされるHTMLのbody要素の中身が読み込まれます．</td>
+      </tr>
+      <tr>
+        <td>規約</td>
+        <td align="left">
+          <b class="boldorange">te:includeChildBody</b>要素
+        </td>
+      </tr>
+      <tr>
+        <td>JSFタグのマッピング先</td>
+        <td>無し</td>
+      </tr>
+      <tr>
+        <td>要素の各属性の使い方</td>
+        <td>特になし</td>
+      </tr>
+      <tr>
+        <td>JavaScriptの描画</td>
+        <td>なし</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td align="left">
+            <span>-<b class="boldorange">te</b>名前空間を使用するにはxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2006-2007, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

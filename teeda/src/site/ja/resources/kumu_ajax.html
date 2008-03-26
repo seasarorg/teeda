@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Kumu Ajax</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="kumu-ajax">
+<h2 class="subtitle" id="id1">Kumu.Ajaxとは</h2>
+<p>Kumu.AjaxはTeedaでAjaxを簡単に使用できるように作られたjavascriptのライブラリです。</p>
+<p>Kumu.AjaxはTeedaに依存しているわけではありません。サーバーサイド側は自由に選択することができます。</p>
+<p>またKumu.Ajaxはkumu.jsに依存していません。ajax.js単体で使用する事ができます。</p>
+<p>Kumu.Ajaxは以下の機能を提供します。</p>
+<ol class="arabic simple">
+<li>Ajaxによる非同期通信</li>
+<li>通信状態ごとの関数実行</li>
+<li>Teedaとの連携機能</li>
+<li>JSONレンダリング</li>
+<li>Formの値の取得</li>
+<li>JSONの文字列化（この機能は将来kumu.jsに移行します）</li>
+</ol>
+<div class="section">
+<h3><a id="ajax" name="ajax">Ajaxによる非同期通信</a></h3>
+<p>Kumu.Ajaxは主にKumu.Ajax.executeTeedaAjaxでTeedaと連携して使用するケースが多いですが、低レベルな非同期通信を行う事もできます。</p>
+<p>Ajaxで通信する際にはS2AjaxComponentを取得して各種パラメータをセットします。</p>
+<pre class="literal-block">
+var ajax = Kumu.Ajax.getS2AjaxComponent();
+ajax.url = '/hogehoge.do';
+ajax.params = {'hoge':1, 'foo':2};
+ajax.doAction = function(response) {
+};
+Kumu.Ajax.executeAjax(ajax);
+</pre>
+<p>AjaxComponentにセットする値は以下です。</p>
+<ul>
+<li><p class="first">url</p>
+<p>リクエスト先URLです。</p>
+<p>絶対パスで指定します。</p>
+</li>
+<li><p class="first">params</p>
+<p>送信するリクエストパラメータです。</p>
+<p>URLEncodeは内部で自動で行います。</p>
+</li>
+<li><p class="first">doAction</p>
+<p>コールバック関数を指定します。</p>
+<p>コールバック関数はレスポンスを渡され実行されます。</p>
+</li>
+<li><p class="first">method</p>
+<p>actionのmethodを指定します。</p>
+<p>GET or POSTを文字列で指定します。デフォルトでは'GET'です。</p>
+</li>
+<li><p class="first">async</p>
+<p>非同期か同期かboolean値で指定します。</p>
+<p>デフォルトではtrueです。</p>
+</li>
+<li><p class="first">timeout</p>
+<p>タイムアウト値を設定します。</p>
+<p>単位は秒です。</p>
+<p>タイムアウト発生時にはonTimeoutで設定した関数を実行します。</p>
+</li>
+<li><p class="first">responseType</p>
+<p>レスポンスタイプを設定します。</p>
+<p>設定できるレスポンスタイプは以下です。</p>
+<ul class="simple">
+<li>RESPONSE_TYPE_XML : XML形式。</li>
+<li>RESPONSE_TYPE_JSON : JSON形式。JSON形式ではevalした結果をコールバック関数に返します。</li>
+<li>RESPONSE_TYPE_TEXT : TEXT形式。</li>
+<li>RESPONSE_TYPE_HTML : HTML形式。</li>
+</ul>
+<p>デフォルトはJSON形式です。</p>
+</li>
+</ul>
+</div>
+<div class="section">
+<h3><a id="id2" name="id2">通信状態ごとの関数実行</a></h3>
+<p>Kumu.AjaxではAjaxの通信状態に合わせ関数を実行することができます。</p>
+<p>状態は以下です。</p>
+<ul class="simple">
+<li>Uninitialized : 初期かされていない状態です</li>
+<li>Loading : 通信開始の状態です</li>
+<li>Loaded : 通信完了の状態です</li>
+<li>Interactive : レスポンスを受け取れる状態です</li>
+<li>Failure : 通信失敗の状態です</li>
+<li>Exception : javascriptエラー発生の状態です</li>
+<li>Timeout : タイムアウト発生の状態です</li>
+</ul>
+<p>これらの状態に合わせ関数を設定するにはAjaxComponentのキーに'on'+状態名で関数をセットします。</p>
+<pre class="literal-block">
+var ajax = Kumu.Ajax.getS2AjaxComponent();
+
+ajax.url = '/hogehoge.do';
+
+var func1 = function(request, component){
+  alert('loading');
+};
+
+var func2 = function(request, component){
+  alert('loaded');
+};
+
+// Loading中、Load完了時にalert
+ajax.params = {'hoge':1, 'foo':2, onLoading : func1, onLoaded : func2};
+
+ajax.doAction = function(response) {
+};
+Kumu.Ajax.executeAjax(ajax);
+</pre>
+<p>各関数は以下の引き数を渡されて実行されます。</p>
+<ul class="simple">
+<li>XMLHTTPRequest</li>
+<li>AjaxComponent</li>
+</ul>
+<p>また通信状態ごとの関数の指定方法にはもうひとつの方法があり、コールバック関数のpropertyに設定することができます。</p>
+<p>コールバック関数ごとに動作を切り替えるたい場合に使用します。</p>
+<pre class="literal-block">
+var ajax = Kumu.Ajax.getS2AjaxComponent();
+
+ajax.url = '/hogehoge.do';
+
+var func1 = function(request, component){
+  alert('loading');
+};
+
+var func2 = function(request, component){
+  alert('loaded');
+};
+
+// Loading中、Load完了時にalert
+ajax.params = {'hoge':1, 'foo':2};
+
+var callback = function(response){
+};
+
+callback.onLoading = func1;
+callback.onLoaded = func2;
+
+ajax.doAction = callback;
+Kumu.Ajax.executeAjax(ajax);
+</pre>
+</div>
+<div class="section">
+<h3><a id="teeda" name="teeda">Teedaとの連携</a></h3>
+<p>Kumu.AjaxはTeedaとの連携を簡単に行う事が出来ます。</p>
+<p>executeTeedaAjaxを使うと簡単にS2のコンポーネントを呼び出す事が出来ます。</p>
+<pre class="literal-block">
+// 呼び出したいコンポーネント名 + &quot;_&quot; + 呼び出したいメソッド名
+function hoge_foo(response){
+}
+
+Kumu.Ajax.executeTeedaAjax(hoge_foo, {&quot;パラメータ名&quot; : &quot;パラメータ値&quot;});
+</pre>
+<p>executeTeedaAjaxはコールバック関数を解析し、名前からコンポーネント名、メソッド名を取得します。</p>
+<p>そのため無名関数では正しく動作しないので注意して下さい。</p>
+<p>その他の詳細は<a href="teeda_ajax.html">Teeda Ajax</a>を参照して下さい。</p>
+<p>executeTeedaAjaxを使用する際にも上記の通信状態による関数実行は使用できます。</p>
+<p>executeTeedaAjaxに渡すパラメータに同様に追加して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="json" name="json">JSONレンダリング</a></h3>
+<p>Kumu.AjaxではJSONをHTMLテンプレートにはめ込みレンダリングする事が出来ます。</p>
+<p>Kumu.Ajax.render関数はJSONのキーとHTMLのidをマッチングさせレンダリングを行います。</p>
+<p>マッチした要素のinnerHTMLにJSONの値を出力します。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/ajax.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'name' : 'name2'
+  },
+  {
+    'no':3,
+    'name' : 'name3'
+  },
+  {
+    'no':4,
+    'name' : 'name4'
+  },
+  {
+    'no':5,
+    'name' : 'name5'
+  }]
+}
+
+&lt;/script&gt;
+
+&lt;title&gt;JSON Rendering Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='test' style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+&lt;div id='test1' style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+&lt;div id='test1' style=&quot;display:none&quot;&gt;Test&lt;/div&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;
+    &lt;td&gt;-&lt;/td&gt;
+    &lt;td&gt;No&lt;/td&gt;
+    &lt;td&gt;Name&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr id='test2' style=&quot;display:none&quot;&gt;
+    &lt;td&gt;Rendering&lt;/td&gt;
+    &lt;td id=&quot;no&quot;&gt;Test&lt;/td&gt;
+    &lt;td id=&quot;name&quot;&gt;Test&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;input type=&quot;button&quot; value=&quot;RENDER&quot; onclick=&quot;Kumu.Ajax.render(o);&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>結果は以下のようになります。</p>
+<pre class="literal-block">
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot; src=&quot;./js/ajax.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var o = {
+  'test' : 'てすと',
+  'test1' : 'てすと1',
+  'test2' : [
+  {
+    'no':1,
+    'name' : 'name1'
+  },
+  {
+    'no':2,
+    'name' : 'name2'
+  },
+  {
+    'no':3,
+    'name' : 'name3'
+  },
+  {
+    'no':4,
+    'name' : 'name4'
+  },
+  {
+    'no':5,
+    'name' : 'name5'
+  }]
+}
+
+&lt;/script&gt;
+
+&lt;title&gt;JSON Rendering Sample&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;test&quot; style=&quot;&quot;&gt;てすと&lt;/div&gt;
+&lt;div id=&quot;test1&quot; style=&quot;&quot;&gt;てすと1&lt;/div&gt;
+&lt;div id=&quot;test1&quot; style=&quot;&quot;&gt;てすと1&lt;/div&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+  &lt;td&gt;-&lt;/td&gt;
+  &lt;td&gt;No&lt;/td&gt;
+  &lt;td&gt;Name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2:rendered&quot; style=&quot;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no:rendered&quot;&gt;1&lt;/td&gt;
+  &lt;td id=&quot;name:rendered&quot;&gt;name1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2:rendered&quot; style=&quot;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no:rendered&quot;&gt;2&lt;/td&gt;
+  &lt;td id=&quot;name:rendered&quot;&gt;name2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2:rendered&quot; style=&quot;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no:rendered&quot;&gt;3&lt;/td&gt;
+  &lt;td id=&quot;name:rendered&quot;&gt;name3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2:rendered&quot; style=&quot;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no:rendered&quot;&gt;4&lt;/td&gt;
+  &lt;td id=&quot;name:rendered&quot;&gt;name4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2:rendered&quot; style=&quot;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no:rendered&quot;&gt;5&lt;/td&gt;
+  &lt;td id=&quot;name:rendered&quot;&gt;name5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id=&quot;test2&quot; style=&quot;display: none;&quot;&gt;
+  &lt;td&gt;Rendering&lt;/td&gt;
+  &lt;td id=&quot;no&quot;&gt;Test&lt;/td&gt;
+  &lt;td id=&quot;name&quot;&gt;Test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;input type=&quot;button&quot; onclick=&quot;Kumu.Ajax.render(o);&quot; value=&quot;CHANGE&quot;/&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>render関数ではレンダリングする要素のstyleがdisplay:noneである場合には表示するように処理を行います。</p>
+<p>またidのobjectがArrayである場合にはその要素をコピーし繰り返しArrayのサイズ分レンダリングします。</p>
+<p>renderで新たに追加された要素はid + &quot;rendered&quot;というidを持っています。</p>
+<p>新たに追加された要素を削除する場合にはKumu.Ajax.removeRender(id)で削除することができます。</p>
+</div>
+<div class="section">
+<h3><a id="form" name="form">Formの値の取得</a></h3>
+
+<p>Kumu.AjaxはFormの値を取得するためのヘルパーを用意しています。</p>
+<p>Kumu.FormHelperを使うとFormをJSON化でき、簡単に値を取得する事ができます。</p>
+<p>では簡単な見てみます。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;firstName&quot;/&gt;
+
+  &lt;input type=&quot;text&quot; name=&quot;lastName&quot;/&gt;
+&lt;/form&gt;
+</pre>
+<p>上記のFormはname属性がfirstNameとlastNameという名前のinputフィールドを持っています。</p>
+<p>このFormをJSON化し、値を取得するには以下のように記述します。</p>
+<pre class="literal-block">
+// FormをJSON化する
+var form = Kumu.FormHelper.create('Form');
+
+//name属性がfirstNameの値を取得
+var firstNameValue = form['firsrtName']
+
+//name属性がfirstNameの値を取得
+var lastNameValue = form['lastName']
+
+</pre>
+<p>FormをJSON化するのはKumu.FormHelper.createを使用します。</p>
+<p>FormHelperの引き数にはFormの要素あるいは対象のFormのid属性の値を指定します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create(&lt;Form要素もしくはFormのid属性&gt;, &lt;タイプ&gt;);
+</pre>
+<div class="section">
+<h3><a id="id3" name="id3">Formのタイプ</a></h3>
+<p>FormHelperはいくつかのタイプをサポートしています。</p>
+
+<p>タイプは以下の３つです。</p>
+<ul class="simple">
+<li>'r' rawモード -- Formそのままのname属性を使用してJSONを構築する。（デフォルト）</li>
+<li>'t' teedaモード -- FormをTeedaのPageクラスのidのようにJSONを構築する。</li>
+<li>'i' idモード -- Formのname属性ではなくid属性をキーに使用してJSONを構築する。</li>
+</ul>
+<p>Teedaモードを使用するには以下のように記述します。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form', 't');
+</pre>
+</div>
+<div class="section">
+
+<h3><a id="raw" name="raw">rawモード</a></h3>
+<p>rawモードはそのままname属性の値をキーとしてJSONを構築します。</p>
+<p>デフォルトではこの動作になります。</p>
+<pre class="literal-block">
+Kumu.FormHelper.create('Form');
+</pre>
+</div>
+<div class="section">
+<h3><a id="id4" name="id4">teedaモード</a></h3>
+<p>teedaモードはteedaでレンダリングされたFormをJSON化します。</p>
+<p>teedaはJSF実装FWのためFormをレンダリングするとname属性がそのまま出ないケースなどがあります。</p>
+
+<p>例えばItemsのケースです。</p>
+<pre class="literal-block">
+&lt;form id=&quot;Form&quot;&gt;
+&lt;input type=&quot;text&quot; id=&quot;num1&quot; class=&quot;hoge&quot;/&gt;&lt;br/&gt;
+
+&lt;input type=&quot;text&quot; id=&quot;num2&quot;/&gt;&lt;br/&gt;
+&lt;span id=&quot;str&quot;&gt;aaa&lt;/span&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;fooItemsSave&quot; /&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+       &lt;div id=&quot;fooItems&quot;&gt;
+       &lt;tr&gt;
+         &lt;td&gt;&lt;span id=&quot;fooNo&quot;&gt;100&lt;/span&gt;&lt;/td&gt;
+
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;aaa&quot; title=&quot;AAA&quot; /&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;bbb&quot; title=&quot;BBB&quot; /&gt;&lt;/td&gt;
+
+       &lt;/tr&gt;
+       &lt;/div&gt;
+&lt;/table&gt;
+&lt;input type=&quot;submit&quot; id=&quot;doNothing&quot; /&gt;
+&lt;/form&gt;
+
+</pre>
+<p>このケースの場合、idは同じになってしまうためidで取得するのは難しく、またname属性は複雑な値になり解析が困難です。</p>
+<p>このようなケースもKumu.FormHelperを使用することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper('Form', 't');
+var items = form['fooItems']
+for(var i = 0; i &lt; items.length; i++){
+    var item = items[i];
+    alert('aaa = '+item['aaa']+' bbb = '+item['bbb');
+}
+</pre>
+<p>Teedaモードを使うと上記のように繰り返し部分もリスト化され、簡単にアクセスすることができます。</p>
+</div>
+<div class="section">
+
+<h3><a id="id" name="id">idモード</a></h3>
+<p>id属性の値をキーとしてJSONを構築します。</p>
+<p>その他の動作はrawモードと変わりません。</p>
+</div>
+</div>
+<div class="section">
+<h3><a id="json-kumu-js" name="json-kumu-js">JSONの文字列化（この機能は将来kumu.jsに移行します）</a></h3>
+<p>Kumu.JSONSerializerを使うとJSONを文字列化することができます。</p>
+<pre class="literal-block">
+var form = Kumu.FormHelper.create('aForm');
+
+// Kumu本体のログ機能でログ出力
+Kumu.log(Kumu.JSONSerializer.serialize(form));
+</pre>
+<p>上記のようにFormの内容などをデバッグする際に使用することができます。</p>
+
+<p>またobjectであればなんでも文字列化することができます。</p>
+<div class="section">
+<h3><a id="id5" name="id5">応用</a></h3>
+<p>JSONSerializerを使用すると複数のobjectをまとめて文字列にする事ができます。</p>
+<p>そのためAjaxで送信するパラメータも減らすことができます。</p>
+<p>JSON化した文字列はサーバサイドでorg.seasar.teeda.ajax.JSONSerializerを使用してMapに復元することができます。</p>
+<pre class="literal-block">
+String str = &quot;{'test1':'test2'}&quot;;
+Map map = JSONSerializer.evalMap(str);
+</pre>
+<p>Mapに変換後、Dxoなどを使用することによって簡単に好きなDtoなどにマッピングする事が出来るようになります。</p>
+
+</div>
+</div>
+
+<div class="section">
+<h3><a id="id3" name="id3">リファレンス</a></h3>
+<div class="section">
+<h3><a id="kumu-ajax-executeajax-ajaxcomponent" name="kumu-ajax-executeajax-ajaxcomponent">Kumu.Ajax.executeAjax(ajaxComponent)</a></h3>
+<p>Ajaxで通信を行います。</p>
+<p>詳細は<a href="#ajax">Ajaxによる非同期通信</a>を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-ajax-executeteedaajax-function-object" name="kumu-ajax-executeteedaajax-function-object">Kumu.Ajax.executeTeedaAjax(function, object)</a></h3>
+<p>Ajaxで通信を行います。</p>
+<p>S2のコンポーネントと連携します。</p>
+<p>詳細は<a href="teeda_ajax.html">Teeda Ajax</a>を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-ajax-render-json" name="kumu-ajax-render-json">Kumu.Ajax.render(json)</a></h3>
+<p>JSONをレンダリングします。</p>
+<p>詳細は<a id="#json">JSONレンダリング</a> を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-ajax-removerender-id" name="kumu-ajax-removerender-id">Kumu.Ajax.removeRender(id)</a></h3>
+<p>Kumu.Ajax.render(json)で新たに追加された要素を削除します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-create-element-type" name="kumu-formhelper-create-element-type">Kumu.FormHelper.create(element, type)</a></h3>
+<p>FormをJSON化します。</p>
+<p>詳細は.. Formの値の取得　を参照して下さい。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getvalue-element" name="kumu-formhelper-getvalue-element">Kumu.FormHelper.getValue(element)</a></h3>
+<p>指定した要素の値を取得します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitem-element-teeda" name="kumu-formhelper-getitem-element-teeda">Kumu.FormHelper.getItem(element)(Teeda使用時）</a></h3>
+
+<p>指定した要素が含まれているItemsの中のItemを返します。</p>
+<p>Itemsのリストの中に入っているItemのJSONを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-formhelper-getitemsindex-form-element-teeda" name="kumu-formhelper-getitemsindex-form-element-teeda">Kumu.FormHelper.getItemsIndex(form, element)(Teeda使用時）</a></h3>
+<p>指定した要素が含まれているItemsのIndexを返します。</p>
+</div>
+<div class="section">
+<h3><a id="kumu-jsonserializer-serialize-object" name="kumu-jsonserializer-serialize-object">Kumu.JSONSerializer.serialize(object)</a></h3>
+<p>指定したobjectをJSON文字列化します。</p>
+</div>
+</div>
+</div>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

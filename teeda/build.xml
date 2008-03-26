@@ -1,28 +1,44 @@
 <project name="teeda" default="dist" basedir=".">
 	<tstamp>
-		<format property="releaseDate" pattern="yyyy-MM-dd" locale="ja,JP"/>
+		<format property="releaseDate" pattern="yyyy-MM-dd"
+			locale="ja,JP" />
 	</tstamp>
+	<property name="newVersion" value="1.0.13-SNAPSHOT" />
+
+	<target name="update-pom">
+		<replaceregexp
+			match="(&lt;artifactId&gt;teeda-project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)"
+			replace="\1${newVersion}\2" encoding="UTF-8">
+			<fileset dir="." includes="**/pom.xml" />
+			<fileset dir="../teeda-tiger" includes="**/pom.xml" />
+			<fileset dir="../teeda-integration-test"
+				includes="**/pom.xml" />
+			<fileset dir="../teeda-html-example" includes="**/pom.xml" />
+			<fileset dir="../teeda-jsp-example" includes="**/pom.xml" />
+		</replaceregexp>
+	</target>
 
 	<target name="dist">
 		<antcall target="fix-site">
-			<param name="site" value="${basedir}/target/site"/>
+			<param name="site" value="${basedir}/target/site" />
 		</antcall>
 	</target>
 
 	<target name="fix-site">
-		<mkdir dir="${site}/en"/>
+		<mkdir dir="${site}/en" />
 		<move todir="${site}/en">
 			<fileset dir="${site}">
-				<exclude name="apidocs/**"/>
-				<exclude name="en/**"/>
-				<exclude name="ja/**"/>
-				<exclude name="zh/**"/>
-				<exclude name="index.html.en"/>
-				<exclude name="index.html.ja"/>
+				<exclude name="apidocs/**" />
+				<exclude name="en/**" />
+				<exclude name="ja/**" />
+				<exclude name="zh/**" />
+				<exclude name="index.html.en" />
+				<exclude name="index.html.ja" />
 			</fileset>
 		</move>
-		<move file="${site}/apidocs" todir="${site}/ja" failonerror="false"/>
-		<delete file="${site}/ja/index.html.en"/>
-		<delete file="${site}/ja/index.html.ja"/>
+		<move file="${site}/apidocs" todir="${site}/ja"
+			failonerror="false" />
+		<delete file="${site}/ja/index.html.en" />
+		<delete file="${site}/ja/index.html.ja" />
 	</target>
 </project>

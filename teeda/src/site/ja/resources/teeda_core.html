@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<h2><i>Teeda Core</i></h2>
+<h4><a name="what_is_core">Teeda Coreとは？</a></h4>
+<p>Teeda Coreとは、JavaServer Facesの実装で、主に以下のような機能を提供します。<br/>
+<ul>
+	<li>JSFの標準コンポーネント(JSFに規定されているコンポーネント一式)</li>
+	<li>S2ContainerによるDIとAOPの機能</li>
+	<li>JSF用テスティングフレームワーク(TeedaUnit)</li>
+</ul>
+現状はJSF1.1に準拠した実装となっています。
+</p>
+
+<h3><a name="document">ドキュメント</a></h3>
+<ul>
+	<li>セットアップ</li>
+	<li><a href="example.html">サンプル解説</a></li>
+</ul>
+
+<h3><a name="vs">Teeda vs Struts, MyFaces</a></h3>
+<table border="1" width="500" summary="Teeda vs Struts, normal JSF">
+	<caption><font size="3">[ Teeda, Struts, 通常のJSFの機能比較 ]</font></caption>
+	<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Teeda</th><th>Struts</th><th>通常のJSF実装</th></tr>
+	<tr>
+		<td>DI機能</td>
+		<td>S2による高度なDI機能あり</td>
+		<td>なし</td>
+		<td>簡易DI機能あり</td>
+	</tr>
+	<tr>
+		<td>AOP機能</td>
+		<td>S2による高度なAOP機能あり</td>
+		<td>なし</td>
+		<td>なし</td>
+	</tr>
+	<tr>
+		<td>HTMLテンプレート機能</td>
+		<td>あり</td>
+		<td>なし</td>
+		<td>なし</td>
+	</tr>
+	<tr>
+		<td>Ajax対応</td>
+		<td>Teeda Ajaxで実現</td>
+		<td>なし</td>
+		<td>Ajax対応あり</td>
+	</tr>
+	<tr>
+		<td>初期化機能</td>
+		<td>Teeda Extensionでinitializeメソッドを提供</td>
+		<td>Actionクラスで指定</td>
+		<td>前のページのアクションで指定</td>
+	</tr>
+	<tr>
+		<td>入力値の保持</td>
+		<td>POJOを使って、UIComponentを自動的に処理</td>
+		<td>ActionFormでStringかbooleanに格納</td>
+		<td>POJOを使って、UIComponentを自動的に処理</td>
+	</tr>
+	<tr>
+		<td>入力値の型変換</td>
+		<td>指定されたConverterで自動変換(faces-config、またはdiconファイルにて管理)</td>
+		<td>BeanUtils.copyProperties()と個別に変換</td>
+		<td>指定されたConverterで自動変換</td>
+	</tr>
+	<tr>
+		<td>入力値の検証</td>
+		<td>サーバサイドのみ。指定されたValidatorで自動検証(Commons validator同等機能を提供予定)</td>
+		<td>クライアントサイド・サーバサイド共に利用可能</td>
+		<td>サーバサイドのみ。指定されたValidatorで自動検証</td>
+	</tr>
+	<tr>
+		<td>入力値のモデルへの適用</td>
+		<td>UIComponentによる自動適用</td>
+		<td>自前で変換</td>
+		<td>UIComponentによる自動適用</td>
+	</tr>
+	<tr>
+		<td>例外処理</td>
+		<td>例外ページ指定可能</td>
+		<td>例外クラスごとのページ指定</td>
+		<td>web.xmlの設定のみ。うまく遷移しない可能性あり</td>
+	</tr>
+	<tr>
+		<td>ボタンやリンクの処理</td>
+		<td>任意のPOJOの任意のメソッドで処理</td>
+		<td>特定クラス(Action)で処理</td>
+		<td>任意のPOJOの任意のメソッドで処理</td>
+	</tr>
+	<tr>
+		<td>レイアウト機能</td>
+		<td>Teeda Extensionで実現</td>
+		<td>Tilesにより実現</td>
+		<td>標準ではなし。（MyFacesではTilesとの連動機能あり）</td>
+	</tr>
+	<tr>
+		<td>一つのフォームに複数のボタンがある処理</td>
+		<td>ボタンごとに任意のPOJOの任意のメソッドで処理（Validatorも個別で設定可能）</td>
+		<td>DispatchActionやLookupDispatchActionで処理可能だがいまいち。</td>
+		<td>ボタンごとに任意のPOJOの任意のメソッドで処理</td>
+	</tr>
+</table>
+
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

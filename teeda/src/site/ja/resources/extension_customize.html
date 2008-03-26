@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen">
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print">
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<div class="document" id="customize-list">
+<h2 class="subtitle" id="id1">Teeda&nbsp;Extensionにおけるカスタマイズの方法について</h2>
+<p>このドキュメントではTeeda&nbsp;Extensionにおけるカスタマイズ方法について記述します．</p>
+<ul class="arabic simple">
+<li><a href="#validator">Validatorのカスタマイズについて</a></li>
+<li><a href="#converter">Convererのカスタマイズについて</a></li>
+<li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
+<li><a href="#parse-xhtml">XHTMLのパーズについて</a></li>
+<li><a href="#redirect">リダイレクトについて</a></li>
+<li><a href="#outputText">outputTextについて</a></li>
+<li><a href="#label">ラベルについて</a></li>
+</ul>
+</div>
+
+<div class="section">
+<h2><a id="validator" name="validator">Validatorのカスタマイズについて</a></h2>
+<p>TeedaではJSF共通のValidatorのほかにExtension共通のValidatorを準備しています．<br/>
+しかし、実案件ではカスタムでValidatorを作成しなくてはいけない場合があるはずです．<br/>
+このような場合でのカスタムValidatorの作り方を下記に示します．<br/>
+<!-- ここでは必須チェックと長さチェックのValidatorをまとめたものを作成するという具体例を元に作成してみましょう． -->
+まずは手順を列挙します．
+</p>
+<ol class="arabic simple">
+<li><a href="#exist-validator">既存Validatorの調査</a></li>
+<li><a href="#create-validator">カスタムValidatorの作成</a></li>
+<li><a href="#register-validator">カスタムValidatorの登録</a></li>
+<li><a href="#tiger-validator">Tigerアノテーションの作成</a></li>
+<li><a href="#use-validator">Validatorの利用例</a></li>
+</ol>
+
+<h3><a id="exist-validator" name="exist-validator">1.既存Validatorの調査</a></h3>
+<p>
+まずは何はともあれ、既存Validatorに何があるか調べてみましょう．<br/>
+<b>javax.faces.validator.*,&nbsp;org.seasar.teeda.extension.validator.*</b>に<br/>
+Teedaで搭載しているValidatorはあります．（ドキュメントは少々お待ちください．）<br/>
+</p>
+
+<h3><a id="create-validator" name="create-validator">2.カスタムValidatorの作成</a></h3>
+<p>
+カスタムのValidatorを作成します．まずは親クラス/インタフェースを決定します．<br/>
+完全にオリジナルのValidatorを作成する場合は下記のような形になります．StateHolderインタフェースは<br/>
+Validatorが持っているプロパティを維持しなくてはいけないときに必要です．<br/>
+<!-- 今回の例では必須チェックのValidatorをベースに長さチェックのValidatorの要素を追加しますので、<br/>
+親クラスはTLengthValidatorとして、<b>RequiredLengthValidator</b>を作成します． -->
+</p>
+
+<pre class="literal-block">
+package examples.teeda.validator;
+
+//オリジナルValidatorの実装イメージ
+public class YourOriginalValidator implements Validator, StateHolder {
+
+    public void validate(FacesContext context, UIComponent component,
+            Object value) throws ValidatorException {
+      //ここにValidtionロジックを記述
+    }
+
+    public Object saveState(FacesContext context) {
+      //状態維持のためのロジック記述
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+      //状態復元のためのロジック記述
+    }
+
+}
+</pre>
+
+<p>
+JSF標準またはTeedaのValidatorを拡張する場合、拡張もとのValidatorを継承して<br/>
+作成します．例えば、TRequiredValidatorを継承して、MyRequiredValidatorを作成します．
+</p>
+
+<pre>
+package examples.teeda.validator;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+
+import org.seasar.teeda.extension.validator.TRequiredValidator;
+
+public class MyRequiredValidator extends TRequiredValidator {
+
+    public MyRequiredValidator() {
+      setMessageId("your.required.validation.message.id");//実際にメッセージファイルで使用するメッセージIDを指定
+    }
+
+    public void validate(FacesContext context, UIComponent component,
+      Object value) throws ValidatorException {
+      //Validationロジックを記述
+    }
+}
+</pre>
+
+<h3><a id="register-validator" name="register-validator">3.カスタムValidatorの登録</a></h3>
+<p>
+Validatorの登録はSMART&nbsp;deploy構成にしたがっているならば、特に必要ありません．<br/>
+例えばTeeda-html-exampleでは、examples.teeda.validatorの下に、*Validatorのようなクラスです．<br/>
+それ以外の構成で作成する場合は、diconかまたはSeasarのAutoRegister機能を使ってValidatorを登録しなくてはいけません．<br/>
+Validatorのインスタンス属性はprototypeが望ましいです．
+</p>
+
+<h3><a id="tiger-validator" name="tiger-validator">4.Tigerアノテーションの作成</a></h3>
+<p>
+TeedaではTigerアノテーションでValidatorを使うことが出来ます．<br/>
+その場合はValidatorのアノテーションを作成する必要があります．<br/>
+Validatorのアノテーションは、@ValidatorというTeedaのアノテーションを独自に付与する必要があります．(下記サンプルの<b><font color="red">[a]</font></b>参照)<br/>
+@Validatorでは、登録するValidatorをコンポーネント名で登録します．
+</p>
+
+<pre>
+package examples.teeda.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.seasar.teeda.extension.annotation.validator.Validator;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.FIELD, ElementType.METHOD })
+@Validator("myRequiredValidator")//<b style="color: red;">[a]</b>Teeda独自の指定
+public @interface MyRequired {
+
+    String target() default "";
+
+    String messageId() default "";
+
+}
+</pre>
+
+<h3><a id="use-validator" name="use-validator">5.Validatorの利用例</a></h3>
+<p>
+JDK1.4/1.5でのValidatorの利用例を下記に示します．<br/>
+JDK1.4では定数アノテーションでの利用、JDK1.5ではTigerアノテーション(または定数アノテーション)で利用できます．
+</p>
+
+<pre>
+//JDK1.4の場合
+public class HogePage {
+  public static final String aaa_myRequiredValidator = null;
+  private String aaa;
+  //以下、getter/setter
+}
+</pre>
+
+<pre>
+//JDK1.5の場合
+public class HogePage {
+  @MyRequired
+  private String aaa;
+  //以下、getter/setter
+}
+</pre>
+<h2><a id="converter" name="converter">Converterのカスタマイズについて</a></h2>
+<p>TODO：作成</p>
+<h2><a id="uicomponent" name="uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></h2>
+<p>TODO：作成</p>
+
+
+</div>
+<h2><a name="parse-xhtml">XHTMLのパーズについて</a></h2>
+<p>Teeda 1.0.12以降では，XHTMLテンプレートをパーズする方法をカスタマイズすることが出来ます．カスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
+<ul>
+<li><code>org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory</code>
+</ul>
+<p>あらかじめ，4種類の実装クラスを用意しています．</p>
+<ul>
+<li>DEFAULT (デフォルト)
+<li>CLASSIC
+<li>STRICT
+<!--
+<li>HTML
+-->
+</ul>
+<p>カスタマイズしない場合はDEFAULTが使用されます．</p>
+<h3>DEFAULT</h3>
+<p>DEFAULTは，Teeda Extension標準の方法でXHTMLをパーズします．<strong>この方法はTeeda1.0.11以前とは異なります</strong>．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+<h3>CLASSIC</h3>
+<p>CLASSICは，<strong>Teeda 1.0.11以前と互換性のある方法</strong>でXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，<code>&amp;</code>等に置換された状態でブラウザに出力されます．このため，ブラウザに対して<code>&amp;amp;</code>と出力したい場合，テンプレートXHTMLには<code>&amp;amp;amp;</code>と一段階余計にエスケープして記述する必要があります．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や実体参照は，そのままの状態でブラウザに出力されます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2でXHTMLをパーズします．Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+<h3>STRICT</h3>
+<p>STRICTは，厳密に正しいXMLとしてXHTMLをパーズします．</p>
+<ul>
+<li>テンプレートXHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートXHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>は必ず<code>&amp;amp;</code>として記述する必要があります．<code>&amp;</code>を参照以外で使用するとテンプレートXHTMLのパーズはエラーとなります．</li>
+<li>XNI (Xerces Native Interface) をサポートした任意のバージョンのXercesでXHTMLをパーズします．Xerces2.6.2を使用することが出来ない環境でも利用することが出来ます．</li>
+</ul>
+<!--
+<h3>HTML</h3>
+<p>HTMLは，テンプレートをXHTMLではなく，HTMLとしてパーズします．このため，<code>&lt;br&gt;</code>等の空要素を<code>&lt;br/&gt;</code>と記述する必要はありません．</p>
+<ul>
+<li>テンプレートHTMLの要素内容に記述した<code>&amp;amp</code>;等の文字参照や実体参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中に記述した<code>&amp;amp;</code>等の文字参照や数値参照は，そのままの状態でレンダリングされます．</li>
+<li>テンプレートHTMLの属性中にURLを記述する場合，リクエストパラメータを区切る<code>&amp;</code>はそのまま<code>&amp;</code>として記述することが出来ます．ただし，正しくは<code>&amp;amp;</code>と記述するべきです．</li>
+<li>Xerces2.6.2とNekoHTMLの組み合わせでHTMLをパーズします．NekoHTMLはTeedaの配布ファイルには含まれていないので，以下からダウンロードしてWEB-INF/libに配置してください．
+<ul>
+<li><a href="http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar">http://maven.seasar.org/maven2/nirvana/nekohtml/0.9.3-nirvana/nekohtml-0.9.3-nirvana.jar</a>
+</ul>Xerces2.6.2を使用できない環境ではSTRICTを使用してください．</li>
+</ul>
+-->
+<h3>各モードの要約</h3>
+<table border="1">
+<tbody>
+<tr>
+<th></th>
+<th>空要素</th>
+<th>要素内容の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;amp;</code></th>
+<th>属性中の<code>&amp;</code>(非参照)</th>
+<th>XMLパーザ</th>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>CLASSIC</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><strong><code>&amp;</code></strong></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2</td>
+</tr>
+<tr>
+<td>STRICT</td>
+<td><code>&lt;br/&gt;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><strong>エラー</strong></td>
+<td>XNIをサポートした任意の<br>
+バージョンのXerces</td>
+</tr>
+<!--
+<tr>
+<td>HTML</td>
+<td><strong><code>&lt;br&gt;</code></strong></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;</code></td>
+<td>Xerces2.6.2<strong>+NekoHTML</strong></td>
+</tr>
+-->
+</tbody>
+</table>
+<h3>カスタマイズの方法</h3>
+<p>XHTMLをパーズする方法をカスタマイズするには，<code>teedaCustomize.dicon</code>に<code>TeedaXMLReaderFactory</code>の実装クラスを登録します．標準の実装クラスは<code>TeedaXMLReaderFactory</code>のネステッドクラスとして用意されているので，次のように記述します．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.html.impl.TeedaXMLReaderFactory$<strong>CLASSIC</strong>&quot;/&gt;</pre>
+<h2><a name="redirect">リダイレクトについて</a></h2>
+<p>Teeda Extensionは，画面遷移にPRG (Post-Redirect-Get) パターンを使用します．<br>
+リダイレクトする際のURLは，現在のリクエストのURLに基づいて，同じプロトコル・同じホスト・同じポート番号・同じコンテキストルートで組み立てられます．<br>
+これをカスタマイズするには，以下のインタフェースを実装したクラスを使用します．</p>
+<ul>
+<li><code>org.seasar.teeda.core.resolver.RedirectUrlResolver</code>
+</ul>
+<p>Teedaでは，次の実装クラスを用意しています．</p>
+<ul>
+<li><code>org.seasar.teeda.core.util.DefaultRedirectUrlResolverImpl</code>
+<li><code>org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl</code>
+</ul>
+<p>デフォルトでは，<code>ExtensionRedirectUrlResolverImpl</code>が使われます．<code>teedaCustomize.dicon</code>に<code>RedirectUrlResolver</code>の実装クラスを定義することで，リダイレクトURLをカスタマイズすることが出来ます．<code>RedirectUrlResolver</code>の実装クラスを定義するdiconファイルは，teedaExtension.diconよりも先にインクルードされるdiconファイルに定義してください．</p>
+<h3>ベースURL</h3>
+<p><code>DefaultRedirectUrlResolverImpl</code>および<code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクトURLのベース部分をカスタマイズすることが出来ます．<br>
+ベースURLは，web.xmlの<code>&lt;context-param&gt;</code>で定義することが出来ます．</p>
+<pre>&lt;context-param&gt;
+    &lt;param-name&gt;teeda.REDIRECT_URL&lt;/param-name&gt;
+    &lt;param-value&gt;https://127.0.0.1:8443/contest/&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+<h3>キャッシュ対策</h3>
+<p><code>ExtensionRedirectUrlResolverImpl</code>は，リダイレクト先のURLがブラウザにキャッシュされることを防ぐために，リクエストパラメータにユニークなパラメータを付加します．<br>
+この機能は，<code>ExtensionRedirectUrlResolverImpl</code>の<code>addUniqueKeyParameter</code>プロパティに<code>false</code>を設定することで無効にすることが出来ます．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
+  &lt;property name=&quot;addUniqueKeyParameter&quot;&gt;false&lt;/property&gt;
+&lt;/component&gt;</pre>
+<p>デフォルトでは，パラメータ名は<code>te-uniquekey</code>が使われます．この名前は，<code>ExtensionRedirectUrlResolverImpl</code>の<code>uniqueKeyParameterName</code>プロパティに<code>false</code>を設定することで無効にすることが出来ます．</p>
+<pre>&lt;component class=&quot;org.seasar.teeda.extension.util.ExtensionRedirectUrlResolverImpl&quot;&gt;
+  &lt;property name=&quot;uniqueKeyParameterName&quot;&gt;&quot;requestId&quot;&lt;/property&gt;
+&lt;/component&gt;</pre>
+<h2><a name="outputText">outputTextについて</a></h2>
+<p>Teeda 1.0.13以降では，&lt;span&gt;要素の他，&lt;div&gt;および&lt;caption&gt;要素もidが付けられていて対応するプロパティがページクラスにあるか，&quot;xxxLabel&quot;であればoutputTextにマッピングされます．
+Teeda 1.0.12以前では，outputTextへのマッピングは&lt;span&gt;要素に限定されていました．</p>
+            <p>Teeda 1.0.13以降で，1.0.12以前と同じように，&lt;span&gt;要素の場合のみoutputTextにマッピングされるようにするには<code>teedaCustomize.dicon</code>に次の設定を記述します．</p>
+            <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
+    &lt;property name=&quot;outputTextSpanOnly&quot;&gt;true&lt;/property&gt;
+&lt;/component&gt;</pre>
+<h2><a name="label">ラベルについて</a></h2>
+            <p>Teeda 1.0.13以降では，id属性の値が&quot;xxxLabel&quot;となっている&lt;span&gt;要素の内容は&quot;xxx&quot;をキーとするラベルの値に置き換えられます．
+Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定されていました．</p>
+            <p>Teeda 1.0.13以降で，1.0.12以前と同じように，&lt;a&gt;要素の子要素の場合のみラベルに置き換えるようにするには<code>teedaCustomize.dicon</code>に次の設定を記述します．</p>
+            <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
+    &lt;property name=&quot;outputTextLabelUnderAnchorOnly&quot;&gt;true&lt;/property&gt;
+&lt;/component&gt;</pre>
+            <!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>

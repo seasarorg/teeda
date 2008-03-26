@@ -60,10 +60,10 @@
 					<a href="reverse/index.html">逆引きリファレンス</a>
 				</li>
 				<li>
-					<a href="reference.html">リファレンス</a>
+					<a href="reference/index.html">リファレンス</a>
 					<ul>
 						<li>
-							<a href="../extensions_features.html">
+							<a href="../extension_features.html">
 								機能リファレンス
 							</a>
 						</li>

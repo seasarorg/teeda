@@ -48,10 +48,11 @@
 		<menu name="ƒ‚ƒWƒ…[ƒ‹">
 			<item name="Teeda" href="../../ja/index.html" />
 			<item name="Teeda Core"
-				href="../../ja/teeda-core/index.html" />
+				href="../../ja/teeda-core/ja/index.html" />
 			<item name="Teeda Extension"
 				href="../../teeda-extension/ja/index.html" />
-			<item name="Teeda Ajax" href="../../teeda-ajax/index.html" />
+			<item name="Teeda Ajax"
+				href="../../teeda-ajax/ja/index.html" />
 			<item name="Teeda Tiger" href="index.html" />
 		</menu>
 	</body>

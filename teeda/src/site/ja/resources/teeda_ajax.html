@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- don't edit start -->
+<head>
+<title>Teeda - JSF meets DI and AOP - </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+<script src="seasar_b.js" type="text/JavaScript" language="JavaScript"></script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left" height="100%"><tr>
+<td align="left" valign="top" width="780"><table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr><td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt=""></td></tr>
+<tr><td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar"></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP"></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt=""></td>
+</tr><tr><td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235"></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)"></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)"></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)"></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)"></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)"></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt=""></td></tr><tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt=""></td></tr></table>
+<table  width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top"><td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td><td width="740" class="main">
+<!-- don't edit end -->
+<!-- document start -->
+<br/>
+<h2>Teeda Ajax</h2>
+<p><font color="red">【最新情報】</font> <a href="#hotdeploy">Seasar2.4の新機能SmartDeployを利用した場合の使い方</a></p>
+
+<p>Teeda Ajaxとは、主に以下のような機能を提供します。<br/>
+<ul>
+  <li>AjaxによりS2Containerに登録されているPOJOとの連携</li>
+  <li>AjaxにおけるパラメータのPOJOへの自動インジェクション</li>
+  <li>Ajaxを簡単に利用する為の、JavaScriptライブラリ</li>
+</ul>
+</p>
+<p>
+Teeda Ajaxの利用方法について解説します。
+Ajaxを利用する為に必要なファイルは以下の通りです。</p>
+<ul>
+<li>teeda-ajax-xx.jar</li>
+<li>ajax.js</li>
+</ul>
+<p>それでは、利用方法を見ていきましょう。</p>
+<p>
+使用するアプリケーションのWEB-INF/lib配下にteeda-ajax-xx.jarを含めて下さい。
+</p>
+<li>web.xmlの設定</li>
+<p>web.xmlに上記AjaxServeltの設定を追加します。</p>
+<pre>
+&lt;servlet&gt;
+    &lt;servlet-name&gt;AjaxServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.seasar.teeda.ajax.AjaxServlet&lt;/servlet-class&gt;
+    &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;AjaxServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.ajax&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+<p>
+load-on-startupは任意に設定して下さい。
+</p>
+<li>ajax.jsの使い方</li>
+<p>ajax.jsを配置し、利用したいHTML側でajax.jsをincludeして下さい。</p>
+<pre>
+&lt;script language="JavaScript" src="/js/ajax.js"&gt;&lt;/script&gt;
+</pre>
+<p>Kumu.Ajax.executeTeedaAjaxという関数を呼びAjaxを実行します。この関数に指定するのは以下の通りです。</p>
+<ul>
+<li>callback関数</li>
+<li>パラメータ</li>
+</ul>
+<p>callback関数は、以下の規約によって指定することにより自動で呼び出すコンポーネントとメソッド名を解決します。</p>
+<pre>
+// 呼び出したいコンポーネント名 + "_" + 呼び出したいメソッド名
+function hoge_foo(response){
+    // responseにはAjaxによるレスポンスが格納されています
+    alert(response);
+}
+Kumu.Ajax.executeTeedaAjax(hoge_foo, {"パラメータ名" : "パラメータ値"});
+</pre>
+<p>上記の場合diconに定義されたhogeコンポーネントのfooメソッドが呼ばれます。
+</p>
+<p>hogeコンポーネントのfooメソッドの呼び方としては以下の方法も可能です</p>
+<pre>
+// callback関数を任意の名前で定義
+function test(response){
+}
+Kumu.Ajax.executeTeedaAjax(test, { "component" : "hoge", "action" : "foo" });
+</pre>
+<p>規約を使用しない場合は、パラメータにcomponent、actionを指定します。これによりhogeコンポーネントのfooメソッドが指定出来ます。</p>
+<li>パラメータ</li>
+<p>パラメータは連想配列で指定します</p>
+<pre>
+// 下記のようなHTMLでteeda, kumuというパラメータ名でパラメータを指定したい場合
+&lt;form name="x"&gt;
+&lt;input type="text" name="teeda" /&gt;
+&lt;input type="text" name="kumu" /&gt;
+&lt;/form&gt;
+Kumu.Ajax.executeTeedaAjax(hoge_foo,
+    {"teeda" : document.x.teeda.value, "kumu" : document.x.kumu.value});
+</pre>
+
+<p>
+それではサーバ側の処理を実装しましょう。
+上記hogeはどこで定義されているのでしょうか。hogeは、任意のdiconの中で、次のように定義されています。
+</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd"&gt;
+
+&lt;components&gt;
+  &lt;include path="examples/teeda/dicon/zip.dicon"/&gt;
+  &lt;component name="hoge" class="examples.ajax.HogeBean" instance="request"&gt;
+    &lt;meta name="teeda-ajax"/&gt;
+  &lt;/component&gt;
+&lt;/components&gt;
+</pre>
+<p>teeda-extensionのAjaxではdiconで定義された任意のPOJOを利用する事が出来ます。</p>
+<p>
+※注意　この際、meta情報をteeda-ajaxとして指定して下さい。meta情報が無いコンポーネントは呼び出せません。
+</p>
+<p>HogeBeanの中身を見てみましょう</p>
+<pre>
+package examples.ajax;
+
+public class HogeBean {
+
+    private String teeda;
+    private String kumu;
+
+    public void setTeeda(String teeda) {
+        this.teeda = teeda;
+    }
+    public void setKumu(String kumu) {
+        this.kumu = kumu;
+    }
+
+    public String foo() {
+        return "{ teeda :'" + this.teeda + "', kumu : '" + this.kumu + "' }";
+    }
+}
+</pre>
+<p>
+Kumu.Ajax.executeTeedaAjaxで指定されたパラメータ名と同名のセッターにパラメータを自動でDIします。
+先ほどのサンプルでは、teeda, kumuというパラメータ名を設定したので、それぞれのセッターにパラメータの値が設定されます。
+呼び出すメソッドは、戻り値が文字列で引数が無いメソッドです。
+fooメソッドでは、JavaScriptに返したい文字列を作成するだけです。
+</p>
+<p>戻り値の基本フォーマットは、JSONですが任意の形でも指定可能です</p>
+<ul>
+<li>JSON</li>
+<li>XML</li>
+<li>HTML</li>
+<li>TEXT</li>
+</ul>
+<p>任意フォーマットの受渡しについては、teeda-ajax-demoのexample.htmlとExampleBean.javaを参考にして下さい。JSONについては<a href="http://www.json.org/" target="_blank">こちら</a>を参考にして下さい。</p>
+
+<li>日本語パラメータについて</li>
+<p>Tomcat5.x系で日本語パラメータを使用する場合には、Tomcatの設定ファイル server.xmlのConnector要素のuseBodyEncodingForURI属性を以下のように"true"を設定して下さい。
+<pre>
+&lt;Connector
+port="8080" maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+enableLookups="false" acceptCount="100"
+debug="0" connectionTimeout="20000"
+disableUploadTimeout="true" useBodyEncodingForURI="true"/&gt;
+</pre>
+
+
+<p>詳しくはteeda-ajax-demoをEclipse上でプロジェクトとして取り込みTomcatを起動後http://localhost:8080/teeda-ajax-demo/にアクセスしてサンプルの動作確認を行って下さい。</p>
+
+<br/>
+<h3><a name="hotdeploy">Seasar2.4の新機能SmartDeployを利用した場合の使い方</a></h3>
+<li>推奨パターン</li>
+<p><font color="green"><b>Pageクラスにajaxで呼び出すメソッドを追加します</b></font></p>
+<ul>
+  <li>呼び出し対象のコンポーネント登録するには？</li>
+  <li>呼び出す際のコンポーネント名は？</li>
+</ul>
+<p>
+呼び出したい対象のコンポーネントをdiconファイルに登録する必要はありません。<br>
+　Pageクラスにajaxから始まるメソッド名を定義する事によりdiconファイルへ登録する際に必要だったmetaタグの登録が不要になります。<br>
+　【Pageクラス例】<br>
+　package examples.teeda.web.ajaxにあるAjaxPageクラスに以下のようにメソッドを定義します。<br>
+<font color="green">　※convention.diconで指定されているrootパッケージはexamples.teedaとします</font>
+</p>
+<pre>
+package examples.teeda.web.ajax;
+
+public class AjaxPage {
+    <font color="green">// メソッド名はajaxから始める</font>
+    public String <font color="red">ajax</font>StartAjax() {
+        return "Start Ajax";
+    }
+}
+</pre>
+<p>
+このコンポーネントをJavaScriptから呼び出すには、コンポーネント名が必要になります。<br>
+　SmartDeployを使用した場合にはPageクラスは<font color="green">サブアプリケーション名 + "_" + Pageクラス名(先頭小文字)</font>という名前でS2に自動登録されます。<br>
+　上記の例の場合、サブアプリケーション名が"ajax"でPageクラス名がAjaxPageなので先頭を小文字にした"ajaxPage"となりますので<br>
+　以下のようにJavaScriptから呼び出す事が出来ます。
+</p>
+<pre>
+  <font color="green">// サブアプリケーション"ajax" + "_" + Pageクラス名の先頭小文字"ajaxPage" + "_" + 呼び出したいメソッド名</font>
+  function <font color="red">ajax_ajaxPage_ajaxStartAjax</font>(res){
+    alert(res);
+  }
+  Kumu.Ajax.executeTeedaAjax(ajax_ajaxPage_ajaxStartAjax, [], Kumu.Ajax.RESPONSE_TYPE_TEXT);
+</pre>
+<p>Kumu.Ajaxの詳細な使い方は<a href="kumu_ajax.html">こちら</a>も参考にして下さい。</p>
+<!-- document end -->
+<!-- don't edit start -->
+</td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt=""></td>
+</tr><tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt=""></td>
+<td width="766" class="copyright">Copyright&copy; 2005-2006, The Seasar Foundation and the others. All rights reserved.</td>
+</tr></table>
+<td class="backright" align="left" valign="top">&nbsp;</td></tr><tr>
+<td class="backunder" align="left"  valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+</body>
+<!-- document end -->
+</html>
