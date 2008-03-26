@@ -20,7 +20,8 @@ import java.io.Serializable;
 public class ForeachListsPage {
 
 	public String[] aaaItems;
-	public Bbb[] bbbItems;
+	public String aaa;
+	public BbbDto[] bbbItems;
 	public String title;
 	public String data;
 
@@ -30,18 +31,21 @@ public class ForeachListsPage {
 		aaaItems[1] = "yyy";
 		aaaItems[2] = "zzz";
 
-		bbbItems = new Bbb[3];
-		bbbItems[0] = new Bbb("xxx", "XXX");
-		bbbItems[1] = new Bbb("yyy", "YYY");
-		bbbItems[2] = new Bbb("zzz", "ZZZ");
+		bbbItems = new BbbDto[3];
+		bbbItems[0] = new BbbDto("xxx", "XXX");
+		bbbItems[1] = new BbbDto("yyy", "YYY");
+		bbbItems[2] = new BbbDto("zzz", "ZZZ");
 	}
 
-	public static class Bbb implements Serializable {
+	public static class BbbDto implements Serializable {
 		private static final long serialVersionUID = 1L;
 		public String title;
 		public String data;
 
-		public Bbb(String title, String data) {
+		public BbbDto() {
+		}
+
+		public BbbDto(String title, String data) {
 			this.title = title;
 			this.data = data;
 		}

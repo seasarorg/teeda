@@ -445,10 +445,30 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         final List itemList;
         if (items != null) {
             if (itemsClass.isArray()) {
-                itemList = Arrays.asList((Object[]) items);
+                final Object[] array = (Object[]) items;
+                final int length = array.length;
+                if (length >= rowSize) {
+                    itemList = Arrays.asList(array);
+                } else {
+                    final Object[] newArray = (Object[]) Array.newInstance(
+                            itemClass, rowSize);
+                    for (int i = 0; i < rowSize; ++i) {
+                        if (i < length) {
+                            newArray[i] = array[i];
+                        } else {
+                            newArray[i] = createNewInstance(context, itemClass);
+                        }
+                    }
+                    itemsPd.setValue(page, newArray);
+                    itemList = Arrays.asList(newArray);
+                }
             } else {
                 itemList = (List) items;
+                for (int i = itemList.size(); i < rowSize; i++) {
+                    itemList.add(createNewInstance(context, itemClass));
+                }
             }
+            rowSize = itemList.size();
         } else {
             if (itemsClass.isArray()) {
                 final Object[] array = (Object[]) Array.newInstance(itemClass,
