@@ -1,0 +1,51 @@
+<project name="teeda-dist" default="dist" basedir=".">
+	<tstamp>
+		<format property="releaseDate" pattern="yyyy-MM-dd" locale="ja,JP"/>
+	</tstamp>
+	<property name="zipDir" value="target/site/download/${releaseDate}"/>
+
+	<target name="dist">
+		<ant antfile="../build.xml" target="fix-site">
+			<property name="site" value="${basedir}/target/site"/>
+		</ant>
+		<mkdir dir="${zipDir}"/>
+		<zip zipfile="${zipDir}/teeda-${ver}.zip">
+			<zipfileset prefix="teeda" dir="..">
+				<exclude name="build/**"/>
+				<exclude name="**/target/**"/>
+				<exclude name="**/.settings/**"/>
+				<exclude name="**/cobertura.ser"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="../teeda-core/target">
+				<include name="teeda-core-${ver}.jar"/>
+				<include name="teeda-core-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="../teeda-extension/target">
+				<include name="teeda-extension-${ver}.jar"/>
+				<include name="teeda-extension-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda" dir="../teeda-ajax/target">
+				<include name="teeda-ajax-${ver}.jar"/>
+				<include name="teeda-ajax-${ver}-sources.jar"/>
+			</zipfileset>
+			<zipfileset prefix="teeda/resources" dir="../teeda-core/src/test/resources">
+				<include name="teeda.dicon"/>
+				<include name="teedaErrorPage.dicon"/>
+				<include name="log4j.properties"/>
+			</zipfileset>
+			<zipfileset prefix="teeda/doc" dir="../target/site">
+				<exclude name="**/download/**"/>
+				<exclude name="**/ja/benchmark/**"/>
+				<exclude name="**/ja/demo/**"/>
+				<exclude name="**/*.zip"/>
+				<exclude name="**/*.vsd"/>
+			</zipfileset>
+		</zip>
+		<ant dir="../../teeda-html-example" antfile="build.xml" target="dist">
+			<property name="zipDir" value="../teeda/teeda-dist/${zipDir}"/>
+		</ant>
+		<ant dir="../../teeda-jsp-example" antfile="build.xml" target="dist">
+			<property name="zipDir" value="../teeda/teeda-dist/${zipDir}"/>
+		</ant>
+	</target>
+</project>

@@ -1,10 +1,8 @@
 <project name="teeda-jsp-example" default="dist" basedir=".">
 
-	<property name="ver" value="1.0.13-rc5"/>
-
 	<target name="dist" depends="copy-jar">
-		<mkdir dir="target"/>
-		<zip zipfile="target/teeda-jsp-example-${ver}.zip">
+		<mkdir dir="${zipDir}"/>
+		<zip zipfile="${zipDir}/teeda-jsp-example-${ver}.zip">
 			<zipfileset prefix="teeda-jsp-example" dir=".">
 				<exclude name="**/target/**"/>
 				<exclude name="**/.settings/**"/>

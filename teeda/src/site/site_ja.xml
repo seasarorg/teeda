@@ -216,13 +216,13 @@
 			</item>
 		</menu>
 
-		${reports}
+		<menu ref="reports" />
 		<menu name="ƒ‚ƒWƒ…[ƒ‹">
 			<item name="Teeda" href="index.html" />
-			<item name="Teeda Core" href="../teeda-core/ja/index.html" />
+			<item name="Teeda Core" href="../teeda-core/index.html" />
 			<item name="Teeda Extension"
 				href="../teeda-extension/ja/index.html" />
-			<item name="Teeda Ajax" href="../teeda-ajax/ja/index.html" />
+			<item name="Teeda Ajax" href="../teeda-ajax/index.html" />
 			<item name="Teeda Tiger"
 				href="../teeda-tiger/ja/index.html" />
 		</menu>

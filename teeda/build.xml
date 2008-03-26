@@ -1,34 +1,28 @@
 <project name="teeda" default="dist" basedir=".">
+	<tstamp>
+		<format property="releaseDate" pattern="yyyy-MM-dd" locale="ja,JP"/>
+	</tstamp>
 
-	<property name="ver" value="1.0.13-rc5"/>
-
-	<!-- TODO : choice including contents -->
 	<target name="dist">
-		<mkdir dir="target"/>
-		<zip zipfile="target/teeda-${ver}.zip">
-			<zipfileset prefix="teeda" dir=".">
-				<exclude name="**/target/**"/>
-				<exclude name="**/.settings/**"/>
-				<exclude name="**/cobertura.ser"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-core/target">
-				<include name="teeda-core-${ver}.jar"/>
-				<include name="teeda-core-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-extension/target">
-				<include name="teeda-extension-${ver}.jar"/>
-				<include name="teeda-extension-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda" dir="teeda-ajax/target">
-				<include name="teeda-ajax-${ver}.jar"/>
-				<include name="teeda-ajax-${ver}-sources.jar"/>
-			</zipfileset>
-			<zipfileset prefix="teeda/resources" dir="teeda-core/src/test/resources">
-				<include name="teeda.dicon"/>
-				<include name="teedaErrorPage.dicon"/>
-				<include name="log4j.properties"/>
-			</zipfileset>
-		</zip>
+		<antcall target="fix-site">
+			<param name="site" value="${basedir}/target/site"/>
+		</antcall>
 	</target>
 
+	<target name="fix-site">
+		<mkdir dir="${site}/en"/>
+		<move todir="${site}/en">
+			<fileset dir="${site}">
+				<exclude name="apidocs/**"/>
+				<exclude name="en/**"/>
+				<exclude name="ja/**"/>
+				<exclude name="zh/**"/>
+				<exclude name="index.html.en"/>
+				<exclude name="index.html.ja"/>
+			</fileset>
+		</move>
+		<move file="${site}/apidocs" todir="${site}/ja" failonerror="false"/>
+		<delete file="${site}/ja/index.html.en"/>
+		<delete file="${site}/ja/index.html.ja"/>
+	</target>
 </project>

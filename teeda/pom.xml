@@ -9,12 +9,13 @@
   <!-- The Basics -->
   <groupId>org.seasar.teeda</groupId>
   <artifactId>teeda-project</artifactId>
-  <version>1.0.13-rc5</version>
+  <version>1.0.13-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>teeda-core</module>
     <module>teeda-extension</module>
     <module>teeda-ajax</module>
+    <module>teeda-dist</module>
   </modules>
   <properties>
     <seasar2.version>2.4.23</seasar2.version>
@@ -173,6 +174,13 @@
       <name>The Seasar Foundation Maven2 Snapshot Repository</name>
       <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
     </snapshotRepository>
+    <site>
+      <id>www.seasar.org</id>
+      <!--
+      <url>scp://www.seasar.org/home/groups/teeda/public_html/1.0</url>
+      -->
+      <url>file:d:/temp/teeda</url>
+    </site>
   </distributionManagement>
   <profiles>
     <profile>
@@ -238,13 +246,15 @@
             <updateReleaseInfo>true</updateReleaseInfo>
           </configuration>
         </plugin>
-        <!--
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <configuration>
-            <outputEncodinf>UTF-8</outputEncodinf>
+            <locales>en,ja</locales>
+            <inputEncoding>UTF-8</inputEncoding>
+            <outputEncoding>UTF-8</outputEncoding>
           </configuration>
         </plugin>
+        <!--
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
@@ -292,6 +302,25 @@
           <execution>
             <goals>
               <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ant-dist</id>
+            <phase>site</phase>
+            <configuration>
+              <tasks>
+                <ant antfile="build.xml" target="dist">
+                  <property name="ver" value="${version}"/>
+                </ant>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
             </goals>
           </execution>
         </executions>
