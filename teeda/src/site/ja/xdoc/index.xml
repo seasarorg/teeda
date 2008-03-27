@@ -55,6 +55,22 @@
 
 		<section name="News">
 			<dl>
+				<dt>2008/03/28</dt>
+				<dd>
+					Teeda 1.0.13 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#a1.0.13">Change Log</a>
+					)
+				</dd>
+				<dt>2008/03/26</dt>
+				<dd>
+					ひがやすを著「
+					<a href="http://www.amazon.co.jp/dp/4774134368/">
+						Seasar2によるスーパーアジャイルなWeb開発
+					</a>
+					」(技術評論社) が発売されました．
+				</dd>
 				<dt>2008/03/21</dt>
 				<dd>
 					Teeda 1.0.13-rc5 をリリースしました． (

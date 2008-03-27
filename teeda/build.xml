@@ -38,6 +38,10 @@
 		</move>
 		<move file="${site}/apidocs" todir="${site}/ja"
 			failonerror="false" />
+		<copy todir="${site}/ja/cobertura"
+			overwrite="true" failonerror="false">
+			<fileset dir="${site}/en/cobertura" />
+		</copy>
 		<delete file="${site}/ja/index.html.en" />
 		<delete file="${site}/ja/index.html.ja" />
 	</target>
