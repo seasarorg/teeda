@@ -167,24 +167,21 @@ public class ConditionUtil {
             writer.write("for (var i = 0, len = forms.length; i < len; ++i) {");
             writer.write(JsfConstants.LINE_SP);
 
-            writer.write("  var hidden = document.createElement('input');");
-            writer.write(JsfConstants.LINE_SP);
-            writer.write("  hidden.setAttribute('type', 'hidden');");
-            writer.write(JsfConstants.LINE_SP);
-            writer.write("  hidden.setAttribute('name', '");
-            writer.write(ExtensionConstants.CONDITIONS_PARAMETER);
-            writer.write("');");
-            writer.write(JsfConstants.LINE_SP);
-            writer.write("  hidden.setAttribute('value', '");
-            final Base64EncodeConverter converter = new Base64EncodeConverter();
-            final String value = converter.getAsEncodeString(conditions);
-            writer.write(value);
-            writer.write("');");
+            writer.write("  var span = document.createElement('span');");
             writer.write(JsfConstants.LINE_SP);
 
             writer.write("  var form = document.getElementById(forms[i]);");
             writer.write(JsfConstants.LINE_SP);
-            writer.write("  form.appendChild(hidden);");
+            writer.write("  form.appendChild(span);");
+            writer.write(JsfConstants.LINE_SP);
+
+            writer.write("  span.innerHTML = \"<input type='hidden' name='");
+            writer.write(ExtensionConstants.CONDITIONS_PARAMETER);
+            writer.write("' value='");
+            final Base64EncodeConverter converter = new Base64EncodeConverter();
+            final String value = converter.getAsEncodeString(conditions);
+            writer.write(value);
+            writer.write("' />\";");
             writer.write(JsfConstants.LINE_SP);
 
             writer.write("}");

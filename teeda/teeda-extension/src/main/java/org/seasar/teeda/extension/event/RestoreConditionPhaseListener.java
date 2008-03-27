@@ -22,6 +22,7 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
+import org.seasar.framework.util.StringUtil;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.util.ConditionUtil;
@@ -45,12 +46,15 @@ public class RestoreConditionPhaseListener implements PhaseListener {
     public void afterPhase(final PhaseEvent event) {
         final FacesContext context = FacesContext.getCurrentInstance();
         final Map param = context.getExternalContext().getRequestParameterMap();
-        final Object encoded = param
-                .get(ExtensionConstants.CONDITIONS_PARAMETER);
-        if (encoded == null || !(encoded instanceof String)) {
+        final Object o = param.get(ExtensionConstants.CONDITIONS_PARAMETER);
+        if (o == null || !(o instanceof String)) {
             return;
         }
-        final Object conditions = converter.getAsDecodeObject((String) encoded);
+        final String encoded = (String) o;
+        if (StringUtil.isEmpty(encoded)) {
+            return;
+        }
+        final Object conditions = converter.getAsDecodeObject(encoded);
         if (conditions == null || !(conditions instanceof Map)) {
             return;
         }
