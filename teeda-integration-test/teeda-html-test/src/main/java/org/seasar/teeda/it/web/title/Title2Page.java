@@ -18,7 +18,7 @@ package org.seasar.teeda.it.web.title;
 /**
  * @author shot
  */
-public class TitlePage {
+public class Title2Page {
 
 	public String getLayout() {
 		return "/title/layout.html";

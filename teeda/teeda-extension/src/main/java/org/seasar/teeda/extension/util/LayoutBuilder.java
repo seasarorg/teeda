@@ -87,6 +87,7 @@ public class LayoutBuilder {
         AssertionUtil.assertNotNull("component", component);
         TViewRoot child = component;
         TViewRoot parent = getParentViewRoot(context, child);
+        UIComponent title = null;
         List styleList = new ArrayList();
         List scriptList = new ArrayList();
         List linkList = new ArrayList();
@@ -99,6 +100,7 @@ public class LayoutBuilder {
             final UIComponent head = UIComponentUtil.findDescendant(component,
                     THtmlHead.class);
             if (head != null) {
+                title = UIComponentUtil.findDescendant(head, UITitle.class);
                 styleList = UIComponentUtil.collectDescendants(head,
                         THtmlStyle.class);
                 scriptList = UIComponentUtil.collectDescendants(head,
@@ -129,6 +131,9 @@ public class LayoutBuilder {
             }
             if (linkList.size() > 0) {
                 head.getChildren().addAll(linkList);
+            }
+            if (title != null) {
+                replaceComponent(head, title);
             }
         } else {
             component.setRootViewId(component.getViewId());
