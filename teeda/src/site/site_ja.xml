@@ -109,14 +109,12 @@
 				<item name="コンポーネント一覧"
 					href="extension_component_reference.html" />
 				<item name="カスタマイズについて" href="extension_customize.html" />
-				<item name="HTMLプロトタイプを作成する際のガイドライン"
-					href="html_for_prototype.html" />
+				<item name="テンプレートXHTML"
+					href="extension/reference/xhtml.html" />
 
 				<!--
 					<item name="機能"
 					href="extension/reference/features.html" />
-					<item name="テンプレートXHTML"
-					href="extension/tips/xhtml.html" />
 					<item name="コンポーネント"
 					href="extension/reference/component.html" />
 					<item name="規約"
