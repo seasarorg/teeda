@@ -54,6 +54,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="#異なったサブアプリケーションに跨って状態を引き継ぐには">
+								異なったサブアプリケーションに跨って状態を引き継ぐには
+							</a>
+						</li>
+						<li>
 							<a
 								href="#特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには">
 								特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには
@@ -523,6 +528,107 @@ public String name;
 						<a
 							href="../concept/scope.html#サブアプリケーションスコープ">
 							サブアプリケーションスコープ
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="異なったサブアプリケーションに跨って状態を引き継ぐには">
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時のページクラスの状態 (プロパティの値) を， 異なったサブアプリケーションのページに
+					<a href="../concept/lifecycle.html#リダイレクト表示">
+						リダイレクト表示
+					</a>
+					するまで引き継ぐには， 画面遷移
+					<strong>元</strong>
+					ページクラスのプロパティに
+					<code>RedirectScope</code>
+					アノテーションを指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@RedirectScope
+public String name;
+]]></source>
+				<div class="sidebar">複数のプロパティをカンマ区切りで指定することができます．</div>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String REDIRECT_SCOPE = "name";
+public String name;
+]]></source>
+				<p>
+					<a href="../concept/lifecycle.html#ポストバック_リダイレクト">
+						ポストバック (リダイレクト)
+					</a>
+					時，
+					<code>name</code>
+					プロパティは
+					<a href="../concept/scope.html#リダイレクトスコープ">
+						リダイレクトスコープ
+					</a>
+					に追加されます．
+				</p>
+				<div class="caution">
+					<div>注意事項</div>
+					<p>
+						<a href="../concept/scope.html#リダイレクトスコープ">
+							リダイレクトスコープ
+						</a>
+						は
+						<a href="../concept/lifecycle.html#リダイレクト表示">
+							リダイレクト表示
+						</a>
+						後に破棄されるため， 再読込を行うと状態は失われます． 再読込で状態を維持する必要がある場合は，
+						画面遷移
+						<strong>先</strong>
+						ページクラスのプロパティに
+						<a href="../concept/scope.html#ページスコープ">
+							ページスコープ
+						</a>
+						を指定してください． 詳細は「
+						<a href="#画面を表示したときの状態をサブミットされたときまで引き継ぐには">
+							画面を表示したときの状態をサブミットされたときまで引き継ぐには
+						</a>
+						」を参照してください．
+					</p>
+				</div>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/page.html#ポストバック">ポストバック</a>
+					</li>
+					<li>
+						<a href="../concept/lifecycle.html#リクエストパターン">
+							リクエストパターン
+						</a>
+					</li>
+					<li>
+						<a
+							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+							リクエストパターンとライフサイクルメソッド
+						</a>
+						<ul>
+							<li>
+								<a
+									href="../concept/lifecycle.html#ポストバック_リダイレクト">
+									ポストバック (リダイレクト)
+								</a>
+							</li>
+							<li>
+								<a
+									href="../concept/lifecycle.html#リダイレクト表示">
+									リダイレクト表示
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../concept/scope.html#リダイレクトスコープ">
+							リダイレクトスコープ
 						</a>
 					</li>
 				</ul>

@@ -88,92 +88,19 @@
 
 			<item name="逆引きリファレンス" href="extension/reverse/index.html"
 				collapse="true">
-
-				<item name="出力" href="extension/reverse/output.html"
-					collapse="true">
-					<item name="ボディ"
-						href="extension/reverse/output.html#ボディ" />
-					<item name="属性"
-						href="extension/reverse/output.html#属性" />
-					<item name="ヘッダ"
-						href="extension/reverse/output.html#ヘッダ" />
-				</item>
-
+				<item name="出力" href="extension/reverse/output.html" />
 				<item name="リンク" href="extension/reverse/link.html" />
-
-				<item name="入力フォーム" href="extension/reverse/input.html"
-					collapse="true">
-					<item name="フォーム"
-						href="extension/reverse/input.html#フォーム" />
-					<item name="テキストフィールド"
-						href="extension/reverse/input.html#テキストフィールド" />
-					<item name="パスワードフィールド"
-						href="extension/reverse/input.html#パスワードフィールド" />
-					<item name="テキストエリア"
-						href="extension/reverse/input.html#テキストエリア" />
-					<item name="ラジオボタン (静的)"
-						href="extension/reverse/input.html#ラジオボタン_静的" />
-					<item name="ラジオボタン (動的)"
-						href="extension/reverse/input.html#ラジオボタン_動的" />
-					<item name="チェックボックス (単一項目)"
-						href="extension/reverse/input.html#チェックボックス_単一項目" />
-					<item name="チェックボックス (複数項目)"
-						href="extension/reverse/input.html#チェックボックス_複数項目" />
-					<item name="選択リスト (単一選択)"
-						href="extension/reverse/input.html#選択リスト単一選択" />
-					<item name="選択リスト (複数選択)"
-						href="extension/reverse/input.html#選択リスト複数選択" />
-					<item name="ファイルアップロード"
-						href="extension/reverse/input.html#ファイルアップロード" />
-					<item name="隠しフィールド"
-						href="extension/reverse/input.html#隠しフィールド" />
-					<item name="サブミットボタン"
-						href="extension/reverse/input.html#サブミットボタン" />
-				</item>
-
+				<item name="入力フォーム" href="extension/reverse/input.html" />
 				<item name="バリデーション"
-					href="extension/reverse/validation.html" collapse="true">
-					<item name="ベーシック"
-						href="extension/reverse/validation.html#ベーシック" />
-					<item name="文字列のバリデーション"
-						href="extension/reverse/validation.html#文字列のバリデーション" />
-					<item name="数値のバリデーション"
-						href="extension/reverse/validation.html#数値のバリデーション" />
-					<item name="複数の項目に跨ったバリデーション"
-						href="extension/reverse/validation.html#複数の項目に跨ったバリデーション" />
-					<item name="動的なバリデーション"
-						href="extension/reverse/validation.html#動的なバリデーション" />
-					<item name="メッセージ"
-						href="extension/reverse/validation.html#メッセージ" />
-				</item>
-
+					href="extension/reverse/validation.html" />
 				<item name="コンバート"
 					href="extension/reverse/convert.html" />
-
-				<item name="繰り返し" href="extension/reverse/foreach.html"
-					collapse="true">
-					<item name="繰り返し出力"
-						href="extension/reverse/foreach.html#繰り返し出力" />
-					<item name="ネストした繰り返し"
-						href="extension/reverse/foreach.html#ネストした繰り返し" />
-					<item name="入力フォーム"
-						href="extension/reverse/foreach.html#入力フォーム" />
-					<item name="インデックス"
-						href="extension/reverse/foreach.html#インデックス" />
-				</item>
-
+				<item name="繰り返し" href="extension/reverse/foreach.html" />
 				<item name="条件分岐"
 					href="extension/reverse/condition.html" />
-
 				<item name="レイアウト" href="extension/reverse/layout.html" />
-
 				<item name="画面遷移と状態"
-					href="extension/reverse/transition.html" collapse="true">
-					<item name="画面遷移"
-						href="extension/reverse/transition.html#画面遷移" />
-					<item name="状態の引き継ぎ"
-						href="extension/reverse/transition.html#状態の引き継ぎ" />
-				</item>
+					href="extension/reverse/transition.html" />
 			</item>
 
 			<item name="リファレンス" href="extension/reference/index.html"

@@ -4,10 +4,10 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title></title>
+		<title>Extension - リファレンス - テンプレートXHTML</title>
 	</properties>
 	<body>
-		<section name="">
+		<section name="テンプレートXHTML">
 			<ul>
 				<li>
 					<a href="#"></a>
@@ -27,32 +27,185 @@
 			</ul>
 		</section>
 
+		<section name="概要">
+			<p>
+				Teeda Extensionのテンプレートファイルは，
+				<a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0</a>
+				で記述します．
+			</p>
+		</section>
+
+		<section name="基本形">
+			<p>XHTMLファイルの基本形は以下のようになります．</p>
+			<source><![CDATA[
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:te="http://www.seasar.org/teeda/extension"
+    xml:lang="ja"
+    lang="ja">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+        <title>...</title>
+        ...
+    </head>
+    <body>
+        ...
+    </body>
+</html>
+]]></source>
+		</section>
+
 		<section name="宣言">
 			<subsection name="XML宣言">
-				<p></p>
+				<p>必要に応じて， XHTMLファイルの先頭にXML宣言を記述します．</p>
+				<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+]]></source>
+				<p>
+					XHTMLファイルのエンコーディングがUnicode系 (UTF-8やUTF-16等)
+					以外の場合，XML宣言が必須となります．
+				</p>
+				<div class="caution">
+					IE6など，ブラウザによってはXML宣言があると標準準拠モードではなく，
+					後方互換モードでレンダリングされてしまう場合があります．
+					標準準拠モードでのレンダリングを期待する場合は， XHTMLファイルはUTF-8で記述し，
+					XML宣言を省略します．
+				</div>
 			</subsection>
 
 			<subsection name="文書型宣言">
-				<p></p>
+				<p>
+					XML宣言を記述した場合はその後に，省略した場合はファイルの先頭に，
+					以下のいずれかの文書型宣言を記述します．
+				</p>
+				<h4>XHTML-1.0-Strict</h4>
+				<source><![CDATA[
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+]]></source>
+				<h4>XHTML-1.0-Transitional</h4>
+				<source><![CDATA[
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+]]></source>
+				<h4>XHTML-1.0-Frameset</h4>
+				<source><![CDATA[
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+]]></source>
 			</subsection>
 
 			<subsection name="名前空間宣言">
 				<p></p>
 				<h4>デフォルト名前空間</h4>
-				<p></p>
+				<p>
+					ルート要素 (
+					<code>&lt;html&gt;</code>
+					) には，デフォルト名前空間としてXHTMLの名前空間URIを宣言します．
+				</p>
+				<source><![CDATA[
+xmlns="http://www.w3.org/1999/xhtml"
+]]></source>
 				<h4>te名前空間</h4>
-				<p></p>
+				<p>
+					Teeda Extensionの拡張要素または拡張属性を使う場合は， Teeda
+					Extensionの名前空間URIを接頭辞
+					<code>te</code>
+					でを宣言します．
+				</p>
+				<source><![CDATA[
+xmlns:te="http://www.seasar.org/teeda/extension"
+]]></source>
+			</subsection>
+
+			<subsection name="言語属性">
+				<p>XHTMLファイルが含むコンテンツの言語を指定することができます．</p>
+				<p>
+					指定する場合は，XMLの
+					<code>xml:lang</code>
+					属性と，XHTMLの
+					<code>lang</code>
+					属性の両方を指定します．
+				</p>
 			</subsection>
 		</section>
 
-		<section name="">
+		<section name="HTMLとの相違点">
 			<subsection name="">
 				<p></p>
 			</subsection>
 
-			<subsection name="">
-				<p></p>
+			<subsection name="要素名・属性名は小文字">
+				<p>
+					HTMLと異なり，XHTMLの要素名は大文字・小文字が区別されます．
+					XHTMLの要素名は小文字のみを使用します．
+				</p>
+				<source><![CDATA[
+<
+]]></source>
 			</subsection>
+
+			<subsection name="終了タグは省略しない">
+				<p>HTMLと異なり，XHTMLでは終了タグを省略することはできません．</p>
+				<source><![CDATA[
+<ul>
+    <li>項目1</li>
+</ul>
+]]></source>
+			</subsection>
+
+			<subsection name="空要素">
+				<p>
+					<code>&lt;br&gt;</code>
+					要素や
+					<code>&lt;hr&gt;</code>
+					など， 内容を持つことのない要素 (空要素) は以下のように記述します．
+				</p>
+				<source><![CDATA[
+<br />
+]]></source>
+			</subsection>
+
+			<subsection name="属性は引用符で囲む"></subsection>
+
+			<subsection name="属性値は省略しない"></subsection>
+
+			<subsection name="規定の属性値は小文字"></subsection>
+
+			<subsection name="属性値の&amp;は&amp;amp;と記述する"></subsection>
+
+			<subsection name="スクリプトやスタイルシートは外部ファイルに"></subsection>
+		</section>
+
+		<section name="参考文献">
+			<ul>
+				<li>
+					<a href="http://www.w3.org/TR/xhtml1/">
+						XHTML™ 1.0 The Extensible HyperText Markup
+						Language (Second Edition)
+					</a>
+					<ul>
+						<li>
+							<a
+								href="http://www.w3.org/TR/xhtml1/#guidelines">
+								C. HTML Compatibility Guidelines
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a
+						href="http://www.kanzaki.com/docs/html/xhtml1.html">
+						XHTMLの書き方と留意点
+					</a>
+				</li>
+			</ul>
 		</section>
 	</body>
 </document>

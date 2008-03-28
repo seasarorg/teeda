@@ -27,9 +27,15 @@
 				<li>
 					<a href="#Maven2での利用">Maven2での利用</a>
 					<ul>
-						<li><a href="#Maven2リポジトリ">Maven2リポジトリ</a></li>
-						<li><a href="#グループID成果物ID">グループID・成果物ID</a></li>
-						<li><a href="#依存関係">依存関係</a></li>
+						<li>
+							<a href="#Maven2リポジトリ">Maven2リポジトリ</a>
+						</li>
+						<li>
+							<a href="#グループID成果物ID">グループID・成果物ID</a>
+						</li>
+						<li>
+							<a href="#依存関係">依存関係</a>
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -37,8 +43,12 @@
 
 		<section name="Eclipseでの利用">
 			<p>
-				EclipseでTeedaを利用するには，Eclipseプラグイン「Dolteng」「DbLauncher」「Sysdeo/SQLI
-				Tomcat Launcher」を使用するのが便利です．
+				EclipseでTeedaを利用するには，Eclipseプラグイン「Dolteng」「DbLauncher」「
+				<a
+					href="http://www.eclipsetotale.com/tomcatPlugin.html">
+					Sysdeo/SQLI Tomcat Launcher
+				</a>
+				」を使用するのが便利です．
 			</p>
 
 			<subsection name="Eclipseプラグインのインストール">
@@ -164,7 +174,8 @@
 				<p>TeedaのグループID・成果物IDについては以下を参照してください．</p>
 				<ul>
 					<li>
-						<a href="../teeda-core/ja/project-summary.html">
+						<a
+							href="../teeda-core/ja/project-summary.html">
 							Teeda Core
 						</a>
 					</li>
@@ -175,12 +186,14 @@
 						</a>
 					</li>
 					<li>
-						<a href="../teeda-ajax/ja/project-summary.html">
+						<a
+							href="../teeda-ajax/ja/project-summary.html">
 							Teeda Ajax
 						</a>
 					</li>
 					<li>
-						<a href="../teeda-tiger/ja/project-summary.html">
+						<a
+							href="../teeda-tiger/ja/project-summary.html">
 							Teeda Tiger
 						</a>
 					</li>
