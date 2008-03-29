@@ -20,7 +20,6 @@
 				<dt>ドキュメントの修正・コミット</dt>
 				<dd>
 					<ul>
-						<li>teeda/src/site/xdoc/index.html</li>
 						<li>teeda/src/site/xdoc/downloads.xml</li>
 						<li>teeda/src/site/ja/xdoc/index.xml</li>
 						<li>teeda/src/site/ja/xdoc/changelog.xml</li>

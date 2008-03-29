@@ -55,12 +55,12 @@
 
 		<section name="News">
 			<dl>
-				<dt>2008/03/28</dt>
+				<dt>2008/03/29</dt>
 				<dd>
-					Teeda 1.0.13 をリリースしました． (
+					Teeda 1.0.13-rc6 をリリースしました． (
 					<a href="downloads.html">ダウンロード</a>
 					) (
-					<a href="changelog.html#a1.0.13">Change Log</a>
+					<a href="changelog.html#a1.0.13-rc6">Change Log</a>
 					)
 				</dd>
 				<dt>2008/03/26</dt>
