@@ -96,11 +96,13 @@
 				<item name="コンバート"
 					href="extension/reverse/convert.html" />
 				<item name="繰り返し" href="extension/reverse/foreach.html" />
-				<item name="条件分岐"
+				<item name="条件制御"
 					href="extension/reverse/condition.html" />
 				<item name="レイアウト" href="extension/reverse/layout.html" />
 				<item name="画面遷移と状態"
 					href="extension/reverse/transition.html" />
+				<item name="プレビュー"
+					href="extension/reverse/preview.html" />
 			</item>
 
 			<item name="リファレンス" href="extension/reference/index.html"

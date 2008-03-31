@@ -4,10 +4,10 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>Extension - 逆引きリファレンス - 条件分岐</title>
+		<title>Extension - 逆引きリファレンス - 条件制御</title>
 	</properties>
 	<body>
-		<section name="条件分岐">
+		<section name="条件制御">
 			<ul>
 				<li>
 					<a href="#条件が成立した場合だけ要素を出力するには">

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - プレビュー</title>
+	</properties>
+	<body id="body" class="foo">
+		<section name="プレビュー">
+			<ul>
+				<li>
+					<a href="#プレビュー時のみ要素を表示するには">プレビュー時のみ要素を表示するには</a>
+				</li>
+				<li>
+					<a href="#プレビュー時にサブミットボタンで画面遷移するには">
+						プレビュー時にサブミットボタンで画面遷移するには
+					</a>
+				</li>
+				<li>
+					<a href="#プレビューでレイアウトを確認にするには">
+						プレビューでレイアウトを確認にするには
+					</a>
+				</li>
+			</ul>
+
+			<subsection name="プレビュー時のみ要素を表示するには">
+				<p>
+					要素の
+					<code>id</code>
+					属性を
+					<code>mock</code>
+					で始まる値にします．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<span id="mockMessage">このメッセージはプレビュー時のみ表示されます</span>
+]]></source>
+				<p>
+					Teeda Extensionで実行する場合，
+					<code>id</code>
+					属性が
+					<code>mock</code>
+					で始まる要素はレンダリングされません．
+				</p>
+			</subsection>
+
+			<subsection name="プレビュー時にサブミットボタンで画面遷移するには">
+				<div class="sidebar">この方法はイメージボタンでは効果がありません．</div>
+				<p>
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>type</code>
+					属性を
+					<code>"button"</code>
+					にして，
+					<code>onclick</code>
+					属性で
+					<code>location.href</code>
+					プロパティを変更して画面遷移します．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="button" id="doNext" value="次へ" onclick="location.href='next.html'" />
+]]></source>
+				<p>
+					プレビュー時にボタンをクリックすると，
+					<code>onclick</code>
+					属性で指定した画面に遷移します．
+				</p>
+				<p>
+					Teeda Extensionで実行する場合，属性値が
+					<code>location.href</code>
+					で始まる
+					<code>onclick</code>
+					属性はレンダリングされません．
+				</p>
+			</subsection>
+
+			<subsection name="プレビューでレイアウトを確認にするには">
+				<p>
+					<a href="../../kumu.html">Kumu</a>
+					のレイアウト機能を使用します．
+				</p>
+				<p>
+					本体のHTMLに
+					<code>&lt;script&gt;</code>
+					要素を記述し，
+					<code>src</code>
+					属性で
+					<code>kumu.js</code>
+					を指定します． その際， パラメータでKumuのinclude機能を有効にする指定と，
+					レイアウトHTMLへのパスを指定します．
+				</p>
+				<p>
+					レイアウトHTMLでは，
+					<code>&lt;te:includeChildBody&gt;</code>
+					要素と同じ位置に
+					<code>id</code>
+					属性が
+					<code>mockIncludeChildBody</code>
+					の
+					<code>div</code>
+					要素を，
+					<code>&lt;te:include&gt;</code>
+					要素と同じ位置に
+					<code>id</code>
+					属性が
+					<code>mockInclude</code>
+					で始まり，
+					<code>src</code>
+					属性でインクルードするHTMLへのパスを指定した
+					<code>div</code>
+					要素を記述します．
+				</p>
+				<h5>例：テンプレートHTML (foo/foo.html)</h5>
+				<source><![CDATA[
+<script type="text/javascript" src="./js/kumu.js?mockInclude=true&layout=../layout/layout.html"></script>
+]]></source>
+				<h5>例：テンプレートHTML (layout/layout.html)</h5>
+				<source><![CDATA[
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:te="http://www.seasar.org/teeda/extension"
+    xml:lang="ja"
+    lang="ja">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+        <title>...</title>
+    </head>
+    <body>
+        <p>ここからchild</p>
+        <table border="1">
+            <tr>
+                <td>
+                    <te:include id="includeHeader" te:src="/layout/header.html"/>
+                    <div id="mockIncludeHeader" src="../layout/header.html"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <te:includeChildBody id="includeChildBody"/>
+                    <div id="mockIncludeChildBody"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <te:include id="includeFooter" te:src="/layout/footer.html"/>
+                    <div id="mockIncludeFooter" src="../layout/footer.html"></div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+]]></source>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						レイアウトHTMLの中で，
+						<code>&lt;div&gt;</code>
+						要素の
+						<code>src</code>
+						属性に指定するパスは， レイアウトHTMLからのパスではなく， 本体のHTML (上の例では
+						<code>foo/foo.html</code>
+						) からのパスとして解釈されます．
+						階層の異なるHTMLでレイアウトを使用する場合は注意が必要です．
+					</p>
+				</div>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/layout.html">レイアウト</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>

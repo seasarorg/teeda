@@ -904,7 +904,7 @@ public String getRowStyleClass() {
 					属性が
 					<code>is</code>
 					で始まる要素の詳細は「
-					<a href="condition.html">条件分岐</a>
+					<a href="condition.html">条件制御</a>
 					」を参照してください．
 				</div>
 				<p>
@@ -973,7 +973,13 @@ public String getRowStyleClass() {
 					<code>true</code>
 					を返した場合のみ呼び出されます．
 				</p>
-				<div class="sidebar">テーブルの2行目はモックでレンダリングされません．</div>
+				<div class="sidebar">
+					テーブルの2行目はモックでレンダリングされません． 詳細は
+					<a href="preview.html#プレビュー時のみ要素を表示するには">
+						プレビュー時のみ要素を表示するには
+					</a>
+					を参照してください．
+				</div>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <table>
@@ -1094,6 +1100,31 @@ public String productName;
 					<code>rowspan</code>
 					属性の値となります．
 				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="condition.html">条件制御</a>
+						<ul>
+							<li>
+								<a
+									href="condition.html#条件が成立した場合だけ要素を出力するには">
+									条件が成立した場合だけ要素を出力するには
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="preview.html">プレビュー</a>
+						<ul>
+							<li>
+								<a
+									href="preview.html#プレビューでレイアウトを確認にするには">
+									プレビューでレイアウトを確認にするには
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 	</body>

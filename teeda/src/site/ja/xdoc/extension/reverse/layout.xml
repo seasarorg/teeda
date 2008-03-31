@@ -99,17 +99,17 @@
         <table>
             <tr>
                 <td>
-                    <te:include id="layoutHeader" te:src="/layout/header.html" />
+                    <te:include id="includeHeader" te:src="/layout/header.html" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <te:includeChildBody id="layoutChildBody"/>
+                    <te:includeChildBody id="includeChildBody"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <te:include id="layoutFooter" te:src="/layout/footer.html" />
+                    <te:include id="includeFooter" te:src="/layout/footer.html" />
                 </td>
             </tr>
         </table>

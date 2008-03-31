@@ -23,6 +23,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="#異なったプロトコルで画面遷移するには">
+								異なったプロトコルで画面遷移するには
+							</a>
+						</li>
+						<li>
 							<a href="#外部サイトにリダイレクトするには">
 								外部サイトにリダイレクトするには
 							</a>
@@ -185,6 +190,42 @@ public Class doNext() {
 								</a>
 							</li>
 						</ul>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="異なったプロトコルで画面遷移するには">
+				<div class="sidebar">プロトコルの他，ポート番号を指定することもできます．</div>
+				<p>
+					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッド
+					</a>
+					に
+					<code>@Redirect</code>
+					アノテーションを付与し，リダイレクトで使用するプロトコル (httpまたはhttps) を指定します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Redirect(protocol = ProtocolType.HTTPS)
+public Class doXxx() {
+    return XxxPage.class;
+}
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String doXxx_REDIRECT = "protocol=https";
+public Class doXxx() {
+    return XxxPage.class;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
 					</li>
 				</ul>
 			</subsection>
