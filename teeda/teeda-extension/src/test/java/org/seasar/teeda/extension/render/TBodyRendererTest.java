@@ -34,6 +34,13 @@ public class TBodyRendererTest extends RendererTest {
         UIBody body = new UIBody();
         body.setId("aaa");
         encodeByRenderer(renderer, body);
+        assertEquals("<body id=\"aaa\"></body>", getResponseText());
+    }
+
+    public void test_simple2_noIdGiven() throws Exception {
+        TBodyRenderer renderer = new TBodyRenderer();
+        UIBody body = new UIBody();
+        encodeByRenderer(renderer, body);
         assertEquals("<body></body>", getResponseText());
     }
 
@@ -43,7 +50,7 @@ public class TBodyRendererTest extends RendererTest {
         body.setId("aaa");
         body.setOnload("hoge");
         encodeByRenderer(renderer, body);
-        assertEquals("<body onload=\"hoge\"></body>", getResponseText());
+        assertEquals("<body id=\"aaa\" onload=\"hoge\"></body>", getResponseText());
     }
 
     public void test_simple2() throws Exception {
@@ -54,7 +61,7 @@ public class TBodyRendererTest extends RendererTest {
         MockRendererListener listener = new MockRendererListener();
         TBodyRenderer.addRendererListener(component, listener);
         renderer.encodeEnd(getFacesContext(), component);
-        assertEquals("<body>hoge</body>", getResponseText());
+        assertEquals("<body id=\"aaa\">hoge</body>", getResponseText());
     }
 
     protected Renderer createRenderer() {
