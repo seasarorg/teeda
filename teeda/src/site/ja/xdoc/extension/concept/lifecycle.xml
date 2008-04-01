@@ -60,10 +60,6 @@
 		</section>
 
 		<section name="概要">
-			<div class="sidebar">
-				ライフサイクルメソッドは，ページクラスに対応するアクションクラスに持たせることも出来ます．
-				詳細は「」を参照してください．
-			</div>
 			<p>
 				Teeda Extensionは， ブラウザからのリクエストに応じてページクラスのメソッドを呼び出します．
 				このメソッドをライフサイクルメソッドと呼びます．
@@ -128,10 +124,6 @@ public Class initialize() {
 			</subsection>
 
 			<subsection name="do～()メソッド">
-				<div class="sidebar">
-					<code>do～()</code>
-					メソッドには複数のバリエーションがあります． 詳細は「」を参照してください．
-				</div>
 				<p>
 					<code>do～()</code>
 					メソッドは， フォームがサブミットされた場合 (

@@ -2054,7 +2054,9 @@ public List<Map> selecteItems;
 			<subsection name="単一選択の選択リストで「選択してください」を出さないようにするには">
 				<div class="sidebar">
 					「選択してください」というメッセージは， 「
-					<a href="../reference/resource.html#メッセージ">メッセージリソース</a>
+					<a href="../reference/resource.html#メッセージ">
+						メッセージリソース
+					</a>
 					」で変更することができます．
 				</div>
 				<p>
@@ -2282,7 +2284,9 @@ public List<Map> selecteItems;
 			<subsection name="複数選択の選択リストで「選択してください」を出さないようにするには">
 				<div class="sidebar">
 					「選択してください」というメッセージは， 「
-					<a href="../reference/resource.html#メッセージ">メッセージリソース</a>
+					<a href="../reference/resource.html#メッセージ">
+						メッセージリソース
+					</a>
 					」で変更することができます．
 				</div>
 				<p>
@@ -2519,17 +2523,13 @@ public Map map;
 			<subsection name="サブミットボタンを使うには">
 				<div class="sidebar">
 					<code>type</code>
-					，
-					<code>id</code>
-					，
-					<code>name</code>
-					，
-					<code>value</code>
-					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
-					<a href="output.html#属性値を動的に出力するには">
-						属性値を動的に出力するには
+					属性を
+					<code>button</code>
+					にすると，
+					<a href="preview.html#プレビュー時にサブミットボタンで画面遷移するには">
+						プレビュー時にサブミットボタンで画面遷移する
 					</a>
-					」を参照してください．
+					ことができます．
 				</div>
 				<p>
 					<code>type</code>
@@ -2559,6 +2559,20 @@ public Map map;
 					</a>
 					」を参照してください．
 				</p>
+				<div class="sidebar">
+					<code>type</code>
+					，
+					<code>id</code>
+					，
+					<code>name</code>
+					，
+					<code>value</code>
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
+					<a href="output.html#属性値を動的に出力するには">
+						属性値を動的に出力するには
+					</a>
+					」を参照してください．
+				</div>
 				<p>
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時， INVOKE_APPLICATIONフェーズで
@@ -2601,8 +2615,7 @@ public Class doSend() {
 						</a>
 					</li>
 					<li>
-						<a
-							href="output.html#プロパティファイルの内容を属性に出力するには">
+						<a href="output.html#プロパティファイルの内容を属性に出力するには">
 							プロパティファイルの内容を属性に出力するには
 						</a>
 					</li>

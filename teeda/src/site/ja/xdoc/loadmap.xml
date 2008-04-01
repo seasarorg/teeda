@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>ロードマップ</title>
+	</properties>
+	<body>
+		<section name="ロードマップ">
+			<ul>
+				<li>
+					<a href="#a1.0系">1.0系</a>
+				</li>
+				<li>
+					<a href="#a1.1系">1.1系</a>
+				</li>
+				<li>
+					<a href="#a1.2系">1.2系</a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="1.0系">
+			<p>
+				1.0系の開発は1.0.13で終了しました． 今後は軽微なバグ修正をService Pack
+				<![CDATA[(1.0.13-sp]]><var>n</var>
+				) として提供するのみとなります．
+			</p>
+		</section>
+
+		<section name="1.1系">
+			<p>1.1系では主に，Teeda Extensionの機能向上を図ります． 以下の新機能を予定しています．</p>
+			<ul>
+				<li>ネストしたプロパティの対応</li>
+				<li>forwardによる画面遷移対応</li>
+				<li>コマンドリンク対応</li>
+			</ul>
+		</section>
+
+		<section name="1.2系">
+			<p>
+				1.2系では，Teeda CoreがJSF 1.2準拠となります．このため，動作環境が以下のように変わります．
+			</p>
+			<ul>
+				<li>JavaSE 5.0 以降</li>
+				<li>Servlet 2.5</li>
+				<li>JSP 2.1</li>
+			</ul>
+		</section>
+	</body>
+</document>
