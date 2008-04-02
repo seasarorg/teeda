@@ -1,18 +1,14 @@
 <project name="teeda" default="dist" basedir=".">
 	<tstamp>
-		<format property="releaseDate" pattern="yyyy-MM-dd"
-			locale="ja,JP" />
+		<format property="releaseDate" pattern="yyyy-MM-dd" locale="ja,JP" />
 	</tstamp>
 	<property name="newVersion" value="1.0.13-rc6" />
 
 	<target name="update-pom">
-		<replaceregexp
-			match="(&lt;artifactId&gt;teeda-(?:integration-test-)?project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)"
-			replace="\1${newVersion}\2" encoding="UTF-8">
+		<replaceregexp match="(&lt;artifactId&gt;teeda-(?:integration-test-)?project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)" replace="\1${newVersion}\2" encoding="UTF-8">
 			<fileset dir="." includes="**/pom.xml" />
 			<fileset dir="../teeda-tiger" includes="**/pom.xml" />
-			<fileset dir="../teeda-integration-test"
-				includes="**/pom.xml" />
+			<fileset dir="../teeda-integration-test" includes="**/pom.xml" />
 			<fileset dir="../teeda-html-example" includes="**/pom.xml" />
 			<fileset dir="../teeda-jsp-example" includes="**/pom.xml" />
 		</replaceregexp>
@@ -22,6 +18,28 @@
 		<antcall target="fix-site">
 			<param name="site" value="${basedir}/target/site" />
 		</antcall>
+		<native2ascii reverse="true" encoding="UTF-8" src="${basedir}/teeda-core/src/main/resources/javax/faces" dest="${basedir}/target/site/ja/extension/reference" includes="Messages_ja.properties" />
+		<concat encoding="UTF-8" outputencoding="UTF-8" destfile="${basedir}/target/site/ja/extension/reference/Messages_ja.html">
+			<fileset dir="${basedir}/target/site/ja/extension/reference" includes="Messages_ja.properties" />
+			<header filtering="no" trimleading="yes">
+				<![CDATA[
+				<html>
+				<head>
+					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				</head>
+				<body>
+					<pre>
+				]]>
+			</header>
+					<footer filtering="no" trimleading="yes">
+						<![CDATA[
+				</pre>
+					</body>
+				</html>
+				]]>
+			</footer>
+		</concat>
+		<delete file="${basedir}/target/site/ja/extension/reference/Messages_ja.properties" />
 	</target>
 
 	<target name="fix-site">
@@ -36,10 +54,8 @@
 				<exclude name="index.html.ja" />
 			</fileset>
 		</move>
-		<move file="${site}/apidocs" todir="${site}/ja"
-			failonerror="false" />
-		<copy todir="${site}/ja/cobertura"
-			overwrite="true" failonerror="false">
+		<move file="${site}/apidocs" todir="${site}/ja" failonerror="false" />
+		<copy todir="${site}/ja/cobertura" overwrite="true" failonerror="false">
 			<fileset dir="${site}/en/cobertura" />
 		</copy>
 		<delete file="${site}/ja/index.html.en" />

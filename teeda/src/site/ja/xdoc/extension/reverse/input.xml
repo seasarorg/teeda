@@ -1111,11 +1111,15 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンで1行に描画される数を指定するには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1163,11 +1167,15 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンを縦に並べるには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1221,11 +1229,15 @@ public List<Map> selectItems;
 
 			<subsection name="動的なラジオボタンでテーブルを使わずに描画するには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1720,11 +1732,15 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスで1行に描画される数を指定するには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1772,11 +1788,15 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスを縦に並べるには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -1830,11 +1850,15 @@ public List<Map> optionItems;
 
 			<subsection name="複数項目のチェックボックスでテーブルを使わずに描画するには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
@@ -2661,11 +2685,15 @@ public Class doOnceSend() {
 
 			<subsection name="二重サブミットをクライアント側で防止するには">
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					<code>&lt;input&gt;</code>

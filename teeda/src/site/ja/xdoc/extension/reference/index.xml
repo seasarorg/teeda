@@ -14,17 +14,24 @@
 					<a href="../../extension_features.html">機能リファレンス</a>
 				</li>
 				<li>
-					<a href="../../extension_component_reference.html">
+					<a
+						href="../../extension_component_reference.html">
 						コンポーネント一覧
 					</a>
 				</li>
 				<li>
-					<a href="../../extension_customize.html">カスタマイズについて</a>
+					<a href="../../extension_customize.html">
+						カスタマイズについて
+					</a>
 				</li>
 				<li>
-					<a href="xhtml.html">
-						テンプレートXHTML
-					</a>
+					<a href="xhtml.html">テンプレートXHTML</a>
+				</li>
+				<li>
+					<a href="resource.html">リソース</a>
+				</li>
+				<li>
+					<a href="directory.html">ディレクトリ構成</a>
 				</li>
 			</ul>
 		</section>

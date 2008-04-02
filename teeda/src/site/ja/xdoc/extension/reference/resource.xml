@@ -10,16 +10,20 @@
 		<section name="リソース">
 			<ul>
 				<li>
-					<a href="#"></a>
+					<a href="#メッセージリソース">メッセージリソース</a>
+					<ul>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
 				</li>
 				<li>
-					<a href="#"></a>
-				</li>
-				<li>
-					<a href="#"></a>
-				</li>
-				<li>
-					<a href="#"></a>
+					<a href="#ラベルリソース">ラベルリソース</a>
+					<ul>
+						<li>
+							<a href="#"></a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="#"></a>
@@ -28,22 +32,224 @@
 		</section>
 
 		<section name="メッセージリソース">
-			<subsection name="">
-				<p></p>
+			<p>
+				メッセージリソースは，
+				バリデーションでエラーが発生した場合などに表示されるメッセージを定義したリソースバンドルです．
+			</p>
+			<p>メッセージリソースは次の2種類のリソースバンドルから構成されます．</p>
+			<ul>
+				<li>アプリケーション固有メッセージリソース</li>
+				<li>Teeda標準メッセージリソース</li>
+			</ul>
+			<p>
+				メッセージは最初にアプリケーション固有メッセージリソースから検索されます．
+				メッセージが見つからない場合は，Teeda標準メッセージリソースから検索されます．
+			</p>
+			<h4>関連項目</h4>
+			<ul>
+				<li>
+					<a href="directory.html">ディレクトリ構成</a>
+				</li>
+			</ul>
+
+			<subsection name="アプリケーション固有メッセージリソース">
+				<p>
+					アプリケーション固有のメッセージリソースは，
+					<code>appMessages</code>
+					をベース名とするプロパティファイルとして作成します． 例えば以下のようになります．
+				</p>
+				<div class="sidebar">
+					プロパティファイルの編集には
+					<a href="http://propedit.sourceforge.jp/">
+						プロパティエディタ
+					</a>
+					等のツールを使用すると便利です．
+				</div>
+				<dl>
+					<dt>
+						<code>appMessages.properties</code>
+					</dt>
+					<dd>デフォルトで使用されるメッセージリソースファイルです．</dd>
+					<dt>
+						<code>appMessages_ja.properties</code>
+					</dt>
+					<dd>日本語のメッセージリソースファイルです．</dd>
+				</dl>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						プロパティファイルはISO-8859-1でエンコードされている必要があるため，
+						日本語はUnicodeエスケープで表します．
+					</p>
+				</div>
+				<p>
+					アプリケーション固有メッセージリソースは，クラスパスの通ったディレクトリ (例えば
+					<code>WEB-INF/lib</code>
+					) 直下に配置します．
+				</p>
 			</subsection>
 
-			<subsection name="">
-				<p></p>
+			<subsection name="Teeda標準メッセージリソース">
+				<p>Teeda標準のメッセージリソースは， Teeda CoreのJarファイルに含まれています．</p>
+				<p>
+					Teeda標準メッセージリソースに定義されているメッセージを変更したい場合は，
+					同じキーを持つメッセージをアプリケーション固有メッセージリソースに記述します．
+				</p>
+				<h5>Teeda標準メッセージリソース</h5>
+				<iframe src="Messages_ja.html" width="100%"
+					height="300px" align="right">
+				</iframe>
+				<div style="clear: both">&#160;</div>
 			</subsection>
 		</section>
 
 		<section name="ラベルリソース">
-			<subsection name="">
-				<p></p>
+			<p>
+				ラベルリソースは， HTMLのボディに出力するテキストや，
+				<code>title</code>
+				要素の内容，
+				<code>img</code>
+				要素の
+				<code>alt</code>
+				属性等に出力するラベルを定義したリソースバンドルです．
+			</p>
+			<p>ラベルリソースは次の2種類のリソースバンドルから構成されます．</p>
+			<ul>
+				<li>サブアプリケーション固有ラベルリソース</li>
+				<li>アプリケーション共通ラベルリソース</li>
+			</ul>
+			<p>
+				ラベルは最初にサブアプリケーション固有ラベルリソースから検索されます．
+				ラベルが見つからない場合は，アプリケーション共通ラベルリソースから検索されます．
+			</p>
+			<h4>関連項目</h4>
+			<ul>
+				<li>
+					<a href="directory.html">ディレクトリ構成</a>
+				</li>
+				<li>
+					<a
+						href="../reverse/output.html#プロパティファイルの内容をボディに出力するには">
+						プロパティファイルの内容をボディに出力するには
+					</a>
+				</li>
+				<li>
+					<a
+						href="../reverse/output.html#プロパティファイルの内容を属性に出力するには">
+						プロパティファイルの内容を属性に出力するには
+					</a>
+				</li>
+				<li>
+					<a
+						href="../reverse/output.html#プロパティファイルの内容をタイトルに出力するには">
+						プロパティファイルの内容をタイトルに出力するには
+					</a>
+				</li>
+				<li>
+					<a
+						href="../reverse/varidation.html#項目名をプロパティファイルから表示するには">
+						項目名をプロパティファイルから表示するには
+					</a>
+				</li>
+			</ul>
+
+			<subsection name="サブアプリケーション固有メッセージリソース">
+				<p>
+					サブアプリケーション固有のラベルリソースは，
+					特定のサブアプリケーション内でのみ使用されるラベルを定義したリソースバンドルで，
+					<code>label</code>
+					をベース名とするプロパティファイルとして作成します． 例えば以下のようになります．
+				</p>
+				<div class="sidebar">
+					プロパティファイルの編集には
+					<a href="http://propedit.sourceforge.jp/">
+						プロパティエディタ
+					</a>
+					等のツールを使用すると便利です．
+				</div>
+				<dl>
+					<dt>
+						<code>label.properties</code>
+					</dt>
+					<dd>デフォルトで使用されるラベルリソースファイルです．</dd>
+					<dt>
+						<code>label_ja.properties</code>
+					</dt>
+					<dd>日本語のラベルリソースファイルです．</dd>
+				</dl>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						プロパティファイルはISO-8859-1でエンコードされている必要があるため，
+						日本語はUnicodeエスケープで表します．
+					</p>
+				</div>
+				<p>
+					サブアプリケーション固有ラベルリソースは，クラスパスの通ったディレクトリ (例えば
+					<code>WEB-INF/lib</code>
+					) 以下の次のディレクトリ (Pageクラスのパッケージと同じディレクトリ階層) に配置します．
+				</p>
+				<ul>
+					<li>
+						<code>
+							<var>ルートパッケージ</var>
+							/
+							<var>ビュールートパッケージ</var>
+							/
+							<var>サブアプリケーションパッケージ</var>
+						</code>
+					</li>
+				</ul>
+				<p>
+					例えば，
+					<code>foo/bar.html</code>
+					(サブアプリケーションは
+					<code>foo</code>
+					) という画面で使用されるサブアプリケーション固有ラベルリソースは， 次のディレクトリに配置します．
+				</p>
+				<ul>
+					<li>
+						<code>&lt;root&gt;/web/foo/</code>
+					</li>
+				</ul>
 			</subsection>
 
-			<subsection name="">
-				<p></p>
+			<subsection name="アプリケーション共通メッセージリソース">
+				<p>
+					アプリケーション共通のラベルリソースは，
+					サブアプリケーションで共通に使用されるラベルを定義したリソースバンドルで，
+					<code>label</code>
+					をベース名とするプロパティファイルとして作成します． 例えば以下のようになります．
+				</p>
+				<div class="sidebar">
+					プロパティファイルの編集には
+					<a href="http://propedit.sourceforge.jp/">
+						プロパティエディタ
+					</a>
+					等のツールを使用すると便利です．
+				</div>
+				<dl>
+					<dt>
+						<code>label.properties</code>
+					</dt>
+					<dd>デフォルトで使用されるラベルリソースファイルです．</dd>
+					<dt>
+						<code>label_ja.properties</code>
+					</dt>
+					<dd>日本語のラベルリソースファイルです．</dd>
+				</dl>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						プロパティファイルはISO-8859-1でエンコードされている必要があるため，
+						日本語はUnicodeエスケープで表します．
+					</p>
+				</div>
+				<p>
+					アプリケーション共通ラベルリソースは，クラスパスの通ったディレクトリ (例えば
+					<code>WEB-INF/lib</code>
+					) 直下のディレクトリに配置します．
+				</p>
 			</subsection>
 		</section>
 	</body>

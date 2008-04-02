@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - リファレンス - ディレクトリ構成</title>
+	</properties>
+	<body>
+		<section name="ディレクトリ構成">
+			<p>
+				以下にTeeda Extensionを使用するアプリケーションの標準的なディレクトリ構成と，
+				そこに配置される主要なファイルを示します． Maven2のディレクトリ構成に準じています．
+			</p>
+			<iframe src="directorytree.html" width="100%"
+				height="1000px" frameborder="0" scrolling="no" align="right">
+			</iframe>
+		</section>
+	</body>
+</document>

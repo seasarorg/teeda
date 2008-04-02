@@ -114,6 +114,10 @@
 				<item name="カスタマイズについて" href="extension_customize.html" />
 				<item name="テンプレートXHTML"
 					href="extension/reference/xhtml.html" />
+					<item name="リソース"
+					href="extension/reference/resource.html" />
+				<item name="ディレクトリ構成"
+					href="extension/reference/directory.html" />
 
 				<!--
 					<item name="機能"
@@ -126,8 +130,6 @@
 					href="extension/reference/annotation.html" />
 					<item name="dicon"
 					href="extension/reference/dicon.html" />
-					<item name="リソース"
-					href="extension/reference/resource.html" />
 					<item name="カスタマイズ"
 					href="extension/reference/customize.html" />
 				-->

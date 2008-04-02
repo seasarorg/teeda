@@ -53,11 +53,15 @@
 				</p>
 				<p style="clear: both">&#160;</p>
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					レンダリング時， プロパティが
@@ -138,11 +142,15 @@ aaaccc
 				</p>
 				<p style="clear: both">&#160;</p>
 				<div class="sidebar">
-					te名前空間を使用するには
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
 					<code>&lt;html&gt;</code>
 					要素で
-					<a href="../reference/xhtml.html#名前空間宣言">名前空間宣言</a>
-					を指定する必要があります．
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
 				</div>
 				<p>
 					レンダリング時， プロパティが

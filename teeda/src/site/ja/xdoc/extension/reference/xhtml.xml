@@ -38,6 +38,61 @@
 					</ul>
 				</li>
 				<li>
+					<a href="#Teeda_Extension拡張要素">
+						Teeda Extension拡張要素
+					</a>
+					<ul>
+						<li>
+							<a href="#te:include要素">te:include要素</a>
+						</li>
+						<li>
+							<a href="#te:includeChildBody要素">
+								te:includeChildBody要素
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					<ul>
+						<li>
+							<a href="#te:col属性">te:col属性</a>
+						</li>
+						<li>
+							<a href="#te:fraction属性">te:fraction属性</a>
+						</li>
+						<li>
+							<a href="#te:fractionSeparator属性">
+								te:fractionSeparator属性
+							</a>
+						</li>
+						<li>
+							<a href="#te:groupingSeparator属性">
+								te:groupingSeparator属性
+							</a>
+						</li>
+						<li>
+							<a href="#te:layout属性">te:layout属性</a>
+						</li>
+						<li>
+							<a href="#te:omittag属性">te:omittag属性</a>
+						</li>
+						<li>
+							<a href="#te:onTeedaError属性">
+								te:onTeedaError属性
+							</a>
+						</li>
+						<li>
+							<a href="#te:renderJs属性">te:renderJs属性</a>
+						</li>
+						<li>
+							<a href="#te:time属性">te:time属性</a>
+						</li>
+					</ul>
+				</li>
+				<li>
 					<a href="#HTMLとの相違点">HTMLとの相違点</a>
 					<ul>
 						<li>
@@ -170,10 +225,18 @@
 				<source><![CDATA[
     xmlns="http://www.w3.org/1999/xhtml"
 ]]></source>
-				<h4>te名前空間</h4>
+				<h4>
+					<a name="te名前空間">te名前空間</a>
+				</h4>
 				<p>
-					Teeda Extensionの拡張要素・拡張属性を使う場合は， Teeda
-					Extensionの名前空間を接頭辞
+					<a href="#Teeda_Extension拡張要素">
+						Teeda Extension拡張要素
+					</a>
+					や
+					<a href="#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使う場合は， Teeda Extensionの名前空間を接頭辞
 					<code>te</code>
 					で宣言します．
 				</p>
@@ -236,6 +299,359 @@
 						エンコーディングの自動判定を行われてしまう場合があります．
 					</p>
 				</div>
+			</subsection>
+		</section>
+
+		<section name="Teeda Extension拡張要素">
+			<p>
+				Teeda Extension拡張要素を使用するには，
+				<a href="#名前空間宣言">名前空間宣言</a>
+				で
+				<a href="#te名前空間">te名前空間</a>
+				を宣言する必要があります．
+			</p>
+
+			<subsection name="te:include要素">
+				<p>他のHTMLを取り込む場所を指定するための要素です．</p>
+				<p>
+					Teeda Extensionの実行時，
+					<code>&lt;te:include&gt;</code>
+					要素の開始タグおよび終了タグはレンダリングされません． 要素の内容として，
+					<code>src</code>
+					属性で指定されたHTMLの
+					<code>&lt;body&gt;</code>
+					要素の内容がレンダリングされます (開始タグと終了タグはレンダリングされません)．
+				</p>
+				<h5>属性</h5>
+				<dl>
+					<dt>
+						<code>id</code>
+						(任意)
+					</dt>
+					<dd>
+						インクルードされたHTMLを識別する名称を指定します．
+						この名称は，インクルードされたHTML内の
+						<code>&lt;form&gt;</code>
+						要素や
+						<code>&lt;input&gt;</code>
+						要素の
+						<code>name</code>
+						属性などでプレフィックスとして使用されるため，
+						<strong>常に指定する</strong>
+						ことを強く推奨します．
+					</dd>
+					<dt>
+						<code>src</code>
+						属性
+					</dt>
+					<dd>
+						インクルードするHTMLへのパスを， この要素を記述したHTMLからの相対パスで指定します．
+					</dd>
+				</dl>
+			</subsection>
+
+			<subsection name="te:includeChildBody要素">
+				<p>
+					<a href="../concept/layout.html">レイアウト</a>
+					を定義するHTMLの中で， アクセスされた本体のHTMLを取り込む場所を指定するための要素です．
+				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						<code>&lt;te:includeChildBody&gt;</code>
+						要素は， レイアウトを定義するHTMLの中で，
+						<strong>1カ所だけ</strong>
+						記述することができます．
+					</p>
+					<p>
+						<a href="../reverse/condition.html">条件制御</a>
+						と組み合わせて「実行時に1回」となるような記述をすることも
+						<strong>できません</strong>
+						．
+					</p>
+				</div>
+				<p>
+					Teeda Extensionの実行時，
+					<code>&lt;te:includeChildBody&gt;</code>
+					要素の開始タグおよび終了タグはレンダリングされません． 要素の内容として， アクセスされたHTML本体の
+					<code>&lt;body&gt;</code>
+					要素の内容がレンダリングされます (開始タグと終了タグはレンダリングされません)．
+				</p>
+				<h5>属性</h5>
+				<dl>
+					<dt>
+						<code>id</code>
+						(任意)
+					</dt>
+					<dd>
+						アクセスされたHTML本体を識別する名称を指定します．
+						この名称は，アクセスされたHTML本体内の
+						<code>&lt;form&gt;</code>
+						要素や
+						<code>&lt;input&gt;</code>
+						要素の
+						<code>name</code>
+						属性などでプレフィックスとして使用されるため，
+						<strong>常に指定する</strong>
+						ことを強く推奨します．
+					</dd>
+				</dl>
+			</subsection>
+		</section>
+
+		<section name="Teeda Extension拡張属性">
+			<p>
+				Teeda Extension拡張属性を使用するには，
+				<a href="#名前空間宣言">名前空間宣言</a>
+				で
+				<a href="#te名前空間">te名前空間</a>
+				を宣言する必要があります．
+			</p>
+
+			<subsection name="te:col属性">
+				<p>
+					<code>te:col</code>
+					属性は，
+					<a href="../reverse/input.html#ラジオボタン_動的">
+						ラジオボタン (動的)
+					</a>
+					や
+					<a href="../reverse/input.html#チェックボックス_複数項目">
+						チェックボックス (複数)
+					</a>
+					を使って項目を横に並べる場合 (
+					<code>te:layout</code>
+					属性が
+					<code>lineDirection</code>
+					) に，1行あたりに表示する項目数を指定します．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;span&gt;</code>
+					</li>
+					<li>
+						<code>&lt;div&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:fraction属性">
+				<p>
+					<code>te:fraction</code>
+					属性は，
+					<a href="../reverse/input.html#数値の入力を支援するには">
+						数値入力テキストフィールド
+					</a>
+					を使う場合に， 小数部の有効桁数を指定します．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:fractionSeparator属性">
+				<p>
+					<code>te:fractionSeparator</code>
+					属性は，
+					<a href="../reverse/input.html#数値の入力を支援するには">
+						数値入力テキストフィールド
+					</a>
+					を使う場合に， 整数部と小数部の区切り文字を指定します． デフォルトはピリオド (
+					<code>'.'</code>
+					) です．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:groupingSeparator属性">
+				<p>
+					<code>te:groupingSeparator</code>
+					属性は，
+					<a href="../reverse/input.html#数値の入力を支援するには">
+						数値入力テキストフィールド
+					</a>
+					を使う場合に， 整数部を3桁ごとのグループに区切る文字を指定します． デフォルトはカンマ (
+					<code>','</code>
+					) です．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:layout属性">
+				<p>
+					<code>te:layout</code>
+					属性は，
+					<a href="../reverse/input.html#ラジオボタン_動的">
+						ラジオボタン (動的)
+					</a>
+					や
+					<a href="../reverse/input.html#チェックボックス_複数項目">
+						チェックボックス (複数)
+					</a>
+					を使って項目をレイアウトする方法を指定します．
+				</p>
+				<h5>指定可能な値</h5>
+				<dl>
+					<dt>
+						<code>lineDirection</code>
+						(デフォルト)
+					</dt>
+					<dd>
+						項目を横に並べます．
+						<code>
+							<a href="#te:col属性">te:col属性</a>
+						</code>
+						が指定されている場合は，指定された数で折り返します．
+					</dd>
+					<dt>
+						<code>pageDirection</code>
+					</dt>
+					<dd>項目を縦に並べます．</dd>
+					<dt>
+						<code>none</code>
+					</dt>
+					<dd>レイアウトを行いません．</dd>
+				</dl>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;span&gt;</code>
+					</li>
+					<li>
+						<code>&lt;div&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:omittag属性">
+				<p>
+					<code>te:omittag</code>
+					属性は，
+					<a href="../reverse/output.html">テキスト出力</a>
+					場合や，
+					<a href="../reverse/foreach.html">繰り返し</a>
+					，
+					<a href="../reverse/condition.html">条件制御</a>
+					で，開始タグ・終了タグの出力を制御します．
+				</p>
+				<h5>指定可能な値</h5>
+				<dl>
+					<dt>
+						<code>true</code>
+					</dt>
+					<dd>開始タグ・終了タグの出力を抑止します (タグは出力されません)．</dd>
+					<dt>
+						<code>false</code>
+					</dt>
+					<dd>開始タグ・終了タグを出力を抑止しません (タグは出力されます)．</dd>
+				</dl>
+				<h5>指定可能な要素</h5>
+				<p>
+					<code>&lt;span&gt;</code>
+					要素や
+					<code>&lt;div&gt;</code>
+					要素等，
+					<a href="../reverse/output.html">テキスト出力</a>
+					・
+					<a href="../reverse/foreach.html">繰り返し</a>
+					・
+					<a href="../reverse/condition.html">条件制御</a>
+					で使用可能な要素．
+				</p>
+			</subsection>
+
+			<subsection name="te:onTeedaError属性">
+				<p>
+					<code>te:onTeedaError</code>
+					属性は，
+					<a href="../reverse/input.html">入力フォーム</a>
+					で使用可能な入力項目がバリデーションでエラーとなった際に， 該当項目の
+					<code>class</code>
+					属性に設定されるスタイルを指定します． デフォルトは
+					<code>"onTeedaError"</code>
+					です．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+					<li>
+						<code>&lt;textarea&gt;</code>
+					</li>
+					<li>
+						<code>&lt;select&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:renderJs属性">
+				<p>
+					<code>te:renderJs</code>
+					属性は，
+					<a href="../reverse/input.html#サブミットボタン">
+						サブミットボタン
+					</a>
+					で
+					<a
+						href="../reverse/input.html#二重サブミットをクライアント側で防止するには">
+						二重サブミットをクライアント側で防止する
+					</a>
+					ためのスクリプトを出力する場合に指定します．
+				</p>
+				<h5>指定可能な値</h5>
+				<dl>
+					<dt>
+						<code>true</code>
+					</dt>
+					<dd>スクリプトを出力します．</dd>
+					<dt>
+						<code>false</code>
+					</dt>
+					<dd>スクリプトを出力しません．</dd>
+				</dl>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="te:time属性">
+				<p>
+					<code>te:time</code>
+					属性は，
+					<a href="../reverse/input.html#サブミットボタン">
+						サブミットボタン
+					</a>
+					で
+					<a
+						href="../reverse/input.html#二重サブミットをクライアント側で防止するには">
+						二重サブミットをクライアント側で防止する
+					</a>
+					場合に，サーバからの応答を待つタイムアウト時間を指定します．
+				</p>
+				<h5>指定可能な要素</h5>
+				<ul>
+					<li>
+						<code>&lt;input&gt;</code>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 

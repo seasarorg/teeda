@@ -113,11 +113,11 @@
 					<code>div</code>
 					要素を記述します．
 				</p>
-				<h5>例：テンプレートHTML (foo/foo.html)</h5>
+				<h5>例：本体のテンプレートHTML (foo/foo.html)</h5>
 				<source><![CDATA[
 <script type="text/javascript" src="./js/kumu.js?mockInclude=true&layout=../layout/layout.html"></script>
 ]]></source>
-				<h5>例：テンプレートHTML (layout/layout.html)</h5>
+				<h5>例：レイアウトのテンプレートHTML (layout/layout.html)</h5>
 				<source><![CDATA[
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
