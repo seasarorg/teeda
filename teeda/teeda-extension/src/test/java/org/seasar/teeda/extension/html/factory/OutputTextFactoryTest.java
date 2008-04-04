@@ -105,10 +105,10 @@ public class OutputTextFactoryTest extends ElementProcessorFactoryTestCase {
         Map properties = new HashMap();
         properties.put("id", "aaaLabel");
         ElementNode elementNode = createElementNode("span", properties);
-        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        PageDesc pageDesc = createPageDesc(FooPage.class, "foo_foo");
         Map props = new HashMap();
         factory.customizeProperties(props, elementNode, pageDesc, null);
-        assertEquals("#{labelProvider.aaa}", props.get("value"));
+        assertEquals("#{labelProvider.foo_foo.aaa}", props.get("value"));
     }
 
     public void testCreateProcessor() throws Exception {

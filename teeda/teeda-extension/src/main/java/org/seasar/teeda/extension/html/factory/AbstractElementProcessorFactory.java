@@ -146,7 +146,7 @@ public abstract class AbstractElementProcessorFactory implements
             Map properties, ElementNode elementNode, PageDesc pageDesc,
             ActionDesc actionDesc) {
         if (pageDesc == null) {
-            customizeLabelProperty(name, properties);
+            customizeLabelProperty(name, properties, pageDesc);
             return;
         }
         final String pageName = pageDesc.getPageName();
@@ -163,7 +163,7 @@ public abstract class AbstractElementProcessorFactory implements
             properties.put(name, getBindingExpression(pageName, propName));
             return;
         }
-        customizeLabelProperty(name, properties);
+        customizeLabelProperty(name, properties, pageDesc);
     }
 
     protected void customizeDynamicPropertyIfNotExists(String base,
@@ -177,13 +177,13 @@ public abstract class AbstractElementProcessorFactory implements
     }
 
     protected void customizeLabelProperty(final String name,
-            final Map properties) {
+            final Map properties, PageDesc pageDesc) {
         final String value = (String) properties.get(name);
-        if (value == null ||
+        if (pageDesc == null || value == null ||
                 !value.endsWith(ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX)) {
             return;
         }
-        properties.put(name, getLabelExpression(value));
+        properties.put(name, getLabelExpression(value, pageDesc));
     }
 
     protected void renameProperty(Map properties, String from, String to) {
@@ -198,11 +198,13 @@ public abstract class AbstractElementProcessorFactory implements
         return BindingUtil.getExpression(componentName, targetName);
     }
 
-    protected String getLabelExpression(final String attributeValue) {
+    protected String getLabelExpression(final String attributeValue,
+            PageDesc pageDesc) {
+        final String pageName = pageDesc.getPageName();
         final String labelName = attributeValue.substring(0, attributeValue
                 .length() -
                 ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX.length());
-        return "#{labelProvider." + labelName + "}";
+        return "#{labelProvider." + pageName + "." + labelName + "}";
     }
 
     protected abstract String getUri();

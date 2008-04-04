@@ -34,13 +34,6 @@ public class LabelUtil {
     private static Logger logger = Logger.getLogger(LabelUtil.class);
 
     public static String getLabelValue(String defaultKey) {
-        if (defaultKey == null) {
-            return null;
-        }
-        int index = defaultKey.lastIndexOf('-');
-        if (index > 0) {
-            defaultKey = defaultKey.substring(0, index);
-        }
         final FacesContext context = FacesContext.getCurrentInstance();
         if (context == null) {
             return null;
@@ -60,6 +53,22 @@ public class LabelUtil {
             return null;
         }
         String pageName = nc.fromPathToPageName(viewId);
+        return getLabelValue(defaultKey, pageName);
+    }
+
+    public static String getLabelValue(String defaultKey, String pageName) {
+        if (defaultKey == null) {
+            return null;
+        }
+        int index = defaultKey.lastIndexOf('-');
+        if (index > 0) {
+            defaultKey = defaultKey.substring(0, index);
+        }
+        final NamingConvention nc = (NamingConvention) DIContainerUtil
+                .getComponentNoException(NamingConvention.class);
+        if (nc == null) {
+            return null;
+        }
         String key = getKey(nc, pageName, defaultKey);
         String propertiesName = getPropertiesName(nc, pageName);
         String defaultPropertiesName = getDefaultApplicationPropertiesName(nc,
@@ -71,8 +80,8 @@ public class LabelUtil {
     private static String getKey(final NamingConvention nc,
             final String pageName, final String defaultKey) {
         final String labelKeySuffix = getLabelKeySuffix(nc, pageName);
-        return new String(new StringBuffer(labelKeySuffix.length()
-                + defaultKey.length() + 1).append(labelKeySuffix).append(
+        return new String(new StringBuffer(labelKeySuffix.length() +
+                defaultKey.length() + 1).append(labelKeySuffix).append(
                 InternalConstants.DOT).append(defaultKey));
     }
 
@@ -85,7 +94,7 @@ public class LabelUtil {
                     .createChain(propertiesName, locale);
             value = (bundle != null) ? (String) bundle.get(key) : null;
             if (value == null && bundle != null) {
-                value = (String) bundle.get(defaultKey);
+                value = bundle.get(defaultKey);
             }
         }
         if (value == null) {
@@ -129,8 +138,8 @@ public class LabelUtil {
             return null;
         }
         if (packageName.lastIndexOf(subAppRoot) > 0) {
-            final int len = packageName.lastIndexOf(subAppRoot)
-                    + subAppRoot.length();
+            final int len = packageName.lastIndexOf(subAppRoot) +
+                    subAppRoot.length();
             final String s = packageName.substring(0, len);
             defaultPropertiesName = new String(new StringBuffer(s.length() + 5)
                     .append(s).append(InternalConstants.DOT).append(

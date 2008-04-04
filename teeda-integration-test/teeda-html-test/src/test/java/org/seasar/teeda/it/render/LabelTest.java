@@ -60,6 +60,15 @@ public class LabelTest extends TeedaWebTestCase {
 		tester.assertTextEqualsById("aaaLabel", "AAA");
 		tester.assertTextEqualsById("aaaLabel-2", "AAA");
 		tester.assertTextEqualsById("bbbLabel", "BBB");
+
+		// TEEDA-457
+		tester.assertTextEqualsById("layout1Label", "レイアウトラベル(span)");
+		tester.assertTextEqualsById("layout2Label", "レイアウトラベル(label)");
+		tester.assertTextEqualsById("common1Label", "共通レイアウトラベル(span)");
+		tester.assertTextEqualsById("common2Label", "共通レイアウトラベル(label)");
+		tester.assertAttributeEqualsById("layoutImg1", "alt", "レイアウトラベル(span)");
+		tester.assertAttributeEqualsById("layoutImg2", "alt",
+				"共通レイアウトラベル(span)");
 	}
 
 }

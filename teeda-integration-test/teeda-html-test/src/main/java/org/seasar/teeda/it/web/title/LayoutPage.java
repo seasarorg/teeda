@@ -13,20 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.converter;
-
-import java.util.Date;
-
-import org.seasar.teeda.extension.annotation.convert.DateTimeConverter;
-import org.seasar.teeda.extension.annotation.validator.Required;
+package org.seasar.teeda.it.web.title;
 
 /**
+ * 
  * @author koichik
  */
-public abstract class AbstractPage {
-
-	@Required
-	@DateTimeConverter(pattern = "yyyy/MM/dd")
-	public Date selectDate;
+public class LayoutPage {
 
 }

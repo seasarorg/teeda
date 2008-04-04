@@ -91,7 +91,8 @@ public class OutputTextFactory extends AbstractElementProcessorFactory {
         } else {
             final String key = toNormalizeId(id);
             TextNode firstTextNode = elementNode.getFirstTextNode();
-            properties.put(JsfConstants.VALUE_ATTR, getLabelExpression(key));
+            properties.put(JsfConstants.VALUE_ATTR, getLabelExpression(key,
+                    pageDesc));
         }
     }
 

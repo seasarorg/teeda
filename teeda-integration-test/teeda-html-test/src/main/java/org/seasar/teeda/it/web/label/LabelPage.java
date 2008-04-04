@@ -31,4 +31,8 @@ public class LabelPage {
 		return "LINK(dynamic)";
 	}
 
+	public String getLayout() {
+		return "/title/layout.html";
+	}
+
 }

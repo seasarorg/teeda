@@ -38,12 +38,18 @@ public class LabelProviderMap implements Map {
         this.suppressDecolate = suppressDecolate;
     }
 
-    public Object get(final Object key) {
-        final String label = LabelUtil.getLabelValue((String) key);
-        if (!StringUtil.isEmpty(label) || suppressDecolate) {
-            return label;
-        }
-        return "??" + key + ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX + "??";
+    public Object get(final Object pageName) {
+        return new LabelProviderMap() {
+            public Object get(final Object key) {
+                final String label = LabelUtil.getLabelValue((String) key,
+                        (String) pageName);
+                if (!StringUtil.isEmpty(label) || suppressDecolate) {
+                    return label;
+                }
+                return "??" + key + ExtensionConstants.LABEL_ATTRIBUTE_SUFFIX +
+                        "??";
+            }
+        };
     }
 
     public boolean containsKey(final Object key) {

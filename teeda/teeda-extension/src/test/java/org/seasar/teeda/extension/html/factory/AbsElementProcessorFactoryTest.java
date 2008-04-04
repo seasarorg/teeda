@@ -94,13 +94,14 @@ public class AbsElementProcessorFactoryTest extends TeedaExtensionTestCase {
         properties.put("href", "foo.html");
         properties.put("title", "fooTitleLabel");
         ElementNode elementNode = createElementNode("a", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
 
-        ElementProcessor processor = factory.createProcessor(elementNode, null,
-                null);
-        assertEquals("#{labelProvider.fooTitle}", processor
+        ElementProcessor processor = factory.createProcessor(elementNode,
+                pageDesc, null);
+        assertEquals("#{labelProvider.fooPage.fooTitle}", processor
                 .getProperty("title"));
 
-        factory.createProcessor(elementNode, null, null);
+        factory.createProcessor(elementNode, pageDesc, null);
     }
 
 }
