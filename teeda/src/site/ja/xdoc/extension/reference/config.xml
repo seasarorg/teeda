@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - リファレンス - 設定ファイル</title>
+	</properties>
+	<body>
+		<section name="設定ファイル">
+			<ul>
+				<li>
+					<a href="#web.xml">web.xml</a>
+					<ul>
+						<li>
+							<a href="#Parameter">Parameter</a>
+						</li>
+						<li>
+							<a href="#Filter">Filter</a>
+						</li>
+						<li>
+							<a href="#Listener">Listener</a>
+						</li>
+						<li>
+							<a href="#Servlet">Servlet</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+				<li>
+					<a href="#"></a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="web.xml">
+			<subsection name="Parameter">
+				<ul>
+					<li>javax.faces.CONFIG_FILES</li>
+					<li>javax.faces.STATE_SAVING_METHOD</li>
+					<li>javax.faces.DEFAULT_SUFFIX</li>
+					<li>teeda.REDIRECT_URL</li>
+				</ul>
+			</subsection>
+
+			<subsection name="Filter">
+				<p>Seasar2およびTeedaで提供しているFilterは以下の順で設定します．</p>
+				<table>
+					<tr>
+						<td>ExtensionFilter</td>
+						<td>必須</td>
+						<td>
+							Teeda
+							ExtensionのJarファイルに含まれるJavaScriptやCSS等のリソースを，
+							レスポンスとして返すためのFilterです．
+						</td>
+					</tr>
+					<tr>
+						<td>EncodingFilter</td>
+						<td>必須</td>
+						<td>
+							HTTPリクエストヘッダにエンコーディングが含まれていない場合に，
+							デフォルトのエンコーディングを設定するFilterです．
+						</td>
+					</tr>
+					<tr>
+						<td>SessionFilter</td>
+						<td>任意</td>
+						<td>
+							Seasar2の
+							<a
+								href="http://s2container.seasar.org/2.4/ja/dbsession.html">
+								DBセッションレプリケーション
+							</a>
+							を使用するためのFilterです．
+						</td>
+					</tr>
+					<tr>
+						<td>MultipartFormDataFilter</td>
+						<td>任意</td>
+						<td>
+							<code>multipart/fom-data</code>
+							形式のリクエストを解析するためのFilterです．
+							ファイルアップロードを使用する場合に必要です．
+						</td>
+					</tr>
+					<tr>
+						<td>S2ContainerFilter</td>
+						<td>必須</td>
+						<td>
+							Seasar2がリクエストスコープやセッションスコープを扱えるようにするためのFilterです．
+						</td>
+					</tr>
+					<tr>
+						<td>HotdeployFilter</td>
+						<td>任意</td>
+						<td>
+							HOT deployを使用するためのFilterです． HOT
+							deployモードでなければ何もしません．
+						</td>
+					</tr>
+					<tr>
+						<td>RequestDumpFilter</td>
+						<td>任意</td>
+						<td>リクエストやセッションの内容をログ出力するFilterです．</td>
+					</tr>
+				</table>
+			</subsection>
+
+			<subsection name="Listener">
+				<ul>
+					<li>TeedaConfigureListener</li>
+				</ul>
+			</subsection>
+
+			<subsection name="Servlet">
+				<ul>
+					<li>TeedaServlet</li>
+					<li>FacesServlet</li>
+					<li>AjaxServlet</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>

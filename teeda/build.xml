@@ -2,7 +2,7 @@
 	<tstamp>
 		<format property="releaseDate" pattern="yyyy-MM-dd" locale="ja,JP" />
 	</tstamp>
-	<property name="newVersion" value="1.0.13-rc6" />
+	<property name="newVersion" value="1.0.13-rc7-SNAPSHOT" />
 
 	<target name="update-pom">
 		<replaceregexp match="(&lt;artifactId&gt;teeda-(?:integration-test-)?project&lt;/artifactId&gt;\s*&lt;version&gt;)(?:[^&lt;]+)(&lt;/version&gt;)" replace="\1${newVersion}\2" encoding="UTF-8">
@@ -14,13 +14,10 @@
 		</replaceregexp>
 	</target>
 
-	<target name="dist">
-		<antcall target="fix-site">
-			<param name="site" value="${basedir}/target/site" />
-		</antcall>
-		<native2ascii reverse="true" encoding="UTF-8" src="${basedir}/teeda-core/src/main/resources/javax/faces" dest="${basedir}/target/site/ja/extension/reference" includes="Messages_ja.properties" />
-		<concat encoding="UTF-8" outputencoding="UTF-8" destfile="${basedir}/target/site/ja/extension/reference/Messages_ja.html">
-			<fileset dir="${basedir}/target/site/ja/extension/reference" includes="Messages_ja.properties" />
+	<target name="native2ascii">
+		<native2ascii reverse="true" encoding="UTF-8" src="${basedir}/teeda-core/src/main/resources/javax/faces" dest="${basedir}/src/site/ja/resources/extension" includes="Messages_ja.properties" />
+		<concat encoding="UTF-8" outputencoding="UTF-8" destfile="${basedir}/src/site/ja/resources/extension/Messages_ja.html">
+			<fileset dir="${basedir}/src/site/ja/resources/extension/" includes="Messages_ja.properties" />
 			<header filtering="no" trimleading="yes">
 				<![CDATA[
 				<html>
@@ -39,7 +36,13 @@
 				]]>
 			</footer>
 		</concat>
-		<delete file="${basedir}/target/site/ja/extension/reference/Messages_ja.properties" />
+		<delete file="${basedir}/src/site/ja/resources/extension/Messages_ja.properties" />
+	</target>
+
+	<target name="dist">
+		<antcall target="fix-site">
+			<param name="site" value="${basedir}/target/site" />
+		</antcall>
 	</target>
 
 	<target name="fix-site">

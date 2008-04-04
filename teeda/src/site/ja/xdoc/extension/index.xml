@@ -36,7 +36,9 @@
 					)
 				</dd>
 				<dt>規約重視</dt>
-				<dd>テンプレートHTMLとページクラスは規約によって関連づけられるため，設定ファイルは不要です．</dd>
+				<dd>
+					テンプレートHTMLとページクラスは規約によって関連づけられるため， 設定ファイルはほとんど不要です．
+				</dd>
 				<dt>HOT deploy対応</dt>
 				<dd>
 					Seasra2.4のHOT deployに対応しているため，
@@ -61,29 +63,6 @@
 				</li>
 				<li>
 					<a href="reference/index.html">リファレンス</a>
-					<ul>
-						<li>
-							<a href="../extension_features.html">
-								機能リファレンス
-							</a>
-						</li>
-						<li>
-							<a
-								href="../extension_component_reference.html">
-								コンポーネント一覧
-							</a>
-						</li>
-						<li>
-							<a href="../extension_customize.html">
-								カスタマイズについて
-							</a>
-						</li>
-						<li>
-							<a href="../html_for_prototype.html">
-								HTMLプロトタイプを作成する際のガイドライン
-							</a>
-						</li>
-					</ul>
 				</li>
 			</ul>
 		</section>

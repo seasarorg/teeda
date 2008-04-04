@@ -37,7 +37,7 @@
 			<item name="ライセンス" href="license.html" />
 			<item name="ダウンロード" href="downloads.html" />
 			<item name="変更履歴" href="changelog.html" />
-			<item name="ロードマップ" href="loadmap.html" />
+			<item name="ロードマップ" href="roadmap.html" />
 			<item name="メーリングリスト"
 				href="https://ml.seasar.org/mailman/listinfo/seasar-user" />
 			<item name="トラッキング"
@@ -114,7 +114,7 @@
 				<item name="カスタマイズについて" href="extension_customize.html" />
 				<item name="テンプレートXHTML"
 					href="extension/reference/xhtml.html" />
-					<item name="リソース"
+				<item name="リソース"
 					href="extension/reference/resource.html" />
 				<item name="ディレクトリ構成"
 					href="extension/reference/directory.html" />
@@ -124,6 +124,8 @@
 					href="extension/reference/features.html" />
 					<item name="コンポーネント"
 					href="extension/reference/component.html" />
+					<item name="設定ファイル"
+					href="extension/reference/config.html" />
 					<item name="規約"
 					href="extension/reference/convention.html" />
 					<item name="アノテーション"

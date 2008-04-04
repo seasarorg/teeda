@@ -65,14 +65,14 @@
 				<dd>
 					<source>
 						<kbd>cd teeda</kbd>
-						<kbd>mvn clean install deploy</kbd>
+						<kbd>mvn clean deploy</kbd>
 					</source>
 				</dd>
 				<dt>Teeda-Tigerのビルド～デプロイ (Java5)</dt>
 				<dd>
 					<source>
 						<kbd>cd teeda-tiger</kbd>
-						<kbd>mvn clean install deploy</kbd>
+						<kbd>mvn clean deploy</kbd>
 					</source>
 				</dd>
 				<dt>Teedaのサイトデプロイ (J2SE1.4)</dt>

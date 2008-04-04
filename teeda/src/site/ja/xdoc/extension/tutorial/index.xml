@@ -67,6 +67,33 @@
 					</li>
 				</ul>
 			</subsection>
+
+			<subsection name="書籍">
+				<p>
+					Teeda ExtensionをStep byStepで理解することができる，入門に最適な解説書です．
+				</p>
+				<div style="width: 100px; height: 80px; float: left;">
+					<a href="http://www.amazon.co.jp/dp/4774134368/">
+						<img
+							src="http://ecx.images-amazon.com/images/I/51PeOTOUYqL._SL500_SS75_.jpg"
+							alt="Seasar2によるスーパーアジャイルなWeb開発" />
+					</a>
+				</div>
+				<dl>
+					<dt style="font-size: large;">
+						<a
+							href="http://www.amazon.co.jp/dp/4774134368/">
+							<strong>Seasar2によるスーパーアジャイルなWeb開発</strong>
+						</a>
+					</dt>
+					<dd>
+						<ul>
+							<li>ひがやすを著</li>
+							<li>技術評論社</li>
+						</ul>
+					</dd>
+				</dl>
+			</subsection>
 		</section>
 	</body>
 </document>

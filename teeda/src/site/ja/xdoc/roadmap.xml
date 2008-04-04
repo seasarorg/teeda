@@ -36,6 +36,7 @@
 				<li>forwardによる画面遷移対応</li>
 				<li>コマンドリンク対応</li>
 			</ul>
+			<p>リリース時期は未定 (2008年前半？)．</p>
 		</section>
 
 		<section name="1.2系">
@@ -47,6 +48,7 @@
 				<li>Servlet 2.5</li>
 				<li>JSP 2.1</li>
 			</ul>
+			<p>リリース時期は未定 (2008年中？)．</p>
 		</section>
 	</body>
 </document>

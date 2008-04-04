@@ -120,7 +120,7 @@ public Class getLayout() {
 					<code>&lt;title&gt;</code>
 					要素が使われます． また，レイアウトHTMLの
 					<code>&lt;head&gt;</code>
-					要素にリクエストされたページの次の要素が加えられてレンダリング結果となります．
+					要素にリクエストされたページの次の要素が加えられてレンダリングされます．
 				</p>
 				<ul>
 					<li>

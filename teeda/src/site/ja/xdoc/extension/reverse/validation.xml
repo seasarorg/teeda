@@ -125,6 +125,16 @@
 							</a>
 						</li>
 						<li>
+							<a href="#メッセージの文言を変更するには">
+								メッセージの文言を変更するには
+							</a>
+						</li>
+						<li>
+							<a href="#特定のコンポーネントだけメッセージを変更するには">
+								特定のコンポーネントだけメッセージを変更するには
+							</a>
+						</li>
+						<li>
 							<a href="#エラーとなった項目が目立つようにするには">
 								エラーとなった項目が目立つようにするには
 							</a>
@@ -1068,6 +1078,73 @@ layoutChildBody:form:employeeItems:0:name
 ]]></source>
 			</subsection>
 
+			<subsection name="メッセージの文言を変更するには">
+				<p>
+					以下から変更したいメッセージを探し，同じキーを持つ独自のメッセージを
+					<code>appMessage.propertyes</code>
+					(日本語のメッセージは
+					<code>appMessages_ja.properties</code>
+					) に定義します．
+				</p>
+				<iframe src="../Messages_ja.html" width="100%"
+					height="300px" align="right">
+				</iframe>
+				<div style="clear: both">&#160;</div>
+				<div class="sidebar">
+					日本語は実際にはUnicodeエスケープで記述します．
+				</div>
+				<h5>例：メッセージリソースファイル (appMessage_ja.properties)</h5>
+				<source><![CDATA[
+javax.faces.component.UIInput.REQUIRED_detail={0}は必須です
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../reference/resource.html#メッセージリソース">
+							メッセージリソース
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="特定のコンポーネントだけメッセージを変更するには">
+				<p>
+					バリデーションのアノテーションに独自のメッセージIDを指定し， それをキーとするメッセージを
+					<code>appErrorMessage.propertyes</code>
+					(日本語のメッセージは
+					<code>appErrorMessages_ja.properties</code>
+					) に定義します．
+				</p>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<h6>Tigerアノテーション</h6>
+				<source><![CDATA[
+@Required(messageId = "foo.name.required")
+public String name;
+]]></source>
+				<h6>定数アノテーション</h6>
+				<source><![CDATA[
+public static final String name_TRequiredValidator = "messageId='foo.name.required'";
+public String name;
+]]></source>
+				<div class="sidebar">
+					日本語は実際にはUnicodeエスケープで記述します．
+				</div>
+				<h5>例：メッセージリソースファイル (appMessage_ja.properties)</h5>
+				<source><![CDATA[
+foo.name.required=名前は絶対入れてね
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a
+							href="../reference/resource.html#メッセージリソース">
+							メッセージリソース
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
 			<subsection name="エラーとなった項目が目立つようにするには">
 				<p>
 					エラーとなった要素は
@@ -1089,31 +1166,6 @@ layoutChildBody:form:employeeItems:0:name
 					時， バリデーションでエラーになると，
 					テキストフィールドやテキストエリアの背景が設定した色で表示されます．
 				</p>
-			</subsection>
-
-			<subsection name="メッセージを変更するには">
-				<p>
-					アノテーションにメッセージIdを指定し，
-					<a href="../reference/resource.html#メッセージリソース">
-						メッセージリソース
-					</a>
-					ファイルに メッセージIdをキーとするプロパティを定義します．
-				</p>
-				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
-				<h6>Tigerアノテーション</h6>
-				<source><![CDATA[
-@Required(messageId = "foo.name.required")
-public String name;
-]]></source>
-				<h6>定数アノテーション</h6>
-				<source><![CDATA[
-public static final String name_TRequiredValidator = "messageId='foo.name.required'";
-public String name;
-]]></source>
-				<h5>例：メッセージリソースファイル (appMessage_ja.properties)</h5>
-				<source><![CDATA[
-foo.name.required=名前は絶対入れてね
-]]></source>
 			</subsection>
 
 			<subsection name="項目名を日本語で表示するには">
