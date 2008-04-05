@@ -136,6 +136,31 @@
 					<a href="#a1.0.13-rc6">1.0.13-rc6</a>
 					からの変更点は以下の通りです．
 				</p>
+				<ul>
+
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-456'>
+									TEEDA-456
+								</a>
+								] - body 要素の id 属性が出力されない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-457'>
+									TEEDA-457
+								</a>
+								] - レイアウトで &lt;label&gt;
+								以外の要素や属性でラベルを使用すると，レイアウトページに対応したプロパティファイルではなく，本体のページに対応したプロパティファイルのラベルが使われてしまう問題を修正しました．[Seasar-user:13562]
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 
