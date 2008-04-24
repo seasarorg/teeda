@@ -103,10 +103,10 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
                 sb.append(";");
             }
         }
-        final String formName = parentForm.getClientId(context);
+        final String formName = parentForm.getId();
         final String functionName = JavaScriptUtil
-                .getClearHiddenCommandFormParamsFunctionName(formName)
-                + "();";
+                .getClearHiddenCommandFormParamsFunctionName(formName) +
+                "();";
         sb.append(functionName).append("var f = document.forms['").append(
                 formId).append("'];");
 
@@ -218,8 +218,8 @@ public class HtmlCommandLinkRenderer extends AbstractRenderer {
     }
 
     private String getHiddenFieldName(final String formId) {
-        return formId + NamingContainer.SEPARATOR_CHAR
-                + HIDDEN_FIELD_NAME_SUFFIX;
+        return formId + NamingContainer.SEPARATOR_CHAR +
+                HIDDEN_FIELD_NAME_SUFFIX;
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)
