@@ -4,66 +4,55 @@
 	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
 	<properties>
-		<title>Extension - チュートリアル</title>
+		<title>Extension - Teeda Extension チュートリアル</title>
 	</properties>
 	<body>
 		<section name="Teeda Extension チュートリアル">
-			<p>現在作成中です．</p>
-
-			<subsection name="下書き">
+			<p>現在作成中です</p>
+			<subsection name="コンテンツ">
 				<ul>
 					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080128/1201507951">
-							チュートリアルの作成思案1
-						</a>
+						<a href="introduction.html">はじめに</a>
 					</li>
 					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080129/1201600484">
-							Teedaチュートリアル1 (概要)
-						</a>
+						<a href="setup.html">環境のセットアップ</a>
 					</li>
 					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080130/1201648959">
-							Teedaチュートリアル2 (セットアップ)
-						</a>
-					</li>
-					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080205/1202204733">
-							Teedaチュートリアル3 (Hello World)
-						</a>
-					</li>
-					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080212/1202812765">
-							Teedaチュートリアル4-1 (入力)
-						</a>
-					</li>
-					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080218/1203329702">
-							Teedaチュートリアル4-2 (画面遷移)
-						</a>
-					</li>
-					<li>
-						<a
-							href="http://d.hatena.ne.jp/shot6/20080229/1204279120">
-							Teedaチュートリアル4-3 (状態の引き継ぎ)
-						</a>
+						<a href="helloworld.html">最初の1歩 - Hello World -</a>
 					</li>
 				</ul>
 			</subsection>
-
+			<subsection name="下書き">
+				<ul>
+					<!-- 
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080128/1201507951"> チュートリアルの作成思案1</a>
+					</li>
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080129/1201600484"> Teedaチュートリアル1 (概要)</a>
+					</li>
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080130/1201648959"> Teedaチュートリアル2 (セットアップ)</a>
+					</li>
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080205/1202204733"> Teedaチュートリアル3 (Hello World)</a>
+					</li>
+					 -->
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080212/1202812765"> Teedaチュートリアル4-1 (入力)</a>
+					</li>
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080218/1203329702"> Teedaチュートリアル4-2 (画面遷移)</a>
+					</li>
+					<li>
+						<a href="http://d.hatena.ne.jp/shot6/20080229/1204279120"> Teedaチュートリアル4-3 (状態の引き継ぎ)</a>
+					</li>
+				</ul>
+			</subsection>
 			<subsection name="ネタ元">
 				<ul>
 					<li>
-						<a
-							href="http://www.seasar.org/wiki/index.php?Teeda%2FgettingStarted">
-							Getting Started
-						</a>
+						<a href="http://www.seasar.org/wiki/index.php?Teeda%2FgettingStarted"> Getting Started</a>
 					</li>
 				</ul>
 			</subsection>

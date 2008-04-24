@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - ファーストステップ</title>
+	</properties>
+	<body>
+		<section name="ファーストステップ">
+			<p>Eclipseプラグイン「Dolteng」を使用すると簡単にTeedaを試すことができます．</p>
+			<ul>
+				<li>
+					<a href="#準備">準備</a>
+				</li>
+				<li>
+					<a href="#プロジェクトの作成">プロジェクトの作成</a>
+				</li>
+				<li>
+					<a href="#H2_Database_Engineの起動">
+						H2 Database Engineの起動
+					</a>
+				</li>
+				<li>
+					<a href="#サンプルデータベースの確認">サンプルデータベースの確認</a>
+				</li>
+				<li>
+					<a href="#DatabaseViewの表示">DatabaseViewの表示</a>
+				</li>
+				<li>
+					<a href="#Deptメンテナンス画面の作成">Deptメンテナンス画面の作成</a>
+				</li>
+				<li>
+					<a href="#Tomcatの起動">Tomcatの起動</a>
+				</li>
+				<li>
+					<a href="#Deptメンテナンス画面の表示">Deptメンテナンス画面の表示</a>
+				</li>
+				<li>
+					<a href="#次のステップ">次のステップ</a>
+				</li>
+			</ul>
+		</section>
+
+		<section name="準備">
+			<a href="../../setup.html">開発環境のセットアップ</a>
+			を参照して以下のEclipseプラグインをインストールしてください．
+			<ul>
+				<li>DbLauncher</li>
+				<li>Dolteng</li>
+				<li>Sysdeo/SQLI Tomcat Launcher</li>
+			</ul>
+		</section>
+
+		<section name="プロジェクトの作成">
+			<p>Doltengを使用してTeeda + S2Dao用の新規Javaプロジェクトを作成しましょう．</p>
+			<ul>
+				<li>
+					メニューから「File」－「New」－「Project」を選択してください (または
+					<code>Ctrl + N</code>
+					)．
+				</li>
+				<li>「New」ウィザードが開きます．</li>
+				<li>「Dolteng」－「Dolteng Project」を選択して「Next」ボタンを押下してください．</li>
+			</ul>
+			<img src="../../images/extension/firststep/01.png"
+				width="500" height="500" alt="Newウィザード" />
+			<ul>
+				<li>「Create a Dolteng Project」ページが表示されます．</li>
+				<li>
+					「Project name」に"
+					<code>firststep</code>
+					"と入力してください．
+				</li>
+				<li>
+					「Root Package Name」に"
+					<code>firststep</code>
+					"と入力してください．
+				</li>
+				<li>「Finish」ボタンを押下してください．</li>
+			</ul>
+			<img src="../../images/extension/firststep/02.png"
+				width="509" height="623" alt="Create a Chura Projectページ" />
+			<p>
+				<code>firststep</code>
+				プロジェクトが作成されます．
+			</p>
+			<img src="../../images/extension/firststep/03.png"
+				width="640" height="480" alt="作成されたプロジェクト" />
+			<p>ここでプロジェクトをビルドしておきます．</p>
+			<ul>
+				<li>
+					<code>firststep</code>
+					プロジェクトを選択して右クリック「Build Project」を選択してください．
+				</li>
+			</ul>
+		</section>
+
+		<section name="H2 Database Engineの起動">
+			<p>
+				DbLauncherを使用して
+				<a href="http://www.h2database.com/">
+					H2 Database Engine
+				</a>
+				を起動します．
+			</p>
+			<ul>
+				<li>
+					「
+					<code>firststep</code>
+					」プロジェクトを右クリックして「H2」－「Start H2 Server」を選択してください．
+				</li>
+				<li>
+					「
+					<code>firststep</code>
+					」プロジェクトにH2が起動したことを示す緑三角のマーカが表示されます．
+				</li>
+				<li>「Console」ビューにH2のメッセージが表示されます．</li>
+			</ul>
+			<img src="../../images/extension/firststep/04.png"
+				width="640" height="480" alt="H2 Database Engine起動" />
+		</section>
+
+		<section name="サンプルデータベースの確認">
+			<p>H2のサンプルのデータベースを確認しましょう．</p>
+			<ul>
+				<li>
+					「
+					<code>firststep</code>
+					」プロジェクトを右クリックして「H2」－「View Database
+					Manager」を選択してください．
+				</li>
+				<li>WebブラウザにH2のログイン画面が表示されます．</li>
+				<li>「接続」ボタンを押下してください．</li>
+			</ul>
+			<img src="../../images/extension/firststep/05.png"
+				width="640" height="480" alt="H2 ログイン画面" />
+			<ul>
+				<li>Webブラウザに「H2コンソール」画面が表示されます．</li>
+				<li>
+					左のペインにDoltengが作成したテーブル
+					<code>DEPT</code>
+					と
+					<code>EMP</code>
+					が表示されています．
+				</li>
+			</ul>
+			<img src="../../images/extension/firststep/06.png"
+				width="640" height="480" alt="H2コンソール画面" />
+			<ul>
+				<li>
+					左のペインで"
+					<code>DEPT</code>
+					"をクリックしてください．
+				</li>
+				<li>
+					「SQLステートメント」テキストエリアに"
+					<code>SELECT * FROM DEPT</code>
+					"が入力されます．
+				</li>
+				<li>「実行」ボタンを押下するとSQLが実行されます．</li>
+			</ul>
+			<img src="../../images/extension/firststep/07.png"
+				width="640" height="480" alt="SQLの実行" />
+		</section>
+
+		<section name="DatabaseViewの表示">
+			<p>
+				DoltengでテーブルからエンティティクラスやDaoインタフェースを生成するために「DatabaseView」ビューを表示します．
+			</p>
+			<ul>
+				<li>メニューから「Window」－「Show View」－「Other」を選択してください．</li>
+				<li>「Show View」ダイアログが開きます．</li>
+				<li>「Dolteng」－「DatabaseView」を選択してください．</li>
+				<li>「OK」ボタンを押下してください．</li>
+			</ul>
+			<img src="../../images/extension/firststep/08.png"
+				width="276" height="400" alt="Show Viewダイアログ" />
+			<p>
+				「DatabaseView」ビューが表示されます．
+				「kuina-example」－「jdbc.dicon」－「PUBLIC」を開くとサンプルデータベースに含まれる2つのテーブル
+				<code>DEPT</code>
+				と
+				<code>EMP</code>
+				を確認することができます．
+			</p>
+			<img src="../../images/extension/firststep/09.png"
+				width="640" height="480" alt="DatabaseView" />
+		</section>
+
+		<section name="Deptメンテナンス画面の作成">
+			<p>Doltengを使用してDeptテーブルのメンテナンス画面を生成しましょう．</p>
+			<ul>
+				<li>
+					「DatabaseView」で「
+					<code>DEPT</code>
+					」テーブルを右クリックして「Generate Scaffold
+					Applicatioh」を選択してください．
+				</li>
+				<li>「Generate Scaffold Codes?」ダイアログが開きます．</li>
+				<li>「OK」ボタンを押下してください．</li>
+			</ul>
+			<img src="../../images/extension/firststep/10.png"
+				width="438" height="225" alt="Generate Scaffold Codes?ダイアログ" />
+			<p>
+				エンティティクラス
+				<code>Dept</code>
+				およびDaoインタフェース
+				<code>DeptDao</code>
+				に加えて，一覧表示画面や編集画面，Dxoインタフェースが生成されます．
+			</p>
+			<img src="../../images/extension/firststep/11.png"
+				width="640" height="480" alt="作成されたクラス" />
+		</section>
+
+		<section name="Tomcatの起動">
+			<p>Tomcatを起動しましょう．</p>
+			<p>最初にfirststepプロジェクトをTomcatに登録します．</p>
+			<ul>
+				<li>
+					<code>firststep</code>
+					プロジェクトを右クリックして「Tomcat」－「コンテキスト定義の更新」を選択してください．
+				</li>
+				<li>「操作が成功しました．」ダイアログが開きます．</li>
+				<li>「OK」ボタンを押下してください．</li>
+			</ul>
+			<p>Tomcatを起動します．</p>
+			<ul>
+				<li>ツールバーの「Tomcat起動」ボタンをクリックしてください．</li>
+				<li>「Console」ビューにTomcatのメッセージが表示されます．</li>
+			</ul>
+			<img src="../../images/extension/firststep/12.png"
+				width="640" height="480" alt="Tomcat起動" />
+		</section>
+
+		<section name="Deptメンテナンス画面の表示">
+			<ul>
+				<li>
+					「Package Explorer」で「
+					<code>src/main/webapp/view</code>
+					」の下の「
+					<code>dept</code>
+					」を展開してください．
+				</li>
+				<li>Doltengが生成したHTMLが表示されます．</li>
+			</ul>
+			<img src="../../images/extension/firststep/13.png"
+				width="640" height="480" alt="生成されたHTML" />
+			<ul>
+				<li>
+					<code>deptList.html</code>
+					を右クリックして， 「Dolteng」－「View on Server」を選択してください．
+				</li>
+				<li>ブラウザにDeptの一覧画面が表示されます．</li>
+			</ul>
+			<img src="../../images/extension/firststep/14.png"
+				width="640" height="480" alt="Dept一覧画面" />
+		</section>
+
+		<section name="次のステップ">
+			<ul>
+				<li>
+					PageクラスやHTMLのソースファイルを参照したり変更したりしてください．
+					Tomcatを再起動することなく変更が反映されます．
+				</li>
+				<li>同じ手順でEmpテーブルのメンテナンス画面を作成してください．</li>
+				<li>
+					「
+					<a href="../tutorial/index.html">チュートリアル</a>
+					」を参照してStep by StepでTeeda Extensionの提供する機能を知ってください．
+				</li>
+				<li>
+					「
+					<a href="../concept/index.html">概念</a>
+					」を参照してTeeda Extensionについて理解を深めてください．
+				</li>
+			</ul>
+		</section>
+	</body>
+</document>

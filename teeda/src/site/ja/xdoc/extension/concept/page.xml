@@ -239,7 +239,7 @@ http://localhost:8080/teeda-html-example/view/hello/hello.html
 				<p>
 					ページクラスの名前は，テンプレートHTMLファイルの名前の先頭を大文字にし，
 					拡張子を取り除いて接尾辞を付加したものにします． デフォルトの接尾辞は
-					<code>Action</code>
+					<code>Page</code>
 					です．
 				</p>
 				<p>

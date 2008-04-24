@@ -62,13 +62,8 @@
 
 		<menu name="Teeda Extension">
 			<item name="概要" href="extension/index.html" />
-
-			<item name="チュートリアル" href="extension/tutorial/index.html"
-				collapse="true">
-				<item name="" href="" />
-				<item name="" href="" />
-				<item name="" href="" />
-			</item>
+			<item name="ファーストステップ" href="extension/firststep/index.html" />
+			<item name="チュートリアル" href="extension/tutorial/index.html" />
 
 			<item name="サンプル解説" href="extension/example.html" />
 

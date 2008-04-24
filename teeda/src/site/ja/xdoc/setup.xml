@@ -87,6 +87,27 @@
 				</ul>
 				<ul>
 					<li>「Install」ページに戻ります．</li>
+					<li>「New Remote Site」ボタンを押下してください．</li>
+					<li>「New Update Site」ダイアログが開きます．</li>
+					<li>
+						「Name」に"
+						<code>Seasar Project Updates 3.3</code>
+						"と入力してください．
+					</li>
+					<li>
+						「URL」に"
+						<code>
+							<a
+								href="http://eclipse.seasar.org/updates/3.3/">
+								http://eclipse.seasar.org/updates/3.3/
+							</a>
+						</code>
+						"と入力してください．
+					</li>
+					<li>「OK」ボタンを押下してください．</li>
+				</ul>
+				<ul>
+					<li>「Install」ページに戻ります．</li>
 					<li>
 						追加されたSeasarプロジェクトのアップデートサイトがチェック状態になっていることを確認してください．
 					</li>
@@ -99,8 +120,14 @@
 						3.2」の下の以下のフィーチャーをチェックしてください．
 						<ul>
 							<li>DbLauncher (任意)</li>
-							<li>Dolteng</li>
 							<li>Sysdeo/SQLI Tomcat Launcher (任意)</li>
+						</ul>
+					</li>
+					<li>
+						「Seasar Project Updates
+						3.3」の下の以下のフィーチャーをチェックしてください．
+						<ul>
+							<li>Dolteng</li>
 						</ul>
 					</li>
 					<li>「Next」ボタンを押下してください．</li>

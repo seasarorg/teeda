@@ -887,8 +887,8 @@ public String name2;
 				<source><![CDATA[
 public String selected;
 public List<ProductDto> productItems;
-public String code;
-public String name;
+public String code; //Teedaが設定
+public String name; //Teedaが設定
 ]]></source>
 				<h5>例：Dtoのプロパティ (ProductDto.java)</h5>
 				<source><![CDATA[
@@ -1427,6 +1427,15 @@ public boolean option;
 					<code>id</code>
 					属性の値と同じ名前のプロパティに置き換えられます．
 				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						サブミットされるフォームデータにチェックされなかった項目は含まれないため，
+						繰り返しの中にチェックボタンしか項目がない場合，
+						繰り返しの数を正確に判定できない場合があります．
+						これを回避するには，繰り返しの中に隠し項目を含めるようにします．
+					</p>
+				</div>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <input type="hidden" id="optionItemsSave" />
@@ -1435,13 +1444,14 @@ public boolean option;
         <input type="checkbox" id="checked" value="dummy" />
         <span id="name" te:omittag="true">dummy</span>
     </label>
+    <input type="hidden" id="name-2" value="dummy" />
 </div>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
 public List<OptionDto> optionItems;
-public boolean checked;
-public String name;
+public boolean checked; //Teedaが設定
+public String name;     //Teedaが設定
 ]]></source>
 				<h5>例：Dtoのプロパティ (OptionDto.java)</h5>
 				<source><![CDATA[
@@ -1460,10 +1470,12 @@ public String name;
         <input type="checkbox" id="checked" name="form:optionItems:0:checked" value="true" />
         Teeda
     </label>
+    <input type="hidden" id="name-2" name="form:optionItems:0:name-2" value="Teeda" />
     <label>
         <input type="checkbox" id="checked" name="form:optionItems:1:checked" value="true" />
         SAStruts
     </label>
+    <input type="hidden" id="name-2" name="form:optionItems:1:name-2" value="SAStruts" />
     
 ]]></source>
 				<p>

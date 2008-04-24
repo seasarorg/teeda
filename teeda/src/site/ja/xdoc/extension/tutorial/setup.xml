@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - Teeda Extension チュートリアル - セットアップ</title>
+	</properties>
+	<body>
+		<section name="セットアップ">
+			<subsection name="本チャプターのゴール">
+				<p>
+					このチャプターでは、Teedaチュートリアルを実行するための環境をセットアップします.
+					<br />
+					チャプター完了後には以下の点が習得できます.
+				</p>
+				<ul>
+					<li>Teedaを使うための開発環境の設定方法</li>
+					<li>Teedaプロジェクトの起動の方法</li>
+					<li>Teedaプロジェクトの稼動の仕方</li>
+				</ul>
+			</subsection>
+			<subsection name="チャプター目次">
+				<ul>
+					<li>
+						<a href="#Eclipseのセットアップ">Eclipseのセットアップ</a>
+					</li>
+					<li>
+						<a href="#チュートリアルのためのセットアップ">チュートリアルのためのセットアップ</a>
+					</li>
+					<li>
+						<a href="#まとめ">まとめ</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="Eclipseのセットアップ">
+			<p> 本チュートリアルでは、IDE(統合開発環境)としてEclipseを使います.</p>
+			<p>
+				Eclipseは適宜
+				<a href="http://www.eclipse.org/">Eclipseのサイト</a>
+				からダウンロードしてください.
+			</p>
+			<p>
+				Eclipseプラグインとしては、下記のものを用います.インストール方法は、
+				<a href="../../setup.html">こちら</a>
+				を参照してください.
+			</p>
+			<ul>
+				<li>Dolteng(どぅるてん) :
+					Teedaを含むSeasar2.4ファミリーであるChuraでの開発を容易にする開発支援プラグイン</li>
+				<li>DbLauncher(でぃーびーらんちゃー) :
+					チュートリアルで使うH2データベースを起動するためのランチャ－プラグイン</li>
+				<li>
+					<a href="http://www.eclipsetotale.com/tomcatPlugin.html">Sysdeo Tomcat Launcher plugin</a>
+					: Tomcat起動用のプラグイン
+				</li>
+			</ul>
+		</section>
+		<section name="チュートリアルのためのセットアップ">
+			<div id="create-new-project">
+				<p>
+					チュートリアルのためにプロジェクトを一つ作成します.
+					<br />
+					まずはEclipseを起動して、適当な場所にworkspaceを作成してください.
+				</p>
+				<p>プロジェクトエクスプローラー上で右クリックして、プロジェクトの新規作成を選択します(下記図参照).
+				</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/project-click.jpg"
+					alt="プロジェクト作成" />
+				<br />
+				<br />
+			</div>
+			<div id="create-chura-project">
+				<p>次にプロジェクト作成ウィザードで、Chura Projectを選択します.</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/wizard.png" alt="ウィザードの選択" />
+				<br />
+				<br />
+			</div>
+			<div id="confirm-project">
+				<p>
+					プロジェクトを作成します.
+					<br />
+					プロジェクト名に「
+					<strong>teeda-tutorial</strong>
+					」と入力し、ルートパッケージ名に「
+					<strong>examples.teeda</strong>
+					」と入力し、プロジェクトタイプは
+					<strong>Teeda＋S2Dao</strong>
+					を選択します.
+				</p>
+				<br />
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/project-create.png"
+					alt="プロジェクトの作成" />
+				<br />
+				<br />
+			</div>
+			<div id="check-project">
+				<p>
+					では出来上がった環境を確認してみましょう. まずはteeda-turotial内のsrc/main/java/を見てみてください.
+					<br />
+					examples.teedaで始まるパッケージ構成が以下のように出来上がっているはずです.
+					<br />
+					構成についての詳細な説明は後述します. いまは下記のような構成が出来上がっていることだけ確認できれば問題ありません.
+				</p>
+				<source><![CDATA[
++examples.teeda.converter
++examples.teeda.dao
++examples.teeda.dto
++examples.teeda.dxo
++examples.teeda.entity
++examples.teeda.helper
++examples.teeda.interceptor
++examples.teeda.logic
++examples.teeda.service
++examples.teeda.validator
++examples.teeda.web.error
+	-ErrorPage.java
+]]></source>
+			</div>
+			<div id="start-project">
+				<p>
+					では次にTomcatを起動して確認してみましょう.
+					<br />
+					まずはTomcatプラグインを使って、コンテキスト定義を更新します.
+					<br />
+					やり方は、プロジェクトエクスプローラーで右クリック→Tomcatプロジェクト→コンテキスト定義を更新 です.
+					<br />
+					「操作が成功しました」と出たらOKを押下して、Tomcatを起動してみましょう.
+					<br />
+					Tomcatマークを押下するとTomcatが起動します.
+				</p>
+				<p>正しく起動すれば以下のようなログ（日付などは適宜読み替えてください）が出るはずです.
+				</p>
+				<source><![CDATA[
+2008-01-30 17:59:48,953 [main] DEBUG org.seasar.framework.env.Env - 環境変数#Envにファイル(env.txt)から値(ct)が設定されました
+（途中略）
+2008-01-30 17:59:52,328 [main] INFO  org.seasar.framework.container.factory.SingletonS2ContainerFactory - Running on [ENV]ct, [DEPLOY MODE]Hot Deploy
+2008-01-30 17:59:52,328 [main] DEBUG org.seasar.teeda.core.webapp.TeedaServlet - Teeda : 1.0.11
+（以下省略）
+]]>
+				</source>
+				<p>
+					では実際に起動してみましょう.
+					<br />
+					ブラウザを立ち上げて、http://localhost:8080/teeda-tutorial/にアクセスします.
+					<br />
+					下記のように「Hello World!」と出ているはずです.
+					<br />
+					これで環境セットアップは完了です.
+				</p>
+				<source><![CDATA[
+Hello World!
+]]>
+				</source>
+			</div>
+		</section>
+		<section name="まとめ">
+			<p>このチャプターでは以下のようなことを学びました.</p>
+			<ul>
+				<li>Churaプロジェクト専用Eclipseプラグイン「Dolteng」について</li>
+				<li>Churaプロジェクト専用Eclipseプラグイン「Dolteng」のインストール</li>
+				<li>DoltengでTeedaプロジェクトを作る</li>
+				<li>DoltengでTeedaプロジェクトを作る</li>
+				<li>Teedaプロジェクトの起動の仕方</li>
+				<li>Teedaプロジェクトの稼動確認</li>
+			</ul>
+			<p>次のチャプタではHello Worldを出すだけの簡単なアプリケーションを作成してみましょう.</p>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - Teeda Extension チュートリアル - はじめに</title>
+	</properties>
+	<body>
+		<section name="はじめに">
+			<p>このチュートリアルでは、Teedaの基本的な使い方をサンプルを作ることによって紹介します.
+			</p>
+			<ul>
+				<li>
+					<a href="#想定読者について">チュートリアルで必要な基礎知識</a>
+				</li>
+			</ul>
+			<subsection name="想定読者について">
+				<p>本チュートリアルでは、前提として読者に以下のようなスキルが概ねあることを想定しています.
+				</p>
+				<ul>
+					<li>
+						<a href="#HTTPについて">HTTP(Hypertext Transfer Protocol)について</a>
+					</li>
+					<li>
+						<a href="#HTML/XHTMLについて">HTML/XHTMLについて</a>
+					</li>
+					<li>
+						<a href="#Java言語の知識">Java言語の知識</a>
+					</li>
+					<li>
+						<a href="#Servlet仕様">Servlet仕様(Servlet2.3以降)</a>
+					</li>
+					<li>
+						<a href="#JSP仕様">JSP仕様(JSP1.2以降)</a>
+					</li>
+					<li>
+						<a href="#JavaBeans仕様">JavaBeans仕様</a>
+					</li>
+					<li>
+						<a href="#Seasar2についての基礎知識">Seasar2についての基礎知識</a>
+					</li>
+					<li>
+						<a href="#JSFについての基礎知識">JSFについての基礎知識(オプション)</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="HTTPについて">
+				<p>HTTP(Hypertext Transfer
+					Protocol)については下記のサイトを参照してください.</p>
+				<ul>
+					<li>
+						<a href="http://www.w3.org/Protocols/">HTTP - Hypertext Transfer Protocol</a>
+					</li>
+					<li>
+						<a href="http://www.rfc-editor.org/rfc/rfc2616.txt">HTTP 1.1仕様</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="HTML/XHTMLについて">
+				<p>HTML/XHTMLについては下記のサイトを参照してください.
+				</p>
+				<ul>
+					<li>
+						<a href="http://www.w3.org/TR/html401/">HTML(HyperText Markup Language)4.01仕様</a>
+					</li>
+					<li>
+						<a href="http://www.w3.org/TR/xhtml1/"> XHTML™ 1.0 (The Extensible HyperText Markup Language)仕様
+						</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="Java言語の知識">
+				<p>Java言語については下記のサイトなどを参照してください.</p>
+				<ul>
+					<li>
+						<a href="http://java.sun.com/j2se/1.4.2/docs/api/">JDK1.4.2 JavaDoc</a>
+					</li>
+					<li>
+						<a href="http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/index.html">JDK1.5 JavaDoc</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="Servlet仕様">
+				<p>Servlet仕様については以下のサイトを参照してください.</p>
+				<ul>
+					<li>
+						<a href="http://java.sun.com/products/servlet/">Java Servlet仕様サイト</a>
+					</li>
+					<li>
+						<a href="http://java.sun.com/products/servlet/download.html">Java Servlet仕様ダウンロードサイト</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="JSP仕様">
+				<p>JSP仕様については以下のサイトを参照してください.</p>
+				<ul>
+					<li>
+						<a href="http://java.sun.com/products/jsp/">JSP仕様サイト</a>
+					</li>
+					<li>
+						<a href="http://java.sun.com/products/jsp/reference/api/index.html">JSP仕様ダウンロードサイト</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="JavaBeans仕様">
+				<p>JavaBeans仕様については以下のサイトを参照してください.
+				</p>
+				<ul>
+					<li>
+						<a href="http://java.sun.com/products/javabeans/docs/spec.html">JavaBeans仕様ダウンロードサイト</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="Seasar2についての基礎知識">
+				<p>Seasar2はTeeda内部で使われているフレームワークです.Seasar2については下記サイト、書籍などを参照してください.
+				</p>
+				<ul>
+					<li>
+						<a href="http://s2container.seasar.org/2.4/ja/index.html">Seasar2サイト</a>
+					</li>
+					<li>
+						<a href="http://www.amazon.co.jp/dp/4774134368/">Seasar2によるスーパーアジャイルなWeb開発</a>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="JSFについての基礎知識">
+				<p>TeedaはJSF仕様の上で成り立っているため、できればJSF(JavaServer
+					Faces)仕様を抑えておくとよいでしょう.JSF仕様は下記サイトなどを参照してください.</p>
+				<ul>
+					<li>
+						<a href="http://java.sun.com/javaee/javaserverfaces/">JSFサイト</a>
+					</li>
+					<li>
+						<a href="http://java.sun.com/javaee/javaserverfaces/download.html">JSF仕様ダウンロードサイト</a>
+					</li>
+					<li>
+						<a
+							href="http://java.sun.com/javaee/javaserverfaces/reference/api/index.html">JSF APIサイト</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>

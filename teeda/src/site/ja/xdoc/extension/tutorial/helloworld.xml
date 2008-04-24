@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - Teeda Extension チュートリアル - Hello Teeda!</title>
+	</properties>
+	<body>
+		<section name="HelloWorldアプリケーションを作ってみよう">
+			<subsection name="本チャプターのゴール">
+				<p> このチャプターでは、簡単なHello Worldと表示するだけのアプリケーションを作成することで、次のような事柄を学びます.
+				</p>
+				<ul>
+					<li>Teedaアプリケーションの作成方法の基礎</li>
+					<li>TeedaのHTMLテンプレートとPageクラスの関係</li>
+					<li>Teedaアプリケーション作成時の手順とDolteng活用方法
+					</li>
+					<li>Teedaアプリケーションを動かす</li>
+				</ul>
+			</subsection>
+			<subsection name="チャプター目次">
+				<ul>
+					<li>
+						<a href="#HTMLテンプレートの作成">HTMLテンプレートの作成</a>
+					</li>
+					<li>
+						<a href="#Pageクラスの作成">Pageクラスの作成</a>
+					</li>
+					<li>
+						<a href="#動かしてみよう">動かしてみよう！</a>
+					</li>
+					<li>
+						<a href="#まとめ">まとめ</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="HTMLテンプレートの作成">
+			<subsection name="Teeda HTMLの作成">
+				<p>
+					まずはHTMLテンプレートを作成しましょう.
+					<br />
+					TeedaでのHTMLテンプレートの置き場所はsrc/main/webapp/view/以下になっています.
+					<br />
+					そこにhelloというフォルダを作成します.下記の図のようになります.
+				</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/hello-folder.png" alt="helloフォルダの作成" />
+				<br />
+				<br />
+				<p>
+					次にhello.htmlを作成します.Eclipseの通常の新規作成メニューからファイルを作成してもかまいませんが、
+					<br />
+					ここではせっかくDoltengを入れているのでDoltengのTeedaHTML作成機能を使ってみましょう.
+					<br />
+					パッケージエクスプローラ上で右クリック→New→Otherを選ぶと、ダイアログが開きます.
+					<br />
+					その中にChuraというカテゴリがあるはずなので、内にあるTeeda
+					HTMLを選び、src/main/webapp/view/hello以下にhello.htmlを作成します.
+				</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/dolteng-create-teeda-html.png"
+					alt="Teeda HTMLの作成" />
+				<br />
+				<br />
+				<p>
+					hello.htmlは初期状態では下記のようになっているはずです.
+					<br />
+					DoltengのTeeda HTML作成機能を使えば、Teedaで必要な大枠のhtml(正確にはXHTML)を作成してくれます.
+				</p>
+				<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form id="Form">
+<div><span id="messages"></span></div>
+</form>
+</body></html>]]></source>
+			</subsection>
+			<subsection name="hello.htmlの作成">
+				<p>
+					これにまずはHello Worldと表示できるように出力用のタグを書いていきます.
+					<br />
+					Doltengが作成してくれたテンプレートに対して、
+					<code>Hello &lt;span id="name"&gt;&lt;/span&gt;</code>という1行を追加しましょう.
+					<br />
+					このようになります.
+				</p>
+				<br />
+				<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form id="Form">
+<div><span id="messages"></span></div>
+Hello&nbsp;<span id="name"></span>
+</form>
+</body></html>]]></source>
+				<p>
+					追加した1行にはどのような意味があるのでしょうか.
+					<br />
+					よく注目してみるとspanタグにidがついているのがわかるはずです.
+					<br />
+					このid属性がTeedaの肝になります
+					<br />
+					<font color="red">TeedaではHTMLとそれに対応するPOJOクラス（Pageクラス）を1対1にマッピングするために、Pageクラスのプロパティは各HTMLタグのidによってマッピングされます。</font>
+					<br />
+					（Pageモデルの詳細については<a href="../concept/page.html">ページモデル</a>を参照してください。）
+					<br />
+					この原則をあてはめると、hello.htmlに対してはHelloPageクラスがいる必要があります.
+					<br />
+					またhello.htmlのnameというspanタグに対応するように、HelloPageにnameというプロパティが対応します.
+					<br />
+					では次のセクションでHTMLに対応するPageクラスを作成してみましょう.
+				</p>
+			</subsection>
+		</section>
+		<section name="Pageクラスの作成">
+			<subsection name="HelloPageの作成">
+				<p>
+					hello.htmlに対応するPageクラスを作成します.
+					<br />
+					ここでもEclipseの新規作成から通常のJavaクラスとしてPageクラスを作成することも出来ますが、
+					<br />
+					Doltengを使ってhello.htmlからPageクラスを簡単に作ることが可能です.
+				</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/page-dialog.png" alt="HelloPageの作成" />
+				<br />
+				<br />
+				<p>
+					hello.html上で右クリック→Dolteng→Create New Page classでPageクラスを作成できます.ダイアログが出ますが、そのままFinishボタンを押してください
+					<br />
+					すると下記のようなHelloPageクラスが作成されます.
+				</p>
+				<br />
+				<source><![CDATA[
+package examples.teeda.web.hello;
+
+public class HelloPage {
+
+	public String name;
+
+	public Class initialize() {
+		return null;
+	}
+
+	public Class prerender() {
+		return null;
+	}
+}]]></source>
+				<p>
+					みてわかるとおり、hello.htmlで定義してあったid属性にnameという値を持つプロパティがPage作成時に定義されています.
+					<br />
+					またSeasar2.4のpublicフィールド機能により、nameプロパティのgetter/setterも必要ありません.
+					<br />
+					(initialize/prerenderメソッドについては後述するので今は心配ありません.)
+				</p>
+			</subsection>
+			<subsection name="Pageマーカーによるバインドの確認">
+				<p>
+					HelloPageクラスのnameプロパティの左横部分に注目してください.
+					<br />
+					なにやら左右の矢印のようなものが見えます.
+					<br />
+					これはDoltengによるPageマーカーの機能です.
+					<br />
+					PageマーカーとはTeedaのHTMLテンプレートとPageクラスのプロパティがバインドされていることを示します.
+					<br />
+					HTMLテンプレートのidとPageのプロパティが正しくバインドされているかどうかも一目瞭然になっています。
+				</p>
+				<br />
+				<br />
+				<img src="../../images/extension/tutorial/helloPage.png" alt="HelloPageクラス" />
+				<br />
+				<br />
+			</subsection>
+			<subsection name="HelloPageクラスの修正">
+				<p>
+					ではHelloPageクラスのnameプロパティに適当な文字列を与えて動かしてみましょう.
+					<br />
+					下記のようになります.
+				</p>			
+				<source><![CDATA[
+package examples.teeda.web.hello;
+
+public class HelloPage {
+
+	public String name = "Teeda";
+
+	public Class initialize() {
+		return null;
+	}
+
+	public Class prerender() {
+		return null;
+	}
+
+}]]></source>
+			</subsection>
+		</section>
+		<section name="動かしてみよう">
+			<p>
+				では出来上がったHelloPageを動かしてみましょう.
+				<br />
+				Tomcatプラグインを使って、パッケージエクスプローラーのteeda-tutorialプロジェクト上で
+				<br />
+				右クリック→Tomcatプロジェクト→コンテキスト定義を更新をして、Tomcatを起動します.
+			</p>
+			<p>
+				次にhello.htmlにフォーカスをあてて、右クリック→Dolteng→View On Serverを実行します.
+				<br />
+				Hello Teedaと表示されたでしょうか？
+			</p>
+		</section>
+		<section name="まとめ">
+			<p>このチャプターでは以下のようなことを学びました.</p>
+			<ul>
+				<li>Teedaアプリケーションの作成方法の基礎
+				</li>
+				<li>TeedaのHTMLテンプレートとPageクラスの関係
+				</li>
+				<li>Teedaアプリケーション作成時の手順とDolteng活用方法</li>
+				<li>DoltengでTeedaプロジェクトを作る</li>
+				<li>Teedaアプリケーションを動かす</li>
+			</ul>
+			<p>次のチャプタではテキスト入力の仕方とボタンのサブミット、画面遷移についてを足し算のサンプルを使いながら学びます.</p>
+		</section>
+	</body>
+</document>
