@@ -665,4 +665,16 @@ public class ForeachTest extends TeedaWebTestCase {
 		tester.assertAttributeEqualsById("productItems", "border", "2");
 	}
 
+	public void testGenericStyleClass_TEEDA458() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/foreach/foreach.html");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertAttributeEqualsById("row", "class", "odd");
+	}
+
 }

@@ -50,12 +50,19 @@ public class GenericElementFactory extends AbstractElementProcessorFactory {
         }
         for (Iterator i = elementNode.getPropertyNameIterator(); i.hasNext();) {
             String key = (String) i.next();
-            if ("id".equalsIgnoreCase(key)) {
+            if (JsfConstants.ID_ATTR.equalsIgnoreCase(key)) {
                 continue;
             }
             String propName = id + StringUtil.capitalize(key);
             if (pageDesc.hasDynamicProperty(propName)) {
                 return true;
+            }
+            if (JsfConstants.CLASS_ATTR.equals(key)) {
+                propName = id +
+                        StringUtil.capitalize(JsfConstants.STYLE_CLASS_ATTR);
+                if (pageDesc.hasDynamicProperty(propName)) {
+                    return true;
+                }
             }
             String value = elementNode.getProperty(key);
             if (value != null &&

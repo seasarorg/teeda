@@ -57,6 +57,15 @@ public class GenericElementFactoryTest extends ElementProcessorFactoryTestCase {
         assertEquals(true, factory.isMatch(elementNode, pageDesc, null));
     }
 
+    public void testIsMatch3() throws Exception {
+        Map properties = new HashMap();
+        properties.put("id", "hogeRow");
+        properties.put("class", "background-color:red");
+        ElementNode elementNode = createElementNode("tr", properties);
+        PageDesc pageDesc = createPageDesc(FooPage.class, "fooPage");
+        assertEquals(true, factory.isMatch(elementNode, pageDesc, null));
+    }
+
     public void testCreateProcessor() throws Exception {
         // ## Arrange ##
         Map properties = new HashMap();

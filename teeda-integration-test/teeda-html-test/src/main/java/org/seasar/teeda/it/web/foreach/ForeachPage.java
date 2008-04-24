@@ -23,6 +23,8 @@ public class ForeachPage {
 
 	private FooItem[] aaaItems;
 
+	public int aaaIndex;
+
 	public String initialize() {
 		System.out.println("<initialize>foo:" + foo);
 		System.out.println("<initialize>bar:" + bar);
@@ -86,6 +88,10 @@ public class ForeachPage {
 
 	public String getFooStyle() {
 		return "background-color:yellow";
+	}
+
+	public String getRowStyleClass() {
+		return (aaaIndex + 1) % 2 == 0 ? "even" : "odd";
 	}
 
 	public static class FooItem {

@@ -48,6 +48,10 @@ public class ForeachPage {
 		}
 	}
 
+	public String getRowStyleClass() {
+		return (aaaIndex + 1) % 2 == 0 ? "even" : "odd";
+	}
+
 	public static class FooItem {
 
 		public String foo;
