@@ -15,6 +15,8 @@
  */
 package org.seasar.teeda.it.web.validator;
 
+import org.seasar.teeda.extension.annotation.validator.Required;
+
 public class ValidatorPage {
 
 	public static final String aaa_TGreaterThanConstantValidator = "targetCommand='doValidate, doValidate2'";
@@ -26,6 +28,9 @@ public class ValidatorPage {
 	private Integer aaa;
 
 	private Integer bbb;
+
+	@Required(target = "doHoge")
+	public Integer ccc;
 
 	public Integer getBbb() {
 		return bbb;
@@ -53,6 +58,9 @@ public class ValidatorPage {
 
 	public String doNoValidate2() {
 		return null;
+	}
+
+	public void doHoge() {
 	}
 
 	public String initialize() {

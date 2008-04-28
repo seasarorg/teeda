@@ -32,4 +32,19 @@ public class TargetCommandUtilTest extends TeedaTestCase {
         assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(),
                 new String[] { "aaa", "bbb" }));
     }
+
+    public void testIsTargetCommandWithHyphen() throws Exception {
+        assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(), null));
+        assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(),
+                new String[] {}));
+        getExternalContext().getRequestMap().put(
+                JsfConstants.SUBMITTED_COMMAND, "aaa-1");
+        assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(), null));
+        assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(),
+                new String[] { "aaa" }));
+        assertTrue(TargetCommandUtil.isTargetCommand(getFacesContext(),
+                new String[] { "aaa-1" }));
+        assertFalse(TargetCommandUtil.isTargetCommand(getFacesContext(),
+                new String[] { "aaa-2", "bbb" }));
+    }
 }

@@ -27,66 +27,107 @@ import org.seasar.teeda.unit.web.TeedaWebTester;
  */
 public class ValidatorTest extends TeedaWebTestCase {
 
-    public static Test suite() throws Exception {
-        return setUpTest(ValidatorTest.class);
-    }
+	public static Test suite() throws Exception {
+		return setUpTest(ValidatorTest.class);
+	}
 
-    private Locale defaultLocale;
+	private Locale defaultLocale;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        defaultLocale = Locale.getDefault();
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		defaultLocale = Locale.getDefault();
+	}
 
-    protected void tearDown() throws Exception {
-        Locale.setDefault(defaultLocale);
-        super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception {
+		Locale.setDefault(defaultLocale);
+		super.tearDown();
+	}
 
-    public void testValidatorTargetOn() throws Exception {
-        // ## Arrange ##
-        Locale.setDefault(Locale.JAPAN);
-        TeedaWebTester tester = new TeedaWebTester();
-        //tester.setLocale(Locale.JAPAN);
+	public void testValidatorTargetOn() throws Exception {
+		// ## Arrange ##
+		Locale.setDefault(Locale.JAPAN);
+		TeedaWebTester tester = new TeedaWebTester();
+		// tester.setLocale(Locale.JAPAN);
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/validator/validator.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/validator.html");
+		tester.dumpHtml();
 
-        tester.setTextById("aaa", "0");
-        tester.setTextById("bbb", "0");
+		tester.setTextById("aaa", "0");
+		tester.setTextById("bbb", "0");
 
-        tester.submitByName("validatorForm:doValidate");
+		tester.submitByName("validatorForm:doValidate");
 
-        // ## Assert ##
-        tester.dumpHtml();
-        tester.assertTextInElementById("allMessages", "aaa");
-        tester.assertTextInElementById("allMessages", "bbb");
-        //tester.assertTextPresent("aaaは0よりも大きくなくてはいけません。");
-        //tester.assertTextPresent("bbbは0よりも大きくなくてはいけません。");
-    }
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertTextInElementById("allMessages", "aaa");
+		tester.assertTextInElementById("allMessages", "bbb");
+		// tester.assertTextPresent("aaaは0よりも大きくなくてはいけません。");
+		// tester.assertTextPresent("bbbは0よりも大きくなくてはいけません。");
+	}
 
-    public void testValidatorTargetOff() throws Exception {
-        // ## Arrange ##
-        TeedaWebTester tester = new TeedaWebTester();
-        tester.setLocale(Locale.JAPAN);
+	public void testValidatorTargetOff() throws Exception {
+		// ## Arrange ##
+		TeedaWebTester tester = new TeedaWebTester();
+		tester.setLocale(Locale.JAPAN);
 
-        // ## Act ##
-        tester.beginAt(getBaseUrl(), "view/validator/validator.html");
-        tester.dumpHtml();
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/validator.html");
+		tester.dumpHtml();
 
-        tester.setTextById("aaa", "0");
-        tester.setTextById("bbb", "0");
+		tester.setTextById("aaa", "0");
+		tester.setTextById("bbb", "0");
 
-        tester.submitByName("validatorForm:doNoValidate");
+		tester.submitByName("validatorForm:doNoValidate");
 
-        // ## Assert ##
-        tester.dumpHtml();
-        tester.assertElementNotPresentById("allMessages");
-        //tester.assertTextNotInElementById("allMessages", "aaa");
-        //tester.assertTextNotInElementById("allMessages", "bbb");
-        //tester.assertTextNotPresent("aaaは0よりも大きくなくてはいけません。");
-        //tester.assertTextNotPresent("bbbは0よりも大きくなくてはいけません。");
-    }
+		// ## Assert ##
+		tester.dumpHtml();
+		tester.assertElementNotPresentById("allMessages");
+		// tester.assertTextNotInElementById("allMessages", "aaa");
+		// tester.assertTextNotInElementById("allMessages", "bbb");
+		// tester.assertTextNotPresent("aaaは0よりも大きくなくてはいけません。");
+		// tester.assertTextNotPresent("bbbは0よりも大きくなくてはいけません。");
+	}
+
+	public void testValidatorWithHyphen_TEEDA460() throws Exception {
+		// ## Arrange ##
+		Locale.setDefault(Locale.JAPAN);
+		TeedaWebTester tester = new TeedaWebTester();
+		// tester.setLocale(Locale.JAPAN);
+
+		// ## Act ##
+		tester.beginAt(getBaseUrl(), "view/validator/validator.html");
+		tester.dumpHtml();
+		tester.submitByName("validatorForm:doHoge");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextInElementById("allMessages", "CCC");
+
+		// ## Act ##
+		tester.submitByName("validatorForm:doHoge-2");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertTextInElementById("allMessages", "CCC");
+
+		// ## Act ##
+		tester.setTextById("ccc", "0");
+		tester.submitByName("validatorForm:doHoge");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementNotPresentById("allMessages");
+
+		// ## Act ##
+		tester.setTextById("ccc", "0");
+		tester.submitByName("validatorForm:doHoge-2");
+		tester.dumpHtml();
+
+		// ## Assert ##
+		tester.assertElementNotPresentById("allMessages");
+	}
 
 }

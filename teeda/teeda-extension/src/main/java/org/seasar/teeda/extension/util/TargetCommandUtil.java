@@ -38,12 +38,14 @@ public abstract class TargetCommandUtil {
         if (command == null) {
             return true;
         }
+        int pos = command.indexOf('-');
+        String normalized = pos == -1 ? command : command.substring(0, pos);
         for (int i = 0; i < forValues.length; ++i) {
             String t = forValues[i].trim();
             if (StringUtil.isEmpty(t)) {
                 continue;
             }
-            if (command.equals(t)) {
+            if (command.equals(t) || normalized.equals(t)) {
                 return true;
             }
         }
