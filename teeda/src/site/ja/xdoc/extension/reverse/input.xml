@@ -95,6 +95,12 @@
 								動的なラジオボタンでテーブルを使わずに描画するには
 							</a>
 						</li>
+						<li>
+							<a
+								href="#動的なラジオボタンで選択されたラベルをポストバック時に受け取るには">
+								動的なラジオボタンで選択されたラベルをポストバック時に受け取るには
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li>
@@ -165,6 +171,12 @@
 							<a
 								href="#単一選択の選択リストで選択してくださいを出さないようにするには">
 								単一選択の選択リストで「選択してください」を出さないようにするには
+							</a>
+						</li>
+						<li>
+							<a
+								href="#単一選択の選択リストで選択されたラベルをポストバック時に受け取るには">
+								単一選択の選択リストで選択されたラベルをポストバック時に受け取るには
 							</a>
 						</li>
 					</ul>
@@ -1272,6 +1284,104 @@ public List<Map> selectItems;
 <label><input type="radio" name="form:select" value="C" />CCCC</label>
 ]]></source>
 			</subsection>
+
+			<subsection name="動的なラジオボタンで選択されたラベルをポストバック時に受け取るには">
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時に， 選択された項目の値だけではなく， ラベルもプロパティで受け取るには，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素よりも
+					<strong>前</strong>
+					に，
+					<a href="#隠しフィールドにシリアライズしたオブジェクトを保存するには">隠しフィールド</a>
+					(
+					<code>input</code>
+					要素) を用意します．
+					<code>input</code>
+					要素の
+					<code>id</code>
+					属性は，
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値に
+					<code>ItemsSave</code>
+					を加えた名前を指定します．
+				</p>
+				<p>
+					ページクラスにラベルを受け取るプロパティを用意します． プロパティは
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値に
+					<code>Label</code>
+					を加えた名前で， 型は
+					<code>String</code>
+					とします．
+				</p>
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択された項目のラベルが
+					<code>&lt;span&gt;</code>
+					要素または
+					<code>&lt;div&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値に
+					<code>Label</code>
+					を加えた名前のプロパティに設定されます． ただし， 「
+					<a href="validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="hidden" id="selectItemsSave" />
+<div id="select">
+    <input type="radio" name="select" /> Item1
+    <input type="radio" name="select" /> Item2
+</div>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public String selectLabel;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="hidden" id="selectItemsSave" name="form:selectItemsSave" value="..." />
+<table id="select">
+    <tr>
+        <td>
+            <label><input type="radio" name="form:select" value="A" />AAAA</label>
+        </td>
+        <td>
+            <label><input type="radio" name="form:select" value="B" />BBBB</label>
+        </td>
+        <td>
+            <label><input type="radio" name="form:select" value="C" />CCCC</label>
+        </td>
+    </tr>
+</table>
+]]></source>
+				<p>
+					最初のラジオボタンを選択してサブミットすると， ページクラスの
+					<code>selectLabel</code>
+					プロパティには，
+					<code>"AAAA"</code>
+					が設定されます．
+				</p>
+			</subsection>
 		</section>
 
 		<section name="チェックボックス (単一項目)">
@@ -1939,6 +2049,10 @@ public List<Map> optionItems;
 					要素を記述して
 					<code>id</code>
 					属性を付けます．
+					<code>id</code>
+					属性は
+					<code>Items</code>
+					で終わる値を指定します．
 					<code>&lt;select&gt;</code>
 					要素の内容には
 					<code>&lt;option&gt;</code>
@@ -1951,16 +2065,16 @@ public List<Map> optionItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前のプロパティで， 選択された項目の値を保持します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティで， 選択された項目の値を保持します．
 				</p>
 				<p>
 					二つめは
 					<code>&lt;select&gt;</code>
 					の
 					<code>id</code>
-					属性の値に
-					<code>Items</code>
-					を加えた名前で， 型は次のいずれかです．
+					属性の値と同じ名前で， 型は次のいずれかです．
 				</p>
 				<ul>
 					<li>
@@ -2019,7 +2133,7 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select">
+<select id="selectItems">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2034,7 +2148,7 @@ public List<Map> selecteItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:selected">
+<select id="selectItems" name="form:selected">
     <option value="">選択してください</option>
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2054,14 +2168,16 @@ public List<Map> selecteItems;
 
 			<subsection name="単一選択の選択リストで項目が選択された状態で表示するには">
 				<p>
-					<code>&lt;input&gt;</code>
+					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前のプロパティに， 選択状態にしたい項目の値を設定します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティに， 選択状態にしたい項目の値を設定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select">
+<select id="selectItems">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2078,7 +2194,7 @@ public List<Map> selecteItems;
 					を設定すると， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:selected">
+<select id="selectItems" name="form:selected">
     <option value="">選択してください</option>
     <option value="t" selected="selected">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2099,7 +2215,9 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前のプロパティを必須項目にします．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティを必須項目にします．
 				</p>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -2109,7 +2227,7 @@ public List<Map> selecteItems;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<select id="select" name="form:selected">
+<select id="selectItems" name="form:selected">
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
     <option value="c">Cubby</option>
@@ -2128,6 +2246,94 @@ public List<Map> selecteItems;
     </property>
 </component>
 ]]></source>
+			</subsection>
+
+			<subsection name="単一選択の選択リストで選択されたラベルをポストバック時に受け取るには">
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時に， 選択された項目の値だけではなく， ラベルもプロパティで受け取るには，
+					<code>&lt;select&gt;</code>
+					要素よりも
+					<strong>前</strong>
+					に，
+					<a href="#隠しフィールドにシリアライズしたオブジェクトを保存するには">隠しフィールド</a>
+					(
+					<code>input</code>
+					要素) を用意します．
+					<code>input</code>
+					要素の
+					<code>id</code>
+					属性は，
+					<code>&lt;select&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値に
+					<code>Save</code>
+					を加えた名前を指定します．
+				</p>
+				<p>
+					ページクラスにラベルを受け取るプロパティを用意します． プロパティは
+					<code>&lt;select&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値の末尾の
+					<code>Items</code>
+					を
+					<code>Label</code>
+					を置き換えた名前で， 型は
+					<code>String</code>
+					とします．
+				</p>
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時，ブラウザで選択された項目のラベルが
+					<code>&lt;select&gt;</code>
+					要素の
+					<code>id</code>
+					属性の値の末尾の
+					<code>Items</code>
+					を
+					<code>Label</code>
+					を置き換えた名前のプロパティに設定されます． ただし， 「
+					<a href="validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="hidden" id="selectItemsSave" />
+<select id="selectItems">
+    <option value="0">dummy</option>
+</select>
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String select;
+public String selectLabel;
+public List<Map> selectItems;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>selectItems</code>
+					が3つの要素を持つ場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="hidden" id="selectItemsSave" name="form:selectItemsSave" value="..." />
+<select id="selectItems" name="form:selectItems">
+    <option value="">選択してください</option>
+    <option value="t" selected="selected">Teeda</option>
+    <option value="s">SAStruts</option>
+    <option value="c">Cubby</option>
+</select>
+]]></source>
+				<p>
+					選択リストで
+					<code>Teeda</code>
+					を選択してサブミットすると， ページクラスの
+					<code>selectLabel</code>
+					プロパティには，
+					<code>"Teeda"</code>
+					が設定されます．
+				</p>
 			</subsection>
 		</section>
 
@@ -2163,6 +2369,10 @@ public List<Map> selecteItems;
 					要素を記述して
 					<code>id</code>
 					属性を付けます．
+					<code>id</code>
+					属性は
+					<code>Items</code>
+					で終わる値を指定します．
 					<code>&lt;select&gt;</code>
 					要素の内容には
 					<code>&lt;option&gt;</code>
@@ -2175,16 +2385,16 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前で，配列型のプロパティです．このプロパティは選択された項目の値を保持します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前で，配列型のプロパティです．このプロパティは選択された項目の値を保持します．
 				</p>
 				<p>
 					二つめは
 					<code>&lt;select&gt;</code>
 					の
 					<code>id</code>
-					属性の値に
-					<code>Items</code>
-					を加えた名前で， 型は次のいずれかです．
+					属性の値と同じ名前で， 型は次のいずれかです．
 				</p>
 				<ul>
 					<li>
@@ -2243,7 +2453,7 @@ public List<Map> selecteItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select" multiple="multiple">
+<select id="selectItems" multiple="multiple">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2258,7 +2468,7 @@ public List<Map> selecteItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:selected" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="">選択してください</option>
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2282,14 +2492,16 @@ public List<Map> selecteItems;
 
 			<subsection name="複数選択の選択リストで項目が選択された状態で表示するには">
 				<p>
-					<code>&lt;input&gt;</code>
+					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前のプロパティに， 選択状態にしたい項目の値を要素とする配列を設定します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティに， 選択状態にしたい項目の値を要素とする配列を設定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select" multiple="multiple">
+<select id="selectItems" multiple="multiple">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2308,7 +2520,7 @@ public List<Map> selecteItems;
 					を要素とする配列を設定すると， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:selected" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="">選択してください</option>
     <option value="t" selected="selected">Teeda</option>
     <option value="s" selected="selected">SAStruts</option>
@@ -2329,7 +2541,9 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性と同じ名前のプロパティを必須項目にします．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティを必須項目にします．
 				</p>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -2339,7 +2553,7 @@ public List<Map> selecteItems;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<select id="select" name="form:selected" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
     <option value="c">Cubby</option>

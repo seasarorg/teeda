@@ -53,8 +53,8 @@
 				ページを構成するのは，静的なテンプレートとなるHTMLと， 動的な情報を持つページクラスです．
 				テンプレートHTMLとページクラスは1対1に対応します．
 			</p>
-			<img src="../../images/extension/concept/page1.png" width="466"
-				height="183" alt="ページモデル" />
+			<img src="../../images/extension/concept/page1.png"
+				width="466" height="183" alt="ページモデル" />
 		</section>
 
 		<section name="テンプレートHTML">
@@ -115,8 +115,8 @@ public class HelloPage {
 				実行時， テンプレートHTMLの動的な部分は対応するページクラスのプロパティで置き換えられて，
 				ブラウザに向けてレンダリングされます．
 			</p>
-			<img src="../../images/extension/concept/page2.png" width="466"
-				height="391" alt="レンダリング" />
+			<img src="../../images/extension/concept/page2.png"
+				width="466" height="391" alt="レンダリング" />
 			<p>
 				上のテンプレートHTMLの例にページクラスの例が適用されると，レンダリングされるHTMLは次のようになります．
 			</p>
@@ -147,8 +147,8 @@ public class HelloPage {
 				<code>&lt;form&gt;</code>
 				をサブミットした場合の宛先 (action) は， 常に表示されているそのページ自身となります．
 			</p>
-			<img src="../../images/extension/concept/page3.png" width="466"
-				height="429" alt="ポストバック" />
+			<img src="../../images/extension/concept/page3.png"
+				width="466" height="429" alt="ポストバック" />
 			<p>
 				このように，
 				<code>&lt;form&gt;</code>
@@ -225,6 +225,14 @@ public class HelloPage {
 				<source><![CDATA[
 http://localhost:8080/teeda-html-example/view/hello/hello.html
 ]]></source>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						HTMLファイル名にアンダースコア (
+						<code>'_'</code>
+						) を含めることはできません．
+					</p>
+				</div>
 			</subsection>
 
 			<subsection name="ページクラスの命名規約">
@@ -255,6 +263,14 @@ examples.teeda.web.hello.HelloPage
 					<code>examples.teeda</code>
 					がルートパッケージです．
 				</p>
+				<div class="caution">
+					<div>注意点</div>
+					<p>
+						ページクラス名にアンダースコア (
+						<code>'_'</code>
+						) を含めることはできません．
+					</p>
+				</div>
 			</subsection>
 
 			<subsection name="ページ名の命名規約">

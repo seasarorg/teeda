@@ -20,6 +20,9 @@
 						プロパティファイルの内容をリンクの文字列にするには
 					</a>
 				</li>
+				<li>
+					<a href="#新しいウィンドウを開くには">新しいウィンドウを開くには</a>
+				</li>
 			</ul>
 
 			<p>次のような場合はリンクを動的に作成する必要があります．</p>
@@ -193,6 +196,26 @@ foo.link=次ページへ
 						</a>
 					</li>
 				</ul>
+			</subsection>
+
+			<subsection name="新しいウィンドウを開くには">
+				<p>
+					<code>&lt;a&gt;</code>
+					要素の
+					<code>href</code>
+					属性で指定するURLに
+					<code>newwindow=true</code>
+					というパラメータを含めます．
+				</p>
+				<p>
+					このパラメータを指定することにより， 新しいウィンドウ用の
+					<a href="../concept/scope.html#スコープ">スコープ</a>
+					が作成され， 元のウィンドウと状態が混在することを回避することができます．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<a target="_blank" href="next.html?newwindow=true">新しいウィンドウで次ページへ</a>
+]]></source>
 			</subsection>
 		</section>
 	</body>
