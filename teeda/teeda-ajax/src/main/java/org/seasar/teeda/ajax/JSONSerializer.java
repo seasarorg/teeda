@@ -29,19 +29,62 @@ import org.seasar.framework.beans.factory.BeanDescFactory;
 
 /**
  * JSON形式の文字列を解析します。
+ * <p>
+ * このクラスはTeeda以外でも使えるようにSeasar2に移植されました。
+ * 今後はSeasar2のJSONSerializerを使用してください。
+ * </p>
+ * 
  * @author mopemope
+ * @deprecated
+ * @see org.seasar.framework.util.JSONSerializer
  */
 public class JSONSerializer {
+    private static final String COMMA = ",";
 
+    private static final String COLON = ":";
+
+    private static final String SINGLE_QUOTE = "'";
+
+    private static final String DOUBLE_QUOTE = "\"";
+
+    private static final String NULL_STRING = "null";
+
+    private static final String TRUE_STRING = "true";
+
+    private static final String FALSE_STRING = "false";
+
+    private static final String START_BRACKET = "[";
+
+    private static final String END_BRACKET = "]";
+
+    private static final String START_BRACE = "{";
+
+    private static final String END_BRACE = "}";
+
+    /**
+     * ObjectをJSONにシリアライズします。
+     * 
+     * @param o
+     *            シリアライズ対象{@link java.lang.Object}
+     * @return JSON形式の文字列
+     */
     public static String serialize(Object o) {
         StringBuffer buf = new StringBuffer(100);
         appendSerializeObject(buf, o);
         return buf.toString();
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param o
+     *            シリアライズ対象{@link java.lang.Object}
+     */
     public static void appendSerializeObject(StringBuffer buf, Object o) {
         if (o == null) {
-            buf.append(AjaxConstants.NULL_STRING);
+            buf.append(JSONSerializer.NULL_STRING);
         } else if (o instanceof String) {
             buf.append(quote((String) o));
         } else if (o instanceof Float) {
@@ -65,6 +108,14 @@ public class JSONSerializer {
         }
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param f
+     *            シリアライズ対象{@link java.lang.Float}
+     */
     public static void appendSerializeFloat(StringBuffer buf, Float f) {
         if (f.isNaN() || f.isInfinite()) {
             throw new IllegalArgumentException(f.toString());
@@ -72,6 +123,14 @@ public class JSONSerializer {
         buf.append(f.toString());
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param d
+     *            シリアライズ対象{@link java.lang.Double}
+     */
     public static void appendSerializeDouble(StringBuffer buf, Double d) {
         if (d.isNaN() || d.isInfinite()) {
             throw new IllegalArgumentException(d.toString());
@@ -79,72 +138,117 @@ public class JSONSerializer {
         buf.append(d.toString());
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param b
+     *            シリアライズ対象{@link java.lang.Boolean}
+     */
     public static void appendSerializeBoolean(StringBuffer buf, Boolean b) {
         if (Boolean.TRUE.equals(b)) {
-            buf.append(AjaxConstants.TRUE_STRING);
+            buf.append(JSONSerializer.TRUE_STRING);
         } else {
-            buf.append(AjaxConstants.FALSE_STRING);
+            buf.append(JSONSerializer.FALSE_STRING);
         }
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param array
+     *            シリアライズ対象{@link java.lang.Object}配列
+     */
     public static void appendSerializeArray(StringBuffer buf, Object[] array) {
         int length = array.length;
-        buf.append(AjaxConstants.START_BRACKET);
+        buf.append(JSONSerializer.START_BRACKET);
         for (int i = 0; i < length; ++i) {
             appendSerializeObject(buf, array[i]);
-            buf.append(AjaxConstants.COMMA);
+            buf.append(JSONSerializer.COMMA);
         }
         if (length > 0) {
             buf.setLength(buf.length() - 1);
         }
-        buf.append(AjaxConstants.END_BRACKET);
+        buf.append(JSONSerializer.END_BRACKET);
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param map
+     *            シリアライズ対象{@link java.util.Map}
+     */
     public static void appendSerializeMap(StringBuffer buf, Map map) {
-        buf.append(AjaxConstants.START_BRACE);
+        buf.append(JSONSerializer.START_BRACE);
         for (Iterator i = map.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
-            buf.append(key + AjaxConstants.COLON);
+            buf.append(quote(key) + JSONSerializer.COLON);
             appendSerializeObject(buf, map.get(key));
-            buf.append(AjaxConstants.COMMA);
+            buf.append(JSONSerializer.COMMA);
         }
         if (map.size() > 0) {
             buf.setLength(buf.length() - 1);
         }
-        buf.append(AjaxConstants.END_BRACE);
+        buf.append(JSONSerializer.END_BRACE);
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param bean
+     *            シリアライズ対象{@link java.lang.Object}
+     */
     public static void appendSerializeBean(StringBuffer buf, Object bean) {
-        buf.append(AjaxConstants.START_BRACE);
+        buf.append(JSONSerializer.START_BRACE);
         BeanDesc beanDesc = BeanDescFactory.getBeanDesc(bean.getClass());
         for (int i = 0; i < beanDesc.getPropertyDescSize(); ++i) {
             PropertyDesc pd = beanDesc.getPropertyDesc(i);
-            if (pd.isReadable()) {
-                buf.append(pd.getPropertyName() + AjaxConstants.COLON);
-                appendSerializeObject(buf, pd.getValue(bean));
-                buf.append(AjaxConstants.COMMA);
-            }
+            buf.append(pd.getPropertyName() + JSONSerializer.COLON);
+            appendSerializeObject(buf, pd.getValue(bean));
+            buf.append(JSONSerializer.COMMA);
         }
         if (beanDesc.getPropertyDescSize() > 0) {
             buf.setLength(buf.length() - 1);
         }
-        buf.append(AjaxConstants.END_BRACE);
+        buf.append(JSONSerializer.END_BRACE);
     }
 
+    /**
+     * 指定したバッファにJSONシリアライズした結果を追加します。
+     * 
+     * @param buf
+     *            {@link java.lang.StringBuffer}
+     * @param o
+     *            シリアライズ対象{@link java.lang.Object}
+     */
     public static void appendSerializeObjectArray(StringBuffer buf, Object o) {
         int length = Array.getLength(o);
-        buf.append(AjaxConstants.START_BRACKET);
+        buf.append(JSONSerializer.START_BRACKET);
         for (int i = 0; i < length; i++) {
             Object value = Array.get(o, i);
             appendSerializeObject(buf, value);
-            buf.append(AjaxConstants.COMMA);
+            buf.append(JSONSerializer.COMMA);
         }
         if (length > 0) {
             buf.setLength(buf.length() - 1);
         }
-        buf.append(AjaxConstants.END_BRACKET);
+        buf.append(JSONSerializer.END_BRACKET);
     }
 
+    /**
+     * 文字列を引用付で囲みます。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 引用付で囲まれた{@link java.lang.String}
+     */
     public static String quote(String str) {
         if (str == null || str.length() == 0) {
             return "\"\"";
@@ -190,71 +294,147 @@ public class JSONSerializer {
         return sb.toString();
     }
 
+    /**
+     * 指定した文字列がJSONのObject形式か判断します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return JSONのObject形式であればtrue、そうでなければfalse
+     */
     public static boolean isObject(String str) {
-        return str.startsWith(AjaxConstants.START_BRACE)
-                && str.endsWith(AjaxConstants.END_BRACE);
+        return str.startsWith(JSONSerializer.START_BRACE) &&
+                str.endsWith(JSONSerializer.END_BRACE);
     }
 
+    /**
+     * 指定した文字列がJSONのArray形式か判断します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return JSONのArray形式であればtrue、そうでなければfalse
+     */
     public static boolean isArray(String str) {
-        return str.startsWith(AjaxConstants.START_BRACKET)
-                && str.endsWith(AjaxConstants.END_BRACKET);
+        return str.startsWith(JSONSerializer.START_BRACKET) &&
+                str.endsWith(JSONSerializer.END_BRACKET);
     }
 
+    /**
+     * 指定した文字列がJSONのString形式か判断します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return JSONのString形式であればtrue、そうでなければfalse
+     */
     public static boolean isString(String str) {
-        return str.startsWith(AjaxConstants.SINGLE_QUOTE)
-                && str.endsWith(AjaxConstants.SINGLE_QUOTE);
+        return (str.startsWith(JSONSerializer.SINGLE_QUOTE) &&
+                str.endsWith(JSONSerializer.SINGLE_QUOTE) || str
+                .startsWith(JSONSerializer.DOUBLE_QUOTE) &&
+                str.endsWith(JSONSerializer.DOUBLE_QUOTE));
     }
 
+    /**
+     * 指定したJSON文字列を評価します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 評価された{@link javac.lang.Object}
+     */
+    public static Object eval(String str) {
+        if (JSONSerializer.isObject(str)) {
+            return JSONSerializer.evalMap(str);
+        } else if (JSONSerializer.isArray(str)) {
+            return JSONSerializer.evalArray(str);
+        } else if (JSONSerializer.isString(str)) {
+            return JSONSerializer.evalString(str);
+        } else {
+            return JSONSerializer.evalInt(str);
+        }
+    }
+
+    /**
+     * 指定したJSON文字列を評価します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 評価された{@link javac.util.Map}
+     */
     public static Map evalMap(String str) {
         Map map = new HashMap();
         StringBuffer buf = new StringBuffer();
         String key = null;
         String value = null;
         boolean valueParse = false;
-        int braceStart = 0;
+        boolean isListedData = false;
+        boolean isMappedData = false;
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             switch (c) {
             case '{':
                 if (valueParse) {
-                    buf.append(c);
-                    braceStart++;
-                }
-                break;
-            case '}':
-                if (valueParse) {
-                    if (braceStart > 0) {
-                        buf.append(c);
-                        braceStart--;
+                    String sub = str.substring(i, str.length() - 1);
+                    int count = 0;
+                    for (int j = 0; j < sub.length(); ++j) {
+                        char sc = sub.charAt(j);
+                        if (sc == '{') {
+                            count++;
+                            continue;
+                        }
+                        if (sc == '}' && count > 1) {
+                            count--;
+                        } else if (sc == '}' && count == 1) {
+                            String mapStr = sub.substring(0, j + 1);
+                            Map submap = JSONSerializer.evalMap(mapStr);
+                            map.put(key, submap);
+                            i = i + j;
+                            isMappedData = true;
+                            break;
+                        }
                     }
                 }
                 break;
+            case '}':
+                break;
             case '[':
                 if (valueParse) {
-                    buf.append(c);
-                    braceStart++;
+                    String sub = str.substring(i, str.length() - 1);
+                    int count = 0;
+                    for (int j = 0; j < sub.length(); ++j) {
+                        char sc = sub.charAt(j);
+                        if (sc == '[') {
+                            count++;
+                            continue;
+                        }
+                        if (sc == ']' && count > 1) {
+                            count--;
+                        } else if (sc == ']' && count == 1) {
+                            String arrayStr = sub.substring(0, j + 1);
+                            List list = JSONSerializer.evalArray(arrayStr);
+                            map.put(key, list);
+                            i = i + j;
+                            isListedData = true;
+                            break;
+                        }
+                    }
                 }
                 break;
             case ']':
-                if (valueParse) {
-                    buf.append(c);
-                    braceStart--;
-                }
                 break;
             case ':':
-                if (braceStart > 0) {
-                    buf.append(c);
-                } else {
-                    key = JSONSerializer.evalString(buf.toString().trim());
-                    valueParse = true;
-                    buf = new StringBuffer();
-                }
+                key = JSONSerializer.evalString(buf.toString().trim());
+                valueParse = true;
+                buf = new StringBuffer();
+                isListedData = false;
+                isMappedData = false;
                 break;
             case ',':
-                value = buf.toString().trim();
-                valueParse = false;
-                buf = new StringBuffer();
-                evalAndAddMap(key, value, map);
+                if (!isListedData && !isMappedData) {
+                    value = buf.toString().trim();
+                    valueParse = false;
+                    buf = new StringBuffer();
+                    evalAndAddMap(key, value, map);
+                }
+                isListedData = false;
+                isMappedData = false;
                 break;
             default:
                 buf.append(c);
@@ -264,49 +444,65 @@ public class JSONSerializer {
         if (buf.length() > 0) {
             value = buf.toString().trim();
         }
-        evalAndAddMap(key, value, map);
+        if (value != null) {
+            evalAndAddMap(key, value, map);
+        }
         return map;
     }
 
+    /**
+     * 指定したJSON文字列を評価します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 評価された{@link javac.util.List}
+     */
     public static List evalArray(String str) {
         List list = new ArrayList();
         StringBuffer buf = new StringBuffer();
         String value = null;
-        int braceStart = 0;
+        boolean isMappedData = false;
         for (int i = 1; i < str.length() - 1; i++) {
             char c = str.charAt(i);
             switch (c) {
             case '{':
-                buf.append(c);
-                braceStart++;
+                String sub = str.substring(i, str.length() - 1);
+                int count = 0;
+                for (int j = 0; j < sub.length(); ++j) {
+                    char sc = sub.charAt(j);
+                    if (sc == '{') {
+                        count++;
+                        continue;
+                    }
+                    if (sc == '}' && count > 1) {
+                        count--;
+                    } else if (sc == '}' && count == 1) {
+                        String mapStr = sub.substring(0, j + 1);
+                        Map map = JSONSerializer.evalMap(mapStr);
+                        list.add(map);
+                        i = i + j;
+                        isMappedData = true;
+                        break;
+                    }
+                }
                 break;
             case '}':
-                if (braceStart > 0) {
-                    buf.append(c);
-                    braceStart--;
-                }
                 break;
             case '[':
                 buf.append(c);
-                braceStart++;
                 break;
             case ']':
                 buf.append(c);
-                braceStart--;
                 break;
             case ':':
-                if (braceStart > 0) {
-                    buf.append(c);
-                }
                 break;
             case ',':
-                if (braceStart > 0) {
-                    buf.append(c);
-                } else {
+                if (!isMappedData) {
                     value = buf.toString().trim();
                     buf = new StringBuffer();
                     JSONSerializer.evalAndAddList(value, list);
                 }
+                isMappedData = false;
                 break;
             default:
                 buf.append(c);
@@ -316,7 +512,9 @@ public class JSONSerializer {
         if (buf.length() > 0) {
             value = buf.toString().trim();
         }
-        JSONSerializer.evalAndAddList(value, list);
+        if (value != null) {
+            JSONSerializer.evalAndAddList(value, list);
+        }
         return list;
     }
 
@@ -352,6 +550,13 @@ public class JSONSerializer {
         }
     }
 
+    /**
+     * 指定したJSON文字列を評価します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 評価された{@link javac.lang.String}
+     */
     public static String evalString(String str) {
         if (JSONSerializer.isString(str)) {
             return str.substring(1, str.length() - 1);
@@ -359,6 +564,13 @@ public class JSONSerializer {
         return str;
     }
 
+    /**
+     * 指定したJSON文字列を評価します。
+     * 
+     * @param str
+     *            対象の文字列
+     * @return 評価された{@link javac.lang.Integer}
+     */
     public static Integer evalInt(String str) {
         try {
             int i = Integer.parseInt(str);
@@ -367,4 +579,5 @@ public class JSONSerializer {
             return null;
         }
     }
+
 }
