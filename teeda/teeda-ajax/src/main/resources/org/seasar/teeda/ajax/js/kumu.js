@@ -1412,8 +1412,9 @@ Kumu.define('Kumu.FormHelper')({
                 result[name] = [o];
               }
               result[name].push(value);
-            }else{  
-              if(node.tagName.toLowerCase() == 'input' && name.endsWith('Items')){
+            }else{
+              var nodeName = node.tagName.toLowerCase();
+              if((nodeName == 'input' || nodeName == 'select') && name.endsWith('Items')){
                 if(result[name][count]){
                   result[name][count][child_name] = value;
                 }else{
@@ -1432,7 +1433,8 @@ Kumu.define('Kumu.FormHelper')({
             if(type != 't'){
               result[name] = value;
             }else{
-              if(node.tagName.toLowerCase() == 'input' && name.endsWith('Items')){
+              var nodeName = node.tagName.toLowerCase();
+              if((nodeName == 'input' || nodeName == 'select') && name.endsWith('Items')){
                 var child = {};
                 child[child_name] = value;
                 result[name] = [child];                
