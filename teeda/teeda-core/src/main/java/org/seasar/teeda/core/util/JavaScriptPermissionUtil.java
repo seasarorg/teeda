@@ -32,8 +32,11 @@ public class JavaScriptPermissionUtil {
     }
 
     public static boolean isJavaScriptPermitted(FacesContext context) {
-        final String requestServletPath = context.getExternalContext()
+        String requestServletPath = context.getExternalContext()
                 .getRequestPathInfo();
+        if (requestServletPath == null) {
+            requestServletPath = context.getViewRoot().getViewId();
+        }
         final String[] javascriptNotAllowedPath = FacesConfigOptions
                 .getJavascriptNotPermittedPath();
         boolean javaScriptAllowed = JAVASCRIPT_DEFAULT_ALLOW;
@@ -42,11 +45,9 @@ public class JavaScriptPermissionUtil {
         }
         for (int i = 0; i < javascriptNotAllowedPath.length; i++) {
             String notAllowedPath = adjustNotAllowedPath(javascriptNotAllowedPath[i]);
-            if (requestServletPath != null
-                    && StringUtil
-                            .startsWith(requestServletPath, notAllowedPath)
-                    || (requestServletPath == null && notAllowedPath
-                            .equals("/"))) {
+            if (requestServletPath != null &&
+                    StringUtil.startsWith(requestServletPath, notAllowedPath) ||
+                    (requestServletPath == null && notAllowedPath.equals("/"))) {
                 javaScriptAllowed = false;
                 break;
             }

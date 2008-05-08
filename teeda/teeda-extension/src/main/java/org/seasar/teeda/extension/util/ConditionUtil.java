@@ -29,6 +29,7 @@ import javax.faces.internal.scope.PageScope;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.Base64EncodeConverter;
+import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.UIBody;
 import org.seasar.teeda.extension.render.RendererListener;
@@ -128,6 +129,9 @@ public class ConditionUtil {
 
         public void renderBeforeBodyEnd(final FacesContext context)
                 throws IOException {
+            if (!JavaScriptPermissionUtil.isJavaScriptPermitted(context)) {
+                return;
+            }
             final Map conditions = getConditions(context);
             if (conditions == null || conditions.isEmpty()) {
                 return;

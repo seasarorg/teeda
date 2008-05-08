@@ -50,6 +50,11 @@
         <param-value>.html</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>teeda.JAVASCRIPT_NOT_PERMITTED_PATH</param-name>
+        <param-value>/view/i/</param-value>
+    </context-param>
+
 	<!-- REDIRECT URLを明示的に指定したい場合は下記コメントをはずし、適切な値を設定してください -->
 	<!--
     <context-param>

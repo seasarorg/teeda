@@ -16,37 +16,68 @@
 package org.seasar.teeda.extension.util;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import javax.faces.component.UIForm;
+import javax.faces.internal.FacesConfigOptions;
 
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
+import org.seasar.teeda.core.mock.MockExternalContext;
+import org.seasar.teeda.core.unit.TeedaTestCase;
+import org.seasar.teeda.core.util.JavaScriptPermissionUtil;
 import org.seasar.teeda.extension.util.ConditionUtil.ConditionRendererListener;
 
 /**
  * @author koichik
  * 
  */
-public class ConditionUtilTest extends TestCase {
+public class ConditionUtilTest extends TeedaTestCase {
 
-    public void testRenderJavascript() throws Exception {
+    public void testRenderJavascript_Allowed() throws Exception {
+
         Map conditions = new LinkedHashMap();
         conditions.put("isXxx", Boolean.TRUE);
         conditions.put("isNotYyy", Boolean.FALSE);
+        ConditionUtil.setConditions(getFacesContext(), conditions);
 
-        List forms = new ArrayList();
-        forms.add("xxxForm");
-        forms.add("yyyForm");
+        UIForm form = new UIForm();
+        form.setId("xxxForm");
+        ConditionUtil.addForm(getFacesContext(), form);
 
         StringWriter sw = new StringWriter();
         HtmlResponseWriter writer = new HtmlResponseWriter();
         writer.setWriter(sw);
-        ConditionRendererListener.renderJavascript(writer, conditions, forms);
+        getFacesContext().setResponseWriter(writer);
+        new ConditionRendererListener().renderBeforeBodyEnd(getFacesContext());
         writer.close();
         System.out.println(sw);
+        assertTrue(sw.toString().indexOf("<script") != -1);
+    }
 
+    public void testRenderJavascript_NotAllow() throws Exception {
+        MockExternalContext ec = getExternalContext();
+        ec.setRequestPathInfo("/i/hoge");
+        FacesConfigOptions.setJavascriptNotPermittedPath(new String[] { "/i" });
+        assertFalse(JavaScriptPermissionUtil
+                .isJavaScriptPermitted(getFacesContext()));
+
+        Map conditions = new LinkedHashMap();
+        conditions.put("isXxx", Boolean.TRUE);
+        conditions.put("isNotYyy", Boolean.FALSE);
+        ConditionUtil.setConditions(getFacesContext(), conditions);
+
+        UIForm form = new UIForm();
+        form.setId("xxxForm");
+        ConditionUtil.addForm(getFacesContext(), form);
+
+        StringWriter sw = new StringWriter();
+        HtmlResponseWriter writer = new HtmlResponseWriter();
+        writer.setWriter(sw);
+        getFacesContext().setResponseWriter(writer);
+        new ConditionRendererListener().renderBeforeBodyEnd(getFacesContext());
+        writer.close();
+        System.out.println(sw);
+        assertTrue(sw.toString().indexOf("<script") == -1);
     }
 }
