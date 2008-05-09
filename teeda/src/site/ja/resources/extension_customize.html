@@ -40,7 +40,8 @@
 <li><a href="#redirect">リダイレクトについて</a></li>
 <li><a href="#outputText">outputTextについて</a></li>
 <li><a href="#label">ラベルについて</a></li>
-</ul>
+              <li><a href="#javascript">JavaScriptについて</a></li>
+            </ul>
 </div>
 
 <div class="section">
@@ -339,6 +340,13 @@ Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定�
             <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
     &lt;property name=&quot;outputTextLabelUnderAnchorOnly&quot;&gt;true&lt;/property&gt;
 &lt;/component&gt;</pre>
+            <h2><a name="javascript">JavaScriptについて</a></h2>
+            <p>携帯端末向けなど，一部のページでTeedaが自動的にJavaScriptを出力することを抑止することができます．JavaScriptの出力を抑止するには，<code>web.xml</code>に次の設定を記述します．</p>
+            <pre>&lt;context-param&gt;
+  &lt;param-name&gt;teeda.JAVASCRIPT_NOT_PERMITTED_PATH&lt;/param-name&gt;
+  &lt;param-value&gt;/view/i/&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+            <p><code>&lt;param-value&gt;</code>要素の内容は，JavaScriptを抑止したい画面のコンテキストルートからのパスです．カンマ区切りで複数のパスを指定することができます．指定されたパスから始まるページがリクエストされると，そのページにはJavaScriptが出力されなくなります．</p>
             <!-- document end -->
 <!-- don't edit start -->
 </td>
