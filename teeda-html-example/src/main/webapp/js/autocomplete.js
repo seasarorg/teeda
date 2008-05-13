@@ -181,7 +181,7 @@ Kumu.extend(Kumu.Html.AutoComplete.prototype, {
   },
   
   blur_event : function blur_event(event, e) {
-    this.hide.bindScope(this).deferred(250)();
+    this.hide.bindScope(this).delay(250)();
   },
       
   click_li : function click_li(event, e){
