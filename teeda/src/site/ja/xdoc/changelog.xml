@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp1">1.0.13-sp1</a>
+					</td>
+					<td>
 						<a href="#a1.0.13">1.0.13</a>
 					</td>
 					<td>
@@ -130,6 +133,108 @@
 			</ul>
 		</section>
 
+		<section name="1.0.13-sp1">
+			<subsection name="移行の注意">
+				<ul>
+					<li>
+						Teeda Ajaxに含まれていた
+						<code>autocomplete.js</code>
+						は正式にリリースされていたものではないため削除されました． サンプルとしてTeeda HTML
+						Exampleに含まれています．
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13">1.0.13</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-458'>
+									TEEDA-458
+								</a>
+								] - Generic な要素の class
+								属性をダイナミックプロパティにする場合に，id + StyleClass
+								が使えない問題を修正しました．[Seasar-user:13936]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-459'>
+									TEEDA-459
+								</a>
+								] - DefaultComponentIdLookupStrategy
+								を使用すると commandLink の JavaScript
+								が動かない問題を修正しました．[Seasar-user:13767]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-460'>
+									TEEDA-460
+								</a>
+								] - サブミットボタンに doHoge-1 のようにハイフンを含む id
+								を指定した場合，Validator/Converter の対象 (target)
+								に doHoge と指定することができず，doHoge-1
+								と指定しなくてはならない問題を修正しました．[Seasar-user:13976]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-461'>
+									TEEDA-461
+								</a>
+								] - [CONTAINER-155]
+								JSONSerializerでMapのネストなどが対応されていない問題および
+								[CONTAINER-190] JSONSerializer で Map
+								を文字列化すると，キーがクオートされない問題の修正を取り込みました．
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-462'>
+									TEEDA-462
+								</a>
+								] - Kumu.FormHelper で &lt;select&gt;
+								要素の値を取得することができない問題を修正しました．[Seasar-user:14074]
+							</li>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-463'>
+									TEEDA-463
+								</a>
+								] - web.xml で JavaScript 無効を指定したパスでも
+								condition の JavaScript
+								が出力されてしまう問題を修正しました．[Seasar-user:14061]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Task
+						<ul>
+							<li>
+								[
+								<a
+									href='https://www.seasar.org/issues/browse/TEEDA-464'>
+									TEEDA-464
+								</a>
+								] - Teeda Ajax の autocomplete.js を Teeda
+								HTML Example に移動しました．[Seasar-user:14127]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
 		<section name="1.0.13">
 			<subsection name="変更内容">
 				<p>
@@ -137,7 +242,6 @@
 					からの変更点は以下の通りです．
 				</p>
 				<ul>
-
 					<li>
 						Bug
 						<ul>
