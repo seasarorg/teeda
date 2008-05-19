@@ -31,7 +31,10 @@ Teeda.THtmlInputCommaText = {
       return;
     }
     var vals = o.value.split(decimalSeparator);
-    if(vals.length == 2 && vals[0] == '') {
+    if (vals.length > 2) {
+      o.value = sign + o.value;
+      return;
+    } else if(vals.length == 2 && vals[0] == '') {
       vals[0] = '0';
     }
     var val1 = vals[0].match(regDecimal).reverse().join('');
