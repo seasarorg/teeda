@@ -173,6 +173,9 @@ public class ConditionUtil {
 
             writer.write("  var span = document.createElement('span');");
             writer.write(JsfConstants.LINE_SP);
+            writer
+                    .write("  span.setAttribute('style', 'display: none; position: absolute');");
+            writer.write(JsfConstants.LINE_SP);
 
             writer.write("  var form = document.getElementById(forms[i]);");
             writer.write(JsfConstants.LINE_SP);
