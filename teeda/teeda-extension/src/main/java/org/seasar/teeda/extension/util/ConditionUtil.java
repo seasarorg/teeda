@@ -111,7 +111,7 @@ public class ConditionUtil {
             map.put(KEY, forms);
             registerRendererListener(form.getParent());
         }
-        forms.add(form.getId());
+        forms.add(context.getExternalContext().encodeNamespace(form.getId()));
     }
 
     protected static void registerRendererListener(UIComponent component) {
