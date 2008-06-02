@@ -79,6 +79,7 @@ public class TPopupCalendarTag extends InputTextTag {
                 popupSelectYearMessage);
         setComponentProperty(component, "popupSelectDateMessage",
                 popupSelectDateMessage);
+        setComponentProperty(component, "datePattern", datePattern);
     }
 
     public void setPopupGotoString(String popupGotoString) {

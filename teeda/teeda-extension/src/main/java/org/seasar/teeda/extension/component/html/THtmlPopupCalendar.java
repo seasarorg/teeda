@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.DateTimeConverter;
 import javax.faces.el.ValueBinding;
 import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.RenderPreparableUtil;
@@ -164,6 +165,7 @@ public class THtmlPopupCalendar extends HtmlInputText implements
 
     public void setDatePattern(String datePattern) {
         this.datePattern = datePattern;
+        ((DateTimeConverter) getConverter()).setPattern(datePattern);
     }
 
     public void preEncodeBegin(final FacesContext context) throws IOException {

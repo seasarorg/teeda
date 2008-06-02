@@ -209,7 +209,7 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
     }
 
     private String getScriptBtn(FacesContext context, UIComponent component,
-            String dateFormat) throws IOException {
+            String datePattern) throws IOException {
         HtmlResponseWriter writer = new HtmlResponseWriter();
         writer.setWriter(new StringWriter());
         writer.write("document.write('");
@@ -220,7 +220,7 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         writer.writeAttribute(JsfConstants.STYLE_ATTR,
                 "vertical-align:bottom;", null);
         writeOnclickJsCalendarFunctionCall(writer, context, component,
-                dateFormat);
+                datePattern);
         writer.endElement(JsfConstants.IMG_ELEM);
         writer.write("');\n");
         return writer.toString();
