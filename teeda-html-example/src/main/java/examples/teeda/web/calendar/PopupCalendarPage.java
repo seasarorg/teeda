@@ -1,9 +1,11 @@
 package examples.teeda.web.calendar;
 
+import java.util.Date;
+
 public class PopupCalendarPage {
 
-	public String aaaa;
-	public String bbbb;
+	public Date aaaa;
+	public Date bbbb;
 
 	public Class doShow() {
 		return null;
