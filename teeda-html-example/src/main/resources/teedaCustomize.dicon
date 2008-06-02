@@ -25,5 +25,8 @@
 
 		<!-- <span id="～Label"> が <a> の子要素の場合のみラベルに関連づける(1.0.12互換)には以下のプロパティを true に設定 -->
 		<property name="outputTextLabelUnderAnchorOnly">false</property>
+
+		<!-- <label id="～"> を outputLabel に関連づけないようにするには以下のプロパティを true に設定 -->
+		<property name="disableLabelFactory">false</property>
 	</component>
 </components>

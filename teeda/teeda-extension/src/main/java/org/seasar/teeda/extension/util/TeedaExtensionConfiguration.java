@@ -35,6 +35,11 @@ public class TeedaExtensionConfiguration {
      */
     public boolean outputTextLabelUnderAnchorOnly;
 
+    /**
+     * &lt;label&gt;要素でプロパティファイルの内容を出力するためのファクトリを無効にする場合は<code>true</code>を設定します。
+     */
+    public boolean disableLabelFactory;
+
     public static TeedaExtensionConfiguration getInstance() {
         final S2Container container = SingletonS2ContainerFactory
                 .getContainer();

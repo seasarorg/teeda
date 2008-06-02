@@ -25,6 +25,7 @@ import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.html.ActionDesc;
 import org.seasar.teeda.extension.html.ElementNode;
 import org.seasar.teeda.extension.html.PageDesc;
+import org.seasar.teeda.extension.util.TeedaExtensionConfiguration;
 
 /**
  * @author shot
@@ -44,6 +45,9 @@ public class OutputLabelFactory extends AbstractElementProcessorFactory {
 
     public boolean isMatch(final ElementNode elementNode,
             final PageDesc pageDesc, final ActionDesc actionDesc) {
+        if (TeedaExtensionConfiguration.getInstance().disableLabelFactory) {
+            return false;
+        }
         final String tagName = elementNode.getTagName();
         if (!JsfConstants.LABEL_ELEM.equalsIgnoreCase(tagName)) {
             return false;
