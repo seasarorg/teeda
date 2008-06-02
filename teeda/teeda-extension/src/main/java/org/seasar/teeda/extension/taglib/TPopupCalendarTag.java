@@ -41,6 +41,8 @@ public class TPopupCalendarTag extends InputTextTag {
 
     private String popupSelectDateMessage;
 
+    private String datePattern;
+
     public String getComponentType() {
         return THtmlPopupCalendar.COMPONENT_TYPE;
     }
@@ -59,6 +61,7 @@ public class TPopupCalendarTag extends InputTextTag {
         popupSelectMonthMessage = null;
         popupSelectYearMessage = null;
         popupSelectDateMessage = null;
+        datePattern = null;
     }
 
     protected void setProperties(UIComponent component) {
@@ -108,5 +111,13 @@ public class TPopupCalendarTag extends InputTextTag {
 
     public void setPopupWeekString(String popupWeekString) {
         this.popupWeekString = popupWeekString;
+    }
+
+    public String getDatePattern() {
+        return datePattern;
+    }
+
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
     }
 }

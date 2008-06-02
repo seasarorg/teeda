@@ -1,10 +1,14 @@
 <html xmlns:te="http://www.seasar.org/teeda/extension">
-<head>
-<title>Calendar</title>
-</head>
-<body>
-<form id="form">
-<te:popupCalendar/>
-</form>
-</body>
+	<head>
+		<title>Calendar</title>
+	</head>
+	<body>
+		<form id="form">
+			<span id="aaaaMessage">dummy</span>
+			<te:popupCalendar id="aaaa" value="#{calendar_popupCalendarPage.aaaa}" required="true"/>
+			<span id="bbbbMessage">dummy</span>
+			<te:popupCalendar id="bbbb" value="#{calendar_popupCalendarPage.bbbb}" />
+			<input id="doShow" type="submit" value="push" />
+		</form>
+	</body>
 </html>

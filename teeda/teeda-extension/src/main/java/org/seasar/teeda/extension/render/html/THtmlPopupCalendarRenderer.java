@@ -72,10 +72,10 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         int firstDayOfWeek = timeKeeper.getFirstDayOfWeek();
         VirtualResource
                 .addCssResource(context, RESOURCE_ROOT + "css/theme.css");
-        VirtualResource.addJsResource(context, RESOURCE_ROOT
-                + "js/popcalendar_init.js");
-        VirtualResource.addJsResource(context, RESOURCE_ROOT
-                + "js/popcalendar.js");
+        VirtualResource.addJsResource(context, RESOURCE_ROOT +
+                "js/popcalendar_init.js");
+        VirtualResource.addJsResource(context, RESOURCE_ROOT +
+                "js/popcalendar.js");
 
         StringBuffer script = new StringBuffer();
         appendImageDirectory(context, script);
@@ -105,11 +105,11 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
                 context, (UIInput) component);
         if (!htmlCalendar.isDisabled()) {
             ResponseWriter writer = context.getResponseWriter();
-            String dateFormat = converter.getPattern();
+            String datePattern = converter.getPattern();
             writer.startElement(JsfConstants.SCRIPT_ELEM, component);
             writer.writeAttribute(JsfConstants.TYPE_ATTR,
                     JsfConstants.TEXT_JAVASCRIPT_VALUE, null);
-            writer.writeText(getScriptBtn(context, htmlCalendar, dateFormat),
+            writer.writeText(getScriptBtn(context, htmlCalendar, datePattern),
                     null);
             writer.endElement(JsfConstants.SCRIPT_ELEM);
         }
@@ -118,8 +118,8 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
     private static void appendImageDirectory(FacesContext context,
             StringBuffer script) {
         script.append("jscalendarSetImageDirectory('");
-        script.append(VirtualResource.convertVirtualPath(context, RESOURCE_ROOT
-                + "images/"));
+        script.append(VirtualResource.convertVirtualPath(context,
+                RESOURCE_ROOT + "images/"));
         script.append("');");
     }
 
@@ -215,8 +215,8 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         writer.write("document.write('");
         writer.startElement(JsfConstants.IMG_ELEM, component);
         writer.writeAttribute(JsfConstants.SRC_ATTR, VirtualResource
-                .convertVirtualPath(context, RESOURCE_ROOT
-                        + "images/calendar.gif"), null);
+                .convertVirtualPath(context, RESOURCE_ROOT +
+                        "images/calendar.gif"), null);
         writer.writeAttribute(JsfConstants.STYLE_ATTR,
                 "vertical-align:bottom;", null);
         writeOnclickJsCalendarFunctionCall(writer, context, component,
@@ -228,11 +228,11 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
 
     private void writeOnclickJsCalendarFunctionCall(ResponseWriter writer,
             FacesContext facesContext, UIComponent uiComponent,
-            String dateFormat) throws IOException {
-        String clientId = uiComponent.getClientId(facesContext);
+            String datePattern) throws IOException {
+        String id = uiComponent.getId();
 
-        String jsCalendarFunctionCall = "jscalendarPopUpCalendar(this,document.getElementById(\\'"
-                + clientId + "\\'),\\'" + dateFormat + "\\')";
+        String jsCalendarFunctionCall = "jscalendarPopUpCalendar(this,document.getElementById(\\'" +
+                id + "\\'),\\'" + datePattern + "\\')";
         writer.writeAttribute(JsfConstants.ONCLICK_ATTR,
                 jsCalendarFunctionCall, null);
     }

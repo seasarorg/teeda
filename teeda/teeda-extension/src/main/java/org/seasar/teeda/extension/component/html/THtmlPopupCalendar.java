@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.component.html;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
@@ -23,6 +24,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.internal.RenderPreparable;
 import javax.faces.internal.RenderPreparableUtil;
 
+import org.seasar.framework.util.DateConversionUtil;
 import org.seasar.teeda.extension.convert.TDateTimeConverter;
 
 /**
@@ -54,9 +56,14 @@ public class THtmlPopupCalendar extends HtmlInputText implements
 
     private String popupSelectDateMessage = null;
 
+    private String datePattern = DateConversionUtil.getY4Pattern(Locale
+            .getDefault());
+
     public THtmlPopupCalendar() {
         setRendererType(DEFAULT_RENDERER_TYPE);
-        setConverter(new TDateTimeConverter());
+        TDateTimeConverter converter = new TDateTimeConverter();
+        converter.setPattern(datePattern);
+        setConverter(converter);
     }
 
     public String getFamily() {
@@ -151,6 +158,14 @@ public class THtmlPopupCalendar extends HtmlInputText implements
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
+    public String getDatePattern() {
+        return datePattern;
+    }
+
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
+    }
+
     public void preEncodeBegin(final FacesContext context) throws IOException {
         RenderPreparableUtil.encodeBeforeForRenderer(context, this);
     }
@@ -159,7 +174,7 @@ public class THtmlPopupCalendar extends HtmlInputText implements
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[20];
+        Object values[] = new Object[10];
         values[0] = super.saveState(context);
         values[1] = popupGotoString;
         values[2] = popupTodayString;
@@ -169,6 +184,7 @@ public class THtmlPopupCalendar extends HtmlInputText implements
         values[6] = popupSelectMonthMessage;
         values[7] = popupSelectYearMessage;
         values[8] = popupSelectDateMessage;
+        values[9] = datePattern;
         return ((Object) (values));
     }
 
@@ -183,5 +199,6 @@ public class THtmlPopupCalendar extends HtmlInputText implements
         popupSelectMonthMessage = (String) values[6];
         popupSelectYearMessage = (String) values[7];
         popupSelectDateMessage = (String) values[8];
+        datePattern = (String) values[9];
     }
 }
