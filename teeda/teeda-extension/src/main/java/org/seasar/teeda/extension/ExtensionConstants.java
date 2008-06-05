@@ -124,6 +124,8 @@ public interface ExtensionConstants {
 
     String TEEDA_DATE_STYLE_CLASS = "T_date";
 
+    String TEEDA_POPUP_CALENDAR_STYLE_CLASS = "T_popupCalendar";
+
     String SAVE_SUFFIX = "Save";
 
     String SESSION_SAVE_SUFFIX = "SessionSave";

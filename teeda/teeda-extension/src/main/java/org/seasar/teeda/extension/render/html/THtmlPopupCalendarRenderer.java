@@ -27,6 +27,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.DateTimeConverter;
+import javax.faces.internal.FacesMessageUtil;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
@@ -49,6 +50,10 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
     private static final String JAVASCRIPT_ENCODED = "org.seasar.teeda.extension.popupcalendar.JAVASCRIPT_ENCODED";
 
     private static final String RESOURCE_ROOT = "org/seasar/teeda/extension/render/html/popupcalendar/";
+
+    private static final String TODAY = "org.seasar.teeda.extension.component.TPopupCalendar.TODAY";
+
+    private static final String GOTO = "org.seasar.teeda.extension.component.TPopupCalendar.GOTO";
 
     public void encodeBefore(FacesContext context, UIComponent component)
             throws IOException {
@@ -141,39 +146,12 @@ public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
         defineStringArray(script, "jscalendarMonthName2", months);
         defineStringArray(script, "jscalendarDayName", weekDays);
         setIntegerVariable(script, "jscalendarStartAt", realFirstDayOfWeek);
-
-        if (htmlCalendar.getPopupGotoString() != null) {
-            setStringVariable(script, "jscalendarGotoString", htmlCalendar
-                    .getPopupGotoString());
-        }
-        if (htmlCalendar.getPopupTodayString() != null) {
-            setStringVariable(script, "jscalendarTodayString", htmlCalendar
-                    .getPopupTodayString());
-        }
-        if (htmlCalendar.getPopupWeekString() != null) {
-            setStringVariable(script, "jscalendarWeekString", htmlCalendar
-                    .getPopupWeekString());
-        }
-        if (htmlCalendar.getPopupScrollLeftMessage() != null) {
-            setStringVariable(script, "jscalendarScrollLeftMessage",
-                    htmlCalendar.getPopupScrollLeftMessage());
-        }
-        if (htmlCalendar.getPopupScrollRightMessage() != null) {
-            setStringVariable(script, "jscalendarScrollRightMessage",
-                    htmlCalendar.getPopupScrollRightMessage());
-        }
-        if (htmlCalendar.getPopupSelectMonthMessage() != null) {
-            setStringVariable(script, "jscalendarSelectMonthMessage",
-                    htmlCalendar.getPopupSelectMonthMessage());
-        }
-        if (htmlCalendar.getPopupSelectYearMessage() != null) {
-            setStringVariable(script, "jscalendarSelectYearMessage",
-                    htmlCalendar.getPopupSelectYearMessage());
-        }
-        if (htmlCalendar.getPopupSelectDateMessage() != null) {
-            setStringVariable(script, "jscalendarSelectDateMessage",
-                    htmlCalendar.getPopupSelectDateMessage());
-        }
+        setStringVariable(script, "jscalendarGotoString", FacesMessageUtil
+                .getDetail(GOTO, null));
+        setStringVariable(script, "jscalendarTodayString", FacesMessageUtil
+                .getDetail(TODAY, null));
+        setStringVariable(script, "jscalendarDateFormat", htmlCalendar
+                .getDatePattern());
         return script.toString();
     }
 

@@ -25,22 +25,6 @@ import org.seasar.teeda.extension.component.html.THtmlPopupCalendar;
  */
 public class TPopupCalendarTag extends InputTextTag {
 
-    private String popupGotoString;
-
-    private String popupTodayString;
-
-    private String popupWeekString;
-
-    private String popupScrollLeftMessage;
-
-    private String popupScrollRightMessage;
-
-    private String popupSelectMonthMessage;
-
-    private String popupSelectYearMessage;
-
-    private String popupSelectDateMessage;
-
     private String datePattern;
 
     public String getComponentType() {
@@ -53,69 +37,12 @@ public class TPopupCalendarTag extends InputTextTag {
 
     public void release() {
         super.release();
-        popupGotoString = null;
-        popupTodayString = null;
-        popupWeekString = null;
-        popupScrollLeftMessage = null;
-        popupScrollRightMessage = null;
-        popupSelectMonthMessage = null;
-        popupSelectYearMessage = null;
-        popupSelectDateMessage = null;
         datePattern = null;
     }
 
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
-        setComponentProperty(component, "popupGotoString", popupGotoString);
-        setComponentProperty(component, "popupTodayString", popupTodayString);
-        setComponentProperty(component, "popupWeekString", popupWeekString);
-        setComponentProperty(component, "popupScrollLeftMessage",
-                popupScrollLeftMessage);
-        setComponentProperty(component, "popupScrollRightMessage",
-                popupScrollRightMessage);
-        setComponentProperty(component, "popupSelectMonthMessage",
-                popupSelectMonthMessage);
-        setComponentProperty(component, "popupSelectYearMessage",
-                popupSelectYearMessage);
-        setComponentProperty(component, "popupSelectDateMessage",
-                popupSelectDateMessage);
         setComponentProperty(component, "datePattern", datePattern);
-    }
-
-    public void setPopupGotoString(String popupGotoString) {
-        this.popupGotoString = popupGotoString;
-    }
-
-    public void setPopupScrollLeftMessage(String popupScrollLeftMessage) {
-        this.popupScrollLeftMessage = popupScrollLeftMessage;
-    }
-
-    public void setPopupScrollRightMessage(String popupScrollRightMessage) {
-        this.popupScrollRightMessage = popupScrollRightMessage;
-    }
-
-    public void setPopupSelectDateMessage(String popupSelectDateMessage) {
-        this.popupSelectDateMessage = popupSelectDateMessage;
-    }
-
-    public void setPopupSelectMonthMessage(String popupSelectMonthMessage) {
-        this.popupSelectMonthMessage = popupSelectMonthMessage;
-    }
-
-    public void setPopupSelectYearMessage(String popupSelectYearMessage) {
-        this.popupSelectYearMessage = popupSelectYearMessage;
-    }
-
-    public void setPopupTodayString(String popupTodayString) {
-        this.popupTodayString = popupTodayString;
-    }
-
-    public void setPopupWeekString(String popupWeekString) {
-        this.popupWeekString = popupWeekString;
-    }
-
-    public String getDatePattern() {
-        return datePattern;
     }
 
     public void setDatePattern(String datePattern) {

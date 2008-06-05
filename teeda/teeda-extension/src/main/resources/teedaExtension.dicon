@@ -128,6 +128,8 @@
 		class="org.seasar.teeda.extension.html.factory.InputDateTextFactory" />
 	<component name="inputCommaTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputCommaTextFactory" />
+	<component name="popupCalendarFactory"
+		class="org.seasar.teeda.extension.html.factory.PopupCalendarFactory" />
 	<component name="inputTextFactory"
 		class="org.seasar.teeda.extension.html.factory.InputTextFactory" />
 	<component name="inputFileFactory"
