@@ -321,7 +321,7 @@ public String mailAddress;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String name_EmailValidator = "";
+public static final String mailAddress_EmailValidator = "";
 public String mailAddress;
 ]]></source>
 				<p>
