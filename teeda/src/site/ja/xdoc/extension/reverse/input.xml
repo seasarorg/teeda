@@ -2049,6 +2049,10 @@ public List<Map> optionItems;
 					要素を記述して
 					<code>id</code>
 					属性を付けます．
+					<code>id</code>
+					属性は
+					<code>Items</code>
+					で終わる値を指定します．
 					<code>&lt;select&gt;</code>
 					要素の内容には
 					<code>&lt;option&gt;</code>
@@ -2061,16 +2065,16 @@ public List<Map> optionItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前のプロパティで， 選択された項目の値を保持します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティで， 選択された項目の値を保持します．
 				</p>
 				<p>
 					二つめは
 					<code>&lt;select&gt;</code>
 					の
 					<code>id</code>
-					属性の値に
-					<code>Items</code>
-					を加えた名前で， 型は次のいずれかです．
+					属性の値と同じ名前で， 型は次のいずれかです．
 				</p>
 				<ul>
 					<li>
@@ -2129,7 +2133,7 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select">
+<select id="selectItems">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2144,7 +2148,7 @@ public List<Map> selecteItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:select">
+<select id="selectItems" name="form:selectItems">
     <option value="">選択してください</option>
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2167,11 +2171,13 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前のプロパティに， 選択状態にしたい項目の値を設定します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティに， 選択状態にしたい項目の値を設定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select">
+<select id="selectItems">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2188,7 +2194,7 @@ public List<Map> selecteItems;
 					を設定すると， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:select">
+<select id="selectItems" name="form:selectItems">
     <option value="">選択してください</option>
     <option value="t" selected="selected">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2209,7 +2215,9 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前のプロパティを必須項目にします．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティを必須項目にします．
 				</p>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -2219,7 +2227,7 @@ public List<Map> selecteItems;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<select id="select" name="form:select">
+<select id="selectItems" name="form:selectItems">
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
     <option value="c">Cubby</option>
@@ -2260,7 +2268,7 @@ public List<Map> selecteItems;
 					要素の
 					<code>id</code>
 					属性の値に
-					<code>ItemsSave</code>
+					<code>Save</code>
 					を加えた名前を指定します．
 				</p>
 				<p>
@@ -2268,9 +2276,11 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値の値に
+					属性の値の末尾の
+					<code>Items</code>
+					を
 					<code>Label</code>
-					を加えた名前で， 型は
+					を置き換えた名前で， 型は
 					<code>String</code>
 					とします．
 				</p>
@@ -2280,16 +2290,18 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値の値に
+					属性の値の末尾の
+					<code>Items</code>
+					を
 					<code>Label</code>
-					を加えた名前のプロパティに設定されます． ただし， 「
+					を置き換えた名前のプロパティに設定されます． ただし， 「
 					<a href="validation.html">バリデーション</a>
 					」でエラーが発生した場合は設定されません．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <input type="hidden" id="selectItemsSave" />
-<select id="select">
+<select id="selectItems">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2306,7 +2318,7 @@ public List<Map> selectItems;
 				</p>
 				<source><![CDATA[
 <input type="hidden" id="selectItemsSave" name="form:selectItemsSave" value="..." />
-<select id="select" name="form:select">
+<select id="selectItems" name="form:selectItems">
     <option value="">選択してください</option>
     <option value="t" selected="selected">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2357,6 +2369,10 @@ public List<Map> selectItems;
 					要素を記述して
 					<code>id</code>
 					属性を付けます．
+					<code>id</code>
+					属性は
+					<code>Items</code>
+					で終わる値を指定します．
 					<code>&lt;select&gt;</code>
 					要素の内容には
 					<code>&lt;option&gt;</code>
@@ -2369,16 +2385,16 @@ public List<Map> selectItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前で，配列型のプロパティです．このプロパティは選択された項目の値を保持します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前で，配列型のプロパティです．このプロパティは選択された項目の値を保持します．
 				</p>
 				<p>
 					二つめは
 					<code>&lt;select&gt;</code>
 					の
 					<code>id</code>
-					属性の値に
-					<code>Items</code>
-					を加えた名前で， 型は次のいずれかです．
+					属性の値と同じ名前で， 型は次のいずれかです．
 				</p>
 				<ul>
 					<li>
@@ -2437,7 +2453,7 @@ public List<Map> selectItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select" multiple="multiple">
+<select id="selectItems" multiple="multiple">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2452,7 +2468,7 @@ public List<Map> selecteItems;
 					が3つの要素を持つ場合， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:select" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="">選択してください</option>
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
@@ -2479,13 +2495,13 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前のプロパティに， 選択状態にしたい項目の値を要素とする配列または
-					<code>List</code>
-					を設定します．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティに， 選択状態にしたい項目の値を要素とする配列を設定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<select id="select" multiple="multiple">
+<select id="selectItems" multiple="multiple">
     <option value="0">dummy</option>
 </select>
 ]]></source>
@@ -2504,7 +2520,7 @@ public List<Map> selecteItems;
 					を要素とする配列を設定すると， レンダリング結果は次のようになります．
 				</p>
 				<source><![CDATA[
-<select id="select" name="form:select" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="">選択してください</option>
     <option value="t" selected="selected">Teeda</option>
     <option value="s" selected="selected">SAStruts</option>
@@ -2525,7 +2541,9 @@ public List<Map> selecteItems;
 					<code>&lt;select&gt;</code>
 					要素の
 					<code>id</code>
-					属性の値と同じ名前のプロパティを必須項目にします．
+					属性から末尾の
+					<code>Items</code>
+					を除いた名前のプロパティを必須項目にします．
 				</p>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -2535,7 +2553,7 @@ public List<Map> selecteItems;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<source><![CDATA[
-<select id="select" name="form:select" multiple="multiple">
+<select id="selectItems" name="form:selectItems" multiple="multiple">
     <option value="t">Teeda</option>
     <option value="s">SAStruts</option>
     <option value="c">Cubby</option>
