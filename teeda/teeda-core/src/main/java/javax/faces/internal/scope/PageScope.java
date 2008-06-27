@@ -43,11 +43,11 @@ public abstract class PageScope {
 
     public static void removeContext(FacesContext context)
             throws FacesException {
-        scope.removeContext(context);
+        scope.clearContext(context);
     }
 
     public static void removeContext(FacesContext context, String wid)
             throws FacesException {
-        scope.removeContext(context, wid);
+        scope.clearContext(context, wid);
     }
 }

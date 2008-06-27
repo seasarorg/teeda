@@ -16,6 +16,7 @@
 package javax.faces.internal;
 
 import java.util.Map;
+import java.util.Random;
 
 import javax.faces.FacesException;
 import javax.faces.context.ExternalContext;
@@ -35,7 +36,7 @@ public abstract class WindowIdUtil {
 
     private static final String BLANK = "_blank";
 
-    private static Long sequence = new Long(0);
+    private static Random random = new Random(System.currentTimeMillis());
 
     protected WindowIdUtil() {
     }
@@ -54,8 +55,7 @@ public abstract class WindowIdUtil {
     }
 
     public static synchronized String createWindowId() {
-        sequence = new Long(sequence.longValue() + 1);
-        return String.valueOf(sequence);
+        return Long.toString(random.nextLong());
     }
 
     public static String getWindowId(final ExternalContext externalContext)
