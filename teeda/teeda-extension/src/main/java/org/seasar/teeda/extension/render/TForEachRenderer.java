@@ -32,6 +32,7 @@ import org.seasar.teeda.core.util.ForEachContext;
 import org.seasar.teeda.core.util.RendererUtil;
 import org.seasar.teeda.extension.component.TForEach;
 import org.seasar.teeda.extension.util.AdjustValueHolderUtil;
+import org.seasar.teeda.extension.util.TeedaExtensionConfiguration;
 
 /**
  * @author higa
@@ -46,7 +47,7 @@ public class TForEachRenderer extends AbstractRenderer {
     public void encodeBegin(final FacesContext context,
             final UIComponent component) throws IOException {
         super.encodeBegin(context, component);
-        if (!component.isRendered()) {
+        if (!isRendered(context, component)) {
             return;
         }
         final TForEach forEach = (TForEach) component;
@@ -80,7 +81,7 @@ public class TForEachRenderer extends AbstractRenderer {
     public void encodeEnd(FacesContext context, UIComponent component)
             throws IOException {
         super.encodeBegin(context, component);
-        if (!component.isRendered()) {
+        if (!isRendered(context, component)) {
             return;
         }
         final TForEach forEach = (TForEach) component;
@@ -119,6 +120,24 @@ public class TForEachRenderer extends AbstractRenderer {
                     .getBeanDesc(item.getClass()), savedValues);
             forEach.bindRowIndex(context, savedIndex);
         }
+    }
+
+    protected boolean isRendered(final FacesContext context,
+            final UIComponent component) {
+        if (!component.isRendered()) {
+            return false;
+        }
+        final TForEach forEach = (TForEach) component;
+        if (forEach.isOmittag()) {
+            return false;
+        }
+        if (!TeedaExtensionConfiguration.getInstance().outputForEachIfEmptyItems) {
+            final Object[] items = forEach.getItems(context);
+            if (items == null || items.length == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected void renderAttributes(ResponseWriter writer, TForEach component)

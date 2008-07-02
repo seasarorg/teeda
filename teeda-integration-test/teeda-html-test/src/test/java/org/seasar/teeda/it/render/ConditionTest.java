@@ -252,15 +252,14 @@ public class ConditionTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		// ## Assert ##
-		String[][] table = new String[0][0];
-		tester.assertTableEqualsById("aaaItems", table);
+		tester.assertElementNotPresentById("aaaItems");
 
 		// ## Act ##
 		tester.submitById("doSubmit");
 		tester.dumpHtml();
 
 		// ## Assert ##
-		table = new String[][] { { "0", "" } };
+		String[][] table = new String[][] { { "0", "" } };
 		tester.assertTableEqualsById("aaaItems", table);
 
 		// ## Act ##

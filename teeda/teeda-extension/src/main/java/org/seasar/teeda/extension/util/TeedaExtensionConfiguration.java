@@ -17,6 +17,7 @@ package org.seasar.teeda.extension.util;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.teeda.core.util.DIContainerUtil;
 
 /**
  * @author koichik
@@ -40,14 +41,18 @@ public class TeedaExtensionConfiguration {
      */
     public boolean disableLabelFactory;
 
+    /**
+     * itemsが空の場合でもforEachの指定された要素を出力する場合 (Teeda 1.0.13-sp1 以前と互換) は <code>true</code> に設定します。 
+     */
+    public boolean outputForEachIfEmptyItems;
+
     public static TeedaExtensionConfiguration getInstance() {
-        final S2Container container = SingletonS2ContainerFactory
-                .getContainer();
-        if (!container.hasComponentDef(TeedaExtensionConfiguration.class)) {
-            return DEFAULT_INSTANCE;
+        final TeedaExtensionConfiguration config = (TeedaExtensionConfiguration) DIContainerUtil
+                .getComponentNoException(TeedaExtensionConfiguration.class);
+        if (config != null) {
+            return config;
         }
-        return (TeedaExtensionConfiguration) container
-                .getComponent(TeedaExtensionConfiguration.class);
+        return DEFAULT_INSTANCE;
     }
 
 }
