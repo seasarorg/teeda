@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp2">1.0.13-sp2</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp1">1.0.13-sp1</a>
 					</td>
 					<td>
@@ -131,6 +134,29 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-sp2">
+			<subsection name="移行の注意">
+				<ul>
+					<li>
+						<div>forEachで，xxxItemsが空の場合は，
+							id属性にxxxItemsを指定した要素の開始タグおよび終了タグを出力しないようになりました．
+						</div>
+						<div>
+							1.0.12以前と同様にすることも可能です．詳細は「
+							<a href="extension_customize.html#forEach">forEachについて</a>
+							」を参照してください．
+						</div>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp1">1.0.13-sp1</a>
+					からの変更点は以下の通りです．
+				</p>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp1">

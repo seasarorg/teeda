@@ -347,6 +347,17 @@ Teeda 1.0.12以前では，この動作は&lt;a&gt;要素の子要素に限定�
   &lt;param-value&gt;/view/i/&lt;/param-value&gt;
 &lt;/context-param&gt;</pre>
             <p><code>&lt;param-value&gt;</code>要素の内容は，JavaScriptを抑止したい画面のコンテキストルートからのパスです．カンマ区切りで複数のパスを指定することができます．指定されたパスから始まるページがリクエストされると，そのページにはJavaScriptが出力されなくなります．</p>
+            <h2><a name="forEach">forEachについて</a></h2>
+            <p>Teeda 1.0.13-sp2以降では，forEachで指定されたxxxItemsが空の場合，id属性にxxxItemsを指定した要素の開始タグおよび終了タグが出力されません．</p>
+            <p>次の例では，xxxItemsが空の場合，&lt;table&gt;要素の開始タグおよび出力タグを含む全体が出力されません．</p>
+            <pre>&lt;table id=&quot;xxxItems&quot;>
+    &lt;tr>&lt;td>...&lt;/td>&lt;/tr>
+&lt;/table&gt;</pre>
+			<p>Teeda 1.0.13-sp1以前では，&lt;table&gt;要素の開始タグおよび出力タグが出力されていました．</p>
+            <p>Teeda 1.0.13-sp2以降で，1.0.13-sp1以前と同じように，xxxItemsが空の場合でも，id属性にxxxItemsを指定した要素の開始タグおよび終了タグが出力されるようにするには，<code>teedaCustomize.dicon</code>に次の設定を記述します．</p>
+            <pre>&lt;component class=&quot;org.seasar.teeda.extension.util.TeedaExtensionConfiguration&quot;&gt;
+    &lt;property name=&quot;outputForEachIfEmptyItems&quot;&gt;true&lt;/property&gt;
+&lt;/component&gt;</pre>
             <!-- document end -->
 <!-- don't edit start -->
 </td>

@@ -1081,7 +1081,7 @@ layoutChildBody:form:employeeItems:0:name
 			<subsection name="メッセージの文言を変更するには">
 				<p>
 					以下から変更したいメッセージを探し，同じキーを持つ独自のメッセージを
-					<code>appMessage.propertyes</code>
+					<code>appMessages.propertyes</code>
 					(日本語のメッセージは
 					<code>appMessages_ja.properties</code>
 					) に定義します．
@@ -1111,9 +1111,9 @@ javax.faces.component.UIInput.REQUIRED_detail={0}は必須です
 			<subsection name="特定のコンポーネントだけメッセージを変更するには">
 				<p>
 					バリデーションのアノテーションに独自のメッセージIDを指定し， それをキーとするメッセージを
-					<code>appErrorMessage.propertyes</code>
+					<code>appMessages.propertyes</code>
 					(日本語のメッセージは
-					<code>appErrorMessages_ja.properties</code>
+					<code>appMessages_ja.properties</code>
 					) に定義します．
 				</p>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
