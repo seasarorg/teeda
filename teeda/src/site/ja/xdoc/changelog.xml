@@ -141,8 +141,7 @@
 				<ul>
 					<li>
 						<div>forEachで，xxxItemsが空の場合は，
-							id属性にxxxItemsを指定した要素の開始タグおよび終了タグを出力しないようになりました．
-						</div>
+							id属性にxxxItemsを指定した要素の開始タグおよび終了タグを出力しないようになりました．</div>
 						<div>
 							1.0.12以前と同様にすることも可能です．詳細は「
 							<a href="extension_customize.html#forEach">forEachについて</a>
@@ -151,11 +150,64 @@
 					</li>
 				</ul>
 			</subsection>
+
 			<subsection name="変更内容">
 				<p>
 					<a href="#a1.0.13-sp1">1.0.13-sp1</a>
 					からの変更点は以下の通りです．
 				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-322'>TEEDA-322</a>
+								] - PopupCalendarで日付選択時に値が入らない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-465'>TEEDA-465</a>
+								] - inputCommaText でカンマ 2 つ (..) など不正な入力を行うとレンダリングで例外が発生する問題を修正しました．
+								[Seasar-user:14246]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-466'>TEEDA-466</a>
+								] - condition を使ったフォームに追加される span 要素のためにレイアウトが崩れる問題を修正しました．
+								[Seasar-user:14239]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-468'>TEEDA-468</a>
+								] - ポートレット環境でte-conditions関連のJavaScriptでformのidが正しくない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-470'>TEEDA-470</a>
+								] - HTTP セッションのレプリケーションを行っている環境でスティッキーセッションが使われていない場合，ウィンドウ ID
+								が重複して割り当てられる場合がある問題を修正しました． [Seasar-user:14778]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-472'>TEEDA-472</a>
+								] - forEach を tbody 等に指定した場合，xxxItems が空でも tbody の開始タグおよび終了タグが出力されるが，tbody
+								の定義は (tr)+ であり，HTML 仕様に違反している問題を修正しました． [Seasar-user:14901]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-469'>TEEDA-469</a>
+								] - label 要素をラベルプロパティファイルに定義された文字列を出力する outputLabel
+								として扱わないよう設定可能にしました．[Seasar-user:14518]
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 
