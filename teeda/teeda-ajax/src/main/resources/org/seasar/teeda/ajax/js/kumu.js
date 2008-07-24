@@ -175,6 +175,20 @@ Kumu = Kumu.extend(Kumu, {
     return elements;
   },
 
+  // removes whitespace-only text node children
+  cleanWhitespace: function(element) {
+    element = $i(element);
+    var node = element.firstChild;
+    while (node) {
+      var nextNode = node.nextSibling;
+      if (node.nodeType == 3 && !/\S/.test(node.nodeValue))
+        element.removeChild(node);
+      node = nextNode;
+    }
+    return element;
+  },
+
+
   /** filter  map **/
   map : function(func, lst){
     if(!lst){
