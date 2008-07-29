@@ -41,6 +41,11 @@
 								パスワードフィールドを使うには
 							</a>
 						</li>
+						<li>
+							<a href="#パスワードフィールドに初期値を表示するには">
+								パスワードフィールドに初期値を表示するには
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li>
@@ -489,11 +494,7 @@ public Date date;
 					<code>&lt;input&gt;</code>
 					要素の
 					<code>value</code>
-					属性にプロパティの値が設定されます． プロパティの値が
-					<code>'&lt;'</code>
-					や
-					<code>'&gt;'</code>
-					等を含む場合はエスケープされます．
+					属性に値は設定されません．
 				</p>
 				<p>
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
@@ -522,6 +523,67 @@ public String pwd;
 					<code>"1234"</code>
 					が設定されます．
 				</p>
+			</subsection>
+
+			<subsection name="パスワードフィールドに初期値を表示するには">
+				<div class="sidebar">
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
+				</div>
+				<p>
+					<code>type</code>
+					属性が
+					<code>password</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素に
+					<code>te:redisplay</code>
+					属性を付け， その値に
+					<code>true</code>
+					を指定します．
+				</p>
+				<p>
+					レンダリング時，
+					<code>&lt;input&gt;</code>
+					要素の
+					<code>value</code>
+					属性にプロパティの値が設定されます． プロパティの値が
+					<code>'&lt;'</code>
+					や
+					<code>'&gt;'</code>
+					等を含む場合はエスケープされます．
+				</p>
+				<p>
+					<a href="../concept/page.html#ポストバック">ポストバック</a>
+					時，ブラウザで入力された値がプロパティに設定されます． ただし， 「
+					<a href="validation.html">バリデーション</a>
+					」でエラーが発生した場合は設定されません．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<input type="password" id="pwd" te:redisplay="true" />
+]]></source>
+				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
+				<source><![CDATA[
+public String pwd;
+]]></source>
+				<h5>例：レンダリング結果</h5>
+				<p>
+					<code>pwd</code>
+					プロパティの値が
+					<code>"hoge"</code>
+					の場合， レンダリング結果は次のようになります．
+				</p>
+				<source><![CDATA[
+<input type="password" id="pwd" name="form:pwd" value="hoge" />
+]]></source>
 			</subsection>
 		</section>
 
