@@ -33,6 +33,8 @@ public @interface ByteLength {
 
 	int maximum() default -1;
 
+	String charSet() default "";
+
 	String target() default "";
 
 	String minimumMessageId() default "";
