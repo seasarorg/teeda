@@ -46,6 +46,7 @@ public class THtmlTreeHiddenRenderer extends AbstractInputRenderer {
     {
         ignoreComponent.addAttributeName(JsfConstants.ID_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
     }
 
     public void decode(FacesContext context, UIComponent component) {
