@@ -14,16 +14,16 @@
 		<copy file="../teeda/teeda-core/target/teeda-core-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-core/target/teeda-core-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 
 		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 
 		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 	</target>
 </project>

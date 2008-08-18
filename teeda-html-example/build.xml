@@ -16,7 +16,7 @@
 				<exclude name="s2-tiger*.jar"/>
 				<exclude name="teeda-tiger*.jar"/>
 			</zipfileset>
-			<zipfileset prefix="teeda-jars/sources" dir="src/main/webapp/WEB-INF/lib/sources">
+			<zipfileset prefix="teeda-jars/sources" dir="src/main/webapp/WEB-INF/libsrc">
 				<include name="*.jar"/>
 				<exclude name="s2-tiger*.jar"/>
 				<exclude name="teeda-tiger*.jar"/>
@@ -29,7 +29,7 @@
 			<zipfileset prefix="teeda-tiger-jars" dir="src/main/webapp/WEB-INF/lib">
 				<include name="*.jar"/>
 			</zipfileset>
-			<zipfileset prefix="teeda-tiger-jars/sources" dir="src/main/webapp/WEB-INF/lib/sources">
+			<zipfileset prefix="teeda-tiger-jars/sources" dir="src/main/webapp/WEB-INF/libsrc">
 				<include name="*.jar"/>
 			</zipfileset>
 			<zipfileset prefix="teeda-tigerjars" dir="lib">
@@ -38,7 +38,6 @@
 		</zip>
 		<war destfile="${zipDir}/teeda-html-example-${ver}.war" webxml="src/main/webapp/WEB-INF/web.xml">
 			<fileset dir="src/main/webapp">
-				<exclude name="WEB-INF/lib/sources/"/>
 				<exclude name="WEB-INF/lib/geronimo-jta_1.1_spec-1.0.jar"/>
 			</fileset>
 			<lib dir="lib">
@@ -51,21 +50,21 @@
 		<copy file="../teeda/teeda-core/target/teeda-core-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-core/target/teeda-core-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 
 		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-extension/target/teeda-extension-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 
 		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda/teeda-ajax/target/teeda-ajax-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 
 		<copy file="../teeda-tiger/target/teeda-tiger-${ver}.jar"
 			todir="src/main/webapp/WEB-INF/lib"/>
 		<copy file="../teeda-tiger/target/teeda-tiger-${ver}-sources.jar"
-			todir="src/main/webapp/WEB-INF/lib/sources"/>
+			todir="src/main/webapp/WEB-INF/libsrc"/>
 	</target>
 </project>
