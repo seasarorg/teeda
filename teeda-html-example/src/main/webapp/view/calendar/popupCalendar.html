@@ -1,13 +1,20 @@
 <html xmlns:te="http://www.seasar.org/teeda/extension">
 	<head>
 		<title>Calendar</title>
+		<style>
+		.onTeedaError {
+			background-color: #FFCCCC;
+		}
+		</style>
 	</head>
 	<body>
 		<form id="form">
+			<span id="aaaa" class="T_popupCalendar" datePattern="yy/MM/dd" required="true"></span>
 			<span id="aaaaMessage">dummy</span>
-			<span id="aaaa" class="T_popupCalendar" datePattern="yy/MM/dd" required="true"/>
+			<br />
+			<span id="bbbb" class="T_popupCalendar"></span>
 			<span id="bbbbMessage">dummy</span>
-			<span id="bbbb" class="T_popupCalendar"/>
+			<br />
 			<input id="doShow" type="submit" value="push" />
 		</form>
 	</body>

@@ -26,7 +26,7 @@ function jscalendarSwapImage(srcImg, destImg){
 }
 
 function jscalendarInit(){
-	if (!jscalendarIe) {
+	if (jscalendarYearNow < 2000) {
 		jscalendarYearNow += 1900;
 	}
 

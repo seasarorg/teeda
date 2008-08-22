@@ -18,7 +18,6 @@ package org.seasar.teeda.extension.component.html;
 import java.io.IOException;
 import java.util.Locale;
 
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.DateTimeConverter;
 import javax.faces.internal.RenderPreparable;
@@ -30,7 +29,7 @@ import org.seasar.teeda.extension.convert.TDateTimeConverter;
 /**
  * @author higa
  */
-public class THtmlPopupCalendar extends HtmlInputText implements
+public class THtmlPopupCalendar extends THtmlInputText implements
         RenderPreparable {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.HtmlPopupCalendar";

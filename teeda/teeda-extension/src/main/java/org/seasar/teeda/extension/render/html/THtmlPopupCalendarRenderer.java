@@ -32,7 +32,6 @@ import javax.faces.internal.FacesMessageUtil;
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.context.html.HtmlResponseWriter;
 import org.seasar.teeda.core.render.RenderPreparableRenderer;
-import org.seasar.teeda.core.render.html.HtmlInputTextRenderer;
 import org.seasar.teeda.extension.component.html.THtmlPopupCalendar;
 import org.seasar.teeda.extension.util.DateFormatSymbolsUtil;
 import org.seasar.teeda.extension.util.VirtualResource;
@@ -40,8 +39,8 @@ import org.seasar.teeda.extension.util.VirtualResource;
 /**
  * @author higa
  */
-public class THtmlPopupCalendarRenderer extends HtmlInputTextRenderer implements
-        RenderPreparableRenderer {
+public class THtmlPopupCalendarRenderer extends THtmlInputTextRenderer
+        implements RenderPreparableRenderer {
 
     public static final String COMPONENT_FAMILY = "org.seasar.teeda.extension.HtmlPopupCalendar";
 
