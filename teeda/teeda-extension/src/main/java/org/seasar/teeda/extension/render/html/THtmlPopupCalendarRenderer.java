@@ -99,11 +99,11 @@ public class THtmlPopupCalendarRenderer extends THtmlInputTextRenderer
             throws IOException {
         super.encodeEnd(context, component);
         THtmlPopupCalendar htmlCalendar = (THtmlPopupCalendar) component;
-        Locale currentLocale = context.getViewRoot().getLocale();
-        Date value = (Date) htmlCalendar.getValue();
+//        Locale currentLocale = context.getViewRoot().getLocale();
+//        Date value = (Date) htmlCalendar.getValue();
 
-        Calendar timeKeeper = Calendar.getInstance(currentLocale);
-        timeKeeper.setTime(value != null ? value : new Date());
+//        Calendar timeKeeper = Calendar.getInstance(currentLocale);
+//        timeKeeper.setTime(value != null ? value : new Date());
 
         DateTimeConverter converter = THtmlCalendarRendererUtil.getConverter(
                 context, (UIInput) component);
