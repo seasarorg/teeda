@@ -43,7 +43,7 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		super.tearDown();
 	}
 
-	public void _testValidator1() throws Exception {
+	public void testValidator1() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPAN);
 		TeedaWebTester tester = new TeedaWebTester();
@@ -54,17 +54,17 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.setTextById("aaa", "");
-		tester.setTextById("bbb", "");
+		tester.setTextById("bbb-1", "");
 
 		tester.submitByName("validatorForm:doExec");
 
 		// ## Assert ##
 		tester.dumpHtml();
 		tester.assertTextInElementById("allMessages", "aaa");
-		tester.assertTextInElementById("allMessages", "bbb");
+		tester.assertTextInElementById("allMessages", "bbb-1");
 	}
 
-	public void _testValidator2() throws Exception {
+	public void testValidator2() throws Exception {
 		// ## Arrange ##
 		Locale.setDefault(Locale.JAPAN);
 		TeedaWebTester tester = new TeedaWebTester();
@@ -75,14 +75,14 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.setTextById("aaa", "12");
-		tester.setTextById("bbb", "22");
+		tester.setTextById("bbb-1", "22");
 
 		tester.submitByName("validatorForm:doExec");
 
 		// ## Assert ##
 		tester.dumpHtml();
 		tester.assertTextInElementById("allMessages", "aaa");
-		tester.assertTextInElementById("allMessages", "bbb");
+		tester.assertTextInElementById("allMessages", "bbb-1");
 	}
 
 	public void testValidator3() throws Exception {
@@ -96,7 +96,7 @@ public class DynamicValidatorTest extends TeedaWebTestCase {
 		tester.dumpHtml();
 
 		tester.setTextById("aaa", "1234");
-		tester.setTextById("bbb", "2246");
+		tester.setTextById("bbb-1", "2246");
 
 		tester.submitByName("validatorForm:doExec");
 

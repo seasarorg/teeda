@@ -45,10 +45,14 @@ public class DynamicValidatorInvokerImpl implements DynamicValidatorInvoker {
             Object newValue) {
         AssertionUtil.assertNotNull("context", context);
         AssertionUtil.assertNotNull("component", component);
-        final String id = component.getId();
+        String id = component.getId();
         final ValueBinding vb = component.getValueBinding("value");
         if (id == null || vb == null) {
             return null;
+        }
+        final int pos = id.indexOf('-');
+        if (pos != -1) {
+            id = id.substring(0, pos);
         }
         final String expressionString = vb.getExpressionString();
         final int index = expressionString.indexOf(".");

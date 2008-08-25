@@ -40,7 +40,7 @@ public class DynamicValidatorInvokerImplTest extends TeedaTestCase {
 
         });
         UIInput input = new UIInput();
-        input.setId("foo");
+        input.setId("foo-1");
         input.setValueBinding("value", new MockValueBinding() {
             public String getExpressionString() {
                 return "#{hoge_hogePage.foo}";
