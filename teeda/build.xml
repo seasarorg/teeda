@@ -49,6 +49,7 @@
 		<mkdir dir="${site}/en" />
 		<move todir="${site}/en">
 			<fileset dir="${site}">
+				<exclude name="download/**" />
 				<exclude name="apidocs/**" />
 				<exclude name="en/**" />
 				<exclude name="ja/**" />
