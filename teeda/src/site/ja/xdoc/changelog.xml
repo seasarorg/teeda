@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp3">1.0.13-sp3</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp2">1.0.13-sp2</a>
 					</td>
 					<td>
@@ -134,6 +137,69 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-sp3">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp2">1.0.13-sp2</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-475'>TEEDA-475</a>
+								] - ツリーを使った場合にレンダリングされる隠しフィールドに type 属性が重複している問題を修正しました．[Seasar-user:15416]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-476'>TEEDA-476</a>
+								] - popupCalendar でエラーになっても style 属性に onTeedaError が付かない問題を修正しました．[Seasar-user:15472]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-477'>TEEDA-477</a>
+								] - popupCalendar で 2008 年を表示すると，Firefox2 では 108 年，Opera9.5 では 3908
+								年になる問題を修正しました．[Seasar-user:15472]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-478'>TEEDA-478</a>
+								] - popupCalendar で target 属性を指定した TimestampConverter 等を指定すると ClassCastException
+								が発生する問題を修正しました．[Seasar-user:15482]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-479'>TEEDA-479</a>
+								] - id にハイフンを含むとダイナミックバリデータが働かない問題を修正しました．[Seasar-user:15503]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-474'>TEEDA-474</a>
+								] - @ByteLength アノテーションでエンコーディングを指定できるようにしました．[Seasar-user:15378]
+							</li>
+						</ul>
+					</li>
+					<li>
+						New Feature
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-473'>TEEDA-473</a>
+								] - Kumuにprototype.jsのElement.cleanWhitespaceと同等の機能を追加しました．
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp2">
