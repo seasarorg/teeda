@@ -391,7 +391,7 @@ function jscalendarPopUpCalendar_Show(ctl){
 		aTag = aTag.offsetParent;
 		leftpos	+= aTag.offsetLeft;
 		toppos += aTag.offsetTop;
-	} while(aTag.tagName!="BODY");
+	} while(aTag.tagName!="BODY" && aTag.tagName!="HTML");
 
 	jscalendarCrossobj.left = jscalendarFixedX==-1 ? ctl.offsetLeft	+ leftpos + "px": jscalendarFixedX;
 	jscalendarCrossobj.top = jscalendarFixedY==-1 ?	ctl.offsetTop +	toppos + ctl.offsetHeight +	2 + "px": jscalendarFixedY;
