@@ -2657,8 +2657,10 @@ public List<Map> selecteItems;
 					<code>
 						org.seasar.teeda.extension.util.UploadedFile
 					</code>
-					の詳細や，他に使えるプロパティの型は「
-					<a href="ref_feature.html#fileUpload">ファイルアップロード</a>
+					の詳細や他に使えるプロパティの型， 
+					<code>web.xml</code>
+					の設定等は「
+					<a href="../../extension_features.html#fileupload">ファイルアップロード</a>
 					」を参照してください．
 				</p>
 				<p>
@@ -2694,6 +2696,21 @@ public UploadedFile textFile;
 					</code>
 					が設定されます．
 				</p>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../../extension_features.html">
+							機能リファレンス
+						</a>
+						<ul>
+							<li>
+								<a href="../../extension_features.html#fileupload">
+									ファイルアップロード
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</subsection>
 		</section>
 
