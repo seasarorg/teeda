@@ -26,6 +26,7 @@ import org.custommonkey.xmlunit.Diff;
 import org.seasar.framework.mock.servlet.MockHttpServletRequest;
 import org.seasar.teeda.core.mock.MockFacesContext;
 import org.seasar.teeda.core.mock.MockHtmlSelectOneMenu;
+import org.seasar.teeda.core.mock.MockValueBinding;
 import org.seasar.teeda.core.util.PostbackUtil;
 
 /**
@@ -204,7 +205,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
                 + "</select>", getResponseText());
     }
 
-    public void testEncode_SelectedIfInitialized() throws Exception {
+    public void testEncode_Selected_noValueBinding() throws Exception {
         // ## Arrange ##
         PostbackUtil.setPostback(getFacesContext().getExternalContext()
                 .getRequestMap(), false);
@@ -228,7 +229,71 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
         // ## Assert ##
         assertEquals("<select name=\"_id0\" size=\"1\">"
                 + "<option value=\"v1\">l1</option>"
-                + "<option value=\"v2\">l2</option>" + "</select>",
+                + "<option value=\"v2\" selected=\"selected\">l2</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_Selected_targetIsPrimitive() throws Exception {
+        // ## Arrange ##
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), new Integer(2));
+        vb.setType(int.class);
+        PostbackUtil.setPostback(getFacesContext().getExternalContext()
+                .getRequestMap(), false);
+        htmlSelectOneMenu.setValue("2");
+        htmlSelectOneMenu.setValueBinding("value", vb);
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("1");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("2");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneMenu);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"1\">"
+                + "<option value=\"1\">l1</option>"
+                + "<option value=\"2\" selected=\"selected\">l2</option>" + "</select>",
+                getResponseText());
+    }
+
+    public void testEncode_Selected_targetIsPrimitiveZeroIgnored() throws Exception {
+        // ## Arrange ##
+        MockValueBinding vb = new MockValueBinding();
+        vb.setValue(getFacesContext(), new Integer(0));
+        vb.setType(int.class);
+        PostbackUtil.setPostback(getFacesContext().getExternalContext()
+                .getRequestMap(), false);
+        htmlSelectOneMenu.setValue("0");
+        htmlSelectOneMenu.setValueBinding("value", vb);
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("0");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("1");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneMenu.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneMenu);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"1\">"
+                + "<option value=\"0\">l1</option>"
+                + "<option value=\"1\">l2</option>" + "</select>",
                 getResponseText());
     }
 

@@ -49,20 +49,20 @@ public class HtmlSelectOneListboxRenderer extends HtmlSelectManyListboxRenderer 
             UIComponent component) {
         final ExternalContext externalContext = context.getExternalContext();
         final Map requestMap = externalContext.getRequestMap();
-        String value = ValueHolderUtil.getValueForRender(context, component);
-        if (PostbackUtil.isPostback(requestMap)) {
-            return new String[] { value };
-        } else {
-            final ValueBinding vb = component.getValueBinding("value");
-            if (vb == null) {
-                return null;
-            }
-            Class type = vb.getType(context);
-            if (type.isPrimitive() && value.equals("0")) {
-                return null;
-            }
-            return new String[] { value };
+        final String value = ValueHolderUtil.getValueForRender(context, component);
+        if (value == null) {
+            return null;
         }
+        if (!PostbackUtil.isPostback(requestMap)) {
+            final ValueBinding vb = component.getValueBinding("value");
+            if (vb != null) {
+                final Class type = vb.getType(context);
+                if (type.isPrimitive() && value.equals("0")) {
+                    return null;
+                }
+            }
+        }
+        return new String[] { value };
     }
 
     public void decode(FacesContext context, UIComponent component) {

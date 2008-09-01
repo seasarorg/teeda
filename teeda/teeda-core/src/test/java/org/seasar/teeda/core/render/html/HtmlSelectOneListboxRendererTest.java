@@ -224,6 +224,31 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
                 + "</select>", getResponseText());
     }
 
+    public void testEncode_Selected_noValueBinding() throws Exception {
+        htmlSelectOneListbox.setValue("2");
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("1");
+            selectItem.setItemLabel("l1");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+        {
+            UISelectItem selectItem = new UISelectItem();
+            selectItem.setItemValue("2");
+            selectItem.setItemLabel("l2");
+            htmlSelectOneListbox.getChildren().add(selectItem);
+        }
+
+        // ## Act ##
+        encodeByRenderer(renderer, htmlSelectOneListbox);
+
+        // ## Assert ##
+        assertEquals("<select name=\"_id0\" size=\"2\">"
+                + "<option value=\"1\">l1</option>"
+                + "<option value=\"2\" selected=\"selected\">l2</option>"
+                + "</select>", getResponseText());
+    }
+
     public void testEncode_Selected_targetIsPrimitive() throws Exception {
         MockValueBinding vb = new MockValueBinding();
         vb.setValue(getFacesContext(), new Integer(2));
