@@ -154,8 +154,7 @@ public class HtmlNavigationHandler extends NavigationHandlerImpl {
             }
         }
         if (root != null && root.trim().length() > 0) {
-            pos = viewId.indexOf('/', 1);
-            pathFirst = viewId.substring(0, pos + 1);
+            pathFirst = root.endsWith("/") ? root : root + "/";
         }
 
         if (suffix != null) {

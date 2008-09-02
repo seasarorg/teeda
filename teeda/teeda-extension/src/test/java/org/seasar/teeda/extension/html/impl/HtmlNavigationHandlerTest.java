@@ -149,4 +149,36 @@ public class HtmlNavigationHandlerTest extends TeedaTestCase {
                 getFacesContext(), "/add/addResult.html", "hello_hello2_Hello"));
     }
 
+    /**
+     * https://www.seasar.org/issues/browse/TEEDA-483
+     */
+    public void testCalcPathFromOutcome6() throws Exception {
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        final NamingConventionImpl nc = new NamingConventionImpl();
+        nc.setViewRootPath("/view/hoge");
+        handler.setNamingConvention(nc);
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        handler.setServletContext(getServletContext());
+        assertEquals("/view/hoge/add/addResult.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/view/hoge/add/addInput.html", "add_addResult"));
+        assertEquals("/view/hoge/bbb/addResult.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/view/hoge/add/addInput.html", "bbb_addResult"));
+        assertEquals("/view/hoge/hello/hello2/hello.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/view/hoge/add/addResult.html", "hello_hello2_Hello"));
+    }
+
+    /**
+     * https://www.seasar.org/issues/browse/TEEDA-483
+     */
+    public void testCalcPathFromOutcome7() throws Exception {
+        HtmlNavigationHandler handler = new HtmlNavigationHandler();
+        final NamingConventionImpl nc = new NamingConventionImpl();
+        nc.setViewRootPath("/view/hoge");
+        handler.setNamingConvention(nc);
+        handler.setHtmlSuffix(new HtmlSuffixImpl());
+        handler.setServletContext(getServletContext());
+        assertEquals("/view/hoge/addResult.html", handler.calcPathFromOutcome(
+                getFacesContext(), "/view/hoge/addInput.html", "addResult"));
+    }
+
 }
