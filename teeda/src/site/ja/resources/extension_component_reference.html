@@ -1426,10 +1426,18 @@ h3.underline {
       <tr>
         <td>その他</td>
         <td>
-          <span>-同期の場合のGridは50件まず描画され、残りはbodyの最後に全て描画される．</span><br/>
-          <span>-非同期の場合は50件ずつ非同期に描画される．</span><br/>
-          <span>-アプリケーション全体でのGridの同期/非同期の挙動は、web.xmlにteeda.DEFAULT_GRID_ASYNCというキーで<br/>
-                   以下のように定義する．(trueで非同期、falseで非同期)</span><br/>
+          <span>-初期表示件数が0より大きい場合，Gridはまず初期表示件数だけ描画される．<br />
+          初期表示件数が0以下の場合は，全件まとめて描画される．</span><br />
+          <span>-初期表示件数が0より大きくて同期の場合，初期表示件数を超えた分はbodyの最後に描画される．<br/>
+          非同期の場合は，50件ずつサーバから取得しながら描画される．</span><br/>
+          <span>-アプリケーション全体でのGridの同期/非同期の挙動は、web.xmlに設定する。<br/>
+          初期表示件数は、teeda.GRID_FIRST_RENDER_ROW_COUNTというキーで以下のように定義する．</span><br/>
+          &nbsp;&nbsp;&lt;context-param&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;<b class="boldorange">teeda.GRID_FIRST_RENDER_ROW_COUNT</b>&lt;/param-name&gt;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;<b class="boldorange">0</b>&lt;/param-value&gt;<br/>
+          &nbsp;&nbsp;&lt;/context-param&gt;<br/>
+          <span>同期/非同期の挙動は、teeda.DEFAULT_GRID_ASYNCというキーで以下のように定義する．<br/>
+                   (trueで非同期、falseで非同期)</span><br/>
           &nbsp;&nbsp;&lt;context-param&gt;<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;<b class="boldorange">teeda.DEFAULT_GRID_ASYNC</b>&lt;/param-name&gt;<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;<b class="boldorange">false</b>&lt;/param-value&gt;<br/>

@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.internal.IgnoreAttribute;
 
 import org.seasar.framework.beans.BeanDesc;
@@ -107,8 +108,6 @@ public class THtmlGridRenderer extends TForEachRenderer implements
 
     private static final String GRID_ATTRIBUTE = THtmlGrid.class.getName() +
             ".GRID_ATTRIBUTE";
-
-    private int firstRenderRowCount = 50;
 
     private final IgnoreAttribute thIgnoreAttribute = new IgnoreAttribute();
     {
@@ -518,9 +517,16 @@ public class THtmlGridRenderer extends TForEachRenderer implements
         final Object page = htmlGrid.getPage(context);
         final BeanDesc beanDesc = BeanDescFactory.getBeanDesc(page.getClass());
         final Object[] items = htmlGrid.getItems(context);
-        // TEEDA-150
-        final int rowSize = Math.min(firstRenderRowCount,
-                ((items != null) ? items.length : 0));
+
+        final int rowSize;
+        final int firstRenderRowCount = FacesConfigOptions
+                .getGridFirstRenderRowCount();
+        if (firstRenderRowCount > 0) {
+            rowSize = Math.min(firstRenderRowCount,
+                    ((items != null) ? items.length : 0));
+        } else {
+            rowSize = (items != null) ? items.length : 0;
+        }
 
         final String id = getIdForRender(context, htmlGrid);
         // https://www.seasar.org/issues/browse/TEEDA-176
@@ -902,7 +908,7 @@ public class THtmlGridRenderer extends TForEachRenderer implements
     }
 
     public void setFirstRenderRowCount(final int firstRenderRowCount) {
-        this.firstRenderRowCount = firstRenderRowCount;
+        FacesConfigOptions.setGridFirstRenderRowCount(firstRenderRowCount);
     }
 
     private static class GridAttribute implements Serializable {

@@ -35,6 +35,8 @@ public interface InternalConstants {
 
     String DEFAULT_GRID_ASYNC = "teeda.DEFAULT_GRID_ASYNC";
 
+    String GRID_FIRST_RENDER_ROW_COUNT = "teeda.GRID_FIRST_RENDER_ROW_COUNT";
+
     String DEFAULT_LAYOUT_PATH = "teeda.DEFAULT_LAYOUT_PATH";
 
     Object[] EMPTY_ARGS = new Object[0];

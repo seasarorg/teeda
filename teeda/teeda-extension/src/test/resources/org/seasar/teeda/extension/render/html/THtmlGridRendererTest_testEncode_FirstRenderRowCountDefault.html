@@ -1,0 +1,568 @@
+<html>
+<head>
+<style>
+.gridHeader {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+}
+.gridTable {
+	background-color: black;
+}
+.gridCell {
+	height: 18px;
+}
+.gridCellEdit {
+	border-width: 0px;
+	background-color: #FFC0CB;
+}
+.gridTable thead tr th div {
+  overflow:hidden;
+}
+.gridTable tbody tr td div {
+  overflow:hidden;
+}
+.row_odd {
+	background-color: white;
+}
+.row_even {
+	background-color: #FFDEAD;
+}
+</style>
+</head>
+<body>
+Grid
+<!-- BEGIN -->
+<table id="someGrid" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<div id="someGridRightHeader" class="gridRightHeader">
+				<table id="someGridRightHeaderTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<thead>
+						<tr>
+							<th><div class="gridHeader" style="width:40px;"><nobr>th1</nobr></div></th>
+							<th><div class="gridHeader" style="width:40px;"><nobr>th2</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th3</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th4</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th5</nobr></div></th>
+							<th><div class="gridHeader" style="width:30px;"><nobr>th6</nobr></div></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="someGridRightBody" class="gridRightBody">
+				<table id="someGridRightBodyTable" cellspacing="0" cellpadding="0" class="gridTable">
+					<tbody>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:0:gridText" value="TD3_1" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_1</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_1</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:1:gridText" value="TD3_2" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_2</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_2</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:2:gridText" value="TD3_3" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_3</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_3</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:3:gridText" value="TD3_4" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_4</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_4</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:4:gridText" value="TD3_5" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_5</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_5</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:5:gridText" value="TD3_6" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_6</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_6</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:6:gridText" value="TD3_7" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_7</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_7</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_8</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_8</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:7:gridText" value="TD3_8" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_8</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_8</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_8</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_9</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_9</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:8:gridText" value="TD3_9" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_9</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_9</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_9</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_10</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_10</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:9:gridText" value="TD3_10" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_10</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_10</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_10</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_11</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_11</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:10:gridText" value="TD3_11" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_11</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_11</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_11</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_12</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_12</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:11:gridText" value="TD3_12" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_12</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_12</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_12</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_13</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_13</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:12:gridText" value="TD3_13" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_13</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_13</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_13</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_14</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_14</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:13:gridText" value="TD3_14" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_14</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_14</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_14</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_15</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_15</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:14:gridText" value="TD3_15" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_15</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_15</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_15</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_16</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_16</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:15:gridText" value="TD3_16" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_16</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_16</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_16</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_17</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_17</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:16:gridText" value="TD3_17" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_17</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_17</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_17</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_18</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_18</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:17:gridText" value="TD3_18" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_18</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_18</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_18</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_19</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_19</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:18:gridText" value="TD3_19" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_19</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_19</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_19</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_20</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_20</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:19:gridText" value="TD3_20" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_20</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_20</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_20</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_21</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_21</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:20:gridText" value="TD3_21" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_21</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_21</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_21</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_22</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_22</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:21:gridText" value="TD3_22" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_22</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_22</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_22</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_23</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_23</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:22:gridText" value="TD3_23" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_23</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_23</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_23</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_24</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_24</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:23:gridText" value="TD3_24" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_24</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_24</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_24</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_25</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_25</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:24:gridText" value="TD3_25" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_25</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_25</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_25</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_26</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_26</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:25:gridText" value="TD3_26" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_26</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_26</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_26</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_27</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_27</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:26:gridText" value="TD3_27" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_27</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_27</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_27</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_28</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_28</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:27:gridText" value="TD3_28" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_28</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_28</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_28</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_29</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_29</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:28:gridText" value="TD3_29" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_29</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_29</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_29</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_30</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_30</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:29:gridText" value="TD3_30" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_30</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_30</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_30</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_31</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_31</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:30:gridText" value="TD3_31" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_31</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_31</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_31</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_32</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_32</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:31:gridText" value="TD3_32" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_32</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_32</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_32</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_33</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_33</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:32:gridText" value="TD3_33" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_33</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_33</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_33</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_34</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_34</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:33:gridText" value="TD3_34" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_34</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_34</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_34</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_35</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_35</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:34:gridText" value="TD3_35" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_35</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_35</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_35</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_36</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_36</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:35:gridText" value="TD3_36" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_36</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_36</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_36</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_37</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_37</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:36:gridText" value="TD3_37" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_37</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_37</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_37</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_38</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_38</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:37:gridText" value="TD3_38" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_38</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_38</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_38</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_39</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_39</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:38:gridText" value="TD3_39" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_39</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_39</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_39</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_40</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_40</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:39:gridText" value="TD3_40" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_40</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_40</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_40</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_41</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_41</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:40:gridText" value="TD3_41" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_41</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_41</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_41</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_42</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_42</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:41:gridText" value="TD3_42" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_42</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_42</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_42</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_43</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_43</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:42:gridText" value="TD3_43" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_43</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_43</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_43</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_44</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_44</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:43:gridText" value="TD3_44" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_44</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_44</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_44</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_45</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_45</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:44:gridText" value="TD3_45" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_45</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_45</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_45</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_46</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_46</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:45:gridText" value="TD3_46" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_46</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_46</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_46</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_47</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_47</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:46:gridText" value="TD3_47" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_47</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_47</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_47</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_48</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_48</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:47:gridText" value="TD3_48" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_48</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_48</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_48</nobr></div></td>
+						</tr>
+						<tr class="row_odd">
+							<td><div class="gridCell"><nobr>TD1_49</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_49</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:48:gridText" value="TD3_49" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_49</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_49</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_49</nobr></div></td>
+						</tr>
+						<tr class="row_even">
+							<td><div class="gridCell"><nobr>TD1_50</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD2_50</nobr></div></td>
+							<td><div class="gridCell"><nobr>
+								<input type="text" id="gridText" name="someGrid:49:gridText" value="TD3_50" />
+							</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD4_50</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD5_50</nobr></div></td>
+							<td><div class="gridCell"><nobr>TD6_50</nobr></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<!-- END -->
+</body>
+</html>

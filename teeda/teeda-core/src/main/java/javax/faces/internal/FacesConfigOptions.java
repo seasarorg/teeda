@@ -37,6 +37,8 @@ public abstract class FacesConfigOptions {
 
     private static boolean defaultGridAsync = true;
 
+    private static int gridFirstRenderRowCount = 50;
+
     private static final String DEFAULT_LAYOUT_PATH = "/layout/layout.html";
 
     private static String defaultLayoutPath = DEFAULT_LAYOUT_PATH;
@@ -102,6 +104,14 @@ public abstract class FacesConfigOptions {
         FacesConfigOptions.defaultGridAsync = defaultGridAsync;
     }
 
+    public static int getGridFirstRenderRowCount() {
+        return gridFirstRenderRowCount;
+    }
+
+    public static void setGridFirstRenderRowCount(int gridFirstRenderRowCount) {
+        FacesConfigOptions.gridFirstRenderRowCount = gridFirstRenderRowCount;
+    }
+
     public static String getDefaultLayoutPath() {
         return defaultLayoutPath;
     }
@@ -126,6 +136,7 @@ public abstract class FacesConfigOptions {
         javascriptNotPermittedPath = null;
         compressState = false;
         defaultGridAsync = true;
+        gridFirstRenderRowCount = 50;
         defaultLayoutPath = DEFAULT_LAYOUT_PATH;
         redirectUrl = null;
     }

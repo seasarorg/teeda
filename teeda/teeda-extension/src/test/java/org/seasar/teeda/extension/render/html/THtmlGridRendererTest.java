@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
+import javax.faces.internal.FacesConfigOptions;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererTest;
 import javax.xml.parsers.ParserConfigurationException;
@@ -454,7 +455,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(true);
         htmlGrid.setScrollVertical(true);
 
-        actNoLeftFixed();
+        actNoLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -479,7 +480,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(true);
 
-        actNoLeftFixed();
+        actNoLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -504,7 +505,7 @@ public class THtmlGridRendererTest extends RendererTest {
         htmlGrid.setScrollHorizontal(false);
         htmlGrid.setScrollVertical(false);
 
-        actNoLeftFixed();
+        actNoLeftFixed(7);
 
         // ## Assert ##
         final String readText = TestUtil.readText(getClass(),
@@ -520,7 +521,7 @@ public class THtmlGridRendererTest extends RendererTest {
         assertEquals(1, containCount(getResponseText(), "</script>"));
     }
 
-    private void actNoLeftFixed() throws IOException {
+    private void actNoLeftFixed(final int itemSize) throws IOException {
         // ## Arrange ##
         final FooPage fooPage = new FooPage();
         {
@@ -532,7 +533,7 @@ public class THtmlGridRendererTest extends RendererTest {
         // items
         {
             final List items = new ArrayList();
-            for (int i = 1; i <= 7; i++) {
+            for (int i = 1; i <= itemSize; i++) {
                 FooItem fooItem = new FooItem();
                 fooItem.setTd1("TD1_" + i);
                 fooItem.setTd2("TD2_" + i);
@@ -884,9 +885,80 @@ public class THtmlGridRendererTest extends RendererTest {
         encodeByRenderer(new TBodyRenderer(), body);
     }
 
+    public void testEncode_FirstRenderRowCountDefault() throws Exception {
+        // ## Arrange ##
+        htmlGrid.setId("someGrid");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(120));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(false);
+        htmlGrid.setScrollVertical(false);
+
+        actNoLeftFixed(60);
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_FirstRenderRowCountDefault.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+    }
+
+    public void testEncode_FirstRenderRowCount() throws Exception {
+        // ## Arrange ##
+        int orgSize = FacesConfigOptions.getGridFirstRenderRowCount();
+        htmlGrid.setId("someGrid");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(120));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(false);
+        htmlGrid.setScrollVertical(false);
+
+        renderer.setFirstRenderRowCount(10);
+
+        actNoLeftFixed(60);
+        
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_FirstRenderRowCount.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+        renderer.setFirstRenderRowCount(orgSize);
+    }
+
+    public void testEncode_FirstRenderRowCountLessZero() throws Exception {
+        int orgSize = FacesConfigOptions.getGridFirstRenderRowCount();
+        // ## Arrange ##
+        htmlGrid.setId("someGrid");
+        htmlGrid.setWidth(String.valueOf(170));
+        htmlGrid.setHeight(String.valueOf(120));
+        htmlGrid.setItemsName("someItems");
+        htmlGrid.setScrollHorizontal(false);
+        htmlGrid.setScrollVertical(false);
+
+        renderer.setFirstRenderRowCount(0);
+
+        actNoLeftFixed(60);
+
+        // ## Assert ##
+        final String readText = TestUtil.readText(getClass(),
+                "testEncode_FirstRenderRowCountLessZero.html", "UTF-8");
+        final String expected = extract(readText);
+        Diff diff = diff(expected, getResponseText());
+        System.out.println(getResponseText());
+        assertEquals(diff.toString(), true, diff.identical());
+        renderer.setFirstRenderRowCount(orgSize);
+    }
+
+
     public void no_testMany() throws Exception {
         // ## Arrange ##
         final int itemSize = 6000;
+        int orgSize = FacesConfigOptions.getGridFirstRenderRowCount();
         renderer.setFirstRenderRowCount(itemSize);
         htmlGrid.setId("someGridXY");
         htmlGrid.setWidth(String.valueOf(170));
@@ -904,6 +976,7 @@ public class THtmlGridRendererTest extends RendererTest {
         final byte[] bytes = getResponseText().getBytes("UTF-8");
         final int bytesLen = bytes.length;
         System.out.println(bytesLen + "バイト (" + bytesLen / 1024 + "K)");
+        renderer.setFirstRenderRowCount(orgSize);
     }
 
     protected Renderer createRenderer() {

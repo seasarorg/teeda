@@ -137,6 +137,12 @@ public class TeedaInitializer {
             FacesConfigOptions.setDefaultGridAsync(Boolean.valueOf(
                     defaultGridAsync).booleanValue());
         }
+        final String gridFirstRenderRowCount = getInitParameter(servletContext,
+                InternalConstants.GRID_FIRST_RENDER_ROW_COUNT);
+        if (gridFirstRenderRowCount != null) {
+            FacesConfigOptions.setGridFirstRenderRowCount(
+                    Integer.parseInt(gridFirstRenderRowCount));
+        }
         final String defaultLayoutPath = getInitParameter(servletContext,
                 InternalConstants.DEFAULT_LAYOUT_PATH);
         if (defaultLayoutPath != null) {
