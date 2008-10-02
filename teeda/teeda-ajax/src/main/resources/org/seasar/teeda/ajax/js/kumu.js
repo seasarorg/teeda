@@ -273,27 +273,23 @@ Kumu = Kumu.extend(Kumu, {
   },
 
   unshift : function() {
-    var start = 1;
-    var list;
-    if(arguments[0] instanceof Array){
-      list = arguments[0];
-    }else{
-      list = this;
-      start = 0;
+    var orgData = [];
+    for (var i = 0; i < this.length; i++){
+      orgData[i] = this[i];
     }
     var arr = [];
-    for (var i = start; i < arguments.length; i++){
+    for (var i = 0; i < arguments.length; i++){
       if(arguments[i] instanceof Array){
         arr = arr.concat(arguments[i]);
       }else{
         arr.push(arguments[i]);
       }
     }
-    var o = arr.concat(list);
-    for (var i = 0; i < o.length; i++){
-      list[i] = o[i];
+    arr = arr.concat(orgData);
+    for (var i = 0; i < arr.length; i++){
+      this[i] = arr[i];
     }
-    return list.length;
+    return this.length;
   },
 
   include: function(value, list) {
