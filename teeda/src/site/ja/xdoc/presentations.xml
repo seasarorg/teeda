@@ -10,17 +10,18 @@
 		<section name="プレゼンテーション資料">
 			<ul>
 				<li>
+					Seasar Conference 2008 Autumn 「
 					<a
-						href="https://www.seasar.org/svn/sandbox/learnings/trunk/donbiki/donbiki-view/1st/InsideOfTeeda.ppt">
-						Inside of Teeda
+						href="http://event.seasarfoundation.org/sc2008autumn/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2008autumn_c4_teeda.pdf">
+						Teeda再考 - 使い方から拡張方法まで -
 					</a>
-					(ppt)
+					」 (pdf)
 				</li>
 				<li>
-					Seasar Conference 2007 Spring 「
+					Seasar Conference 2007 Autumn 「
 					<a
-						href="http://event.seasarfoundation.org/sc2007spring/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007spring_S4_Teeda.pdf">
-						今から役立つTeeda入門
+						href="http://event.seasarfoundation.org/sc2007autumn/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007a-b2-teeda.pdf">
+						これであなたもTeedaが好きになる
 					</a>
 					」 (pdf)
 				</li>
@@ -33,12 +34,19 @@
 					」 (pdf)
 				</li>
 				<li>
-					Seasar Conference 2007 Autumn 「
+					Seasar Conference 2007 Spring 「
 					<a
-						href="http://event.seasarfoundation.org/sc2007autumn/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007a-b2-teeda.pdf">
-						これであなたもTeedaが好きになる
+						href="http://event.seasarfoundation.org/sc2007spring/viewAttachment.do?_pageName_=Session&amp;_fileName_=sc2007spring_S4_Teeda.pdf">
+						今から役立つTeeda入門
 					</a>
 					」 (pdf)
+				</li>
+				<li>
+					<a
+						href="https://www.seasar.org/svn/sandbox/learnings/trunk/donbiki/donbiki-view/1st/InsideOfTeeda.ppt">
+						Inside of Teeda
+					</a>
+					(ppt)
 				</li>
 			</ul>
 		</section>
