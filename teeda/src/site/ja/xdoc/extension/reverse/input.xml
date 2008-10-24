@@ -1047,8 +1047,6 @@ public String name;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素に
 					<code>id</code>
 					属性を付けます． 要素の内容には，
@@ -1057,8 +1055,6 @@ public String name;
 					<code>radio</code>
 					で，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ
@@ -1072,8 +1068,6 @@ public String name;
 				<p>
 					ページクラスに2つのプロパティを用意します． 一つめは
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ名前で， 配列型のプロパティです． このプロパティは選択された項目の値を保持します．
@@ -1081,9 +1075,7 @@ public String name;
 				<p>
 					二つめは
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
-					の
+					要素の
 					<code>id</code>
 					属性の値に
 					<code>Items</code>
@@ -1122,8 +1114,6 @@ public String name;
 				<p>
 					レンダリング時，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の内容は
 					<code>Items</code>
 					プロパティの要素の数分の
@@ -1134,8 +1124,6 @@ public String name;
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された項目の値が
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ名前のプロパティに設定されます． ただし， 「
@@ -1144,10 +1132,10 @@ public String name;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="select">
+<span id="select">
     <input type="radio" name="select" /> Item1
     <input type="radio" name="select" /> Item2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1197,18 +1185,16 @@ public List<Map> selectItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:col</code>
 					属性に 1 行あたりのチェックボックスの数を指定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="select" te:col="2">
+<span id="select" te:col="2">
     <input type="radio" name="select" />Item1
     <input type="radio" name="select" />Item2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1253,8 +1239,6 @@ public List<Map> selectItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:layout</code>
 					属性に
@@ -1265,10 +1249,10 @@ public List<Map> selectItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="select" te:layout="pageDirection">
+<span id="select" te:layout="pageDirection">
     <input type="radio" name="select" />Item1
     <input type="radio" name="select" />Item2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1315,8 +1299,6 @@ public List<Map> selectItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:layout</code>
 					属性に
@@ -1325,10 +1307,10 @@ public List<Map> selectItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="select" te:layout="none">
+<span id="select" te:layout="none">
     <input type="radio" name="select" />Option1
     <input type="radio" name="select" />Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1352,8 +1334,6 @@ public List<Map> selectItems;
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時に， 選択された項目の値だけではなく， ラベルもプロパティで受け取るには，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素よりも
 					<strong>前</strong>
 					に，
@@ -1366,8 +1346,6 @@ public List<Map> selectItems;
 					<code>id</code>
 					属性は，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性の値に
@@ -1377,8 +1355,6 @@ public List<Map> selectItems;
 				<p>
 					ページクラスにラベルを受け取るプロパティを用意します． プロパティは
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性の値に
@@ -1391,8 +1367,6 @@ public List<Map> selectItems;
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された項目のラベルが
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性の値に
@@ -1404,10 +1378,10 @@ public List<Map> selectItems;
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
 <input type="hidden" id="selectItemsSave" />
-<div id="select">
+<span id="select">
     <input type="radio" name="select" /> Item1
     <input type="radio" name="select" /> Item2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1711,8 +1685,6 @@ public String name;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素に
 					<code>id</code>
 					属性を付けます． 要素の内容には，
@@ -1721,8 +1693,6 @@ public String name;
 					<code>checkbox</code>
 					で，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ
@@ -1736,8 +1706,6 @@ public String name;
 				<p>
 					ページクラスに2つのプロパティを用意します． 一つめは
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ名前で， 配列型のプロパティです． このプロパティは選択された項目の値を保持します．
@@ -1745,9 +1713,7 @@ public String name;
 				<p>
 					二つめは
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
-					の
+					要素の
 					<code>id</code>
 					属性の値に
 					<code>Items</code>
@@ -1786,8 +1752,6 @@ public String name;
 				<p>
 					レンダリング時，
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の内容は
 					<code>Items</code>
 					プロパティの要素の数分の
@@ -1798,8 +1762,6 @@ public String name;
 					<a href="../concept/page.html#ポストバック">ポストバック</a>
 					時，ブラウザで選択された項目の値が
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>id</code>
 					属性と同じ名前のプロパティに設定されます． ただし， 「
@@ -1808,10 +1770,10 @@ public String name;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option">
+<span id="option">
     <input type="checkbox" name="option" /> Option1
     <input type="checkbox" name="option" /> Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1869,10 +1831,10 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option">
+<span id="option">
     <input type="checkbox" name="option" /> Option1
     <input type="checkbox" name="option" /> Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1928,18 +1890,16 @@ public List<Map> optionItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:col</code>
 					属性に 1 行あたりのチェックボックスの数を指定します．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option" te:col="2">
+<span id="option" te:col="2">
     <input type="checkbox" name="option" /> Option1
     <input type="checkbox" name="option" /> Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -1984,8 +1944,6 @@ public List<Map> optionItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:layout</code>
 					属性に
@@ -1996,10 +1954,10 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option" te:layout="pageDirection">
+<span id="option" te:layout="pageDirection">
     <input type="checkbox" name="option" /> Option1
     <input type="checkbox" name="option" /> Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -2046,8 +2004,6 @@ public List<Map> optionItems;
 				</div>
 				<p>
 					<code>&lt;span&gt;</code>
-					要素または
-					<code>&lt;div&gt;</code>
 					要素の
 					<code>te:layout</code>
 					属性に
@@ -2056,10 +2012,10 @@ public List<Map> optionItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<div id="option" te:layout="none">
+<span id="option" te:layout="none">
     <input type="checkbox" name="option1" /> Option1
     <input type="checkbox" name="option2" /> Option2
-</div>
+</span>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
