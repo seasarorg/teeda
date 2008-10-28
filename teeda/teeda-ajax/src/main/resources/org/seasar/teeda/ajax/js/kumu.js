@@ -279,11 +279,7 @@ Kumu = Kumu.extend(Kumu, {
     }
     var arr = [];
     for (var i = 0; i < arguments.length; i++){
-      if(arguments[i] instanceof Array){
-        arr = arr.concat(arguments[i]);
-      }else{
-        arr.push(arguments[i]);
-      }
+      arr.push(arguments[i]);
     }
     arr = arr.concat(orgData);
     for (var i = 0; i < arr.length; i++){
