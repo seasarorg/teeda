@@ -1,4 +1,4 @@
-var	jscalendarCrossobj, jscalendarCrossMonthObj, jscalendarCrossYearObj,
+var	jscalendarCrossFrameobj, jscalendarObj, jscalendarCrossobj, jscalendarCrossMonthObj, jscalendarCrossYearObj,
     jscalendarMonthSelected, jscalendarYearSelected, jscalendarDateSelected,
     jscalendarOmonthSelected, jscalendarOyearSelected, jscalendarOdateSelected,
     jscalendarMonthConstructed, jscalendarYearConstructed, jscalendarIntervalID1, jscalendarIntervalID2,
@@ -6,6 +6,7 @@ var	jscalendarCrossobj, jscalendarCrossMonthObj, jscalendarCrossYearObj,
 
 var	jscalendarBPageLoaded=false
 var	jscalendarIe=document.all
+var	jscalendarIe6=navigator.userAgent.indexOf("MSIE 5.5") >= 0 || navigator.userAgent.indexOf("MSIE 6") >= 0
 
 var	jscalendarToday =	new	Date()
 var	jscalendarDateNow	 = jscalendarToday.getDate()
@@ -14,6 +15,9 @@ var	jscalendarYearNow	 = jscalendarToday.getYear()
 
 var jscalendarBShow = false;
 
+if (jscalendarIe6) {
+	document.write ("<iframe scrolling='no' frameborder='0' id='calendarFrame' style='z-index:10; position:absolute; display:none;'></iframe>");
+}
 document.write ("<div onclick='jscalendarBShow=true' id='calendar'	class='"+jscalendarThemePrefix+"-div-style'><table	width='220' class='"+jscalendarThemePrefix+"-table-style'><tr class='"+jscalendarThemePrefix+"-title-background-style'><td><table width='218'><tr><td class='"+jscalendarThemePrefix+"-title-style'><span id='caption'></span></td><td align=right><a href='javascript:jscalendarHideCalendar()'><span id='jscalendarCloseButton'></span></a></td></tr></table></td></tr><tr><td class='"+jscalendarThemePrefix+"-body-style'><span id='popupcalendar_content'></span></td></tr>")
 
 if (jscalendarShowToday==1)
@@ -30,6 +34,10 @@ function jscalendarInit(){
 		jscalendarYearNow += 1900;
 	}
 
+	if (jscalendarIe6) {
+		jscalendarCrossFrameobj=document.getElementById("calendarFrame").style;
+	}
+	jscalendarObj=document.getElementById("calendar");
 	jscalendarCrossobj=document.getElementById("calendar").style;
 	jscalendarCrossMonthObj=document.getElementById("selectMonth").style;
 	jscalendarCrossYearObj=document.getElementById("selectYear").style;
@@ -54,6 +62,10 @@ function jscalendarHideCalendar(){
 	jscalendarCrossobj.visibility="hidden";
 	jscalendarCrossMonthObj.visibility="hidden";
 	jscalendarCrossYearObj.visibility="hidden";
+
+	if (jscalendarIe6) {
+		jscalendarCrossFrameobj.display="none";
+	}
 }
 
 function jscalendarPadZero(num){
@@ -399,6 +411,14 @@ function jscalendarPopUpCalendar_Show(ctl){
 	jscalendarCrossobj.visibility = "visible";
 
 	jscalendarBShow = true;
+
+	if (jscalendarIe6) {
+		jscalendarCrossFrameobj.display = "block";
+		jscalendarCrossFrameobj.left = jscalendarCrossobj.left;
+		jscalendarCrossFrameobj.top = jscalendarCrossobj.top;
+		jscalendarCrossFrameobj.width = jscalendarObj.offsetWidth;
+		jscalendarCrossFrameobj.height = jscalendarObj.offsetHeight;
+	}
 }
 
 document.onkeypress = function jscalendarHidecal1 () {
