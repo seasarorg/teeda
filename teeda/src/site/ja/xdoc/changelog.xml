@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp4">1.0.13-sp4</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp3">1.0.13-sp3</a>
 					</td>
 					<td>
@@ -137,6 +140,71 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-sp4">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp3">1.0.13-sp3</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-480'>TEEDA-480</a>
+								] - IE7 でポップアップカレンダーのボタンを押すとスクリプトエラーとなり，カレンダーがポップアップしない問題を修正しました．[Seasar-user:15560]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-481'>TEEDA-481</a>
+								] - ポップアップカレンダーのフォーマットで年を 4 桁にした場合，ポップアップしたカレンダーの「今日は～」の年が Firefox
+								だと「108」と表示される．[Seasar-user:15579]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-482'>TEEDA-482</a>
+								] - SelectOneListbox でポストバックでない場合，valueBinding が設定されていないと value が常に null
+								になる問題を修正しました．[Seasar-user:15590]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-483'>TEEDA-483</a>
+								] - viewRootPathを/view/appのようにすると、Pageクラス名から正しいHTMLが見つけられない.
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-485'>TEEDA-485</a>
+								] - Teeda Ajax に含まれる kumu.js および event.js に UTF-8 の BOM が含まれている問題を修正しました．[Seasar-user:15655]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-486'>TEEDA-486</a>
+								] - kumu.jsのunshift関数の不具合を修正しました．
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-489'>TEEDA-489</a>
+								] - IE6 で popupCalendar が表示される位置に selectBox
+								があると，カレンダーの一部がselectBoxで隠れてしまう問題を修正しました．[Seasar-user:16157]
+							</li>
+						</ul>
+					</li>
+					<li>
+						Improvement
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-484'>TEEDA-484</a>
+								] - grid コンポーネントで，最初の 50
+								件に限らず全ての繰り返しを一度に描画することを指定できるようにしました．[Seasar-user:15515][Seasar-user:15578]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp3">
