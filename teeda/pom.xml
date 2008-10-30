@@ -18,7 +18,7 @@
     <module>teeda-dist</module>
   </modules>
   <properties>
-    <seasar2.version>2.4.28</seasar2.version>
+    <seasar2.version>2.4.32</seasar2.version>
   </properties>
 
   <!-- More Project Information -->
