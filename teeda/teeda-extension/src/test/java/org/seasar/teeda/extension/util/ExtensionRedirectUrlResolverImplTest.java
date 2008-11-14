@@ -32,7 +32,7 @@ public class ExtensionRedirectUrlResolverImplTest extends TeedaTestCase {
         System.out.println(url1);
         assertTrue(url1.startsWith("/hoge.html?te-uniquekey="));
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
         String url2 = resolver.resolveUrl("/hoge.html", getFacesContext(),
                 getRequest(), getResponse());
         System.out.println(url2);
