@@ -18,6 +18,9 @@
 				<li>
 					<a href="#GlassFish">GlassFish</a>
 				</li>
+				<li>
+					<a href="#JBoss">JBoss</a>
+				</li>
 			</ul>
 		</section>
 
@@ -28,13 +31,11 @@
 		<section name="WebSphere">
 			<p>
 				「
-				<a
-					href="http://www.ibm.com/developerworks/jp/offers/seasar2/">
+				<a href="http://www.ibm.com/developerworks/jp/offers/seasar2/">
 					IBM developerWorks Japan : Seasar2 シリーズ
 				</a>
 				」の「
-				<a
-					href="http://www.ibm.com/developerworks/jp/java/library/j_j-seasar01/">
+				<a href="http://www.ibm.com/developerworks/jp/java/library/j_j-seasar01/">
 					Seasar2: 第 1 回 WebSphere Application Server へ Web
 					アプリケーションをデプロイする
 				</a>
@@ -59,6 +60,20 @@
     <class-loader delegate="false" />
     <property name="useMyFaces" value="true" />
 </sun-web-app>
+]]></source>
+		</section>
+
+		<section name="JBoss">
+			<p>
+				<code>WEB-INF/web.xml</code>
+				に次の記述を追加してください．
+			</p>
+			<h5>WEB-INF/web.xml</h5>
+			<source><![CDATA[
+<context-param>
+     <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+     <param-value>true</param-value>
+</context-param>
 ]]></source>
 		</section>
 	</body>
