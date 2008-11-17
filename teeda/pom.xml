@@ -183,7 +183,7 @@
     <profile>
       <id>snapshot</id>
       <properties>
-        <seasar2.version>(2.4,]</seasar2.version>
+        <seasar2.version>[2.4,)</seasar2.version>
       </properties>
     </profile>
     <profile>
