@@ -42,7 +42,7 @@
                       </fileset>
                     </copy>
                     <copy
-                      todir="../teeda-html-example/src/main/webapp/WEB-INF/lib/sources"
+                      todir="../teeda-html-example/src/main/webapp/WEB-INF/libsrc"
                       failonerror="false">
                       <fileset dir="${project.build.directory}">
                         <include name="${pom.build.finalName}-sources.jar"/>
