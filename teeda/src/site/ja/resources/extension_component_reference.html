@@ -1313,6 +1313,11 @@ h3.underline {
       <tr>
         <td>要素の各属性の使い方</td>
         <td>
+          <span>-<b class="boldorange">te:refresh</b> (Teeda 1.0.11以降)</span><br/>
+          <p>te:refrest属性に、<b class="boldorange">true</b>を指定すると、バリデーションでエラーになった場合でもページクラスのプロパティが評価されます．<br/>
+          te:refresh属性に、<b class="boldorange">false</b>(デフォルト)を指定すると、 バリデーションでエラーになった場合は前に表示したときの状態が使われ，ページクラスのプロパティは参照されません．</p>
+          &lt;span id=&quot;isXxx&quot; te:refresh=&quot;true&quot;&gt;aaa&lt;/span&gt;<br/>
+          <br/>
           <span>-<b class="boldorange">te:omittag</b> (Teeda 1.0.12以降)</span><br/>
           <p>te:omittag属性に、<b class="boldorange">true</b>を指定すると、 条件が成立した場合でも要素の開始タグおよび終了タグは出力されません (要素の内容は出力されます)．<br/>
           te:omittag属性に、<b class="boldorange">true</b>(デフォルト)を指定すると、 条件が成立した場合は要素の開始タグおよび終了タグが出力されます．</p>
@@ -1330,7 +1335,7 @@ h3.underline {
           <span>&nbsp;&nbsp;-isXxxであれば、<b class="boldorange">#{Page名.xxx == true}</b>の条件が満たされれば描画される</span><br/>
           <span>&nbsp;&nbsp;-isNotXxxであれば、<b class="boldorange">#{Page名.xxx == false}</b>の条件が満たされれば描画される</span><br/>
           <span>&nbsp;&nbsp;Validationエラーになったときは元の状態に復元される</span><br/>
-          <span>-<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br />
+          <span>-<b class="boldorange">te:refresh</b>属性または<b class="boldorange">te:omittag</b>属性を使用するには&lt;html&gt;要素にxmlns:te="http://www.seasar.org/teeda/extension"が必要となります．</span><br />
           <span>-属性にダイナミックプロパティを使うにはid属性から先頭のisまたはisNotを取り除いた名前に属性名を付け加える</span><br />
           <span>&nbsp;&nbsp;-isXxxのstyle属性であれば、<b class="boldorange">xxxStyle</b>となる</span>
         </td>

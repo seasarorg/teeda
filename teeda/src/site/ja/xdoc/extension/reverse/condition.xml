@@ -19,6 +19,11 @@
 						条件が成立しなかった場合だけ要素を出力するには
 					</a>
 				</li>
+				<li>
+					<a href="#バリデーションでエラーになった場合も条件を評価するには">
+						バリデーションでエラーになった場合も条件を評価するには
+					</a>
+				</li>
 			</ul>
 
 			<subsection name="条件が成立した場合だけ要素を出力するには">
@@ -197,6 +202,48 @@ aaa<span id="isNotHide">bbb</span>ccc
 				<source><![CDATA[
 aaaccc
 ]]></source>
+			</subsection>
+
+			<subsection name="バリデーションでエラーになった場合も条件を評価するには">
+				<p>
+					ポストバックでバリデーションでエラーになった場合は元の画面の状態を維持するため，
+					ページクラスの条件プロパティは評価されません．
+				</p>
+				<div class="sidebar">
+					<a
+						href="../reference/xhtml.html#Teeda_Extension拡張属性">
+						Teeda Extension拡張属性
+					</a>
+					を使用するには
+					<code>&lt;html&gt;</code>
+					要素で
+					<a href="../reference/xhtml.html#te名前空間">te名前空間</a>
+					を宣言する必要があります．
+				</div>
+				<p>
+					バリデーションでエラーになった場合でも条件プロパティを評価するには，
+					<code>id</code>
+					属性に
+					<code>is～</code>
+					または
+					<code>isNot～</code>
+					を指定した要素に
+					<code>te:refresh</code>
+					属性を指定します．
+					属性の値は
+					<code>true</code>
+					を指定します．
+					<br clear="all" />
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+aaa<span id="isDisplay" te:refresh="true">bbb</span>ccc
+]]></source>
+				<p>
+					バリデーションでエラーになった場合でも，表示の度に
+					<code>display</code>
+					プロパティが評価されます．
+				</p>
 			</subsection>
 		</section>
 	</body>
