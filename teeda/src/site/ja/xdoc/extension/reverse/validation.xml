@@ -234,7 +234,7 @@ public String name;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String name_TLengthValidator = "minimum=3, maximun=5";
+public static final String name_TLengthValidator = "minimum=3, maximum=5";
 public String name;
 ]]></source>
 				<p>
@@ -266,7 +266,7 @@ public String name;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String name_TByteLengthValidator = "minimum=5, maximun=10";
+public static final String name_TByteLengthValidator = "minimum=5, maximum=10";
 public String name;
 ]]></source>
 				<p>
@@ -321,7 +321,7 @@ public String mailAddress;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String mailAddress_EmailValidator = "";
+public static final String mailAddress_emailValidator = "";
 public String mailAddress;
 ]]></source>
 				<p>
@@ -350,7 +350,7 @@ public String url;
 ]]></source>
 				<h6>定数アノテーション</h6>
 				<source><![CDATA[
-public static final String url_UrlValidator = "";
+public static final String url_urlValidator = "";
 public String url;
 ]]></source>
 				<p>
