@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.convert;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -27,7 +28,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.AbstractConverterTestCase;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.DateTimeConverter;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.mock.MockFacesContext;
@@ -306,12 +306,12 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
 
         assertEquals(value, "");
 
-        DateTimeConverter converter2 = new DateTimeConverter();
+        TDateTimeConverter converter2 = new TDateTimeConverter();
         String value2 = converter2.getAsString(context, component, "a");
 
         assertEquals(value2, "a");
 
-        DateTimeConverter converter3 = new DateTimeConverter();
+        TDateTimeConverter converter3 = new TDateTimeConverter();
         Locale defaultLocale = Locale.getDefault();
         converter3.setLocale(defaultLocale);
 
@@ -326,7 +326,11 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
         String val = createDateFormat(pattern3, defaultLocale, date3);
         assertEquals(value3, val);
 
-        DateTimeConverter converter4 = new DateTimeConverter();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date3);
+        assertEquals(val, converter3.getAsString(context, component, cal));
+
+        TDateTimeConverter converter4 = new TDateTimeConverter();
         Locale usLocale = Locale.US;
         converter4.setLocale(usLocale);
         converter4.setTimeZone(TimeZone.getDefault());
@@ -342,14 +346,14 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     }
 
     public void testIsTransient() {
-        DateTimeConverter converter = new DateTimeConverter();
+        TDateTimeConverter converter = new TDateTimeConverter();
         converter.setTransient(true);
         assertTrue(converter.isTransient());
     }
 
     public void testSetTransient() {
 
-        DateTimeConverter converter = new DateTimeConverter();
+        TDateTimeConverter converter = new TDateTimeConverter();
         converter.setTransient(true);
         assertTrue(converter.isTransient());
     }
@@ -386,7 +390,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     }
 
     public void testGetLocale() {
-        DateTimeConverter converter = new DateTimeConverter();
+        TDateTimeConverter converter = new TDateTimeConverter();
         Locale locale = Locale.getDefault();
 
         converter.setLocale(locale);
@@ -487,7 +491,7 @@ public class TDateTimeConverterTest extends AbstractConverterTestCase {
     }
 
     public void testConstants() throws Exception {
-        assertEquals("javax.faces.DateTime", DateTimeConverter.CONVERTER_ID);
+        assertEquals("javax.faces.DateTime", TDateTimeConverter.CONVERTER_ID);
     }
 
     protected Converter createConverter() {

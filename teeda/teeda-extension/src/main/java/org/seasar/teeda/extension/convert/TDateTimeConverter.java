@@ -141,6 +141,9 @@ public class TDateTimeConverter extends DateTimeConverter implements
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) throws ConverterException {
+        if (value instanceof Calendar) {
+            value = ((Calendar) value).getTime();
+        }
         return super.getAsString(context, component, value);
     }
 
