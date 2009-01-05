@@ -13,6 +13,7 @@
     <groupId>org.seasar.teeda</groupId>
     <artifactId>teeda-project</artifactId>
     <version>1.0.13-sp5-SNAPSHOT</version>
+    <relativePath>../teeda</relativePath>
   </parent>
 
   <!-- More Project Information -->
