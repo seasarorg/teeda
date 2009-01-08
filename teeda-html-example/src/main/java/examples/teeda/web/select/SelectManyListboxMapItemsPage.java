@@ -18,11 +18,15 @@ package examples.teeda.web.select;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.seasar.framework.util.ArrayUtil;
+
 public class SelectManyListboxMapItemsPage {
 
 	public Map<String, Integer> aaaItems;
 
 	public Integer[] aaa;
+
+	protected String aaaAsString;
 
 	public String prerender() {
 		aaaItems = new LinkedHashMap<String, Integer>();
@@ -30,6 +34,14 @@ public class SelectManyListboxMapItemsPage {
 		aaaItems.put("BBBB", 1);
 		aaaItems.put("CCCC", 2);
 		return null;
+	}
+
+	public String getAaaAsString() {
+		return ArrayUtil.toString(aaa);
+	}
+
+	public void setAaaAsString(String aaaAsString) {
+		this.aaaAsString = aaaAsString;
 	}
 
 }
