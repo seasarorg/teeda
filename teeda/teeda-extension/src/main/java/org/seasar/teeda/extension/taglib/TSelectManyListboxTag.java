@@ -15,7 +15,7 @@
  */
 package org.seasar.teeda.extension.taglib;
 
-import javax.faces.component.html.HtmlSelectManyListbox;
+import org.seasar.teeda.extension.component.html.THtmlSelectManyListbox;
 
 /**
  * @author manhole
@@ -23,11 +23,11 @@ import javax.faces.component.html.HtmlSelectManyListbox;
 public class TSelectManyListboxTag extends TSelectTagBase {
 
     public String getComponentType() {
-        return HtmlSelectManyListbox.COMPONENT_TYPE;
+        return THtmlSelectManyListbox.COMPONENT_TYPE;
     }
 
     public String getRendererType() {
-        return "javax.faces.Listbox";
+        return THtmlSelectManyListbox.DEFAULT_RENDERER_TYPE;
     }
 
 }
