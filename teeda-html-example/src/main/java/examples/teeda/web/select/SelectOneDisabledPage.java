@@ -13,40 +13,38 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.checkbox;
+package examples.teeda.web.select;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.extension.annotation.scope.PageScope;
 
-/**
- * @author shot
- */
-public class SelectManyCheckboxPage {
-
-	public static final String aaa_TRequiredValidator = null;
-
-	private Integer[] aaa = { 2 };
-
+public class SelectOneDisabledPage {
+    @PageScope
 	private List aaaItems;
-
-	protected String aaaAsString;
+	@PageScope
+	private String aaa;
+    
+    public String initialize() {
+        aaaItems = new ArrayList();
+        AaaDto dto1 = new AaaDto();
+        dto1.setValue("0");
+        dto1.setLabel("AAAA");
+        aaaItems.add(dto1);
+        AaaDto dto2 = new AaaDto();
+        dto2.setValue("1");
+        dto2.setLabel("BBBB");
+        aaaItems.add(dto2);
+        AaaDto dto3 = new AaaDto();
+        dto3.setValue("2");
+        dto3.setLabel("CCCC");
+        aaaItems.add(dto3);
+        setAaa("1");
+        return null;
+    }
 
 	public String prerender() {
-		aaaItems = new ArrayList();
-		AaaDto dto1 = new AaaDto();
-		dto1.setValue(0);
-		dto1.setLabel("AAAA");
-		aaaItems.add(dto1);
-		AaaDto dto2 = new AaaDto();
-		dto2.setValue(1);
-		dto2.setLabel("BBBB");
-		aaaItems.add(dto2);
-		AaaDto dto3 = new AaaDto();
-		dto3.setValue(2);
-		dto3.setLabel("CCCC");
-		aaaItems.add(dto3);
 		return null;
 	}
 
@@ -58,24 +56,16 @@ public class SelectManyCheckboxPage {
 		this.aaaItems = aaaItems;
 	}
 
-	public String doAction() {
-		return null;
-	}
-
-	public Integer[] getAaa() {
+	public String getAaa() {
 		return aaa;
 	}
 
-	public void setAaa(Integer[] aaa) {
+	public void setAaa(String aaa) {
 		this.aaa = aaa;
 	}
 
-	public String getAaaAsString() {
-		return ArrayUtil.toString(aaa);
+	public String doAction() {
+        System.out.println("doAction called getAaa()=" + getAaa());
+		return null;
 	}
-
-	public void setAaaAsString(String aaaAsString) {
-		this.aaaAsString = aaaAsString;
-	}
-
 }

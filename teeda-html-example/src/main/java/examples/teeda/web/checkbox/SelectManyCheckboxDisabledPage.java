@@ -19,34 +19,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.extension.annotation.scope.PageScope;
 
 /**
  * @author shot
  */
-public class SelectManyCheckboxPage {
+public class SelectManyCheckboxDisabledPage {
 
-	public static final String aaa_TRequiredValidator = null;
+	@PageScope
+	private Integer[] aaa;
 
-	private Integer[] aaa = { 2 };
-
+	@PageScope
 	private List aaaItems;
 
 	protected String aaaAsString;
 
-	public String prerender() {
-		aaaItems = new ArrayList();
+	public void initialize() {
+		setAaa(new Integer[] { new Integer(2) });
+
+		ArrayList aaaItem = new ArrayList();
 		AaaDto dto1 = new AaaDto();
-		dto1.setValue(0);
+		dto1.setValue(new Integer(0));
 		dto1.setLabel("AAAA");
-		aaaItems.add(dto1);
+		aaaItem.add(dto1);
 		AaaDto dto2 = new AaaDto();
-		dto2.setValue(1);
+		dto2.setValue(new Integer(1));
 		dto2.setLabel("BBBB");
-		aaaItems.add(dto2);
+		aaaItem.add(dto2);
 		AaaDto dto3 = new AaaDto();
-		dto3.setValue(2);
+		dto3.setValue(new Integer(2));
 		dto3.setLabel("CCCC");
-		aaaItems.add(dto3);
+		aaaItem.add(dto3);
+		setAaaItems(aaaItem);
+
+	}
+
+	public String prerender() {
 		return null;
 	}
 
@@ -59,6 +67,13 @@ public class SelectManyCheckboxPage {
 	}
 
 	public String doAction() {
+
+		if (null != getAaa()) {
+			for (int aa : getAaa()) {
+				System.out.println("doAction getAaa()=" + aa);
+			}
+		}
+
 		return null;
 	}
 

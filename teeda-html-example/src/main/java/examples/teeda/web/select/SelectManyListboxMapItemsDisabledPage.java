@@ -13,52 +13,32 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.teeda.web.checkbox;
+package examples.teeda.web.select;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.seasar.framework.util.ArrayUtil;
+import org.seasar.teeda.extension.annotation.scope.PageScope;
 
-/**
- * @author shot
- */
-public class SelectManyCheckboxPage {
-
-	public static final String aaa_TRequiredValidator = null;
-
-	private Integer[] aaa = { 2 };
-
-	private List aaaItems;
+public class SelectManyListboxMapItemsDisabledPage {
+	@PageScope
+	public Map<String, Integer> aaaItems;
+	@PageScope
+	public Integer[] aaa;
 
 	protected String aaaAsString;
 
-	public String prerender() {
-		aaaItems = new ArrayList();
-		AaaDto dto1 = new AaaDto();
-		dto1.setValue(0);
-		dto1.setLabel("AAAA");
-		aaaItems.add(dto1);
-		AaaDto dto2 = new AaaDto();
-		dto2.setValue(1);
-		dto2.setLabel("BBBB");
-		aaaItems.add(dto2);
-		AaaDto dto3 = new AaaDto();
-		dto3.setValue(2);
-		dto3.setLabel("CCCC");
-		aaaItems.add(dto3);
+	public String initialize() {
+		aaaItems = new LinkedHashMap<String, Integer>();
+		aaaItems.put("AAAA", 0);
+		aaaItems.put("BBBB", 1);
+		aaaItems.put("CCCC", 2);
+		setAaa(new Integer[] { 1, 2 });
 		return null;
 	}
 
-	public List getAaaItems() {
-		return aaaItems;
-	}
-
-	public void setAaaItems(List aaaItems) {
-		this.aaaItems = aaaItems;
-	}
-
-	public String doAction() {
+	public String prerender() {
 		return null;
 	}
 
@@ -76,6 +56,15 @@ public class SelectManyCheckboxPage {
 
 	public void setAaaAsString(String aaaAsString) {
 		this.aaaAsString = aaaAsString;
+	}
+
+	public String doAction() {
+		if (null != aaa) {
+			for (Integer aaaValue : aaa) {
+				System.out.println("doAction called getAaa()=" + aaaValue);
+			}
+		}
+		return null;
 	}
 
 }
