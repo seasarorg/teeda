@@ -532,7 +532,7 @@ foo.dummy=ダミー
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<title id="title">dummy</span>
+<title id="title">dummy</title>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
@@ -625,7 +625,7 @@ public String titleValue;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<title id="title">dummy</span>
+<title id="title">dummy</title>
 ]]></source>
 				<h5>例：ラベルリソースファイル (label_ja.properties)</h5>
 				<source><![CDATA[
@@ -634,7 +634,7 @@ foo.title=Teeda
 				<h5>例：レンダリング結果</h5>
 				<p>レンダリング結果は次のようになります．</p>
 				<source><![CDATA[
-<span id="title">Teeda</span>
+<title id="title">Teeda</title>
 ]]></source>
 			</subsection>
 		</section>

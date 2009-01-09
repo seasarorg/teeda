@@ -101,8 +101,7 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#動的なラジオボタンで選択されたラベルをポストバック時に受け取るには">
+							<a href="#動的なラジオボタンで選択されたラベルをポストバック時に受け取るには">
 								動的なラジオボタンで選択されたラベルをポストバック時に受け取るには
 							</a>
 						</li>
@@ -137,8 +136,7 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#複数項目のチェックボックスで項目がチェックされた状態で表示するには">
+							<a href="#複数項目のチェックボックスで項目がチェックされた状態で表示するには">
 								複数項目のチェックボックスで項目がチェックされた状態で表示するには
 							</a>
 						</li>
@@ -173,14 +171,12 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#単一選択の選択リストで選択してくださいを出さないようにするには">
+							<a href="#単一選択の選択リストで選択してくださいを出さないようにするには">
 								単一選択の選択リストで「選択してください」を出さないようにするには
 							</a>
 						</li>
 						<li>
-							<a
-								href="#単一選択の選択リストで選択されたラベルをポストバック時に受け取るには">
+							<a href="#単一選択の選択リストで選択されたラベルをポストバック時に受け取るには">
 								単一選択の選択リストで選択されたラベルをポストバック時に受け取るには
 							</a>
 						</li>
@@ -200,8 +196,7 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#複数選択の選択リストで選択してくださいを出さないようにするには">
+							<a href="#複数選択の選択リストで選択してくださいを出さないようにするには">
 								複数選択の選択リストで「選択してください」を出さないようにするには
 							</a>
 						</li>
@@ -808,7 +803,7 @@ public String selected;
 			<subsection name="静的なラジオボタンの値を動的に変えるには">
 				<p>
 					「
-					<a href="">ダイナミックプロパティ</a>
+					<a href="output.html#属性値を動的に出力するには">ダイナミックプロパティ</a>
 					」と組み合わせます．
 				</p>
 				<p>
@@ -819,7 +814,9 @@ public String selected;
 					<code>&lt;input&gt;</code>
 					要素に
 					<code>id</code>
-					属性を付け， その値と同じ名前のプロパティをページクラスに用意します．
+					属性を付け， その値に
+					<code>Value</code>
+					を加えた名前のプロパティをページクラスに用意します．
 					このプロパティは項目の値を保持します．
 				</p>
 				<p>
@@ -828,8 +825,8 @@ public String selected;
 					要素の
 					<code>value</code>
 					属性の値は
-					<code>id</code>
-					属性の値と同じ名前のプロパティに置き換えられます．
+					<code>id + <var>Value</var></code>
+					という名前のプロパティ値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -847,14 +844,14 @@ public String selected;
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[
 public String selected;
-public String code1;
+public String code1Value;
 public String name1;
-public String code2;
+public String code2Value;
 public String name2;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
 				<p>
-					<code>code1</code>
+					<code>code1Value</code>
 					が
 					<code>"t"</code>
 					，
@@ -862,7 +859,7 @@ public String name2;
 					が
 					<code>"Teeda"</code>
 					で，
-					<code>code2</code>
+					<code>code2Value</code>
 					が
 					<code>"s"</code>
 					，
@@ -920,9 +917,7 @@ public String name2;
 					<code>java.util.List</code>
 					に，その要素の型はDtoまたは
 					<code>java.util.Map</code>
-					にします． Dtoのプロパティまたは
-					<code>Map</code>
-					のキーと同じ名前のプロパティをページクラスにも持たせます．
+					にします．
 				</p>
 				<p>
 					<code>type</code>
@@ -932,9 +927,18 @@ public String name2;
 					<code>&lt;input&gt;</code>
 					要素に
 					<code>id</code>
-					属性を付け， Dtoのプロパティまたは
+					属性を付けます．
+				</p>
+				<p>
+					<code>input</code>
+					要素の
+					<code>id + <var>Value</var></code>
+					という名前を持つDtoのプロパティまたは
 					<code>Map</code>
-					のキーと同じ名前を付けます．
+					のキーを用意します．
+					Dtoのプロパティまたは
+					<code>Map</code>
+					のキーと同じ名前のプロパティをページクラスにも持たせます．
 				</p>
 				<p>
 					レンダリング時，
@@ -942,8 +946,8 @@ public String name2;
 					要素の
 					<code>value</code>
 					属性の値は
-					<code>id</code>
-					属性の値と同じ名前のプロパティに置き換えられます．
+					<code>id + <var>Value</var></code>
+					という名前のプロパティ値に置き換えられます．
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
@@ -961,12 +965,12 @@ public String name2;
 				<source><![CDATA[
 public String selected;
 public List<ProductDto> productItems;
-public String code; //Teedaが設定
+public String codeValue; //Teedaが設定
 public String name; //Teedaが設定
 ]]></source>
 				<h5>例：Dtoのプロパティ (ProductDto.java)</h5>
 				<source><![CDATA[
-public String code;
+public String codeValue;
 public String name;
 ]]></source>
 				<h5>例：レンダリング結果</h5>
@@ -979,15 +983,15 @@ public String name;
 <div id="selected">
     
         <label>
-            <input type="radio" id="code" name="form:selected" value="t" />
+            <input type="radio" id="form:productImtems:0:code" name="form:selected" value="t" />
             Teeda
         </label>
         <label>
-            <input type="radio" id="code" name="form:selected" value="s" />
+            <input type="radio" id="form:productImtems:1:code" name="form:selected" value="s" />
             SAStruts
         </label>
         <label>
-            <input type="radio" id="code" name="form:selected" value="c" />
+            <input type="radio" id="form:productImtems:2:code" name="form:selected" value="c" />
             Cubby
         </label>
     
