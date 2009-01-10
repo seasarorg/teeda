@@ -18,12 +18,15 @@ package examples.teeda.web.radio;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.teeda.extension.annotation.validator.Required;
+
 /**
  * @author shot
  */
 public class SelectOneRadioPage {
 
-	private int aaa;
+	@Required
+	private Integer aaa;
 
 	private List aaaItems;
 
@@ -44,11 +47,11 @@ public class SelectOneRadioPage {
 		return null;
 	}
 
-	public int getAaa() {
+	public Integer getAaa() {
 		return aaa;
 	}
 
-	public void setAaa(int aaa) {
+	public void setAaa(Integer aaa) {
 		this.aaa = aaa;
 	}
 
