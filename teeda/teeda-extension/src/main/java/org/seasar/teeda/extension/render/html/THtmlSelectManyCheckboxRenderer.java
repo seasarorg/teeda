@@ -16,22 +16,16 @@
 package org.seasar.teeda.extension.render.html;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Iterator;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
-import javax.faces.internal.UIComponentUtil;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
 import org.seasar.teeda.core.JsfConstants;
 import org.seasar.teeda.core.render.html.HtmlSelectManyCheckboxRenderer;
-import org.seasar.teeda.core.util.UIValueUtil;
-import org.seasar.teeda.core.util.ValueHolderUtil;
 import org.seasar.teeda.extension.ExtensionConstants;
 import org.seasar.teeda.extension.component.html.THtmlSelectManyCheckbox;
 
@@ -88,30 +82,6 @@ public class THtmlSelectManyCheckboxRenderer extends
                 writer.endElement(JsfConstants.TR_ELEM);
             }
             ++i;
-        }
-    }
-
-    protected String[] getValuesForRender(FacesContext context,
-            UIComponent htmlSelectManyCheckbox) {
-        final boolean disabled = UIComponentUtil
-                .isDisabled(htmlSelectManyCheckbox);
-        if (disabled) {
-            final ValueHolder vh = (ValueHolder) htmlSelectManyCheckbox;
-            final Object value = vh.getValue();
-            if (value == null) {
-                return new String[0];
-            }
-            final Converter converter = vh.getConverter();
-            final int length = Array.getLength(value);
-            final String[] values = new String[length];
-            for (int i = 0; i < length; ++i) {
-                values[i] = UIValueUtil.getValueAsString(context,
-                        htmlSelectManyCheckbox, Array.get(value, i), converter);
-            }
-            return values;
-        } else {
-            return ValueHolderUtil.getValuesForRender(context,
-                    htmlSelectManyCheckbox);
         }
     }
 

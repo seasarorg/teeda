@@ -48,7 +48,7 @@ public class THtmlSelectManyCheckboxRendererTest extends RendererTest {
         htmlSelectManyCheckbox = new MockTHtmlSelectManyCheckbox();
         htmlSelectManyCheckbox.setRenderer(renderer);
 
-        // MockHtmlSelectManyCheckboxのプロパティ
+        // MockHtmlSelectManyCheckbox縺ｮ繝励Ο繝代ユ繧｣
         renderer.addIgnoreAttributeName("setSubmittedValueCalls");
     }
 
@@ -452,39 +452,6 @@ public class THtmlSelectManyCheckboxRendererTest extends RendererTest {
                         + "lab</label></td>"
                         + "<td><label>"
                         + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" />"
-                        + "l2</label>" + "</td></tr>" + "</table>",
-                getResponseText());
-    }
-
-    public void testEncode_CheckedAndDisabled() throws Exception {
-        // ## Arrange ##
-        htmlSelectManyCheckbox.setSelectedValues(new String[] { "val" });
-        htmlSelectManyCheckbox.setDisabled(true);
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("val");
-            selectItem.setItemLabel("lab");
-            htmlSelectManyCheckbox.getChildren().add(selectItem);
-        }
-        {
-            UISelectItem selectItem = new UISelectItem();
-            selectItem.setItemValue("v2");
-            selectItem.setItemLabel("l2");
-            htmlSelectManyCheckbox.getChildren().add(selectItem);
-        }
-
-        // ## Act ##
-        encodeByRenderer(renderer, htmlSelectManyCheckbox);
-
-        // ## Assert ##
-        assertEquals(
-                "<table>"
-                        + "<tr><td>"
-                        + "<label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"val\" checked=\"checked\" disabled=\"disabled\" />"
-                        + "lab</label></td>"
-                        + "<td><label>"
-                        + "<input type=\"checkbox\" name=\"_id0\" value=\"v2\" disabled=\"disabled\" />"
                         + "l2</label>" + "</td></tr>" + "</table>",
                 getResponseText());
     }
