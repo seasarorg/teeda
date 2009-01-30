@@ -28,6 +28,8 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
  */
 public class UploadedFileImpl implements UploadedFile {
 
+    private static final long serialVersionUID = 1L;
+
     protected final FileItem fileItem;
 
     /**

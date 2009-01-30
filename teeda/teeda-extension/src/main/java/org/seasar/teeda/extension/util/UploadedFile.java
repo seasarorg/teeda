@@ -18,6 +18,7 @@ package org.seasar.teeda.extension.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -28,7 +29,7 @@ import java.io.UnsupportedEncodingException;
  * 
  * @author koichik
  */
-public interface UploadedFile {
+public interface UploadedFile extends Serializable {
 
     /**
      * アップロードされたファイルの<strong>クライアント側</strong>ファイルシステム上のベースファイル名を返します。
