@@ -17,9 +17,9 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-framework-2.4.34.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/s2-framework-2.4.34-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.13-sp5-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-ajax-1.0.13-sp5-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.13-sp5-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-core-1.0.13-sp5-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp5-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp5-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.13-sp5.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-ajax-1.0.13-sp5-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.13-sp5.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-core-1.0.13-sp5-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp5.jar" sourcepath="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp5-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-el-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-lang-2.1.jar"/>
