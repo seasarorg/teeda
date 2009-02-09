@@ -15,6 +15,7 @@
  */
 package org.seasar.teeda.extension.config.taglib.impl;
 
+import java.io.InputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Iterator;
@@ -23,6 +24,8 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.seasar.framework.log.Logger;
+import org.seasar.framework.util.InputStreamUtil;
+import org.seasar.framework.util.URLUtil;
 
 /**
  * @author higa
@@ -40,6 +43,7 @@ public class ServletContextTaglibManagerImpl extends AbstractTaglibManager {
     }
 
     public void init() {
+        scanTlds("/WEB-INF/");
         scanJars("/WEB-INF/lib/");
     }
 
@@ -67,4 +71,34 @@ public class ServletContextTaglibManagerImpl extends AbstractTaglibManager {
             logger.log(t);
         }
     }
+
+    public void scanTlds(final String basePath) {
+        final Set tlds = servletContext.getResourcePaths(basePath);
+        if (tlds != null) {
+            for (final Iterator i = tlds.iterator(); i.hasNext();) {
+                final String path = (String) i.next();
+                if (path.toLowerCase().endsWith(".tld")) {
+                    scanTld(path);
+                }
+            }
+        }
+    }
+
+    public void scanTld(final String tldPath) {
+        try {
+            final URL url = servletContext.getResource(tldPath);
+            final InputStream is = URLUtil.openStream(url);
+            try {
+                if (is == null) {
+                    return;
+                }
+                scanTld(is, tldPath);
+            } finally {
+                InputStreamUtil.close(is);
+            }
+        } catch (final Throwable t) {
+            logger.log(t);
+        }
+    }
+
 }
