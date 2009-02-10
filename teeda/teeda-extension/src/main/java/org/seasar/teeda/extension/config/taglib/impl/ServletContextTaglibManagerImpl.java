@@ -79,6 +79,8 @@ public class ServletContextTaglibManagerImpl extends AbstractTaglibManager {
                 final String path = (String) i.next();
                 if (path.toLowerCase().endsWith(".tld")) {
                     scanTld(path);
+                } else if (path.endsWith("/")) {
+                    scanTlds(path);
                 }
             }
         }
