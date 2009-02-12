@@ -32,14 +32,18 @@
 								外部サイトにリダイレクトするには
 							</a>
 						</li>
+						<li>
+							<a href="#CSVやPDFをダウンロードするには">
+								CSVやPDFをダウンロードするには
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li>
 					<a href="#状態の引き継ぎ">状態の引き継ぎ</a>
 					<ul>
 						<li>
-							<a
-								href="#画面を表示したときの状態をサブミットされたときまで引き継ぐには">
+							<a href="#画面を表示したときの状態をサブミットされたときまで引き継ぐには">
 								画面を表示したときの状態をサブミットされたときまで引き継ぐには
 							</a>
 						</li>
@@ -64,14 +68,12 @@
 							</a>
 						</li>
 						<li>
-							<a
-								href="#特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには">
+							<a href="#特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには">
 								特定のサブミットボタンが押されたときは画面遷移で状態を引き継がないようにするには
 							</a>
 						</li>
 						<li>
-							<a
-								href="#サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには">
+							<a href="#サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには">
 								サブミットボタンが押されたときにサブアプリケーションスコープの状態を破棄するには
 							</a>
 						</li>
@@ -83,8 +85,7 @@
 		<section name="画面遷移">
 			<subsection name="初期表示やリダイレクト表示で別画面へ遷移するには">
 				<p>
-					<a
-						href="../concept/lifecycle.html#initializeメソッド">
+					<a href="../concept/lifecycle.html#initializeメソッド">
 						<code>initialize()</code>
 					</a>
 					メソッドの戻り値で次画面のページクラスまたは
@@ -100,14 +101,12 @@ public Class initialize() {
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						<a
-							href="../concept/lifecycle.html#ライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 							ライフサイクルメソッド
 						</a>
 						<ul>
 							<li>
-								<a
-									href="../concept/lifecycle.html#initializeメソッド">
+								<a href="../concept/lifecycle.html#initializeメソッド">
 									initializeメソッド
 								</a>
 							</li>
@@ -119,20 +118,17 @@ public Class initialize() {
 						</a>
 					</li>
 					<li>
-						<a
-							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
 							リクエストパターンとライフサイクルメソッド
 						</a>
 						<ul>
 							<li>
-								<a
-									href="../concept/lifecycle.html#初期表示">
+								<a href="../concept/lifecycle.html#初期表示">
 									初期表示
 								</a>
 							</li>
 							<li>
-								<a
-									href="../concept/lifecycle.html#リダイレクト表示">
+								<a href="../concept/lifecycle.html#リダイレクト表示">
 									リダイレクト表示
 								</a>
 							</li>
@@ -159,14 +155,12 @@ public Class doNext() {
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						<a
-							href="../concept/lifecycle.html#ライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 							ライフサイクルメソッド
 						</a>
 						<ul>
 							<li>
-								<a
-									href="../concept/lifecycle.html#doメソッド">
+								<a href="../concept/lifecycle.html#doメソッド">
 									do～()メソッド
 								</a>
 							</li>
@@ -178,14 +172,12 @@ public Class doNext() {
 						</a>
 					</li>
 					<li>
-						<a
-							href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#リクエストパターンとライフサイクルメソッド">
 							リクエストパターンとライフサイクルメソッド
 						</a>
 						<ul>
 							<li>
-								<a
-									href="../concept/lifecycle.html#ポストバック_自画面表示">
+								<a href="../concept/lifecycle.html#ポストバック_自画面表示">
 									ポストバック (自画面表示)
 								</a>
 							</li>
@@ -195,7 +187,8 @@ public Class doNext() {
 			</subsection>
 
 			<subsection name="異なったプロトコルで画面遷移するには">
-				<div class="sidebar">プロトコルの他，ポート番号を指定することもできます．</div>
+				<div class="sidebar">プロトコルの他，ポート番号を指定することもできます．
+				</div>
 				<p>
 					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 						ライフサイクルメソッド
@@ -222,8 +215,7 @@ public Class doXxx() {
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						<a
-							href="../concept/lifecycle.html#ライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 							ライフサイクルメソッド
 						</a>
 					</li>
@@ -233,9 +225,11 @@ public Class doXxx() {
 			<subsection name="外部サイトにリダイレクトするには">
 				<p>
 					ページクラスに
-					<code>javax.servlet.http.HttpServletResponse</code>
+					<code>javax.servlet.http.HttpServletResponse
+					</code>
 					型および
-					<code>javax.faces.context.FacesContext</code>
+					<code>javax.faces.context.FacesContext
+					</code>
 					型のプロパティを用意します．
 					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 						ライフサイクルメソッドの中で
@@ -264,8 +258,56 @@ public Class doRedirect() {
 				<h4>関連項目</h4>
 				<ul>
 					<li>
-						<a
-							href="../concept/lifecycle.html#ライフサイクルメソッド">
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="CSVやPDFをダウンロードするには">
+				<p>
+					ページクラスに
+					<code>javax.servlet.http.HttpServletResponse
+					</code>
+					型および
+					<code>javax.faces.context.FacesContext
+					</code>
+					型のプロパティを用意します．
+					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッドの中で
+					</a>
+					<code>HttpServletResponse</code>
+					の
+					<code>getOutputStream()</code>
+					または
+					<code>getWriter()</code>
+					メソッドを呼び出して出力ストリームを取得し， コンテンツを出力します． その後，
+					<code>FacesContext</code>
+					の
+					<code>responseComplete()</code>
+					メソッドを呼び出します．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public HttpServletResponse response;
+public FacesContext facesContext;
+
+public Class doRedirect() throws IOException {
+    OutputStream os = response.getOutputStream();
+    try {
+      ...
+      facesContext.responseComplete();
+    } finally {
+      os.close();
+    }
+    return null;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
 							ライフサイクルメソッド
 						</a>
 					</li>
