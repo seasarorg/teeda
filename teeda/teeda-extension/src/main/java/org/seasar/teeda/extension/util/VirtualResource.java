@@ -182,8 +182,9 @@ public abstract class VirtualResource {
             response.setContentType("image/png");
         } else if (lcPath.endsWith(".jpg") || lcPath.endsWith(".jpeg")) {
             response.setContentType("image/jpeg");
-        } else if (lcPath.endsWith(".xml") || lcPath.endsWith(".xsl")) {
-            response.setContentType("text/xml");
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
         response.setDateHeader("Last-Modified", 0);
         Calendar expires = Calendar.getInstance();
