@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<title>seasarUser Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script language="JavaScript" type="text/javascript" src="../../js/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/ajax.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+function test(){
+  var form = Kumu.FormHelper.create('testForm');
+  Kumu.log(Kumu.JSONSerializer.serialize(form));
+}
+//]]>
+</script>
+</head>
+<body>
+<h2>Seasar-user:16893確認用</h2>
+<hr/>
+<form id="testForm">
+<input type="text" id="txt1" name="txt1" value="aaa" />
+<img id="img1" name="img1" src="http://teeda.seasar.org/ja/images/top02_b.gif" />
+<input type="button" id="btn1" name="btn1" value="test" onclick="test();" />
+</form>
+</body>
+</html>

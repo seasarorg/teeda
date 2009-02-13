@@ -555,7 +555,8 @@ Kumu.FormHelper = {
       var node = nodes[i];
       if(!node.disabled && node.name){
         var name;
-        var value = Kumu.FormHelper.Serializer[node.tagName.toLowerCase()](node);
+        var serializer = Kumu.FormHelper.Serializer[node.tagName.toLowerCase()];
+        var value = (serializer) ? serializer(node) : null;
         if(type == 'i'){
           name = node.id;
         }else if(type == 't'){

@@ -354,7 +354,6 @@ Kumu.Ajax = {
     var componentName = ret.substring(0, idx);
     var actionName = ret.substring(idx + 1);
     var arr = new Array(componentName, actionName);
-
     return arr;
   },
 
@@ -394,8 +393,7 @@ Kumu.Ajax = {
       ajax.onTimeout = param['onTimeout'];
       delete param['onTimeout'];
     }
-
-    ajax.params = param;
+    ajax.params = self._clone(param);
     if(param instanceof Array){
       for(var i = 0; i < param.length; i++){
         ajax.params["AjaxParam" + new String(i)] = param[i];
@@ -406,7 +404,6 @@ Kumu.Ajax = {
       ajax.params["component"] = components[0];
       ajax.params["action"] = components[1];
     }
-
     ajax.doAction = callback;
     if (!responseType) {
       responseType = self.RESPONSE_TYPE_JSON;
@@ -414,7 +411,13 @@ Kumu.Ajax = {
     ajax.responseType = responseType;
     return self.executeAjax(ajax);
   },
-
+  
+  _clone : function(o){
+    var f = function(){};
+    f.prototype = o;
+    return new f;
+  },
+   
   _setJSONData : function(node, data){
     if(node.style.display == 'none'){
       node.style.display = '';
@@ -552,7 +555,8 @@ Kumu.FormHelper = {
       var node = nodes[i];
       if(!node.disabled && node.name){
         var name;
-        var value = Kumu.FormHelper.Serializer[node.tagName.toLowerCase()](node);
+        var serializer = Kumu.FormHelper.Serializer[node.tagName.toLowerCase()];
+        var value = (serializer) ? serializer(node) : null;
         if(type == 'i'){
           name = node.id;
         }else if(type == 't'){
