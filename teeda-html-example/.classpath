@@ -25,9 +25,9 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/s2-tiger-2.4.34.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/s2-tiger-2.4.34-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xercesImpl-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/xercesImpl-2.6.2-sources.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/xmlParserAPIs-2.6.2.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/xercesImpl-2.6.2-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.13-sp6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-ajax-1.0.13-sp6-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.13-sp6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-core-1.0.13-sp6-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-extension-1.0.13-sp6-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.13-sp6-SNAPSHOT.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-tiger-1.0.13-sp6-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-ajax-1.0.13-sp6.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-ajax-1.0.13-sp6-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-core-1.0.13-sp6.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-core-1.0.13-sp6-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-extension-1.0.13-sp6.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-extension-1.0.13-sp6-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/teeda-tiger-1.0.13-sp6.jar" sourcepath="src/main/webapp/WEB-INF/libsrc/teeda-tiger-1.0.13-sp6-sources.jar"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>

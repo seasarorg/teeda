@@ -47,7 +47,8 @@
 					Webアプリケーションの開発をもっとシンプルにし，ユーザが本当に開発すべきものに専念できるようにする．
 				</li>
 				<li>オープンに開発し，オープンな仕組みの中で常に提供し続ける．</li>
-				<li>自働化されたテストによってよくテストされており，ユーザが安心して使うことが出来る．</li>
+				<li>自働化されたテストによってよくテストされており，ユーザが安心して使うことが出来る．
+				</li>
 				<li>POJO(Plain Old Java Object)中心の開発スタイルを提供する．</li>
 				<li>Webアプリケーションとして必要な機能を一括して提供する．</li>
 			</ul>
@@ -55,6 +56,24 @@
 
 		<section name="News">
 			<dl>
+				<dt>2009/02/13</dt>
+				<dd>
+					Teeda 1.0.13-sp6 をリリースしました． (
+					<a href="downloads.html">ダウンロード</a>
+					) (
+					<a href="changelog.html#a1.0.13-sp6">Change Log</a>
+					)
+					<br />
+					バージョン 1.0.2～1.0.13-sp5 の Teeda Extension に含まれている
+					<code>ExtensionFilter</code>
+					を
+					<code>web.xml</code>
+					に登録している場合，深刻なセキュリティホールとなる可能性があります．
+					<br />
+					早急に 1.0.13-sp6 にバージョンアップしてください (
+					<a href="changelog.html#a1.0.13-sp6">詳細</a>
+					)．
+				</dd>
 				<dt>2009/01/31</dt>
 				<dd>
 					Teeda 1.0.13-sp5 をリリースしました． (
