@@ -21,16 +21,21 @@
 	<skin>
 		<groupId>org.seasar.teeda</groupId>
 		<artifactId>teeda-skin</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3</version>
 	</skin>
+	<bannerLeft>
+		<name>Seasar Banner</name>
+		<src>http://www.seasar.org/images/seasar_banner.gif</src>
+		<href>http://www.seasar.org/</href>
+	</bannerLeft>
 	<bannerRight>
 		<src>http://maven.apache.org/images/maven-small.gif</src>
 	</bannerRight>
 	<body>
-		<links>
-			<item name="Seasar" href="http://www.seasar.org/" />
-			<item name="Maven 2" href="http://maven.apache.org/maven2/" />
-		</links>
+		<breadcrumbs>
+			<item name="Seasar" href="http://www.seasar.org/en/"/>
+			<item name="Teeda" href="http://teeda.seasar.org/"/>
+		</breadcrumbs>
 
 		<menu name="About">
 			<item name="Home" href="index.html" />
