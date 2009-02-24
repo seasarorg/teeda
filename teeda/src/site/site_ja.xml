@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="Shift_JIS"?>
 
-<!--
-	| Copyright 2004-2008 the Seasar Foundation and the Others.
-	|
-	| Licensed under the Apache License, Version 2.0 (the "License");
-	| you may not use this file except in compliance with the License.
-	| You may obtain a copy of the License at
-	|
-	|		 http://www.apache.org/licenses/LICENSE-2.0
-	|
-	| Unless required by applicable law or agreed to in writing, software
-	| distributed under the License is distributed on an "AS IS" BASIS,
-	| WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
-	| either express or implied. See the License for the specific language
-	| governing permissions and limitations under the License.
-	|
--->
+	<!--
+		| Copyright 2004-2008 the Seasar Foundation and the Others. | |
+		Licensed under the Apache License, Version 2.0 (the "License"); | you
+		may not use this file except in compliance with the License. | You may
+		obtain a copy of the License at | |
+		http://www.apache.org/licenses/LICENSE-2.0 | | Unless required by
+		applicable law or agreed to in writing, software | distributed under
+		the License is distributed on an "AS IS" BASIS, | WITHOUT WARRANTIES
+		OR CONDITIONS OF ANY KIND, | either express or implied. See the
+		License for the specific language | governing permissions and
+		limitations under the License. |
+	-->
 
 <project name="Teeda">
 	<skin>
@@ -25,16 +21,18 @@
 	</skin>
 	<bannerLeft>
 		<name>Seasar Banner</name>
-		<src>http://www.seasar.org/images/seasar_banner.gif</src>
+		<src>http://www.seasar.org/images/seasar_banner.gif
+		</src>
 		<href>http://www.seasar.org/</href>
 	</bannerLeft>
 	<bannerRight>
-		<src>http://maven.apache.org/images/maven-small.gif</src>
+		<src>http://maven.apache.org/images/maven-small.gif
+		</src>
 	</bannerRight>
 	<body>
 		<breadcrumbs>
-			<item name="Seasar" href="http://www.seasar.org/"/>
-			<item name="Teeda" href="http://teeda.seasar.org/"/>
+			<item name="Seasar" href="http://www.seasar.org/" />
+			<item name="Teeda" href="http://teeda.seasar.org/" />
 		</breadcrumbs>
 
 		<menu name="About">
@@ -43,20 +41,16 @@
 			<item name="ダウンロード" href="downloads.html" />
 			<item name="変更履歴" href="changelog.html" />
 			<item name="ロードマップ" href="roadmap.html" />
-			<item name="メーリングリスト"
-				href="https://ml.seasar.org/mailman/listinfo/seasar-user" />
-			<item name="トラッキング"
-				href="https://www.seasar.org/issues/browse/TEEDA" />
-			<item name="SVN リポジトリブラウザ"
-				href="http://svn.seasar.org/browse/?root=teeda" />
+			<item name="メーリングリスト" href="https://ml.seasar.org/mailman/listinfo/seasar-user" />
+			<item name="トラッキング" href="https://www.seasar.org/issues/browse/TEEDA" />
+			<item name="SVN リポジトリブラウザ" href="http://svn.seasar.org/browse/?root=teeda" />
 		</menu>
 
 		<menu name="General">
 			<item name="環境" href="env.html" />
 			<item name="開発環境のセットアップ" href="setup.html" />
 			<item name="実行環境へのデプロイ" href="deploy.html" />
-			<item name="FAQ"
-				href="http://www.seasar.org/wiki/index.php?FAQ%2FTeeda" />
+			<item name="FAQ" href="http://www.seasar.org/wiki/index.php?FAQ%2FTeeda" />
 			<item name="プレゼンテーション資料" href="presentations.html" />
 		</menu>
 
@@ -72,18 +66,14 @@
 
 			<item name="サンプル解説" href="extension/example.html" />
 
-			<item name="概念" href="extension/concept/index.html"
-				collapse="true">
+			<item name="概念" href="extension/concept/index.html" collapse="true">
 				<item name="ページモデル" href="extension/concept/page.html" />
 				<item name="PRGパターン" href="extension/concept/prg.html" />
-				<item name="ライフサイクル"
-					href="extension/concept/lifecycle.html" />
+				<item name="ライフサイクル" href="extension/concept/lifecycle.html" />
 				<!--
-					<item name="バインディング"
-					href="extension/concept/binding.html" />
+					<item name="バインディング" href="extension/concept/binding.html" />
 				-->
-				<item name="状態とスコープ"
-					href="extension/concept/scope.html" />
+				<item name="状態とスコープ" href="extension/concept/scope.html" />
 				<item name="レイアウト" href="extension/concept/layout.html" />
 			</item>
 
@@ -92,48 +82,33 @@
 				<item name="出力" href="extension/reverse/output.html" />
 				<item name="リンク" href="extension/reverse/link.html" />
 				<item name="入力フォーム" href="extension/reverse/input.html" />
-				<item name="バリデーション"
-					href="extension/reverse/validation.html" />
-				<item name="コンバート"
-					href="extension/reverse/convert.html" />
+				<item name="ダウンロード" href="extension/reverse/download.html" />
+				<item name="バリデーション" href="extension/reverse/validation.html" />
+				<item name="コンバート" href="extension/reverse/convert.html" />
 				<item name="繰り返し" href="extension/reverse/foreach.html" />
-				<item name="条件制御"
-					href="extension/reverse/condition.html" />
+				<item name="条件制御" href="extension/reverse/condition.html" />
 				<item name="レイアウト" href="extension/reverse/layout.html" />
-				<item name="画面遷移と状態"
-					href="extension/reverse/transition.html" />
-				<item name="プレビュー"
-					href="extension/reverse/preview.html" />
+				<item name="画面遷移と状態" href="extension/reverse/transition.html" />
+				<item name="プレビュー" href="extension/reverse/preview.html" />
 			</item>
 
 			<item name="リファレンス" href="extension/reference/index.html"
 				collapse="true">
 				<item name="機能リファレンス" href="extension_features.html" />
-				<item name="コンポーネント一覧"
-					href="extension_component_reference.html" />
+				<item name="コンポーネント一覧" href="extension_component_reference.html" />
 				<item name="カスタマイズについて" href="extension_customize.html" />
-				<item name="テンプレートXHTML"
-					href="extension/reference/xhtml.html" />
-				<item name="リソース"
-					href="extension/reference/resource.html" />
-				<item name="ディレクトリ構成"
-					href="extension/reference/directory.html" />
+				<item name="テンプレートXHTML" href="extension/reference/xhtml.html" />
+				<item name="リソース" href="extension/reference/resource.html" />
+				<item name="ディレクトリ構成" href="extension/reference/directory.html" />
 
 				<!--
-					<item name="機能"
-					href="extension/reference/features.html" />
-					<item name="コンポーネント"
-					href="extension/reference/component.html" />
-					<item name="設定ファイル"
-					href="extension/reference/config.html" />
-					<item name="規約"
-					href="extension/reference/convention.html" />
-					<item name="アノテーション"
-					href="extension/reference/annotation.html" />
-					<item name="dicon"
-					href="extension/reference/dicon.html" />
-					<item name="カスタマイズ"
-					href="extension/reference/customize.html" />
+					<item name="機能" href="extension/reference/features.html" /> <item
+					name="コンポーネント" href="extension/reference/component.html" /> <item
+					name="設定ファイル" href="extension/reference/config.html" /> <item
+					name="規約" href="extension/reference/convention.html" /> <item
+					name="アノテーション" href="extension/reference/annotation.html" /> <item
+					name="dicon" href="extension/reference/dicon.html" /> <item
+					name="カスタマイズ" href="extension/reference/customize.html" />
 				-->
 			</item>
 		</menu>
@@ -152,11 +127,9 @@
 		<menu name="モジュール">
 			<item name="Teeda" href="index.html" />
 			<item name="Teeda Core" href="../teeda-core/ja/index.html" />
-			<item name="Teeda Extension"
-				href="../teeda-extension/ja/index.html" />
+			<item name="Teeda Extension" href="../teeda-extension/ja/index.html" />
 			<item name="Teeda Ajax" href="../teeda-ajax/ja/index.html" />
-			<item name="Teeda Tiger"
-				href="../teeda-tiger/ja/index.html" />
+			<item name="Teeda Tiger" href="../teeda-tiger/ja/index.html" />
 		</menu>
 	</body>
 </project>

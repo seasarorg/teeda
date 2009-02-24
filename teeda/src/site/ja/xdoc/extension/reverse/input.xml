@@ -2899,7 +2899,6 @@ public Class doSend() {
 			</subsection>
 
 			<subsection name="二重サブミットを防止するには">
-				<div class="sidebar">二重サブミット対策の詳細は「」を参照してください．</div>
 				<p>
 					<code>&lt;input&gt;</code>
 					要素の

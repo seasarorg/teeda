@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document
+	PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+	"http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+	<properties>
+		<title>Extension - 逆引きリファレンス - ダウンロード</title>
+	</properties>
+	<body>
+		<section name="ダウンロード">
+			<ul>
+				<li>
+					<a href="#CSVやPDFをダウンロードするには">
+						CSVやPDFをダウンロードするには
+					</a>
+				</li>
+				<li>
+					<a href="#二重サブミット防止ボタンと組み合わせるには">
+						二重サブミット防止ボタンと組み合わせるには
+					</a>
+				</li>
+			</ul>
+
+			<subsection name="CSVやPDFをダウンロードするには">
+				<p>
+					ページクラスに
+					<code>javax.servlet.http.HttpServletResponse
+					</code>
+					型および
+					<code>javax.faces.context.FacesContext
+					</code>
+					型のプロパティを用意します．
+					<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+						ライフサイクルメソッドの中で
+					</a>
+					<code>HttpServletResponse</code>
+					の
+					<code>getOutputStream()</code>
+					または
+					<code>getWriter()</code>
+					メソッドを呼び出して出力ストリームを取得し， コンテンツを出力します． その後，
+					<code>FacesContext</code>
+					の
+					<code>responseComplete()</code>
+					メソッドを呼び出します．
+				</p>
+				<h5>例：ページクラス (FooPage.java)</h5>
+				<source><![CDATA[
+public HttpServletResponse response;
+public FacesContext facesContext;
+
+public Class doRedirect() throws IOException {
+    OutputStream os = response.getOutputStream();
+    try {
+      ...
+      facesContext.responseComplete();
+    } finally {
+      os.close();
+    }
+    return null;
+}
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="../concept/lifecycle.html#ライフサイクルメソッド">
+							ライフサイクルメソッド
+						</a>
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection name="二重サブミット防止ボタンと組み合わせるには">
+				<div class="sidebar">ダウンロードボタンの二重サブミットを防止することは出来ません．
+				</div>
+				<p>
+					二重サブミットを防止するボタン (
+					<code>id</code>
+					属性が
+					<code>doOnce</code>
+					で始まるボタン) と，
+					CSVやPDFをダウンロードするボタンが同じフォームにあると，
+					ダウンロードボタンを押した後に画面が書き換わらないため，
+					二重サブミット防止ボタンを押すと必ず二重サブミットと判定されてしまいます．
+				</p>
+				<p>
+					これを防ぐには， ダウンロードを行うための非表示のフォームを別途用意し，
+					ダウンロードボタンでそのフォームをサブミットします．
+				</p>
+				<p>
+					ダウンロード用のフォームは非表示とし，
+					<code>id</code>
+					属性が
+					<code>form</code>
+					または
+					<code>Form</code>
+					で終了するようにします． このフォームに
+					<code>type</code>
+					属性が
+					<code>submit</code>
+					で，
+					<code>id</code>
+					属性が
+					<code>do</code>
+					で始まる
+					<code>&lt;input&gt;</code>
+					要素 (本当のダウンロードボタン) と，
+					<code>type</code>
+					属性が
+					<code>hidden</code>
+					で
+					<code>name</code>
+					属性が
+					<code>newwindow</code>
+					，
+					<code>value</code>
+					属性が
+					<code>true</code>
+					の
+					<code>&lt;input&gt;</code>
+					要素を含めます．
+				</p>
+				<p>
+					本来の (表示される) フォームには
+					<code>id</code>
+					属性を持たないか値が
+					<code>do/go/jump</code>
+					で始まらない，
+					<code>tyep</code>
+					属性が
+					<code>button</code>
+					で，
+					<code>onclick</code>
+					属性でスクリプトの関数を呼び出すボタン (表示上のダウンロードボタン) を含めます．
+				</p>
+				<p>
+					スクリプトの関数は，本来のフォームからダウンロード用のフォームに必要な
+					<code>&lt;input&gt;</code>
+					要素をコピーし， ダウンロードボタンをクリックして，
+					ダウンロード用のフォームをサブミットします．
+				</p>
+				<h5>例：テンプレートHTML (foo.html)</h5>
+				<source><![CDATA[
+<script type="text/javascript">
+function dowonload() {
+  //必要に応じて form から downloadForm へ input をコピー
+  var downloadButton = document.getElementById('doDownload');
+  downloadButton.click();
+}
+</script>
+
+<!-- 本来のフォーム -->
+<form id="form">
+  ・・・
+  <input type="button" value="ダウンロード" onclick="download()" /><!-- id は付けない -->
+</form>
+
+<!-- 非表示のフォーム -->
+<form id="downloadForm" style="display: none;">
+  <input type="submit" id="doDownload" value="ダウンロード" />
+  <input type="hidden" name="newwindow" value="true" />
+</form>
+]]></source>
+				<h4>関連項目</h4>
+				<ul>
+					<li>
+						<a href="input.html#二重サブミットを防止するには">
+							二重サブミットを防止するには
+						</a>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+	</body>
+</document>
