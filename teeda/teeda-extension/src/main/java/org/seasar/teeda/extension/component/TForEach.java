@@ -316,7 +316,7 @@ public class TForEach extends UIComponentBase implements NamingContainer,
         for (final Iterator itr = context.getClientIdsWithMessages(); itr
                 .hasNext();) {
             final String clientId = (String) itr.next();
-            if (!clientId.startsWith(parentClientId)) {
+            if (clientId == null || !clientId.startsWith(parentClientId)) {
                 continue;
             }
             for (final Iterator messages = context.getMessages(clientId); messages

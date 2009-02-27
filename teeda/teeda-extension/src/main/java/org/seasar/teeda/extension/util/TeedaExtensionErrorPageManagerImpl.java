@@ -16,6 +16,7 @@
 package org.seasar.teeda.extension.util;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -53,7 +54,7 @@ public class TeedaExtensionErrorPageManagerImpl extends
         if (logger.isDebugEnabled()) {
             logger.debug(exception.getMessage(), exception);
         }
-        if (exception instanceof AlreadyRedirectingException) {
+        if (isIgnorableException(exception)) {
             return false;
         }
         final String location = getLocation(exception.getClass());
@@ -118,5 +119,18 @@ public class TeedaExtensionErrorPageManagerImpl extends
     protected PagePersistence getPagePersistence() {
         return (PagePersistence) DIContainerUtil
                 .getComponentNoException(PagePersistence.class);
+    }
+
+    protected boolean isIgnorableException(final Throwable t) {
+        if (t instanceof AlreadyRedirectingException) {
+            return true;
+        } else if (t instanceof SocketException) {
+            return true;
+        }
+        final Throwable cause = t.getCause();
+        if (cause == null) {
+            return false;
+        }
+        return isIgnorableException(cause);
     }
 }
