@@ -244,7 +244,7 @@ Kumu.Validator.MinRangeValidator = function(value){
   this.value = value;
   this.validate = function(v){
     var v = v.toString();
-    if(v > this.value){
+    if(Number(v) > Number(this.value)){
       return true;
     }else{
       return false;
@@ -257,7 +257,7 @@ Kumu.Validator.MaxRangeValidator = function(value){
   this.value = value;
   this.validate = function(v){
     var v = v.toString();
-    if(v < this.value){
+    if(Number(v) < Number(this.value)){
       return true;
     }else{
       return false;
