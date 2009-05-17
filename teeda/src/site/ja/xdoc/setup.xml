@@ -55,26 +55,18 @@
 				<p>以下の手順でEclipseプラグインをインストールしてください．</p>
 				<ul>
 					<li>
-						Eclipseのメニューから「Help」－「Software Updates」－「Find
-						and Install」を選択してください．
+						Eclipseのメニューから「Help」－「Software Updates」を選択してください．
 					</li>
-					<li>「Install/Updates」ウィザードが開きます．</li>
+					<li>「Software Updates and Add-ons」ダイアログが開きます．</li>
 					<li>
-						「Search for new features to install」を選択してください．
+						「Available Software」タブを選択してください．
 					</li>
-					<li>「Next」ボタンを押下してください．</li>
 				</ul>
 				<ul>
-					<li>「Install」ページが開きます．</li>
-					<li>「New Remote Site」ボタンを押下してください．</li>
-					<li>「New Update Site」ダイアログが開きます．</li>
+					<li>「Add Site」ボタンを押下してください．</li>
+					<li>「Add Site」ダイアログが開きます．</li>
 					<li>
-						「Name」に"
-						<code>Seasar Project Updates 3.2</code>
-						"と入力してください．
-					</li>
-					<li>
-						「URL」に"
+						「Location」に"
 						<code>
 							<a
 								href="http://eclipse.seasar.org/updates/3.2/">
@@ -86,16 +78,11 @@
 					<li>「OK」ボタンを押下してください．</li>
 				</ul>
 				<ul>
-					<li>「Install」ページに戻ります．</li>
-					<li>「New Remote Site」ボタンを押下してください．</li>
-					<li>「New Update Site」ダイアログが開きます．</li>
+					<li>「Software Updates and Add-ons」ダイアログに戻ります．</li>
+					<li>「Add Site」ボタンを押下してください．</li>
+					<li>「Add Site」ダイアログが開きます．</li>
 					<li>
-						「Name」に"
-						<code>Seasar Project Updates 3.3</code>
-						"と入力してください．
-					</li>
-					<li>
-						「URL」に"
+						「Location」に"
 						<code>
 							<a
 								href="http://eclipse.seasar.org/updates/3.3/">
@@ -107,49 +94,45 @@
 					<li>「OK」ボタンを押下してください．</li>
 				</ul>
 				<ul>
-					<li>「Install」ページに戻ります．</li>
+					<li>「Software Updates and Add-ons」ダイアログに戻ります．</li>
 					<li>
-						追加されたSeasarプロジェクトのアップデートサイトがチェック状態になっていることを確認してください．
-					</li>
-					<li>「Finish」ボタンを押下してください．</li>
-				</ul>
-				<ul>
-					<li>「Updates」ページが開きます．</li>
-					<li>
-						「Seasar Project Updates
-						3.2」の下の以下のフィーチャーをチェックしてください．
+						「
+						<code>
+							<a
+								href="http://eclipse.seasar.org/updates/3.2/">
+								http://eclipse.seasar.org/updates/3.2/
+							</a>
+						</code>
+						」の下の以下のフィーチャーをチェックしてください．
 						<ul>
 							<li>DbLauncher (任意)</li>
 							<li>Sysdeo/SQLI Tomcat Launcher (任意)</li>
 						</ul>
 					</li>
 					<li>
-						「Seasar Project Updates
-						3.3」の下の以下のフィーチャーをチェックしてください．
+						「
+						<code>
+							<a
+								href="http://eclipse.seasar.org/updates/3.3/">
+								http://eclipse.seasar.org/updates/3.3/
+							</a>
+						</code>
+						」の下の以下のフィーチャーをチェックしてください．
 						<ul>
 							<li>Dolteng</li>
 						</ul>
 					</li>
-					<li>「Next」ボタンを押下してください．</li>
+					<li>「Install」ボタンを押下してください．</li>
 				</ul>
 				<ul>
-					<li>「Install」ページが開きます．</li>
+					<li>「Install」ウィザードが開きます．</li>
 					<li>
-						ライセンスを確認して「I accept the terms in the license
-						agreement」を選択してください．
+						選択したフィーチャーが表示されていることを確認してください．
 					</li>
-					<li>「Next」ボタンを押下してください．</li>
-				</ul>
-				<ul>
-					<li>「Install」ページが開きます．</li>
 					<li>「Finish」ボタンを押下してください．</li>
 				</ul>
 				<ul>
-					<li>「Verification」ページが開きます．</li>
-					<li>「Install All」ボタンを押下してください．</li>
-				</ul>
-				<ul>
-					<li>「Install/Update」ダイアログが開きます．</li>
+					<li>「Software Updates」ダイアログが開きます．</li>
 					<li>「Yes」ボタンを押下してください．</li>
 				</ul>
 				<p>Eclipseが再起動するとインストールは終了です．</p>

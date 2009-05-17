@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp7">1.0.13-sp7</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp6">1.0.13-sp6</a>
 					</td>
 					<td>
@@ -148,6 +151,32 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+			</section>
+	
+		<section name="1.0.13-sp7">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp6">1.0.13-sp6</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-500'>TEEDA-500</a>
+								] - forEach を使用した画面でサブミットボタンを連打すると NullPointerException が発生する問題を修正しました．[Seasar-user:16976]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-501'>TEEDA-501</a>
+								] - KumuのXxxRangeValidatorが正常に機能しない問題を修正しました．
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp6">

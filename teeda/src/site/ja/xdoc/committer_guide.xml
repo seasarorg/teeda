@@ -56,6 +56,22 @@
 				</dd>
 				<dt>ドキュメント確認</dt>
 				<dd>teeda/target/site以下のドキュメントを確認．</dd>
+				<dt>Teeda HTML Exampleのクラスパス修正</dt>
+				<dd>
+					<ul>
+						<li>teeda-html-example/.classpath修正</li>
+						<li>teeda-html-example/src/main/webapp/WEB-INF/libから古いバージョンのJarを削除</li>
+						<li>teeda-html-example/src/main/webapp/WEB-INF/srclibから古いバージョンのJarを削除</li>
+					</ul>
+				</dd>
+				<dt>Teeda JSP Exampleのクラスパス修正</dt>
+				<dd>
+					<ul>
+						<li>teeda-jsp-example/.classpath修正</li>
+						<li>teeda-jsp-example/src/main/webapp/WEB-INF/libから古いバージョンのJarを削除</li>
+						<li>teeda-jsp-example/src/main/webapp/WEB-INF/srclibから古いバージョンのJarを削除</li>
+					</ul>
+				</dd>
 			</dl>
 		</section>
 
