@@ -4,8 +4,11 @@
 		<mkdir dir="${zipDir}"/>
 		<zip zipfile="${zipDir}/teeda-jsp-example-${ver}.zip">
 			<zipfileset prefix="teeda-jsp-example" dir=".">
-				<exclude name="**/target/**"/>
+				<exclude name="target/**"/>
+				<exclude name="work/**"/>
 				<exclude name="**/.settings/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="**/.DS_Store"/>
 			</zipfileset>
 		</zip>
 	</target>

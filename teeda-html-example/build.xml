@@ -4,7 +4,9 @@
 		<mkdir dir="${zipDir}"/>
 		<zip zipfile="${zipDir}/teeda-html-example-${ver}.zip">
 			<zipfileset prefix="teeda-html-example" dir=".">
+				<exclude name="build/**"/>
 				<exclude name="target/**"/>
+				<exclude name="work/**"/>
 				<exclude name="**/.settings/**"/>
 				<exclude name="build.xml"/>
 				<exclude name="**/.DS_Store"/>
