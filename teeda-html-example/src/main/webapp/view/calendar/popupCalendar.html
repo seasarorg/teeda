@@ -6,6 +6,21 @@
 			background-color: #FFCCCC;
 		}
 		</style>
+		<script type="text/javascript" src="../../js/disabled.js"></script>
+		<script type="text/javascript">
+		//<![CDATA[
+		DisabledConf = {
+			time : 50000,
+			includeButton : [ 'doShow', 'doShow2' ],
+			submitMessage : function(){
+				alert('送信中です');
+			},
+			anchorMessage : function(){
+				alert('遷移中です');
+			}
+		}
+		//]]>
+		</script>
 	</head>
 	<body>
 		<form id="form">
