@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="JavaScript" type="text/javascript" src="../../js/kumu.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/event.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/disabled.js"></script>
+<title>Disabled Sample</title>
+<script type="text/javascript">
+//<![CDATA[
+DisabledConf = {
+  time : 50000,
+  includeButton : [ 'doOnceHoge' ],
+  submitMessage : function(){
+    alert('送信中です');
+  },
+  anchorMessage : function(){
+    alert('遷移中です');
+  }
+}
+//]]>
+</script>
+</head>
+<body>
+<a id="a1" href="https://www.seasar.org/issues/">テストリンク1（2重送信防止）</a><br/>
+<a id="a2" class="excludeDisabled" href="https://www.seasar.org/issues/">2重送信防止対象外（excludeDisabled css class指定）</a><br/>
+<a id="a3" class="design hoge excludeDisabled" href="https://www.seasar.org/issues/">2重送信防止対象外（excludeDisabled 複数 css class指定）</a><br/>
+<hr/>
+<form id="test1" action="https://www.seasar.org/issues/">
+  <input type="submit" id="doOnceHoge" value="includeButton" />
+  <input type="submit" id="normal" value="normalButton" />
+</form>
+</body>
+</html>

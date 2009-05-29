@@ -41,6 +41,8 @@ Kumu.extend(Kumu.Html.Disabled, {
   submitMessage : false,
 
   anchorMessage : false,
+  
+  exDisabledAnchor : false,
 
   lock : function(element) {
     if(!element.__lock){
@@ -74,6 +76,13 @@ Kumu.extend(Kumu.Html.Disabled, {
     document.body.onclick = function(e){
       var element = e.target || e.srcElement;
       if(element){
+    	if(this.exDisabledAnchor){
+    		for(var i = 0, len = this.exDisabledAnchor.length; i < len; i++){
+    			if(element == this.exDisabledAnchor[i]) {
+    				return;
+    			}
+    		}
+    	}
         if(this.anchor && element.id){
           for(var i = 0, len = this.anchor.length; i < len; i++){
             if(element.id == this.anchor[i]){
@@ -143,10 +152,32 @@ Kumu.extend(Kumu.Html.Disabled, {
         }
       }
     }
+    // excludeDisabled check
+    var elements = this.getElementsByClassName('excludeDisabled');
+    var elem;
+    for (var i = 0; elem = elements[i]; i++){
+      var nodeName = elem.nodeName.toUpperCase();
+      if (nodeName === 'A') {
+        if(this.exDisabledAnchor) this.exDisabledAnchor.push(elem);
+        else this.exDisabledAnchor = [elem];
+      }
+    }
     this.disableAction();
     if(!DisabledConf.includeButton){
       this.disableForms(forms);
     }
+  },
+  
+  getElementsByClassName : function(classname){
+    var rl = new Array();
+    var re = new RegExp('(^| )'+classname+'( |$)');
+    var ael = document.getElementsByTagName('*');
+    var op = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+    if (document.all && !op) ael = document.all;
+    for(i=0, j=0 ; i<ael.length ; i++) {
+      if(re.test(ael[i].className)) rl[j++]=ael[i];
+    }
+    return rl;
   }
 });
 Kumu.Event.addOnLoadEvent(Kumu.Html.Disabled.loadDisabled.bindScope(Kumu.Html.Disabled));
