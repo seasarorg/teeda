@@ -172,7 +172,9 @@ Kumu.extend(Kumu.Html.Disabled, {
     var rl = new Array();
     var re = new RegExp('(^| )'+classname+'( |$)');
     var ael = document.getElementsByTagName('*');
-    var op = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+    if(navigator.userAgent){
+        op = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+    }
     if (document.all && !op) ael = document.all;
     for(i=0, j=0 ; i<ael.length ; i++) {
       if(re.test(ael[i].className)) rl[j++]=ael[i];
