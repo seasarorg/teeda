@@ -46,6 +46,9 @@
           <execution>
             <id>prepare-test-jar</id>
             <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
             <configuration>
               <tasks>
                 <copy todir="${project.build.directory}/test-jar-staging">
@@ -55,9 +58,6 @@
                 </copy>
               </tasks>
             </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
@@ -70,12 +70,15 @@
           <execution>
             <id>test-jar</id>
             <phase>package</phase>
-            <configuration>
-              <testClassesDirectory>${project.build.directory}/test-jar-staging</testClassesDirectory>
-            </configuration>
             <goals>
               <goal>test-jar</goal>
             </goals>
+            <configuration>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+              </archive>
+              <testClassesDirectory>${project.build.directory}/test-jar-staging</testClassesDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>

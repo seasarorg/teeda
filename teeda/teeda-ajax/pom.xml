@@ -32,6 +32,11 @@
             <goals>
               <goal>test-jar</goal>
             </goals>
+            <configuration>
+              <archive>
+                <addMavenDescriptor>false</addMavenDescriptor>
+              </archive>
+            </configuration>
           </execution>
         </executions>
       </plugin>
