@@ -2581,6 +2581,14 @@ public List<Map> selecteItems;
 
 		<section name="ファイルアップロード">
 			<subsection name="ファイルアップロードを使うには">
+				<p>
+					<code>form</code>
+					要素に
+					<code>enctype</code>
+					属性を追加し，値に
+					<code>multipart/form-data</code>
+					を指定します．
+				</p>
 				<div class="sidebar">
 					<code>type</code>
 					，
@@ -2589,9 +2597,7 @@ public List<Map> selecteItems;
 					<code>name</code>
 					，
 					<code>value</code>
-					を除いた
-					<code>&lt;select&gt;</code>
-					要素の属性にはダイナミックプロパティを適用することができます． 詳細は「
+					を除いた属性にはダイナミックプロパティを適用することができます． 詳細は「
 					<a href="output.html#属性値を動的に出力するには">
 						属性値を動的に出力するには
 					</a>
@@ -2631,7 +2637,10 @@ public List<Map> selecteItems;
 				</p>
 				<h5>例：テンプレートHTML (foo.html)</h5>
 				<source><![CDATA[
-<input type="file" id="textFile" />
+<form id="form" enctype="multipart/form-data">
+    ...
+    <input type="file" id="textFile" />
+</form>
 ]]></source>
 				<h5>例：ページクラスのプロパティ (FooPage.java)</h5>
 				<source><![CDATA[

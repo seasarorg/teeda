@@ -472,7 +472,9 @@ public Validator getAaaValidator() {
     &lt;/init-param&gt;</pre>
 <p>ポートレット環境では，<code>web.xml</code>で指定した値ではなく，<code>portlet.xml</code>で指定した値が有効になります．</p>
 <h4>テンプレートHTML</h4>
-<p>テンプレートHTMLには，通常のHTMLとして<code>&lt;input type=&quot;file&quot;&gt;</code>要素を記述し，id属性を付与します．</p>
+<p><code>&lt;form&gt;</code>要素に<code>enctype=&quot;multipart/form-data&quot;</code>を指定します．</p>
+<pre>&lt;form id=&quot;form&quot; enctype=&quot;multipart/form-data&quot;&gt;</pre>
+<p>通常のXHTMLと同じように<code>&lt;input type=&quot;file&quot;&gt;</code>要素を記述し，id属性を付与します．</p>
 <pre>&lt;input type=&quot;file&quot; id=&quot;uploadedFile&quot; /&gt;</pre>
 <h4>ページクラス</h4>
 <p>ページクラスには，次の型のプロパティを定義します．プロパティ名はテンプレートHTMLのid属性値と一致させます．</p>
