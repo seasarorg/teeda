@@ -17,6 +17,8 @@ package examples.teeda.web.add;
 
 import javax.faces.internal.PhaseUtil;
 
+import org.seasar.teeda.extension.annotation.transition.ProtocolType;
+import org.seasar.teeda.extension.annotation.transition.Redirect;
 import org.seasar.teeda.extension.annotation.validator.Length;
 import org.seasar.teeda.extension.annotation.validator.Required;
 
@@ -42,6 +44,12 @@ public class AddInputPage {
 		result = new Integer(arg1.intValue() + arg2.intValue());
 		return AddResultPage.class;
 	}
+
+    @Redirect(protocol = ProtocolType.HTTPS)
+    public Class doCalculateHttps() {
+        result = new Integer(arg1.intValue() + arg2.intValue());
+        return AddResultPage.class;
+    }
 
 	public Integer getArg1() {
 		return arg1;

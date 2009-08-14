@@ -201,12 +201,20 @@ public class HtmlComponentInvokerImpl implements HtmlComponentInvoker {
         }
         final String viewId = ExternalContextUtil.getViewId(context
                 .getExternalContext());
+        RedirectDesc redirectDesc = null;
         final PageDesc pageDesc = pageDescCache.getPageDesc(viewId);
-        if (pageDesc == null || !pageDesc.hasRedirectDesc(methodName)) {
-            return;
+        final ActionDesc actionDesc = actionDescCache.getActionDesc(viewId);
+        if (actionDesc != null && actionDesc.hasRedirectDesc(methodName)) {
+            redirectDesc = actionDesc.getRedirectDesc(methodName);
         }
-        final RedirectDesc redirectDesc = pageDesc.getRedirectDesc(methodName);
-        RedirectUtil.setRedirectDesc(redirectDesc);
+        if (redirectDesc == null) {
+            if (pageDesc != null && pageDesc.hasRedirectDesc(methodName)) {
+                redirectDesc = pageDesc.getRedirectDesc(methodName);
+            }
+        }
+        if (redirectDesc != null) {
+            RedirectUtil.setRedirectDesc(redirectDesc);
+        }
     }
 
     public boolean isInitialized(final FacesContext context,

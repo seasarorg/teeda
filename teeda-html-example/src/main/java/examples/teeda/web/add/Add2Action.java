@@ -15,6 +15,9 @@
  */
 package examples.teeda.web.add;
 
+import org.seasar.teeda.extension.annotation.transition.ProtocolType;
+import org.seasar.teeda.extension.annotation.transition.Redirect;
+
 public class Add2Action {
 
 	private Add2Page add2Page;
@@ -32,4 +35,12 @@ public class Add2Action {
 		add2Page.setResult(result);
 		return null;
 	}
+	
+	@Redirect(protocol = ProtocolType.HTTPS)
+	public Class doCalculateHttps() {
+        int result = add2Page.getArg1() + add2Page.getArg2();
+        add2Page.setResult(result);
+        return AddResultPage.class;
+	}
+
 }
