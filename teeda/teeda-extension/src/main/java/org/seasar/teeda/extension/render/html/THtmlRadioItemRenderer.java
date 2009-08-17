@@ -50,6 +50,7 @@ public class THtmlRadioItemRenderer extends AbstractRenderer {
         ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.NAME_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.VALUE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.DISABLED_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.CHECKED_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.ITEM_VALUE_ATTR);
     }
@@ -100,8 +101,7 @@ public class THtmlRadioItemRenderer extends AbstractRenderer {
         }
         renderRemainAttributes(component, writer, ignoreComponent);
         if (disabled) {
-            writer.writeAttribute(JsfConstants.DISABLED_ATTR, Boolean.TRUE,
-                    null);
+            renderDisabledAttribute(writer);
         }
         writer.endElement(JsfConstants.INPUT_ELEM);
     }

@@ -86,6 +86,26 @@ public class THtmlRadioItemRendererTest extends RendererTest {
                 getResponseText());
     }
 
+    public void testEncode_Checked() throws Exception {
+        parent.setClientId("aaa");
+        parent.getChildren().add(component);
+        parent.setValue("abc");
+        component.setValue("abc");
+        encodeByRenderer(renderer, component);
+        assertEquals("<input type=\"radio\" name=\"aaa\" checked=\"checked\" value=\"abc\" />",
+                getResponseText());
+    }
+
+    public void testEncode_Disabled() throws Exception {
+        parent.setClientId("aaa");
+        parent.getChildren().add(component);
+        component.setValue("abc");
+        component.setDisabled(true);
+        encodeByRenderer(renderer, component);
+        assertEquals("<input type=\"radio\" name=\"aaa\" value=\"abc\" disabled=\"disabled\" />",
+                getResponseText());
+    }
+
     protected Renderer createRenderer() {
         THtmlRadioItemRenderer renderer = new THtmlRadioItemRenderer();
         renderer.setComponentIdLookupStrategy(getComponentIdLookupStrategy());
