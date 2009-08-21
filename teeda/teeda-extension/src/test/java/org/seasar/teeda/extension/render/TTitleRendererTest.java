@@ -62,9 +62,9 @@ public class TTitleRendererTest extends RendererTest {
         title.setId("aaa");
         title.setDir("left");
         title.setLang("ja");
-        title.setTemplateValue("aaa");
+        title.setTemplateValue("aaa &amp; bbb");
         encodeByRenderer(renderer, title);
-        assertEquals("<title id=\"aaa\" dir=\"left\" lang=\"ja\">aaa</title>",
+        assertEquals("<title id=\"aaa\" dir=\"left\" lang=\"ja\">aaa &amp; bbb</title>",
                 getResponseText());
     }
 

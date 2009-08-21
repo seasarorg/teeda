@@ -73,11 +73,13 @@ public class TTitleRenderer extends AbstractRenderer {
             value = LabelUtil.getLabelValue(key, propertiesName, defaultKey,
                     defaultPropertiesName);
         }
-        if (StringUtil.isEmpty(value)) {
-            value = title.getTemplateValue();
-        }
-        if (value != null) {
+        if (!StringUtil.isEmpty(value)) {
             writer.writeText(value, null);
+            return;
+        }
+        value = title.getTemplateValue();
+        if (value != null) {
+            writer.write(value);
         }
     }
 
