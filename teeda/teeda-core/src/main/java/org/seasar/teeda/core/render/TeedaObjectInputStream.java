@@ -36,7 +36,8 @@ public class TeedaObjectInputStream extends ObjectInputStream {
             clazzName = clazzName.substring(0, clazzName.indexOf("$$"));
         }
         try {
-            return Class.forName(clazzName);
+            return Class.forName(clazzName, true, Thread.currentThread()
+                    .getContextClassLoader());
         } catch (final ClassNotFoundException e) {
             return super.resolveClass(clazz);
         }
