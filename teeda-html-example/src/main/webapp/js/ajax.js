@@ -19,6 +19,9 @@ if (typeof(Kumu) == 'undefined') {
 if (typeof(Kumu.Ajax) == 'undefined') {
   Kumu.Ajax = {};
 };
+var Empty = {
+  emptyFunction: function() {}
+}
 
 Kumu.Ajax = {
 
@@ -232,7 +235,8 @@ Kumu.Ajax = {
     return function(){
       var self = Kumu.Ajax;
       if (req.readyState == 0 || req.readyState == self.XML_HTTP_REQUEST_STATUS_COMPLETE){
-        return;
+    	  req.onreadystatechange = Empty.emptyFunction;
+    	  return;
       }
       req.abort();
       if (ajaxComponent._clearTimeout){
@@ -300,6 +304,7 @@ Kumu.Ajax = {
         ajaxComponent._clearTimeout();
       }
     }
+    req.onreadystatechange = Empty.emptyFunction;
   },
 
   _registAjaxListener : function(req, ajaxComponent) {
@@ -312,6 +317,7 @@ Kumu.Ajax = {
           self._onReadyStateChange(req, ajaxComponent);
         }
       }catch(e){
+    	req.onreadystatechange = Empty.emptyFunction;
         self._onException(e, ajaxComponent);
       }
     };
