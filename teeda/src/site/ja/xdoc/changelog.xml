@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp8">1.0.13-sp8</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp7">1.0.13-sp7</a>
 					</td>
 					<td>
@@ -151,8 +154,52 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
-			</section>
-	
+		</section>
+
+		<section name="1.0.13-sp8">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp7">1.0.13-sp7</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-502'>TEEDA-502</a>
+								] - IE6+SSL 環境下で popupCalendar
+								を使用すると「保護されていない項目を表示しますか?」メッセージが毎回表示される問題を修正しました．[Seasar-user:17518]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-503'>TEEDA-503</a>
+								] - Kumu の disabled.js を使っていると，popupCalendar
+								内のリンクも二重送信防止の対象となってしまい，タイムアウトするまで他のリンクやサブミットボタンを操作できなくなる問題を修正しました．[Seasar-user:17518]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-504'>TEEDA-504</a>
+								] - Action クラスのメソッドに指定した @Redirect アノテーションが有効にならない問題を修正しました．[Seasar-user:18258]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-505'>TEEDA-505</a>]
+								- 静的なラジオボタンの disabled 属性が有効な場合，disabled=&quot;disabled&quot; に加えて disabled=&quot;true&quot; もレンダリングされてしまう問題を修正しました．
+							</li>
+							<li>[<a href='https://www.seasar.org/issues/browse/TEEDA-506'>TEEDA-506</a>] -         テンプレート HTML に &quot;&amp;amp;&quot; などの文字参照を記述すると，レンダリング時に &quot;&amp;&quot; がエスケープされてしまう問題を修正しました．[Seasar-user:18357]
+							</li>
+							<li>[<a href='https://www.seasar.org/issues/browse/TEEDA-507'>TEEDA-507</a>] -         ItemsSave で保存されたオブジェクトを復元する際にコンテキストクラスローダを使っていないため，HOT deploy 対象クラスが通常のクラスローダにロードされてしまう問題を修正しました．[Seasar-user:18517]
+							</li>
+							<li>[<a href='https://www.seasar.org/issues/browse/TEEDA-508'>TEEDA-508</a>] -         TeedaAjaxにおいてメモリリークが発生
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
 		<section name="1.0.13-sp7">
 			<subsection name="変更内容">
 				<p>

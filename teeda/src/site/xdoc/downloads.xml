@@ -11,8 +11,8 @@
 			<dl>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-1.0.13-sp7.zip">
-						Teeda 1.0.13-sp7
+						href="../download/2009-11-27/teeda-1.0.13-sp8.zip">
+						Teeda 1.0.13-sp8
 					</a>
 				</dt>
 				<dd>
@@ -21,36 +21,36 @@
 				</dd>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-tiger-1.0.13-sp7.zip">
-						Teeda Tiger 1.0.13-sp7
+						href="../download/2009-11-27/teeda-tiger-1.0.13-sp8.zip">
+						Teeda Tiger 1.0.13-sp8
 					</a>
 				</dt>
 				<dd>Optional modules for JDK1.5 or later.</dd>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-html-example-1.0.13-sp7.zip">
-						Teeda HTML Example 1.0.13-sp7
+						href="../download/2009-11-27/teeda-html-example-1.0.13-sp8.zip">
+						Teeda HTML Example 1.0.13-sp8
 					</a>
 				</dt>
 				<dd>Teeda Extension (with HTML template) examples</dd>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-jsp-example-1.0.13-sp7.zip">
-						Teeda JSP Example 1.0.13-sp7
+						href="../download/2009-11-27/teeda-jsp-example-1.0.13-sp8.zip">
+						Teeda JSP Example 1.0.13-sp8
 					</a>
 				</dt>
 				<dd>Teeda Core (with JSP) examples</dd>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-jars-1.0.13-sp7.zip">
-						Teeda 1.0.13-sp7 jars
+						href="../download/2009-11-27/teeda-jars-1.0.13-sp8.zip">
+						Teeda 1.0.13-sp8 jars
 					</a>
 				</dt>
 				<dd>Jar files for JDK1.4</dd>
 				<dt>
 					<a
-						href="../download/2009-05-17/teeda-tiger-jars-1.0.13-sp7.zip">
-						Teeda 1.0.13-sp7 tiger jars
+						href="../download/2009-11-27/teeda-tiger-jars-1.0.13-sp8.zip">
+						Teeda 1.0.13-sp8 tiger jars
 					</a>
 				</dt>
 				<dd>Jar files for JDK1.5 or later</dd>
@@ -60,6 +60,9 @@
 		<section name="All Releases">
 			<table>
 				<tr>
+					<td>
+						<a href="#a1.0.13-sp8">1.0.13-sp8</a>
+					</td>
 					<td>
 						<a href="#a1.0.13-sp7">1.0.13-sp7</a>
 					</td>
@@ -207,6 +210,51 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+
+			<subsection name="1.0.13-sp8">
+				<table>
+					<tr>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-1.0.13-sp8.zip">
+								Teeda 1.0.13-sp8
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-html-example-1.0.13-sp8.zip">
+								Teeda HTML Example 1.0.13-sp8
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-jars-1.0.13-sp8.zip">
+								Teeda 1.0.13-sp8 jars
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-tiger-1.0.13-sp8.zip">
+								Teeda Tiger 1.0.13-sp8
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-jsp-example-1.0.13-sp8.zip">
+								Teeda JSP Example 1.0.13-sp8
+							</a>
+						</td>
+						<td>
+							<a
+								href="../download/2009-11-27/teeda-tiger-jars-1.0.13-sp8.zip">
+								Teeda 1.0.13-sp8 tiger jars
+							</a>
+						</td>
+					</tr>
+				</table>
+			</subsection>
 
 			<subsection name="1.0.13-sp7">
 				<table>
