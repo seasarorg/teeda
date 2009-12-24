@@ -55,10 +55,11 @@ public class HtmlDescCacheImplTest extends TeedaExtensionTestCase {
         HtmlDescCacheImpl cache = new HtmlDescCacheImpl();
         cache.setServletContext(new MyMockServletContextImpl());
         try {
-            cache.createHtmlDesc(null);
+            cache.createHtmlDesc("<script/>");
             fail();
         } catch (HtmlNotFoundRuntimeExcpetion e) {
             success();
+            assertTrue(e.getMessage().indexOf("&lt;script/&gt;") >= 0);
         }
     }
 
