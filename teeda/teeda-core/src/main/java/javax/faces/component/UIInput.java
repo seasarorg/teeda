@@ -280,6 +280,13 @@ public class UIInput extends UIOutput implements EditableValueHolder {
         if (!isValid()) {
             return;
         }
+
+        // Teeda Extension で target を指定した Converter をサポートするためのトリック。
+        if (isLocalValueSet() && getValue() == null) {
+            setLocalValueSet(false);
+            return;
+        }
+
         Object previous = getValue();
         setValue(convertedValue);
         setSubmittedValue(null);
