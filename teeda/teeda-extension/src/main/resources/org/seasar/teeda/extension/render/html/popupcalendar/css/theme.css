@@ -2,7 +2,7 @@
 .jscalendar-table-style {
     font-family:arial;
     font-size:11px;
-    border-width:1;
+    border-width:1px;
     border-style:solid;
     border-color:#a0a0a0;
 	background-color: #ffffff;
@@ -43,7 +43,7 @@
 /* Moused-over (selected) appearance of controls in calendar title. */
 .jscalendar-title-control-select-style {
 	border-style: solid;
-	border-width: 1;
+	border-width: 1px;
 	border-color: #88AAFF;
 	cursor: pointer;
 }
@@ -66,7 +66,7 @@
 
 /* Default attributes unselected (mouse-off) item in drop down lists (month and year). */
 .jscalendar-dropdown-normal-style {
-	background-color: #0;
+	background-color: #000000;
 }
 
 /* Default attributes of calendar body (weekday titles and numbers). */

@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.faces.component.UIComponent;
@@ -206,10 +205,10 @@ public class THtmlPopupCalendarRenderer extends THtmlInputTextRenderer
     private void writeOnclickJsCalendarFunctionCall(ResponseWriter writer,
             FacesContext facesContext, UIComponent uiComponent,
             String datePattern) throws IOException {
-        String id = uiComponent.getId();
+        String id = uiComponent.getClientId(facesContext);
 
-        String jsCalendarFunctionCall = "jscalendarPopUpCalendar(this,document.getElementById(\\'" +
-                id + "\\'),\\'" + datePattern + "\\')";
+        String jsCalendarFunctionCall = "jscalendarPopUpCalendar(this,document.getElementsByName(\\'" +
+                id + "\\').item(0),\\'" + datePattern + "\\')";
         writer.writeAttribute(JsfConstants.ONCLICK_ATTR,
                 jsCalendarFunctionCall, null);
     }
