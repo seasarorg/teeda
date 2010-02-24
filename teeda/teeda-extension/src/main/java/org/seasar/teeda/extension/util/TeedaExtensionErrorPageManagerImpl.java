@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.internal.scope.RedirectScope;
 import javax.faces.internal.scope.SubApplicationScope;
 import javax.servlet.ServletRequest;
+import javax.servlet.jsp.JspException;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.framework.message.MessageFormatter;
@@ -127,7 +128,12 @@ public class TeedaExtensionErrorPageManagerImpl extends
         } else if (t instanceof SocketException) {
             return true;
         }
-        final Throwable cause = t.getCause();
+        final Throwable cause;
+        if (t instanceof JspException) {
+            cause = ((JspException) t).getRootCause();
+        } else {
+            cause = t.getCause();
+        }
         if (cause == null) {
             return false;
         }
