@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp9">1.0.13-sp9</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp8">1.0.13-sp8</a>
 					</td>
 					<td>
@@ -156,6 +159,45 @@
 			</ul>
 		</section>
 
+		<section name="1.0.13-sp9">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp8">1.0.13-sp8</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-509'>TEEDA-509</a>
+								] - リクエストされたページが見つからない場合のエラーメッセージに含まれる URL
+								がエスケープされずにエラー画面に表示される問題を修正しました．[Seasar-user:19055]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-510'>TEEDA-510</a>
+								] - popupCalendar を foreach または grid と組み合わせるとスクリプトエラーになってしまう問題を修正しました．[Seasar-user:19050]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-511'>TEEDA-511</a>
+								] - popupCalendar を foreach または grid と組み合わせた項目に target を指定した TDateTimeConverter を組み合わせて
+								target に指定していないボタンをサブミットすると，2 番目以降の popupCalendar
+								の項目にデフォルトのコンバータが適用されてしまい，変換エラーが発生する問題を修正しました．[Seasar-user:19050]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-512'>TEEDA-512</a>
+								] - JSP2.0 の環境だと SocketException が原因で発生した例外を無視できない問題を修正しました．[Seasar-user:19356]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+
 		<section name="1.0.13-sp8">
 			<subsection name="変更内容">
 				<p>
@@ -187,7 +229,7 @@
 								[
 								<a href='https://www.seasar.org/issues/browse/TEEDA-505'>TEEDA-505</a>]
 								- 静的なラジオボタンの disabled 属性が有効な場合，disabled=&quot;disabled&quot; に加えて disabled=&quot;true&quot; もレンダリングされてしまう問題を修正しました．
-							</li>
+					</li>
 							<li>[<a href='https://www.seasar.org/issues/browse/TEEDA-506'>TEEDA-506</a>] -         テンプレート HTML に &quot;&amp;amp;&quot; などの文字参照を記述すると，レンダリング時に &quot;&amp;&quot; がエスケープされてしまう問題を修正しました．[Seasar-user:18357]
 							</li>
 							<li>[<a href='https://www.seasar.org/issues/browse/TEEDA-507'>TEEDA-507</a>] -         ItemsSave で保存されたオブジェクトを復元する際にコンテキストクラスローダを使っていないため，HOT deploy 対象クラスが通常のクラスローダにロードされてしまう問題を修正しました．[Seasar-user:18517]
