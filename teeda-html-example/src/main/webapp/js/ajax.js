@@ -173,6 +173,7 @@ Kumu.Ajax = {
     }
 
     var process = new Kumu.Ajax.AjaxProcess(xmlHttp, ajaxComponent);
+    var onreadystatechange = null;
 
     if(method == 'GET'){
       url += "?time=" + self.encodeURL(sysdate);
@@ -187,7 +188,7 @@ Kumu.Ajax = {
       }
       url += parameters;
       if(xmlHttp){
-        self._registAjaxListener(xmlHttp, ajaxComponent);
+        onreadystatechange = self._registAjaxListener(xmlHttp, ajaxComponent);
         xmlHttp.open("GET", url, async);
         xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
         xmlHttp.send(null);
@@ -206,12 +207,15 @@ Kumu.Ajax = {
         parameters = array.join("&");
       }
       if(xmlHttp){
-        self._registAjaxListener(xmlHttp, ajaxComponent);
+        onreadystatechange = self._registAjaxListener(xmlHttp, ajaxComponent);
         xmlHttp.open("POST", url, async);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.setRequestHeader("If-Modified-Since", sysdate);
         xmlHttp.send(parameters);
       }
+    }
+    if (!async && onreadystatechange && xmlHttp.overrideMimeType) {
+      onreadystatechange();
     }
     return process;
   },
@@ -235,8 +239,8 @@ Kumu.Ajax = {
     return function(){
       var self = Kumu.Ajax;
       if (req.readyState == 0 || req.readyState == self.XML_HTTP_REQUEST_STATUS_COMPLETE){
-    	  req.onreadystatechange = Empty.emptyFunction;
-    	  return;
+        req.onreadystatechange = Empty.emptyFunction;
+        return;
       }
       req.abort();
       if (ajaxComponent._clearTimeout){
@@ -304,12 +308,11 @@ Kumu.Ajax = {
         ajaxComponent._clearTimeout();
       }
     }
-    req.onreadystatechange = Empty.emptyFunction;
   },
 
   _registAjaxListener : function(req, ajaxComponent) {
     var self = Kumu.Ajax;
-    req.onreadystatechange = function() {
+    var onreadystatechange = req.onreadystatechange = function() {
       try{
         if (self.XML_HTTP_REQUEST_STATUS_COMPLETE == req.readyState) {
           self._evalResult(req, ajaxComponent);
@@ -317,11 +320,11 @@ Kumu.Ajax = {
           self._onReadyStateChange(req, ajaxComponent);
         }
       }catch(e){
-    	req.onreadystatechange = Empty.emptyFunction;
+        onreadystatechange = Empty.emptyFunction;
         self._onException(e, ajaxComponent);
       }
     };
-
+    return onreadystatechange;
   },
   
   toQueryString : function(params){
