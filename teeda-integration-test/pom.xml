@@ -120,6 +120,12 @@
       <artifactId>teeda-webunit</artifactId>
       <version>0.2.3</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.seasar.container</groupId>
+          <artifactId>s2-extension</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- for junit-addons -->
     <dependency>
