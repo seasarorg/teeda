@@ -182,6 +182,12 @@
   </distributionManagement>
   <profiles>
     <profile>
+      <id>snapshot</id>
+      <properties>
+        <seasar2.version>[2.4,)</seasar2.version>
+      </properties>
+    </profile>
+    <profile>
       <id>example</id>
       <build>
         <defaultGoal>package</defaultGoal>
