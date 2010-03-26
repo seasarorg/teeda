@@ -33,6 +33,7 @@
 <h2 class="subtitle" id="id1">Teeda&nbsp;Extensionにおけるカスタマイズの方法について</h2>
 <p>このドキュメントではTeeda&nbsp;Extensionにおけるカスタマイズ方法について記述します．</p>
 <ul class="arabic simple">
+<li><a href="#viewRootPath">ビュールートパスのカスタマイズについて</a></li>
 <li><a href="#validator">Validatorのカスタマイズについて</a></li>
 <li><a href="#converter">Convererのカスタマイズについて</a></li>
 <li><a href="#uicomponent">コンポーネントのカスタマイズと新しい規約の導入について</a></li>
@@ -43,6 +44,51 @@
               <li><a href="#javascript">JavaScriptについて</a></li>
             </ul>
 </div>
+
+<div class="section">
+<h2><a id="viewRootPath" name="viewRootPath">ビュールートパスのカスタマイズについて</a></h2>
+<p>
+Teedaでは動的なHTMLのURLは <code>&lt;context&gt;/<strong>view</strong>/aaa/bbb.html</code> のようになります．
+この <code>view</code> のことを「<strong>ビュールートパス</strong>」と呼びます．
+</p>
+<p>
+ビュールートパスを変更するには，<code>convention.dicon</code> で指定します．
+例えばビュールートパスを <code>hoge</code> に変更する場合は次のようになります．
+</p>
+<pre>
+  &lt;component class=&quot;org.seasar.framework.convention.impl.NamingConventionImpl&quot;&gt;
+    <strong>&lt;property name=&quot;viewRootPath&quot;&gt;&quot;/hoge&quot;&lt;/property&gt;</strong>
+    &lt;initMethod name=&quot;addRootPackageName&quot;&gt;
+      &lt;arg&gt;&quot;aaa&quot;&lt;/arg&gt;
+    &lt;/initMethod&gt;
+  &lt;/component&gt;
+</pre>
+<p>
+この場合，HTML を配置するディレクトリも標準の <code>src/main/webapp/view</code> から <code>src/main/webapp/hoge</code> に変更する必要があります．
+URL が <code>&lt;context&gt;/hoge/aaa/bbb.html</code> の場合，対応する HTML は <code>src/main/webapp/hoge/aaa/bbb.html</code> になります．
+</p>
+<p>
+Dolteng を使っている場合は，クラスパスに設定されている <code>src/main/webapp/view</code> を <code>src/main/webapp/hoge</code> に変更する必要があります．
+</p>
+<p>
+ビュールートパスを無くしたい場合は，<code>convention.dicon</code> で次のように指定します．
+</p>
+<pre>
+  &lt;component class=&quot;org.seasar.framework.convention.impl.NamingConventionImpl&quot;&gt;
+    <strong>&lt;property name=&quot;viewRootPath&quot;&gt;&quot;/&quot;&lt;/property&gt;</strong>
+    &lt;initMethod name=&quot;addRootPackageName&quot;&gt;
+      &lt;arg&gt;&quot;aaa&quot;&lt;/arg&gt;
+    &lt;/initMethod&gt;
+  &lt;/component&gt;
+</pre>
+<p>
+この場合，HTML を配置するディレクトリも標準の <code>src/main/webapp/view</code> から <code>src/main/webapp</code> 直下に変更する必要があります．
+URL が <code>&lt;context&gt;/aaa/bbb.html</code> の場合，対応する HTML は <code>src/main/webapp/aaa/bbb.html</code> になります．
+</p>
+<p>
+Dolteng を使っている場合は，クラスパスに設定されている <code>src/main/webapp/view</code> を <code>src/main/webapp</code> に変更する必要があります．
+その際，ビルドパスの設定で <code>WEB-INF/</code> を <code>excluded</code> に指定してください．
+</p>
 
 <div class="section">
 <h2><a id="validator" name="validator">Validatorのカスタマイズについて</a></h2>
