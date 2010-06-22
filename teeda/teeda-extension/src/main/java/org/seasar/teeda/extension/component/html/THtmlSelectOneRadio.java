@@ -60,6 +60,12 @@ public class THtmlSelectOneRadio extends HtmlSelectOneRadio {
                 getLabelName());
     }
 
+    public void updateModel(FacesContext context) {
+        super.updateModel(context);
+        THtmlSelectUtil.takeOverLabel(context, this, getPage(context),
+                getLabelName());
+    }
+
     private Object getPage(final FacesContext context) {
         final VariableResolver variableResolver = context.getApplication()
                 .getVariableResolver();
