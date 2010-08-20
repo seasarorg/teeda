@@ -26,4 +26,8 @@ public class ForwardPage {
 		return null;
 	}
 
+    public Class<?> doSearch() {
+        return null;
+    }
+
 }

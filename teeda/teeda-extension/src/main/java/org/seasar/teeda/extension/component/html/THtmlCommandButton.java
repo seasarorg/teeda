@@ -147,13 +147,15 @@ public class THtmlCommandButton extends HtmlCommandButton implements
         super.restoreState(context, values[0]);
         renderJs = (Boolean) values[1];
         baseViewId = (String) values[2];
+        time = (Long) values[3];
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[3];
+        Object values[] = new Object[4];
         values[0] = super.saveState(context);
         values[1] = renderJs;
         values[2] = baseViewId;
+        values[3] = time;
         return values;
     }
 
