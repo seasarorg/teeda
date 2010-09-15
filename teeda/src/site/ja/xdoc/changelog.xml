@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp10">1.0.13-sp10</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp9">1.0.13-sp9</a>
 					</td>
 					<td>
@@ -157,6 +160,50 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-sp10">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp9">1.0.13-sp9</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-513'>TEEDA-513</a>
+								] - TeedaAjaxにおけるメモリリークの修正がブランチに反映されていない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-514'>TEEDA-514</a>
+								] - TeedaAjaxにおいてFirefoxでの同期通信のコールバック関数が呼ばれない問題を修正しました．
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-517'>TEEDA-517</a>
+								] -
+								ポップアップカレンダーで「月」および「日」のドロップダウンリスト上でマウスを動かすと，マウスが外れたメニューの背景色が黒になってしまう問題を修正しました．[Seasar-user:19603]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-518'>TEEDA-518</a>
+								] - SelectOneMenu/SelectOneRadio を foreach
+								と組み合わせるとラベルプロパティが設定されない問題を修正しました．[Seasar-user:19873]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-519'>TEEDA-519</a>
+								] -
+								クライアント側で二重サブミットを防止する場合にタイムアウト時間を設定しても，ポストバックするとデフォルト値になってしまう問題を修正しました．[Seasar-user:20088]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp9">
