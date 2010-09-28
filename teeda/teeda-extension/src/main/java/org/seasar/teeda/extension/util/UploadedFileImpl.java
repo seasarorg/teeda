@@ -43,7 +43,7 @@ public class UploadedFileImpl implements UploadedFile {
 
     public String getName() {
         final String name = fileItem.getName();
-        final File file = new File(name);
+        final File file = new File(name.replace('\\', '/'));
         return file.getName();
     }
 
