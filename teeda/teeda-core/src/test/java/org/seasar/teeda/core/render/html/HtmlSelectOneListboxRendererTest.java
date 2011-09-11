@@ -492,6 +492,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
         htmlSelectOneListbox.setStyleClass("u");
         htmlSelectOneListbox.setTabindex("x");
         htmlSelectOneListbox.setTitle("y");
+        htmlSelectOneListbox.getAttributes().put("name", "hoge");
 
         htmlSelectOneListbox.setId("A");
         htmlSelectOneListbox.setValue("val");

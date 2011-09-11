@@ -392,6 +392,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
         htmlSelectManyListbox.setStyleClass("u");
         htmlSelectManyListbox.setTabindex("x");
         htmlSelectManyListbox.setTitle("y");
+        htmlSelectManyListbox.getAttributes().put("name", "hoge");
 
         htmlSelectManyListbox.setId("A");
         htmlSelectManyListbox.setValue(new String[] { "val" });

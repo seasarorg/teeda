@@ -451,6 +451,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
         htmlSelectOneMenu.setStyleClass("u");
         htmlSelectOneMenu.setTabindex("x");
         htmlSelectOneMenu.setTitle("y");
+        htmlSelectOneMenu.getAttributes().put("name", "hoge");
 
         htmlSelectOneMenu.setId("A");
         htmlSelectOneMenu.setSubmittedValue("val");

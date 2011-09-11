@@ -367,6 +367,7 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
         htmlSelectManyMenu.setStyleClass("u");
         htmlSelectManyMenu.setTabindex("x");
         htmlSelectManyMenu.setTitle("y");
+        htmlSelectManyMenu.getAttributes().put("name", "hoge");
 
         htmlSelectManyMenu.setId("A");
         htmlSelectManyMenu.setValue(new String[] { "val" });

@@ -49,6 +49,7 @@ public class HtmlSelectOneRadioRenderer extends HtmlSelectManyCheckboxRenderer {
         ignoreComponent.addAttributeName(JsfConstants.ENABLED_CLASS_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.BORDER_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.STYLE_CLASS_ATTR);
     }
 

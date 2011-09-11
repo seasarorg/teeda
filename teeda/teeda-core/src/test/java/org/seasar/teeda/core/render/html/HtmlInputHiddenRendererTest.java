@@ -103,6 +103,8 @@ public class HtmlInputHiddenRendererTest extends RendererTest {
     public void testEncode_WithAllAttributes() throws Exception {
         htmlInputHidden.setId("A");
         htmlInputHidden.setValue("B");
+        htmlInputHidden.getAttributes().put("type", "hidden");
+        htmlInputHidden.getAttributes().put("name", "hoge");
 
         encodeByRenderer(renderer, htmlInputHidden);
 

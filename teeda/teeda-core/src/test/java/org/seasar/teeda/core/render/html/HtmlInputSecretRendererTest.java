@@ -153,6 +153,8 @@ public class HtmlInputSecretRendererTest extends RendererTest {
         htmlInputSecret.setStyleClass("u");
         htmlInputSecret.setTabindex("x");
         htmlInputSecret.setTitle("y");
+        htmlInputSecret.getAttributes().put("type", "password");
+        htmlInputSecret.getAttributes().put("name", "hoge");
 
         htmlInputSecret.setId("Aa");
         htmlInputSecret.setValue("Ba");

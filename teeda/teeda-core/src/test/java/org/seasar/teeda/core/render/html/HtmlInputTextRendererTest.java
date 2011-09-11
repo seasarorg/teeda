@@ -157,6 +157,8 @@ public class HtmlInputTextRendererTest extends RendererTest {
         htmlInputText.setStyleClass("u");
         htmlInputText.setTabindex("x");
         htmlInputText.setTitle("y");
+        htmlInputText.getAttributes().put("type", "hidden");
+        htmlInputText.getAttributes().put("name", "hoge");
 
         htmlInputText.setId("A");
         htmlInputText.setValue("B");
