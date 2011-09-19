@@ -469,6 +469,7 @@ public class HtmlSelectManyCheckboxRendererTest extends RendererTest {
         htmlSelectManyCheckbox.setTabindex("x");
         htmlSelectManyCheckbox.setTitle("y");
         htmlSelectManyCheckbox.getAttributes().put("type", "checkbox");
+        htmlSelectManyCheckbox.getAttributes().put("checked", "checked");
 
         htmlSelectManyCheckbox.setId("A");
         htmlSelectManyCheckbox.setValue(new String[] { "val" });

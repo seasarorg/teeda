@@ -459,6 +459,7 @@ public class HtmlSelectOneMenuRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
+            selectItem.getAttributes().put("selected", "selected");
             htmlSelectOneMenu.getChildren().add(selectItem);
         }
         encodeByRenderer(renderer, htmlSelectOneMenu);

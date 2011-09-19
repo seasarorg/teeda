@@ -155,6 +155,7 @@ public class HtmlSelectBooleanCheckboxRendererTest extends RendererTest {
         htmlSelectBooleanCheckbox.setTabindex("x");
         htmlSelectBooleanCheckbox.setTitle("y");
         htmlSelectBooleanCheckbox.getAttributes().put("type", "checkbox");
+        htmlSelectBooleanCheckbox.getAttributes().put("checked", "checked");
 
         htmlSelectBooleanCheckbox.setId("A");
         htmlSelectBooleanCheckbox.setValue("true");

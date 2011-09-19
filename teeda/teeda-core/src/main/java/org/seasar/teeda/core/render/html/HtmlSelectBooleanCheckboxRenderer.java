@@ -45,6 +45,7 @@ public class HtmlSelectBooleanCheckboxRenderer extends AbstractRenderer {
         ignoreComponent.addAttributeName(JsfConstants.SELECTED_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.NAME_ATTR);
         ignoreComponent.addAttributeName(JsfConstants.TYPE_ATTR);
+        ignoreComponent.addAttributeName(JsfConstants.CHECKED_ATTR);
     }
 
     public void encodeEnd(FacesContext context, UIComponent component)

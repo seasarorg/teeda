@@ -412,7 +412,9 @@ public class HtmlSelectOneRadioRendererTest extends RendererTest {
         htmlSelectOneRadio.setStyleClass("u");
         htmlSelectOneRadio.setTabindex("x");
         htmlSelectOneRadio.setTitle("y");
+        htmlSelectOneRadio.getAttributes().put("name", "foo");
         htmlSelectOneRadio.getAttributes().put("type", "radio");
+        htmlSelectOneRadio.getAttributes().put("checked", "checked");
 
         htmlSelectOneRadio.setId("A");
         htmlSelectOneRadio.setValue("val");

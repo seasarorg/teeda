@@ -501,6 +501,7 @@ public class HtmlSelectOneListboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
+            selectItem.getAttributes().put("selected", "selected");
             htmlSelectOneListbox.getChildren().add(selectItem);
         }
         encodeByRenderer(renderer, htmlSelectOneListbox);

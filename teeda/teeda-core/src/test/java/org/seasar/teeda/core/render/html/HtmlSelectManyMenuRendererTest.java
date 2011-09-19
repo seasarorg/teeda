@@ -375,6 +375,7 @@ public class HtmlSelectManyMenuRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
+            selectItem.getAttributes().put("selected", "selected");
             htmlSelectManyMenu.getChildren().add(selectItem);
         }
 

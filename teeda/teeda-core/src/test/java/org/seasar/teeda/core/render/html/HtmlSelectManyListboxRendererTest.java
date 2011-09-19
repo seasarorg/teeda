@@ -400,6 +400,7 @@ public class HtmlSelectManyListboxRendererTest extends RendererTest {
             UISelectItem selectItem = new UISelectItem();
             selectItem.setItemValue("val");
             selectItem.setItemLabel("lab");
+            selectItem.getAttributes().put("selected", "selected");
             htmlSelectManyListbox.getChildren().add(selectItem);
         }
 
