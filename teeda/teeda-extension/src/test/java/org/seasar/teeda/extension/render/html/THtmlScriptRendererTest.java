@@ -42,6 +42,7 @@ public class THtmlScriptRendererTest extends RendererTest {
     }
 
     public void testEncode_simple() throws Exception {
+        script.setBaseViewId("aaa");
         encodeByRenderer(renderer, script);
         assertEquals(
                 "<script type=\"text/javascript\" language=\"JavaScript\"></script>",

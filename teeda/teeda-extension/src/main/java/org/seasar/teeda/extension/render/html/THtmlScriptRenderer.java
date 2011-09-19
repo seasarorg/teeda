@@ -105,6 +105,7 @@ public class THtmlScriptRenderer extends AbstractRenderer {
         ignore.addAttributeName(JsfConstants.TYPE_ATTR);
         ignore.addAttributeName(JsfConstants.LANGUAGE_ATTR);
         ignore.addAttributeName(JsfConstants.SRC_ATTR);
+        ignore.addAttributeName("baseViewId");
         return ignore;
     }
 }
