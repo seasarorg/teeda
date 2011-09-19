@@ -11,6 +11,9 @@
 			<table>
 				<tr>
 					<td>
+						<a href="#a1.0.13-sp11">1.0.13-sp11</a>
+					</td>
+					<td>
 						<a href="#a1.0.13-sp10">1.0.13-sp10</a>
 					</td>
 					<td>
@@ -160,6 +163,43 @@
 				<li>sp : service pack</li>
 				<li>rc : release candidate</li>
 			</ul>
+		</section>
+
+		<section name="1.0.13-sp10">
+			<subsection name="変更内容">
+				<p>
+					<a href="#a1.0.13-sp9">1.0.13-sp9</a>
+					からの変更点は以下の通りです．
+				</p>
+				<ul>
+					<li>
+						Bug
+						<ul>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-520'>TEEDA-520</a>
+								] - 非 Windows 環境の Web コンテナにファイルアップロードを行うと，UploadedFile#getName()
+								がファイル名ではなくパスを返してしまう問題を修正しました．[Seasar-user:20199]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-521'>TEEDA-521</a>
+								] - レンダリング時に入力系コンポーネントの type および name 属性が重複して出力される問題を修正しました．[Seasar-user:20996]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-522'>TEEDA-522</a>]
+								- テンプレート HTML に checked=&quot;checked&quot; が指定されると，checked 属性が重複して出力される問題を修正しました．[Seasar-user:21007]
+							</li>
+							<li>
+								[
+								<a href='https://www.seasar.org/issues/browse/TEEDA-523'>TEEDA-523</a>]
+								- テンプレート HTML に記述した &lt;script&gt; 要素に baseViewId 属性が出力されてしまう問題を修正しました．[Seasar-user:21011]
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</subsection>
 		</section>
 
 		<section name="1.0.13-sp10">
