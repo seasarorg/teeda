@@ -1,0 +1,8 @@
+/build
+/target
+/cobertura.ser
+/surefire-classloader.properties
+/surefire.properties
+/*.log
+/bin
+/.classpath

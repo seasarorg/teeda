@@ -1,0 +1,5 @@
+/build
+/target
+/*.log
+/.classpath
+/.project
